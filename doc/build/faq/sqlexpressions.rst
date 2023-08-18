@@ -29,7 +29,7 @@ if we don't use it explicitly):
 
 The ``str()`` builtin, or an equivalent, can be invoked on ORM
 :class:`_query.Query`  object as well as any statement such as that of
-:func:`_expression.select`, :func:`_expression.insert` etc. and also any expression fragment, such
+:func:`_expression.select` , :func:`_expression.insert` etc. and also any expression fragment, such
 as:
 
 .. sourcecode:: pycon+sql
@@ -48,7 +48,7 @@ In these cases, we might get a stringified statement that is not in the correct
 syntax for the database we are targeting, or the operation may raise a
 :class:`.UnsupportedCompilationError` exception.   In these cases, it is
 necessary that we stringify the statement using the
-:meth:`_expression.ClauseElement.compile` method, while passing along an :class:`_engine.Engine`
+:meth:`_expression.ClauseElement.compile` method, while passing along an :class:` _engine.Engine`
 or :class:`.Dialect` object that represents the target database.  Such as
 below, if we have a MySQL database engine, we can stringify a statement in
 terms of the MySQL dialect::
@@ -74,8 +74,8 @@ such as if we wanted a dialect object for psycopg2::
     psycopg2_dialect = e.dialect
 
 When given an ORM :class:`~.orm.query.Query` object, in order to get at the
-:meth:`_expression.ClauseElement.compile`
-method we only need access the :attr:`~.orm.query.Query.statement`
+:meth:`_expression.ClauseElement.compile` 
+method we only need access the :attr:`~.orm.query.Query.statement` 
 accessor first::
 
     statement = query.statement
@@ -92,7 +92,7 @@ Rendering Bound Parameters Inline
    invoking non-DDL SQL statements against a relational database.
 
 The above forms will render the SQL statement as it is passed to the Python
-:term:`DBAPI`, which includes that bound parameters are not rendered inline.
+:term:`DBAPI` , which includes that bound parameters are not rendered inline.
 SQLAlchemy normally does not stringify bound parameters, as this is handled
 appropriately by the Python DBAPI, not to mention bypassing bound
 parameters is probably the most widely exploited security hole in
@@ -149,7 +149,7 @@ Methods of stringifying all parameters unconditionally are detailed below.
 
 As SQLAlchemy intentionally does not support full stringification of literal
 values, techniques to do so within specific debugging scenarios include the
-following. As an example, we will use the PostgreSQL :class:`_postgresql.UUID`
+following. As an example, we will use the PostgreSQL :class:`_postgresql.UUID` 
 datatype::
 
     import uuid
@@ -223,7 +223,7 @@ include:
   Another example using a positional paramstyle such as ``qmark``, we can render
   our above statement in terms of SQLite by also using the
   :attr:`.SQLCompiler.positiontup` collection in conjunction with
-  :attr:`.SQLCompiler.params`, in order to retrieve the parameters in
+  :attr:`.SQLCompiler.params` , in order to retrieve the parameters in
   their positional order for the statement as compiled::
 
     import re
@@ -291,7 +291,7 @@ include:
             return repr(value)
 
   The above datatype needs to be used either explicitly within the model
-  or locally within the statement using :func:`_sql.type_coerce`, such as ::
+  or locally within the statement using :func:`_sql.type_coerce` , such as ::
 
     from sqlalchemy import type_coerce
 
@@ -311,18 +311,18 @@ Rendering "POSTCOMPILE" Parameters as Bound Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 SQLAlchemy includes a variant on a bound parameter known as
-:paramref:`_sql.BindParameter.expanding`, which is a "late evaluated" parameter
+:paramref:`_sql.BindParameter.expanding` , which is a "late evaluated" parameter
 that is rendered in an intermediary state when a SQL construct is compiled,
 which is then further processed at statement execution time when the actual
 known values are passed.   "Expanding" parameters are used for
 :meth:`_sql.ColumnOperators.in_` expressions by default so that the SQL
 string can be safely cached independently of the actual lists of values
-being passed to a particular invocation of :meth:`_sql.ColumnOperators.in_`::
+being passed to a particular invocation of :meth:`_sql.ColumnOperators.in_` ::
 
   >>> stmt = select(A).where(A.id.in_[1, 2, 3])
 
 To render the IN clause with real bound parameter symbols, use the
-``render_postcompile=True`` flag with :meth:`_sql.ClauseElement.compile`:
+``render_postcompile=True`` flag with :meth:`_sql.ClauseElement.compile` :
 
 .. sourcecode:: pycon+sql
 
@@ -345,7 +345,7 @@ directly:
   FROM a
   WHERE a.id IN (1, 2, 3)
 
-The :attr:`.SQLCompiler.params` and :attr:`.SQLCompiler.positiontup` are
+The :attr:`.SQLCompiler.params` and :attr:` .SQLCompiler.positiontup` are
 also compatible with ``render_postcompile``, so that
 the previous recipes for rendering inline bound parameters will work here
 in the same way, such as SQLite's positional form:
@@ -384,7 +384,7 @@ in the same way, such as SQLite's positional form:
 Why are percent signs being doubled up when stringifying SQL statements?
 ------------------------------------------------------------------------
 
-Many :term:`DBAPI` implementations make use of the ``pyformat`` or ``format``
+Many :term:`DBAPI` implementations make use of the ` `pyformat`` or ``format``
 `paramstyle <https://www.python.org/dev/peps/pep-0249/#paramstyle>`_, which
 necessarily involve percent signs in their syntax.  Most DBAPIs that do this
 expect percent signs used for other reasons to be doubled up (i.e. escaped) in
@@ -520,7 +520,7 @@ really don't like that either.  So parenthesization doesn't naively
 parenthesize, it uses operator precedence and associativity to determine
 groupings.
 
-For :meth:`.Operators.op`, the value of precedence defaults to zero.
+For :meth:`.Operators.op` , the value of precedence defaults to zero.
 
 What if we defaulted the value of :paramref:`.Operators.op.precedence` to 100,
 e.g. the highest?  Then this expression makes more parenthesis, but is

@@ -5,8 +5,8 @@ Setup for ORM Queryguide: Joined Inheritance
 ============================================
 
 This page illustrates the mappings and fixture data used by the
-:ref:`joined_inheritance` examples in the :doc:`inheritance` document of
-the :ref:`queryguide_toplevel`.
+:ref:`joined_inheritance` examples in the :doc:` inheritance` document of
+the :ref:`queryguide_toplevel` .
 
 ..  sourcecode:: python
 

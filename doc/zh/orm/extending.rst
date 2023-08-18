@@ -1,7 +1,7 @@
-事件和内部实现
-====================
+事件和内部机制
+==============
 
-SQLAlchemy的ORM以及Core通常通过使用事件钩子来扩展。请务必在 :ref:`event_toplevel` 上一般性地查看事件系统的使用。
+SQLAlchemy ORM 和 Core 一般是通过使用事件钩子进行扩展。请务必在   :ref:`event_toplevel`  中概览事件系统的使用情况。
 
 .. toctree::
     :maxdepth: 2

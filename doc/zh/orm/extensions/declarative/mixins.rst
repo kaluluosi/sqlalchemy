@@ -1,4 +1,4 @@
-基类和混入类
-=============
+混入和自定义基类
+=================
 
-请参阅 :ref:`orm_mixins_toplevel` 前往该部分。
+请参见   :ref:`orm_mixins_toplevel`  部分。

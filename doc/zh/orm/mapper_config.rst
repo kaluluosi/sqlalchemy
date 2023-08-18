@@ -1,15 +1,17 @@
 .. _mapper_config_toplevel:
 
-================================
+=========================================
 ORM映射类配置
-================================
+=========================================
 
-本文档对ORM配置进行详细参考，但不包括关系，关系详见：:ref:`relationship_config_toplevel`。
+ORM配置的详细参考，不包括关系的详细信息，这些详细信息请参见
+  :ref:`relationship_config_toplevel` .
 
-若要快速了解典型的ORM配置，请先参考:ref:`orm_quickstart`。
+要快速查看典型的ORM配置，请从
+ :ref:`orm_quickstart` 开始。
 
-若要介绍ORM概念，建议先参考:ref:`unified_tutorial`中的:ref:`tutorial_orm_table_metadata`。
-
+关于对象关系映射在SQLAlchemy中的实现概念的介绍，首先在   :ref:`unified_tutorial`  中介绍了
+   :ref:`tutorial_orm_table_metadata` .
 
 .. toctree::
     :maxdepth: 4

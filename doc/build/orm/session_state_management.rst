@@ -53,11 +53,11 @@ internal ORM state for the object.  :class:`.InstanceState` provides, among
 other accessors, boolean attributes indicating the persistence state
 of the object, including:
 
-* :attr:`.InstanceState.transient`
-* :attr:`.InstanceState.pending`
-* :attr:`.InstanceState.persistent`
-* :attr:`.InstanceState.deleted`
-* :attr:`.InstanceState.detached`
+* :attr:`.InstanceState.transient` 
+* :attr:`.InstanceState.pending` 
+* :attr:`.InstanceState.persistent` 
+* :attr:`.InstanceState.deleted` 
+* :attr:`.InstanceState.detached` 
 
 E.g.::
 
@@ -69,7 +69,7 @@ E.g.::
 .. seealso::
 
   :ref:`orm_mapper_inspection_instancestate` - further examples of
-  :class:`.InstanceState`
+  :class:`.InstanceState` 
 
 .. _session_attributes:
 
@@ -106,8 +106,8 @@ all objects which have had changes since they were last loaded or saved (i.e.
     # identity key
     session.identity_map
 
-(Documentation: :attr:`.Session.new`, :attr:`.Session.dirty`,
-:attr:`.Session.deleted`, :attr:`.Session.identity_map`).
+(Documentation: :attr:`.Session.new` , :attr:`.Session.dirty` ,
+:attr:`.Session.deleted` , :attr:`.Session.identity_map` ).
 
 
 .. _session_referencing_behavior:
@@ -130,7 +130,7 @@ of externally managed strong-referencing behavior include loading
 objects into a local dictionary keyed to their primary key, or into
 lists or sets for the span of time that they need to remain
 referenced. These collections can be associated with a
-:class:`.Session`, if desired, by placing them into the
+:class:`.Session` , if desired, by placing them into the
 :attr:`.Session.info` dictionary.
 
 An event based approach is also feasible.  A simple recipe that provides
@@ -159,8 +159,8 @@ the :term:`persistent` state is as follows::
         def deref_object(sess, instance):
             sess.info["refs"].discard(instance)
 
-Above, we intercept the :meth:`.SessionEvents.pending_to_persistent`,
-:meth:`.SessionEvents.detached_to_persistent`,
+Above, we intercept the :meth:`.SessionEvents.pending_to_persistent` ,
+:meth:`.SessionEvents.detached_to_persistent` ,
 :meth:`.SessionEvents.deleted_to_persistent` and
 :meth:`.SessionEvents.loaded_as_persistent` event hooks in order to intercept
 objects as they enter the :term:`persistent` transition, and the
@@ -176,7 +176,7 @@ provide strong-referencing behavior on a per-:class:`.Session` basis::
     my_session = Session()
     strong_reference_session(my_session)
 
-It may also be called for any :class:`.sessionmaker`::
+It may also be called for any :class:`.sessionmaker` ::
 
     from sqlalchemy.orm import sessionmaker
 
@@ -222,12 +222,12 @@ When given an instance, it follows these steps:
   is passed as ``False``, the incoming data is "stamped" directly without
   producing any history.
 * The operation is cascaded to related objects and collections, as
-  indicated by the ``merge`` cascade (see :ref:`unitofwork_cascades`).
+  indicated by the ``merge`` cascade (see :ref:`unitofwork_cascades` ).
 * The new instance is returned.
 
-With :meth:`~.Session.merge`, the given "source"
-instance is not modified nor is it associated with the target :class:`.Session`,
-and remains available to be merged with any number of other :class:`.Session`
+With :meth:`~.Session.merge` , the given "source"
+instance is not modified nor is it associated with the target :class:`.Session` ,
+and remains available to be merged with any number of other :class:`.Session` 
 objects.  :meth:`~.Session.merge` is useful for
 taking the state of any kind of object structure without regard for its
 origins or current session associations and copying its state into a
@@ -248,24 +248,24 @@ new session. Here's some examples:
   then updating its state with the new state given.
 
 * An application is storing objects in an in-memory cache, shared by
-  many :class:`.Session` objects simultaneously.   :meth:`~.Session.merge`
+  many :class:`.Session` objects simultaneously.   :meth:` ~.Session.merge`
   is used each time an object is retrieved from the cache to create
   a local copy of it in each :class:`.Session` which requests it.
   The cached object remains detached; only its state is moved into
-  copies of itself that are local to individual :class:`~.Session`
+  copies of itself that are local to individual :class:`~.Session` 
   objects.
 
   In the caching use case, it's common to use the ``load=False``
   flag to remove the overhead of reconciling the object's state
   with the database.   There's also a "bulk" version of
-  :meth:`~.Session.merge` called :meth:`_query.Query.merge_result`
-  that was designed to work with cache-extended :class:`_query.Query`
-  objects - see the section :ref:`examples_caching`.
+  :meth:`~.Session.merge` called :meth:` _query.Query.merge_result`
+  that was designed to work with cache-extended :class:`_query.Query` 
+  objects - see the section :ref:`examples_caching` .
 
 * An application wants to transfer the state of a series of objects
   into a :class:`.Session` maintained by a worker thread or other
   concurrent system.  :meth:`~.Session.merge` makes a copy of each object
-  to be placed into this new :class:`.Session`.  At the end of the operation,
+  to be placed into this new :class:`.Session` .  At the end of the operation,
   the parent thread/process maintains the objects it started with,
   and the thread/worker can proceed with local copies of those objects.
 
@@ -281,7 +281,7 @@ it deals with the intricate border between objects that are transient/detached a
 those that are persistent, as well as the automated transference of state.
 The wide variety of scenarios that can present themselves here often require a
 more careful approach to the state of objects.   Common problems with merge usually involve
-some unexpected state regarding the object being passed to :meth:`~.Session.merge`.
+some unexpected state regarding the object being passed to :meth:`~.Session.merge` .
 
 Lets use the canonical example of the User and Address objects::
 
@@ -337,19 +337,19 @@ and made our ``a1`` object pending, as though we had added it.   Now we have
 
 Above, our ``a1`` is already pending in the session. The
 subsequent :meth:`~.Session.merge` operation essentially
-does nothing. Cascade can be configured via the :paramref:`_orm.relationship.cascade`
-option on :func:`_orm.relationship`, although in this case it
+does nothing. Cascade can be configured via the :paramref:`_orm.relationship.cascade` 
+option on :func:`_orm.relationship` , although in this case it
 would mean removing the ``save-update`` cascade from the
 ``User.addresses`` relationship - and usually, that behavior
 is extremely convenient.  The solution here would usually be to not assign
 ``a1.user`` to an object already persistent in the target
 session.
 
-The ``cascade_backrefs=False`` option of :func:`_orm.relationship`
+The ``cascade_backrefs=False`` option of :func:`_orm.relationship` 
 will also prevent the ``Address`` from
 being added to the session via the ``a1.user = u1`` assignment.
 
-Further detail on cascade operation is at :ref:`unitofwork_cascades`.
+Further detail on cascade operation is at :ref:`unitofwork_cascades` .
 
 Another example of unexpected state::
 
@@ -399,7 +399,7 @@ the detached state, and pending instances to the transient state:
 
     session.expunge(obj1)
 
-To remove all items, call :meth:`~.Session.expunge_all`
+To remove all items, call :meth:`~.Session.expunge_all` 
 (this method was formerly known as ``clear()``).
 
 .. _session_expire:
@@ -436,7 +436,7 @@ we should use the :func:`_sa.inspect` function to access it).
 
 At this point, the state in our ``User`` object matches that of the loaded
 database row.  But upon expiring the object using a method such as
-:meth:`.Session.expire`, we see that the state is removed::
+:meth:`.Session.expire` , we see that the state is removed::
 
     >>> session.expire(user)
     >>> user.__dict__
@@ -474,13 +474,13 @@ the ``__dict__`` is again populated::
    order to track the changes we make to an object, and when we modify ``__dict__``
    directly, the ORM won't be able to track that we changed something.
 
-Another key behavior of both :meth:`~.Session.expire` and :meth:`~.Session.refresh`
+Another key behavior of both :meth:`~.Session.expire` and :meth:` ~.Session.refresh`
 is that all un-flushed changes on an object are discarded.  That is,
 if we were to modify an attribute on our ``User``::
 
     >>> user.name = "user2"
 
-but then we call :meth:`~.Session.expire` without first calling :meth:`~.Session.flush`,
+but then we call :meth:`~.Session.expire` without first calling :meth:` ~.Session.flush`,
 our pending value of ``'user2'`` is discarded::
 
     >>> session.expire(user)
@@ -500,7 +500,7 @@ attributes to be marked as expired::
     session.expire(obj1, ["attr1", "attr2"])
 
 The :meth:`.Session.expire_all` method allows us to essentially call
-:meth:`.Session.expire` on all objects contained within the :class:`.Session`
+:meth:`.Session.expire` on all objects contained within the :class:` .Session`
 at once::
 
     session.expire_all()
@@ -512,7 +512,7 @@ of expiring, it emits an immediate SELECT for the object's row immediately::
     session.refresh(obj1)
 
 :meth:`~.Session.refresh` also accepts a list of string attribute names,
-but unlike :meth:`~.Session.expire`, expects at least one name to
+but unlike :meth:`~.Session.expire` , expects at least one name to
 be that of a column-mapped attribute::
 
     # reload obj1.attr1, obj1.attr2
@@ -522,8 +522,8 @@ be that of a column-mapped attribute::
 
     An alternative method of refreshing which is often more flexible is to
     use the :ref:`orm_queryguide_populate_existing` feature of the ORM,
-    available for :term:`2.0 style` queries with :func:`_sql.select` as well
-    as from the :meth:`_orm.Query.populate_existing` method of :class:`_orm.Query`
+    available for :term:`2.0 style` queries with :func:` _sql.select` as well
+    as from the :meth:`_orm.Query.populate_existing` method of :class:` _orm.Query`
     within :term:`1.x style` queries.  Using this execution option,
     all of the ORM objects returned in the result set of the statement
     will be refreshed with data from the database::
@@ -542,18 +542,18 @@ be that of a column-mapped attribute::
 What Actually Loads
 ~~~~~~~~~~~~~~~~~~~
 
-The SELECT statement that's emitted when an object marked with :meth:`~.Session.expire`
+The SELECT statement that's emitted when an object marked with :meth:`~.Session.expire` 
 or loaded with :meth:`~.Session.refresh` varies based on several factors, including:
 
 * The load of expired attributes is triggered from **column-mapped attributes only**.
   While any kind of attribute can be marked as expired, including a
-  :func:`_orm.relationship` - mapped attribute, accessing an expired :func:`_orm.relationship`
+  :func:`_orm.relationship` - mapped attribute, accessing an expired :func:` _orm.relationship`
   attribute will emit a load only for that attribute, using standard
   relationship-oriented lazy loading.   Column-oriented attributes, even if
   expired, will not load as part of this operation, and instead will load when
   any column-oriented attribute is accessed.
 
-* :func:`_orm.relationship`- mapped attributes will not load in response to
+* :func:`_orm.relationship` - mapped attributes will not load in response to
   expired column-based attributes being accessed.
 
 * Regarding relationships, :meth:`~.Session.refresh` is more restrictive than
@@ -565,7 +565,7 @@ or loaded with :meth:`~.Session.refresh` varies based on several factors, includ
 
 * :func:`_orm.relationship` attributes configured as "eager loading" via the
   :paramref:`_orm.relationship.lazy` parameter will load in the case of
-  :meth:`~.Session.refresh`, if either no attribute names are specified, or
+  :meth:`~.Session.refresh` , if either no attribute names are specified, or
   if their names are included in the list of attributes to be
   refreshed.
 
@@ -591,9 +591,9 @@ When to Expire or Refresh
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :class:`.Session` uses the expiration feature automatically whenever
-the transaction referred to by the session ends.  Meaning, whenever :meth:`.Session.commit`
-or :meth:`.Session.rollback` is called, all objects within the :class:`.Session`
-are expired, using a feature equivalent to that of the :meth:`.Session.expire_all`
+the transaction referred to by the session ends.  Meaning, whenever :meth:`.Session.commit` 
+or :meth:`.Session.rollback` is called, all objects within the :class:` .Session`
+are expired, using a feature equivalent to that of the :meth:`.Session.expire_all` 
 method.   The rationale is that the end of a transaction is a
 demarcating point at which there is no more context available in order to know
 what the current state of the database is, as any number of other transactions
@@ -609,14 +609,14 @@ may have occurred.
     tables or rows, this is when the :term:`isolation` aspect of the database comes
     into play.  The isolation behavior of different databases varies considerably
     and even on a single database can be configured to behave in different ways
-    (via the so-called :term:`isolation level` setting).  In that sense, the :class:`.Session`
+    (via the so-called :term:`isolation level` setting).  In that sense, the :class:` .Session`
     can't fully predict when the same SELECT statement, emitted a second time,
     will definitely return the data we already have, or will return new data.
     So as a best guess, it assumes that within the scope of a transaction, unless
     it is known that a SQL expression has been emitted to modify a particular row,
     there's no need to refresh a row unless explicitly told to do so.
 
-The :meth:`.Session.expire` and :meth:`.Session.refresh` methods are used in
+The :meth:`.Session.expire` and :meth:` .Session.refresh` methods are used in
 those cases when one wants to force an object to re-load its data from the
 database, in those cases when it is known that the current state of data
 is possibly stale.  Reasons for this might include:
@@ -634,16 +634,16 @@ The second bullet has the important caveat that "it is also known that the isola
 allow this data to be visible."  This means that it cannot be assumed that an
 UPDATE that happened on another database connection will yet be visible here
 locally; in many cases, it will not.  This is why if one wishes to use
-:meth:`.Session.expire` or :meth:`.Session.refresh` in order to view data between ongoing
+:meth:`.Session.expire` or :meth:` .Session.refresh` in order to view data between ongoing
 transactions, an understanding of the isolation behavior in effect is essential.
 
 .. seealso::
 
-    :meth:`.Session.expire`
+    :meth:`.Session.expire` 
 
-    :meth:`.Session.expire_all`
+    :meth:`.Session.expire_all` 
 
-    :meth:`.Session.refresh`
+    :meth:`.Session.refresh` 
 
     :ref:`orm_queryguide_populate_existing` - allows any ORM query
     to refresh objects as they would be loaded normally, refreshing

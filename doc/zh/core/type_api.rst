@@ -2,22 +2,22 @@
 
 .. _types_api:
 
-基础类型 API
+数据库类型 API
 -------------
 
 .. autoclass:: TypeEngine
-   :members: 
+   :members:
 
 .. autoclass:: Concatenable
-   :members: 
+   :members:
 
 .. autoclass:: Indexable
-   :members: 
+   :members:
 
 .. autoclass:: NullType
 
 .. autoclass:: ExternalType
-   :members: 
+    :members:
 
 .. autoclass:: Variant
    :members: with_variant, __init__

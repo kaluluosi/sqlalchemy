@@ -5,8 +5,8 @@ Setup for ORM Queryguide: Single Inheritance
 =============================================
 
 This page illustrates the mappings and fixture data used by the
-:ref:`single_inheritance` examples in the :doc:`inheritance` document of
-the :ref:`queryguide_toplevel`.
+:ref:`single_inheritance` examples in the :doc:` inheritance` document of
+the :ref:`queryguide_toplevel` .
 
 ..  sourcecode:: python
 

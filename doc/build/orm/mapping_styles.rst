@@ -9,8 +9,8 @@ Overview of ORM class mapping configuration.
 For readers new to the SQLAlchemy ORM and/or new to Python in general,
 it's recommended to browse through the
 :ref:`orm_quickstart` and preferably to work through the
-:ref:`unified_tutorial`, where ORM configuration is first introduced at
-:ref:`tutorial_orm_table_metadata`.
+:ref:`unified_tutorial` , where ORM configuration is first introduced at
+:ref:`tutorial_orm_table_metadata` .
 
 .. _orm_mapping_styles:
 
@@ -45,7 +45,7 @@ SQLAlchemy now refers to these two mapping styles as **imperative mapping**
 and **declarative mapping**.
 
 Regardless of what style of mapping used, all ORM mappings as of SQLAlchemy 1.4
-originate from a single object known as :class:`_orm.registry`, which is a
+originate from a single object known as :class:`_orm.registry` , which is a
 registry of mapped classes. Using this registry, a set of mapper configurations
 can be finalized as a group, and classes within a particular registry may refer
 to each other by name within the configurational process.
@@ -101,7 +101,7 @@ class ``User`` is constructed.
    See :ref:`whatsnew_20_orm_declarative_typing` for migration notes.
 
 The base class refers to a :class:`_orm.registry` object that maintains a
-collection of related mapped classes. as well as to a :class:`_schema.MetaData`
+collection of related mapped classes. as well as to a :class:`_schema.MetaData` 
 object that retains a collection of :class:`_schema.Table` objects to which
 the classes are mapped.
 
@@ -132,12 +132,12 @@ of how the :class:`_schema.Table` metadata may be declared.  These include:
   and attributes separately, an explicitly constructed :class:`_schema.Table` object
   is associated with a class that is otherwise mapped declaratively.  This
   style of mapping is a hybrid of "declarative" and "imperative" mapping,
-  and applies to techniques such as mapping classes to :term:`reflected`
+  and applies to techniques such as mapping classes to :term:`reflected` 
   :class:`_schema.Table` objects, as well as mapping classes to existing
   Core constructs such as joins and subqueries.
 
 
-Documentation for Declarative mapping continues at :ref:`declarative_config_toplevel`.
+Documentation for Declarative mapping continues at :ref:`declarative_config_toplevel` .
 
 .. _classical_mapping:
 .. _orm_imperative_mapping:
@@ -155,7 +155,7 @@ where the target class does not include any declarative class attributes.
    more "barebones" system of mapping, and does not offer modern features
    such as :pep:`484` support.  As such, most documentation examples
    use Declarative forms, and it's recommended that new users start
-   with :ref:`Declarative Table <orm_declarative_table_config_toplevel>`
+   with :ref:`Declarative Table <orm_declarative_table_config_toplevel>` 
    configuration.
 
 .. versionchanged:: 2.0  The :meth:`_orm.registry.map_imperatively` method
@@ -163,10 +163,10 @@ where the target class does not include any declarative class attributes.
    standalone function is effectively removed.
 
 In "classical" form, the table metadata is created separately with the
-:class:`_schema.Table` construct, then associated with the ``User`` class via
+:class:`_schema.Table` construct, then associated with the ` `User`` class via
 the :meth:`_orm.registry.map_imperatively` method, after establishing
 a :class:`_orm.registry` instance.  Normally, a single instance of
-:class:`_orm.registry`
+:class:`_orm.registry` 
 shared for all mapped classes that are related to each other::
 
     from sqlalchemy import Table, Column, Integer, String, ForeignKey
@@ -191,8 +191,8 @@ shared for all mapped classes that are related to each other::
     mapper_registry.map_imperatively(User, user_table)
 
 Information about mapped attributes, such as relationships to other classes, are provided
-via the ``properties`` dictionary.  The example below illustrates a second :class:`_schema.Table`
-object, mapped to a class called ``Address``, then linked to ``User`` via :func:`_orm.relationship`::
+via the ``properties`` dictionary.  The example below illustrates a second :class:`_schema.Table` 
+object, mapped to a class called ``Address``, then linked to ``User`` via :func:`_orm.relationship` ::
 
     address = Table(
         "address",
@@ -215,9 +215,9 @@ object, mapped to a class called ``Address``, then linked to ``User`` via :func:
 Note that classes which are mapped with the Imperative approach are **fully
 interchangeable** with those mapped with the Declarative approach. Both systems
 ultimately create the same configuration, consisting of a
-:class:`_schema.Table`, user-defined class, linked together with a
+:class:`_schema.Table` , user-defined class, linked together with a
 :class:`_orm.Mapper` object. When we talk about "the behavior of
-:class:`_orm.Mapper`", this includes when using the Declarative system as well
+:class:`_orm.Mapper` ", this includes when using the Declarative system as well
 - it's still used, just behind the scenes.
 
 
@@ -227,14 +227,14 @@ Mapped Class Essential Components
 ==================================
 
 With all mapping forms, the mapping of the class can be configured in many ways
-by passing construction arguments that ultimately become part of the :class:`_orm.Mapper`
+by passing construction arguments that ultimately become part of the :class:`_orm.Mapper` 
 object via its constructor.  The parameters that are delivered to
 :class:`_orm.Mapper` originate from the given mapping form, including
 parameters passed to :meth:`_orm.registry.map_imperatively` for an Imperative
 mapping, or when using the Declarative system, from a combination
 of the table columns, SQL expressions and
 relationships being mapped along with that of attributes such as
-:ref:`__mapper_args__ <orm_declarative_mapper_options>`.
+:ref:`__mapper_args__ <orm_declarative_mapper_options>` .
 
 There are four general classes of configuration information that the
 :class:`_orm.Mapper` class looks for:
@@ -244,12 +244,12 @@ The class to be mapped
 
 This is a class that we construct in our application.
 There are generally no restrictions on the structure of this class. [1]_
-When a Python class is mapped, there can only be **one** :class:`_orm.Mapper`
+When a Python class is mapped, there can only be **one** :class:`_orm.Mapper` 
 object for the class. [2]_
 
 When mapping with the :ref:`declarative <orm_declarative_mapping>` mapping
 style, the class to be mapped is either a subclass of the declarative base class,
-or is handled by a decorator or function such as :meth:`_orm.registry.mapped`.
+or is handled by a decorator or function such as :meth:`_orm.registry.mapped` .
 
 When mapping with the :ref:`imperative <orm_imperative_mapping>` style, the
 class is passed directly as the
@@ -259,9 +259,9 @@ The table, or other from clause object
 --------------------------------------
 
 In the vast majority of common cases this is an instance of
-:class:`_schema.Table`.  For more advanced use cases, it may also refer
+:class:`_schema.Table` .  For more advanced use cases, it may also refer
 to any kind of :class:`_sql.FromClause` object, the most common
-alternative objects being the :class:`_sql.Subquery` and :class:`_sql.Join`
+alternative objects being the :class:`_sql.Subquery` and :class:` _sql.Join`
 object.
 
 When mapping with the :ref:`declarative <orm_declarative_mapping>` mapping
@@ -269,14 +269,14 @@ style, the subject table is either generated by the declarative system based
 on the ``__tablename__`` attribute and the :class:`_schema.Column` objects
 presented, or it is established via the ``__table__`` attribute.  These
 two styles of configuration are presented at
-:ref:`orm_declarative_table` and :ref:`orm_imperative_table_configuration`.
+:ref:`orm_declarative_table` and :ref:` orm_imperative_table_configuration`.
 
 When mapping with the :ref:`imperative <orm_imperative_mapping>` style, the
 subject table is passed positionally as the
 :paramref:`_orm.registry.map_imperatively.local_table` argument.
 
 In contrast to the "one mapper per class" requirement of a mapped class,
-the :class:`_schema.Table` or other :class:`_sql.FromClause` object that
+the :class:`_schema.Table` or other :class:` _sql.FromClause` object that
 is the subject of the mapping may be associated with any number of mappings.
 The :class:`_orm.Mapper` applies modifications directly to the user-defined
 class, but does not modify the given :class:`_schema.Table` or other
@@ -290,7 +290,7 @@ The properties dictionary
 This is a dictionary of all of the attributes
 that will be associated with the mapped class.    By default, the
 :class:`_orm.Mapper` generates entries for this dictionary derived from the
-given :class:`_schema.Table`, in the form of :class:`_orm.ColumnProperty`
+given :class:`_schema.Table` , in the form of :class:`_orm.ColumnProperty` 
 objects which each refer to an individual :class:`_schema.Column` of the
 mapped table.  The properties dictionary will also contain all the other
 kinds of :class:`_orm.MapperProperty` objects to be configured, most
@@ -304,7 +304,7 @@ the section :ref:`orm_declarative_properties` for notes on this process.
 When mapping with the :ref:`imperative <orm_imperative_mapping>` style, the
 properties dictionary is passed directly as the
 ``properties`` parameter
-to :meth:`_orm.registry.map_imperatively`, which will pass it along to the
+to :meth:`_orm.registry.map_imperatively` , which will pass it along to the
 :paramref:`_orm.Mapper.properties` parameter.
 
 Other mapper configuration parameters
@@ -313,13 +313,13 @@ Other mapper configuration parameters
 When mapping with the :ref:`declarative <orm_declarative_mapping>` mapping
 style, additional mapper configuration arguments are configured via the
 ``__mapper_args__`` class attribute.   Examples of use are available
-at :ref:`orm_declarative_mapper_options`.
+at :ref:`orm_declarative_mapper_options` .
 
 When mapping with the :ref:`imperative <orm_imperative_mapping>` style,
-keyword arguments are passed to the to :meth:`_orm.registry.map_imperatively`
+keyword arguments are passed to the to :meth:`_orm.registry.map_imperatively` 
 method which passes them along to the :class:`_orm.Mapper` class.
 
-The full range of parameters accepted are documented at  :class:`_orm.Mapper`.
+The full range of parameters accepted are documented at  :class:`_orm.Mapper` .
 
 
 .. _orm_mapped_class_behavior:
@@ -336,7 +336,7 @@ the following behaviors are common:
 Default Constructor
 -------------------
 
-The :class:`_orm.registry` applies a default constructor, i.e. ``__init__``
+The :class:`_orm.registry` applies a default constructor, i.e. ` `__init__``
 method, to all mapped classes that don't explicitly have their own
 ``__init__`` method.   The behavior of this method is such that it provides
 a convenient keyword constructor that will accept as optional keyword arguments
@@ -397,11 +397,11 @@ The constructor also applies to imperative mappings::
 
     mapper_registry.map_imperatively(User, user_table)
 
-The above class, mapped imperatively as described at :ref:`orm_imperative_mapping`,
-will also feature the default constructor associated with the :class:`_orm.registry`.
+The above class, mapped imperatively as described at :ref:`orm_imperative_mapping` ,
+will also feature the default constructor associated with the :class:`_orm.registry` .
 
 .. versionadded:: 1.4  classical mappings now support a standard configuration-level
-   constructor when they are mapped via the :meth:`_orm.registry.map_imperatively`
+   constructor when they are mapped via the :meth:`_orm.registry.map_imperatively` 
    method.
 
 .. _orm_mapper_inspection:
@@ -426,14 +426,14 @@ attributes that are common to all mappings:
 
   ..
 
-* The ``__table__`` attribute will refer to the :class:`_schema.Table`, or
+* The ``__table__`` attribute will refer to the :class:`_schema.Table` , or
   more generically to the :class:`.FromClause` object, to which the
   class is mapped::
 
     table = User.__table__
 
   This :class:`.FromClause` is also what's returned when using the
-  :attr:`_orm.Mapper.local_table` attribute of the :class:`_orm.Mapper`::
+  :attr:`_orm.Mapper.local_table` attribute of the :class:` _orm.Mapper`::
 
     table = inspect(User).local_table
 
@@ -455,13 +455,13 @@ Inspection of Mapper objects
 As illustrated in the previous section, the :class:`_orm.Mapper` object is
 available from any mapped class, regardless of method, using the
 :ref:`core_inspection_toplevel` system.  Using the
-:func:`_sa.inspect` function, one can acquire the :class:`_orm.Mapper` from a
+:func:`_sa.inspect` function, one can acquire the :class:` _orm.Mapper` from a
 mapped class::
 
     >>> from sqlalchemy import inspect
     >>> insp = inspect(User)
 
-Detailed information is available including :attr:`_orm.Mapper.columns`::
+Detailed information is available including :attr:`_orm.Mapper.columns` ::
 
     >>> insp.columns
     <sqlalchemy.util._collections.OrderedProperties object at 0x102f407f8>
@@ -474,7 +474,7 @@ via individual names::
     >>> insp.columns.name
     Column('name', String(length=50), table=<user>)
 
-Other namespaces include :attr:`_orm.Mapper.all_orm_descriptors`, which includes all mapped
+Other namespaces include :attr:`_orm.Mapper.all_orm_descriptors` , which includes all mapped
 attributes as well as hybrids, association proxies::
 
     >>> insp.all_orm_descriptors
@@ -482,7 +482,7 @@ attributes as well as hybrids, association proxies::
     >>> insp.all_orm_descriptors.keys()
     ['fullname', 'nickname', 'name', 'id']
 
-As well as :attr:`_orm.Mapper.column_attrs`::
+As well as :attr:`_orm.Mapper.column_attrs` ::
 
     >>> list(insp.column_attrs)
     [<ColumnProperty at 0x10403fde0; id>, <ColumnProperty at 0x10403fce8; name>, <ColumnProperty at 0x1040e9050; fullname>, <ColumnProperty at 0x1040e9148; nickname>]
@@ -493,7 +493,7 @@ As well as :attr:`_orm.Mapper.column_attrs`::
 
 .. seealso::
 
-    :class:`.Mapper`
+    :class:`.Mapper` 
 
 .. _orm_mapper_inspection_instancestate:
 
@@ -502,7 +502,7 @@ Inspection of Mapped Instances
 
 The :func:`_sa.inspect` function also provides information about instances
 of a mapped class.  When applied to an instance of a mapped class, rather
-than the class itself, the object returned is known as :class:`.InstanceState`,
+than the class itself, the object returned is known as :class:`.InstanceState` ,
 which will provide links to not only the :class:`.Mapper` in use by the
 class, but also a detailed interface that provides information on the state
 of individual attributes within the instance including their current value
@@ -512,24 +512,24 @@ Given an instance of the ``User`` class loaded from the database::
 
   >>> u1 = session.scalars(select(User)).first()
 
-The :func:`_sa.inspect` function will return to us an :class:`.InstanceState`
+The :func:`_sa.inspect` function will return to us an :class:` .InstanceState`
 object::
 
   >>> insp = inspect(u1)
   >>> insp
   <sqlalchemy.orm.state.InstanceState object at 0x7f07e5fec2e0>
 
-With this object we can see elements such as the :class:`.Mapper`::
+With this object we can see elements such as the :class:`.Mapper` ::
 
   >>> insp.mapper
   <Mapper at 0x7f07e614ef50; User>
 
-The :class:`_orm.Session` to which the object is :term:`attached`, if any::
+The :class:`_orm.Session` to which the object is :term:` attached`, if any::
 
   >>> insp.session
   <sqlalchemy.orm.session.Session object at 0x7f07e614f160>
 
-Information about the current :ref:`persistence state <session_object_states>`
+Information about the current :ref:`persistence state <session_object_states>` 
 for the object::
 
   >>> insp.persistent
@@ -538,7 +538,7 @@ for the object::
   False
 
 Attribute state information such as attributes that have not been loaded or
-:term:`lazy loaded` (assume ``addresses`` refers to a :func:`_orm.relationship`
+:term:`lazy loaded` (assume ` `addresses`` refers to a :func:`_orm.relationship` 
 on the mapped class to a related class)::
 
   >>> insp.unloaded
@@ -560,11 +560,11 @@ as well as specific history on modifications to attributes since the last flush:
 
 .. seealso::
 
-    :class:`.InstanceState`
+    :class:`.InstanceState` 
 
-    :attr:`.InstanceState.attrs`
+    :attr:`.InstanceState.attrs` 
 
-    :class:`.AttributeState`
+    :class:`.AttributeState` 
 
 
 .. _dataclasses: https://docs.python.org/3/library/dataclasses.html

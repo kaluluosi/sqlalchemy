@@ -4,30 +4,30 @@
 Basic Use
 =========
 
-This section has moved to :ref:`orm_declarative_mapping`.
+This section has moved to :ref:`orm_declarative_mapping` .
 
 Defining Attributes
 ===================
 
-This section is covered by :ref:`mapping_columns_toplevel`
+This section is covered by :ref:`mapping_columns_toplevel` 
 
 
 
 Accessing the MetaData
 ======================
 
-This section has moved to :ref:`orm_declarative_metadata`.
+This section has moved to :ref:`orm_declarative_metadata` .
 
 
 Class Constructor
 =================
 
-This section has moved to :ref:`orm_mapper_configuration_overview`.
+This section has moved to :ref:`orm_mapper_configuration_overview` .
 
 Mapper Configuration
 ====================
 
-This section is moved to :ref:`orm_declarative_mapper_options`.
+This section is moved to :ref:`orm_declarative_mapper_options` .
 
 
 .. _declarative_sql_expressions:

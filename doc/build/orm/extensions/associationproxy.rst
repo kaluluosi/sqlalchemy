@@ -23,7 +23,7 @@ Simplifying Scalar Collections
 
 Consider a many-to-many mapping between two classes, ``User`` and ``Keyword``.
 Each ``User`` can have any number of ``Keyword`` objects, and vice-versa
-(the many-to-many pattern is described at :ref:`relationships_many_to_many`).
+(the many-to-many pattern is described at :ref:`relationships_many_to_many` ).
 The example below illustrates this pattern in the same way, with the
 exception of an extra attribute added to the ``User`` class called
 ``User.keywords``::
@@ -79,7 +79,7 @@ exception of an extra attribute added to the ``User`` class called
         Column("keyword_id", Integer, ForeignKey("keyword.id"), primary_key=True),
     )
 
-In the above example, :func:`.association_proxy` is applied to the ``User``
+In the above example, :func:`.association_proxy` is applied to the ` `User``
 class to produce a "view" of the ``kw`` relationship, which exposes the string
 value of ``.keyword`` associated with each ``Keyword`` object.  It also
 creates new ``Keyword`` objects transparently when strings are added to the
@@ -105,7 +105,7 @@ series of operations applied without using the association proxy::
     >>> print([keyword.keyword for keyword in user.kw])
     ['cheese-inspector', 'snack-ninja']
 
-The :class:`.AssociationProxy` object produced by the :func:`.association_proxy` function
+The :class:`.AssociationProxy` object produced by the :func:` .association_proxy` function
 is an instance of a `Python descriptor <https://docs.python.org/howto/descriptor.html>`_,
 and is not considered to be "mapped" by the :class:`.Mapper` in any way.  Therefore,
 it's always indicated inline within the class definition of the mapped class,
@@ -143,7 +143,7 @@ Is translated by the association proxy into the operation::
 The example works here because we have designed the constructor for ``Keyword``
 to accept a single positional argument, ``keyword``. For those cases where a
 single-argument constructor isn't feasible, the association proxy's creational
-behavior can be customized using the :paramref:`.association_proxy.creator`
+behavior can be customized using the :paramref:`.association_proxy.creator` 
 argument, which references a callable (i.e. Python function) that will produce
 a new object instance given the singular argument. Below we illustrate this
 using a lambda as is typical::
@@ -159,13 +159,13 @@ using a lambda as is typical::
 The ``creator`` function accepts a single argument in the case of a list-
 or set- based collection, or a scalar attribute.  In the case of a dictionary-based
 collection, it accepts two arguments, "key" and "value".   An example
-of this is below in :ref:`proxying_dictionaries`.
+of this is below in :ref:`proxying_dictionaries` .
 
 Simplifying Association Objects
 -------------------------------
 
 The "association object" pattern is an extended form of a many-to-many
-relationship, and is described at :ref:`association_pattern`. Association
+relationship, and is described at :ref:`association_pattern` . Association
 proxies are useful for keeping "association objects" out of the way during
 regular use.
 
@@ -256,7 +256,7 @@ objects that are obtained from the underlying ``UserKeywordAssociation`` element
     [Keyword('new_from_blammo'), Keyword('its_big')]
 
 This example is in contrast to the example illustrated previously at
-:ref:`associationproxy_scalar_collections`, where the association proxy exposed
+:ref:`associationproxy_scalar_collections` , where the association proxy exposed
 a collection of strings, rather than a collection of composed objects.
 In this case, each ``.keywords.append()`` operation is equivalent to::
 
@@ -302,7 +302,7 @@ Proxying to Dictionary Based Collections
 The association proxy can proxy to dictionary based collections as well.   SQLAlchemy
 mappings usually use the :func:`.attribute_keyed_dict` collection type to
 create dictionary collections, as well as the extended techniques described in
-:ref:`dictionary_collections`.
+:ref:`dictionary_collections` .
 
 The association proxy adjusts its behavior when it detects the usage of a
 dictionary-based collection. When new values are added to the dictionary, the
@@ -599,7 +599,7 @@ a LIKE operator:
 For association proxies where the immediate target is a **related object or collection,
 or another association proxy or attribute on the related object**, relationship-oriented
 operators can be used instead, such as :meth:`_orm.PropComparator.has` and
-:meth:`_orm.PropComparator.any`.   The ``User.keywords`` attribute is in fact
+:meth:`_orm.PropComparator.any` .   The ``User.keywords`` attribute is in fact
 two association proxies linked together, so when using this proxy for generating
 SQL phrases, we get two levels of EXISTS subqueries:
 
@@ -621,7 +621,7 @@ when chaining association proxies together.
 
 
 .. versionchanged:: 1.3 Association proxy features distinct querying modes
-   based on the type of target.   See :ref:`change_4351`.
+   based on the type of target.   See :ref:`change_4351` .
 
 
 
@@ -672,7 +672,7 @@ An assignment to ``A.b`` will generate an ``AB`` object::
     a.b = B()
 
 The ``A.b`` association is scalar, and includes use of the parameter
-:paramref:`.AssociationProxy.cascade_scalar_deletes`.  When this parameter
+:paramref:`.AssociationProxy.cascade_scalar_deletes` .  When this parameter
 is enabled, setting ``A.b``
 to ``None`` will remove ``A.ab`` as well::
 
@@ -689,7 +689,7 @@ deleted depends on the relationship cascade setting.
 
 .. seealso::
 
-    :ref:`unitofwork_cascades`
+    :ref:`unitofwork_cascades` 
 
 Scalar Relationships
 --------------------

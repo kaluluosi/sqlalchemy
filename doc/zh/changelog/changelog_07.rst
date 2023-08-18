@@ -11,7 +11,7 @@
         :tickets: 2851
         :versions: 0.8.3, 0.9.0b1
 
-        :func:`~sqlalchemy.engine.url.make_url`函数所使用的正则表达式现在解析ipv6地址，例如被括号括起来的地址。
+         :func:`~sqlalchemy.engine.url.make_url` 函数所使用的正则表达式现在解析ipv6地址，例如被括号括起来的地址。
         
     .. 更改::
     
@@ -51,7 +51,7 @@
         :tickets: 2784
         :versions: 0.8.3, 0.9.0b1
 
-        修复:class:`.CheckConstraint` DDL中的错误，在其中，从：class:`_schema.Column`对象继承的“quote”标志不会被传播。
+        修复  :class:`.CheckConstraint`  DDL中的错误，在其中，从：class:` _schema.Column`对象继承的“quote”标志不会被传播。
         
     .. 更改::
     
@@ -132,14 +132,14 @@
         :tags: sql, bug
         :tickets: 2594、2584
 
-        更改:class:`.TypeDecorator`的“__repr__”，以便允许:class:`.PickleType`生成干净的“repr()”，以帮助Alembic。
+        更改  :class:`.TypeDecorator` .PickleType` 生成干净的“repr()”，以帮助Alembic。
         
     .. 更改::
     
         :tags: sql, bug
         :tickets: 2643
 
-        修复了:meth:`_schema.Table.tometadata`上的错误，即如果:class:`_schema.Column`既具有外键，又具有列的备选“。key”名称，则无法使用该函数，忽略这一点。
+        修复了  :meth:`_schema.Table.tometadata`  上的错误，即如果 :class:` _schema.Column`既具有外键，又具有列的备选“。key”名称，则无法使用该函数，忽略这一点。
         
     .. 更改::
     
@@ -153,14 +153,14 @@
         :tags: orm, bug
         :tickets: 2650
 
-      修复潜在的内存泄漏，如果创建任意数量的:class:`.sessionmaker`对象会发生，当与事件调度器一起使用自适应谷类时将无法垃圾回收匿名子类被创建时，当这个子类被引用时，由于事件的类级引用保留，将不被垃圾回收。该问题还适用于与事件分派器一起使用的单独制定的系统，这些系统使用自定义子系统。
+      修复潜在的内存泄漏，如果创建任意数量的 :class:`.sessionmaker` 对象会发生，当与事件调度器一起使用自适应谷类时将无法垃圾回收匿名子类被创建时，当这个子类被引用时，由于事件的类级引用保留，将不被垃圾回收。该问题还适用于与事件分派器一起使用的单独制定的系统，这些系统使用自定义子系统。
     
     .. 更改::
     
         :tags: orm, bug
         :tickets: 2640
 
-      :meth:`_query.Query.merge_result`现在可以加载外键约束条目而该约束可以是 ``None``，没有抛出异常。
+       :meth:`_query.Query.merge_result` ` None``，没有抛出异常。
     
     .. 更改::
     

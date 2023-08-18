@@ -1,17 +1,12 @@
-关系 API
---------
+关系API
+----------
 
-.. autofunction:: relationship
-   :doc: sqlalchemy.orm.relationship
+.. autofunction:: relationship 关系
 
-.. autofunction:: backref
-   :doc: sqlalchemy.orm.backref
+.. autofunction:: backref 反向引用
 
-.. autofunction:: dynamic_loader
-   :doc: sqlalchemy.orm.dynamic_loader
+.. autofunction:: dynamic_loader 动态加载器
 
-.. autofunction:: foreign
-   :doc: sqlalchemy.orm.foreign
+.. autofunction:: foreign 外键
 
-.. autofunction:: remote
-   :doc: sqlalchemy.orm.remote
+.. autofunction:: remote 远程引用

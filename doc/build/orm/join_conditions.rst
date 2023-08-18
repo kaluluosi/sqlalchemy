@@ -65,7 +65,7 @@ to detect a variety of common configurational issues; most will suggest
 the additional configuration that's needed to resolve the ambiguity
 or other missing information.
 
-In this case, the message wants us to qualify each :func:`_orm.relationship`
+In this case, the message wants us to qualify each :func:`_orm.relationship` 
 by instructing for each one which foreign key column should be considered, and
 the appropriate form is as follows::
 
@@ -118,8 +118,8 @@ The default behavior of :func:`_orm.relationship` when constructing a join
 is that it equates the value of primary key columns
 on one side to that of foreign-key-referring columns on the other.
 We can change this criterion to be anything we'd like using the
-:paramref:`_orm.relationship.primaryjoin`
-argument, as well as the :paramref:`_orm.relationship.secondaryjoin`
+:paramref:`_orm.relationship.primaryjoin` 
+argument, as well as the :paramref:`_orm.relationship.secondaryjoin` 
 argument in the case when a "secondary" table is used.
 
 In the example below, using the ``User`` class
@@ -161,7 +161,7 @@ construct to establish two distinct predicates for the join condition - joining
 both the ``User.id`` and ``Address.user_id`` columns to each other, as well as
 limiting rows in ``Address`` to just ``city='Boston'``.   When using
 Declarative, rudimentary SQL functions like :func:`.and_` are automatically
-available in the evaluated namespace of a string :func:`_orm.relationship`
+available in the evaluated namespace of a string :func:`_orm.relationship` 
 argument.
 
 .. warning:: When passed as a Python-evaluable string, the
@@ -172,12 +172,12 @@ argument.
     evaluation of :func:`_orm.relationship` arguments.
 
 
-The custom criteria we use in a :paramref:`_orm.relationship.primaryjoin`
+The custom criteria we use in a :paramref:`_orm.relationship.primaryjoin` 
 is generally only significant when SQLAlchemy is rendering SQL in
 order to load or represent this relationship. That is, it's used in
 the SQL statement that's emitted in order to perform a per-attribute
 lazy load, or when a join is constructed at query time, such as via
-:meth:`Select.join`, or via the eager "joined" or "subquery" styles of
+:meth:`Select.join` , or via the eager "joined" or "subquery" styles of
 loading.   When in-memory objects are being manipulated, we can place
 any ``Address`` object we'd like into the ``boston_addresses``
 collection, regardless of what the value of the ``.city`` attribute
@@ -197,13 +197,13 @@ Creating Custom Foreign Conditions
 
 Another element of the primary join condition is how those columns
 considered "foreign" are determined.  Usually, some subset
-of :class:`_schema.Column` objects will specify :class:`_schema.ForeignKey`, or otherwise
+of :class:`_schema.Column` objects will specify :class:` _schema.ForeignKey`, or otherwise
 be part of a :class:`_schema.ForeignKeyConstraint` that's relevant to the join condition.
 :func:`_orm.relationship` looks to this foreign key status as it decides
 how it should load and persist data for this relationship.   However, the
 :paramref:`_orm.relationship.primaryjoin` argument can be used to create a join condition that
-doesn't involve any "schema" level foreign keys.  We can combine :paramref:`_orm.relationship.primaryjoin`
-along with :paramref:`_orm.relationship.foreign_keys` and :paramref:`_orm.relationship.remote_side` explicitly in order to
+doesn't involve any "schema" level foreign keys.  We can combine :paramref:`_orm.relationship.primaryjoin` 
+along with :paramref:`_orm.relationship.foreign_keys` and :paramref:` _orm.relationship.remote_side` explicitly in order to
 establish such a join.
 
 Below, a class ``HostEntry`` joins to itself, equating the string ``content``
@@ -246,7 +246,7 @@ The above relationship will produce a join like:
     ON host_entry_1.ip_address = CAST(host_entry.content AS INET)
 
 An alternative syntax to the above is to use the :func:`.foreign` and
-:func:`.remote` :term:`annotations`,
+:func:`.remote` :term:` annotations`,
 inline within the :paramref:`_orm.relationship.primaryjoin` expression.
 This syntax represents the annotations that :func:`_orm.relationship` normally
 applies by itself to the join condition given the :paramref:`_orm.relationship.foreign_keys` and
@@ -280,14 +280,14 @@ Using custom operators in join conditions
 
 Another use case for relationships is the use of custom operators, such
 as PostgreSQL's "is contained within" ``<<`` operator when joining with
-types such as :class:`_postgresql.INET` and :class:`_postgresql.CIDR`.
+types such as :class:`_postgresql.INET` and :class:` _postgresql.CIDR`.
 For custom boolean operators we use the :meth:`.Operators.bool_op` function::
 
     inet_column.bool_op("<<")(cidr_column)
 
 A comparison like the above may be used directly with
 :paramref:`_orm.relationship.primaryjoin` when constructing
-a :func:`_orm.relationship`::
+a :func:`_orm.relationship` ::
 
     class IPA(Base):
         __tablename__ = "ip_address"
@@ -329,7 +329,7 @@ when we aren't using an operator, but a SQL function.   The typical example
 of this use case is the PostgreSQL PostGIS functions however any SQL
 function on any database that resolves to a binary condition may apply.
 To suit this use case, the :meth:`.FunctionElement.as_comparison` method
-can modify any SQL function, such as those invoked from the :data:`.func`
+can modify any SQL function, such as those invoked from the :data:`.func` 
 namespace, to indicate to the ORM that the function produces a comparison of
 two expressions.  The below example illustrates this with the
 `Geoalchemy2 <https://geoalchemy-2.readthedocs.io/>`_ library::
@@ -360,7 +360,7 @@ Above, the :meth:`.FunctionElement.as_comparison` indicates that the
 ``Point.geom`` expressions. The :func:`.foreign` annotation additionally notes
 which column takes on the "foreign key" role in this particular relationship.
 
-.. versionadded:: 1.3 Added :meth:`.FunctionElement.as_comparison`.
+.. versionadded:: 1.3 Added :meth:`.FunctionElement.as_comparison` .
 
 .. _relationship_overlapping_foreignkeys:
 
@@ -472,7 +472,7 @@ Therefore, to get at all of #1, #2, and #3, we express the join condition
 as well as which columns to be written by combining
 :paramref:`_orm.relationship.primaryjoin` fully, along with either the
 :paramref:`_orm.relationship.foreign_keys` argument, or more succinctly by
-annotating with :func:`_orm.foreign`::
+annotating with :func:`_orm.foreign` ::
 
     class Article(Base):
         # ...
@@ -493,9 +493,9 @@ don't obey the usual primary/foreign key model.  One such example is the
 materialized path pattern, where we compare strings for overlapping path tokens
 in order to produce a tree structure.
 
-Through careful use of :func:`.foreign` and :func:`.remote`, we can build
+Through careful use of :func:`.foreign` and :func:` .remote`, we can build
 a relationship that effectively produces a rudimentary materialized path
-system.   Essentially, when :func:`.foreign` and :func:`.remote` are
+system.   Essentially, when :func:`.foreign` and :func:` .remote` are
 on the *same* side of the comparison expression, the relationship is considered
 to be "one to many"; when they are on *different* sides, the relationship
 is considered to be "many to one".   For the comparison we'll use here,
@@ -530,15 +530,15 @@ Self-Referential Many-to-Many Relationship
 .. seealso::
 
     This section documents a two-table variant of the "adjacency list" pattern,
-    which is documented at :ref:`self_referential`.  Be sure to review the
+    which is documented at :ref:`self_referential` .  Be sure to review the
     self-referential querying patterns in subsections
-    :ref:`self_referential_query` and :ref:`self_referential_eager_loading`
+    :ref:`self_referential_query` and :ref:` self_referential_eager_loading`
     which apply equally well to the mapping pattern discussed here.
 
-Many to many relationships can be customized by one or both of :paramref:`_orm.relationship.primaryjoin`
+Many to many relationships can be customized by one or both of :paramref:`_orm.relationship.primaryjoin` 
 and :paramref:`_orm.relationship.secondaryjoin` - the latter is significant for a relationship that
 specifies a many-to-many reference using the :paramref:`_orm.relationship.secondary` argument.
-A common situation which involves the usage of :paramref:`_orm.relationship.primaryjoin` and :paramref:`_orm.relationship.secondaryjoin`
+A common situation which involves the usage of :paramref:`_orm.relationship.primaryjoin` and :paramref:` _orm.relationship.secondaryjoin`
 is when establishing a many-to-many relationship from a class to itself, as shown below::
 
     from typing import List
@@ -580,18 +580,18 @@ is when establishing a many-to-many relationship from a class to itself, as show
         )
 
 Where above, SQLAlchemy can't know automatically which columns should connect
-to which for the ``right_nodes`` and ``left_nodes`` relationships.   The :paramref:`_orm.relationship.primaryjoin`
+to which for the ``right_nodes`` and ``left_nodes`` relationships.   The :paramref:`_orm.relationship.primaryjoin` 
 and :paramref:`_orm.relationship.secondaryjoin` arguments establish how we'd like to join to the association table.
 In the Declarative form above, as we are declaring these conditions within the Python
 block that corresponds to the ``Node`` class, the ``id`` variable is available directly
 as the :class:`_schema.Column` object we wish to join with.
 
-Alternatively, we can define the :paramref:`_orm.relationship.primaryjoin`
+Alternatively, we can define the :paramref:`_orm.relationship.primaryjoin` 
 and :paramref:`_orm.relationship.secondaryjoin` arguments using strings, which is suitable
 in the case that our configuration does not have either the ``Node.id`` column
 object available yet or the ``node_to_node`` table perhaps isn't yet available.
 When referring to a plain :class:`_schema.Table` object in a declarative string, we
-use the string name of the table as it is present in the :class:`_schema.MetaData`::
+use the string name of the table as it is present in the :class:`_schema.MetaData` ::
 
     class Node(Base):
         __tablename__ = "node"
@@ -655,7 +655,7 @@ to ``node.c.id``::
         },
     )
 
-Note that in both examples, the :paramref:`_orm.relationship.backref`
+Note that in both examples, the :paramref:`_orm.relationship.backref` 
 keyword specifies a ``left_nodes`` backref - when
 :func:`_orm.relationship` creates the second relationship in the reverse
 direction, it's smart enough to reverse the
@@ -680,7 +680,7 @@ Composite "Secondary" Joins
     This section features far edge cases that are somewhat supported
     by SQLAlchemy, however it is recommended to solve problems like these
     in simpler ways whenever possible, by using reasonable relational
-    layouts and / or :ref:`in-Python attributes <mapper_hybrids>`.
+    layouts and / or :ref:`in-Python attributes <mapper_hybrids>` .
 
 Sometimes, when one seeks to build a :func:`_orm.relationship` between two tables
 there is a need for more than just two or three tables to be involved in
@@ -689,7 +689,7 @@ to push the boundaries of what's possible, and often the ultimate solution to
 many of these exotic use cases needs to be hammered out on the SQLAlchemy mailing
 list.
 
-In more recent versions of SQLAlchemy, the :paramref:`_orm.relationship.secondary`
+In more recent versions of SQLAlchemy, the :paramref:`_orm.relationship.secondary` 
 parameter can be used in some of these cases in order to provide a composite
 target consisting of multiple tables.   Below is an example of such a
 join condition (requires version 0.9.2 at least to function as is)::
@@ -730,8 +730,8 @@ join condition (requires version 0.9.2 at least to function as is)::
 
         id = mapped_column(Integer, primary_key=True)
 
-In the above example, we provide all three of :paramref:`_orm.relationship.secondary`,
-:paramref:`_orm.relationship.primaryjoin`, and :paramref:`_orm.relationship.secondaryjoin`,
+In the above example, we provide all three of :paramref:`_orm.relationship.secondary` ,
+:paramref:`_orm.relationship.primaryjoin` , and :paramref:`_orm.relationship.secondaryjoin` ,
 in the declarative style referring to the named tables ``a``, ``b``, ``c``, ``d``
 directly.  A query from ``A`` to ``D`` looks like:
 
@@ -747,7 +747,7 @@ directly.  A query from ``A`` to ``D`` looks like:
 
 In the above example, we take advantage of being able to stuff multiple
 tables into a "secondary" container, so that we can join across many
-tables while still keeping things "simple" for :func:`_orm.relationship`, in that
+tables while still keeping things "simple" for :func:`_orm.relationship` , in that
 there's just "one" table on both the "left" and the "right" side; the
 complexity is kept within the middle.
 
@@ -765,11 +765,11 @@ Relationship to Aliased Class
 
 .. versionadded:: 1.3
     The :class:`.AliasedClass` construct can now be specified as the
-    target of a :func:`_orm.relationship`, replacing the previous approach
+    target of a :func:`_orm.relationship` , replacing the previous approach
     of using non-primary mappers, which had limitations such that they did
     not inherit sub-relationships of the mapped entity as well as that they
     required complex configuration against an alternate selectable.  The
-    recipes in this section are now updated to use :class:`.AliasedClass`.
+    recipes in this section are now updated to use :class:`.AliasedClass` .
 
 In the previous section, we illustrated a technique where we used
 :paramref:`_orm.relationship.secondary` in order to place additional
@@ -792,7 +792,7 @@ for our class, we use the :func:`.aliased` function to produce the new
 construct, then use :func:`_orm.relationship` against the object as though it
 were a plain mapped class.
 
-Below illustrates a :func:`_orm.relationship` with a simple join from ``A`` to
+Below illustrates a :func:`_orm.relationship` with a simple join from ` `A`` to
 ``B``, however the primaryjoin condition is augmented with two additional
 entities ``C`` and ``D``, which also must have rows that line up with
 the rows in both ``A`` and ``B`` simultaneously::
@@ -896,7 +896,7 @@ so in terms of ``B_viacd_subquery`` rather than ``B`` directly:
 Row-Limited Relationships with Window Functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Another interesting use case for relationships to :class:`.AliasedClass`
+Another interesting use case for relationships to :class:`.AliasedClass` 
 objects are situations where
 the relationship needs to join to a specialized SELECT of any form.   One
 scenario is when the use of a window function is desired, such as to limit
@@ -927,7 +927,7 @@ ten items for each collection::
     )
 
 We can use the above ``partitioned_bs`` relationship with most of the loader
-strategies, such as :func:`.selectinload`::
+strategies, such as :func:`.selectinload` ::
 
     for a1 in session.scalars(select(A).options(selectinload(A.partitioned_bs))):
         print(a1.partitioned_bs)  # <-- will be no more than ten objects
@@ -964,7 +964,7 @@ Building Query-Enabled Properties
 Very ambitious custom join conditions may fail to be directly persistable, and
 in some cases may not even load correctly. To remove the persistence part of
 the equation, use the flag :paramref:`_orm.relationship.viewonly` on the
-:func:`~sqlalchemy.orm.relationship`, which establishes it as a read-only
+:func:`~sqlalchemy.orm.relationship` , which establishes it as a read-only
 attribute (data written to the collection will be ignored on flush()).
 However, in extreme cases, consider using a regular Python property in
 conjunction with :class:`_query.Query` as follows:
@@ -985,4 +985,4 @@ of special Python attributes.
 
 .. seealso::
 
-    :ref:`mapper_hybrids`
+    :ref:`mapper_hybrids` 

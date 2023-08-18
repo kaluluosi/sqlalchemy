@@ -1,5 +1,5 @@
-.. |prev| replace:: :doc:`columns`
-.. |next| replace:: :doc:`api`
+.. |prev| replace:: :doc:`columns` 
+.. |next| replace:: :doc:`api` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -19,13 +19,13 @@ Relationship Loading Techniques
     :ref:`relationship_config_toplevel` and basic use.
 
     Most examples here assume the "User/Address" mapping setup similar
-    to the one illustrated at :doc:`setup for selects <_plain_setup>`.
+    to the one illustrated at :doc:`setup for selects <_plain_setup>` .
 
 A big part of SQLAlchemy is providing a wide range of control over how related
 objects get loaded when querying.   By "related objects" we refer to collections
-or scalar associations configured on a mapper using :func:`_orm.relationship`.
+or scalar associations configured on a mapper using :func:`_orm.relationship` .
 This behavior can be configured at mapper construction time using the
-:paramref:`_orm.relationship.lazy` parameter to the :func:`_orm.relationship`
+:paramref:`_orm.relationship.lazy` parameter to the :func:` _orm.relationship`
 function, as well as by using **ORM loader options** with
 the :class:`_sql.Select` construct.
 
@@ -52,47 +52,47 @@ Summary of Relationship Loading Styles
 
 The primary forms of relationship loading are:
 
-* **lazy loading** - available via ``lazy='select'`` or the :func:`.lazyload`
+* **lazy loading** - available via ``lazy='select'`` or the :func:`.lazyload` 
   option, this is the form of loading that emits a SELECT statement at
   attribute access time to lazily load a related reference on a single
   object at a time.  Lazy loading is the **default loading style** for all
   :func:`_orm.relationship` constructs that don't otherwise indicate the
   :paramref:`_orm.relationship.lazy` option.  Lazy loading is detailed at
-  :ref:`lazy_loading`.
+  :ref:`lazy_loading` .
 
-* **select IN loading** - available via ``lazy='selectin'`` or the :func:`.selectinload`
+* **select IN loading** - available via ``lazy='selectin'`` or the :func:`.selectinload` 
   option, this form of loading emits a second (or more) SELECT statement which
   assembles the primary key identifiers of the parent objects into an IN clause,
   so that all members of related collections / scalar references are loaded at once
-  by primary key.  Select IN loading is detailed at :ref:`selectin_eager_loading`.
+  by primary key.  Select IN loading is detailed at :ref:`selectin_eager_loading` .
 
-* **joined loading** - available via ``lazy='joined'`` or the :func:`_orm.joinedload`
+* **joined loading** - available via ``lazy='joined'`` or the :func:`_orm.joinedload` 
   option, this form of loading applies a JOIN to the given SELECT statement
   so that related rows are loaded in the same result set.   Joined eager loading
-  is detailed at :ref:`joined_eager_loading`.
+  is detailed at :ref:`joined_eager_loading` .
 
 * **raise loading** - available via ``lazy='raise'``, ``lazy='raise_on_sql'``,
   or the :func:`.raiseload` option, this form of loading is triggered at the
   same time a lazy load would normally occur, except it raises an ORM exception
   in order to guard against the application making unwanted lazy loads.
-  An introduction to raise loading is at :ref:`prevent_lazy_with_raiseload`.
+  An introduction to raise loading is at :ref:`prevent_lazy_with_raiseload` .
 
-* **subquery loading** - available via ``lazy='subquery'`` or the :func:`.subqueryload`
+* **subquery loading** - available via ``lazy='subquery'`` or the :func:`.subqueryload` 
   option, this form of loading emits a second SELECT statement which re-states the
   original query embedded inside of a subquery, then JOINs that subquery to the
   related table to be loaded to load all members of related collections / scalar
-  references at once.  Subquery eager loading is detailed at :ref:`subquery_eager_loading`.
+  references at once.  Subquery eager loading is detailed at :ref:`subquery_eager_loading` .
 
 * **write only loading** - available via ``lazy='write_only'``, or by
   annotating the left side of the :class:`_orm.Relationship` object using the
   :class:`_orm.WriteOnlyMapped` annotation.   This collection-only
   loader style produces an alternative attribute instrumentation that never
   implicitly loads records from the database, instead only allowing
-  :meth:`.WriteOnlyCollection.add`,
-  :meth:`.WriteOnlyCollection.add_all` and :meth:`.WriteOnlyCollection.remove`
+  :meth:`.WriteOnlyCollection.add` ,
+  :meth:`.WriteOnlyCollection.add_all` and :meth:` .WriteOnlyCollection.remove`
   methods.  Querying the collection is performed by invoking a SELECT statement
-  which is constructed using the :meth:`.WriteOnlyCollection.select`
-  method.    Write only loading is discussed at :ref:`write_only_relationship`.
+  which is constructed using the :meth:`.WriteOnlyCollection.select` 
+  method.    Write only loading is discussed at :ref:`write_only_relationship` .
 
 * **dynamic loading** - available via ``lazy='dynamic'``, or by
   annotating the left side of the :class:`_orm.Relationship` object using the
@@ -104,7 +104,7 @@ The primary forms of relationship loading are:
   truly large collections. Dynamic loaders are superseded by
   :ref:`"write only" <write_only_relationship>` collections, which will prevent
   the underlying collection from being implicitly loaded under any
-  circumstances. Dynamic loaders are discussed at :ref:`dynamic_relationship`.
+  circumstances. Dynamic loaders are discussed at :ref:`dynamic_relationship` .
 
 
 .. _relationship_lazy_option:
@@ -116,11 +116,11 @@ The loader strategy for a particular relationship can be configured
 at mapping time to take place in all cases where an object of the mapped
 type is loaded, in the absence of any query-level options that modify it.
 This is configured using the :paramref:`_orm.relationship.lazy` parameter to
-:func:`_orm.relationship`; common values for this parameter
+:func:`_orm.relationship` ; common values for this parameter
 include ``select``, ``selectin`` and ``joined``.
 
 The example below illustrates the relationship example at
-:ref:`relationship_patterns_o2m`, configuring the ``Parent.children``
+:ref:`relationship_patterns_o2m` , configuring the ``Parent.children``
 relationship to use :ref:`selectin_eager_loading` when a SELECT
 statement for ``Parent`` objects is emitted::
 
@@ -155,7 +155,7 @@ Above, whenever a collection of ``Parent`` objects are loaded, each
 the ``"selectin"`` loader strategy that emits a second query.
 
 The default value of the :paramref:`_orm.relationship.lazy` argument is
-``"select"``, which indicates :ref:`lazy_loading`.
+``"select"``, which indicates :ref:`lazy_loading` .
 
 .. _relationship_loader_options:
 
@@ -167,8 +167,8 @@ is to set them up on a per-query basis against specific attributes using the
 :meth:`_sql.Select.options` method.  Very detailed
 control over relationship loading is available using loader options;
 the most common are
-:func:`_orm.joinedload`, :func:`_orm.selectinload`
-and :func:`_orm.lazyload`.   The option accepts a class-bound attribute
+:func:`_orm.joinedload` , :func:`_orm.selectinload` 
+and :func:`_orm.lazyload` .   The option accepts a class-bound attribute
 referring to the specific class/attribute that should be targeted::
 
     from sqlalchemy import select
@@ -216,7 +216,7 @@ Adding Criteria to loader options
 The relationship attributes used to indicate loader options include the
 ability to add additional filtering criteria to the ON clause of the join
 that's created, or to the WHERE criteria involved, depending on the loader
-strategy.  This can be achieved using the :meth:`.PropComparator.and_`
+strategy.  This can be achieved using the :meth:`.PropComparator.and_` 
 method which will pass through an option such that loaded results are limited
 to the given filter criteria::
 
@@ -300,8 +300,8 @@ the :meth:`_orm.Load.options` method::
           .all()
       )
 
-   If the objects loaded above are fully cleared from the :class:`.Session`,
-   such as due to garbage collection or that :meth:`.Session.expunge_all`
+   If the objects loaded above are fully cleared from the :class:`.Session` ,
+   such as due to garbage collection or that :meth:`.Session.expunge_all` 
    were used, the "sticky" options will also be gone and the newly created
    objects will make use of new options if loaded again.
 
@@ -315,7 +315,7 @@ Lazy Loading
 ------------
 
 By default, all inter-object relationships are **lazy loading**. The scalar or
-collection attribute associated with a :func:`_orm.relationship`
+collection attribute associated with a :func:`_orm.relationship` 
 contains a trigger which fires the first time the attribute is accessed.  This
 trigger typically issues a SQL call at the point of access
 in order to load the related object or objects:
@@ -334,7 +334,7 @@ in order to load the related object or objects:
 
 The one case where SQL is not emitted is for a simple many-to-one relationship, when
 the related object can be identified by its primary key alone and that object is already
-present in the current :class:`.Session`.  For this reason, while lazy loading
+present in the current :class:`.Session` .  For this reason, while lazy loading
 can be expensive for related collections, in the case that one is loading
 lots of objects with simple many-to-ones against a relatively small set of
 possible target objects, lazy loading may be able to refer to these objects locally
@@ -361,7 +361,7 @@ Preventing unwanted lazy loads using raiseload
 
 The :func:`.lazyload` strategy produces an effect that is one of the most
 common issues referred to in object relational mapping; the
-:term:`N plus one problem`, which states that for any N objects loaded,
+:term:`N plus one problem` , which states that for any N objects loaded,
 accessing their lazy-loaded attributes means there will be N+1 SELECT
 statements emitted.  In SQLAlchemy, the usual mitigation for the N+1 problem
 is to make use of its very capable eager load system.  However, eager loading
@@ -393,8 +393,8 @@ to set up only one attribute as eager loading, and all the rest as raise::
 
 The above wildcard will apply to **all** relationships not just on ``Order``
 besides ``items``, but all those on the ``Item`` objects as well.  To set up
-:func:`.raiseload` for only the ``Order`` objects, specify a full
-path with :class:`_orm.Load`::
+:func:`.raiseload` for only the ` `Order`` objects, specify a full
+path with :class:`_orm.Load` ::
 
     from sqlalchemy import select
     from sqlalchemy.orm import joinedload
@@ -413,14 +413,14 @@ column-oriented attributes, the :func:`.defer` option supports the
 .. tip:: The "raiseload" strategies **do not apply**
    within the :term:`unit of work` flush process.   That means if the
    :meth:`_orm.Session.flush` process needs to load a collection in order
-   to finish its work, it will do so while bypassing any :func:`_orm.raiseload`
+   to finish its work, it will do so while bypassing any :func:`_orm.raiseload` 
    directives.
 
 .. seealso::
 
-    :ref:`wildcard_loader_strategies`
+    :ref:`wildcard_loader_strategies` 
 
-    :ref:`orm_queryguide_deferred_raiseload`
+    :ref:`orm_queryguide_deferred_raiseload` 
 
 .. _joined_eager_loading:
 
@@ -544,9 +544,9 @@ The Zen of Joined Eager Loading
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Since joined eager loading seems to have many resemblances to the use of
-:meth:`_sql.Select.join`, it often produces confusion as to when and how it should
+:meth:`_sql.Select.join` , it often produces confusion as to when and how it should
 be used.   It is critical to understand the distinction that while
-:meth:`_sql.Select.join` is used to alter the results of a query, :func:`_orm.joinedload`
+:meth:`_sql.Select.join` is used to alter the results of a query, :func:` _orm.joinedload`
 goes through great lengths to **not** alter the results of the query, and
 instead hide the effects of the rendered join to only allow for related objects
 to be present.
@@ -599,7 +599,7 @@ named in the query:
 
 Above, ``ORDER BY addresses.email_address`` is not valid since ``addresses`` is not in the
 FROM list.   The correct way to load the ``User`` records and order by email
-address is to use :meth:`_sql.Select.join`:
+address is to use :meth:`_sql.Select.join` :
 
 .. sourcecode:: pycon+sql
 
@@ -661,7 +661,7 @@ clauses we'd like to use in subsequent query criterion, whereas our usage of
 ``User.addresses`` collection, for each ``User`` in the result. In this case,
 the two joins most probably appear redundant - which they are.  If we wanted to
 use just one JOIN for collection loading as well as ordering, we use the
-:func:`.contains_eager` option, described in :ref:`contains_eager` below.   But
+:func:`.contains_eager` option, described in :ref:` contains_eager` below.   But
 to see why :func:`joinedload` does what it does, consider if we were
 **filtering** on a particular ``Address``:
 
@@ -698,8 +698,8 @@ returned.
 
 By changing the usage of :func:`_orm.joinedload` to another style of loading, we
 can change how the collection is loaded completely independently of SQL used to
-retrieve the actual ``User`` rows we want.  Below we change :func:`_orm.joinedload`
-into :func:`.selectinload`:
+retrieve the actual ``User`` rows we want.  Below we change :func:`_orm.joinedload` 
+into :func:`.selectinload` :
 
 .. sourcecode:: pycon+sql
 
@@ -737,7 +737,7 @@ no matter what the format of the query is.
 
 .. seealso::
 
-    :ref:`contains_eager` - using :func:`.contains_eager`
+    :ref:`contains_eager` - using :func:` .contains_eager`
 
 .. _selectin_eager_loading:
 
@@ -751,7 +751,7 @@ composite primary keys, and the backend database does not support tuples with
 IN, which currently includes SQL Server.
 
 "Select IN" eager loading is provided using the ``"selectin"`` argument to
-:paramref:`_orm.relationship.lazy` or by using the :func:`.selectinload` loader
+:paramref:`_orm.relationship.lazy` or by using the :func:` .selectinload` loader
 option.   This style of loading emits a SELECT that refers to the primary key
 values of the parent object, or in the case of a many-to-one
 relationship to the those of the child objects, inside of an IN clause, in
@@ -817,7 +817,7 @@ value from the parent object is used:
 
 .. tip::
 
-   by "simple" we mean that the :paramref:`_orm.relationship.primaryjoin`
+   by "simple" we mean that the :paramref:`_orm.relationship.primaryjoin` 
    condition expresses an equality comparison between the primary key of the
    "one" side and a straight foreign key of the "many" side, without any
    additional criteria.
@@ -853,7 +853,7 @@ Subquery Eager Loading
 .. legacy:: The :func:`_orm.subqueryload` eager loader is mostly legacy
    at this point, superseded by the :func:`_orm.selectinload` strategy
    which is of much simpler design, more flexible with features such as
-   :ref:`Yield Per <orm_queryguide_yield_per>`, and emits more efficient SQL
+   :ref:`Yield Per <orm_queryguide_yield_per>` , and emits more efficient SQL
    statements in most cases.   As :func:`_orm.subqueryload` relies upon
    re-interpreting the original SELECT statement, it may fail to work
    efficiently when given very complex source queries.
@@ -868,7 +868,7 @@ the SELECT statement which is emitted is derived from the original statement,
 and has a more complex query structure as that of selectin eager loading.
 
 Subquery eager loading is provided using the ``"subquery"`` argument to
-:paramref:`_orm.relationship.lazy` or by using the :func:`.subqueryload` loader
+:paramref:`_orm.relationship.lazy` or by using the :func:` .subqueryload` loader
 option.
 
 The operation of subquery eager loading is to emit a second SELECT statement
@@ -916,8 +916,8 @@ Things to know about this kind of loading include:
 
 * "subquery" loading imposes some special ordering requirements in order to work
   correctly.  A query which makes use of :func:`.subqueryload` in conjunction with a
-  limiting modifier such as :meth:`_sql.Select.limit`,
-  or :meth:`_sql.Select.offset` should **always** include :meth:`_sql.Select.order_by`
+  limiting modifier such as :meth:`_sql.Select.limit` ,
+  or :meth:`_sql.Select.offset` should **always** include :meth:` _sql.Select.order_by`
   against unique column(s) such as the primary key, so that the additional queries
   emitted by :func:`.subqueryload` include
   the same ordering as used by the parent query.  Without it, there is a chance
@@ -947,7 +947,7 @@ Things to know about this kind of loading include:
   repeatedly.
 
 * "subquery" loading is not compatible with the
-  "batched" loading supplied by :ref:`Yield Per <orm_queryguide_yield_per>`, both for collection
+  "batched" loading supplied by :ref:`Yield Per <orm_queryguide_yield_per>` , both for collection
   and scalar relationships.
 
 For the above reasons, the "selectin" strategy should be preferred over
@@ -955,7 +955,7 @@ For the above reasons, the "selectin" strategy should be preferred over
 
 .. seealso::
 
-    :ref:`selectin_eager_loading`
+    :ref:`selectin_eager_loading` 
 
 
 
@@ -982,7 +982,7 @@ backends support it.
 **Many to One** - The :func:`_orm.joinedload` strategy is the most general
 purpose strategy. In special cases, the :func:`_orm.immediateload` strategy may
 also be useful, if there are a very small number of potential related values,
-as this strategy will fetch the object from the local :class:`_orm.Session`
+as this strategy will fetch the object from the local :class:`_orm.Session` 
 without emitting any SQL if the related object is already present.
 
 
@@ -1000,9 +1000,9 @@ of the :meth:`.PropComparator.of_type` method in conjunction with the
 Wildcard Loading Strategies
 ---------------------------
 
-Each of :func:`_orm.joinedload`, :func:`.subqueryload`, :func:`.lazyload`,
-:func:`.selectinload`,
-:func:`.noload`, and :func:`.raiseload` can be used to set the default
+Each of :func:`_orm.joinedload` , :func:`.subqueryload` , :func:`.lazyload` ,
+:func:`.selectinload` ,
+:func:`.noload` , and :func:`.raiseload` can be used to set the default
 style of :func:`_orm.relationship` loading
 for a particular query, affecting all :func:`_orm.relationship` -mapped
 attributes not otherwise
@@ -1026,8 +1026,8 @@ cause all those relationships to use ``'select'`` loading, e.g. emit a
 SELECT statement when each attribute is accessed.
 
 The option does not supersede loader options stated in the
-query, such as :func:`.joinedload`,
-:func:`.selectinload`, etc.  The query below will still use joined loading
+query, such as :func:`.joinedload` ,
+:func:`.selectinload` , etc.  The query below will still use joined loading
 for the ``widget`` relationship::
 
     from sqlalchemy import select
@@ -1050,7 +1050,7 @@ A variant of the wildcard loader strategy is the ability to set the strategy
 on a per-entity basis.  For example, if querying for ``User`` and ``Address``,
 we can instruct all relationships on ``Address`` to use lazy loading,
 while leaving the loader strategies for ``User`` unaffected,
-by first applying the :class:`_orm.Load` object, then specifying the ``*`` as a
+by first applying the :class:`_orm.Load` object, then specifying the ` `*`` as a
 chained option::
 
     from sqlalchemy import select
@@ -1075,11 +1075,11 @@ includes the necessary joins which represent a particular collection or scalar
 reference, and the joins added by the joinedload feature are redundant - yet
 you'd still like the collections/references to be populated.
 
-For this SQLAlchemy supplies the :func:`_orm.contains_eager`
+For this SQLAlchemy supplies the :func:`_orm.contains_eager` 
 option. This option is used in the same manner as the
 :func:`_orm.joinedload()` option except it is assumed that the
 :class:`_sql.Select` object will explicitly include the appropriate joins,
-typically using methods like :meth:`_sql.Select.join`.
+typically using methods like :meth:`_sql.Select.join` .
 Below, we specify a join between ``User`` and ``Address``
 and additionally establish this as the basis for eager loading of ``User.addresses``::
 
@@ -1088,7 +1088,7 @@ and additionally establish this as the basis for eager loading of ``User.address
     stmt = select(User).join(User.addresses).options(contains_eager(User.addresses))
 
 If the "eager" portion of the statement is "aliased", the path
-should be specified using :meth:`.PropComparator.of_type`, which allows
+should be specified using :meth:`.PropComparator.of_type` , which allows
 the specific :func:`_orm.aliased` construct to be passed:
 
 .. sourcecode:: python+sql
@@ -1126,7 +1126,7 @@ to be a full path from the starting entity. For example if we were loading
 Using contains_eager() to load a custom-filtered collection result
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When we use :func:`.contains_eager`, *we* are constructing ourselves the
+When we use :func:`.contains_eager` , *we* are constructing ourselves the
 SQL that will be used to populate collections.  From this, it naturally follows
 that we can opt to **modify** what values the collection is intended to store,
 by writing our SQL to load a subset of elements for collections or
@@ -1134,8 +1134,8 @@ scalar attributes.
 
 .. tip::  SQLAlchemy now has a **much simpler way to do this**, by allowing
    WHERE criteria to be added directly to loader options such as
-   :func:`_orm.joinedload`
-   and :func:`_orm.selectinload` using :meth:`.PropComparator.and_`.  See
+   :func:`_orm.joinedload` 
+   and :func:`_orm.selectinload` using :meth:` .PropComparator.and_`.  See
    the section :ref:`loader_option_criteria` for examples.
 
    The techniques described here still apply if the related collection is
@@ -1145,7 +1145,7 @@ scalar attributes.
 
 As an example, we can load a ``User`` object and eagerly load only particular
 addresses into its ``.addresses`` collection by filtering the joined data,
-routing it using :func:`_orm.contains_eager`, also using
+routing it using :func:`_orm.contains_eager` , also using
 :ref:`orm_queryguide_populate_existing` to ensure any already-loaded collections
 are overwritten::
 
@@ -1176,12 +1176,12 @@ in fact associated with the collection.
    before using it.   Using the :class:`_orm.Session` with its default behavior
    of :ref:`autoflush <session_flushing>` is sufficient.
 
-.. note::   The customized collection we load using :func:`_orm.contains_eager`
+.. note::   The customized collection we load using :func:`_orm.contains_eager` 
    is not "sticky"; that is, the next time this collection is loaded, it will
    be loaded with its usual default contents.   The collection is subject
    to being reloaded if the object is expired, which occurs whenever the
-   :meth:`.Session.commit`, :meth:`.Session.rollback` methods are used
-   assuming default session settings, or the :meth:`.Session.expire_all`
+   :meth:`.Session.commit` , :meth:`.Session.rollback` methods are used
+   assuming default session settings, or the :meth:`.Session.expire_all` 
    or :meth:`.Session.expire` methods are used.
 
 .. seealso::

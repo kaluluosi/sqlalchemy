@@ -6,7 +6,7 @@
 Table Configuration
 ===================
 
-This section has moved; see :ref:`orm_declarative_table_configuration`.
+This section has moved; see :ref:`orm_declarative_table_configuration` .
 
 
 .. _declarative_hybrid_table:
@@ -14,11 +14,11 @@ This section has moved; see :ref:`orm_declarative_table_configuration`.
 Using a Hybrid Approach with __table__
 ======================================
 
-This section has moved; see :ref:`orm_imperative_table_configuration`.
+This section has moved; see :ref:`orm_imperative_table_configuration` .
 
 
 Using Reflection with Declarative
 =================================
 
-This section has moved to :ref:`orm_declarative_reflected`.
+This section has moved to :ref:`orm_declarative_reflected` .
 

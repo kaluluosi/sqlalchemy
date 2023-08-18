@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`data_insert`
-.. |next| replace:: :doc:`data_update`
+.. |prev| replace:: :doc:`data_insert` 
+.. |next| replace:: :doc:`data_update` 
 
 .. include:: tutorial_nav_include.rst
 
@@ -24,14 +24,14 @@ current transaction and the result rows available via the returned
     **ORM Readers** - the content here applies equally well to both Core and ORM
     use and basic ORM variant use cases are mentioned here.  However there are
     a lot more ORM-specific features available as well; these are documented
-    at :ref:`queryguide_toplevel`.
+    at :ref:`queryguide_toplevel` .
 
 
 The select() SQL Expression Construct
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :func:`_sql.select` construct builds up a statement in the same way
-as that of :func:`_sql.insert`, using a :term:`generative` approach where
+as that of :func:`_sql.insert` , using a :term:`generative` approach where
 each method builds more state onto the object.  Like the other SQL constructs,
 it can be stringified in place::
 
@@ -45,7 +45,7 @@ it can be stringified in place::
 Also in the same manner as all other statement-level SQL constructs, to
 actually run the statement we pass it to an execution method.
 Since a SELECT statement returns
-rows we can always iterate the result object to get :class:`_engine.Row`
+rows we can always iterate the result object to get :class:`_engine.Row` 
 objects back:
 
 .. sourcecode:: pycon+sql
@@ -63,7 +63,7 @@ objects back:
 
 When using the ORM, particularly with a :func:`_sql.select` construct that's
 composed against ORM entities, we will want to execute it using the
-:meth:`_orm.Session.execute` method on the :class:`_orm.Session`; using
+:meth:`_orm.Session.execute` method on the :class:` _orm.Session`; using
 this approach, we continue to get :class:`_engine.Row` objects from the
 result, however these rows are now capable of including
 complete entities, such as instances of the ``User`` class, as individual
@@ -101,7 +101,7 @@ Setting the COLUMNS and FROM clause
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :func:`_sql.select` function accepts positional elements representing any
-number of :class:`_schema.Column` and/or :class:`_schema.Table` expressions, as
+number of :class:`_schema.Column` and/or :class:` _schema.Table` expressions, as
 well as a wide range of compatible objects, which are resolved into a list of SQL
 expressions to be SELECTed from that will be returned as columns in the result
 set.  These elements also serve in simpler cases to create the FROM clause,
@@ -112,9 +112,9 @@ which is inferred from the columns and table-like expressions passed::
     FROM user_account
 
 To SELECT from individual columns using a Core approach,
-:class:`_schema.Column` objects are accessed from the :attr:`_schema.Table.c`
+:class:`_schema.Column` objects are accessed from the :attr:` _schema.Table.c`
 accessor and can be sent directly; the FROM clause will be inferred as the set
-of all :class:`_schema.Table` and other :class:`_sql.FromClause` objects that
+of all :class:`_schema.Table` and other :class:` _sql.FromClause` objects that
 are represented by those columns::
 
     >>> print(select(user_table.c.name, user_table.c.fullname))
@@ -122,7 +122,7 @@ are represented by those columns::
     FROM user_account
 
 Alternatively, when using the :attr:`.FromClause.c` collection of any
-:class:`.FromClause` such as :class:`.Table`, multiple columns may be specified
+:class:`.FromClause` such as :class:` .Table`, multiple columns may be specified
 for a :func:`_sql.select` by using a tuple of string names::
 
     >>> print(select(user_table.c["name", "fullname"]))
@@ -148,7 +148,7 @@ in the same way as if we had used ``user_table`` directly::
     {printsql}SELECT user_account.id, user_account.name, user_account.fullname
     FROM user_account
 
-When executing a statement like the above using the ORM :meth:`_orm.Session.execute`
+When executing a statement like the above using the ORM :meth:`_orm.Session.execute` 
 method, there is an important difference when we select from a full entity
 such as ``User``, as opposed to ``user_table``, which is that the **entity
 itself is returned as a single element within each row**.  That is, when we fetch rows from
@@ -164,7 +164,7 @@ instances of the ``User`` class::
     >>> row
     (User(id=1, name='spongebob', fullname='Spongebob Squarepants'),)
 
-The above :class:`_engine.Row` has just one element, representing the ``User`` entity::
+The above :class:`_engine.Row` has just one element, representing the ` `User`` entity::
 
     >>> row[0]
     User(id=1, name='spongebob', fullname='Spongebob Squarepants')
@@ -185,7 +185,7 @@ instances of the ``User`` class::
 
 Alternatively, we can select individual columns of an ORM entity as distinct
 elements within result rows, by using the class-bound attributes; when these
-are passed to a construct such as :func:`_sql.select`, they are resolved into
+are passed to a construct such as :func:`_sql.select` , they are resolved into
 the :class:`_schema.Column` or other SQL expression represented by each
 attribute::
 
@@ -193,7 +193,7 @@ attribute::
     {printsql}SELECT user_account.name, user_account.fullname
     FROM user_account
 
-When we invoke *this* statement using :meth:`_orm.Session.execute`, we now
+When we invoke *this* statement using :meth:`_orm.Session.execute` , we now
 receive rows that have individual elements per value, each corresponding
 to a separate column or other SQL expression::
 
@@ -220,11 +220,11 @@ it with full ``Address`` entities in the second element::
     ('sandy', Address(id=3, email_address='sandy@squirrelpower.org'))]
 
 Approaches towards selecting ORM entities and columns as well as common methods
-for converting rows are discussed further at :ref:`orm_queryguide_select_columns`.
+for converting rows are discussed further at :ref:`orm_queryguide_select_columns` .
 
 .. seealso::
 
-    :ref:`orm_queryguide_select_columns` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_select_columns` - in the :ref:` queryguide_toplevel`
 
 Selecting from Labeled SQL Expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -255,17 +255,17 @@ when referring to arbitrary SQL expressions in a result row by name:
 .. seealso::
 
     :ref:`tutorial_order_by_label` - the label names we create may also be
-    referred towards in the ORDER BY or GROUP BY clause of the :class:`_sql.Select`.
+    referred towards in the ORDER BY or GROUP BY clause of the :class:`_sql.Select` .
 
 .. _tutorial_select_arbitrary_text:
 
 Selecting with Textual Column Expressions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When we construct a :class:`_sql.Select` object using the :func:`_sql.select`
-function, we are normally passing to it a series of :class:`_schema.Table`
+When we construct a :class:`_sql.Select` object using the :func:` _sql.select`
+function, we are normally passing to it a series of :class:`_schema.Table` 
 and :class:`_schema.Column` objects that were defined using
-:ref:`table metadata <tutorial_working_with_metadata>`, or when using the ORM we may be
+:ref:`table metadata <tutorial_working_with_metadata>` , or when using the ORM we may be
 sending ORM-mapped attributes that represent table columns.   However,
 sometimes there is also the need to manufacture arbitrary SQL blocks inside
 of statements, such as constant string expressions, or just some arbitrary
@@ -292,7 +292,7 @@ While the :func:`_sql.text` construct can be used in most places to inject
 literal SQL phrases, more often than not we are actually dealing with textual
 units that each represent an individual
 column expression.  In this common case we can get more functionality out of
-our textual fragment using the :func:`_sql.literal_column`
+our textual fragment using the :func:`_sql.literal_column` 
 construct instead.  This object is similar to :func:`_sql.text` except that
 instead of representing arbitrary SQL of any form,
 it explicitly represents a single "column" and can then be labeled and referred
@@ -317,7 +317,7 @@ towards in subqueries and other expressions::
 
 
 Note that in both cases, when using :func:`_sql.text` or
-:func:`_sql.literal_column`, we are writing a syntactical SQL expression, and
+:func:`_sql.literal_column` , we are writing a syntactical SQL expression, and
 not a literal value. We therefore have to include whatever quoting or syntaxes
 are necessary for the SQL we want to see rendered.
 
@@ -349,7 +349,7 @@ the resulting objects to the :meth:`_sql.Select.where` method::
     WHERE user_account.name = :name_1
 
 
-To produce multiple expressions joined by AND, the :meth:`_sql.Select.where`
+To produce multiple expressions joined by AND, the :meth:`_sql.Select.where` 
 method may be invoked any number of times::
 
     >>> print(
@@ -375,7 +375,7 @@ with the same effect::
     WHERE user_account.name = :name_1 AND address.user_id = user_account.id
 
 "AND" and "OR" conjunctions are both available directly using the
-:func:`_sql.and_` and :func:`_sql.or_` functions, illustrated below in terms
+:func:`_sql.and_` and :func:` _sql.or_` functions, illustrated below in terms
 of ORM entities::
 
     >>> from sqlalchemy import and_, or_
@@ -416,9 +416,9 @@ Explicit FROM clauses and JOINs
 
 As mentioned previously, the FROM clause is usually **inferred**
 based on the expressions that we are setting in the columns
-clause as well as other elements of the :class:`_sql.Select`.
+clause as well as other elements of the :class:`_sql.Select` .
 
-If we set a single column from a particular :class:`_schema.Table`
+If we set a single column from a particular :class:`_schema.Table` 
 in the COLUMNS clause, it puts that :class:`_schema.Table` in the FROM
 clause as well::
 
@@ -434,7 +434,7 @@ clause::
     FROM user_account, address
 
 In order to JOIN these two tables together, we typically use one of two methods
-on :class:`_sql.Select`.  The first is the :meth:`_sql.Select.join_from`
+on :class:`_sql.Select` .  The first is the :meth:`_sql.Select.join_from` 
 method, which allows us to indicate the left and right side of the JOIN
 explicitly::
 
@@ -456,7 +456,7 @@ right side of the JOIN, the left hand-side is inferred::
 
 .. sidebar::  The ON Clause is inferred
 
-    When using :meth:`_sql.Select.join_from` or :meth:`_sql.Select.join`, we may
+    When using :meth:`_sql.Select.join_from` or :meth:` _sql.Select.join`, we may
     observe that the ON clause of the join is also inferred for us in simple
     foreign key cases. More on that in the next section.
 
@@ -464,14 +464,14 @@ We also have the option to add elements to the FROM clause explicitly, if it is 
 inferred the way we want from the columns clause.  We use the
 :meth:`_sql.Select.select_from` method to achieve this, as below
 where we establish ``user_table`` as the first element in the FROM
-clause and :meth:`_sql.Select.join` to establish ``address_table`` as
+clause and :meth:`_sql.Select.join` to establish ` `address_table`` as
 the second::
 
     >>> print(select(address_table.c.email_address).select_from(user_table).join(address_table))
     {printsql}SELECT address.email_address
     FROM user_account JOIN address ON user_account.id = address.user_id
 
-Another example where we might want to use :meth:`_sql.Select.select_from`
+Another example where we might want to use :meth:`_sql.Select.select_from` 
 is if our columns clause doesn't have enough information to provide for a
 FROM clause.  For example, to SELECT from the common SQL expression
 ``count(*)``, we use a SQLAlchemy element known as :attr:`_sql.func` to
@@ -484,10 +484,10 @@ produce the SQL ``count()`` function::
 
 .. seealso::
 
-    :ref:`orm_queryguide_select_from` - in the :ref:`queryguide_toplevel` -
+    :ref:`orm_queryguide_select_from` - in the :ref:` queryguide_toplevel` -
     contains additional examples and notes
     regarding the interaction of :meth:`_sql.Select.select_from` and
-    :meth:`_sql.Select.join`.
+    :meth:`_sql.Select.join` .
 
 .. _tutorial_select_join_onclause:
 
@@ -497,14 +497,14 @@ Setting the ON Clause
 The previous examples of JOIN illustrated that the :class:`_sql.Select` construct
 can join between two tables and produce the ON clause automatically.  This
 occurs in those examples because the ``user_table`` and ``address_table``
-:class:`_sql.Table` objects include a single :class:`_schema.ForeignKeyConstraint`
+:class:`_sql.Table` objects include a single :class:` _schema.ForeignKeyConstraint`
 definition which is used to form this ON clause.
 
 If the left and right targets of the join do not have such a constraint, or
 there are multiple constraints in place, we need to specify the ON clause
-directly.   Both :meth:`_sql.Select.join` and :meth:`_sql.Select.join_from`
+directly.   Both :meth:`_sql.Select.join` and :meth:` _sql.Select.join_from`
 accept an additional argument for the ON clause, which is stated using the
-same SQL Expression mechanics as we saw about in :ref:`tutorial_select_where_clause`::
+same SQL Expression mechanics as we saw about in :ref:`tutorial_select_where_clause` ::
 
     >>> print(
     ...     select(address_table.c.email_address)
@@ -519,14 +519,14 @@ same SQL Expression mechanics as we saw about in :ref:`tutorial_select_where_cla
     **ORM Tip** - there's another way to generate the ON clause when using
     ORM entities that make use of the :func:`_orm.relationship` construct,
     like the mapping set up in the previous section at
-    :ref:`tutorial_declaring_mapped_classes`.
+    :ref:`tutorial_declaring_mapped_classes` .
     This is a whole subject onto itself, which is introduced at length
-    at :ref:`tutorial_joining_relationships`.
+    at :ref:`tutorial_joining_relationships` .
 
 OUTER and FULL join
 ~~~~~~~~~~~~~~~~~~~
 
-Both the :meth:`_sql.Select.join` and :meth:`_sql.Select.join_from` methods
+Both the :meth:`_sql.Select.join` and :meth:` _sql.Select.join_from` methods
 accept keyword arguments :paramref:`_sql.Select.join.isouter` and
 :paramref:`_sql.Select.join.full` which will render LEFT OUTER JOIN
 and FULL OUTER JOIN, respectively::
@@ -575,7 +575,7 @@ more of these expressions positionally::
     {printsql}SELECT user_account.id, user_account.name, user_account.fullname
     FROM user_account ORDER BY user_account.name
 
-Ascending / descending is available from the :meth:`_sql.ColumnElement.asc`
+Ascending / descending is available from the :meth:`_sql.ColumnElement.asc` 
 and :meth:`_sql.ColumnElement.desc` modifiers, which are present
 from ORM-bound attributes as well::
 
@@ -597,7 +597,7 @@ counting, computing averages, as well as locating the maximum or minimum
 value in a set of values.
 
 SQLAlchemy provides for SQL functions in an open-ended way using a namespace
-known as :data:`_sql.func`.  This is a special constructor object which
+known as :data:`_sql.func` .  This is a special constructor object which
 will create new instances of :class:`_functions.Function` when given the name
 of a particular SQL function, which can have any name, as well as zero or
 more arguments to pass to the function, which are, like in all other cases,
@@ -611,7 +611,7 @@ we call upon the ``count()`` name::
     {printsql}count(user_account.id)
 
 SQL functions are described in more detail later in this tutorial at
-:ref:`tutorial_functions`.
+:ref:`tutorial_functions` .
 
 When using aggregate functions in SQL, the GROUP BY clause is essential in that
 it allows rows to be partitioned into groups where aggregate functions will
@@ -622,7 +622,7 @@ a primary key association.    The HAVING clause is then used in a similar
 manner as the WHERE clause, except that it filters out rows based on aggregated
 values rather than direct row contents.
 
-SQLAlchemy provides for these two clauses using the :meth:`_sql.Select.group_by`
+SQLAlchemy provides for these two clauses using the :meth:`_sql.Select.group_by` 
 and :meth:`_sql.Select.having` methods.   Below we illustrate selecting
 user name fields as well as count of addresses, for those users that have more
 than one address:
@@ -655,11 +655,11 @@ to ORDER BY or GROUP BY an expression that is already stated in the columns
 clause, without re-stating the expression in the ORDER BY or GROUP BY clause
 and instead using the column name or labeled name from the COLUMNS clause.
 This form is available by passing the string text of the name to the
-:meth:`_sql.Select.order_by` or :meth:`_sql.Select.group_by` method.  The text
+:meth:`_sql.Select.order_by` or :meth:` _sql.Select.group_by` method.  The text
 passed is **not rendered directly**; instead, the name given to an expression
 in the columns clause and rendered as that expression name in context, raising an
 error if no match is found.   The unary modifiers
-:func:`.asc` and :func:`.desc` may also be used in this form:
+:func:`.asc` and :func:` .desc` may also be used in this form:
 
 .. sourcecode:: pycon+sql
 
@@ -685,10 +685,10 @@ which are a syntax that supplies an alternative name to a table or subquery
 from which it can be referred towards in the statement.
 
 In the SQLAlchemy Expression Language, these "names" are instead represented by
-:class:`_sql.FromClause` objects known as the :class:`_sql.Alias` construct,
-which is constructed in Core using the :meth:`_sql.FromClause.alias`
-method. An :class:`_sql.Alias` construct is just like a :class:`_sql.Table`
-construct in that it also has a namespace of :class:`_schema.Column`
+:class:`_sql.FromClause` objects known as the :class:` _sql.Alias` construct,
+which is constructed in Core using the :meth:`_sql.FromClause.alias` 
+method. An :class:`_sql.Alias` construct is just like a :class:` _sql.Table`
+construct in that it also has a namespace of :class:`_schema.Column` 
 objects within the :attr:`_sql.Alias.c` collection.  The SELECT statement
 below for example returns all unique pairs of user names::
 
@@ -734,10 +734,10 @@ while maintaining ORM functionality.  The SELECT below selects from the
 
 .. tip::
 
-    As mentioned in :ref:`tutorial_select_join_onclause`, the ORM provides
+    As mentioned in :ref:`tutorial_select_join_onclause` , the ORM provides
     for another way to join using the :func:`_orm.relationship` construct.
-    The above example using aliases is demonstrated using :func:`_orm.relationship`
-    at :ref:`tutorial_joining_relationships_aliased`.
+    The above example using aliases is demonstrated using :func:`_orm.relationship` 
+    at :ref:`tutorial_joining_relationships_aliased` .
 
 
 .. _tutorial_subqueries_ctes:
@@ -756,13 +756,13 @@ but includes additional features.
 
 SQLAlchemy uses the :class:`_sql.Subquery` object to represent a subquery and
 the :class:`_sql.CTE` to represent a CTE, usually obtained from the
-:meth:`_sql.Select.subquery` and :meth:`_sql.Select.cte` methods, respectively.
+:meth:`_sql.Select.subquery` and :meth:` _sql.Select.cte` methods, respectively.
 Either object can be used as a FROM element inside of a larger
 :func:`_sql.select` construct.
 
 We can construct a :class:`_sql.Subquery` that will select an aggregate count
 of rows from the ``address`` table (aggregate functions and GROUP BY were
-introduced previously at :ref:`tutorial_group_by_w_aggregates`):
+introduced previously at :ref:`tutorial_group_by_w_aggregates` ):
 
     >>> subq = (
     ...     select(func.count(address_table.c.id).label("count"), address_table.c.user_id)
@@ -780,7 +780,7 @@ without any enclosing parenthesis::
 
 
 The :class:`_sql.Subquery` object behaves like any other FROM object such
-as a :class:`_schema.Table`, notably that it includes a :attr:`_sql.Subquery.c`
+as a :class:`_schema.Table` , notably that it includes a :attr:`_sql.Subquery.c` 
 namespace of the columns which it selects.  We can use this namespace to
 refer to both the ``user_id`` column as well as our custom labeled
 ``count`` expression::
@@ -846,10 +846,10 @@ for :class:`_sql.CTE` includes details on these additional patterns.
 
 In both cases, the subquery and CTE were named at the SQL level using an
 "anonymous" name.  In the Python code, we don't need to provide these names
-at all.  The object identity of the :class:`_sql.Subquery` or :class:`_sql.CTE`
+at all.  The object identity of the :class:`_sql.Subquery` or :class:` _sql.CTE`
 instances serves as the syntactical identity of the object when rendered.
 A name that will be rendered in the SQL can be provided by passing it as the
-first argument of the :meth:`_sql.Select.subquery` or :meth:`_sql.Select.cte` methods.
+first argument of the :meth:`_sql.Select.subquery` or :meth:` _sql.Select.cte` methods.
 
 .. seealso::
 
@@ -864,16 +864,16 @@ ORM Entity Subqueries/CTEs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the ORM, the :func:`_orm.aliased` construct may be used to associate an ORM
-entity, such as our ``User`` or ``Address`` class, with any :class:`_sql.FromClause`
+entity, such as our ``User`` or ``Address`` class, with any :class:`_sql.FromClause` 
 concept that represents a source of rows.  The preceding section
-:ref:`tutorial_orm_entity_aliases` illustrates using :func:`_orm.aliased`
+:ref:`tutorial_orm_entity_aliases` illustrates using :func:` _orm.aliased`
 to associate the mapped class with an :class:`_sql.Alias` of its
-mapped :class:`_schema.Table`.   Here we illustrate :func:`_orm.aliased` doing the same
-thing against both a :class:`_sql.Subquery` as well as a :class:`_sql.CTE`
+mapped :class:`_schema.Table` .   Here we illustrate :func:`_orm.aliased` doing the same
+thing against both a :class:`_sql.Subquery` as well as a :class:` _sql.CTE`
 generated against a :class:`_sql.Select` construct, that ultimately derives
-from that same mapped :class:`_schema.Table`.
+from that same mapped :class:`_schema.Table` .
 
-Below is an example of applying :func:`_orm.aliased` to the :class:`_sql.Subquery`
+Below is an example of applying :func:`_orm.aliased` to the :class:` _sql.Subquery`
 construct, so that ORM entities can be extracted from its rows.  The result
 shows a series of ``User`` and ``Address`` objects, where the data for
 each ``Address`` object ultimately came from a subquery against the
@@ -938,7 +938,7 @@ Another example follows, which is exactly the same except it makes use of the
 
 .. seealso::
 
-    :ref:`orm_queryguide_subqueries` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_subqueries` - in the :ref:` queryguide_toplevel`
 
 .. _tutorial_scalar_subquery:
 
@@ -958,8 +958,8 @@ subquery which is represented by the :class:`_sql.Subquery` construct, which is
 in the :class:`_sql.FromClause` hierarchy.
 
 Scalar subqueries are often, but not necessarily, used with aggregate functions,
-introduced previously at :ref:`tutorial_group_by_w_aggregates`.   A scalar
-subquery is indicated explicitly by making use of the :meth:`_sql.Select.scalar_subquery`
+introduced previously at :ref:`tutorial_group_by_w_aggregates` .   A scalar
+subquery is indicated explicitly by making use of the :meth:`_sql.Select.scalar_subquery` 
 method as below.  It's default string form when stringified by itself
 renders as an ordinary SELECT statement that is selecting from two tables::
 
@@ -973,7 +973,7 @@ renders as an ordinary SELECT statement that is selecting from two tables::
     FROM address, user_account
     WHERE user_account.id = address.user_id)
 
-The above ``subq`` object now falls within the :class:`_sql.ColumnElement`
+The above ``subq`` object now falls within the :class:`_sql.ColumnElement` 
 SQL expression hierarchy, in that it may be used like any other column
 expression::
 
@@ -1071,9 +1071,9 @@ correlation may only refer to a table that is part of another SELECT that
 entirely encloses this SELECT.  The LATERAL keyword allows us to turn this
 behavior around and allow correlation from the right side JOIN.
 
-SQLAlchemy supports this feature using the :meth:`_expression.Select.lateral`
-method, which creates an object known as :class:`.Lateral`. :class:`.Lateral`
-is in the same family as :class:`.Subquery` and :class:`.Alias`, but also
+SQLAlchemy supports this feature using the :meth:`_expression.Select.lateral` 
+method, which creates an object known as :class:`.Lateral` . :class:`.Lateral` 
+is in the same family as :class:`.Subquery` and :class:` .Alias`, but also
 includes correlation behavior when the construct is added to the FROM clause of
 an enclosing SELECT. The following example illustrates a SQL query that makes
 use of LATERAL, selecting the "user account / count of email address" data as
@@ -1106,16 +1106,16 @@ was discussed in the previous section::
 Above, the right side of the JOIN is a subquery that correlates to the
 ``user_account`` table that's on the left side of the join.
 
-When using :meth:`_expression.Select.lateral`, the behavior of
+When using :meth:`_expression.Select.lateral` , the behavior of
 :meth:`_expression.Select.correlate` and
 :meth:`_expression.Select.correlate_except` methods is applied to the
 :class:`.Lateral` construct as well.
 
 .. seealso::
 
-    :class:`_expression.Lateral`
+    :class:`_expression.Lateral` 
 
-    :meth:`_expression.Select.lateral`
+    :meth:`_expression.Select.lateral` 
 
 
 
@@ -1130,17 +1130,17 @@ statements together.  Other set operations such as INTERSECT [ALL] and
 EXCEPT [ALL] are also possible.
 
 SQLAlchemy's :class:`_sql.Select` construct supports compositions of this
-nature using functions like :func:`_sql.union`, :func:`_sql.intersect` and
-:func:`_sql.except_`, and the "all" counterparts :func:`_sql.union_all`,
-:func:`_sql.intersect_all` and :func:`_sql.except_all`. These functions all
+nature using functions like :func:`_sql.union` , :func:`_sql.intersect` and
+:func:`_sql.except_` , and the "all" counterparts :func:`_sql.union_all` ,
+:func:`_sql.intersect_all` and :func:` _sql.except_all`. These functions all
 accept an arbitrary number of sub-selectables, which are typically
 :class:`_sql.Select` constructs but may also be an existing composition.
 
-The construct produced by these functions is the :class:`_sql.CompoundSelect`,
+The construct produced by these functions is the :class:`_sql.CompoundSelect` ,
 which is used in the same manner as the :class:`_sql.Select` construct, except
 that it has fewer methods.   The :class:`_sql.CompoundSelect` produced by
 :func:`_sql.union_all` for example may be invoked directly using
-:meth:`_engine.Connection.execute`::
+:meth:`_engine.Connection.execute` ::
 
     >>> from sqlalchemy import union_all
     >>> stmt1 = select(user_table).where(user_table.c.name == "sandy")
@@ -1160,10 +1160,10 @@ that it has fewer methods.   The :class:`_sql.CompoundSelect` produced by
     {stop}[(2, 'sandy', 'Sandy Cheeks'), (1, 'spongebob', 'Spongebob Squarepants')]
     {execsql}ROLLBACK{stop}
 
-To use a :class:`_sql.CompoundSelect` as a subquery, just like :class:`_sql.Select`
+To use a :class:`_sql.CompoundSelect` as a subquery, just like :class:` _sql.Select`
 it provides a :meth:`_sql.SelectBase.subquery` method which will produce a
-:class:`_sql.Subquery` object with a :attr:`_sql.FromClause.c`
-collection that may be referred towards in an enclosing :func:`_sql.select`::
+:class:`_sql.Subquery` object with a :attr:` _sql.FromClause.c`
+collection that may be referred towards in an enclosing :func:`_sql.select` ::
 
     >>> u_subq = u.subquery()
     >>> stmt = (
@@ -1199,7 +1199,7 @@ The preceding examples illustrated how to construct a UNION given two
 :class:`_schema.Table` objects, to then return database rows.  If we wanted
 to use a UNION or other set operation to select rows that we then receive
 as ORM objects, there are two approaches that may be used.  In both cases,
-we first construct a :func:`_sql.select` or :class:`_sql.CompoundSelect`
+we first construct a :func:`_sql.select` or :class:` _sql.CompoundSelect`
 object that represents the SELECT / UNION / etc statement we want to
 execute; this statement should be composed against the target
 ORM entities or their underlying mapped :class:`_schema.Table` objects::
@@ -1232,9 +1232,9 @@ criteria can be added after :meth:`_sql.Select.from_statement` is used::
 
 To use a UNION or other set-related construct as an entity-related component in
 in a more flexible manner, the :class:`_sql.CompoundSelect` construct may be
-organized into a subquery using :meth:`_sql.CompoundSelect.subquery`, which
+organized into a subquery using :meth:`_sql.CompoundSelect.subquery` , which
 then links to ORM objects using the :func:`_orm.aliased` function. This works
-in the same way introduced at :ref:`tutorial_subqueries_orm_aliased`, to first
+in the same way introduced at :ref:`tutorial_subqueries_orm_aliased` , to first
 create an ad-hoc "mapping" of our desired entity to the subquery, then
 selecting from that that new entity as though it were any other mapped class.
 In the example below, we are able to add additional criteria such as ORDER BY
@@ -1260,7 +1260,7 @@ by the subquery::
 
 .. seealso::
 
-    :ref:`orm_queryguide_unions` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_unions` - in the :ref:` queryguide_toplevel`
 
 .. _tutorial_exists:
 
@@ -1270,7 +1270,7 @@ EXISTS subqueries
 The SQL EXISTS keyword is an operator that is used with :ref:`scalar subqueries
 <tutorial_scalar_subquery>` to return a boolean true or false depending on if
 the SELECT statement would return a row.  SQLAlchemy includes a variant of the
-:class:`_sql.ScalarSelect` object called :class:`_sql.Exists`, which will
+:class:`_sql.ScalarSelect` object called :class:` _sql.Exists`, which will
 generate an EXISTS subquery and is most conveniently generated using the
 :meth:`_sql.SelectBase.exists` method.  Below we produce an EXISTS so that we
 can return ``user_account`` rows that have more than one related row in
@@ -1329,9 +1329,9 @@ Working with SQL Functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First introduced earlier in this section at
-:ref:`tutorial_group_by_w_aggregates`, the :data:`_sql.func` object serves as a
+:ref:`tutorial_group_by_w_aggregates` , the :data:`_sql.func` object serves as a
 factory for creating new :class:`_functions.Function` objects, which when used
-in a construct like :func:`_sql.select`, produce a SQL function display,
+in a construct like :func:`_sql.select` , produce a SQL function display,
 typically consisting of a name, some parenthesis (although not always), and
 possibly some arguments. Examples of typical SQL functions include:
 
@@ -1384,7 +1384,7 @@ considered to be a SQL function that will render in a generic way::
     FROM user_account
 
 At the same time, a relatively small set of extremely common SQL functions such
-as :class:`_functions.count`, :class:`_functions.now`, :class:`_functions.max`,
+as :class:`_functions.count` , :class:`_functions.now` , :class:`_functions.max` ,
 :class:`_functions.concat` include pre-packaged versions of themselves which
 provide for proper typing information as well as backend-specific SQL
 generation in some cases.  The example below contrasts the SQL generation
@@ -1409,7 +1409,7 @@ in the context of a database-side SQL expression,
 as opposed to the "return type" of a Python function.
 
 The SQL return type of any SQL function may be accessed, typically for
-debugging purposes, by referring to the :attr:`_functions.Function.type`
+debugging purposes, by referring to the :attr:`_functions.Function.type` 
 attribute::
 
     >>> func.now().type
@@ -1418,12 +1418,12 @@ attribute::
 These SQL return types are significant when making
 use of the function expression in the context of a larger expression; that is,
 math operators will work better when the datatype of the expression is
-something like :class:`_types.Integer` or :class:`_types.Numeric`, JSON
+something like :class:`_types.Integer` or :class:` _types.Numeric`, JSON
 accessors in order to work need to be using a type such as
-:class:`_types.JSON`.  Certain classes of functions return entire rows
+:class:`_types.JSON` .  Certain classes of functions return entire rows
 instead of column values, where there is a need to refer to specific columns;
 such functions are referred towards
-as :ref:`table valued functions <tutorial_functions_table_valued>`.
+as :ref:`table valued functions <tutorial_functions_table_valued>` .
 
 The SQL return type of the function may also be significant when executing a
 statement and getting rows back, for those cases where SQLAlchemy has to apply
@@ -1453,10 +1453,10 @@ elements::
 Built-in Functions Have Pre-Configured Return Types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For common aggregate functions like :class:`_functions.count`,
-:class:`_functions.max`, :class:`_functions.min` as well as a very small number
+For common aggregate functions like :class:`_functions.count` ,
+:class:`_functions.max` , :class:`_functions.min` as well as a very small number
 of date functions like :class:`_functions.now` and string functions like
-:class:`_functions.concat`, the SQL return type is set up appropriately,
+:class:`_functions.concat` , the SQL return type is set up appropriately,
 sometimes based on usage. The :class:`_functions.max` function and similar
 aggregate filtering functions will set up the SQL return type based on the
 argument given::
@@ -1470,15 +1470,15 @@ argument given::
     String()
 
 Date and time functions typically correspond to SQL expressions described by
-:class:`_types.DateTime`, :class:`_types.Date` or :class:`_types.Time`::
+:class:`_types.DateTime` , :class:`_types.Date` or :class:` _types.Time`::
 
     >>> func.now().type
     DateTime()
     >>> func.current_date().type
     Date()
 
-A known string function such as :class:`_functions.concat`
-will know that a SQL expression would be of type :class:`_types.String`::
+A known string function such as :class:`_functions.concat` 
+will know that a SQL expression would be of type :class:`_types.String` ::
 
     >>> func.concat("x", "y").type
     String()
@@ -1506,7 +1506,7 @@ Overall, the scenario where the
 :paramref:`_functions.Function.type_` parameter is likely necessary is:
 
 1. the function is not already a SQLAlchemy built-in function; this can be
-   evidenced by creating the function and observing the :attr:`_functions.Function.type`
+   evidenced by creating the function and observing the :attr:`_functions.Function.type` 
    attribute, that is::
 
       >>> func.count().type
@@ -1521,12 +1521,12 @@ Overall, the scenario where the
 
 2. Function-aware expression support is needed; this most typically refers to
    special operators related to datatypes such as :class:`_types.JSON` or
-   :class:`_types.ARRAY`
+   :class:`_types.ARRAY` 
 
 3. Result value processing is needed, which may include types such as
-   :class:`_functions.DateTime`, :class:`_types.Boolean`, :class:`_types.Enum`,
-   or again special datatypes such as :class:`_types.JSON`,
-   :class:`_types.ARRAY`.
+   :class:`_functions.DateTime` , :class:`_types.Boolean` , :class:`_types.Enum` ,
+   or again special datatypes such as :class:`_types.JSON` ,
+   :class:`_types.ARRAY` .
 
 Advanced SQL Function Techniques
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1587,7 +1587,7 @@ number the email addresses of individual users:
 
 Above, the :paramref:`_functions.FunctionElement.over.partition_by` parameter
 is used so that the ``PARTITION BY`` clause is rendered within the OVER clause.
-We also may make use of the ``ORDER BY`` clause using :paramref:`_functions.FunctionElement.over.order_by`:
+We also may make use of the ``ORDER BY`` clause using :paramref:`_functions.FunctionElement.over.order_by` :
 
 .. sourcecode:: pycon+sql
 
@@ -1616,7 +1616,7 @@ Further options for window functions include usage of ranges; see
 
 .. tip::
 
-   It's important to note that the :meth:`_functions.FunctionElement.over`
+   It's important to note that the :meth:`_functions.FunctionElement.over` 
    method only applies to those SQL functions which are in fact aggregate
    functions; while the :class:`_sql.Over` construct will happily render itself
    for any SQL function given, the database will reject the expression if the
@@ -1631,9 +1631,9 @@ The "WITHIN GROUP" SQL syntax is used in conjunction with an "ordered set"
 or a "hypothetical set" aggregate
 function.  Common "ordered set" functions include ``percentile_cont()``
 and ``rank()``.  SQLAlchemy includes built in implementations
-:class:`_functions.rank`, :class:`_functions.dense_rank`,
-:class:`_functions.mode`, :class:`_functions.percentile_cont` and
-:class:`_functions.percentile_disc` which include a :meth:`_functions.FunctionElement.within_group`
+:class:`_functions.rank` , :class:`_functions.dense_rank` ,
+:class:`_functions.mode` , :class:`_functions.percentile_cont` and
+:class:`_functions.percentile_disc` which include a :meth:` _functions.FunctionElement.within_group`
 method::
 
     >>> print(
@@ -1683,7 +1683,7 @@ Oracle, and SQL Server.
 
 .. seealso::
 
-    :ref:`postgresql_table_valued_overview` - in the :ref:`postgresql_toplevel` documentation.
+    :ref:`postgresql_table_valued_overview` - in the :ref:` postgresql_toplevel` documentation.
 
     While many databases support table valued and other special
     forms, PostgreSQL tends to be where there is the most demand for these
@@ -1696,7 +1696,7 @@ as the basic "table valued function" construct, which will convert a
 columns, based on string names passed positionally. This returns a
 :class:`_sql.TableValuedAlias` object, which is a function-enabled
 :class:`_sql.Alias` construct that may be used as any other FROM clause as
-introduced at :ref:`tutorial_using_aliases`. Below we illustrate the
+introduced at :ref:`tutorial_using_aliases` . Below we illustrate the
 ``json_each()`` function, which while common on PostgreSQL is also supported by
 modern versions of SQLite::
 
@@ -1719,7 +1719,7 @@ towards as ``value``, and then selected two of its three rows.
 
 .. seealso::
 
-    :ref:`postgresql_table_valued` - in the :ref:`postgresql_toplevel` documentation -
+    :ref:`postgresql_table_valued` - in the :ref:` postgresql_toplevel` documentation -
     this section will detail additional syntaxes such as special column derivations
     and "WITH ORDINALITY" that are known to work with PostgreSQL.
 
@@ -1757,7 +1757,7 @@ it is usable for custom SQL functions::
 
 .. seealso::
 
-    :ref:`postgresql_column_valued` - in the :ref:`postgresql_toplevel` documentation.
+    :ref:`postgresql_column_valued` - in the :ref:` postgresql_toplevel` documentation.
 
 .. _tutorial_casts:
 
@@ -1804,7 +1804,7 @@ expression, for all the reasons mentioned above, but to not render the CAST
 expression itself on the SQL side, where it may interfere with a SQL operation
 that already works without it.  For this fairly common use case there is
 another function :func:`.type_coerce` which is closely related to
-:func:`.cast`, in that it sets up a Python expression as having a specific SQL
+:func:`.cast` , in that it sets up a Python expression as having a specific SQL
 database type, but does not render the ``CAST`` keyword or datatype on the
 database side.    :func:`.type_coerce` is particularly important when dealing
 with the :class:`_types.JSON` datatype, which typically has an intricate
@@ -1825,7 +1825,7 @@ string into one of MySQL's JSON functions:
 
 Above, MySQL's ``JSON_EXTRACT`` SQL function was invoked
 because we used :func:`.type_coerce` to indicate that our Python dictionary
-should be treated as :class:`_types.JSON`.  The Python ``__getitem__``
+should be treated as :class:`_types.JSON` .  The Python ``__getitem__``
 operator, ``['some_key']`` in this case, became available as a result and
 allowed a ``JSON_EXTRACT`` path expression (not shown, however in this
 case it would ultimately be ``'$."some_key"'``) to be rendered.

@@ -84,7 +84,7 @@ This is most easily accomplished using the
 :meth:`~.Session.execute` method, which returns a
 :class:`~sqlalchemy.engine.CursorResult` in the same manner as an
 :class:`~sqlalchemy.engine.Engine` or
-:class:`~sqlalchemy.engine.Connection`::
+:class:`~sqlalchemy.engine.Connection` ::
 
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -103,7 +103,7 @@ The current :class:`~sqlalchemy.engine.Connection` held by the
 
 The examples above deal with a :class:`_orm.Session` that's
 bound to a single :class:`_engine.Engine` or
-:class:`_engine.Connection`. To execute statements using a
+:class:`_engine.Connection` . To execute statements using a
 :class:`_orm.Session` which is bound either to multiple
 engines, or none at all (i.e. relies upon bound metadata), both
 :meth:`_orm.Session.execute` and
@@ -213,7 +213,7 @@ NULL value being directly present in the target INSERT statement.
 If we'd like to be able to use the Python value ``None`` and have this
 also be persisted as NULL despite the presence of column defaults,
 we can configure this for the ORM using a Core-level modifier
-:meth:`.TypeEngine.evaluates_none`, which indicates
+:meth:`.TypeEngine.evaluates_none` , which indicates
 a type where the ORM should treat the value ``None`` the same as any other
 value and pass it through, rather than omitting it as a "missing" value::
 
@@ -248,7 +248,7 @@ value and pass it through, rather than omitting it as a "missing" value::
 Fetching Server-Generated Defaults
 ===================================
 
-As introduced in the sections :ref:`server_defaults` and :ref:`triggered_columns`,
+As introduced in the sections :ref:`server_defaults` and :ref:` triggered_columns`,
 the Core supports the notion of database columns for which the database
 itself generates a value upon INSERT and in less common cases upon UPDATE
 statements.  The ORM features support for such columns regarding being
@@ -263,7 +263,7 @@ from a sequence associated with the column.   Every database dialect within
 SQLAlchemy Core supports a method of retrieving these primary key values which
 is often native to the Python DBAPI, and in general this process is automatic.
 There is more documentation regarding this at
-:paramref:`_schema.Column.autoincrement`.
+:paramref:`_schema.Column.autoincrement` .
 
 For server-generating columns that are not primary key columns or that are not
 simple autoincrementing integer columns, the ORM requires that these columns
@@ -280,12 +280,12 @@ Case 1: non primary key, RETURNING or equivalent is supported
 -------------------------------------------------------------
 
 In this case, columns should be marked as :class:`.FetchedValue` or with an
-explicit :paramref:`_schema.Column.server_default`.   The ORM will
+explicit :paramref:`_schema.Column.server_default` .   The ORM will
 automatically add these columns to the RETURNING clause when performing
 INSERT statements, assuming the
-:paramref:`_orm.Mapper.eager_defaults` parameter is set to ``True``, or
+:paramref:`_orm.Mapper.eager_defaults` parameter is set to ` `True``, or
 if left at its default setting of ``"auto"``, for dialects that support
-both RETURNING as well as :ref:`insertmanyvalues <engine_insertmanyvalues>`::
+both RETURNING as well as :ref:`insertmanyvalues <engine_insertmanyvalues>` ::
 
 
     class MyModel(Base):
@@ -318,7 +318,7 @@ above table will look like:
 .. versionchanged:: 2.0.0rc1 The :paramref:`_orm.Mapper.eager_defaults` parameter now defaults
    to a new setting ``"auto"``, which will automatically make use of RETURNING
    to fetch server-generated default values on INSERT if the backing database
-   supports both RETURNING as well as :ref:`insertmanyvalues <engine_insertmanyvalues>`.
+   supports both RETURNING as well as :ref:`insertmanyvalues <engine_insertmanyvalues>` .
 
 .. note:: The ``"auto"`` value for :paramref:`_orm.Mapper.eager_defaults` only
    applies to INSERT statements.  UPDATE statements will not use RETURNING,
@@ -348,8 +348,8 @@ using triggers, such that RETURNING can't be used:
 To disable the use of RETURNING for such values, including not just for
 server generated default values but also to ensure that the ORM will never
 use RETURNING with a particular table, specify
-:paramref:`_schema.Table.implicit_returning`
-as ``False`` for the mapped :class:`.Table`.  Using a Declarative mapping
+:paramref:`_schema.Table.implicit_returning` 
+as ``False`` for the mapped :class:`.Table` .  Using a Declarative mapping
 this looks like::
 
     class MyModel(Base):
@@ -382,7 +382,7 @@ Case 3: non primary key, RETURNING or equivalent is not supported or not needed
 --------------------------------------------------------------------------------
 
 This case is the same as case 1 above, except we typically don't want to
-use :paramref:`.orm.Mapper.eager_defaults`, as its current implementation
+use :paramref:`.orm.Mapper.eager_defaults` , as its current implementation
 in the absence of RETURNING support is to emit a SELECT-per-row, which
 is not performant.  Therefore the parameter is omitted in the mapping below::
 
@@ -438,7 +438,7 @@ PostgreSQL SERIAL, these types are handled automatically by the Core; databases
 include functions for fetching the "last inserted id" where RETURNING
 is not supported, and where RETURNING is supported SQLAlchemy will use that.
 
-For example, using Oracle with a column marked as :class:`.Identity`,
+For example, using Oracle with a column marked as :class:`.Identity` ,
 RETURNING is used automatically to fetch the new primary key value::
 
     class MyOracleModel(Base):
@@ -481,7 +481,7 @@ column so that it is used for new primary key generation, and also uses
 RETURNING to get the new value back immediately.
 
 If the source of data is not represented by a simple SQL function or
-:class:`.Sequence`, such as when using triggers or database-specific datatypes
+:class:`.Sequence` , such as when using triggers or database-specific datatypes
 that produce new values, the presence of a value-generating default may be
 indicated by using :class:`.FetchedValue` within the column definition. Below
 is a model that uses a SQL Server TIMESTAMP column as the primary key; on SQL
@@ -562,7 +562,7 @@ into the column::
         )
 
 Above, in addition to selecting the "NOW()" function, we additionally make
-use of the :class:`.Binary` datatype in conjunction with :func:`.cast` so that
+use of the :class:`.Binary` datatype in conjunction with :func:` .cast` so that
 the returned value is binary.  SQL rendered from the above within an
 INSERT looks like:
 
@@ -574,25 +574,25 @@ INSERT looks like:
 
 .. seealso::
 
-    :ref:`metadata_defaults_toplevel`
+    :ref:`metadata_defaults_toplevel` 
 
 Notes on eagerly fetching client invoked SQL expressions used for INSERT or UPDATE
 -----------------------------------------------------------------------------------
 
-The preceding examples indicate the use of :paramref:`_schema.Column.server_default`
+The preceding examples indicate the use of :paramref:`_schema.Column.server_default` 
 to create tables that include default-generation functions within their
 DDL.
 
 SQLAlchemy also supports non-DDL server side defaults, as documented at
-:ref:`defaults_client_invoked_sql`; these "client invoked SQL expressions"
+:ref:`defaults_client_invoked_sql` ; these "client invoked SQL expressions"
 are set up using the :paramref:`_schema.Column.default` and
 :paramref:`_schema.Column.onupdate` parameters.
 
 These SQL expressions currently are subject to the same limitations within the
 ORM as occurs for true server-side defaults; they won't be eagerly fetched with
-RETURNING when :paramref:`_orm.Mapper.eager_defaults` is set to ``"auto"`` or
+RETURNING when :paramref:`_orm.Mapper.eager_defaults` is set to ` `"auto"`` or
 ``True`` unless the :class:`.FetchedValue` directive is associated with the
-:class:`_schema.Column`, even though these expressions are not DDL server
+:class:`_schema.Column` , even though these expressions are not DDL server
 defaults and are actively rendered by SQLAlchemy itself. This limitation may be
 addressed in future SQLAlchemy releases.
 
@@ -600,13 +600,13 @@ The :class:`.FetchedValue` construct can be applied to
 :paramref:`_schema.Column.server_default` or
 :paramref:`_schema.Column.server_onupdate` at the same time that a SQL
 expression is used with :paramref:`_schema.Column.default` and
-:paramref:`_schema.Column.onupdate`, such as in the example below where the
+:paramref:`_schema.Column.onupdate` , such as in the example below where the
 ``func.now()`` construct is used as a client-invoked SQL expression
 for :paramref:`_schema.Column.default` and
-:paramref:`_schema.Column.onupdate`.  In order for the behavior of
+:paramref:`_schema.Column.onupdate` .  In order for the behavior of
 :paramref:`_orm.Mapper.eager_defaults` to include that it fetches these
 values using RETURNING when available, :paramref:`_schema.Column.server_default` and
-:paramref:`_schema.Column.server_onupdate` are used with :class:`.FetchedValue`
+:paramref:`_schema.Column.server_onupdate` are used with :class:` .FetchedValue`
 to ensure that the fetch occurs::
 
     class MyModel(Base):
@@ -647,12 +647,12 @@ Using INSERT, UPDATE and ON CONFLICT (i.e. upsert) to return ORM Objects
 SQLAlchemy 2.0 includes enhanced capabilities for emitting several varieties
 of ORM-enabled INSERT, UPDATE, and upsert statements.  See the
 document at :doc:`queryguide/dml` for documentation.  For upsert, see
-:ref:`orm_queryguide_upsert`.
+:ref:`orm_queryguide_upsert` .
 
 Using PostgreSQL ON CONFLICT with RETURNING to return upserted ORM objects
 ---------------------------------------------------------------------------
 
-This section has moved to :ref:`orm_queryguide_upsert`.
+This section has moved to :ref:`orm_queryguide_upsert` .
 
 
 .. _session_partitioning:
@@ -665,12 +665,12 @@ Simple Vertical Partitioning
 
 Vertical partitioning places different classes, class hierarchies,
 or mapped tables, across multiple databases, by configuring the
-:class:`.Session` with the :paramref:`.Session.binds` argument. This
+:class:`.Session` with the :paramref:` .Session.binds` argument. This
 argument receives a dictionary that contains any combination of
 ORM-mapped classes, arbitrary classes within a mapped hierarchy (such
 as declarative base classes or mixins), :class:`_schema.Table` objects,
 and :class:`_orm.Mapper` objects as keys, which then refer typically to
-:class:`_engine.Engine` or less typically :class:`_engine.Connection` objects as targets.
+:class:`_engine.Engine` or less typically :class:` _engine.Connection` objects as targets.
 The dictionary is consulted whenever the :class:`.Session` needs to
 emit SQL on behalf of a particular kind of mapped class in order to locate
 the appropriate source of database connectivity::
@@ -685,7 +685,7 @@ the appropriate source of database connectivity::
 
     session = Session()
 
-Above, SQL operations against either class will make usage of the :class:`_engine.Engine`
+Above, SQL operations against either class will make usage of the :class:`_engine.Engine` 
 linked to that class.     The functionality is comprehensive across both
 read and write operations; a :class:`_query.Query` that is against entities
 mapped to ``engine1`` (determined by looking at the first entity in the
@@ -743,7 +743,7 @@ class' hierarchy will be chosen to represent which engine should be used.
 
 .. seealso::
 
-    :paramref:`.Session.binds`
+    :paramref:`.Session.binds` 
 
 
 Coordination of Transactions for a multiple-engine Session
@@ -761,8 +761,8 @@ phase transactions across backends.  Most typically, it is known to work well
 with the PostgreSQL backend and to  a lesser extent with the MySQL backend.
 However, the :class:`.Session` is fully capable of taking advantage of the two
 phase transaction feature when the backend supports it, by setting the
-:paramref:`.Session.use_twophase` flag within :class:`.sessionmaker` or
-:class:`.Session`.  See :ref:`session_twophase` for an example.
+:paramref:`.Session.use_twophase` flag within :class:` .sessionmaker` or
+:class:`.Session` .  See :ref:`session_twophase` for an example.
 
 
 .. _session_custom_partitioning:
@@ -810,14 +810,14 @@ a custom :class:`.Session` which delivers the following rules:
             else:
                 return engines[random.choice(["follower1", "follower2"])]
 
-The above :class:`.Session` class is plugged in using the ``class_``
-argument to :class:`.sessionmaker`::
+The above :class:`.Session` class is plugged in using the ` `class_``
+argument to :class:`.sessionmaker` ::
 
     Session = sessionmaker(class_=RoutingSession)
 
 This approach can be combined with multiple :class:`_schema.MetaData` objects,
 using an approach such as that of using the declarative ``__abstract__``
-keyword, described at :ref:`declarative_abstract`.
+keyword, described at :ref:`declarative_abstract` .
 
 .. note:: While the above example illustrates routing of specific SQL statements
    to a so-called "leader" or "follower" database based on whether or not the
@@ -835,17 +835,17 @@ keyword, described at :ref:`declarative_abstract`.
 
 .. seealso::
 
-    `Django-style Database Routers in SQLAlchemy <https://techspot.zzzeek.org/2012/01/11/django-style-database-routers-in-sqlalchemy/>`_  - blog post on a more comprehensive example of :meth:`.Session.get_bind`
+    `Django-style Database Routers in SQLAlchemy <https://techspot.zzzeek.org/2012/01/11/django-style-database-routers-in-sqlalchemy/>`_  - blog post on a more comprehensive example of :meth:`.Session.get_bind` 
 
 Horizontal Partitioning
 -----------------------
 
 Horizontal partitioning partitions the rows of a single table (or a set of
-tables) across multiple databases.    The SQLAlchemy :class:`.Session`
+tables) across multiple databases.    The SQLAlchemy :class:`.Session` 
 contains support for this concept, however to use it fully requires that
-:class:`.Session` and :class:`_query.Query` subclasses are used.  A basic version
-of these subclasses are available in the :ref:`horizontal_sharding_toplevel`
-ORM extension.   An example of use is at: :ref:`examples_sharding`.
+:class:`.Session` and :class:` _query.Query` subclasses are used.  A basic version
+of these subclasses are available in the :ref:`horizontal_sharding_toplevel` 
+ORM extension.   An example of use is at: :ref:`examples_sharding` .
 
 .. _bulk_operations:
 
@@ -855,8 +855,8 @@ Bulk Operations
 .. legacy::
 
   SQLAlchemy 2.0 has integrated the :class:`_orm.Session` "bulk insert" and
-  "bulk update" capabilities into 2.0 style :meth:`_orm.Session.execute`
-  method, making direct use of :class:`_dml.Insert` and :class:`_dml.Update`
+  "bulk update" capabilities into 2.0 style :meth:`_orm.Session.execute` 
+  method, making direct use of :class:`_dml.Insert` and :class:` _dml.Update`
   constructs. See the document at :doc:`queryguide/dml` for documentation,
   including :ref:`orm_queryguide_legacy_bulk_insert` which illustrates migration
   from the older methods to the new methods.

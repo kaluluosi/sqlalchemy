@@ -102,7 +102,7 @@ an "offline" SQL generation mode that renders database migrations as SQL scripts
 How can I subclass Table/Column to provide certain behaviors/configurations?
 ============================================================================
 
-:class:`_schema.Table` and :class:`_schema.Column` are not good targets for direct subclassing.
+:class:`_schema.Table` and :class:` _schema.Column` are not good targets for direct subclassing.
 However, there are simple ways to get on-construction behaviors using creation
 functions, and behaviors related to the linkages between schema objects such as
 constraint conventions or naming conventions using attachment events.

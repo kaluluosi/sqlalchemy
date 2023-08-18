@@ -33,12 +33,12 @@ SQLAlchemy最终将取消对2.5版本的支持-当2.6版本成为基线时，SQL
 
 .. _feature_relationship_08:
 
-重写的 :func:`_orm.relationship` 机制
+重写的   :func:`_orm.relationship`  机制
 ----------------------------------------------
 
-0.8版具有更强大和更可行的系统，用于确定 :func:`_orm.relationship` 在两个实体之间如何连接。新系统包括以下功能：
+0.8版具有更强大和更可行的系统，用于确定   :func:`_orm.relationship`  在两个实体之间如何连接。新系统包括以下功能：
 
-* 当使用多个外键路径连接到目标时，在构建 :func:`_orm.relationship` 时，不再需要 ``primaryjoin`` 参数。仅需要 ``foreign_keys`` 参数来指定应包括哪些列：
+* 当使用多个外键路径连接到目标时，在构建   :func:`_orm.relationship`  时，不再需要 ` `primaryjoin`` 参数。仅需要 ``foreign_keys`` 参数来指定应包括哪些列：
 
   ::
 
@@ -114,7 +114,7 @@ SQLAlchemy最终将取消对2.5版本的支持-当2.6版本成为基线时，SQL
             remote_side=ip_address,
         )
 
-  新的 :func:`_orm.relationship` 机制使用 SQLAlchemy 概念称为 :term:`注释（annotations）` 。这些注释也可通过 :func:`.foreign` 和 :func:`.remote` 函数明确提供给应用程序代码，作为提高高级配置的可读性或直接注入精确配置的手段，从而绕过通常的连接检查启发式算法：
+  新的   :func:`_orm.relationship`  机制使用 SQLAlchemy 概念称为  :term:` 注释（annotations）`  。这些注释也可通过   :func:`.foreign`  和   :func:` .remote`  函数明确提供给应用程序代码，作为提高高级配置的可读性或直接注入精确配置的手段，从而绕过通常的连接检查启发式算法：
 
     from sqlalchemy.orm import foreign, remote
 
@@ -135,9 +135,9 @@ SQLAlchemy最终将取消对2.5版本的支持-当2.6版本成为基线时，SQL
 
 .. 参见::
 
-    :ref:`relationship_configure_joins` - 新修订了 :func:`_orm.relationship` 的一部分，详细介绍了定制相关属性和集合访问的最新技术。
+      :ref:`relationship_configure_joins`  - 新修订了   :func:` _orm.relationship`  的一部分，详细介绍了定制相关属性和集合访问的最新技术。
 
-:ticket:`1401` :ticket:`610`
+  :ticket:`1401`    :ticket:` 610` 
 
 .. _feature_orminspection_08:
 
@@ -146,9 +146,9 @@ SQLAlchemy最终将取消对2.5版本的支持-当2.6版本成为基线时，SQL
 
 许多SQLAlchemy用户正在编写需要检查映射类的属性的系统，包括能够获取主键列、对象关系、普通属性等等，通常用于构建数据封送系统，如JSON/XML转换方案和当然还有表单库等等。
 
-最初， :class:`_schema.Table` 和 :class:`_schema.Column` 模型是原始检查点，具有良好记录的系统。虽然ORM模型也是完全可检查的，但这从来不是完全稳定和受支持的特性，用户倾向于不知道如何获取此信息。
+最初，   :class:`_schema.Table`  和   :class:` _schema.Column`  模型是原始检查点，具有良好记录的系统。虽然ORM模型也是完全可检查的，但这从来不是完全稳定和受支持的特性，用户倾向于不知道如何获取此信息。
 
-0.8现在为此提供了一致，稳定且完全记录的API，包括一组可用于映射类别，实例，属性和其他核心和ORM结构的检查系统。这个系统的入口点是核心级 :func:`_sa.inspect` 函数。在大多数情况下，正在检查的对象是SQLAlchemy系统的一部分，例如 :class:`_orm.Mapper`，:class:`.InstanceState`，:class:`_reflection.Inspector`。在某些情况下，已添加具有提供检查API的作业的新对象，在特定上下文中，例如 :class:`.AliasedInsp` 和 :class:`.AttributeState`。
+0.8现在为此提供了一致，稳定且完全记录的API，包括一组可用于映射类别，实例，属性和其他核心和ORM结构的检查系统。这个系统的入口点是核心级   :func:`_sa.inspect`  函数。在大多数情况下，正在检查的对象是SQLAlchemy系统的一部分，例如   :class:` _orm.Mapper` ，  :class:`.InstanceState` ，  :class:` _reflection.Inspector` 。在某些情况下，已添加具有提供检查API的作业的新对象，在特定上下文中，例如   :class:`.AliasedInsp`  和   :class:` .AttributeState` 。
 
 以下是一些关键功能的说明：
 
@@ -256,22 +256,22 @@ SQLAlchemy最终将取消对2.5版本的支持-当2.6版本成为基线时，SQL
 
 .. 参见::
 
-    :ref:`core_inspection_toplevel`
+      :ref:`core_inspection_toplevel` 
 
-:ticket:`2208`
+  :ticket:`2208`  
 
 可以将ORM类别用于核心构造
 -------------------------------------------
 
-虽然 :meth:`_query.Query.filter` 中使用的SQL表达式，如 ``User.id == 5``，对于 :func:`_expression.select` 等核心构造始终是兼容的，但映射的类本身在传递给 :func:`_expression.select`，:meth:`_expression.Select.select_from` 或 :meth:`_expression.Select.correlate` 时将无法识别。现在，新的SQL注册系统允许将映射类作为CORE中的FROM子句：
+虽然  :meth:`_query.Query.filter`  中使用的SQL表达式，如 ` `User.id == 5``，对于   :func:`_expression.select`  等核心构造始终是兼容的，但映射的类本身在传递给   :func:` _expression.select` ，  :meth:`_expression.Select.select_from`   或  :meth:` _expression.Select.correlate`  时将无法识别。现在，新的SQL注册系统允许将映射类作为CORE中的FROM子句：
 
     from sqlalchemy import select
 
     stmt = select([User]).where(User.id == 5)
 
-在上面的示例中，映射的 ``User`` 类将会被扩展为与其映射的 :class:`_schema.Table`。
+在上面的示例中，映射的 ``User`` 类将会被扩展为与其映射的   :class:`_schema.Table` 。
 
-:ticket:`2245`
+  :ticket:`2245`  
 
 .. _change_orm_2365:
 
@@ -299,14 +299,14 @@ Query.update() 支持 UPDATE..FROM
     UPDATE engineer SET engineer_data='java' FROM person
     WHERE person.id=engineer.id AND person.name='dilbert'
 
-:ticket:`2365`
+  :ticket:`2365`  
 
 rollback() 仅回滚begin_nested（）中的“dirty”对象
 -----------------------------------------------------
 
 针对使用 ``Session.begin_nested()`` 的SAVEPOINT的用户，将在 ``rollback()`` 时仅过期那些自上次刷新后变脏的对象，而会话的其余部分仍然完好无损。这是因为ROLLBACK到SAVEPOINT并不会终止包含事务的隔离，因此除了那些没有在当前事务中刷新的更改之外，不需要过期。这将提高工作效率。
 
-:ticket:`2452`
+  :ticket:`2452`  
 
 缓存示例现在使用dogpile.cache
 -----------------------------------
@@ -332,9 +332,9 @@ rollback() 仅回滚begin_nested（）中的“dirty”对象
 
 .. 参见::
 
-    :ref:`examples_caching`
+      :ref:`examples_caching` 
 
-:ticket:`2589`
+  :ticket:`2589`  
 
 新的CORE功能
 ================
@@ -342,11 +342,11 @@ rollback() 仅回滚begin_nested（）中的“dirty”对象
 Core中完全可扩展的类型级运算符支持
 -----------------------------------------------------
 
-到目前为止，Core从未具有为Column和其他表达式结构添加支持新SQL运算符的任何系统，除了 :meth:`.ColumnOperators.op` 方法“只是足够”可以使其正常工作。在Core中还从未有过任何可以允许覆盖现有运算符行为的系统。迄今为止，唯一可以灵活地重新定义运算符的方式是使用ORM层，使用 :func:`.column_property` 并给定 ``comparator_factory`` 参数。因此，第三方库如GeoAlchemy被强制为ORM-centric，并依赖于一系列hack来应用新操作，以及使它们正确传播。
+到目前为止，Core从未具有为Column和其他表达式结构添加支持新SQL运算符的任何系统，除了  :meth:`.ColumnOperators.op`  方法“只是足够”可以使其正常工作。在Core中还从未有过任何可以允许覆盖现有运算符行为的系统。迄今为止，唯一可以灵活地重新定义运算符的方式是使用ORM层，使用   :func:` .column_property`  并给定 ``comparator_factory`` 参数。因此，第三方库如GeoAlchemy被强制为ORM-centric，并依赖于一系列hack来应用新操作，以及使它们正确传播。
 
-Core中的新运算符系统添加了一直缺失的一个钩子，即将新的和覆盖的运算符与*类型*关联起来。毕竟，实际上*不是*一个列，CAST运算符或SQL函数真正驱动可用的操作类型的种类。实现细节很少-只添加了一些额外的方法到核心 :class:`_expression.ColumnElement` 类型，以便在核心中的 :class:`.TypeEngine` 对象中查看可选运算符集。新的或修订的操作可以与任何类型关联，无论是通过现有类型的子类化，使用 :class:`.TypeDecorator`，或通过将新的 :class:`.TypeEngine.Comparator` 对象附加到现有类型类“全局跨越。” 
+Core中的新运算符系统添加了一直缺失的一个钩子，即将新的和覆盖的运算符与*类型*关联起来。毕竟，实际上*不是*一个列，CAST运算符或SQL函数真正驱动可用的操作类型的种类。实现细节很少-只添加了一些额外的方法到核心   :class:`_expression.ColumnElement`  类型，以便在核心中的   :class:` .TypeEngine`  对象中查看可选运算符集。新的或修订的操作可以与任何类型关联，无论是通过现有类型的子类化，使用   :class:`.TypeDecorator` ，或通过将新的   :class:` .TypeEngine.Comparator`  对象附加到现有类型类“全局跨越。” 
 
-例如，要将logarithm支持添加到 :class:`.Numeric` 类型：
+例如，要将logarithm支持添加到   :class:`.Numeric`  类型：
 
 ::
 
@@ -379,18 +379,18 @@ Core中的新运算符系统添加了一直缺失的一个钩子，即将新的�
 
 .. 参见::
 
-    :ref:`types_operators`
+      :ref:`types_operators` 
 
-    :class:`.HSTORE`
+      :class:`.HSTORE` 
 
-:ticket:`2547`
+  :ticket:`2547`  
 
 .. _feature_2623:
 
 支持Insert的多重VALUES
 --------------------------------------------------
 
-:meth:`_expression.Insert.values` 方法现在支持字典列表，这将呈现出multi-VALUES语句，例如 ``VALUES (<row1>), (<row2>), ...``。这仅涉及支持这种语法的后端，包括PostgreSQL，SQLite和MySQL。它与通常的 ``executemany()`` 样式的INSERT不同，它保持不变：
+  :meth:`_expression.Insert.values`   方法现在支持字典列表，这将呈现出multi-VALUES语句，例如 ` `VALUES (<row1>), (<row2>), ...``。这仅涉及支持这种语法的后端，包括PostgreSQL，SQLite和MySQL。它与通常的 ``executemany()`` 样式的INSERT不同，它保持不变：
 
     users.insert().values(
         [
@@ -402,14 +402,14 @@ Core中的新运算符系统添加了一直缺失的一个钩子，即将新的�
 
 .. 参见::
 
-    :meth:`_expression.Insert.values`
+     :meth:`_expression.Insert.values` 
 
-:ticket:`2623`
+  :ticket:`2623`  
 
 类型表达式
 ----------------
 
-现在可以将SQL表达式与类型相对应。 历史上， :class:`.TypeEngine` 总是允许Python侧函数，其接收绑定参数以及结果行值，并在通过Python侧转换函数时将其传递到/从数据库。新功能允许在数据库方面进行类似功能，但是它要将SQL表达式与类型相关联：
+现在可以将SQL表达式与类型相对应。 历史上，   :class:`.TypeEngine`  总是允许Python侧函数，其接收绑定参数以及结果行值，并在通过Python侧转换函数时将其传递到/从数据库。新功能允许在数据库方面进行类似功能，但是它要将SQL表达式与类型相关联：
 
     from sqlalchemy.types import String
     from sqlalchemy import func, Table, Column, MetaData
@@ -439,14 +439,14 @@ Core中的新运算符系统添加了一直缺失的一个钩子，即将新的�
 
 .. 参见::
 
-    :ref:`types_sql_value_processing`
+      :ref:`types_sql_value_processing` 
 
-:ticket:`1534`
+  :ticket:`1534`  
 
 Core检查系统
 ------------------
 
-在 :ref:`feature_orminspection_08` 中引入的 :func:`_sa.inspect` 函数，现在也适用于Core。应用于 :class:`_engine.Engine` 它会产生 :class:`_reflection.Inspector` 对象：
+在   :ref:`feature_orminspection_08`  中引入的   :func:` _sa.inspect`  函数，现在也适用于Core。应用于   :class:`_engine.Engine`  它会产生   :class:` _reflection.Inspector`  对象：
 
     from sqlalchemy import inspect
     from sqlalchemy import create_engine
@@ -454,12 +454,12 @@ Core检查系统
     engine = create_engine("postgresql://scott:tiger@localhost/test")
     insp = inspect(engine)    print(insp.get_table_names())
 
-它还可以应用于任何 :class:`_expression.ClauseElement`，它返回 :class:`_expression.ClauseElement` 本身，例如 :class:`_schema.Table`、:class:`_schema.Column`、:class:`_expression.Select` 等。这使得它可以在 Core 和 ORM 结构之间流畅地工作。
+它还可以应用于任何   :class:`_expression.ClauseElement` ，它返回   :class:` _expression.ClauseElement`  本身，例如   :class:`_schema.Table` 、  :class:` _schema.Column` 、  :class:`_expression.Select`  等。这使得它可以在 Core 和 ORM 结构之间流畅地工作。
 
 
-新的方法 :meth:`_expression.Select.correlate_except`
+新的方法  :meth:`_expression.Select.correlate_except` 
 -------------------------------------------------------
-现在，:func:`_expression.select` 有一个方法 :meth:`_expression.Select.correlate_except`，它指定“对除特定选择之外的所有 FROM 子句进行关联”。它可用于映射场景，其中一个相关子查询应该正常关联，除了特定的目标可选择的子句：
+现在，  :func:`_expression.select`  有一个方法  :meth:` _expression.Select.correlate_except` ，它指定“对除特定选择之外的所有 FROM 子句进行关联”。它可用于映射场景，其中一个相关子查询应该正常关联，除了特定的目标可选择的子句：
 
     class SnortEvent(Base):
         __tablename__ = "event"
@@ -483,12 +483,12 @@ Core检查系统
 
 .. 参见::
 
-    :meth:`_expression.Select.correlate_except`
+     :meth:`_expression.Select.correlate_except` 
 
 PostgreSQL HSTORE 类型
 ----------------------
 
-现在可以使用 PostgreSQL 的 ``HSTORE`` 类型，例如 :class:`_postgresql.HSTORE`。该类型充分利用了新的运算符系统，为 HSTORE 类型提供了全面的运算符范围，包括索引访问、连接和包含方法，例如 :meth:`~.HSTORE.comparator_factory.has_key`、:meth:`~.HSTORE.comparator_factory.has_any` 和 :meth:`~.HSTORE.comparator_factory.matrix`：
+现在可以使用 PostgreSQL 的 ``HSTORE`` 类型，例如   :class:`_postgresql.HSTORE` 。该类型充分利用了新的运算符系统，为 HSTORE 类型提供了全面的运算符范围，包括索引访问、连接和包含方法，例如  :meth:` ~.HSTORE.comparator_factory.has_key` 、  :meth:`~.HSTORE.comparator_factory.has_any`   和  :meth:` ~.HSTORE.comparator_factory.matrix` ：
 
     from sqlalchemy.dialects.postgresql import HSTORE
 
@@ -505,17 +505,17 @@ PostgreSQL HSTORE 类型
 
 .. 参见::
 
-    :class:`_postgresql.HSTORE`
+      :class:`_postgresql.HSTORE` 
 
-    :class:`_postgresql.hstore`
+      :class:`_postgresql.hstore` 
 
-:ticket:`2606`
+  :ticket:`2606`  
 
 
 增强的 PostgreSQL ARRAY 类型
 -----------------------------
 
-:class:`_postgresql.ARRAY` 类型将接受一个名为“维度”的可选参数，将其固定为一定数量的维度，并在检索结果时大大提高效率：
+  :class:`_postgresql.ARRAY`  类型将接受一个名为“维度”的可选参数，将其固定为一定数量的维度，并在检索结果时大大提高效率：
 
 ::
 
@@ -550,11 +550,11 @@ PostgreSQL HSTORE 类型
 
 .. 参见::
 
-    :class:`_postgresql.ARRAY`
+      :class:`_postgresql.ARRAY` 
 
-    :class:`_postgresql.array`
+      :class:`_postgresql.array` 
 
-:ticket:`2441`
+  :ticket:`2441`  
 
 适用于 SQLite 的新可配置 DATE、TIME 类型
 ---------------------------------------------
@@ -586,18 +586,18 @@ SQLite 没有内置的 DATE、TIME 或 DATETIME 类型，而是提供了一些�
 
 .. 参见::
 
-    :class:`_sqlite.DATETIME`
+      :class:`_sqlite.DATETIME` 
 
-    :class:`_sqlite.DATE`
+      :class:`_sqlite.DATE` 
 
-    :class:`_sqlite.TIME`
+      :class:`_sqlite.TIME` 
 
-:ticket:`2363`
+  :ticket:`2363`  
 
 在所有方言上支持“COLLATE”；特别是在 MySQL、PostgreSQL 和 SQLite 中
 ----------------------------------------------------------------------------
 
-“collate”关键字在 MySQL 方言上被长期接受，现在已在所有 :class:`.String` 类型上及任何后端上呈现：
+“collate”关键字在 MySQL 方言上被长期接受，现在已在所有   :class:`.String`  类型上及任何后端上呈现：
 
 .. sourcecode:: pycon+sql
 
@@ -608,11 +608,11 @@ SQLite 没有内置的 DATE、TIME 或 DATETIME 类型，而是提供了一些�
 
 .. 参见::
 
-    :class:`.String`
+      :class:`.String` 
 
-:ticket:`2276`
+  :ticket:`2276`  
 
-为 :func:`_expression.update`、:func:`_expression.delete` 启用“前缀”
+为   :func:`_expression.update` 、  :func:` _expression.delete`  启用“前缀”
 -----------------------------------------------------------------------
 面向 MySQL，可以在任何这些结构中呈现前缀。“a=1”这样的比较就变成了“a IN (1,)”。
 例如：
@@ -623,21 +623,21 @@ SQLite 没有内置的 DATE、TIME 或 DATETIME 类型，而是提供了一些�
     stmt = table.update().prefix_with("LOW_PRIORITY", dialect="mysql")
 
 该方法是新添加的，另外加入了一些已经存在的方法，
-如 :func:`_expression.insert`、:func:`_expression.select` 和 :class:`_query.Query`
+如   :func:`_expression.insert` 、  :func:` _expression.select`  和   :class:`_query.Query` 
 
 .. 参见::
 
-    :meth:`_expression.Update.prefix_with`
+     :meth:`_expression.Update.prefix_with` 
 
-    :meth:`_expression.Delete.prefix_with`
+     :meth:`_expression.Delete.prefix_with` 
 
-    :meth:`_expression.Insert.prefix_with`
+     :meth:`_expression.Insert.prefix_with` 
 
-    :meth:`_expression.Select.prefix_with`
+     :meth:`_expression.Select.prefix_with` 
 
-    :meth:`_query.Query.prefix_with`
+     :meth:`_query.Query.prefix_with` 
 
-:ticket:`2431`
+  :ticket:`2431`  
 
 行为变化
 ==========
@@ -649,9 +649,9 @@ legacy_is_orphan_addition：
 将“挂起”对象视为“孤立”对象的考虑更加积极
 ----------------------------------------------------
 
-这是 0.8 系列的一个迟到的添加，但是希望新行为通常在更广泛的情况下更一致和直观。ORM 从至少版本 0.4 开始就包含行为，使得“挂起”的对象（即它与 :class:`.Session` 关联，但尚未插入到数据库中的对象）在成为“孤儿”时，在断开与引用它的父对象的关系（在配置的 :func:`_orm.relationship` 上使用“delete-orphan”级联时）时会自动从 :class:`.Session` 中删除，这种行为旨在大约类似于持久（即已插入）对象的行为，其中 ORM 将拦截分离事件并为基于分离事件的孤儿对象发出 DELETE。
+这是 0.8 系列的一个迟到的添加，但是希望新行为通常在更广泛的情况下更一致和直观。ORM 从至少版本 0.4 开始就包含行为，使得“挂起”的对象（即它与   :class:`.Session`  关联，但尚未插入到数据库中的对象）在成为“孤儿”时，在断开与引用它的父对象的关系（在配置的   :func:` _orm.relationship`  上使用“delete-orphan”级联时）时会自动从   :class:`.Session`  中删除，这种行为旨在大约类似于持久（即已插入）对象的行为，其中 ORM 将拦截分离事件并为基于分离事件的孤儿对象发出 DELETE。
 
-该行为适用于从属于多个父级都指定“delete-orphan”级联的任何父级都指定“delete-orphan”级联并且规模为一对多或多对多的 :func:`_orm.relationship`；这是一种尴尬而又无法预知地使用用例（受到一定限制），但尽管如此，该行为仍然希望在对象被部分地关联到要求的父级时能够更一致地操作，而不是需要所有父级都必须置于一个已知的状态。
+该行为适用于从属于多个父级都指定“delete-orphan”级联的任何父级都指定“delete-orphan”级联并且规模为一对多或多对多的   :func:`_orm.relationship` ；这是一种尴尬而又无法预知地使用用例（受到一定限制），但尽管如此，该行为仍然希望在对象被部分地关联到要求的父级时能够更一致地操作，而不是需要所有父级都必须置于一个已知的状态。
 
 发生更改的行为适用于以下对象：
 
@@ -668,9 +668,9 @@ legacy_is_orphan_addition：
             "Keyword", backref=backref("user_keywords", cascade="all, delete-orphan")
         )
 
-在以前的行为中，在所有父对象上均未放置该挂起的对象时，该对象将被删除，并且我的结果不同，如果该挂起的对象已与任何父级关联，将重新关联 :class:`.Session` 。
+在以前的行为中，在所有父对象上均未放置该挂起的对象时，该对象将被删除，并且我的结果不同，如果该挂起的对象已与任何父级关联，将重新关联   :class:`.Session`  。
 
-无论如何，您仍然可以刷新未与所有必需的父项关联的对象（即，如果该对象在首次关联时未与那些父项关联，或者如果该对象被强制删除，但是它后来又通过后续附加事件重新关联了 :class:`.Session`，但仍未完全关联）在此情况下，预计数据库会发出完整性错误，因为可能存在未填充的 NOT NULL 外键列。ORM 做出的决定是让这些 INSERT 尝试发生，基于这样的审判，一个只与某些父级部分关联但已积极关联到其中某些父级的对象更经常是用户错误，而不是意向性遗漏，此时忽略 INSERT 操作是更常见的用户错误，而不是应该默默地跳过--在这里默默跳过 INSERT 将使这种类型的用户错误非常难以调试。
+无论如何，您仍然可以刷新未与所有必需的父项关联的对象（即，如果该对象在首次关联时未与那些父项关联，或者如果该对象被强制删除，但是它后来又通过后续附加事件重新关联了   :class:`.Session` ，但仍未完全关联）在此情况下，预计数据库会发出完整性错误，因为可能存在未填充的 NOT NULL 外键列。ORM 做出的决定是让这些 INSERT 尝试发生，基于这样的审判，一个只与某些父级部分关联但已积极关联到其中某些父级的对象更经常是用户错误，而不是意向性遗漏，此时忽略 INSERT 操作是更常见的用户错误，而不是应该默默地跳过--在这里默默跳过 INSERT 将使这种类型的用户错误非常难以调试。
 
 对于可能依赖这种行为的应用程序，可以通过 mapper 选项将旧行为重新启用“legacy_is_orphan”。
 
@@ -736,7 +736,7 @@ legacy_is_orphan_addition：
 
     session.commit()
 
-:ticket:`2655`
+  :ticket:`2655`  
 
 在对象关联到 Session 后发生 after_attach 事件，而不是在之前；添加 before_attach
 -------------------------------------------------------------------------------------
@@ -747,7 +747,7 @@ legacy_is_orphan_addition：
     def after_attach(session, instance):
         assert instance in session
 
-某些用例需要它按此方式工作。但是，另一些用例要求该项尚未成为会话的一部分，例如，当查询旨在加载某些用于实例的必要状态时，它会首先发出 autoflush，并且将在未执行 :class:`.Session` 的任何关联事件之前更改结果。这些用例应使用新的“before_attach”事件：
+某些用例需要它按此方式工作。但是，另一些用例要求该项尚未成为会话的一部分，例如，当查询旨在加载某些用于实例的必要状态时，它会首先发出 autoflush，并且将在未执行   :class:`.Session`  的任何关联事件之前更改结果。这些用例应使用新的“before_attach”事件：
 
     @event.listens_for(Session, "before_attach")
     def before_attach(session, instance):
@@ -755,12 +755,12 @@ legacy_is_orphan_addition：
             session.query(Widget).filter_by(instance.widget_name).first()
         )
 
-:ticket:`2464`
+  :ticket:`2464`  
 
 查询现在会像 select() 一样自动关联
 --------------------------------------
 
-以前，必须调用 :meth:`_query.Query.correlate` 才能使列子查询或 WHERE 子查询与父级关联 :
+以前，必须调用  :meth:`_query.Query.correlate`  才能使列子查询或 WHERE 子查询与父级关联 :
 
     subq = (
         session.query(Entity.value)
@@ -809,7 +809,7 @@ legacy_is_orphan_addition：
 
 此更改不应影响任何现有应用程序，因为关联行为对于正确构建的表达式保持相同。只有测试场景中依赖于关联 SELECT 的非法字符串输出的应用程序会看到任何更改。
 
-:ticket:`2668`
+  :ticket:`2668`  
 
 
 correlation_context_specific:
@@ -817,38 +817,38 @@ correlation_context_specific:
 关联始终是上下文特定的
 --------------------------
 
-为了允许更广泛的关联方案，:meth:`_expression.Select.correlate` 和 :meth:`_query.Query.correlate` 的行为略有更改，以便仅在语句在该上下文中实际使用时，才从选择语句的 FROM 子句中省略“关联”目标。此外，无法自己指定一个在封闭的 SELECT 中作为一个 FROM 语句被放置的选择语句来“关联”（即，省略）FROM 子句。
+为了允许更广泛的关联方案，  :meth:`_expression.Select.correlate`   和  :meth:` _query.Query.correlate`  的行为略有更改，以便仅在语句在该上下文中实际使用时，才从选择语句的 FROM 子句中省略“关联”目标。此外，无法自己指定一个在封闭的 SELECT 中作为一个 FROM 语句被放置的选择语句来“关联”（即，省略）FROM 子句。
 
-此更改仅使呈现 SQL 更佳，在正确构建的表达式中，关联行为仍完全相同，包括“名字”和“键”方面的所有行为相同，包括呈现 SQL 仍然使用：<tablename>_<colname>该重点在于防止 :attr:`_schema.Column.key` 内容呈现为“SELECT”语句，以使 :attr:`_schema.Column.key` 中使用的特殊/非 ASCII 字符没有任何问题。
+此更改仅使呈现 SQL 更佳，在正确构建的表达式中，关联行为仍完全相同，包括“名字”和“键”方面的所有行为相同，包括呈现 SQL 仍然使用：<tablename>_<colname>该重点在于防止  :attr:`_schema.Column.key`  内容呈现为“SELECT”语句，以使  :attr:` _schema.Column.key`  中使用的特殊/非 ASCII 字符没有任何问题。
 
-:ticket:`2668`
+  :ticket:`2668`  
 
 
 metadata_create_drop_tables:
-.:meth:`_schema.MetaData.create_all` 和 :meth:`_schema.MetaData.drop_all` 现在将尊重空列表作为这样的
+.  :meth:`_schema.MetaData.create_all`   和  :meth:` _schema.MetaData.drop_all`  现在将尊重空列表作为这样的
 ----------------------------------------------------------------
 
-方法 :meth:`_schema.MetaData.create_all` 和 :meth:`_schema.MetaData.drop_all` 现在将接受一个空的 :class:`_schema.Table` 对象列表，并且不会发出任何 CREATE 或 DROP 语句。以前，空列表与传递“None”集合相同，并且 CREATE/DROP 将无条件地发出。
+方法  :meth:`_schema.MetaData.create_all`  和  :meth:` _schema.MetaData.drop_all`  现在将接受一个空的   :class:`_schema.Table`  对象列表，并且不会发出任何 CREATE 或 DROP 语句。以前，空列表与传递“None”集合相同，并且 CREATE/DROP 将无条件地发出。
 
 这是一个错误修复，但某些应用程序可能已经依赖于以前的行为。
 
-:ticket:`2664`
+  :ticket:`2664`  
 
-:func:`_orm.Session.is_modified` 的行为已修复
+  :func:`_orm.Session.is_modified`  的行为已修复
 ----------------------------------------------
 
-:meth:`.Session.is_modified` 方法接受一个参数“被动”，基本上不应该必要的情况下，所有情况下都应该是 “True” 的值 - 当其保留在其默认值“False”时，它会显示数据库，通常会触发 autoflush，它本身会更改结果。在 0.8 中，“被动”参数将无效，并且未加载的属性将永远不会检查其记录，因为按定义，未加载的属性上不能有待处理的状态更改。
+  :meth:`.Session.is_modified`   方法接受一个参数“被动”，基本上不应该必要的情况下，所有情况下都应该是 “True” 的值 - 当其保留在其默认值“False”时，它会显示数据库，通常会触发 autoflush，它本身会更改结果。在 0.8 中，“被动”参数将无效，并且未加载的属性将永远不会检查其记录，因为按定义，未加载的属性上不能有待处理的状态更改。
 
 .. 参见::
 
-    :meth:`.Session.is_modified`
+     :meth:`.Session.is_modified` 
 
-:ticket:`2320`
+  :ticket:`2320`  
 
-:attr:`_schema.Column.key` 在 :meth:`_expression.Select.apply_labels` 中使用 :class:`_expression.Select.c` 属性时得到了尊重
+  :attr:`_schema.Column.key`   在  :meth:` _expression.Select.apply_labels`  中使用   :class:`_expression.Select.c`  属性时得到了尊重
 ----------------------------------------------------------------------------------------------------------------
 
-表达式系统的用户知道，:meth:`_expression.Select.apply_labels` 将表名添加到每个列名之前，影响可从 :attr:`_expression.Select.c` 中使用的名称：
+表达式系统的用户知道，  :meth:`_expression.Select.apply_labels`   将表名添加到每个列名之前，影响可从  :attr:` _expression.Select.c`  中使用的名称：
 
 ::
 
@@ -856,7 +856,7 @@ metadata_create_drop_tables:
     s.c.table1_col1
     s.c.table1_col2
 
-在 0.8 之前，如果 :class:`_schema.Column` 具有不同的 :attr:`_schema.Column.key`，则此键将被忽略，相对于未使用 :meth:`_expression.Select.apply_labels` 时的不一致：
+在 0.8 之前，如果   :class:`_schema.Column`  具有不同的  :attr:` _schema.Column.key` ，则此键将被忽略，相对于未使用  :meth:`_expression.Select.apply_labels`  时的不一致：
 
     # 在 0.8 之前
     table1 = Table("t1", metadata, Column("col1", Integer, key="column_one"))
@@ -868,7 +868,7 @@ metadata_create_drop_tables:
     s.c.table1_column_one  # 将引发 AttributeError
     s.c.table1_col1  # 可以像这样访问
 
-在 0.8 中，:attr:`_schema.Column.key` 在两种情况下都会被尊重：
+在 0.8 中，  :attr:`_schema.Column.key`   在两种情况下都会被尊重：
 
     # 与 0.8 一起使用
     table1 = Table("t1", metadata, Column("col1", Integer, key="column_one"))
@@ -880,17 +880,17 @@ metadata_create_drop_tables:
     s.c.table1_column_one  # 有效
     s.c.table1_col1  # AttributeError
 
-所有其他的“name”和“key”行为都是相同的，包括呈现的 SQL 仍然使用形式“< tablename> _ <colname>”--重点是防止 :attr:`_schema.Column.key` 内容被呈现为“SELECT”语句，从而避免了使用 :attr:`_schema.Column.key` 中的特殊/非 ASCII 字符可能会出现的问题。
+所有其他的“name”和“key”行为都是相同的，包括呈现的 SQL 仍然使用形式“< tablename> _ <colname>”--重点是防止  :attr:`_schema.Column.key`  内容被呈现为“SELECT”语句，从而避免了使用  :attr:` _schema.Column.key`  中的特殊/非 ASCII 字符可能会出现的问题。
 
-:ticket:`2397`
+  :ticket:`2397`  
 
 单个父级警告现在为错误
 ------------------------
 
-由于某种原因，如果 :func:`_orm.relationship` 是一对多或多对多关系，并且指定了“cascade='all, delete-orphan'”，这是一种尴尬但仍然支持的用例（具有限制条件），如果关系没有指定 ``single_parent=True`` 选项，则现在将引发错误而不是警告。
+由于某种原因，如果   :func:`_orm.relationship`  是一对多或多对多关系，并且指定了“cascade='all, delete-orphan'”，这是一种尴尬但仍然支持的用例（具有限制条件），如果关系没有指定 ` `single_parent=True`` 选项，则现在将引发错误而不是警告。
 以前只会发出警告，但是几乎立即会在属性系统中因为警告而失败。
 
-:ticket:`2405`
+  :ticket:`2405`  
 
 为“列反映”添加“审核器”参数
 ---------------------------------------------
@@ -901,14 +901,14 @@ metadata_create_drop_tables:
     def listen_for_col(inspector, table, column_info):
         ...
 
-:ticket:`2418`
+  :ticket:`2418`  
 
 禁用 MySQL 的自动检测排序方式，大小写方式
 -----------------------------------------------------
 
 MySQL 方言为了连接所有可能的排序方式花费了两次调用，特别是消耗大量的时间，第一次在 ``Engine`` 连接的第一次，获取所有可能的排序方式，以及大小写方式的信息。这些集合不用于 SQLAlchemy 的任何功能，因此将更改这些调用不再自动发出。如果需要，可能会依赖于“engin.dialect” 中存在这些集合的应用程序需要直接调用“_detect_collations()”和“_detect_casing()”。
 
-:ticket:`2404`
+  :ticket:`2404`  
 
 “未使用的列名称”警告现在变成异常
 ----------------------------------
@@ -920,7 +920,7 @@ MySQL 方言为了连接所有可能的排序方式花费了两次调用，特�
     t1 = table("t1", column("x"))
     t1.insert().values(x=5, z=5)  # 引发 "Unconsumed column names: z"
 
-:ticket:`2415`
+  :ticket:`2415`  
 
 Inspector.get_primary_keys() 被弃用，请使用 Inspector.get_pk_constraint
 --------------------------------------------------------------------------
@@ -935,12 +935,12 @@ Inspector.get_primary_keys() 被弃用，请使用 Inspector.get_pk_constraint
     >>> insp.get_pk_constraint()
     {"name":"pk_constraint", "constrained_columns":["a", "b"]}
 
-:ticket:`2422`
+  :ticket:`2422`  
 
 在大多数情况下，将不再启用大小写不敏感的结果行名称
 ------------------------------------------------------
 
-对于大多数数据库/方言，添加一个新的配置 - :paramref:`_engine.create_engine.case_sensitive` 来控制大小写是否保留为结果行名称。该选项指示对结果行名称进行适当大小写，或仅对结果行名称进行小写或大写，具体取决于方言的处理方式。但是，几乎所有版本的 SQLite 都不能保留大小写，而要么只使用大写名称，要么只是小写名称。因此，对于 SQLite，case_sensitive=False 现在是默认设置，并且对于其他方言是 True。标准的 INI 文件系列目前未引用此设置，但是可以通过传递“sqlalchemy.create_engine（*args， ** kwargs）”参数来使用此选择。
+对于大多数数据库/方言，添加一个新的配置 -  :paramref:`_engine.create_engine.case_sensitive`  来控制大小写是否保留为结果行名称。该选项指示对结果行名称进行适当大小写，或仅对结果行名称进行小写或大写，具体取决于方言的处理方式。但是，几乎所有版本的 SQLite 都不能保留大小写，而要么只使用大写名称，要么只是小写名称。因此，对于 SQLite，case_sensitive=False 现在是默认设置，并且对于其他方言是 True。标准的 INI 文件系列目前未引用此设置，但是可以通过传递“sqlalchemy.create_engine（*args， ** kwargs）”参数来使用此选择。
 
 An error has occured parsing your request. Please try again. If this issue persists, contact support.一个非常老的行为，即``RowProxy``中的列名始终是不区分大小写比较：
 
@@ -972,7 +972,7 @@ SQLSoup是SQLAlchemy ORM上的一个备选接口。SQLSoup现已移到它自己�
 
 SQLSoup是一个非常简单的工具，也可以受益于那些对它的使用风格感兴趣的贡献者。
 
-:ticket:`2262`
+  :ticket:`2262`  
 
 MutableType
 -----------
@@ -981,11 +981,11 @@ MutableType
 
 今天，预计使用``MutableType``的人很少，因为多年来已经警告过其低效性。
 
-:ticket:`2442`
+  :ticket:`2442`  
 
 sqlalchemy.exceptions（数年来已是sqlalchemy.exc）
 ---------------------------------------------------------
 
 我们留下了一个别名``sqlalchemy.exceptions``，以试图使一些尚未升级到使用``sqlalchemy.exc``的非常老的库稍微容易一些。然而，一些用户仍然被困惑了，因此在0.8中完全删除它以消除任何混淆。
 
-:ticket:`2433`
+  :ticket:`2433`  

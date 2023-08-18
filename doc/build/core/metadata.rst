@@ -10,16 +10,16 @@ Describing Databases with MetaData
 
 .. module:: sqlalchemy.schema
 
-This section discusses the fundamental :class:`_schema.Table`, :class:`_schema.Column`
+This section discusses the fundamental :class:`_schema.Table` , :class:`_schema.Column` 
 and :class:`_schema.MetaData` objects.
 
 .. seealso::
 
     :ref:`tutorial_working_with_metadata` - tutorial introduction to
-    SQLAlchemy's database metadata concept in the :ref:`unified_tutorial`
+    SQLAlchemy's database metadata concept in the :ref:`unified_tutorial` 
 
 A collection of metadata entities is stored in an object aptly named
-:class:`~sqlalchemy.schema.MetaData`::
+:class:`~sqlalchemy.schema.MetaData` ::
 
     from sqlalchemy import MetaData
 
@@ -52,9 +52,9 @@ primary key, known as a *composite* primary key.
 
 Note also that each column describes its datatype using objects corresponding
 to genericized types, such as :class:`~sqlalchemy.types.Integer` and
-:class:`~sqlalchemy.types.String`. SQLAlchemy features dozens of types of
+:class:`~sqlalchemy.types.String` . SQLAlchemy features dozens of types of
 varying levels of specificity as well as the ability to create custom types.
-Documentation on the type system can be found at :ref:`types_toplevel`.
+Documentation on the type system can be found at :ref:`types_toplevel` .
 
 .. _metadata_tables_and_columns:
 
@@ -92,7 +92,7 @@ accessors which allow inspection of its properties. Given the following
 
 Note the :class:`~sqlalchemy.schema.ForeignKey` object used in this table -
 this construct defines a reference to a remote table, and is fully described
-in :ref:`metadata_foreignkeys`. Methods of accessing information about this
+in :ref:`metadata_foreignkeys` . Methods of accessing information about this
 table include::
 
     # access the column "employee_id":
@@ -144,11 +144,11 @@ table include::
 
   The :attr:`_sql.FromClause.c` collection, synonymous with the
   :attr:`_sql.FromClause.columns` collection, is an instance of
-  :class:`_sql.ColumnCollection`, which provides a **dictionary-like interface**
+  :class:`_sql.ColumnCollection` , which provides a **dictionary-like interface**
   to the collection of columns.   Names are ordinarily accessed like
   attribute names, e.g. ``employees.c.employee_name``.  However for special names
   with spaces or those that match the names of dictionary methods such as
-  :meth:`_sql.ColumnCollection.keys` or :meth:`_sql.ColumnCollection.values`,
+  :meth:`_sql.ColumnCollection.keys` or :meth:` _sql.ColumnCollection.values`,
   indexed access must be used, such as ``employees.c['values']`` or
   ``employees.c["some column"]``.  See :class:`_sql.ColumnCollection` for
   further information.
@@ -224,7 +224,7 @@ presence of each table is checked first, and tables are dropped in reverse
 order of dependency.
 
 Creating and dropping individual tables can be done via the ``create()`` and
-``drop()`` methods of :class:`~sqlalchemy.schema.Table`. These methods by
+``drop()`` methods of :class:`~sqlalchemy.schema.Table` . These methods by
 default issue the CREATE or DROP regardless of the table being present:
 
 .. sourcecode:: python+sql
@@ -272,7 +272,7 @@ schema constructs, the ability to alter those constructs, usually via the ALTER
 statement as well as other database-specific constructs, is outside of the
 scope of SQLAlchemy itself.  While it's easy enough to emit ALTER statements
 and similar by hand, such as by passing a :func:`_expression.text` construct to
-:meth:`_engine.Connection.execute` or by using the :class:`.DDL` construct, it's a
+:meth:`_engine.Connection.execute` or by using the :class:` .DDL` construct, it's a
 common practice to automate the maintenance of database schemas in relation to
 application code using schema migration tools.
 
@@ -303,18 +303,18 @@ remote servers (Oracle DBLINK with synonyms).
 What all of the above approaches have (mostly) in common is that there's a way
 of referring to this alternate set of tables using a string name.  SQLAlchemy
 refers to this name as the **schema name**.  Within SQLAlchemy, this is nothing
-more than a string name which is associated with a :class:`_schema.Table`
+more than a string name which is associated with a :class:`_schema.Table` 
 object, and is then rendered into SQL statements in a manner appropriate to the
 target database such that the table is referred towards in its remote "schema",
 whatever mechanism that is on the target database.
 
-The "schema" name may be associated directly with a :class:`_schema.Table`
+The "schema" name may be associated directly with a :class:`_schema.Table` 
 using the :paramref:`_schema.Table.schema` argument; when using the ORM
 with :ref:`declarative table <orm_declarative_table_config_toplevel>` configuration,
 the parameter is passed using the ``__table_args__`` parameter dictionary.
 
-The "schema" name may also be associated with the :class:`_schema.MetaData`
-object where it will take effect automatically for all :class:`_schema.Table`
+The "schema" name may also be associated with the :class:`_schema.MetaData` 
+object where it will take effect automatically for all :class:`_schema.Table` 
 objects associated with that :class:`_schema.MetaData` that don't otherwise
 specify their own name.  Finally, SQLAlchemy also supports a "dynamic" schema name
 system that is often used for multi-tenant applications such that a single set
@@ -356,7 +356,7 @@ using a Core :class:`_schema.Table` object as follows::
         schema="remote_banks",
     )
 
-SQL that is rendered using this :class:`_schema.Table`, such as the SELECT
+SQL that is rendered using this :class:`_schema.Table` , such as the SELECT
 statement below, will explicitly qualify the table name ``financial_info`` with
 the ``remote_banks`` schema name:
 
@@ -379,7 +379,7 @@ key ``'remote_banks.financial_info'``::
     schema='remote_banks')
 
 This dotted name is also what must be used when referring to the table
-for use with the :class:`_schema.ForeignKey` or :class:`_schema.ForeignKeyConstraint`
+for use with the :class:`_schema.ForeignKey` or :class:` _schema.ForeignKeyConstraint`
 objects, even if the referring table is also in that same schema::
 
     customer = Table(
@@ -404,7 +404,7 @@ at once, such as::
     :ref:`multipart_schema_names` - describes use of dotted schema names
     with the SQL Server dialect.
 
-    :ref:`metadata_reflection_schemas`
+    :ref:`metadata_reflection_schemas` 
 
 
 .. _schema_metadata_schema_name:
@@ -414,7 +414,7 @@ Specifying a Default Schema Name with MetaData
 
 The :class:`_schema.MetaData` object may also set up an explicit default
 option for all :paramref:`_schema.Table.schema` parameters by passing the
-:paramref:`_schema.MetaData.schema` argument to the top level :class:`_schema.MetaData`
+:paramref:`_schema.MetaData.schema` argument to the top level :class:` _schema.MetaData`
 construct::
 
     metadata_obj = MetaData(schema="remote_banks")
@@ -426,16 +426,16 @@ construct::
         Column("value", String(100), nullable=False),
     )
 
-Above, for any :class:`_schema.Table` object (or :class:`_schema.Sequence` object
-directly associated with the :class:`_schema.MetaData`) which leaves the
-:paramref:`_schema.Table.schema` parameter at its default of ``None`` will instead
+Above, for any :class:`_schema.Table` object (or :class:` _schema.Sequence` object
+directly associated with the :class:`_schema.MetaData` ) which leaves the
+:paramref:`_schema.Table.schema` parameter at its default of ` `None`` will instead
 act as though the parameter were set to the value ``"remote_banks"``.  This
-includes that the :class:`_schema.Table` is cataloged in the :class:`_schema.MetaData`
+includes that the :class:`_schema.Table` is cataloged in the :class:` _schema.MetaData`
 using the schema-qualified name, that is::
 
     metadata_obj.tables["remote_banks.financial_info"]
 
-When using the :class:`_schema.ForeignKey` or :class:`_schema.ForeignKeyConstraint`
+When using the :class:`_schema.ForeignKey` or :class:` _schema.ForeignKeyConstraint`
 objects to refer to this table, either the schema-qualified name or the
 non-schema-qualified name may be used to refer to the ``remote_banks.financial_info``
 table::
@@ -460,9 +460,9 @@ table::
     )
 
 When using a :class:`_schema.MetaData` object that sets
-:paramref:`_schema.MetaData.schema`, a :class:`_schema.Table` that wishes
+:paramref:`_schema.MetaData.schema` , a :class:`_schema.Table` that wishes
 to specify that it should not be schema qualified may use the special symbol
-:data:`_schema.BLANK_SCHEMA`::
+:data:`_schema.BLANK_SCHEMA` ::
 
     from sqlalchemy import BLANK_SCHEMA
 
@@ -478,7 +478,7 @@ to specify that it should not be schema qualified may use the special symbol
 
 .. seealso::
 
-    :paramref:`_schema.MetaData.schema`
+    :paramref:`_schema.MetaData.schema` 
 
 
 .. _schema_dynamic_naming_convention:
@@ -494,7 +494,7 @@ The section :ref:`schema_translating` describes how this feature is used.
 
 .. seealso::
 
-    :ref:`schema_translating`
+    :ref:`schema_translating` 
 
 
 .. _schema_set_default_connections:
@@ -543,7 +543,7 @@ for specific information regarding how default schemas are configured.
 
 .. seealso::
 
-    :ref:`postgresql_alternate_search_path` - in the :ref:`postgresql_toplevel` dialect documentation.
+    :ref:`postgresql_alternate_search_path` - in the :ref:` postgresql_toplevel` dialect documentation.
 
 
 
@@ -552,7 +552,7 @@ Schemas and Reflection
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The schema feature of SQLAlchemy interacts with the table reflection
-feature introduced at :ref:`metadata_reflection_toplevel`.  See the section
+feature introduced at :ref:`metadata_reflection_toplevel` .  See the section
 :ref:`metadata_reflection_schemas` for additional details on how this works.
 
 
@@ -582,12 +582,12 @@ Column, Table, MetaData API
 .. attribute:: sqlalchemy.schema.BLANK_SCHEMA
     :noindex:
 
-    Refers to :attr:`.SchemaConst.BLANK_SCHEMA`.
+    Refers to :attr:`.SchemaConst.BLANK_SCHEMA` .
 
 .. attribute:: sqlalchemy.schema.RETAIN_SCHEMA
     :noindex:
 
-    Refers to :attr:`.SchemaConst.RETAIN_SCHEMA`
+    Refers to :attr:`.SchemaConst.RETAIN_SCHEMA` 
 
 
 .. autoclass:: Column

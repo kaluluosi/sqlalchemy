@@ -19,7 +19,7 @@ instructions regarding secondary event targets based on the given target.
 
 The name of an event and the argument signature of a corresponding listener function is derived from
 a class bound specification method, which exists bound to a marker class that's described in the documentation.
-For example, the documentation for :meth:`_events.PoolEvents.connect` indicates that the event name is ``"connect"``
+For example, the documentation for :meth:`_events.PoolEvents.connect` indicates that the event name is ` `"connect"``
 and that a user-defined listener function should receive two positional arguments::
 
     from sqlalchemy.event import listen
@@ -48,11 +48,11 @@ Named Argument Styles
 ---------------------
 
 There are some varieties of argument styles which can be accepted by listener
-functions.  Taking the example of :meth:`_events.PoolEvents.connect`, this function
+functions.  Taking the example of :meth:`_events.PoolEvents.connect` , this function
 is documented as receiving ``dbapi_connection`` and ``connection_record`` arguments.
 We can opt to receive these arguments by name, by establishing a listener function
 that accepts ``**keyword`` arguments, by passing ``named=True`` to either
-:func:`.listen` or :func:`.listens_for`::
+:func:`.listen` or :func:` .listens_for`::
 
     from sqlalchemy.event import listens_for
     from sqlalchemy.pool import Pool
@@ -88,7 +88,7 @@ The :func:`.listen` function is very flexible regarding targets.  It
 generally accepts classes, instances of those classes, and related
 classes or objects from which the appropriate target can be derived.
 For example, the above mentioned ``"connect"`` event accepts
-:class:`_engine.Engine` classes and objects as well as :class:`_pool.Pool` classes
+:class:`_engine.Engine` classes and objects as well as :class:` _pool.Pool` classes
 and objects::
 
     from sqlalchemy.event import listen
@@ -123,7 +123,7 @@ and objects::
 Modifiers
 ---------
 
-Some listeners allow modifiers to be passed to :func:`.listen`.  These
+Some listeners allow modifiers to be passed to :func:`.listen` .  These
 modifiers sometimes provide alternate calling signatures for
 listeners.  Such as with ORM events, some event listeners can have a
 return value which modifies the subsequent handling.   By default, no
@@ -151,7 +151,7 @@ Both SQLAlchemy Core and SQLAlchemy ORM feature a wide variety of event hooks:
   transaction lifecycle, and schema creation and teardown.
 
 * **ORM Events** - these are described in
-  :ref:`orm_event_toplevel`, and include event hooks specific to
+  :ref:`orm_event_toplevel` , and include event hooks specific to
   class and attribute instrumentation, object initialization
   hooks, attribute on-change hooks, session state, flush, and
   commit hooks, mapper initialization, object/result population,

@@ -29,11 +29,11 @@ The PostgreSQL dialect supports both JSON and JSONB datatypes, including
 psycopg2's native support and support for all of PostgreSQL's special
 operators:
 
-* :class:`_postgresql.JSON`
+* :class:`_postgresql.JSON` 
 
-* :class:`_postgresql.JSONB`
+* :class:`_postgresql.JSONB` 
 
-* :class:`_postgresql.JSONPATH`
+* :class:`_postgresql.JSONPATH` 
 
 HSTORE Type
 -----------
@@ -57,7 +57,7 @@ entity.   The following sections should be consulted:
 
 * :meth:`.PGInspector.get_enums` - retrieve a listing of current ENUM types
 
-* :meth:`.postgresql.ENUM.create` , :meth:`.postgresql.ENUM.drop` - individual
+* :meth:`.postgresql.ENUM.create` , :meth:` .postgresql.ENUM.drop` - individual
   CREATE and DROP commands for ENUM.
 
 .. _postgresql_array_of_enum:
@@ -154,7 +154,7 @@ range types only.
 Data values being passed to the database may be passed as string
 values or by using the :class:`_postgresql.Range` data object.
 
-.. versionadded:: 2.0  Added the backend-agnostic :class:`_postgresql.Range`
+.. versionadded:: 2.0  Added the backend-agnostic :class:`_postgresql.Range` 
    object used to indicate ranges.  The ``psycopg2``-specific range classes
    are no longer exposed and are only used internally by that particular
    dialect.
@@ -182,7 +182,7 @@ E.g. an example of a fully typed model using the
         room: Mapped[str]
         during: Mapped[Range[datetime]] = mapped_column(TSRANGE)
 
-To represent data for the ``during`` column above, the :class:`_postgresql.Range`
+To represent data for the ``during`` column above, the :class:`_postgresql.Range` 
 type is a simple dataclass that will represent the bounds of the range.
 Below illustrates an INSERT of a row into the above ``room_booking`` table::
 
@@ -200,7 +200,7 @@ Below illustrates an INSERT of a row into the above ``room_booking`` table::
         session.add(booking)
         session.commit()
 
-Selecting from any range column will also return :class:`_postgresql.Range`
+Selecting from any range column will also return :class:`_postgresql.Range` 
 objects as indicated::
 
     from sqlalchemy import select
@@ -211,12 +211,12 @@ objects as indicated::
 
 The available range datatypes are as follows:
 
-* :class:`_postgresql.INT4RANGE`
-* :class:`_postgresql.INT8RANGE`
-* :class:`_postgresql.NUMRANGE`
-* :class:`_postgresql.DATERANGE`
-* :class:`_postgresql.TSRANGE`
-* :class:`_postgresql.TSTZRANGE`
+* :class:`_postgresql.INT4RANGE` 
+* :class:`_postgresql.INT8RANGE` 
+* :class:`_postgresql.NUMRANGE` 
+* :class:`_postgresql.DATERANGE` 
+* :class:`_postgresql.TSRANGE` 
+* :class:`_postgresql.TSTZRANGE` 
 
 .. autoclass:: sqlalchemy.dialects.postgresql.Range
     :members:
@@ -238,7 +238,7 @@ dialect, **does not** support multirange datatypes.
 .. versionadded:: 2.0.17 Added multirange support for the pg8000 dialect.
    pg8000 1.29.8 or greater is required.
 
-The example below illustrates use of the :class:`_postgresql.TSMULTIRANGE`
+The example below illustrates use of the :class:`_postgresql.TSMULTIRANGE` 
 datatype::
 
     from datetime import datetime
@@ -291,28 +291,28 @@ Illustrating insertion and selecting of a record::
 .. note:: In the above example, the list of :class:`_postgresql.Range` types
    as handled by the ORM will not automatically detect in-place changes to
    a particular list value; to update list values with the ORM, either re-assign
-   a new list to the attribute, or use the :class:`.MutableList`
+   a new list to the attribute, or use the :class:`.MutableList` 
    type modifier.  See the section :ref:`mutable_toplevel` for background.
 
 
 The available multirange datatypes are as follows:
 
-* :class:`_postgresql.INT4MULTIRANGE`
-* :class:`_postgresql.INT8MULTIRANGE`
-* :class:`_postgresql.NUMMULTIRANGE`
-* :class:`_postgresql.DATEMULTIRANGE`
-* :class:`_postgresql.TSMULTIRANGE`
-* :class:`_postgresql.TSTZMULTIRANGE`
+* :class:`_postgresql.INT4MULTIRANGE` 
+* :class:`_postgresql.INT8MULTIRANGE` 
+* :class:`_postgresql.NUMMULTIRANGE` 
+* :class:`_postgresql.DATEMULTIRANGE` 
+* :class:`_postgresql.TSMULTIRANGE` 
+* :class:`_postgresql.TSTZMULTIRANGE` 
 
 .. _postgresql_network_datatypes:
 
 Network Data Types
 ------------------
 
-The included networking datatypes are :class:`_postgresql.INET`,
-:class:`_postgresql.CIDR`, :class:`_postgresql.MACADDR`.
+The included networking datatypes are :class:`_postgresql.INET` ,
+:class:`_postgresql.CIDR` , :class:`_postgresql.MACADDR` .
 
-For :class:`_postgresql.INET` and :class:`_postgresql.CIDR` datatypes,
+For :class:`_postgresql.INET` and :class:` _postgresql.CIDR` datatypes,
 conditional support is available for these datatypes to send and retrieve
 Python ``ipaddress`` objects including ``ipaddress.IPv4Network``,
 ``ipaddress.IPv6Network``, ``ipaddress.IPv4Address``,
@@ -320,11 +320,11 @@ Python ``ipaddress`` objects including ``ipaddress.IPv4Network``,
 the DBAPI itself, and varies per DBAPI.  SQLAlchemy does not yet implement its
 own network address conversion logic**.
 
-* The :ref:`postgresql_psycopg` and :ref:`postgresql_asyncpg` support these
+* The :ref:`postgresql_psycopg` and :ref:` postgresql_asyncpg` support these
   datatypes fully; objects from the ``ipaddress`` family are returned in rows
   by default.
 * The :ref:`postgresql_psycopg2` dialect only sends and receives strings.
-* The :ref:`postgresql_pg8000` dialect supports ``ipaddress.IPv4Address`` and
+* The :ref:`postgresql_pg8000` dialect supports ` `ipaddress.IPv4Address`` and
   ``ipaddress.IPv6Address`` objects for the :class:`_postgresql.INET` datatype,
   but uses strings for :class:`_postgresql.CIDR` types.
 

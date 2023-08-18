@@ -29,7 +29,7 @@ Release 1.3 ensures that all behaviors and APIs that are deprecated, including
 all those that have been long listed as "legacy" for years, are emitting
 ``DeprecationWarning`` warnings. This includes when making use of parameters
 such as :paramref:`.Session.weak_identity_map` and classes such as
-:class:`.MapperExtension`.     While all deprecations have been noted in the
+:class:`.MapperExtension` .     While all deprecations have been noted in the
 documentation, often they did not use a proper restructured text directive, or
 include in what version they were deprecated.  Whether or not a particular API
 feature actually emitted a deprecation warning was not consistent.  The general
@@ -68,13 +68,13 @@ below.
 
 .. seealso::
 
-    :ref:`change_4393_threadlocal`
+    :ref:`change_4393_threadlocal` 
 
-    :ref:`change_4393_convertunicode`
+    :ref:`change_4393_convertunicode` 
 
-    :ref:`change_4423`
+    :ref:`change_4423` 
 
-:ticket:`4393`
+:ticket:`4393` 
 
 New Features and Improvements - ORM
 ===================================
@@ -91,7 +91,7 @@ mapper has its roots in the 0.1, 0.2 series of SQLAlchemy where it was
 anticipated that the :class:`_orm.Mapper` object was to be the primary query
 construction interface, before the :class:`_query.Query` object existed.
 
-With the advent of :class:`_query.Query` and later the :class:`.AliasedClass`
+With the advent of :class:`_query.Query` and later the :class:` .AliasedClass`
 construct, most use cases for the non primary mapper went away.  This was a
 good thing since SQLAlchemy also moved away from "classical" mappings altogether
 around the 0.5 series in favor of the declarative system.
@@ -114,17 +114,17 @@ in the old 0.1 - 0.4 days, one would use :class:`_schema.Table` objects directly
 the ORM).
 
 The missing piece was to allow the :func:`_orm.relationship` to refer directly
-to the :class:`.AliasedClass`.  The :class:`.AliasedClass` already does
+to the :class:`.AliasedClass` .  The :class:`.AliasedClass` already does
 everything we want the non primary mapper to do; it allows an existing mapped
 class to be loaded from an alternative selectable, it inherits all the
 attributes and relationships of the existing mapper, it works
 extremely well with loader options, and it provides a class-like
 object that can be mixed into queries just like the class itself.
 With this change, the recipes that
-were formerly for non primary mappers at :ref:`relationship_configure_joins`
+were formerly for non primary mappers at :ref:`relationship_configure_joins` 
 are changed to aliased class.
 
-At :ref:`relationship_aliased_class`, the original non primary mapper looked
+At :ref:`relationship_aliased_class` , the original non primary mapper looked
 like::
 
     j = join(B, D, D.b_id == B.id).join(C, C.id == D.c_id)
@@ -164,7 +164,7 @@ become the single means of mapping which hopefully will allow internal
 improvements and simplifications, as well as a clearer documentation story.
 
 
-:ticket:`4423`
+:ticket:`4423` 
 
 
 .. _change_4340:
@@ -225,11 +225,11 @@ directly from the identity map.   However, as with most querying features,
 the feature's implementation became more complex as a result of advanced
 scenarios regarding polymorphic loading.   If problems are encountered,
 users should report a bug, however the change also includes a flag
-:paramref:`_orm.relationship.omit_join` which can be set to ``False`` on the
+:paramref:`_orm.relationship.omit_join` which can be set to ` `False`` on the
 :func:`_orm.relationship` to disable the optimization.
 
 
-:ticket:`4340`
+:ticket:`4340` 
 
 .. _change_4359:
 
@@ -256,7 +256,7 @@ the expression was created.
 However, a side effect of this behavior is that if ``u1`` ends up being expired
 by the time the expression is evaluated, it results in an additional SELECT
 statement, and in the case that ``u1`` was also detached from the
-:class:`.Session`, it would raise an error::
+:class:`.Session` , it would raise an error::
 
     u1 = session.query(User).get(5)
 
@@ -268,9 +268,9 @@ statement, and in the case that ``u1`` was also detached from the
     query.all()  # <-- would raise DetachedInstanceError
 
 The expiration / expunging of the object can occur implicitly when the
-:class:`.Session` is committed and the ``u1`` instance falls out of scope,
+:class:`.Session` is committed and the ` `u1`` instance falls out of scope,
 as the ``Address.user == u1`` expression does not strongly reference the
-object itself, only its :class:`.InstanceState`.
+object itself, only its :class:`.InstanceState` .
 
 The fix is to allow the ``Address.user == u1`` expression to evaluate the value
 ``5`` based on attempting to retrieve or load the value normally at expression
@@ -278,7 +278,7 @@ compilation time as it does now, but if the object is detached and has
 been expired, it is retrieved from a new mechanism upon the
 :class:`.InstanceState` which will memoize the last known value for a
 particular attribute on that state when that attribute is expired.  This
-mechanism is only enabled for a specific attribute / :class:`.InstanceState`
+mechanism is only enabled for a specific attribute / :class:`.InstanceState` 
 when needed by the expression feature to conserve performance / memory
 overhead.
 
@@ -301,7 +301,7 @@ when the first evaluation was made and is now detached. In all cases,
 :class:`.DetachedInstanceError` is no longer raised.
 
 
-:ticket:`4359`
+:ticket:`4359` 
 
 .. _change_4353:
 
@@ -336,7 +336,7 @@ exception as a result of the attribute attempting to retrieve the previous
 value.   This assertion is now skipped in the case of loading the "old" value.
 
 
-:ticket:`4353`
+:ticket:`4353` 
 
 
 .. _change_4354:
@@ -354,7 +354,7 @@ where the ``del`` operation is roughly equivalent to setting the attribute to th
 
     del some_object.some_attribute  # from a SQL perspective, works like "= None"
 
-:ticket:`4354`
+:ticket:`4354` 
 
 
 .. _change_4257:
@@ -373,19 +373,19 @@ along with that object's full lifecycle in memory::
 
     inspect(u1).info["user_info"] = "7|ed"
 
-:ticket:`4257`
+:ticket:`4257` 
 
 .. _change_4196:
 
 Horizontal Sharding extension supports bulk update and delete methods
 ---------------------------------------------------------------------
 
-The :class:`.ShardedQuery` extension object supports the :meth:`_query.Query.update`
-and :meth:`_query.Query.delete` bulk update/delete methods.    The ``query_chooser``
+The :class:`.ShardedQuery` extension object supports the :meth:` _query.Query.update`
+and :meth:`_query.Query.delete` bulk update/delete methods.    The ` `query_chooser``
 callable is consulted when they are called in order to run the update/delete
 across multiple shards based on given criteria.
 
-:ticket:`4196`
+:ticket:`4196` 
 
 Association Proxy Improvements
 -------------------------------
@@ -425,7 +425,7 @@ An assignment to ``A.b`` will generate an ``AB`` object::
     a.b = B()
 
 The ``A.b`` association is scalar, and includes a new flag
-:paramref:`.AssociationProxy.cascade_scalar_deletes`.  When set, setting ``A.b``
+:paramref:`.AssociationProxy.cascade_scalar_deletes` .  When set, setting ``A.b``
 to ``None`` will remove ``A.ab`` as well.   The default behavior remains
 that it leaves ``a.ab`` in place::
 
@@ -443,7 +443,7 @@ to ``None``::
     del a.b
     assert a.ab is None
 
-:ticket:`4308`
+:ticket:`4308` 
 
 .. _change_3423:
 
@@ -463,7 +463,7 @@ context of that class, such as calling ``MyClass.some_descriptor``, which calls
 the ``__get__()`` method which passes in the class.    The
 :class:`.AssociationProxy` object would therefore store state that is specific
 to that class, but only once this method were called; trying to inspect this
-state ahead of time without first accessing the :class:`.AssociationProxy`
+state ahead of time without first accessing the :class:`.AssociationProxy` 
 as a descriptor would raise an error.  Additionally, it would  assume that
 the first class to be seen by ``__get__()`` would be  the only parent class it
 needed to know about.  This is despite the fact that if a particular class
@@ -484,9 +484,9 @@ nonetheless improved in 1.1, has essentially been replaced with an approach
 where the AP now can treat any number of "owning" classes equally.
 
 To accommodate for applications that want to inspect this state for an
-:class:`.AssociationProxy` without necessarily calling ``__get__()``, a new
+:class:`.AssociationProxy` without necessarily calling ` `__get__()``, a new
 method :meth:`.AssociationProxy.for_class` is added that provides direct access
-to a class-specific :class:`.AssociationProxyInstance`, demonstrated as::
+to a class-specific :class:`.AssociationProxyInstance` , demonstrated as::
 
     class User(Base):
         # ...
@@ -505,7 +505,7 @@ specific to the ``User.keywords`` proxy, such as ``target_class``::
     Keyword
 
 
-:ticket:`3423`
+:ticket:`3423` 
 
 .. _change_4351:
 
@@ -626,11 +626,11 @@ the list of ``User.elements`` for the presence of an ``Element`` object:
     WHERE "user".id = user_element.user_id AND :param_1 = user_element.element_id)
 
 Overall, the change is enabled based on the architectural change that is
-part of :ref:`change_3423`; as the proxy now spins off additional state when
+part of :ref:`change_3423` ; as the proxy now spins off additional state when
 an expression is generated, there is both an object-target and a column-target
 version of the :class:`.AssociationProxyInstance` class.
 
-:ticket:`4351`
+:ticket:`4351` 
 
 Association Proxy now Strong References the Parent Object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -688,12 +688,12 @@ reference to the ``a1`` object, so that it remains present::
 This change introduces the side effect that if an application is passing around
 the collection as above, **the parent object won't be garbage collected** until
 the collection is also discarded.   As always, if ``a1`` is persistent inside a
-particular :class:`.Session`, it will remain part of that session's  state
+particular :class:`.Session` , it will remain part of that session's  state
 until it is garbage collected.
 
 Note that this change may be revised if it leads to problems.
 
-:ticket:`4268`
+:ticket:`4268` 
 
 .. _change_2642:
 
@@ -743,7 +743,7 @@ new association objects where appropriate::
     # against the deleted ones.
     assert len(s.new) == 1
 
-:ticket:`2642`
+:ticket:`2642` 
 
 .. _change_1103:
 
@@ -751,7 +751,7 @@ Many-to-one backref checks for collection duplicates during remove operation
 ----------------------------------------------------------------------------
 
 When an ORM-mapped collection that existed as a Python sequence, typically a
-Python ``list`` as is the default for :func:`_orm.relationship`, contained
+Python ``list`` as is the default for :func:`_orm.relationship` , contained
 duplicates, and the object were removed from one of its positions but not the
 other(s),  a many-to-one backref would set its attribute to ``None`` even
 though the one-to-many side still represented the object as present.  Even
@@ -818,7 +818,7 @@ collections are already used within the unit of work as well as when a
 collection is bulk replaced.
 
 
-:ticket:`1103`
+:ticket:`1103` 
 
 Key Behavioral Changes - ORM
 =============================
@@ -892,7 +892,7 @@ Now the query works fine:
 Overall the change is directly towards Python's "explicit is better than
 implicit" philosophy.
 
-:ticket:`4365`
+:ticket:`4365` 
 
 
 
@@ -903,8 +903,8 @@ FOR UPDATE clause is rendered within the joined eager load subquery as well as o
 --------------------------------------------------------------------------------------
 
 This change applies specifically to the use of the :func:`_orm.joinedload` loading
-strategy in conjunction with a row limited query, e.g. using :meth:`_query.Query.first`
-or :meth:`_query.Query.limit`, as well as with use of the :meth:`_query.Query.with_for_update` method.
+strategy in conjunction with a row limited query, e.g. using :meth:`_query.Query.first` 
+or :meth:`_query.Query.limit` , as well as with use of the :meth:`_query.Query.with_for_update` method.
 
 Given a query as::
 
@@ -967,7 +967,7 @@ target.
 Overall, FOR UPDATE remains highly specific to the target database in use
 and can't easily be generalized for more complex queries.
 
-:ticket:`4246`
+:ticket:`4246` 
 
 .. _change_3844:
 
@@ -1008,7 +1008,7 @@ The fix now includes that ``address.user_id`` is left unchanged as per
 ``passive_deletes="all"``. This kind of thing is useful for building custom
 "version table" schemes and such where rows are archived instead of deleted.
 
-:ticket:`3844`
+:ticket:`3844` 
 
 .. _change_4268:
 
@@ -1029,7 +1029,7 @@ naming convention tokens are added, including
 ``referred_column_0N_name``, ``referred_column_0_N_name``, etc., which render
 the column name (or key or label) for all columns in the constraint,
 joined together either with no separator or with an underscore
-separator.  Below we define a convention that will name :class:`.UniqueConstraint`
+separator.  Below we define a convention that will name :class:`.UniqueConstraint` 
 constraints with a name that joins together the names of all columns::
 
     metadata_obj = MetaData(
@@ -1140,7 +1140,7 @@ This will again output deterministically truncated SQL as in:
     ALTER TABLE t ADD CONSTRAINT this_is_too_long_of_a_name_for_any_database_backend_eve_ac05 UNIQUE (x)
 
 There is not at the moment an option to have the names pass through to allow
-database-side truncation.  This has already been the case for :class:`.Index`
+database-side truncation.  This has already been the case for :class:`.Index` 
 names for some time and issues have not been raised.
 
 The change also repairs two other issues.  One is that the  ``column_0_key``
@@ -1151,11 +1151,11 @@ different.
 
 .. seealso::
 
-    :ref:`constraint_naming_conventions`
+    :ref:`constraint_naming_conventions` 
 
-    :paramref:`_schema.MetaData.naming_convention`
+    :paramref:`_schema.MetaData.naming_convention` 
 
-:ticket:`3989`
+:ticket:`3989` 
 
 .. _change_3831:
 
@@ -1166,9 +1166,9 @@ This enhancement is implemented at the Core level, however is applicable
 primarily to the ORM.
 
 A SQL function that compares two elements can now be used as a "comparison"
-object, suitable for usage in an ORM :func:`_orm.relationship`, by first
+object, suitable for usage in an ORM :func:`_orm.relationship` , by first
 creating the function as usual using the :data:`.func` factory, then
-when the function is complete calling upon the :meth:`.FunctionElement.as_comparison`
+when the function is complete calling upon the :meth:`.FunctionElement.as_comparison` 
 modifier to produce a :class:`.BinaryExpression` that has a "left" and a "right"
 side::
 
@@ -1221,7 +1221,7 @@ This feature is expected to help with situations such as making use of
 geometric functions in relationship join conditions, or any case where
 the ON clause of the SQL join is expressed in terms of a SQL function.
 
-:ticket:`3831`
+:ticket:`3831` 
 
 .. _change_4271:
 
@@ -1264,20 +1264,20 @@ such as on PostgreSQL::
     IN (SELECT CAST(NULL AS INTEGER), CAST(NULL AS VARCHAR) WHERE 1!=1)
 
 
-:ticket:`4271`
+:ticket:`4271` 
 
 .. _change_3981:
 
 TypeEngine methods bind_expression, column_expression work with Variant, type-specific types
 --------------------------------------------------------------------------------------------
 
-The :meth:`.TypeEngine.bind_expression` and :meth:`.TypeEngine.column_expression` methods
+The :meth:`.TypeEngine.bind_expression` and :meth:` .TypeEngine.column_expression` methods
 now work when they are present on the "impl" of a particular datatype, allowing these methods
-to be used by dialects as well as for :class:`.TypeDecorator` and :class:`.Variant` use cases.
+to be used by dialects as well as for :class:`.TypeDecorator` and :class:` .Variant` use cases.
 
 The following example illustrates a :class:`.TypeDecorator` that applies SQL-time conversion
-functions to a :class:`.LargeBinary`.   In order for this type to work in the
-context of a :class:`.Variant`, the compiler needs to drill into the "impl" of the
+functions to a :class:`.LargeBinary` .   In order for this type to work in the
+context of a :class:`.Variant` , the compiler needs to drill into the "impl" of the
 variant expression in order to locate these methods::
 
     from sqlalchemy import TypeDecorator, LargeBinary, func
@@ -1309,12 +1309,12 @@ will render:
     SELECT uncompress(x) AS x
 
 The change also includes that dialects can implement
-:meth:`.TypeEngine.bind_expression` and :meth:`.TypeEngine.column_expression`
+:meth:`.TypeEngine.bind_expression` and :meth:` .TypeEngine.column_expression`
 on dialect-level implementation types where they will now be used; in
 particular this will be used for MySQL's new "binary prefix" requirement as
 well as for casting decimal bind values for MySQL.
 
-:ticket:`3981`
+:ticket:`3981` 
 
 .. _change_pr467:
 
@@ -1322,7 +1322,7 @@ New last-in-first-out strategy for QueuePool
 ---------------------------------------------
 
 The connection pool usually used by :func:`_sa.create_engine` is known
-as :class:`.QueuePool`.  This pool uses an object equivalent to Python's
+as :class:`.QueuePool` .  This pool uses an object equivalent to Python's
 built-in ``Queue`` class in order to store database connections waiting
 to be used.   The ``Queue`` features first-in-first-out behavior, which is
 intended to provide a round-robin use of the database connections that are
@@ -1338,7 +1338,7 @@ considered, however this was too much verbosity).
 
 .. seealso::
 
-    :ref:`pool_use_lifo`
+    :ref:`pool_use_lifo` 
 
 
 
@@ -1352,17 +1352,17 @@ Coercion of string SQL fragments to text() fully removed
 ---------------------------------------------------------
 
 The warnings that were first added in version 1.0, described at
-:ref:`migration_2992`, have now been converted into exceptions.    Continued
+:ref:`migration_2992` , have now been converted into exceptions.    Continued
 concerns have been raised regarding the automatic coercion of string fragments
-passed to methods like :meth:`_query.Query.filter` and :meth:`_expression.Select.order_by` being
+passed to methods like :meth:`_query.Query.filter` and :meth:` _expression.Select.order_by` being
 converted to :func:`_expression.text` constructs, even though this has emitted a warning.
-In the case of :meth:`_expression.Select.order_by`, :meth:`_query.Query.order_by`,
-:meth:`_expression.Select.group_by`, and :meth:`_query.Query.group_by`, a string label or column
+In the case of :meth:`_expression.Select.order_by` , :meth:`_query.Query.order_by` ,
+:meth:`_expression.Select.group_by` , and :meth:`_query.Query.group_by` , a string label or column
 name is still resolved into the corresponding expression construct, however if
 the resolution fails, a :class:`.CompileError` is raised, thus preventing raw
 SQL text from being rendered directly.
 
-:ticket:`4481`
+:ticket:`4481` 
 
 .. _change_4393_threadlocal:
 
@@ -1432,7 +1432,7 @@ the :meth:`_engine.Engine.connect` method except in the case where the threadloc
 engine is in use.
 
 
-:ticket:`4393`
+:ticket:`4393` 
 
 
 .. _change_4393_convertunicode:
@@ -1474,7 +1474,7 @@ except in arguable non use cases such as accessing mis-encoded data from a
 legacy database, which would be better suited using custom types.
 
 
-:ticket:`4393`
+:ticket:`4393` 
 
 
 Dialect Improvements and Changes - PostgreSQL
@@ -1516,7 +1516,7 @@ as ``Inspector.get_columns('data_values_4_10')``.   This also extends to the
 use of ``Table(..., autoload=True)`` with these tables.
 
 
-:ticket:`4237`
+:ticket:`4237` 
 
 
 Dialect Improvements and Changes - MySQL
@@ -1529,7 +1529,7 @@ Protocol-level ping now used for pre-ping
 
 The MySQL dialects including mysqlclient, python-mysql, PyMySQL and
 mysql-connector-python now use the ``connection.ping()`` method for the
-pool pre-ping feature, described at :ref:`pool_disconnects_pessimistic`.
+pool pre-ping feature, described at :ref:`pool_disconnects_pessimistic` .
 This is a much more lightweight ping than the previous method of emitting
 "SELECT 1" on the connection.
 
@@ -1554,7 +1554,7 @@ can now be explicitly ordered by passing a list of 2-tuples::
 
 .. seealso::
 
-    :ref:`mysql_insert_on_duplicate_key_update`
+    :ref:`mysql_insert_on_duplicate_key_update` 
 
 Dialect Improvements and Changes - SQLite
 =============================================
@@ -1565,7 +1565,7 @@ Support for SQLite JSON Added
 -----------------------------
 
 A new datatype :class:`_sqlite.JSON` is added which implements SQLite's json
-member access functions on behalf of the :class:`_types.JSON`
+member access functions on behalf of the :class:`_types.JSON` 
 base datatype.  The SQLite ``JSON_EXTRACT`` and ``JSON_QUOTE`` functions
 are used by the implementation to provide basic JSON support.
 
@@ -1577,7 +1577,7 @@ in SQLite's own documentation at https://www.sqlite.org/json1.html the name
 JSON is being used for its familiarity.
 
 
-:ticket:`3850`
+:ticket:`3850` 
 
 .. _change_4360:
 
@@ -1611,9 +1611,9 @@ The above table would render in a CREATE TABLE statement as:
 
 .. seealso::
 
-    :ref:`sqlite_on_conflict_ddl`
+    :ref:`sqlite_on_conflict_ddl` 
 
-:ticket:`4360`
+:ticket:`4360` 
 
 Dialect Improvements and Changes - Oracle
 =============================================
@@ -1623,7 +1623,7 @@ Dialect Improvements and Changes - Oracle
 National char datatypes de-emphasized for generic unicode, re-enabled with option
 ---------------------------------------------------------------------------------
 
-The :class:`.Unicode` and :class:`.UnicodeText` datatypes by default now
+The :class:`.Unicode` and :class:` .UnicodeText` datatypes by default now
 correspond to the ``VARCHAR2`` and ``CLOB`` datatypes on Oracle, rather than
 ``NVARCHAR2`` and ``NCLOB`` (otherwise known as "national" character set
 types).  This will be seen in behaviors such  as that of how they render in
@@ -1640,7 +1640,7 @@ database that is not using a Unicode-compliant character set.  In this case,
 the flag ``use_nchar_for_unicode`` can be passed to :func:`_sa.create_engine` to
 re-enable the old behavior.
 
-As always, using the :class:`_oracle.NVARCHAR2` and :class:`_oracle.NCLOB`
+As always, using the :class:`_oracle.NVARCHAR2` and :class:` _oracle.NCLOB`
 datatypes explicitly will continue to make use of ``NVARCHAR2`` and ``NCLOB``,
 including within DDL as well as when handling bound parameters with cx_Oracle's
 ``setinputsizes()``.
@@ -1655,7 +1655,7 @@ The automatic unicode coercion can be disabled by setting the
 to all string data returned in a result set that isn't explicitly under
 :class:`.Unicode` or Oracle's NVARCHAR2/NCHAR/NCLOB datatypes.
 
-:ticket:`4242`
+:ticket:`4242` 
 
 .. _change_4369:
 
@@ -1687,7 +1687,7 @@ dialect as well as the URL string:
   via the :paramref:`_sa.create_engine.connect_args` dictionary, the documentation
   was inaccurate regarding this.
 
-:ticket:`4369`
+:ticket:`4369` 
 
 Dialect Improvements and Changes - SQL Server
 =============================================
@@ -1699,7 +1699,7 @@ Support for pyodbc fast_executemany
 
 Pyodbc's recently added "fast_executemany" mode, available when using the
 Microsoft ODBC driver, is now an option for the pyodbc / mssql dialect.
-Pass it via :func:`_sa.create_engine`::
+Pass it via :func:`_sa.create_engine` ::
 
     engine = create_engine(
         "mssql+pyodbc://scott:tiger@mssql2017:1433/test?driver=ODBC+Driver+13+for+SQL+Server",
@@ -1708,10 +1708,10 @@ Pass it via :func:`_sa.create_engine`::
 
 .. seealso::
 
-    :ref:`mssql_pyodbc_fastexecutemany`
+    :ref:`mssql_pyodbc_fastexecutemany` 
 
 
-:ticket:`4158`
+:ticket:`4158` 
 
 .. _change_4362:
 
@@ -1719,7 +1719,7 @@ New parameters to affect IDENTITY start and increment, use of Sequence deprecate
 ---------------------------------------------------------------------------------
 
 SQL Server as of SQL Server 2012 now supports sequences with real
-``CREATE SEQUENCE`` syntax.  In :ticket:`4235`, SQLAlchemy will add support for
+``CREATE SEQUENCE`` syntax.  In :ticket:`4235` , SQLAlchemy will add support for
 these using :class:`.Sequence` in the same way as for any other dialect.
 However, the current situation is that :class:`.Sequence` has been repurposed
 on SQL Server specifically in order to affect the "start" and "increment"
@@ -1728,7 +1728,7 @@ to make the transition towards normal sequences being available as well,
 using :class:`.Sequence` will emit a deprecation warning throughout the
 1.3 series.  In order to affect "start" and "increment", use the
 new ``mssql_identity_start`` and ``mssql_identity_increment`` parameters
-on :class:`_schema.Column`::
+on :class:`_schema.Column` ::
 
     test = Table(
         "test",
@@ -1758,11 +1758,11 @@ primary key column::
 
 .. seealso::
 
-    :ref:`mssql_identity`
+    :ref:`mssql_identity` 
 
-:ticket:`4362`
+:ticket:`4362` 
 
-:ticket:`4235`
+:ticket:`4235` 
 
 .. _change_4500:
 
@@ -1797,5 +1797,5 @@ a complete exception message is on a single line, however the original
 "error" portion that is generated from the DBAPI driver or SQLAlchemy internals
 will still be on the first line.
 
-:ticket:`4500`
+:ticket:`4500` 
 

@@ -18,7 +18,7 @@ column.  If the statement *does* include a value  for this column, then the
 default does *not* take place.
 
 Column defaults can be server-side functions or constant values which are
-defined in the database along with the schema in :term:`DDL`, or as SQL
+defined in the database along with the schema in :term:`DDL` , or as SQL
 expressions which are rendered directly within an INSERT or UPDATE statement
 emitted by SQLAlchemy; they may also be client-side Python functions or
 constant values which are invoked by SQLAlchemy before data is passed to the
@@ -29,12 +29,12 @@ database.
     A column default handler should not be confused with a construct that
     intercepts and modifies incoming values for INSERT and UPDATE statements
     which *are* provided to the statement as it is invoked.  This is known
-    as :term:`data marshalling`, where a column value is modified in some way
+    as :term:`data marshalling` , where a column value is modified in some way
     by the application before being sent to the database.  SQLAlchemy provides
     a few means of achieving this which include using :ref:`custom datatypes
     <types_typedecorator>`, :ref:`SQL execution events <core_sql_events>` and
     in the ORM :ref:`custom  validators <simple_validators>` as well as
-    :ref:`attribute events <orm_attribute_events>`.    Column defaults are only
+    :ref:`attribute events <orm_attribute_events>` .    Column defaults are only
     invoked when there is **no value present** for a column in a SQL
     :term:`DML` statement.
 
@@ -73,7 +73,7 @@ defaults)::
 Python-Executed Functions
 -------------------------
 
-The :paramref:`_schema.Column.default` and :paramref:`_schema.Column.onupdate` keyword arguments also accept Python
+The :paramref:`_schema.Column.default` and :paramref:` _schema.Column.onupdate` keyword arguments also accept Python
 functions. These functions are invoked at the time of insert or update if no
 other value for that column is supplied, and the value returned is used for
 the column's value. Below illustrates a crude "sequence" that assigns an
@@ -100,7 +100,7 @@ built-in capabilities of the database should normally be used, which may
 include sequence objects or other autoincrementing capabilities. For primary
 key columns, SQLAlchemy will in most cases use these capabilities
 automatically. See the API documentation for
-:class:`~sqlalchemy.schema.Column` including the :paramref:`_schema.Column.autoincrement` flag, as
+:class:`~sqlalchemy.schema.Column` including the :paramref:` _schema.Column.autoincrement` flag, as
 well as the section on :class:`~sqlalchemy.schema.Sequence` later in this
 chapter for background on standard primary key generation techniques.
 
@@ -156,7 +156,7 @@ otherwise not provided, and the value will be that of whatever value is present
 in the execution for the ``counter`` column, plus the number 12.
 
 For a single statement that is being executed using "executemany" style, e.g.
-with multiple parameter sets passed to :meth:`_engine.Connection.execute`, the
+with multiple parameter sets passed to :meth:`_engine.Connection.execute` , the
 user-defined function is called once for each set of parameters. For the use case of
 a multi-valued :class:`_expression.Insert` construct (e.g. with more than one VALUES
 clause set up via the :meth:`_expression.Insert.values` method), the user-defined function
@@ -164,7 +164,7 @@ is also called once for each set of parameters.
 
 When the function is invoked, the special method
 :meth:`.DefaultExecutionContext.get_current_parameters` is available from
-the context object (an subclass of :class:`.DefaultExecutionContext`).  This
+the context object (an subclass of :class:`.DefaultExecutionContext` ).  This
 method returns a dictionary of column-key to values that represents the
 full set of values for the INSERT or UPDATE statement.   In the case of a
 multi-valued INSERT construct, the subset of parameters that corresponds to
@@ -184,7 +184,7 @@ and returned alone.
 Client-Invoked SQL Expressions
 ------------------------------
 
-The :paramref:`_schema.Column.default` and :paramref:`_schema.Column.onupdate` keywords may
+The :paramref:`_schema.Column.default` and :paramref:` _schema.Column.onupdate` keywords may
 also be passed SQL expressions, which are in most cases rendered inline within the
 INSERT or UPDATE statement::
 
@@ -228,7 +228,7 @@ INSERT or UPDATE statement occurs, typically rendered inline within the DML
 statement except in certain cases listed below.   This is different than a
 "server side" default, which is part of the table's DDL definition, e.g. as
 part of the "CREATE TABLE" statement, which are likely more common.   For
-server side defaults, see the next section :ref:`server_defaults`.
+server side defaults, see the next section :ref:`server_defaults` .
 
 When a SQL expression indicated by :paramref:`_schema.Column.default` is used with
 primary key columns, there are some cases where SQLAlchemy must "pre-execute"
@@ -249,7 +249,7 @@ default. Similarly, all parameters which were bound to the statement, including
 all Python and SQL expressions which were pre-executed, are present in the
 :meth:`_engine.CursorResult.last_inserted_params` or
 :meth:`_engine.CursorResult.last_updated_params` collections on
-:class:`~sqlalchemy.engine.CursorResult`. The
+:class:`~sqlalchemy.engine.CursorResult` . The
 :attr:`_engine.CursorResult.inserted_primary_key` collection contains a list of primary
 key values for the row inserted (a list so that single-column and
 composite-column primary keys are represented in the same format).
@@ -259,7 +259,7 @@ composite-column primary keys are represented in the same format).
 Server-invoked DDL-Explicit Default Expressions
 -----------------------------------------------
 
-A variant on the SQL expression default is the :paramref:`_schema.Column.server_default`, which gets
+A variant on the SQL expression default is the :paramref:`_schema.Column.server_default` , which gets
 placed in the CREATE TABLE statement during a :meth:`_schema.Table.create` operation:
 
 .. sourcecode:: python+sql
@@ -282,7 +282,7 @@ A create call for the above table will produce:
         index_value integer default 0
     )
 
-The above example illustrates the two typical use cases for :paramref:`_schema.Column.server_default`,
+The above example illustrates the two typical use cases for :paramref:`_schema.Column.server_default` ,
 that of the SQL function (SYSDATE in the above example) as well as a server-side constant
 value (the integer "0" in the above example).  It is advisable to use the
 :func:`_expression.text` construct for any literal SQL values as opposed to passing the
@@ -322,12 +322,12 @@ and for supporting  databases may be used to indicate that the column should be
 part of a RETURNING or OUTPUT clause for the statement.    Tools such as the
 SQLAlchemy ORM then make use of this marker in order to know how to get at the
 value of the column after such an operation.   In particular, the
-:meth:`.ValuesBase.return_defaults` method can be used with an :class:`_expression.Insert`
+:meth:`.ValuesBase.return_defaults` method can be used with an :class:` _expression.Insert`
 or :class:`_expression.Update` construct to indicate that these values should be
 returned.
 
 For details on using :class:`.FetchedValue` with the ORM, see
-:ref:`orm_server_defaults`.
+:ref:`orm_server_defaults` .
 
 .. warning:: The :paramref:`_schema.Column.server_onupdate` directive
     **does not** currently produce MySQL's
@@ -338,7 +338,7 @@ For details on using :class:`.FetchedValue` with the ORM, see
 
 .. seealso::
 
-    :ref:`orm_server_defaults`
+    :ref:`orm_server_defaults` 
 
 .. _defaults_sequences:
 
@@ -395,17 +395,17 @@ table will include:
 .. tip::
 
   When using tables with explicit schema names (detailed at
-  :ref:`schema_table_schema_name`), the configured schema of the :class:`.Table`
-  is **not** automatically shared by an embedded :class:`.Sequence`, instead,
-  specify :paramref:`.Sequence.schema`::
+  :ref:`schema_table_schema_name` ), the configured schema of the :class:`.Table` 
+  is **not** automatically shared by an embedded :class:`.Sequence` , instead,
+  specify :paramref:`.Sequence.schema` ::
 
     Sequence("cart_id_seq", start=1, schema="some_schema")
 
   The :class:`.Sequence` may also be made to automatically make use of the
-  :paramref:`.MetaData.schema` setting on the :class:`.MetaData` in use;
+  :paramref:`.MetaData.schema` setting on the :class:` .MetaData` in use;
   see :ref:`sequence_metadata` for background.
 
-When :class:`_dml.Insert` DML constructs are invoked against the ``cartitems``
+When :class:`_dml.Insert` DML constructs are invoked against the ` `cartitems``
 table, without an explicit value passed for the ``cart_id`` column, the
 ``cart_id_seq`` sequence will be used to generate a value on participating
 backends. Typically, the sequence function is embedded in the INSERT statement,
@@ -418,20 +418,20 @@ returned to the Python process:
     VALUES (next_val(cart_id_seq), 'some description', '2015-10-15 12:00:15')
     RETURNING cart_id
 
-When using :meth:`.Connection.execute` to invoke an :class:`_dml.Insert` construct,
+When using :meth:`.Connection.execute` to invoke an :class:` _dml.Insert` construct,
 newly generated primary key identifiers, including but not limited to those
-generated using :class:`.Sequence`, are available from the :class:`.CursorResult`
+generated using :class:`.Sequence` , are available from the :class:`.CursorResult` 
 construct using the :attr:`.CursorResult.inserted_primary_key` attribute.
 
 When the :class:`~sqlalchemy.schema.Sequence` is associated with a
 :class:`_schema.Column` as its **Python-side** default generator, the
 :class:`.Sequence` will also be subject to "CREATE SEQUENCE" and "DROP
-SEQUENCE" DDL when similar DDL is emitted for the owning :class:`_schema.Table`,
+SEQUENCE" DDL when similar DDL is emitted for the owning :class:`_schema.Table` ,
 such as when using :meth:`.MetaData.create_all` to generate DDL for a series
 of tables.
 
 The :class:`.Sequence` may also be associated with a
-:class:`.MetaData` construct directly.  This allows the :class:`.Sequence`
+:class:`.MetaData` construct directly.  This allows the :class:` .Sequence`
 to be used in more than one :class:`.Table` at a time and also allows the
 :paramref:`.MetaData.schema` parameter to be inherited.  See the section
 :ref:`sequence_metadata` for background.
@@ -441,7 +441,7 @@ Associating a Sequence on a SERIAL column
 
 PostgreSQL's SERIAL datatype is an auto-incrementing type that implies
 the implicit creation of a PostgreSQL sequence when CREATE TABLE is emitted.
-The :class:`.Sequence` construct, when indicated for a :class:`_schema.Column`,
+The :class:`.Sequence` construct, when indicated for a :class:` _schema.Column`,
 may indicate that it should not be used in this specific case by specifying
 a value of ``True`` for the :paramref:`.Sequence.optional` parameter.
 This allows the given :class:`.Sequence` to be used for backends that have no
@@ -480,7 +480,7 @@ Executing a Sequence Standalone
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A SEQUENCE is a first class schema object in SQL and can be used to generate
-values independently in the database.   If you have a :class:`.Sequence`
+values independently in the database.   If you have a :class:`.Sequence` 
 object, it can be invoked with its "next value" instruction by
 passing it directly to a SQL execution method::
 
@@ -488,8 +488,8 @@ passing it directly to a SQL execution method::
         seq = Sequence("some_sequence", start=1)
         nextid = conn.execute(seq)
 
-In order to embed the "next value" function of a :class:`.Sequence`
-inside of a SQL statement like a SELECT or INSERT, use the :meth:`.Sequence.next_value`
+In order to embed the "next value" function of a :class:`.Sequence` 
+inside of a SQL statement like a SELECT or INSERT, use the :meth:`.Sequence.next_value` 
 method, which will render at statement compilation time a SQL function that is
 appropriate for the target backend:
 
@@ -506,8 +506,8 @@ Associating a Sequence with the MetaData
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For a :class:`.Sequence` that is to be associated with arbitrary
-:class:`.Table` objects, the :class:`.Sequence` may be associated with
-a particular :class:`_schema.MetaData`, using the
+:class:`.Table` objects, the :class:` .Sequence` may be associated with
+a particular :class:`_schema.MetaData` , using the
 :paramref:`.Sequence.metadata` parameter::
 
     seq = Sequence("my_general_seq", metadata=metadata_obj, start=1)
@@ -526,19 +526,19 @@ In the above example, the :class:`.Sequence` object is treated as an
 independent schema construct that can exist on its own or be shared among
 tables.
 
-Explicitly associating the :class:`.Sequence` with :class:`_schema.MetaData`
+Explicitly associating the :class:`.Sequence` with :class:` _schema.MetaData`
 allows for the following behaviors:
 
-* The :class:`.Sequence` will inherit the :paramref:`_schema.MetaData.schema`
-  parameter specified to the target :class:`_schema.MetaData`, which
+* The :class:`.Sequence` will inherit the :paramref:` _schema.MetaData.schema`
+  parameter specified to the target :class:`_schema.MetaData` , which
   affects the production of CREATE / DROP DDL as well as how the
   :meth:`.Sequence.next_value` function is rendered in SQL statements.
 
-* The :meth:`_schema.MetaData.create_all` and :meth:`_schema.MetaData.drop_all`
-  methods will emit CREATE / DROP for this :class:`.Sequence`,
+* The :meth:`_schema.MetaData.create_all` and :meth:` _schema.MetaData.drop_all`
+  methods will emit CREATE / DROP for this :class:`.Sequence` ,
   even if the :class:`.Sequence` is not associated with any
-  :class:`_schema.Table` / :class:`_schema.Column` that's a member of this
-  :class:`_schema.MetaData`.
+  :class:`_schema.Table` / :class:` _schema.Column` that's a member of this
+  :class:`_schema.MetaData` .
 
 Associating a Sequence as the Server Side Default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -557,13 +557,13 @@ The preceding sections illustrate how to associate a :class:`.Sequence` with a
     )
 
 In the above case, the :class:`.Sequence` will automatically be subject
-to CREATE SEQUENCE / DROP SEQUENCE DDL when the related :class:`_schema.Table`
+to CREATE SEQUENCE / DROP SEQUENCE DDL when the related :class:`_schema.Table` 
 is subject to CREATE / DROP.  However, the sequence will **not** be present
 as the server-side default for the column when CREATE TABLE is emitted.
 
 If we want the sequence to be used as a server-side default,
 meaning it takes place even if we emit INSERT commands to the table from
-the SQL command line, we can use the :paramref:`_schema.Column.server_default`
+the SQL command line, we can use the :paramref:`_schema.Column.server_default` 
 parameter in conjunction with the value-generation function of the
 sequence, available from the :meth:`.Sequence.next_value` method.  Below
 we illustrate the same :class:`.Sequence` being associated with the
@@ -619,7 +619,7 @@ of the INSERT statement itself, which only works if the sequence is
 included as the Python-side default generator function.
 
 The example also associates the :class:`.Sequence` with the enclosing
-:class:`_schema.MetaData` directly, which again ensures that the :class:`.Sequence`
+:class:`_schema.MetaData` directly, which again ensures that the :class:` .Sequence`
 is fully associated with the parameters of the :class:`_schema.MetaData` collection
 including the default schema, if any.
 
@@ -636,11 +636,11 @@ Computed Columns (GENERATED ALWAYS AS)
 
 .. versionadded:: 1.3.11
 
-The :class:`.Computed` construct allows a :class:`_schema.Column` to be declared in
+The :class:`.Computed` construct allows a :class:` _schema.Column` to be declared in
 DDL as a "GENERATED ALWAYS AS" column, that is, one which has a value that is
 computed by the database server.    The construct accepts a SQL expression
 typically declared textually using a string or the :func:`_expression.text` construct, in
-a similar manner as that of :class:`.CheckConstraint`.   The SQL expression is
+a similar manner as that of :class:`.CheckConstraint` .   The SQL expression is
 then interpreted by the database server in order to determine the value for the
 column within a row.
 
@@ -676,21 +676,21 @@ Whether the value is persisted upon INSERT and UPDATE, or if it is calculated
 on fetch, is an implementation detail of the database; the former is known as
 "stored" and the latter is known as "virtual".  Some database implementations
 support both, but some only support one or the other.  The optional
-:paramref:`.Computed.persisted` flag may be specified as ``True`` or ``False``
+:paramref:`.Computed.persisted` flag may be specified as ` `True`` or ``False``
 to indicate if the "STORED" or "VIRTUAL" keyword should be rendered in DDL,
 however this will raise an error if the keyword is not supported by the target
 backend; leaving it unset will use  a working default for the target backend.
 
-The :class:`.Computed` construct is a subclass of the :class:`.FetchedValue`
+The :class:`.Computed` construct is a subclass of the :class:` .FetchedValue`
 object, and will set itself up as both the "server default" and "server
-onupdate" generator for the target :class:`_schema.Column`, meaning it will be treated
+onupdate" generator for the target :class:`_schema.Column` , meaning it will be treated
 as a default generating column when INSERT and UPDATE statements are generated,
 as well as that it will be fetched as a generating column when using the ORM.
 This includes that it will be part of the RETURNING clause of the database
 for databases which support RETURNING and the generated values are to be
 eagerly fetched.
 
-.. note:: A :class:`_schema.Column` that is defined with the :class:`.Computed`
+.. note:: A :class:`_schema.Column` that is defined with the :class:` .Computed`
    construct may not store any value outside of that which the server applies
    to it;  SQLAlchemy's behavior when a value is passed for such a column
    to be written in INSERT or UPDATE is currently that the value will be
@@ -716,12 +716,12 @@ When :class:`.Computed` is used with an unsupported backend, if the target
 dialect does not support it, a :class:`.CompileError` is raised when attempting
 to render the construct.  Otherwise, if the dialect supports it but the
 particular database server version in use does not, then a subclass of
-:class:`.DBAPIError`, usually :class:`.OperationalError`, is raised when the
+:class:`.DBAPIError` , usually :class:`.OperationalError` , is raised when the
 DDL is emitted to the database.
 
 .. seealso::
 
-    :class:`.Computed`
+    :class:`.Computed` 
 
 .. _identity_ddl:
 
@@ -730,12 +730,12 @@ Identity Columns (GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY)
 
 .. versionadded:: 1.4
 
-The :class:`.Identity` construct allows a :class:`_schema.Column` to be declared
+The :class:`.Identity` construct allows a :class:` _schema.Column` to be declared
 as an identity column and rendered in DDL as "GENERATED { ALWAYS | BY DEFAULT }
 AS IDENTITY".  An identity column has its value automatically generated by the
 database server using an incrementing (or decrementing) sequence. The construct
 shares most of its option to control the database behaviour with
-:class:`.Sequence`.
+:class:`.Sequence` .
 
 Example::
 
@@ -767,7 +767,7 @@ the ``id`` column.
 An identity column can also require that the database generates the value
 of the column, ignoring the value passed with the statement or raising an
 error, depending on the backend. To activate this mode, set the parameter
-:paramref:`_schema.Identity.always` to ``True`` in the
+:paramref:`_schema.Identity.always` to ` `True`` in the
 :class:`.Identity` construct. Updating the previous
 example to include this parameter will generate the following DDL:
 
@@ -779,9 +779,9 @@ example to include this parameter will generate the following DDL:
         PRIMARY KEY (id)
     )
 
-The :class:`.Identity` construct is a subclass of the :class:`.FetchedValue`
+The :class:`.Identity` construct is a subclass of the :class:` .FetchedValue`
 object, and will set itself up as the "server default" generator for the
-target :class:`_schema.Column`, meaning it will be treated
+target :class:`_schema.Column` , meaning it will be treated
 as a default generating column when INSERT statements are generated,
 as well as that it will be fetched as a generating column when using the ORM.
 This includes that it will be part of the RETURNING clause of the database
@@ -803,12 +803,12 @@ When :class:`.Identity` is used with an unsupported backend, it is ignored,
 and the default SQLAlchemy logic for autoincrementing columns is used.
 
 An error is raised when a :class:`_schema.Column` specifies both an
-:class:`.Identity` and also sets :paramref:`_schema.Column.autoincrement`
+:class:`.Identity` and also sets :paramref:` _schema.Column.autoincrement`
 to ``False``.
 
 .. seealso::
 
-    :class:`.Identity`
+    :class:`.Identity` 
 
 
 Default Objects API

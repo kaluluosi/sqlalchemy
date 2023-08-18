@@ -1,8 +1,8 @@
 ======================================
-配置ORM查询指南: DML
+ORM查询指南的设置：DML
 ======================================
 
-本页说明了在 :ref:`queryguide_toplevel` 的 :doc:`dml` 文档中使用的映射和装置数据。
+本页面说明了在   :ref:`queryguide_toplevel`  的  :doc:` DML`  文档中使用的映射和样例数据。
 
 ..  sourcecode:: python
 
@@ -90,8 +90,8 @@
     >>> engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
     >>> Base.metadata.create_all(engine)
     BEGIN ...
+
     >>> conn = engine.connect()
     >>> session = Session(conn)
     >>> conn.begin()
     BEGIN ...
-

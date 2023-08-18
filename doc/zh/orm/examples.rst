@@ -1,33 +1,33 @@
 .. _examples_toplevel:
 
 ============
-ORM Examples
+ORM 示例
 ============
 
-SQLAlchemy分发包括各种代码示例，用于说明一组选择的模式，有些是典型的，有些则不太典型。所有示例都是可运行的，可以在发布版的``/examples`路径下找到。这里可以找到所有描述和源代码。
+SQLAlchemy 发行版包含各种示例代码，展示了一些典型和非典型的模式。所有可运行的示例都可以在发行版的 ``/examples`` 目录中找到。这里可以找到所有的描述和源代码。
 
-其他SQLAlchemy示例，一些是用户贡献的，可以在wiki上查找，网址为<https://www.sqlalchemy.org/trac/wiki/UsageRecipes>`_。
+另外，有一些SQLAlchemy示例是由用户贡献的，可以在 wiki 上 `<https://www.sqlalchemy.org/trac/wiki/UsageRecipes>`_ 找到。
 
-映射示例
+Mapping Recipes
 ===============
 
 .. _examples_adjacencylist:
 
-相邻列表
+邻接列表
 --------------
 
 .. automodule:: examples.adjacency_list
 
 .. _examples_associations:
 
-联想
+关联
 ------------
 
 .. automodule:: examples.association
 
 .. _examples_asyncio:
 
-Asyncio集成
+Asyncio 集成
 -------------------
 
 .. automodule:: examples.asyncio
@@ -37,7 +37,7 @@ Asyncio集成
 
 .. automodule:: examples.graphs
 
-动态关系作为字典
+作为字典的动态关系
 ---------------------------------
 
 .. automodule:: examples.dynamic_dict
@@ -56,7 +56,7 @@ Asyncio集成
 .. automodule:: examples.materialized_paths
 
 嵌套集
------------
+----------
 
 .. automodule:: examples.nested_sets
 
@@ -78,19 +78,19 @@ Asyncio集成
 
 .. _examples_versioning:
 
-版本化对象
+版本对象
 ------------------
 
 .. _examples_versioned_history:
 
-具有历史表的版本控制
+使用历史表进行版本化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: examples.versioned_history
 
 .. _examples_versioned_rows:
 
-使用时态行进行版本控制
+使用时间行进行版本化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: examples.versioned_rows
@@ -118,7 +118,7 @@ Asyncio集成
 
 .. _examples_instrumentation:
 
-属性检测
+属性检查
 -------------------------
 
 .. automodule:: examples.custom_attributes
@@ -130,19 +130,19 @@ Asyncio集成
 
 .. automodule:: examples.sharding
 
-扩展ORM
+扩展 ORM
 =================
 
 .. _examples_session_orm_events:
 
-ORM查询事件
+ORM 查询事件
 -----------------
 
 .. automodule:: examples.extending_query
 
 .. _examples_caching:
 
-Dogpile缓存
+Dogpile 缓存
 ---------------
 
 .. automodule:: examples.dogpile_caching

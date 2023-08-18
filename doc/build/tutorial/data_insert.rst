@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`data`
-.. |next| replace:: :doc:`data_select`
+.. |prev| replace:: :doc:`data` 
+.. |next| replace:: :doc:`data_select` 
 
 .. include:: tutorial_nav_include.rst
 
@@ -24,14 +24,14 @@ INSERT statement in SQL, that adds new data into a table.
     This section details the Core means of generating an individual SQL INSERT
     statement in order to add new rows to a table. When using the ORM, we
     normally use another tool that rides on top of this called the
-    :term:`unit of work`, which will automate the production of many INSERT
+    :term:`unit of work` , which will automate the production of many INSERT
     statements at once. However, understanding how the Core handles data
     creation and manipulation is very useful even when the ORM is running
     it for us.  Additionally, the ORM supports direct use of INSERT
-    using a feature called :ref:`tutorial_orm_bulk`.
+    using a feature called :ref:`tutorial_orm_bulk` .
 
     To skip directly to how to INSERT rows with the ORM using normal
-    unit of work patterns, see :ref:`tutorial_inserting_orm`.
+    unit of work patterns, see :ref:`tutorial_inserting_orm` .
 
 
 The insert() SQL Expression Construct
@@ -43,7 +43,7 @@ and the VALUES clause at once::
     >>> from sqlalchemy import insert
     >>> stmt = insert(user_table).values(name="spongebob", fullname="Spongebob Squarepants")
 
-The above ``stmt`` variable is an instance of :class:`_sql.Insert`.  Most
+The above ``stmt`` variable is an instance of :class:`_sql.Insert` .  Most
 SQL expressions can be stringified in place as a means to see the general
 form of what's being produced::
 
@@ -58,8 +58,8 @@ the statement; we can acquire this object directly using the
     >>> compiled = stmt.compile()
 
 Our :class:`_sql.Insert` construct is an example of a "parameterized"
-construct, illustrated previously at :ref:`tutorial_sending_parameters`; to
-view the ``name`` and ``fullname`` :term:`bound parameters`, these are
+construct, illustrated previously at :ref:`tutorial_sending_parameters` ; to
+view the ``name`` and ``fullname`` :term:`bound parameters` , these are
 available from the :class:`_engine.Compiled` construct as well::
 
     >>> compiled.params
@@ -98,7 +98,7 @@ first integer primary key value, which we can acquire using the
 
 .. tip:: :attr:`_engine.CursorResult.inserted_primary_key` returns a tuple
    because a primary key may contain multiple columns.  This is known as
-   a :term:`composite primary key`.  The :attr:`_engine.CursorResult.inserted_primary_key`
+   a :term:`composite primary key` .  The :attr:`_engine.CursorResult.inserted_primary_key` 
    is intended to always contain the complete primary key of the record just
    inserted, not just a "cursor.lastrowid" kind of value, and is also intended
    to be populated regardless of whether or not "autoincrement" were used, hence
@@ -124,7 +124,7 @@ statement, we get an INSERT for every column in the table::
 If we take an :class:`_sql.Insert` construct that has not had
 :meth:`_sql.Insert.values` called upon it and execute it
 rather than print it, the statement will be compiled to a string based
-on the parameters that we passed to the :meth:`_engine.Connection.execute`
+on the parameters that we passed to the :meth:`_engine.Connection.execute` 
 method, and only include columns relevant to the parameters that were
 passed.   This is actually the usual way that
 :class:`_sql.Insert` is used to insert rows without having to type out
@@ -149,12 +149,12 @@ INSERT statement being executed with a list of parameters at once:
     COMMIT{stop}
 
 The execution above features "executemany" form first illustrated at
-:ref:`tutorial_multiple_parameters`, however unlike when using the
+:ref:`tutorial_multiple_parameters` , however unlike when using the
 :func:`_sql.text` construct, we didn't have to spell out any SQL.
-By passing a dictionary or list of dictionaries to the :meth:`_engine.Connection.execute`
+By passing a dictionary or list of dictionaries to the :meth:`_engine.Connection.execute` 
 method in conjunction with the :class:`_sql.Insert` construct, the
 :class:`_engine.Connection` ensures that the column names which are passed
-will be expressed in the VALUES clause of the :class:`_sql.Insert`
+will be expressed in the VALUES clause of the :class:`_sql.Insert` 
 construct automatically.
 
 .. deepalchemy::
@@ -230,8 +230,8 @@ INSERT...RETURNING
 The RETURNING clause for supported backends is used
 automatically in order to retrieve the last inserted primary key value
 as well as the values for server defaults.   However the RETURNING clause
-may also be specified explicitly using the :meth:`_sql.Insert.returning`
-method; in this case, the :class:`_engine.Result`
+may also be specified explicitly using the :meth:`_sql.Insert.returning` 
+method; in this case, the :class:`_engine.Result` 
 object that's returned when the statement is executed has rows which
 can be fetched::
 
@@ -243,9 +243,9 @@ can be fetched::
     VALUES (:id, :user_id, :email_address)
     RETURNING address.id, address.email_address
 
-It can also be combined with :meth:`_sql.Insert.from_select`,
+It can also be combined with :meth:`_sql.Insert.from_select` ,
 as in the example below that builds upon the example stated in
-:ref:`tutorial_insert_from_select`::
+:ref:`tutorial_insert_from_select` ::
 
     >>> select_stmt = select(user_table.c.id, user_table.c.name + "@aol.com")
     >>> insert_stmt = insert(address_table).from_select(
@@ -280,7 +280,7 @@ as in the example below that builds upon the example stated in
 INSERT...FROM SELECT
 ^^^^^^^^^^^^^^^^^^^^^
 
-A less used feature of :class:`_sql.Insert`, but here for completeness, the
+A less used feature of :class:`_sql.Insert` , but here for completeness, the
 :class:`_sql.Insert` construct can compose an INSERT that gets rows directly
 from a SELECT using the :meth:`_sql.Insert.from_select` method.
 This method accepts a :func:`_sql.select` construct, which is discussed in the

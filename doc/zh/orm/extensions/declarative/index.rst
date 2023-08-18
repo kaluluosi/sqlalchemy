@@ -2,15 +2,15 @@
 
 .. currentmodule:: sqlalchemy.ext.declarative
 
-======================
+=====================================
 声明式扩展
-======================
+=====================================
 
-特定于 :ref:`Declarative <orm_declarative_mapping>` 映射API的扩展。
+该模块提供了与  :ref:`Declarative <orm_declarative_mapping>`  ORM 映射 API 特定的扩展。
 
-.. versionchanged:: 1.4  大部分的声明式扩展现在并入Sqlalchemy ORM中，
-   可以从``sqlalchemy.orm``命名空间中导入。详见 :ref:`orm_declarative_mapping` 中的文档。
-   关于变化的概述，请参阅 :ref:`change_5508`.
+.. versionchanged:: 1.4  现在大部分声明式扩展已经融入了 SQLAlchemy ORM 并可以从 ``sqlalchemy.orm`` 命名空间中导入。
+   请查看   :ref:`orm_declarative_mapping`  文档以获取新的文档说明。
+   针对这次变更的详细介绍请参见   :ref:`change_5508` 。
 
 .. autoclass:: AbstractConcreteBase
 

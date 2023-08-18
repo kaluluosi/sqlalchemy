@@ -13,12 +13,12 @@ use the :data:`_sql.func` object to render SQL functions in statements.
 
 .. seealso::
 
-    :ref:`tutorial_functions` - in the :ref:`unified_tutorial`
+    :ref:`tutorial_functions` - in the :ref:` unified_tutorial`
 
 Function API
 ------------
 
-The base API for SQL functions, which provides for the :data:`_sql.func`
+The base API for SQL functions, which provides for the :data:`_sql.func` 
 namespace as well as classes that may be used for extensibility.
 
 .. autoclass:: AnsiFunction

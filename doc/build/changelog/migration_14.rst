@@ -20,7 +20,7 @@ What's New in SQLAlchemy 1.4?
     implicit behaviors and rarely-used API flags that complicate the internals
     and hinder performance will be removed.
 
-    For the current status of SQLAlchemy 2.0, see :ref:`migration_20_toplevel`.
+    For the current status of SQLAlchemy 2.0, see :ref:`migration_20_toplevel` .
 
 Major API changes and features - General
 =========================================
@@ -41,19 +41,19 @@ ORM Query is internally unified with select, update, delete; 2.0 style execution
 ------------------------------------------------------------------------------------------
 
 The biggest conceptual change to SQLAlchemy for version 2.0 and essentially
-in 1.4 as well is that the great separation between the :class:`_sql.Select`
+in 1.4 as well is that the great separation between the :class:`_sql.Select` 
 construct in Core and the :class:`_orm.Query` object in the ORM has been removed,
-as well as between the :meth:`_orm.Query.update` and :meth:`_orm.Query.delete`
-methods in how they relate to :class:`_dml.Update` and :class:`_dml.Delete`.
+as well as between the :meth:`_orm.Query.update` and :meth:` _orm.Query.delete`
+methods in how they relate to :class:`_dml.Update` and :class:` _dml.Delete`.
 
-With regards to :class:`_sql.Select` and :class:`_orm.Query`, these two objects
+With regards to :class:`_sql.Select` and :class:` _orm.Query`, these two objects
 have for many versions had similar, largely overlapping APIs and even some
 ability to change between one and the other, while remaining very different in
 their usage patterns and behaviors.   The historical background for this was
 that the :class:`_orm.Query` object was introduced to overcome shortcomings in
 the :class:`_sql.Select` object which used to be at the core of how ORM objects
 were queried, except that they had to be queried in terms of
-:class:`_schema.Table` metadata only.    However :class:`_orm.Query` had only a
+:class:`_schema.Table` metadata only.    However :class:` _orm.Query` had only a
 simplistic interface for loading objects, and only over the course of many
 major releases did it eventually gain most of the flexibility of the
 :class:`_sql.Select` object, which then led to the ongoing awkwardness that
@@ -61,8 +61,8 @@ these two objects became highly similar yet still largely incompatible with
 each other.
 
 In version 1.4, all Core and ORM SELECT statements are rendered from a
-:class:`_sql.Select` object directly; when the :class:`_orm.Query` object
-is used, at statement invocation time it copies its state to a :class:`_sql.Select`
+:class:`_sql.Select` object directly; when the :class:` _orm.Query` object
+is used, at statement invocation time it copies its state to a :class:`_sql.Select` 
 which is then invoked internally using :term:`2.0 style` execution.   Going forward,
 the :class:`_orm.Query` object will become legacy only, and applications will
 be encouraged to move to :term:`2.0 style` execution which allows Core constructs
@@ -83,12 +83,12 @@ to be used freely against ORM entities::
 
 Things to note about the above example:
 
-* The :class:`_orm.Session` and :class:`_orm.sessionmaker` objects now feature
+* The :class:`_orm.Session` and :class:` _orm.sessionmaker` objects now feature
   full context manager (i.e. the ``with:`` statement) capability;
   see the revised documentation at :ref:`session_getting` for an example.
 
 * Within the 1.4 series, all :term:`2.0 style` ORM invocation uses a
-  :class:`_orm.Session` that includes the :paramref:`_orm.Session.future`
+  :class:`_orm.Session` that includes the :paramref:` _orm.Session.future`
   flag set to ``True``; this flag indicates the :class:`_orm.Session` should
   have 2.0-style behaviors, which include that ORM queries can be invoked
   from :class:`_orm.Session.execute` as well as some changes in transactional
@@ -97,31 +97,31 @@ Things to note about the above example:
 * The :func:`_sql.select` construct no longer needs brackets around the
   columns clause; see :ref:`change_5284` for background on this improvement.
 
-* The :func:`_sql.select`  / :class:`_sql.Select` object has a :meth:`_sql.Select.join`
+* The :func:`_sql.select`  / :class:` _sql.Select` object has a :meth:`_sql.Select.join` 
   method that acts like that of the :class:`_orm.Query` and even accommodates
   an ORM relationship attribute (without breaking the separation between
   Core and ORM!) - see :ref:`change_select_join` for background on this.
 
 * Statements that work with ORM entities and are expected to return ORM
-  results are invoked using :meth:`.orm.Session.execute`.  See
+  results are invoked using :meth:`.orm.Session.execute` .  See
   :ref:`session_querying_20` for a primer.  See also the following note
-  at :ref:`change_session_execute_result`.
+  at :ref:`change_session_execute_result` .
 
 * a :class:`_engine.Result` object is returned, rather than a plain list, which
   itself is a much more sophisticated version of the previous ``ResultProxy``
   object; this object is now used both for Core and ORM results.   See
-  :ref:`change_result_14_core`,
-  :ref:`change_4710_core`, and :ref:`change_4710_orm` for information on this.
+  :ref:`change_result_14_core` ,
+  :ref:`change_4710_core` , and :ref:`change_4710_orm` for information on this.
 
 Throughout SQLAlchemy's documentation, there will be many references to
-:term:`1.x style` and :term:`2.0 style` execution.  This is to distinguish
+:term:`1.x style` and :term:` 2.0 style` execution.  This is to distinguish
 between the two querying styles and to attempt to forwards-document the new
-calling style going forward.  In SQLAlchemy 2.0, while the :class:`_orm.Query`
+calling style going forward.  In SQLAlchemy 2.0, while the :class:`_orm.Query` 
 object may remain as a legacy construct, it will no longer be featured in
 most documentation.
 
 Similar adjustments have been made to "bulk updates and deletes" such that
-Core :func:`_sql.update` and :func:`_sql.delete` can be used for bulk
+Core :func:`_sql.update` and :func:` _sql.delete` can be used for bulk
 operations.   A bulk update like the following::
 
     session.query(User).filter(User.name == "sandy").update(
@@ -143,15 +143,15 @@ in this way) as follows::
 
 Note the use of the :meth:`_sql.Executable.execution_options` method to pass
 ORM-related options.  The use of "execution options" is now much more prevalent
-within both Core and ORM, and many ORM-related methods from :class:`_orm.Query`
-are now implemented as execution options (see :meth:`_orm.Query.execution_options`
+within both Core and ORM, and many ORM-related methods from :class:`_orm.Query` 
+are now implemented as execution options (see :meth:`_orm.Query.execution_options` 
 for some examples).
 
 .. seealso::
 
-    :ref:`migration_20_toplevel`
+    :ref:`migration_20_toplevel` 
 
-:ticket:`5159`
+:ticket:`5159` 
 
 
 .. _change_session_execute_result:
@@ -159,10 +159,10 @@ for some examples).
 ORM ``Session.execute()`` uses "future" style ``Result`` sets in all cases
 --------------------------------------------------------------------------
 
-As noted in :ref:`change_4710_core`, the :class:`_engine.Result` and
+As noted in :ref:`change_4710_core` , the :class:`_engine.Result` and
 :class:`_engine.Row` objects now feature "named tuple" behavior, when used with
 an :class:`_engine.Engine` that includes the
-:paramref:`_sa.create_engine.future` parameter set to ``True``.  These
+:paramref:`_sa.create_engine.future` parameter set to ` `True``.  These
 "named tuple" rows in particular include a behavioral change which is that
 Python containment expressions using ``in``, such as::
 
@@ -182,10 +182,10 @@ partial-named-tuple behavior of prior SQLAlchemy versions, where containment
 checks continue to use key containment; ``"name" in row`` would return
 True if the row had a **column** named "name", rather than a value.
 
-When using :meth:`_orm.Session.execute`, full named-tuple style is enabled
+When using :meth:`_orm.Session.execute` , full named-tuple style is enabled
 **unconditionally**, meaning ``"name" in row`` will use **value containment**
 as the test, and **not** key containment. This is to accommodate that
-:meth:`_orm.Session.execute` now returns a :class:`_engine.Result` that also
+:meth:`_orm.Session.execute` now returns a :class:` _engine.Result` that also
 accommodates for ORM results, where even legacy ORM result rows such as those
 returned by :meth:`_orm.Query.all` use value containment.
 
@@ -283,13 +283,13 @@ driven in order to support this new feature.
 
 .. seealso::
 
-    :ref:`sql_caching`
+    :ref:`sql_caching` 
 
-:ticket:`4639`
-:ticket:`5380`
-:ticket:`4645`
-:ticket:`4808`
-:ticket:`5004`
+:ticket:`4639` 
+:ticket:`5380` 
+:ticket:`4645` 
+:ticket:`4808` 
+:ticket:`5004` 
 
 .. _change_5508:
 
@@ -312,7 +312,7 @@ The new classes added to ``sqlalchemy.orm`` include:
   has been in use throughout the span of the declarative system, except it now
   references a :class:`_orm.registry` object internally and is implemented
   by the :meth:`_orm.registry.generate_base` method which can be invoked
-  from a :class:`_orm.registry` directly.   The :func:`_orm.declarative_base`
+  from a :class:`_orm.registry` directly.   The :func:` _orm.declarative_base`
   function creates this registry automatically so there is no impact on
   existing code.    The ``sqlalchemy.ext.declarative.declarative_base`` name
   is still present, emitting a 2.0 deprecation warning when
@@ -323,29 +323,29 @@ The new classes added to ``sqlalchemy.orm`` include:
   name is still present, emitting a 2.0 deprecation warning when
   :ref:`2.0 deprecations mode <deprecation_20_mode>` is enabled.
 
-* Other names moved into ``sqlalchemy.orm`` include :func:`_orm.has_inherited_table`,
-  :func:`_orm.synonym_for`, :class:`_orm.DeclarativeMeta`, :func:`_orm.as_declarative`.
+* Other names moved into ``sqlalchemy.orm`` include :func:`_orm.has_inherited_table` ,
+  :func:`_orm.synonym_for` , :class:`_orm.DeclarativeMeta` , :func:`_orm.as_declarative` .
 
 In addition, The :func:`_declarative.instrument_declarative` function is
-deprecated, superseded by :meth:`_orm.registry.map_declaratively`.  The
-:class:`_declarative.ConcreteBase`, :class:`_declarative.AbstractConcreteBase`,
+deprecated, superseded by :meth:`_orm.registry.map_declaratively` .  The
+:class:`_declarative.ConcreteBase` , :class:`_declarative.AbstractConcreteBase` ,
 and :class:`_declarative.DeferredReflection` classes remain as extensions in the
 :ref:`declarative_toplevel` package.
 
 Mapping styles have now been organized such that they all extend from
 the :class:`_orm.registry` object, and fall into these categories:
 
-* :ref:`orm_declarative_mapping`
+* :ref:`orm_declarative_mapping` 
     * Using :func:`_orm.declarative_base` Base class w/ metaclass
-        * :ref:`orm_declarative_table`
-        * :ref:`Imperative Table (a.k.a. "hybrid table") <orm_imperative_table_configuration>`
+        * :ref:`orm_declarative_table` 
+        * :ref:`Imperative Table (a.k.a. "hybrid table") <orm_imperative_table_configuration>` 
     * Using :meth:`_orm.registry.mapped` Declarative Decorator
         * Declarative Table
         * Imperative Table (Hybrid)
-            * :ref:`orm_declarative_dataclasses`
-* :ref:`Imperative (a.k.a. "classical" mapping) <orm_imperative_mapping>`
-    * Using :meth:`_orm.registry.map_imperatively`
-        * :ref:`orm_imperative_dataclasses`
+            * :ref:`orm_declarative_dataclasses` 
+* :ref:`Imperative (a.k.a. "classical" mapping) <orm_imperative_mapping>` 
+    * Using :meth:`_orm.registry.map_imperatively` 
+        * :ref:`orm_imperative_dataclasses` 
 
 The existing classical mapping function ``sqlalchemy.orm.mapper()`` remains,
 however it is deprecated to call upon ``sqlalchemy.orm.mapper()`` directly; the
@@ -371,11 +371,11 @@ documentation.
 
 .. seealso::
 
-  :ref:`orm_mapping_classes_toplevel`
+  :ref:`orm_mapping_classes_toplevel` 
 
-  :ref:`change_5027`
+  :ref:`change_5027` 
 
-:ticket:`5508`
+:ticket:`5508` 
 
 
 .. _change_5027:
@@ -383,8 +383,8 @@ documentation.
 Python Dataclasses, attrs Supported w/ Declarative, Imperative Mappings
 -----------------------------------------------------------------------
 
-Along with the new declarative decorator styles introduced in :ref:`change_5508`,
-the :class:`_orm.Mapper` is now explicitly aware of the Python ``dataclasses``
+Along with the new declarative decorator styles introduced in :ref:`change_5508` ,
+the :class:`_orm.Mapper` is now explicitly aware of the Python ` `dataclasses``
 module and will recognize attributes that are configured in this way, and
 proceed to map them without skipping them as was the case previously.  In the
 case of the ``attrs`` module, ``attrs`` already removes its own attributes
@@ -394,12 +394,12 @@ attribute systems can now interoperate with Declarative mappings as well.
 
 .. seealso::
 
-  :ref:`orm_declarative_dataclasses`
+  :ref:`orm_declarative_dataclasses` 
 
-  :ref:`orm_imperative_dataclasses`
+  :ref:`orm_imperative_dataclasses` 
 
 
-:ticket:`5027`
+:ticket:`5027` 
 
 
 .. _change_3414:
@@ -410,13 +410,13 @@ Asynchronous IO Support for Core and ORM
 SQLAlchemy now supports Python ``asyncio``-compatible database drivers using an
 all-new asyncio front-end interface to :class:`_engine.Connection` for Core
 usage as well as :class:`_orm.Session` for ORM use, using the
-:class:`_asyncio.AsyncConnection` and :class:`_asyncio.AsyncSession` objects.
+:class:`_asyncio.AsyncConnection` and :class:` _asyncio.AsyncSession` objects.
 
 .. note::  The new asyncio feature should be considered **alpha level** for
    the initial releases of SQLAlchemy 1.4.   This is super new stuff that uses
    some previously unfamiliar programming techniques.
 
-The initial database API supported is the :ref:`dialect-postgresql-asyncpg`
+The initial database API supported is the :ref:`dialect-postgresql-asyncpg` 
 asyncio driver for PostgreSQL.
 
 The internal features of SQLAlchemy are fully integrated by making use of
@@ -442,14 +442,14 @@ is appreciative.
 
 The user facing ``async`` API itself is focused around IO-oriented methods such
 as :meth:`_asyncio.AsyncEngine.connect` and
-:meth:`_asyncio.AsyncConnection.execute`.   The new Core constructs strictly
+:meth:`_asyncio.AsyncConnection.execute` .   The new Core constructs strictly
 support :term:`2.0 style` usage only; which means all statements must be
 invoked given a connection object, in this case
-:class:`_asyncio.AsyncConnection`.
+:class:`_asyncio.AsyncConnection` .
 
 Within the ORM, :term:`2.0 style` query execution is
 supported, using :func:`_sql.select` constructs in conjunction with
-:meth:`_asyncio.AsyncSession.execute`; the legacy :class:`_orm.Query`
+:meth:`_asyncio.AsyncSession.execute` ; the legacy :class:`_orm.Query` 
 object itself is not supported by the :class:`_asyncio.AsyncSession` class.
 
 ORM features such as lazy loading of related attributes as well as unexpiry of
@@ -465,29 +465,29 @@ For the asyncio application developer who **chooses to break** with
 tradition, the new API provides a **strictly optional
 feature** such that applications that wish to make use of such ORM features
 can opt to organize database-related code into functions which can then be
-run within greenlets using the :meth:`_asyncio.AsyncSession.run_sync`
-method. See the ``greenlet_orm.py`` example at :ref:`examples_asyncio`
+run within greenlets using the :meth:`_asyncio.AsyncSession.run_sync` 
+method. See the ``greenlet_orm.py`` example at :ref:`examples_asyncio` 
 for a demonstration.
 
 Support for asynchronous cursors is also provided using new methods
 :meth:`_asyncio.AsyncConnection.stream` and
-:meth:`_asyncio.AsyncSession.stream`, which support a new
+:meth:`_asyncio.AsyncSession.stream` , which support a new
 :class:`_asyncio.AsyncResult` object that itself provides awaitable
 versions of common methods like
 :meth:`_asyncio.AsyncResult.all` and
-:meth:`_asyncio.AsyncResult.fetchmany`.   Both Core and ORM are integrated
+:meth:`_asyncio.AsyncResult.fetchmany` .   Both Core and ORM are integrated
 with the feature which corresponds to the use of "server side cursors"
 in traditional SQLAlchemy.
 
 .. seealso::
 
-  :ref:`asyncio_toplevel`
+  :ref:`asyncio_toplevel` 
 
-  :ref:`examples_asyncio`
+  :ref:`examples_asyncio` 
 
 
 
-:ticket:`3414`
+:ticket:`3414` 
 
 .. _change_deferred_construction:
 
@@ -501,7 +501,7 @@ of statement creation and compilation, where the compilation step would be
 cached, based on a cache key generated by the created statement object, which
 itself is newly created for each use.  Towards this goal, much of the Python
 computation which occurs within the construction of statements, particularly
-that of the ORM :class:`_query.Query` as well as the :func:`_sql.select`
+that of the ORM :class:`_query.Query` as well as the :func:` _sql.select`
 construct when used to invoke ORM queries, is being moved to occur within
 the compilation phase of the statement which only occurs after the statement
 has been invoked, and only if the statement's compiled form was not yet
@@ -521,27 +521,27 @@ Error conditions which fall under this category include:
   :class:`.ArgumentError` would be raised immediately upon statement
   construction.
 
-* Various error conditions which may arise when calling upon :meth:`.Query.join`
+* Various error conditions which may arise when calling upon :meth:`.Query.join` 
   will be evaluated at statement compilation time rather than when the method
   is first called.
 
 Other things that may change involve the :class:`_orm.Query` object directly:
 
 * Behaviors may be slightly different when calling upon the
-  :attr:`_orm.Query.statement` accessor. The :class:`_sql.Select` object
+  :attr:`_orm.Query.statement` accessor. The :class:` _sql.Select` object
   returned is now a direct copy of the same state that was present in the
-  :class:`_orm.Query`, without any ORM-specific compilation being performed
-  (which means it's dramatically faster). However, the :class:`_sql.Select`
+  :class:`_orm.Query` , without any ORM-specific compilation being performed
+  (which means it's dramatically faster). However, the :class:`_sql.Select` 
   will not have the same internal state as it had in 1.3, including things like
   the FROM clauses being explicitly spelled out if they were not explicitly
-  stated in the :class:`_orm.Query`. This means code that relies upon
+  stated in the :class:`_orm.Query` . This means code that relies upon
   manipulating this :class:`_sql.Select` statement such as calling methods like
   :meth:`_sql.Select.with_only_columns` may need to accommodate for the FROM
   clause.
 
 .. seealso::
 
-    :ref:`change_4639`
+    :ref:`change_4639` 
 
 .. _change_4656:
 
@@ -562,9 +562,9 @@ signature is no longer modified and the module object is procured inside the fun
 instead.
 
 
-:ticket:`4656`
+:ticket:`4656` 
 
-:ticket:`4689`
+:ticket:`4689` 
 
 
 .. _change_1390:
@@ -576,7 +576,7 @@ A long awaited feature to add rudimentary support for database regular
 expression operators, to complement the :meth:`_sql.ColumnOperators.like` and
 :meth:`_sql.ColumnOperators.match` suites of operations.   The new features
 include :meth:`_sql.ColumnOperators.regexp_match` implementing a regular
-expression match like function, and :meth:`_sql.ColumnOperators.regexp_replace`
+expression match like function, and :meth:`_sql.ColumnOperators.regexp_replace` 
 implementing a regular expression string replace function.
 
 Supported backends include SQLite, PostgreSQL, MySQL / MariaDB, and Oracle.
@@ -592,14 +592,14 @@ is established as the implementation.
 .. seealso::
 
 
-    :meth:`_sql.ColumnOperators.regexp_match`
+    :meth:`_sql.ColumnOperators.regexp_match` 
 
-    :meth:`_sql.ColumnOperators.regexp_replace`
+    :meth:`_sql.ColumnOperators.regexp_replace` 
 
     :ref:`pysqlite_regexp` - SQLite implementation notes
 
 
-:ticket:`1390`
+:ticket:`1390` 
 
 
 .. _deprecation_20_mode:
@@ -613,18 +613,18 @@ this end, a primary feature in release 1.4 is "2.0 deprecations mode", which is
 a series of deprecation warnings that emit against every detectable API pattern
 which will work differently in version 2.0.   The warnings all make use of the
 :class:`_exc.RemovedIn20Warning` class. As these warnings affect foundational
-patterns including the :func:`_sql.select` and :class:`_engine.Engine` constructs, even
+patterns including the :func:`_sql.select` and :class:` _engine.Engine` constructs, even
 simple applications can generate a lot of warnings until appropriate API
 changes are made.   The warning mode is therefore turned off by default until
 the developer enables the environment variable ``SQLALCHEMY_WARN_20=1``.
 
-For a full walkthrough of using 2.0 Deprecations mode, see :ref:`migration_20_deprecations_mode`.
+For a full walkthrough of using 2.0 Deprecations mode, see :ref:`migration_20_deprecations_mode` .
 
 .. seealso::
 
-  :ref:`migration_20_toplevel`
+  :ref:`migration_20_toplevel` 
 
-  :ref:`migration_20_deprecations_mode`
+  :ref:`migration_20_deprecations_mode` 
 
 
 
@@ -644,10 +644,10 @@ The most immediate noticeable impact is that a :func:`_expression.select` can no
 be embedded inside of another :func:`_expression.select` directly, without explicitly
 turning the inner :func:`_expression.select` into a subquery first.  This is historically
 performed by using the :meth:`_expression.SelectBase.alias` method, which remains, however
-is more explicitly suited by using a new method :meth:`_expression.SelectBase.subquery`;
-both methods do the same thing.   The object returned is now :class:`.Subquery`,
+is more explicitly suited by using a new method :meth:`_expression.SelectBase.subquery` ;
+both methods do the same thing.   The object returned is now :class:`.Subquery` ,
 which is very similar to the :class:`_expression.Alias` object and shares a common
-base :class:`.AliasedReturnsRows`.
+base :class:`.AliasedReturnsRows` .
 
 That is, this will now raise::
 
@@ -675,14 +675,14 @@ equivalent to using the :meth:`_expression.SelectBase.alias` method.
 The rationale for this change is based on the following:
 
 * In order to support the unification of :class:`_sql.Select` with
-  :class:`_orm.Query`, the :class:`_sql.Select` object needs to have
-  :meth:`_sql.Select.join` and :meth:`_sql.Select.outerjoin` methods that
+  :class:`_orm.Query` , the :class:`_sql.Select` object needs to have
+  :meth:`_sql.Select.join` and :meth:` _sql.Select.outerjoin` methods that
   actually add JOIN criteria to the existing FROM clause, as is what users have
   always expected it to do in any case.    The previous behavior, having to
   align with what a :class:`.FromClause` would do, was that it would generate
   an unnamed subquery and then JOIN to it, which was a completely useless
   feature that only confused those users unfortunate enough to try this.  This
-  change is discussed at :ref:`change_select_join`.
+  change is discussed at :ref:`change_select_join` .
 
 * The behavior of including a SELECT in the FROM clause of another SELECT
   without first creating an alias or subquery would be that it creates an
@@ -724,14 +724,14 @@ The rationale for this change is based on the following:
   ..
 
 As :class:`_expression.SelectBase` objects are no longer
-:class:`_expression.FromClause` objects, attributes like the ``.c`` attribute
+:class:`_expression.FromClause` objects, attributes like the ` `.c`` attribute
 as well as methods like ``.select()`` is now deprecated, as they imply implicit
 production of a subquery. The ``.join()`` and ``.outerjoin()`` methods are now
 :ref:`repurposed to append JOIN criteria to the existing query <change_select_join>` in a similar
-way as that of :meth:`_orm.Query.join`, which is what users have always
+way as that of :meth:`_orm.Query.join` , which is what users have always
 expected these methods to do in any case.
 
-In place of the ``.c`` attribute, a new attribute :attr:`_expression.SelectBase.selected_columns`
+In place of the ``.c`` attribute, a new attribute :attr:`_expression.SelectBase.selected_columns` 
 is added.  This attribute resolves to a column collection that is what most
 people hope that ``.c`` does (but does not), which is to reference the columns
 that are in the columns clause of the SELECT statement.   A common beginner mistake
@@ -752,7 +752,7 @@ present in the ``users.c`` collection::
     stmt = select(users)
     stmt = stmt.where(stmt.selected_columns.name == "foo")
 
-:ticket:`4617`
+:ticket:`4617` 
 
 
 .. _change_select_join:
@@ -760,8 +760,8 @@ present in the ``users.c`` collection::
 select().join() and outerjoin() add JOIN criteria to the current query, rather than creating a subquery
 -------------------------------------------------------------------------------------------------------
 
-Towards the goal of unifying :class:`_orm.Query` and :class:`_sql.Select`,
-particularly for :term:`2.0 style` use of :class:`_sql.Select`, it was critical
+Towards the goal of unifying :class:`_orm.Query` and :class:` _sql.Select`,
+particularly for :term:`2.0 style` use of :class:` _sql.Select`, it was critical
 that there be a working :meth:`_sql.Select.join` method that behaves like the
 :meth:`_orm.Query.join` method, adding additional entries to the FROM clause of
 the existing SELECT and then returning the new :class:`_sql.Select` object for
@@ -770,15 +770,15 @@ subquery and returning a JOIN from that subquery, a behavior that has always
 been virtually useless and completely misleading to users.
 
 To allow this to be the case, :ref:`change_4617` was first implemented which
-splits off :class:`_sql.Select` from having to be a :class:`_sql.FromClause`;
+splits off :class:`_sql.Select` from having to be a :class:` _sql.FromClause`;
 this removed the requirement that :meth:`_sql.Select.join` would need to
 return a :class:`_sql.Join` object rather than a new version of that
 :class:`_sql.Select` object that includes a new JOIN in its FROM clause.
 
-From that point on, as the :meth:`_sql.Select.join` and :meth:`_sql.Select.outerjoin`
+From that point on, as the :meth:`_sql.Select.join` and :meth:` _sql.Select.outerjoin`
 did have an existing behavior, the original plan was that these
 methods would be deprecated, and the new "useful" version of
-the methods would be available on an alternate, "future" :class:`_sql.Select`
+the methods would be available on an alternate, "future" :class:`_sql.Select` 
 object available as a separate import.
 
 However, after some time working with this particular codebase, it was decided
@@ -786,7 +786,7 @@ that having two different kinds of :class:`_sql.Select` objects floating
 around, each with 95% the same behavior except for some subtle difference
 in how some of the methods behave was going to be more misleading and inconvenient
 than simply making a hard change in how these two methods behave, given
-that the existing behavior of :meth:`_sql.Select.join` and :meth:`_sql.Select.outerjoin`
+that the existing behavior of :meth:`_sql.Select.join` and :meth:` _sql.Select.outerjoin`
 is essentially never used and only causes confusion.
 
 So it was decided, given how very useless the current behavior is, and how
@@ -796,14 +796,14 @@ and having a more awkward API in the interim.   SQLAlchemy developers do not
 take it lightly to make a completely breaking change like this, however this is
 a very special case and it is extremely unlikely that the previous
 implementation of these methods was being used;  as noted in
-:ref:`change_4617`, major databases such as MySQL and PostgreSQL don't allow
+:ref:`change_4617` , major databases such as MySQL and PostgreSQL don't allow
 for unnamed subqueries in any case and from a syntactical point of view it's
 nearly impossible for a JOIN from an unnamed subquery to be useful since it's
 very difficult to refer to the columns within it unambiguously.
 
 With the new implementation, :meth:`_sql.Select.join` and
 :meth:`_sql.Select.outerjoin` now behave very similarly to that of
-:meth:`_orm.Query.join`, adding JOIN criteria to the existing statement by
+:meth:`_orm.Query.join` , adding JOIN criteria to the existing statement by
 matching to the left entity::
 
     stmt = select(user_table).join(
@@ -816,7 +816,7 @@ producing:
 
     SELECT user.id, user.name FROM user JOIN address ON user.id=address.user_id
 
-As is the case for :class:`_sql.Join`, the ON clause is automatically determined
+As is the case for :class:`_sql.Join` , the ON clause is automatically determined
 if feasible::
 
     stmt = select(user_table).join(addresses_table)
@@ -868,7 +868,7 @@ warnings when any kind of standard library mutation methods are invoked, in
 addition that when the dictionary would hold any kind of list of elements, the
 list would also have to emit deprecation warnings on mutation) against the
 unlikely use case of projects already mutating :class:`_engine.URL` objects in
-the first place, as well as that small changes such as that of :ticket:`5341`
+the first place, as well as that small changes such as that of :ticket:`5341` 
 were creating backwards-incompatibility in any case.   The primary case for
 mutation of a
 :class:`_engine.URL` object is that of parsing plugin arguments within the
@@ -885,7 +885,7 @@ existing mechanism to create a :class:`_engine.URL` object, the
      >>> url = make_url("postgresql+psycopg2://user:pass@host/dbname")
 
 For programmatic construction, code that may have been using the
-:class:`_engine.URL` constructor or ``__init__`` method directly will
+:class:`_engine.URL` constructor or ` `__init__`` method directly will
 receive a deprecation warning if arguments are passed as keyword arguments
 and not an exact 7-tuple.  The keyword-style constructor is now available
 via the :meth:`_engine.URL.create` method::
@@ -949,15 +949,15 @@ normalized into sequences, use the :attr:`_engine.URL.normalized_query` attribut
     >>> url.normalized_query
     immutabledict({'alt_host': ('host1', 'host2'), 'sslcert': ('/path/to/crt',)})
 
-The query string can be appended to via methods such as :meth:`_engine.URL.update_query_dict`,
-:meth:`_engine.URL.update_query_pairs`, :meth:`_engine.URL.update_query_string`::
+The query string can be appended to via methods such as :meth:`_engine.URL.update_query_dict` ,
+:meth:`_engine.URL.update_query_pairs` , :meth:`_engine.URL.update_query_string` ::
 
     >>> url.update_query_dict({"alt_host": "host3"}, append=True)
     postgresql://user:***@host/dbname?alt_host=host1&alt_host=host2&alt_host=host3&sslcert=%2Fpath%2Fto%2Fcrt
 
 .. seealso::
 
-  :class:`_engine.URL`
+  :class:`_engine.URL` 
 
 
 Changes to CreateEnginePlugin
@@ -966,7 +966,7 @@ Changes to CreateEnginePlugin
 The :class:`_engine.CreateEnginePlugin` is also impacted by this change,
 as the documentation for custom plugins indicated that the ``dict.pop()``
 method should be used to remove consumed arguments from the URL object.  This
-should now be achieved using the :meth:`_engine.CreateEnginePlugin.update_url`
+should now be achieved using the :meth:`_engine.CreateEnginePlugin.update_url` 
 method.  A backwards compatible approach would look like::
 
     from sqlalchemy.engine import CreateEnginePlugin
@@ -993,7 +993,7 @@ method.  A backwards compatible approach would look like::
 See the docstring at :class:`_engine.CreateEnginePlugin` for complete details
 on how this class is used.
 
-:ticket:`5526`
+:ticket:`5526` 
 
 
 .. _change_5284:
@@ -1035,7 +1035,7 @@ is omitted::
 
 As part of this change, the :class:`.Select` construct also gains the 2.0-style
 "future" API which includes an updated :meth:`.Select.join` method as well
-as methods like :meth:`.Select.filter_by` and :meth:`.Select.join_from`.
+as methods like :meth:`.Select.filter_by` and :meth:` .Select.join_from`.
 
 In a related change, the :func:`_sql.case` construct has also been modified
 to accept its list of WHEN clauses positionally, with a similar deprecation
@@ -1051,25 +1051,25 @@ track for the old calling style::
 
 The convention for SQLAlchemy constructs accepting ``*args`` vs. a list of
 values, as is the latter case for a construct like
-:meth:`_sql.ColumnOperators.in_`, is that **positional arguments are used for
+:meth:`_sql.ColumnOperators.in_` , is that **positional arguments are used for
 structural specification, lists are used for data specification**.
 
 
 .. seealso::
 
-    :ref:`migration_20_5284`
+    :ref:`migration_20_5284` 
 
-    :ref:`error_c9ae`
+    :ref:`error_c9ae` 
 
 
-:ticket:`5284`
+:ticket:`5284` 
 
 .. _change_4645:
 
 All IN expressions render parameters for each value in the list on the fly (e.g. expanding parameters)
 ------------------------------------------------------------------------------------------------------
 
-The "expanding IN" feature, first introduced in :ref:`change_3953`, has matured
+The "expanding IN" feature, first introduced in :ref:`change_3953` , has matured
 enough such that it is clearly superior to the previous method of rendering IN
 expressions.  As the approach was improved to handle empty lists of values, it
 is now the only means that Core / ORM will use to render lists of IN
@@ -1086,16 +1086,16 @@ their parameters, nor could the parameter dictionary be fully used for
 statements that included IN expressions generally.
 
 In order to service the "baked query" feature described at
-:ref:`baked_toplevel`, a cacheable version of IN was needed, which is what
+:ref:`baked_toplevel` , a cacheable version of IN was needed, which is what
 brought about the "expanding IN" feature.  In contrast to the existing behavior
 whereby the parameter list is expanded at statement construction time into
 individual :class:`.BindParameter` objects, the feature instead uses a single
 :class:`.BindParameter` that stores the list of values at once; when the
-statement is executed by the :class:`_engine.Engine`, it is "expanded" on the fly into
+statement is executed by the :class:`_engine.Engine` , it is "expanded" on the fly into
 individual bound parameter positions based on the parameters passed to the call
-to :meth:`_engine.Connection.execute`, and the existing SQL string which may have been
+to :meth:`_engine.Connection.execute` , and the existing SQL string which may have been
 retrieved from a previous execution is modified using a regular expression to
-suit the current parameter set.   This allows for the same :class:`.Compiled`
+suit the current parameter set.   This allows for the same :class:`.Compiled` 
 object, which stores the rendered string statement, to be invoked multiple
 times against different parameter sets that modify the list contents passed to
 IN expressions, while still maintaining the behavior of individual scalar
@@ -1153,11 +1153,11 @@ parameter is empty, is now standardized on use of the IN operator against a
 so-called "empty set".  As there is no standard SQL syntax for empty sets, a
 SELECT that returns no rows is used, tailored in specific ways for each backend
 so that the database treats it as an empty set; this feature was first
-introduced in version 1.3 and is described at :ref:`change_4271`.  The
+introduced in version 1.3 and is described at :ref:`change_4271` .  The
 :paramref:`_sa.create_engine.empty_in_strategy` parameter, introduced in version
 1.2 as a means for migrating for how this case was treated for the previous IN
 system, is now deprecated and this flag no longer has an effect; as described
-in :ref:`change_3907`, this flag allowed a dialect to switch between the
+in :ref:`change_3907` , this flag allowed a dialect to switch between the
 original system of comparing a column against itself, which turned out to be a
 huge performance issue, and a newer system of comparing "1 != 1" in
 order to produce a "false" expression. The 1.3 introduced behavior which
@@ -1172,13 +1172,13 @@ details.
 
 .. seealso::
 
-    :ref:`change_4808`
+    :ref:`change_4808` 
 
-    :ref:`change_4271`
+    :ref:`change_4271` 
 
-    :class:`.BindParameter`
+    :class:`.BindParameter` 
 
-:ticket:`4645`
+:ticket:`4645` 
 
 .. _change_4737:
 
@@ -1250,7 +1250,7 @@ algorithm to a :func:`_expression.select` construct at query execution time and 
 the structure of the query for these un-linked FROM clauses, parsing through
 the WHERE clause and all JOIN clauses to determine how FROM elements are linked
 together and ensuring that all the FROM elements are connected in a single
-graph. This recipe has now been adapted to be part of the :class:`.SQLCompiler`
+graph. This recipe has now been adapted to be part of the :class:`.SQLCompiler` 
 itself where it now optionally emits a warning for a statement if this
 condition is detected.   The warning is enabled using the
 :paramref:`_sa.create_engine.enable_from_linting` flag and is enabled by default.
@@ -1303,7 +1303,7 @@ following query will return all rows and produce no warnings::
     q = session.query(User).join(Address, true())  # intentional cartesian product
 
 The warning is only generated by default when the statement is compiled by the
-:class:`_engine.Connection` for execution; calling the :meth:`_expression.ClauseElement.compile`
+:class:`_engine.Connection` for execution; calling the :meth:` _expression.ClauseElement.compile`
 method will not emit a warning unless the linting flag is supplied:
 
 .. sourcecode:: pycon+sql
@@ -1315,7 +1315,7 @@ method will not emit a warning unless the linting flag is supplied:
     FROM addresses, users JOIN addresses AS addresses_1 ON users.id = addresses_1.user_id
     WHERE addresses.email_address = :email_address_1
 
-:ticket:`4737`
+:ticket:`4737` 
 
 
 .. _change_result_14_core:
@@ -1328,7 +1328,7 @@ the ORM and Core.   Towards this goal, version 1.4 introduces new versions
 of both the ``ResultProxy`` and ``RowProxy`` objects that have been part
 of SQLAlchemy since the beginning.
 
-The new objects are documented at :class:`_engine.Result` and :class:`_engine.Row`,
+The new objects are documented at :class:`_engine.Result` and :class:` _engine.Row`,
 and are used not only for Core result sets but for :term:`2.0 style` results
 within the ORM as well.
 
@@ -1393,7 +1393,7 @@ dictionaries:
              print("Y: %(y)s  X: %(x)s" % map_)
 
 When using Core, the object returned by :meth:`_engine.Connection.execute` is
-an instance of :class:`.CursorResult`, which continues to feature the same API
+an instance of :class:`.CursorResult` , which continues to feature the same API
 features as ``ResultProxy`` regarding inserted primary keys, defaults,
 rowcounts, etc.   For ORM, a :class:`_result.Result` subclass will be returned
 that performs translation of Core rows into ORM rows, and then allows all the
@@ -1403,11 +1403,11 @@ same operations to take place.
 
     :ref:`migration_20_unify_select` - in the 2.0 migration documentation
 
-:ticket:`5087`
+:ticket:`5087` 
 
-:ticket:`4395`
+:ticket:`4395` 
 
-:ticket:`4959`
+:ticket:`4959` 
 
 
 .. _change_4710_core:
@@ -1432,23 +1432,23 @@ API where both the ORM and Core deliver result sets that  behave identically.
 Unification of major patterns within ORM and Core is a major goal of SQLAlchemy
 2.0, and release 1.4 aims to have most or all of the underlying architectural
 patterns in place in order to support this process.   The note in
-:ref:`change_4710_orm` describes the ORM's use of the :class:`.Row` class.
+:ref:`change_4710_orm` describes the ORM's use of the :class:` .Row` class.
 
 For release 1.4, the :class:`.Row` class provides an additional subclass
 ``LegacyRow``, which is used by Core and provides a backwards-compatible
 version of :class:`.RowProxy` while emitting deprecation warnings for those API
 features and behaviors that will be moved.  ORM :class:`_query.Query` now makes use
-of :class:`.Row` directly as a replacement for :class:`.KeyedTuple`.
+of :class:`.Row` directly as a replacement for :class:` .KeyedTuple`.
 
 The ``LegacyRow`` class is a transitional class where the
 ``__contains__`` method is still testing against the keys, not the values,
 while emitting a deprecation warning when the operation succeeds.
 Additionally, all the other mapping-like methods on the previous
-:class:`.RowProxy` are deprecated, including ``LegacyRow.keys()``,
-``LegacyRow.items()``, etc.  For mapping-like behaviors from a :class:`.Row`
+:class:`.RowProxy` are deprecated, including ` `LegacyRow.keys()``,
+``LegacyRow.items()``, etc.  For mapping-like behaviors from a :class:`.Row` 
 object, including support for these methods as well as a key-oriented
 ``__contains__`` operator, the API going forward will be to first access a
-special attribute :attr:`.Row._mapping`, which will then provide a complete
+special attribute :attr:`.Row._mapping` , which will then provide a complete
 mapping interface to the row, rather than a tuple interface.
 
 Rationale: To behave more like a named tuple rather than a mapping
@@ -1485,7 +1485,7 @@ Proxying behavior goes away, was also unnecessary in modern usage
 
 The refactor of :class:`.Row` to behave like a tuple requires that all
 data values be fully available up front.  This is an internal behavior change
-from that of :class:`.RowProxy`, where result-row processing functions would
+from that of :class:`.RowProxy` , where result-row processing functions would
 be invoked at the point of accessing an element of the row, instead of
 when the row was first fetched.     This means for example when retrieving
 a datetime value from SQLite, the data for the row as present in the
@@ -1501,7 +1501,7 @@ having been called just once up front::
 
     row = (1, datetime.datetime(2019, 12, 31, 19, 56, 58, 272106))
 
-The :class:`.RowProxy` and :class:`.Row` objects in SQLAlchemy are where the
+The :class:`.RowProxy` and :class:` .Row` objects in SQLAlchemy are where the
 majority of SQLAlchemy's C extension code takes place.   This code has been
 highly refactored to provide the new behavior in an efficient manner, and
 overall performance has been improved as the design of :class:`.Row` is now
@@ -1550,11 +1550,11 @@ There are many reasons why the above assumptions do not hold:
 
 .. seealso::
 
-    :ref:`change_4710_orm`
+    :ref:`change_4710_orm` 
 
-    :ref:`change_session_execute_result`
+    :ref:`change_session_execute_result` 
 
-:ticket:`4710`
+:ticket:`4710` 
 
 .. _change_4753:
 
@@ -1579,9 +1579,9 @@ the 2.0 transition:
 To support this change, the :class:`_expression.ColumnCollection` used by
 :class:`_expression.SelectBase` as well as for derived FROM clauses such as subqueries
 also support duplicate columns; this includes the new
-:attr:`_expression.SelectBase.selected_columns` attribute, the deprecated ``SelectBase.c``
+:attr:`_expression.SelectBase.selected_columns` attribute, the deprecated ` `SelectBase.c``
 attribute, as well as the :attr:`_expression.FromClause.c` attribute seen on constructs
-such as :class:`.Subquery` and :class:`_expression.Alias`:
+such as :class:`.Subquery` and :class:` _expression.Alias`:
 
 .. sourcecode:: pycon+sql
 
@@ -1605,9 +1605,9 @@ when the string "key" is ambiguous::
     <sqlalchemy.sql.elements.Label object at 0x7fa540b3e2e8>
 
 To suit the use of :class:`_expression.ColumnCollection` in objects such as
-:class:`_schema.Table` and :class:`.PrimaryKeyConstraint`, the old "deduplicating"
+:class:`_schema.Table` and :class:` .PrimaryKeyConstraint`, the old "deduplicating"
 behavior which is more critical for these objects is preserved in a new class
-:class:`.DedupeColumnCollection`.
+:class:`.DedupeColumnCollection` .
 
 The change includes that the familiar warning ``"Column %r on table %r being
 replaced by %r, which has the same key.  Consider use_labels for select()
@@ -1642,7 +1642,7 @@ as:
 
 
 
-:ticket:`4753`
+:ticket:`4753` 
 
 
 
@@ -1695,12 +1695,12 @@ These anonymous expressions were necessary as SQLAlchemy's
 up datatypes, such as the :class:`.String` datatype which used to have
 result-row-processing behavior, to the correct column, so most importantly the
 names had to be both easy to determine in a database-agnostic manner as well as
-unique in all cases.    In SQLAlchemy 1.0 as part of :ticket:`918`, this
+unique in all cases.    In SQLAlchemy 1.0 as part of :ticket:`918` , this
 reliance on named columns in result rows (specifically the
 ``cursor.description`` element of the PEP-249 cursor) was scaled back to not be
 necessary for most Core SELECT constructs; in release 1.4, the system overall
 is becoming more comfortable with SELECT statements that have duplicate column
-or label names such as in :ref:`change_4753`.  So we now emulate PostgreSQL's
+or label names such as in :ref:`change_4753` .  So we now emulate PostgreSQL's
 reasonable behavior for simple modifications to a single column, most
 prominently with CAST:
 
@@ -1719,7 +1719,7 @@ to generate the usual "anonymous" labels:
     {printsql}SELECT CAST(:data_1 + foo.data AS VARCHAR) AS anon_1
     FROM foo
 
-A :func:`.cast` against a :class:`.Label`, despite having to omit the label
+A :func:`.cast` against a :class:` .Label`, despite having to omit the label
 expression as these don't render inside of a CAST, will nonetheless make use of
 the given name:
 
@@ -1739,7 +1739,7 @@ expression on the outside to apply an "AS <name>" label directly:
     FROM foo
 
 
-:ticket:`4449`
+:ticket:`4449` 
 
 .. _change_4808:
 
@@ -1747,7 +1747,7 @@ New "post compile" bound parameters used for LIMIT/OFFSET in Oracle, SQL Server
 -------------------------------------------------------------------------------
 
 A major goal of the 1.4 series is to establish that all Core SQL constructs
-are completely cacheable, meaning that a particular :class:`.Compiled`
+are completely cacheable, meaning that a particular :class:`.Compiled` 
 structure will produce an identical SQL string regardless of any SQL parameters
 used with it, which notably includes those used to specify the LIMIT and
 OFFSET values, typically used for pagination and "top N" style results.
@@ -1834,26 +1834,26 @@ intended for general use.   The literal values are rendered using the
 SQLAlchemy has **extremely limited** scope, supporting only integers and simple
 string values.
 
-:ticket:`4808`
+:ticket:`4808` 
 
 .. _change_4712:
 
 Connection-level transactions can now be inactive based on subtransaction
 -------------------------------------------------------------------------
 
-A :class:`_engine.Connection` now includes the behavior where a :class:`.Transaction`
+A :class:`_engine.Connection` now includes the behavior where a :class:` .Transaction`
 can be made inactive due to a rollback on an inner transaction, however the
 :class:`.Transaction` will not clear until it is itself rolled back.
 
 This is essentially a new error condition which will disallow statement
 executions to proceed on a :class:`_engine.Connection` if an inner "sub" transaction
 has been rolled back.  The behavior works very similarly to that of the
-ORM :class:`.Session`, where if an outer transaction has been begun, it needs
+ORM :class:`.Session` , where if an outer transaction has been begun, it needs
 to be rolled back to clear the invalid transaction; this behavior is described
-in :ref:`faq_session_rollback`.
+in :ref:`faq_session_rollback` .
 
 While the :class:`_engine.Connection` has had a less strict behavioral pattern than
-the :class:`.Session`, this change was made as it helps to identify when
+the :class:`.Session` , this change was made as it helps to identify when
 a subtransaction has rolled back the DBAPI transaction, however the external
 code isn't aware of this and attempts to continue proceeding, which in fact
 runs operations on a new transaction.   The "test harness" pattern described
@@ -1865,9 +1865,9 @@ is itself temporary as it will no longer apply once subtransactions are removed.
 
 In order to work with the 2.0 style behavior that does not include
 subtransactions, use the :paramref:`_sa.create_engine.future` parameter
-on :func:`_sa.create_engine`.
+on :func:`_sa.create_engine` .
 
-The error message is described in the errors page at :ref:`error_8s2a`.
+The error message is described in the errors page at :ref:`error_8s2a` .
 
 .. _change_5367:
 
@@ -1891,7 +1891,7 @@ flags to ``True``::
         boolean = Column(Boolean(create_constraint=True))
         enum = Column(Enum("a", "b", "c", create_constraint=True))
 
-:ticket:`5367`
+:ticket:`5367` 
 
 New Features - ORM
 ==================
@@ -1903,7 +1903,7 @@ Raiseload for Columns
 
 The "raiseload" feature, which raises :class:`.InvalidRequestError` when an
 unloaded attribute is accessed, is now available for column-oriented attributes
-using the :paramref:`.orm.defer.raiseload` parameter of :func:`.defer`. This
+using the :paramref:`.orm.defer.raiseload` parameter of :func:` .defer`. This
 works in the same manner as that of the :func:`.raiseload` option used by
 relationship loading::
 
@@ -1913,7 +1913,7 @@ relationship loading::
     book.summary
 
 To configure column-level raiseload on a mapping, the
-:paramref:`.deferred.raiseload` parameter of :func:`.deferred` may be used.  The
+:paramref:`.deferred.raiseload` parameter of :func:` .deferred` may be used.  The
 :func:`.undefer` option may then be used at query time to eagerly load
 the attribute::
 
@@ -1930,7 +1930,7 @@ the attribute::
 
 It was originally considered that the existing :func:`.raiseload` option that
 works for :func:`_orm.relationship` attributes be expanded to also support column-oriented
-attributes.    However, this would break the "wildcard" behavior of :func:`.raiseload`,
+attributes.    However, this would break the "wildcard" behavior of :func:`.raiseload` ,
 which is documented as allowing one to prevent all relationships from loading::
 
     session.query(Order).options(joinedload(Order.items), raiseload("*"))
@@ -1941,7 +1941,7 @@ backwards incompatible change; additionally, it's not clear if
 :func:`.raiseload` covered both column expressions and relationships, how one
 would achieve the  effect above of only blocking relationship loads, without
 new API being added.   So to keep things simple, the option for columns
-remains on :func:`.defer`:
+remains on :func:`.defer` :
 
     :func:`.raiseload` - query option to raise for relationship loads
 
@@ -1964,9 +1964,9 @@ as was present previously.
 
 .. seealso::
 
-    :ref:`orm_queryguide_deferred_raiseload`
+    :ref:`orm_queryguide_deferred_raiseload` 
 
-:ticket:`4826`
+:ticket:`4826` 
 
 .. _change_5263:
 
@@ -2038,9 +2038,9 @@ The ultimate INSERT statement can be seen by enabling statement logging on the P
 
 The feature batches rows into groups of 1000 by default which can be affected
 using the ``executemany_values_page_size`` argument documented at
-:ref:`psycopg2_executemany_mode`.
+:ref:`psycopg2_executemany_mode` .
 
-:ticket:`5263`
+:ticket:`5263` 
 
 
 .. _change_orm_update_returning_14:
@@ -2104,17 +2104,17 @@ Behavioral Changes - ORM
 The "KeyedTuple" object returned by Query is replaced by Row
 -------------------------------------------------------------
 
-As discussed at :ref:`change_4710_core`, the Core :class:`.RowProxy` object
-is now replaced by a class called :class:`.Row`.    The base :class:`.Row`
+As discussed at :ref:`change_4710_core` , the Core :class:`.RowProxy` object
+is now replaced by a class called :class:`.Row` .    The base :class:`.Row` 
 object now behaves more fully like a named tuple, and as such it is now
-used as the basis for tuple-like results returned by the :class:`_query.Query`
+used as the basis for tuple-like results returned by the :class:`_query.Query` 
 object, rather than the previous "KeyedTuple" class.
 
 The rationale is so that by SQLAlchemy 2.0, both Core and ORM SELECT statements
 will return result rows using the same :class:`.Row` object which behaves  like
-a named tuple.  Dictionary-like functionality is available from :class:`.Row`
+a named tuple.  Dictionary-like functionality is available from :class:`.Row` 
 via the :attr:`.Row._mapping` attribute.   In the interim, Core result sets
-will make use of a :class:`.Row` subclass ``LegacyRow`` which maintains
+will make use of a :class:`.Row` subclass ` `LegacyRow`` which maintains
 the previous dict/tuple hybrid behavior for backwards compatibility while the
 :class:`.Row` class will be used directly for ORM tuple results returned
 by the :class:`_query.Query` object.
@@ -2143,71 +2143,71 @@ as entity / column should work::
 
 .. seealso::
 
-    :ref:`change_4710_core`
+    :ref:`change_4710_core` 
 
-:ticket:`4710`.
+:ticket:`4710` .
 
 .. _change_5074:
 
 Session features new "autobegin" behavior
 -----------------------------------------
 
-Previously, the :class:`.Session` in its default mode of ``autocommit=False``
+Previously, the :class:`.Session` in its default mode of ` `autocommit=False``
 would internally begin a :class:`.SessionTransaction` object immediately
 on construction, and additionally would create a new one after each call to
-:meth:`.Session.rollback` or :meth:`.Session.commit`.
+:meth:`.Session.rollback` or :meth:` .Session.commit`.
 
 The new behavior is that this :class:`.SessionTransaction` object is now
 created on demand only, when methods such as :meth:`.Session.add` or
 :meth:`.Session.execute` are called.    However it is also now possible
 to call :meth:`.Session.begin` explicitly in order to begin the transaction,
 even in ``autocommit=False`` mode, thus matching the behavior of the
-future-style :class:`_base.Connection`.
+future-style :class:`_base.Connection` .
 
 The behavioral changes this indicates are:
 
 * The :class:`.Session` can now be in the state where no transaction is begun,
   even in ``autocommit=False`` mode. Previously, this state was only available
   in "autocommit" mode.
-* Within this state, the :meth:`.Session.commit` and :meth:`.Session.rollback`
+* Within this state, the :meth:`.Session.commit` and :meth:` .Session.rollback`
   methods are no-ops. Code that relies upon these methods to expire all objects
   should make explicit use of either :meth:`.Session.begin` or
   :meth:`.Session.expire_all` to suit their use case.
 * The :meth:`.SessionEvents.after_transaction_create` event hook is not emitted
   immediately when the :class:`.Session` is created, or after a
-  :meth:`.Session.rollback` or :meth:`.Session.commit` completes.
+  :meth:`.Session.rollback` or :meth:` .Session.commit` completes.
 * The :meth:`.Session.close` method also does not imply implicit begin of a new
-  :class:`.SessionTransaction`.
+  :class:`.SessionTransaction` .
 
 .. seealso::
 
-    :ref:`session_autobegin`
+    :ref:`session_autobegin` 
 
 Rationale
 ^^^^^^^^^
 
-The :class:`.Session` object's default behavior of ``autocommit=False``
-historically has meant that there is always a :class:`.SessionTransaction`
+The :class:`.Session` object's default behavior of ` `autocommit=False``
+historically has meant that there is always a :class:`.SessionTransaction` 
 object in play, associated with the :class:`.Session` via the
 :attr:`.Session.transaction` attribute.   When the given
 :class:`.SessionTransaction` was complete, due to a commit, rollback, or close,
-it was immediately replaced with a new one.  The :class:`.SessionTransaction`
+it was immediately replaced with a new one.  The :class:`.SessionTransaction` 
 by itself does not imply the usage of any connection-oriented resources, so
 this long-standing behavior has a particular elegance to it in that the state
 of :attr:`.Session.transaction` is always predictable as non-None.
 
 However, as part of the initiative in :ticket:`5056` to greatly reduce
 reference cycles, this assumption means that calling upon
-:meth:`.Session.close` results in a :class:`.Session` object that still has
+:meth:`.Session.close` results in a :class:` .Session` object that still has
 reference cycles and is more expensive to clean up, not to mention that there
-is a small overhead in constructing the :class:`.SessionTransaction`
+is a small overhead in constructing the :class:`.SessionTransaction` 
 object, which meant that there would be unnecessary overhead created
-for a :class:`.Session` that for example invoked :meth:`.Session.commit`
-and then :meth:`.Session.close`.
+for a :class:`.Session` that for example invoked :meth:` .Session.commit`
+and then :meth:`.Session.close` .
 
 As such, it was decided that :meth:`.Session.close` should leave the internal
 state of ``self.transaction``, now referred to internally as
-``self._transaction``, as None, and that a new :class:`.SessionTransaction`
+``self._transaction``, as None, and that a new :class:`.SessionTransaction` 
 should only be created when needed.  For consistency and code coverage, this
 behavior was also expanded to include all the points at which "autobegin" is
 expected, not just when :meth:`.Session.close` were called.
@@ -2216,12 +2216,12 @@ In particular, this causes a behavioral change for applications which
 subscribe to the :meth:`.SessionEvents.after_transaction_create` event hook;
 previously, this event would be emitted when the :class:`.Session` were  first
 constructed, as well as for most actions that closed the previous transaction
-and would emit :meth:`.SessionEvents.after_transaction_end`.  The new behavior
+and would emit :meth:`.SessionEvents.after_transaction_end` .  The new behavior
 is that :meth:`.SessionEvents.after_transaction_create` is emitted on demand,
 when the :class:`.Session` has not yet created a  new
 :class:`.SessionTransaction` object and mapped objects are associated with the
-:class:`.Session` through methods like :meth:`.Session.add` and
-:meth:`.Session.delete`, when  the :attr:`.Session.transaction` attribute is
+:class:`.Session` through methods like :meth:` .Session.add` and
+:meth:`.Session.delete` , when  the :attr:`.Session.transaction` attribute is
 called upon, when the :meth:`.Session.flush` method has tasks to complete, etc.
 
 In addition, code which relies upon the :meth:`.Session.commit` or
@@ -2229,17 +2229,17 @@ In addition, code which relies upon the :meth:`.Session.commit` or
 longer do so. Code which needs to expire all objects when no change that has
 occurred should be calling :meth:`.Session.expire_all` for this case.
 
-Besides the change in when the :meth:`.SessionEvents.after_transaction_create`
+Besides the change in when the :meth:`.SessionEvents.after_transaction_create` 
 event is emitted as well as the no-op nature of :meth:`.Session.commit` or
-:meth:`.Session.rollback`, the change should have no other user-visible impact
-on the :class:`.Session` object's behavior; the :class:`.Session` will continue
+:meth:`.Session.rollback` , the change should have no other user-visible impact
+on the :class:`.Session` object's behavior; the :class:` .Session` will continue
 to have the behavior that it remains usable for new operations after
 :meth:`.Session.close` is called, and the sequencing of how the
-:class:`.Session` interacts with the :class:`_engine.Engine` and the database
+:class:`.Session` interacts with the :class:` _engine.Engine` and the database
 itself should also remain unaffected, since these operations were already
 operating in an on-demand fashion.
 
-:ticket:`5074`
+:ticket:`5074` 
 
 .. _change_5237_14:
 
@@ -2247,24 +2247,24 @@ Viewonly relationships don't synchronize backrefs
 -------------------------------------------------
 
 In :ticket:`5149` in 1.3.14, SQLAlchemy began emitting a warning when the
-:paramref:`_orm.relationship.backref` or :paramref:`_orm.relationship.back_populates`
-keywords would be used at the same time as the :paramref:`_orm.relationship.viewonly`
+:paramref:`_orm.relationship.backref` or :paramref:` _orm.relationship.back_populates`
+keywords would be used at the same time as the :paramref:`_orm.relationship.viewonly` 
 flag on the target relationship.  This was because a "viewonly" relationship does
 not actually persist changes made to it, which could cause some misleading
-behaviors to occur.  However, in :ticket:`5237`, we sought to refine this
+behaviors to occur.  However, in :ticket:`5237` , we sought to refine this
 behavior as there are legitimate use cases to have backrefs set up on
 viewonly relationships, including that back populates attributes are used
 in some cases by the relationship lazy loaders to determine that an additional
 eager load in the other direction is not necessary, as well as that back
-populates can be used for mapper introspection and that :func:`_orm.backref`
+populates can be used for mapper introspection and that :func:`_orm.backref` 
 can be a convenient way to set up bi-directional relationships.
 
 The solution then was to make the "mutation" that occurs from a backref
-an optional thing, using the :paramref:`_orm.relationship.sync_backref`
+an optional thing, using the :paramref:`_orm.relationship.sync_backref` 
 flag.  In 1.4 the value of :paramref:`_orm.relationship.sync_backref` defaults
-to False for a relationship target that also sets :paramref:`_orm.relationship.viewonly`.
+to False for a relationship target that also sets :paramref:`_orm.relationship.viewonly` .
 This indicates that any changes made to a relationship with
-viewonly will not impact the state of the other side or of the :class:`_orm.Session`
+viewonly will not impact the state of the other side or of the :class:`_orm.Session` 
 in any way::
 
 
@@ -2286,11 +2286,11 @@ in any way::
 Above, the ``a1`` object will **not** be added to the ``u1.addresses``
 collection, nor will the ``a1`` object be added to the session.  Previously,
 both of these things would be true.   The warning that
-:paramref:`.relationship.sync_backref` should be set to ``False`` when
-:paramref:`.relationship.viewonly` is ``False`` is no longer emitted as this is
+:paramref:`.relationship.sync_backref` should be set to ` `False`` when
+:paramref:`.relationship.viewonly` is ` `False`` is no longer emitted as this is
 now the default behavior.
 
-:ticket:`5237`
+:ticket:`5237` 
 
 .. _change_5150:
 
@@ -2298,8 +2298,8 @@ cascade_backrefs behavior deprecated for removal in 2.0
 -------------------------------------------------------
 
 SQLAlchemy has long had a behavior of cascading objects into the
-:class:`_orm.Session` based on backref assignment.   Given ``User`` below
-already in a :class:`_orm.Session`, assigning it to the ``Address.user``
+:class:`_orm.Session` based on backref assignment.   Given ` `User`` below
+already in a :class:`_orm.Session` , assigning it to the ``Address.user``
 attribute of an ``Address`` object, assuming a bidirectional relationship
 is set up, would mean that the ``Address`` also gets put into the
 :class:`_orm.Session` at that point::
@@ -2312,9 +2312,9 @@ is set up, would mean that the ``Address`` also gets put into the
 
 The above behavior was an unintended side effect of backref behavior, in that
 since ``a1.user`` implies ``u1.addresses.append(a1)``, ``a1`` would get
-cascaded into the :class:`_orm.Session`.  This remains the default behavior
-throughout 1.4.     At some point, a new flag :paramref:`_orm.relationship.cascade_backrefs`
-was added to disable to above behavior, along with :paramref:`_orm.backref.cascade_backrefs`
+cascaded into the :class:`_orm.Session` .  This remains the default behavior
+throughout 1.4.     At some point, a new flag :paramref:`_orm.relationship.cascade_backrefs` 
+was added to disable to above behavior, along with :paramref:`_orm.backref.cascade_backrefs` 
 to set this when the relationship is specified by ``relationship.backref``, as it can be
 surprising and also gets in the way of some operations where the object would be placed in
 the :class:`_orm.Session` too early and get prematurely flushed.
@@ -2324,9 +2324,9 @@ additionally there will be no "True" behavior as this is not generally a desirab
 behavior.    When 2.0 deprecation warnings are enabled, a warning will be emitted
 when a "backref cascade" actually takes place.    To get the new behavior, either
 set :paramref:`_orm.relationship.cascade_backrefs` and
-:paramref:`_orm.backref.cascade_backrefs` to ``False`` on any target
+:paramref:`_orm.backref.cascade_backrefs` to ` `False`` on any target
 relationships, as is already supported in 1.3 and earlier, or alternatively make
-use of the :paramref:`_orm.Session.future` flag to :term:`2.0-style` mode::
+use of the :paramref:`_orm.Session.future` flag to :term:` 2.0-style` mode::
 
     Session = sessionmaker(engine, future=True)
 
@@ -2337,7 +2337,7 @@ use of the :paramref:`_orm.Session.future` flag to :term:`2.0-style` mode::
         a1 = Address()
         a1.user = u1  # <--- will not add "a1" to the Session
 
-:ticket:`5150`
+:ticket:`5150` 
 
 .. _change_1763:
 
@@ -2370,7 +2370,7 @@ include the joinedload operation as well:
 
 The behavior applies both to loader strategies applied to the
 :func:`_orm.relationship` directly, as well as with options used with
-:meth:`_query.Query.options`, provided that the object was originally loaded by that
+:meth:`_query.Query.options` , provided that the object was originally loaded by that
 query.
 
 For the "secondary" eager loaders "selectinload" and "subqueryload", the SQL
@@ -2395,14 +2395,14 @@ an additional query:
     (1,)
 
 Note that a loader option does not apply to an object that was introduced
-into the :class:`.Session` in a different way.  That is, if the ``a1`` object
-were just persisted in this :class:`.Session`, or was loaded with a different
+into the :class:`.Session` in a different way.  That is, if the ` `a1`` object
+were just persisted in this :class:`.Session` , or was loaded with a different
 query before the eager option had been applied, then the object doesn't have
 an eager load option associated with it.  This is not a new concept, however
 users who are looking for the eagerload on refresh behavior may find this
 to be more noticeable.
 
-:ticket:`1763`
+:ticket:`1763` 
 
 .. _change_8879:
 
@@ -2474,13 +2474,13 @@ first element of the UNION, discarding any options on other parts of the query.
 
 This implicit copying and selective ignoring of options, demonstrated above as
 being fairly arbitrary, is a legacy behavior that's only part of
-:class:`_orm.Query`, and is a particular example of where :class:`_orm.Query`
+:class:`_orm.Query` , and is a particular example of where :class:`_orm.Query` 
 and its means of applying :meth:`_orm.Query.union_all` falls short, as it's
 ambiguous how to turn a single SELECT into a UNION of itself and another query
 and how loader options should be applied to that new statement.
 
 SQLAlchemy 1.4's behavior can be demonstrated as generally superior to that
-of 1.3 for a more common case of using :func:`_orm.defer`.  The following
+of 1.3 for a more common case of using :func:`_orm.defer` .  The following
 query::
 
     q1 = session.query(User).options(defer(User.name))
@@ -2544,7 +2544,7 @@ producing the SQL:
     SELECT user_account.id, user_account.name
     FROM user_account
 
-To correctly apply :func:`_orm.with_expression` to the ``User`` entity,
+To correctly apply :func:`_orm.with_expression` to the ` `User`` entity,
 it should be applied to the outermost level of the query, using an
 ordinary SQL expression inside the columns clause of each SELECT::
 
@@ -2617,7 +2617,7 @@ in the value of the ``name`` attribute.  Since this is a SQL NULL, the ORM
 would skip including these values within an INSERT so that SQL-level defaults
 take place, if any, else the value defaults to NULL on the database side.
 
-In version 1.0 as part of :ref:`migration_3061`, this behavior was refined so
+In version 1.0 as part of :ref:`migration_3061` , this behavior was refined so
 that the ``None`` value was no longer populated into ``__dict__``, only
 returned.   Besides removing the mutating side effect of a getter operation,
 this change also made it possible to set columns that did have server defaults
@@ -2710,14 +2710,14 @@ need to be changed so that they assign the desired collection explicitly::
 
     >>> u1.addresses = []
 
-:ticket:`4519`
+:ticket:`4519` 
 
 .. _change_4662:
 
 The "New instance conflicts with existing identity" error is now a warning
 ---------------------------------------------------------------------------
 
-SQLAlchemy has always had logic to detect when an object in the :class:`.Session`
+SQLAlchemy has always had logic to detect when an object in the :class:`.Session` 
 to be inserted has the same primary key as an object that is already present::
 
     class Product(Base):
@@ -2744,9 +2744,9 @@ The change is that the :class:`.FlushError` is altered to be only a warning:
 
 
 Subsequent to that, the condition will attempt to insert the row into the
-database which will emit :class:`.IntegrityError`, which is the same error that
+database which will emit :class:`.IntegrityError` , which is the same error that
 would be raised if the primary key identity was not already present in the
-:class:`.Session`:
+:class:`.Session` :
 
 .. sourcecode:: text
 
@@ -2754,7 +2754,7 @@ would be raised if the primary key identity was not already present in the
 
 The rationale is to allow code that is using :class:`.IntegrityError` to catch
 duplicates to function regardless of the existing state of the
-:class:`.Session`, as is often done using savepoints::
+:class:`.Session` , as is often done using savepoints::
 
     # add another Product with same primary key
     try:
@@ -2765,7 +2765,7 @@ duplicates to function regardless of the existing state of the
 
 The above logic was not fully feasible earlier, as in the case that the
 ``Product`` object with the existing identity were already in the
-:class:`.Session`, the code would also have to catch :class:`.FlushError`,
+:class:`.Session` , the code would also have to catch :class:`.FlushError` ,
 which additionally is not filtered for the specific condition of integrity
 issues.   With the change, the above block behaves consistently with the
 exception of the warning also being emitted.
@@ -2783,14 +2783,14 @@ existing identity were still in the database.  The warning can also be
 configured to raise an exception using the Python warnings filter.
 
 
-:ticket:`4662`
+:ticket:`4662` 
 
 .. _change_4994:
 
 Persistence-related cascade operations disallowed with viewonly=True
 ---------------------------------------------------------------------
 
-When a :func:`_orm.relationship` is set as ``viewonly=True`` using the
+When a :func:`_orm.relationship` is set as ` `viewonly=True`` using the
 :paramref:`_orm.relationship.viewonly` flag, it indicates this relationship should
 only be used to load data from the database, and should not be mutated
 or involved in a persistence operation.   In order to ensure this contract
@@ -2825,8 +2825,8 @@ SQLAlchemy 1.3.12, and for the above error the solution is to remove
 the cascade settings for a viewonly relationship.
 
 
-:ticket:`4993`
-:ticket:`4994`
+:ticket:`4993` 
+:ticket:`4994` 
 
 .. _change_5122:
 
@@ -2897,7 +2897,7 @@ only a ``Manager`` object is returned:
 
 The :class:`_query.Query` added the "single table inheritance" criteria to the
 subquery, editorializing on the intent that was originally set up by it.
-This behavior was added in version 1.0 in :ticket:`3891`, and creates a
+This behavior was added in version 1.0 in :ticket:`3891` , and creates a
 behavioral inconsistency between "joined" and "single" table inheritance,
 and additionally modifies the intent of the given query, which may intend
 to return additional rows where the columns that correspond to the inheriting
@@ -2942,7 +2942,7 @@ discriminator column::
     [<__main__.Manager object at 0x7f70e13fca90>]
 
 
-:ticket:`5122`
+:ticket:`5122` 
 
 Dialect Changes
 ===============
@@ -2958,7 +2958,7 @@ version 1.16.6 or greater. The pg8000 series has dropped Python 2 support as of
 the 1.13 series.  Python 2 users who require pg8000 should ensure their
 requirements are pinned at ``SQLAlchemy<1.4``.
 
-:ticket:`5451`
+:ticket:`5451` 
 
 psycopg2 version 2.7 or higher is required for the PostgreSQL psycopg2 dialect
 ------------------------------------------------------------------------------
@@ -2985,9 +2985,9 @@ are fully escaped in all scenarios, so these workarounds are no longer
 necessary.
 
 
-:ticket:`5941`
+:ticket:`5941` 
 
-:ticket:`5653`
+:ticket:`5653` 
 
 
 .. _change_5401:
@@ -3009,7 +3009,7 @@ SQLAlchemy's :func:`_sql.insert` construct already supports this syntax via
 the :meth:`_sql.Insert.values` method, the extension method allows the
 construction of the VALUES clause to occur dynamically when the statement
 is executed as an "executemany" execution, which is what occurs when one
-passes a list of parameter dictionaries to :meth:`_engine.Connection.execute`.
+passes a list of parameter dictionaries to :meth:`_engine.Connection.execute` .
 It also occurs beyond the cache boundary so that the INSERT statement may
 be cached before the VALUES are rendered.
 
@@ -3028,8 +3028,8 @@ suite reveals an approximate **fivefold performance increase**:
     test_core_insert : A single Core INSERT construct inserting mappings in bulk. (100000 iterations); total time 0.944007 sec
 
 Support for the "batch" extension was added in version 1.2 in
-:ref:`change_4109`, and enhanced to include support for the ``execute_values``
-extension in 1.3 in :ticket:`4623`.  In 1.4 the ``execute_values`` extension is
+:ref:`change_4109` , and enhanced to include support for the ``execute_values``
+extension in 1.3 in :ticket:`4623` .  In 1.4 the ``execute_values`` extension is
 now being turned on by default for INSERT statements; the "batch" extension
 for UPDATE and DELETE remains off by default.
 
@@ -3080,10 +3080,10 @@ with the following changes:
 
 .. seealso::
 
-    :ref:`psycopg2_executemany_mode`
+    :ref:`psycopg2_executemany_mode` 
 
 
-:ticket:`5401`
+:ticket:`5401` 
 
 
 .. _change_4895:
@@ -3096,7 +3096,7 @@ versions prior to 3.7.16, released in 2013.   It is not expected that
 any modern Python versions rely upon this limitation.
 
 The behavior was first introduced in 0.9 and was part of the larger change of
-allowing for right nested joins as described at :ref:`feature_joins_09`.
+allowing for right nested joins as described at :ref:`feature_joins_09` .
 However the SQLite workaround produced many regressions in the 2013-2014
 period due to its complexity. In 2016, the dialect was modified so that the
 join rewriting logic would only occur for SQLite versions prior to 3.7.16 after
@@ -3113,7 +3113,7 @@ In related changes, the module imports for SQLite no longer attempt to
 import the "pysqlite2" driver on Python 3 as this driver does not exist
 on Python 3; a very old warning for old pysqlite2 versions is also dropped.
 
-:ticket:`4895`
+:ticket:`4895` 
 
 
 .. _change_4976:
@@ -3124,7 +3124,7 @@ Added Sequence support for MariaDB 10.3
 The MariaDB database as of 10.3 supports sequences.   SQLAlchemy's MySQL
 dialect now implements support for the :class:`.Sequence` object against this
 database, meaning "CREATE SEQUENCE" DDL will be emitted for a
-:class:`.Sequence` that is present in a :class:`_schema.Table` or :class:`_schema.MetaData`
+:class:`.Sequence` that is present in a :class:` _schema.Table` or :class:`_schema.MetaData` 
 collection in the same way as it works for backends such as PostgreSQL, Oracle,
 when the dialect's server version check has confirmed the database is MariaDB
 10.3 or greater.    Additionally, the :class:`.Sequence` will act as a
@@ -3134,7 +3134,7 @@ Since this change will impact the assumptions both for DDL as well as the
 behavior of INSERT statements for an application that is currently deployed
 against MariaDB 10.3 which also happens to make explicit use the
 :class:`.Sequence` construct within its table definitions, it is important to
-note that :class:`.Sequence` supports a flag :paramref:`.Sequence.optional`
+note that :class:`.Sequence` supports a flag :paramref:` .Sequence.optional`
 which is used to limit the scenarios in which the :class:`.Sequence` to take
 effect. When "optional" is used on a :class:`.Sequence` that is present in the
 integer primary key column of a table::
@@ -3159,9 +3159,9 @@ was not created.
 
 .. seealso::
 
-    :ref:`defaults_sequences`
+    :ref:`defaults_sequences` 
 
-:ticket:`4976`
+:ticket:`4976` 
 
 
 .. _change_4235:
@@ -3170,7 +3170,7 @@ Added Sequence support distinct from IDENTITY to SQL Server
 -----------------------------------------------------------
 
 The :class:`.Sequence` construct is now fully functional with Microsoft
-SQL Server.  When applied to a :class:`.Column`, the DDL for the table will
+SQL Server.  When applied to a :class:`.Column` , the DDL for the table will
 no longer include IDENTITY keywords and instead will rely upon "CREATE SEQUENCE"
 to ensure a sequence is present which will then be used for INSERT statements
 on the table.
@@ -3184,8 +3184,8 @@ parameters should be used; see the MSSQL dialect documentation linked below.
 
 .. seealso::
 
-    :ref:`mssql_identity`
+    :ref:`mssql_identity` 
 
-:ticket:`4235`
+:ticket:`4235` 
 
-:ticket:`4633`
+:ticket:`4633` 

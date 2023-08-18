@@ -14,7 +14,7 @@ Glossary
     1.x-style
     2.0-style
         These terms are new in SQLAlchemy 1.4 and refer to the SQLAlchemy 1.4->
-        2.0 transition plan, described at :ref:`migration_20_toplevel`.  The
+        2.0 transition plan, described at :ref:`migration_20_toplevel` .  The
         term "1.x style" refers to an API used in the way it's been documented
         throughout the 1.x series of SQLAlchemy and earlier (e.g. 1.3, 1.2, etc)
         and the term "2.0 style" refers to the way an API will look in version
@@ -25,7 +25,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`migration_20_toplevel`
+            :ref:`migration_20_toplevel` 
 
     sentinel
     insert sentinel
@@ -49,7 +49,7 @@ Glossary
         .. seealso::
 
             :ref:`engine_insertmanyvalues_returning_order` - in the section
-            :ref:`engine_insertmanyvalues`
+            :ref:`engine_insertmanyvalues` 
 
     insertmanyvalues
         This refers to a SQLAlchemy-specific feature which allows INSERT
@@ -63,7 +63,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`engine_insertmanyvalues`
+            :ref:`engine_insertmanyvalues` 
 
     mixin class
     mixin classes
@@ -103,9 +103,9 @@ Glossary
 
         .. seealso::
 
-            :ref:`orm_declarative_mapping`
+            :ref:`orm_declarative_mapping` 
 
-            :ref:`orm_imperative_mapping`
+            :ref:`orm_imperative_mapping` 
 
     facade
 
@@ -179,12 +179,12 @@ Glossary
 
             `bind parameters <https://use-the-index-luke.com/sql/where-clause/bind-parameters>`_ - at Use The Index, Luke!
 
-            :ref:`tutorial_sending_parameters` - in the :ref:`unified_tutorial`
+            :ref:`tutorial_sending_parameters` - in the :ref:` unified_tutorial`
 
     selectable
         A term used in SQLAlchemy to describe a SQL construct that represents
         a collection of rows.   It's largely similar to the concept of a
-        "relation" in :term:`relational algebra`.  In SQLAlchemy, objects
+        "relation" in :term:`relational algebra` .  In SQLAlchemy, objects
         that subclass the :class:`_expression.Selectable` class are considered to be
         usable as "selectables" when using SQLAlchemy Core.  The two most
         common constructs are that of the :class:`_schema.Table` and that of the
@@ -198,7 +198,7 @@ Glossary
         additional runtime information that marks it as belonging to a particular
         ORM mapping.   The term should not be confused with the common phrase
         "type annotation", which refers to Python source code "type hints" used
-        for static typing as introduced at :pep:`484`.
+        for static typing as introduced at :pep:`484` .
 
         Most of SQLAlchemy's documented code examples are formatted with a
         small note regarding "Annotated Example" or "Non-annotated Example".
@@ -206,20 +206,20 @@ Glossary
         and is not related to the SQLAlchemy concept of "ORM-annotated".
 
         When the phrase "ORM-annotated" appears in documentation, it is
-        referring to Core SQL expression objects such as :class:`.Table`,
-        :class:`.Column`, and :class:`.Select` objects, which originate from,
+        referring to Core SQL expression objects such as :class:`.Table` ,
+        :class:`.Column` , and :class:`.Select` objects, which originate from,
         or refer to sub-elements that originate from, one or more ORM mappings,
         and therefore will have ORM-specific interpretations and/or behaviors
-        when passed to ORM methods such as :meth:`_orm.Session.execute`.
+        when passed to ORM methods such as :meth:`_orm.Session.execute` .
         For example, when we construct a :class:`.Select` object from an ORM
         mapping, such as the ``User`` class illustrated in the
-        :ref:`ORM Tutorial <tutorial_declaring_mapped_classes>`::
+        :ref:`ORM Tutorial <tutorial_declaring_mapped_classes>` ::
 
             >>> stmt = select(User)
 
         The internal state of the above :class:`.Select` refers to the
-        :class:`.Table` to which ``User`` is mapped.   The ``User`` class
-        itself is not immediately referenced.  This is how the :class:`.Select`
+        :class:`.Table` to which ` `User`` is mapped.   The ``User`` class
+        itself is not immediately referenced.  This is how the :class:`.Select` 
         construct remains compatible with Core-level processes (note that
         the ``._raw_columns`` member of :class:`.Select` is private and
         should not be accessed by end-user code)::
@@ -228,7 +228,7 @@ Glossary
             [Table('user_account', MetaData(), Column('id', Integer(), ...)]
 
         However, when our :class:`.Select` is passed along to an ORM
-        :class:`.Session`, the ORM entities that are indirectly associated
+        :class:`.Session` , the ORM entities that are indirectly associated
         with the object are used to interpret this :class:`.Select` in an
         ORM context.  The actual "ORM annotations" can be seen in another
         private variable ``._annotations``::
@@ -243,7 +243,7 @@ Glossary
         Therefore we refer to ``stmt`` as an **ORM-annotated select()** object.
         It's a :class:`.Select` statement that contains additional information
         that will cause it to be interpreted in an ORM-specific way when passed
-        to methods like :meth:`_orm.Session.execute`.
+        to methods like :meth:`_orm.Session.execute` .
 
 
     plugin
@@ -264,13 +264,13 @@ Glossary
 
         .. seealso::
 
-            :ref:`migration_20_unify_select`
+            :ref:`migration_20_unify_select` 
 
     crud
     CRUD
         An acronym meaning "Create, Update, Delete".  The term in SQL refers to the
         set of operations that create, modify and delete data from the database,
-        also known as :term:`DML`, and typically refers to the ``INSERT``,
+        also known as :term:`DML` , and typically refers to the ``INSERT``,
         ``UPDATE``, and ``DELETE`` statements.
 
     executemany
@@ -305,7 +305,7 @@ Glossary
 
         To overcome this limitation, SQLAlchemy as of the 2.0 series implements
         an alternative form of "executemany" which is referred towards as
-        :ref:`engine_insertmanyvalues`. This feature makes use of
+        :ref:`engine_insertmanyvalues` . This feature makes use of
         ``cursor.execute()`` to invoke an INSERT statement that will proceed
         with multiple parameter sets in one round trip, thus producing the same
         effect as using ``cursor.executemany()`` while still supporting
@@ -332,7 +332,7 @@ Glossary
 
             `Marshalling (via Wikipedia) <https://en.wikipedia.org/wiki/Marshalling_(computer_science)>`_
 
-            :ref:`types_typedecorator` - SQLAlchemy's :class:`.TypeDecorator`
+            :ref:`types_typedecorator` - SQLAlchemy's :class:` .TypeDecorator`
             is commonly used for data marshalling as data is sent into the
             database for INSERT and UPDATE statements, and "unmarshalling"
             data as it is retrieved using SELECT statements.
@@ -360,9 +360,9 @@ Glossary
         is complete, at which point the ``id`` and ``data`` attributes,
         starting out as :class:`_schema.Column` objects, will be replaced
         by the :term:`instrumentation` system with instances
-        of :class:`.InstrumentedAttribute`, which are descriptors that
+        of :class:`.InstrumentedAttribute` , which are descriptors that
         provide the above mentioned ``__get__()``, ``__set__()`` and
-        ``__delete__()`` methods.   The :class:`.InstrumentedAttribute`
+        ``__delete__()`` methods.   The :class:`.InstrumentedAttribute` 
         will generate a SQL expression when used at the class level:
 
         .. sourcecode:: pycon+sql
@@ -390,13 +390,13 @@ Glossary
 
         .. seealso::
 
-            :ref:`metadata_toplevel`
+            :ref:`metadata_toplevel` 
 
             `DDL (via Wikipedia) <https://en.wikipedia.org/wiki/Data_definition_language>`_
 
-            :term:`DML`
+            :term:`DML` 
 
-            :term:`DQL`
+            :term:`DQL` 
 
     DML
        An acronym for **Data Manipulation Language**.  DML is the subset of
@@ -409,9 +409,9 @@ Glossary
 
             `DML (via Wikipedia) <https://en.wikipedia.org/wiki/Data_manipulation_language>`_
 
-            :term:`DDL`
+            :term:`DDL` 
 
-            :term:`DQL`
+            :term:`DQL` 
 
     DQL
         An acronym for **Data Query Language**.  DQL is the subset of
@@ -423,9 +423,9 @@ Glossary
 
             `DQL (via Wikipedia) <https://en.wikipedia.org/wiki/Data_query_language>`_
 
-            :term:`DML`
+            :term:`DML` 
 
-            :term:`DDL`
+            :term:`DDL` 
 
     metadata
     database metadata
@@ -441,7 +441,7 @@ Glossary
 
             `Metadata Mapping (via Martin Fowler) <https://www.martinfowler.com/eaaCatalog/metadataMapping.html>`_
 
-            :ref:`tutorial_working_with_metadata`  - in the :ref:`unified_tutorial`
+            :ref:`tutorial_working_with_metadata`  - in the :ref:` unified_tutorial`
 
     version id column
         In SQLAlchemy, this refers to the use of a particular table column that
@@ -479,7 +479,7 @@ Glossary
         A term used in SQLAlchemy to describe how an ORM persistence action that
         takes place on a particular object would extend into other objects
         which are directly associated with that object.  In SQLAlchemy, these
-        object associations are configured using the :func:`_orm.relationship`
+        object associations are configured using the :func:`_orm.relationship` 
         construct.   :func:`_orm.relationship` contains a parameter called
         :paramref:`_orm.relationship.cascade` which provides options on how certain
         persistence operations may cascade.
@@ -490,18 +490,18 @@ Glossary
 
         .. seealso::
 
-            :ref:`unitofwork_cascades`
+            :ref:`unitofwork_cascades` 
 
     dialect
         In SQLAlchemy, the "dialect" is a Python object that represents information
         and methods that allow database operations to proceed on a particular
         kind of database backend and a particular kind of Python driver (or
-        :term:`DBAPI`) for that database.   SQLAlchemy dialects are subclasses
+        :term:`DBAPI` ) for that database.   SQLAlchemy dialects are subclasses
         of the :class:`.Dialect` class.
 
         .. seealso::
 
-            :ref:`engines_toplevel`
+            :ref:`engines_toplevel` 
 
     discriminator
         A result-set column which is used during :term:`polymorphic` loading
@@ -510,7 +510,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`inheritance_toplevel`
+            :ref:`inheritance_toplevel` 
 
     instrumentation
     instrumented
@@ -520,7 +520,7 @@ Glossary
         behavior of the class should remain close to a regular
         class, except that additional behaviors and features are
         made available.  The SQLAlchemy :term:`mapping` process,
-        among other things, adds database-enabled :term:`descriptors`
+        among other things, adds database-enabled :term:`descriptors` 
         to a mapped
         class each of which represents a particular database column
         or relationship to a related class.
@@ -528,11 +528,11 @@ Glossary
     identity key
         A key associated with ORM-mapped objects that identifies their
         primary key identity within the database, as well as their unique
-        identity within a :class:`_orm.Session` :term:`identity map`.
+        identity within a :class:`_orm.Session` :term:` identity map`.
 
         In SQLAlchemy, you can view the identity key for an ORM object
-        using the :func:`_sa.inspect` API to return the :class:`_orm.InstanceState`
-        tracking object, then looking at the :attr:`_orm.InstanceState.key`
+        using the :func:`_sa.inspect` API to return the :class:` _orm.InstanceState`
+        tracking object, then looking at the :attr:`_orm.InstanceState.key` 
         attribute::
 
             >>> from sqlalchemy import inspect
@@ -541,7 +541,7 @@ Glossary
 
         .. seealso::
 
-           :term:`identity map`
+           :term:`identity map` 
 
     identity map
         A mapping between Python objects and their database identities.
@@ -587,7 +587,7 @@ Glossary
         attributes for related tables don't need to be addressed
         immediately.
 
-        Lazy loading is the opposite of :term:`eager loading`.
+        Lazy loading is the opposite of :term:`eager loading` .
 
         Within SQLAlchemy, lazy loading is a key feature of the ORM, and
         applies to attributes which are :term:`mapped` on a user-defined class.
@@ -596,8 +596,8 @@ Glossary
         use of the :class:`_orm.Session` for which the current object is
         associated with in the :term:`persistent` state, and emits a SELECT
         statement on the current transaction, starting a new transaction if
-        one was not in progress.   If the object is in the :term:`detached`
-        state and not associated with any :class:`_orm.Session`, this is
+        one was not in progress.   If the object is in the :term:`detached` 
+        state and not associated with any :class:`_orm.Session` , this is
         considered to be an error state and an
         :ref:`informative exception <error_bhk3>` is raised.
 
@@ -605,7 +605,7 @@ Glossary
 
             `Lazy Load (via Martin Fowler) <https://martinfowler.com/eaaCatalog/lazyLoad.html>`_
 
-            :term:`N plus one problem`
+            :term:`N plus one problem` 
 
             :ref:`loading_columns` - includes information on lazy loading of
             ORM mapped columns
@@ -632,11 +632,11 @@ Glossary
         particular table being queried, such as when using
         :ref:`inheritance <inheritance_toplevel>` mappings.
 
-        Eager loading is the opposite of :term:`lazy loading`.
+        Eager loading is the opposite of :term:`lazy loading` .
 
         .. seealso::
 
-            :doc:`orm/queryguide/relationships`
+            :doc:`orm/queryguide/relationships` 
 
 
     mapping
@@ -647,11 +647,11 @@ Glossary
         instance of the :class:`_orm.Mapper` class. This process associates
         the class with a database table or other :term:`selectable` construct,
         so that instances of it can be persisted and loaded using a
-        :class:`.Session`.
+        :class:`.Session` .
 
         .. seealso::
 
-            :ref:`orm_mapping_classes_toplevel`
+            :ref:`orm_mapping_classes_toplevel` 
 
     N plus one problem
     N plus one
@@ -668,13 +668,13 @@ Glossary
         that member.  The end result is that for a result set of
         N parent objects, there will be N + 1 SELECT statements emitted.
 
-        The N plus one problem is alleviated using :term:`eager loading`.
+        The N plus one problem is alleviated using :term:`eager loading` .
 
         .. seealso::
 
-            :ref:`tutorial_orm_loader_strategies`
+            :ref:`tutorial_orm_loader_strategies` 
 
-            :doc:`orm/queryguide/relationships`
+            :doc:`orm/queryguide/relationships` 
 
     polymorphic
     polymorphically
@@ -682,7 +682,7 @@ Glossary
         the term is usually applied to the concept of an ORM mapped class
         whereby a query operation will return different subclasses
         based on information in the result set, typically by checking the
-        value of a particular column in the result known as the :term:`discriminator`.
+        value of a particular column in the result known as the :term:`discriminator` .
 
         Polymorphic loading in SQLAlchemy implies that a one or a
         combination of three different schemes are used to map a hierarchy
@@ -699,11 +699,11 @@ Glossary
         object.
 
         The two SQLAlchemy objects that make the most use of
-        method chaining are the :class:`_expression.Select`
+        method chaining are the :class:`_expression.Select` 
         object and the :class:`.orm.query.Query` object.
         For example, a :class:`_expression.Select` object can
         be assigned two expressions to its WHERE clause as well
-        as an ORDER BY clause by calling upon the :meth:`_expression.Select.where`
+        as an ORDER BY clause by calling upon the :meth:`_expression.Select.where` 
         and :meth:`_expression.Select.order_by` methods::
 
             stmt = (
@@ -753,7 +753,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`pooling_toplevel`
+            :ref:`pooling_toplevel` 
 
     DBAPI
     pep-249
@@ -766,11 +766,11 @@ Glossary
         :term:`dialect` system is constructed around the
         operation of the DBAPI, providing individual dialect
         classes which service a specific DBAPI on top of a
-        specific database engine; for example, the :func:`_sa.create_engine`
+        specific database engine; for example, the :func:`_sa.create_engine` 
         URL ``postgresql+psycopg2://@localhost/test``
-        refers to the :mod:`psycopg2 <.postgresql.psycopg2>`
+        refers to the :mod:`psycopg2 <.postgresql.psycopg2>` 
         DBAPI/dialect combination, whereas the URL ``mysql+mysqldb://@localhost/test``
-        refers to the :mod:`MySQL for Python <.mysql.mysqldb>`
+        refers to the :mod:`MySQL for Python <.mysql.mysqldb>` 
         DBAPI/dialect combination.
 
         .. seealso::
@@ -799,24 +799,24 @@ Glossary
         style persistence.
 
         For a walk-through of what unit of work persistence looks like in
-        SQLAlchemy, start with the section :ref:`tutorial_orm_data_manipulation`
-        in the :ref:`unified_tutorial`.    Then for more detail, see
+        SQLAlchemy, start with the section :ref:`tutorial_orm_data_manipulation` 
+        in the :ref:`unified_tutorial` .    Then for more detail, see
         :ref:`session_basics` in the general reference documentation.
 
         .. seealso::
 
             `Unit of Work (via Martin Fowler) <https://martinfowler.com/eaaCatalog/unitOfWork.html>`_
 
-            :ref:`tutorial_orm_data_manipulation`
+            :ref:`tutorial_orm_data_manipulation` 
 
-            :ref:`session_basics`
+            :ref:`session_basics` 
 
     expire
     expired
     expires
     expiring
     Expiring
-        In the SQLAlchemy ORM, refers to when the data in a :term:`persistent`
+        In the SQLAlchemy ORM, refers to when the data in a :term:`persistent` 
         or sometimes :term:`detached` object is erased, such that when
         the object's attributes are next accessed, a :term:`lazy load` SQL
         query will be emitted in order to refresh the data for this object
@@ -824,7 +824,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`session_expire`
+            :ref:`session_expire` 
 
     Session
         The container or scope for ORM database operations. Sessions
@@ -834,7 +834,7 @@ Glossary
 
         .. seealso::
 
-            :doc:`orm/session`
+            :doc:`orm/session` 
 
     columns clause
         The portion of the ``SELECT`` statement which enumerates the
@@ -898,7 +898,7 @@ Glossary
         which specifically must return exactly one row and one column, and the
         other form which acts as a "derived table" and serves as a source of
         rows for the FROM clause of another select.  A scalar select is eligible
-        to be placed in the :term:`WHERE clause`, :term:`columns clause`,
+        to be placed in the :term:`WHERE clause` , :term:`columns clause` ,
         ORDER BY clause or HAVING clause of the enclosing select, whereas the
         derived table form is eligible to be placed in the FROM clause of the
         enclosing ``SELECT``.
@@ -960,12 +960,12 @@ Glossary
         table is received from the enclosing query, where each row selected from
         ``user_account`` results in a distinct execution of the subquery.
 
-        A correlated subquery is in most cases present in the :term:`WHERE clause`
-        or :term:`columns clause` of the immediately enclosing ``SELECT``
+        A correlated subquery is in most cases present in the :term:`WHERE clause` 
+        or :term:`columns clause` of the immediately enclosing ` `SELECT``
         statement, as well as in the ORDER BY or HAVING clause.
 
         In less common cases, a correlated subquery may be present in the
-        :term:`FROM clause` of an enclosing ``SELECT``; in these cases the
+        :term:`FROM clause` of an enclosing ` `SELECT``; in these cases the
         correlation is typically due to the enclosing ``SELECT`` itself being
         enclosed in the WHERE,
         ORDER BY, columns or HAVING clause of another ``SELECT``, such as:
@@ -996,13 +996,13 @@ Glossary
 
         .. seealso::
 
-            :term:`atomicity`
+            :term:`atomicity` 
 
-            :term:`consistency`
+            :term:`consistency` 
 
-            :term:`isolation`
+            :term:`isolation` 
 
-            :term:`durability`
+            :term:`durability` 
 
             `ACID Model (via Wikipedia) <https://en.wikipedia.org/wiki/ACID_Model>`_
 
@@ -1017,7 +1017,7 @@ Glossary
 
         .. seealso::
 
-            :term:`ACID`
+            :term:`ACID` 
 
             `Atomicity (via Wikipedia) <https://en.wikipedia.org/wiki/Atomicity_(database_systems)>`_
 
@@ -1026,13 +1026,13 @@ Glossary
         and ensures that any transaction will
         bring the database from one valid state to another. Any data
         written to the database must be valid according to all defined
-        rules, including but not limited to :term:`constraints`, cascades,
+        rules, including but not limited to :term:`constraints` , cascades,
         triggers, and any combination thereof.
         (via Wikipedia)
 
         .. seealso::
 
-            :term:`ACID`
+            :term:`ACID` 
 
             `Consistency (via Wikipedia) <https://en.wikipedia.org/wiki/Consistency_(database_systems)>`_
 
@@ -1051,21 +1051,21 @@ Glossary
 
         .. seealso::
 
-            :term:`ACID`
+            :term:`ACID` 
 
             `Isolation (via Wikipedia) <https://en.wikipedia.org/wiki/Isolation_(database_systems)>`_
 
-            :term:`read uncommitted`
+            :term:`read uncommitted` 
 
-            :term:`read committed`
+            :term:`read committed` 
 
-            :term:`repeatable read`
+            :term:`repeatable read` 
 
-            :term:`serializable`
+            :term:`serializable` 
 
     repeatable read
         One of the four database :term:`isolation` levels, repeatable read
-        features all of the isolation of :term:`read committed`, and
+        features all of the isolation of :term:`read committed` , and
         additionally features that any particular row that is read within a
         transaction is guaranteed from that point to not have any subsequent
         external changes in value (i.e. from other concurrent UPDATE
@@ -1089,7 +1089,7 @@ Glossary
 
     serializable
         One of the four database :term:`isolation` levels, serializable
-        features all of the isolation of :term:`repeatable read`, and
+        features all of the isolation of :term:`repeatable read` , and
         additionally within a lock-based approach guarantees that so-called
         "phantom reads" cannot occur; this means that rows which are INSERTed
         or DELETEd within the scope of other transactions will not be
@@ -1117,7 +1117,7 @@ Glossary
 
         .. seealso::
 
-            :term:`ACID`
+            :term:`ACID` 
 
             `Durability (via Wikipedia) <https://en.wikipedia.org/wiki/Durability_(database_systems)>`_
 
@@ -1207,11 +1207,11 @@ Glossary
 
         .. seealso::
 
-            :term:`relationship`
+            :term:`relationship` 
 
-            :term:`many to one`
+            :term:`many to one` 
 
-            :term:`backref`
+            :term:`backref` 
 
     many to one
         A style of :func:`~sqlalchemy.orm.relationship` which links
@@ -1259,11 +1259,11 @@ Glossary
 
         .. seealso::
 
-            :term:`relationship`
+            :term:`relationship` 
 
-            :term:`one to many`
+            :term:`one to many` 
 
-            :term:`backref`
+            :term:`backref` 
 
     backref
     bidirectional relationship
@@ -1292,17 +1292,17 @@ Glossary
                 dep_id = Column(Integer, ForeignKey("department.id"))
 
         A backref can be applied to any relationship, including one to many,
-        many to one, and :term:`many to many`.
+        many to one, and :term:`many to many` .
 
         .. seealso::
 
-            :term:`relationship`
+            :term:`relationship` 
 
-            :term:`one to many`
+            :term:`one to many` 
 
-            :term:`many to one`
+            :term:`many to one` 
 
-            :term:`many to many`
+            :term:`many to many` 
 
     many to many
         A style of :func:`sqlalchemy.orm.relationship` which links two tables together
@@ -1376,13 +1376,13 @@ Glossary
 
         .. seealso::
 
-            :term:`association relationship`
+            :term:`association relationship` 
 
-            :term:`relationship`
+            :term:`relationship` 
 
-            :term:`one to many`
+            :term:`one to many` 
 
-            :term:`many to one`
+            :term:`many to one` 
 
     relationship
     relationships
@@ -1390,10 +1390,10 @@ Glossary
         to some relationship between the two tables in the database.
 
         The relationship is defined using the SQLAlchemy function
-        :func:`~sqlalchemy.orm.relationship`.   Once created, SQLAlchemy
+        :func:`~sqlalchemy.orm.relationship` .   Once created, SQLAlchemy
         inspects the arguments and underlying mappings involved
         in order to classify the relationship as one of three types:
-        :term:`one to many`, :term:`many to one`, or :term:`many to many`.
+        :term:`one to many` , :term:`many to one` , or :term:`many to many` .
         With this classification, the relationship construct
         handles the task of persisting the appropriate linkages
         in the database in response to in-memory object associations,
@@ -1403,7 +1403,7 @@ Glossary
 
         .. seealso::
 
-            :ref:`relationship_config_toplevel`
+            :ref:`relationship_config_toplevel` 
 
     cursor
         A control structure that enables traversal over the records in a database.
@@ -1421,7 +1421,7 @@ Glossary
     association relationship
         A two-tiered :term:`relationship` which links two tables
         together using an association table in the middle.  The
-        association relationship differs from a :term:`many to many`
+        association relationship differs from a :term:`many to many` 
         relationship in that the many-to-many table is mapped
         by a full class, rather than invisibly handled by the
         :func:`sqlalchemy.orm.relationship` construct as in the case
@@ -1494,15 +1494,15 @@ Glossary
 
         .. seealso::
 
-            :term:`many to many`
+            :term:`many to many` 
 
     constraint
     constraints
     constrained
         Rules established within a relational database that ensure
         the validity and consistency of data.   Common forms
-        of constraint include :term:`primary key constraint`,
-        :term:`foreign key constraint`, and :term:`check constraint`.
+        of constraint include :term:`primary key constraint` ,
+        :term:`foreign key constraint` , and :term:`check constraint` .
 
     candidate key
 
@@ -1514,7 +1514,7 @@ Glossary
 
         .. seealso::
 
-            :term:`primary key`
+            :term:`primary key` 
 
             `Candidate key (via Wikipedia) <https://en.wikipedia.org/wiki/Candidate_key>`_
 
@@ -1531,7 +1531,7 @@ Glossary
         (via Wikipedia)
 
         The primary key of a table is typically, though not always,
-        defined within the ``CREATE TABLE`` :term:`DDL`:
+        defined within the ``CREATE TABLE`` :term:`DDL` :
 
         .. sourcecode:: sql
 
@@ -1544,7 +1544,7 @@ Glossary
 
         .. seealso::
 
-            :term:`composite primary key`
+            :term:`composite primary key` 
 
             `Primary key (via Wikipedia) <https://en.wikipedia.org/wiki/Primary_Key>`_
 
@@ -1556,7 +1556,7 @@ Glossary
 
         .. seealso::
 
-            :term:`primary key`
+            :term:`primary key` 
 
     foreign key constraint
         A referential constraint between two tables.  A foreign key is a field or set of fields in a
@@ -1615,7 +1615,7 @@ Glossary
 
     transient
         This describes one of the major object states which
-        an object can have within a :term:`Session`; a transient object
+        an object can have within a :term:`Session` ; a transient object
         is a new object that doesn't have any database identity
         and has not been associated with a session yet.  When the
         object is added to the session, it moves to the
@@ -1623,11 +1623,11 @@ Glossary
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 
     pending
         This describes one of the major object states which
-        an object can have within a :term:`Session`; a pending object
+        an object can have within a :term:`Session` ; a pending object
         is a new object that doesn't have any database identity,
         but has been recently associated with a session.   When
         the session emits a flush and the row is inserted, the
@@ -1635,41 +1635,41 @@ Glossary
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 
     deleted
         This describes one of the major object states which
-        an object can have within a :term:`Session`; a deleted object
+        an object can have within a :term:`Session` ; a deleted object
         is an object that was formerly persistent and has had a
         DELETE statement emitted to the database within a flush
-        to delete its row.  The object will move to the :term:`detached`
+        to delete its row.  The object will move to the :term:`detached` 
         state once the session's transaction is committed; alternatively,
         if the session's transaction is rolled back, the DELETE is
-        reverted and the object moves back to the :term:`persistent`
+        reverted and the object moves back to the :term:`persistent` 
         state.
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 
     persistent
         This describes one of the major object states which
-        an object can have within a :term:`Session`; a persistent object
+        an object can have within a :term:`Session` ; a persistent object
         is an object that has a database identity (i.e. a primary key)
         and is currently associated with a session.   Any object
         that was previously :term:`pending` and has now been inserted
         is in the persistent state, as is any object that's
         been loaded by the session from the database.   When a
         persistent object is removed from a session, it is known
-        as :term:`detached`.
+        as :term:`detached` .
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 
     detached
         This describes one of the major object states which
-        an object can have within a :term:`Session`; a detached object
+        an object can have within a :term:`Session` ; a detached object
         is an object that has a database identity (i.e. a primary key)
         but is not associated with any session.  An object that
         was previously :term:`persistent` and was removed from its
@@ -1681,13 +1681,13 @@ Glossary
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 
     attached
         Indicates an ORM object that is presently associated with a specific
-        :term:`Session`.
+        :term:`Session` .
 
         .. seealso::
 
-            :ref:`session_object_states`
+            :ref:`session_object_states` 
 

@@ -1,10 +1,10 @@
-排序列表
-=============
+有序列表
+========
 
 .. automodule:: sqlalchemy.ext.orderinglist
 
 API 参考
--------------
+--------
 
 .. autofunction:: ordering_list
 

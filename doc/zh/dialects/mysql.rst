@@ -1,54 +1,65 @@
+.. _mysql_toplevel:
+
 MySQL 和 MariaDB
-===============
+=================
 
 .. automodule:: sqlalchemy.dialects.mysql.base
 
 MySQL SQL 构造
 --------------------
 
-和所有 SQLAlchemy 方言一样，所有 MySQL 可用的大写类型都可以从方言的顶层导入：
+.. currentmodule:: sqlalchemy.dialects.mysql
 
-```Python
-from sqlalchemy.dialects.mysql import (
-    BIGINT,
-    BINARY,
-    BIT,
-    BLOB,
-    BOOLEAN,
-    CHAR,
-    DATE,
-    DATETIME,
-    DECIMAL,
-    DOUBLE,
-    ENUM,
-    FLOAT,
-    INTEGER,
-    LONGBLOB,
-    LONGTEXT,
-    MEDIUMBLOB,
-    MEDIUMINT,
-    MEDIUMTEXT,
-    NCHAR,
-    NUMERIC,
-    NVARCHAR,
-    REAL,
-    SET,
-    SMALLINT,
-    TEXT,
-    TIME,
-    TIMESTAMP,
-    TINYBLOB,
-    TINYINT,
-    TINYTEXT,
-    VARBINARY,
-    VARCHAR,
-    YEAR,
-)
-```
+.. autoclass:: match
+    :members:
 
-以下类型是特定于 MySQL 的，或具有 MySQL 特定的构造参数：
+MySQL 数据类型
+----------------
 
-.. 笔记：使用 :noindex: 的情况表示不在方言模块中重新定义的类型，只从 sqltypes 导入。这避免了 sphinx 构建中的警告。
+和所有 SQLAlchemy 方言一样，所有已经在 MySQL 中被识别为有效类型的大写类型都可以从顶级方言进行导入：
+
+::
+
+    from sqlalchemy.dialects.mysql import (
+        BIGINT,
+        BINARY,
+        BIT,
+        BLOB,
+        BOOLEAN,
+        CHAR,
+        DATE,
+        DATETIME,
+        DECIMAL,
+        DECIMAL,
+        DOUBLE,
+        ENUM,
+        FLOAT,
+        INTEGER,
+        LONGBLOB,
+        LONGTEXT,
+        MEDIUMBLOB,
+        MEDIUMINT,
+        MEDIUMTEXT,
+        NCHAR,
+        NUMERIC,
+        NVARCHAR,
+        REAL,
+        SET,
+        SMALLINT,
+        TEXT,
+        TIME,
+        TIMESTAMP,
+        TINYBLOB,
+        TINYINT,
+        TINYTEXT,
+        VARBINARY,
+        VARCHAR,
+        YEAR,
+    )
+
+特定于 MySQL 的类型或具有 MySQL 特定构造参数的类型如下：
+
+.. note:: 当使用 :noindex: 时，表示该类型未在方言模块中重新定义，只是从 sqltypes 导入。这避免了 sphinx 构建中的警告。
 
 .. currentmodule:: sqlalchemy.dialects.mysql
 
@@ -191,7 +202,7 @@ from sqlalchemy.dialects.mysql import (
 .. autoclass:: YEAR
     :members: __init__
 
-MySQL DML Constructs
+MySQL 数据操纵语言构造
 -------------------------
 
 .. autofunction:: sqlalchemy.dialects.mysql.insert
@@ -200,7 +211,8 @@ MySQL DML Constructs
   :members:
 
 
-mysqlclient (MySQL-Python 的 fork)
+
+mysqlclient (MySQL-Python 的分支)
 ----------------------------------
 
 .. automodule:: sqlalchemy.dialects.mysql.mysqldb
@@ -239,3 +251,8 @@ cymysql
 -------
 
 .. automodule:: sqlalchemy.dialects.mysql.cymysql
+
+pyodbc
+------
+
+.. automodule:: sqlalchemy.dialects.mysql.pyodbc

@@ -30,14 +30,14 @@
         :versions: 1.0.0b1, 0.9.7
         :tickets: 3124
 
-        修复了 :class:`.Enum` 和其他 :class:`.SchemaType` 子类中的一个bug,其中将类型直接关联到 :class:`_schema.MetaData` 会导致在 :class:`_schema.MetaData` 上发出事件(如创建事件)时出错。
+        修复了   :class:`.Enum`  和其他   :class:` .SchemaType`  子类中的一个bug,其中将类型直接关联到   :class:`_schema.MetaData`  会导致在   :class:` _schema.MetaData`  上发出事件(如创建事件)时出错。
 
     .. change::
         :tags: bug, sql
         :versions: 1.0.0b1, 0.9.7
         :tickets: 3102
 
-        在自定义运算符加 :meth:`.TypeEngine.with_variant` 系统中修复了一个bug，在使用 :class:`.TypeDecorator` 结合 variant 时，当使用比较运算符时将失败，并出现MRO错误。
+        在自定义运算符加  :meth:`.TypeEngine.with_variant`  系统中修复了一个bug，在使用   :class:` .TypeDecorator`  结合 variant 时，当使用比较运算符时将失败，并出现MRO错误。
 
     .. change::
         :tags: bug, mysql
@@ -72,48 +72,48 @@
         :versions: 0.9.5, 1.0.0b1
         :tickets: 3053
 
-        在 PG:class:`.HSTORE` 类型中添加了新的 "hashable=False" 标志，这是需要的，以允许ORM在请求混合列/实体列表中的ORM映射HSTORE列时跳过尝试对ORM映射HSTORE列进行"hash"的过程。补丁由Gunnlaugur Þór Briem提供。
+        在 PG  :class:`.HSTORE`  类型中添加了新的 "hashable=False" 标志，这是需要的，以允许ORM在请求混合列/实体列表中的ORM映射HSTORE列时跳过尝试对ORM映射HSTORE列进行"hash"的过程。补丁由Gunnlaugur Þór Briem提供。
 
     .. change::
         :tags: bug, orm
         :versions: 0.9.5, 1.0.0b1
         :tickets: 3055
 
-        修复ORM中的bug，在子查询贪婪加载中，当跨越多个多态子类和多态加载的长连贪婪加载链时，可能会失败，因此无法定位链中的子类链接，从而在:class:`.AliasedClass` 上缺少属性名称。
+        修复ORM中的bug，在子查询贪婪加载中，当跨越多个多态子类和多态加载的长连贪婪加载链时，可能会失败，因此无法定位链中的子类链接，从而在  :class:`.AliasedClass`  上缺少属性名称。
 
     .. change::
         :tags: bug, ext
         :versions: 0.9.5, 1.0.0b1
         :tickets: 3051, 3093
 
-        修复可变扩展中的一个bug，其中 :class:`.MutableDict` 没有为 "setdefault()" 字典操作报告更改事件。
+        修复可变扩展中的一个bug，其中   :class:`.MutableDict`  没有为 "setdefault()" 字典操作报告更改事件。
 
     .. change::
         :tags: bug, ext
         :versions: 0.9.5, 1.0.0b1
         :tickets: 3093, 3051
 
-        修复了一个bug，其中 :meth:`.MutableDict.setdefault` 不返回现有值或新的值(在0.8版本中未发布该bug)。由Thomas Hervé发起的拉取请求。
+        修复了一个bug，其中  :meth:`.MutableDict.setdefault`  不返回现有值或新的值(在0.8版本中未发布该bug)。由Thomas Hervé发起的拉取请求。
 
     .. change::
         :tags: bug, mysql
         :versions: 0.9.5, 1.0.0b1
 
-        添加对通过使用等号包括KEY_BLOCK_SIZE的索引进行反映的支持。涉及到:class:`_schema.Table` 的“mysql_partition_by='value'”和“mysql_partitions='value'”。
+        添加对通过使用等号包括KEY_BLOCK_SIZE的索引进行反映的支持。涉及到  :class:`_schema.Table`  的“mysql_partition_by='value'”和“mysql_partitions='value'”。
 
     .. change::
         :tags: bug, orm
         :tickets: 3047
         :versions: 0.9.5, 1.0.0b1
 
-        修复了ORM bug，其中 :func:`.class_mapper` 函数会遮盖由于用户错误导致的mapper配置期间发生的属性错误或KeyError。已将attribute/keyerror的catch设置得更具体，以不包括配置步骤。
+        修复了ORM bug，其中   :func:`.class_mapper`  函数会遮盖由于用户错误导致的mapper配置期间发生的属性错误或KeyError。已将attribute/keyerror的catch设置得更具体，以不包括配置步骤。
 
     .. change::
         :tags: bug, sql
         :tickets: 3045
         :versions: 0.9.5, 1.0.0b1
 
-        修复了一个bug，在 :meth:`_schema.Table.update` 和 :meth:`_schema.Table.delete` 中，如果将空 :func:`.and_()` 或 :func:`.or_()` 或其他空表达式应用于 INSERT 中，则将产生一个空WHERE子句。现在与 :func:`_expression.select` 保持一致。
+        修复了一个bug，在  :meth:`_schema.Table.update`  和  :meth:` _schema.Table.delete`  中，如果将空   :func:`.and_()`  或   :func:` .or_()`  或其他空表达式应用于 INSERT 中，则将产生一个空WHERE子句。现在与   :func:`_expression.select`  保持一致。
 
     .. change::
         :tags: bug, postgresql
@@ -150,7 +150,7 @@
         :tickets: 2995,
         :versions: 0.9.4
 
-        修复了从0.8.3引入的回归，由于 :ticket:`2818`，因此 :meth:`_query.Query.exists` 对于仅具有 :meth:`_query.Query.select_from` 条目但没有其他实体的查询将无法正常工作。
+        修复了从0.8.3引入的回归，由于  :ticket:`2818` ，因此  :meth:` _query.Query.exists`  对于仅具有  :meth:`_query.Query.select_from`  条目但没有其他实体的查询将无法正常工作。
 
     .. change::
         :tags: bug, general
@@ -164,27 +164,27 @@
         :versions: 0.9.4
         :tickets: 2997
 
-        修复了一个问题，在 :class:`.MutableDict` 以及 :func:`.attributes.flag_modified` 中，如果将属性重新分配给自己，则更改事件将不会传播。
+        修复了一个问题，在   :class:`.MutableDict`  以及   :func:` .attributes.flag_modified`  中，如果将属性重新分配给自己，则更改事件将不会传播。
 
     .. change::
         :tags: bug, orm
         :versions: 0.9.4
 
-        改进了一个错误消息，当光标对象传递到 :func:`.class_mapper` 相关的函数而不是查询语句时，当尝试使用 :meth:`_query.Query.join` 使“left”侧确定为 ``None`` 并且失败时，错误消息会发生，因此错误已在显式检测到的情况下进行了处理。
+        改进了一个错误消息，当光标对象传递到   :func:`.class_mapper`  相关的函数而不是查询语句时，当尝试使用  :meth:` _query.Query.join`  使“left”侧确定为 ``None`` 并且失败时，错误消息会发生，因此错误已在显式检测到的情况下进行了处理。
 
     .. change::
         :tags: bug, sql
         :versions: 0.9.4
         :tickets: 2977
 
-        修复了 :func:`.tuple_` 构造中的bug，其中实际上第一个SQL表达式的 "type" 会应用为比较元组值的 "comparison type" 的效果。在某些情况下，这会导致不适当的 "类型强制转换"，例如当一个具有String和Binary值的元组不应该将目标值不适当地强制为Binary时，即使左侧不是Binary。 :func:`.tuple_` 现在期望在其值列表中具有异构类型。
+        修复了   :func:`.tuple_`  构造中的bug，其中实际上第一个SQL表达式的 "type" 会应用为比较元组值的 "comparison type" 的效果。在某些情况下，这会导致不适当的 "类型强制转换"，例如当一个具有String和Binary值的元组不应该将目标值不适当地强制为Binary时，即使左侧不是Binary。   :func:` .tuple_`  现在期望在其值列表中具有异构类型。
 
     .. change::
         :tags: orm, bug
         :versions: 0.9.4
         :tickets: 2975
 
-        从 :mod:`sqlalchemy.orm.interfaces` 中删除过时的名称，并使用当前名称进行刷新，以便再次从模块进行 "import *"。
+        从  :mod:`sqlalchemy.orm.interfaces`  中删除过时的名称，并使用当前名称进行刷新，以便再次从模块进行 "import *"。
 
 .. changelog::
     :version: 0.8.5
@@ -208,33 +208,33 @@
         :tickets: 2941
         :versions: 0.9.3
 
-        添加了新的MySQL特定的 :class:`.mysql.DATETIME`，其中包括分数秒支持； :class:`.mysql.TIMESTAMP` 也添加了分数秒支持。DBAPI支持有限，尽管MySQL Connector/Python已知支持分数秒。 感谢Geert JM Vanderkelen。
+        添加了新的MySQL特定的   :class:`.mysql.DATETIME` ，其中包括分数秒支持；   :class:` .mysql.TIMESTAMP`  也添加了分数秒支持。DBAPI支持有限，尽管MySQL Connector/Python已知支持分数秒。 感谢Geert JM Vanderkelen。
 
     .. change::
         :tags: bug, mysql
         :tickets: 2966
         :versions: 0.9.3
 
-        添加了对“PARTITION BY”和“PARTITIONS”MySQL表关键字的支持，指定为“mysql_partition_by ='value'”和“mysql_partitions ='value'”到 :class:`_schema.Table`。感谢Marcus McCurdy的拉动请求。
+        添加了对“PARTITION BY”和“PARTITIONS”MySQL表关键字的支持，指定为“mysql_partition_by ='value'”和“mysql_partitions ='value'”到   :class:`_schema.Table` 。感谢Marcus McCurdy的拉动请求。
 
     .. change::
         :tags: bug, sql
         :tickets: 2944
         :versions: 0.9.3
 
-        修正了 :meth:`_expression.Insert.values` 与空列表或元组一起调用时会引发IndexError。现在将产生一个空插入操作，与空字典的情况相同。
+        修正了  :meth:`_expression.Insert.values`  与空列表或元组一起调用时会引发IndexError。现在将产生一个空插入操作，与空字典的情况相同。
 
     .. change::
         :tags: bug, engine, pool
         :versions: 0.9.3
         :tickets: 2880, 2964
 
-        修复 :ticket:`2880` 引入的严重回归，其中从池返回连接的并发能力意味着“first_connect”事件现在也不再同步，因此根本不需要dialect的" is_disconnect"例程同时包含包装和" is_disconnect"例程的异常。连接过程本身。
+        修复  :ticket:`2880`  引入的严重回归，其中从池返回连接的并发能力意味着“first_connect”事件现在也不再同步，因此根本不需要dialect的" is_disconnect"例程同时包含包装和" is_disconnect"例程的异常。连接过程本身。
 
     .. change::
         :tags: bug, sqlite
 
-        恢复了唯一约束反射的变化，在SQLite中使用 :class:`.UniqueConstraint` 时，如果保留字包含在列名中，则会失败。现在忽略保留字，并将其删除。感谢Roman Podolyaka。
+        恢复了唯一约束反射的变化，在SQLite中使用   :class:`.UniqueConstraint`  时，如果保留字包含在列名中，则会失败。现在忽略保留字，并将其删除。感谢Roman Podolyaka。
 
     .. change::
         :tags: bug, postgresql
@@ -248,14 +248,14 @@
         :tickets: 2957
         :versions: 0.9.3
 
-        修复了 :meth:`.ColumnOperators.in_` 的Bug，如果错误地传递了包含"__getitem__()"方法的列表达式(例如，使用 :class:`_postgresql.ARRAY` 类型的列)，将进入无限循环。
+        修复了  :meth:`.ColumnOperators.in_`  的Bug，如果错误地传递了包含"__getitem__()"方法的列表达式(例如，使用   :class:` _postgresql.ARRAY`  类型的列)，将进入无限循环。
 
     .. change::
         :tags: bug, orm
         :tickets: 2951
         :versions: 0.9.3
 
-        修复了一个bug，其中 :meth:`_query.Query.get` 将无法一致地提出引发 :class:`.InvalidRequestError` 的查询，该查询在具有现有标准的身份映射中已存在于标识映射中时。
+        修复了一个bug，其中  :meth:`_query.Query.get`  将无法一致地提出引发   :class:` .InvalidRequestError`  的查询，该查询在具有现有标准的身份映射中已存在于标识映射中时。
 
     .. change::
         :tags: bug, mysql
@@ -275,29 +275,29 @@
         :tickets: 2818
         :versions: 0.9.0
 
-        由于 :ticket:`2818` 引入的更改，这是：如果在只有:meth:`_query.Query.select_from` 条目但没有其他实体的查询中调用:func:`._query.Query.exists`, 将引发“替换列”的警告，对于语句具有两个相同命名的列会产生警告，因为内部SELECT没有使用标签。
+        由于  :ticket:`2818`  引入的更改，这是：如果在只有  :meth:` _query.Query.select_from`   条目但没有其他实体的查询中调用  :func:`._query.Query.exists` , 将引发“替换列”的警告，对于语句具有两个相同命名的列会产生警告，因为内部SELECT没有使用标签。
 
-- :class:`_schema.Column`在与父级:class:`_schema.Table`关联之前使用:func:`.foreign`可能会产生问题，因为会进行注释的固有复制操作，这导致父表未在联接中呈现。
-- 非工作的:class:`_schema.ForeignKey`上的"schema"参数已被废弃;引发了一个警告。在0.9中将被删除。
+-   :class:`_schema.Column` .foreign` 可能会产生问题，因为会进行注释的固有复制操作，这导致父表未在联接中呈现。
+- 非工作的 :class:`_schema.ForeignKey` 上的"schema"参数已被废弃;引发了一个警告。在0.9中将被删除。
 - 修复了PostgreSQL版本字符串无法解析的错误，该字符串具有在单词"PostgreSQL"或"EnterpriseDB"之前的前缀。感谢Scott Schaefer。
-- 现在，:class:`.URL`的:class:`_engine.Engine`表述将使用星号隐藏密码。感谢Gunnlaugur Þór Briem。
-- 修复:meth:`_query.Query.exists`无WHERE条件时无法正常工作的bug。感谢Vladimir Magamedov。
-- 修复了使用`column_reflect`事件更改传入的:class:`_schema.Column`的`.key`时会防止正确反映主键约束，索引和外键约束的bug。
-- 增加了一个新标志：`system=True`，用于:class:`_schema.Column`，将列标记为"系统"列，数据库会自动使其存在（例如PostgreSQL `oid`或`xmin`）。列将从`CREATE TABLE`语句中省略，但其他情况下可用于查询。此外，:class:`.CreateColumn`结构可以应用于自定义编译规则，该规则允许跳过列，即生成一个返回''的规则。
+- 现在， :class:`.URL` 的 :class:`_engine.Engine` 表述将使用星号隐藏密码。感谢Gunnlaugur Þór Briem。
+- 修复  :meth:`_query.Query.exists`  无WHERE条件时无法正常工作的bug。感谢Vladimir Magamedov。
+- 修复了使用`column_reflect`事件更改传入的  :class:`_schema.Column` .key` 时会防止正确反映主键约束，索引和外键约束的bug。
+- 增加了一个新标志：`system=True`，用于  :class:`_schema.Column` ，将列标记为"系统"列，数据库会自动使其存在（例如PostgreSQL ` oid`或`xmin`）。列将从`CREATE TABLE`语句中省略，但其他情况下可用于查询。此外， :class:`.CreateColumn` 结构可以应用于自定义编译规则，该规则允许跳过列，即生成一个返回''的规则。
 - 从0.9中回退了一项更改，此更改也适用于0.8.子级映射器层次结构的迭代现在进行了排序，这有助于具有确定性渲染的多态查询生成的SELECT语句，而这又有助于缓存方案，在SQL字符串本身缓存时缓存该字符串本身。
 - 在ORM中使用的有序序列实现中的潜在问题已过去，该问题用于迭代器继承加载器层次结构；在Jython解释器下，此实现未排序，即使cPython和PyPy都保持排序。
 - 在版本控制示例中创建历史记录表，添加了“autoincrement=False”，因为在任何情况下，此表都不应具有autoinc，感谢Patrick Schmid。
-- :meth:`.ColumnOperators.notin_`运算符现在正确地生成`IN`返回的否定表达式，即使针对空集合使用该运算符时。
+- :meth:`.ColumnOperators.notin_` 运算符现在正确地生成`IN`返回的否定表达式，即使针对空集合使用该运算符时。
 - 改进了``examples/generic_associations``中的一些示例，包括``discriminator_on_association.py``使用单表继承执行"discriminator"的工作。还增加了一个真正的"通用外键"示例，其工作方式类似于其他流行的框架。它使用开放式整数来指向任何其他表，这样就可以省略传统的参照完整性。虽然我们不推荐此模式，但是信息想要变得自由。
-- 增加了一个方便的类装饰器：func:`.as_declarative`，它是:func:`.declarative_base`的一个包装器，允许使用嵌套的类进行传递。
+- 增加了一个方便的类装饰器：func:`.as_declarative`，它是 :func:`.declarative_base` 的一个包装器，允许使用嵌套的类进行传递。
 - 修复了ORM中事件注册的bug，其中"原始"或"propagate"标志在某些"未映射的基类"配置中可能会配置错误。
-- 改进了:func:`.defer`选项用于加载映射实体时的性能修复；应用每个对象的延迟可调用以在装入时对实例进行的函数开销显着高于仅从行中加载数据的开销。（请注意，``defer（）``的目的是减少DB/网络开销，而不一定是函数调用计数）；在所有情况下，函数调用开销现在小于从列加载数据的开销。此外，从N（结果中的总延迟值）到1（延迟列的总数）每次加载的“懒惰可调用”对象数量也有所减少。
+- 改进了  :func:`.defer` ` defer（）``的目的是减少DB/网络开销，而不一定是函数调用计数）；在所有情况下，函数调用开销现在小于从列加载数据的开销。此外，从N（结果中的总延迟值）到1（延迟列的总数）每次加载的“懒惰可调用”对象数量也有所减少。
 - 为PostgreSQL 9.2范围类型添加了支持。目前，不提供类型转换，因此当前可以直接使用字符串或psycopg2 2.5范围扩展类型。修补程序由Chris Withers提供。
 - 出现了一个HSTORE类型的错误，其中包含了反斜杠引号的键/值将无法在使用HSTORE数据的“非本机”（即非psycopg2）方法转换时正确转义。感谢Ryan Kelly。
 - 修复了多种错误，否则会导致在：meth:`_query.Query.order_by`中发送复合属性产生括号表达式，这是某些数据库不接受的。
-- 修复:meth:`_schema.MetaData.reflect`在远程模式和本地模式均具有相同名称的表时可能会产生错误结果的bug。
-- 修复了:meth:`_schema.Index`中使用的`mysql_length`参数，使其成为列名称/长度的字典，供复合索引使用。感谢Russell Stuart。
-- 在:meth:`_orm.relationship`中添加了一个新方法:meth:`_query.Query.select_entity_from`，该方法将在0.9中替换:meth:`_query.Query.select_from`的部分功能。在0.8中，这两种方法执行相同的功能，因此可以根据需要将代码迁移到使用:meth:`_query.Query.select_entity_from`方法。详见0.9迁移指南。
+- 修复  :meth:`_schema.MetaData.reflect`  在远程模式和本地模式均具有相同名称的表时可能会产生错误结果的bug。
+- 修复了  :meth:`_schema.Index`  中使用的` mysql_length`参数，使其成为列名称/长度的字典，供复合索引使用。感谢Russell Stuart。
+- 在  :meth:`_orm.relationship`  中添加了一个新方法  :meth:` _query.Query.select_entity_from`  ，该方法将在0.9中替换  :meth:`_query.Query.select_from`  的部分功能。在0.8中，这两种方法执行相同的功能，因此可以根据需要将代码迁移到使用  :meth:` _query.Query.select_entity_from`  方法。详见0.9迁移指南。
 - 修复Bug：多对多关系使用`uselist = False`将无法删除关联行并引发错误，如果将标量属性设置为None。这是由为：ticket:`2229`更改引起的回归。
 - ORM映射对象中对于强Session引用的创建已做出改进;当该对象处于瞬态状态或进入分离状态时，将不再创建内部引用循环——只有当对象附加到Session并且在分离时才创建强引用。即使不建议使用这种方法，一个对象仍然可以具有 `¨del（）` 方法，因为关系与backrefs一起产生循环。映射了一个带有 `¨del（）方法的类`，增加了一个警告。
 - SQLAlchemy延迟规则的错误已修复，原先用于防止在自定义运算符上实现`__getitem __（）`方法的对象调用`list（）`时出现无限且扩大内存的循环，但这实际上会使列元素报告它们是可迭代类型，然后尝试循环时抛出错误。这里无法有太多选择，所以我们坚持最佳实践。在自定义运算符上实现`__getitem __（）`方面要特别小心！
@@ -389,18 +389,18 @@ PS：其中包含的英文标点符号不能转化为中文标点符号！.. 相
     .. 更改::
         :tags: pool, feature
 
-        :class:`_pool.Pool` 现在将记录所有连接的 close() 操作，包括用于无效连接、分离连接、超出池容量的连接。
+          :class:`_pool.Pool`  现在将记录所有连接的 close() 操作，包括用于无效连接、分离连接、超出池容量的连接。
 
     .. 更改::
         :tags: pool, feature
         :tickets: 2611
 
-        :class:`_pool.Pool` 现在在与事务相关的功能方面咨询 :class:`.Dialect`，包括连接应该如何“自动回滚”以及关闭。这授予方言更多的事务范围控制，因此我们将更好地能够实现事务性处理的解决方案，如可能需要为 pysqlite 和 cx_oracle 做的解决方案。
+          :class:`_pool.Pool`  现在在与事务相关的功能方面咨询   :class:` .Dialect` ，包括连接应该如何“自动回滚”以及关闭。这授予方言更多的事务范围控制，因此我们将更好地能够实现事务性处理的解决方案，如可能需要为 pysqlite 和 cx_oracle 做的解决方案。
 
     .. 更改::
         :tags: pool, feature
 
-        添加新的 :meth:`_events.PoolEvents.reset` 钩子，以捕获连接在返回池之前自动回滚的事件。以及 :meth:`_events.ConnectionEvents.rollback`，这允许拦截所有回滚事件。
+        添加新的  :meth:`_events.PoolEvents.reset`  钩子，以捕获连接在返回池之前自动回滚的事件。以及  :meth:` _events.ConnectionEvents.rollback` ，这允许拦截所有回滚事件。
 
     .. 更改::
         :tags: feature, sql
@@ -424,18 +424,18 @@ PS：其中包含的英文标点符号不能转化为中文标点符号！.. 相
     .. 更改::
         :tags: pool, feature
 
-        :class:`_pool.Pool` 现在将记录所有连接的 close() 操作，包括用于无效连接、分离连接、超出池容量的连接。
+          :class:`_pool.Pool`  现在将记录所有连接的 close() 操作，包括用于无效连接、分离连接、超出池容量的连接。
 
     .. 更改::
         :tags: pool, feature
         :tickets: 2611
 
-        :class:`_pool.Pool` 现在在与事务相关的功能方面咨询 :class:`.Dialect`，包括连接应该如何“自动回滚”以及关闭。这授予方言更多的事务范围控制，因此我们将更好地能够实现事务性处理的解决方案，如可能需要为 pysqlite 和 cx_oracle 做的解决方案。
+          :class:`_pool.Pool`  现在在与事务相关的功能方面咨询   :class:` .Dialect` ，包括连接应该如何“自动回滚”以及关闭。这授予方言更多的事务范围控制，因此我们将更好地能够实现事务性处理的解决方案，如可能需要为 pysqlite 和 cx_oracle 做的解决方案。
 
     .. 更改::
         :tags: pool, feature
 
-        添加新的 :meth:`_events.PoolEvents.reset` 钩子，以捕获连接在返回池之前自动回滚的事件。以及 :meth:`_events.ConnectionEvents.rollback`，这允许拦截所有回滚事件。
+        添加新的  :meth:`_events.PoolEvents.reset`  钩子，以捕获连接在返回池之前自动回滚的事件。以及  :meth:` _events.ConnectionEvents.rollback` ，这允许拦截所有回滚事件。
 
     .. 更改::
         :tags: engine, bug
@@ -592,7 +592,7 @@ PS：其中包含的英文标点符号不能转化为中文标点符号！.. 相
         :tags: orm, bug
         :tickets: 2593
 
-        修复了传递给 :meth:`.Compiler.process` 的关键字参数不会传播到 SELECT 语句的列子句中存在的列表达式中的 bug。特别是，当使用依赖于特殊标志的自定义编译方案时，这将出现。
+        修复了传递给  :meth:`.Compiler.process`  的关键字参数不会传播到 SELECT 语句的列子句中存在的列表达式中的 bug。特别是，当使用依赖于特殊标志的自定义编译方案时，这将出现。
 
     .. 更改::
         :tags: orm, feature

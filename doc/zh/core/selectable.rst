@@ -1,17 +1,16 @@
-SELECT和相关结构
-==========================
+选择和相关结构
+=================
 
-“可选择（selectable）”一词是指表示数据库行的任何对象。在SQLAlchemy中，这些对象都继承自:class:`_expression.Selectable`，其中最突出的是:class:`_expression.Select`，它代表了一个SQL SELECT语句。 :class:`_expression.FromClause`是:class:`_expression.Selectable`的一个子集，它代表可以在:class:`.Select`语句的FROM子句中包含的对象。 :class:`_expression.FromClause`的一个区别特征是 :attr:`_expression.FromClause.c` 属性，它是FROM子句中包含的所有列的命名空间（这些元素本身是 :class:`_expression.ColumnElement`的子类）。
+“selectable”这个术语指代所有代表数据库行的对象。在SQLAlchemy中，这些对象从   :class:`_expression.Selectable`  继承，其中最显著的是   :class:` _expression.Select` ，表示 SQL SELECT 语句。   :class:`_expression.Selectable`  的一个子集是   :class:` _expression.FromClause` ，表示可以在   :class:`.Select`  语句的 FROM 子句中的对象。   :class:` _expression.FromClause`  的一个显著特征是  :attr:`_expression.FromClause.c`  属性，它是 FROM 子句中包含的所有列的名称空间（这些元素本身是   :class:` _expression.ColumnElement`  子类）。
 
 .. currentmodule:: sqlalchemy.sql.expression
 
 .. _selectable_foundational_constructors:
 
-可选择的基础构造函数
---------------------------------------
+可选择的基础构造器
+--------------------------
 
-顶级“FROM子句”和“SELECT”构造函数。
-
+顶级“FROM子句”和“SELECT”构造器。
 
 .. autofunction:: except_
 
@@ -36,10 +35,10 @@ SELECT和相关结构
 
 .. _fromclause_modifier_constructors:
 
-可选择的修饰符构造函数
+可选择的修饰符构造器
 ---------------------------------
 
-此处列出的函数更常见地作为:class:`_sql.FromClause`和:class:`_sql.Selectable`元素的方法可用，例如，:func:`_sql.alias`函数通常通过 :meth:`_sql.FromClause.alias`方法调用。
+此处列出的函数通常作为   :class:`_sql.FromClause`  和   :class:` _sql.Selectable`  元素的方法更常见，例如，   :func:`_sql.alias`  函数通常通过  :meth:` _sql.FromClause.alias`  方法调用。
 
 .. autofunction:: alias
 
@@ -54,10 +53,10 @@ SELECT和相关结构
 .. autofunction:: tablesample
 
 
-可选择的类文档
+Selectable类文档
 --------------------------------
 
-以下类是使用列在 :ref:`selectable_foundational_constructors` 和 :ref:`fromclause_modifier_constructors` 中列出的构造函数生成的。
+这里的类是使用   :ref:`selectable_foundational_constructors`  和   :ref:` fromclause_modifier_constructors`  中列出的构造器生成的。
 
 .. autoclass:: Alias
    :members:
@@ -66,7 +65,7 @@ SELECT和相关结构
    :members:
 
 .. autoclass:: CompoundSelect
-   :inherited-members: ClauseElement
+   :inherited-members:  ClauseElement
    :members:
 
 .. autoclass:: CTE
@@ -101,14 +100,14 @@ SELECT和相关结构
 
 .. autoclass:: ReturnsRows
    :members:
-   :inherited-members: ClauseElement
+   :inherited-members:  ClauseElement
 
 .. autoclass:: ScalarSelect
    :members:
 
 .. autoclass:: Select
    :members:
-   :inherited-members: ClauseElement
+   :inherited-members:  ClauseElement
    :exclude-members: memoized_attribute, memoized_instancemethod, append_correlation, append_column, append_prefix, append_whereclause, append_having, append_from, append_order_by, append_group_by
 
 
@@ -118,7 +117,7 @@ SELECT和相关结构
 
 .. autoclass:: SelectBase
    :members:
-   :inherited-members: ClauseElement
+   :inherited-members:  ClauseElement
    :exclude-members: memoized_attribute, memoized_instancemethod
 
 .. autoclass:: Subquery
@@ -144,12 +143,10 @@ SELECT和相关结构
 .. autoclass:: ScalarValues
    :members:
 
-
-
 标签样式常量
 ---------------------
 
-在:meth:`_sql.GenerativeSelect.set_label_style`方法中使用的常量。
+  :meth:`_sql.GenerativeSelect.set_label_style`   方法使用的常量。
 
 .. autoclass:: SelectLabelStyle
     :members:
@@ -157,6 +154,6 @@ SELECT和相关结构
 
 .. seealso::
 
-    :meth:`_sql.Select.set_label_style`
+     :meth:`_sql.Select.set_label_style` 
 
-    :meth:`_sql.Select.get_label_style`
+     :meth:`_sql.Select.get_label_style` 

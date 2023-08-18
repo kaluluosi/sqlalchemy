@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`relationships`
-.. |next| replace:: :doc:`query`
+.. |prev| replace:: :doc:`relationships` 
+.. |next| replace:: :doc:`query` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -14,9 +14,9 @@ ORM Loader Options
 -------------------
 
 Loader options are objects which, when passed to the
-:meth:`_sql.Select.options` method of a :class:`.Select` object or similar SQL
+:meth:`_sql.Select.options` method of a :class:` .Select` object or similar SQL
 construct, affect the loading of both column and relationship-oriented
-attributes. The majority of loader options descend from the :class:`_orm.Load`
+attributes. The majority of loader options descend from the :class:`_orm.Load` 
 hierarchy. For a complete overview of using loader options, see the linked
 sections below.
 
@@ -37,18 +37,18 @@ ORM-level execution options are keyword options that may be associated with a
 statement execution using either the
 :paramref:`_orm.Session.execute.execution_options` parameter, which is a
 dictionary argument accepted by :class:`_orm.Session` methods such as
-:meth:`_orm.Session.execute` and :meth:`_orm.Session.scalars`, or by
+:meth:`_orm.Session.execute` and :meth:` _orm.Session.scalars`, or by
 associating them directly with the statement to be invoked itself using the
 :meth:`_sql.Executable.execution_options` method, which accepts them as
 arbitrary keyword arguments.
 
 ORM-level options are distinct from the Core level execution options
-documented at :meth:`_engine.Connection.execution_options`.
+documented at :meth:`_engine.Connection.execution_options` .
 It's important to note that the ORM options
 discussed below are **not** compatible with Core level methods
 :meth:`_engine.Connection.execution_options` or
-:meth:`_engine.Engine.execution_options`; the options are ignored at this
-level, even if the :class:`.Engine` or :class:`.Connection` is associated
+:meth:`_engine.Engine.execution_options` ; the options are ignored at this
+level, even if the :class:`.Engine` or :class:` .Connection` is associated
 with the :class:`_orm.Session` in use.
 
 Within this section, the :meth:`_sql.Executable.execution_options` method
@@ -112,13 +112,13 @@ a per-query basis.   Options for which this apply include:
 * The :func:`_orm.with_loader_criteria` option
 
 The ``populate_existing`` execution option is equvialent to the
-:meth:`_orm.Query.populate_existing` method in :term:`1.x style` ORM queries.
+:meth:`_orm.Query.populate_existing` method in :term:` 1.x style` ORM queries.
 
 .. seealso::
 
-    :ref:`faq_session_identity` - in :doc:`/faq/index`
+    :ref:`faq_session_identity` - in :doc:` /faq/index`
 
-    :ref:`session_expire` - in the ORM :class:`_orm.Session`
+    :ref:`session_expire` - in the ORM :class:` _orm.Session`
     documentation
 
 .. _orm_queryguide_autoflush:
@@ -126,7 +126,7 @@ The ``populate_existing`` execution option is equvialent to the
 Autoflush
 ^^^^^^^^^
 
-This option, when passed as ``False``, will cause the :class:`_orm.Session`
+This option, when passed as ``False``, will cause the :class:`_orm.Session` 
 to not invoke the "autoflush" step.  It is equivalent to using the
 :attr:`_orm.Session.no_autoflush` context manager to disable autoflush::
 
@@ -140,11 +140,11 @@ This option will also work on ORM-enabled :class:`_sql.Update` and
 :class:`_sql.Delete` queries.
 
 The ``autoflush`` execution option is equvialent to the
-:meth:`_orm.Query.autoflush` method in :term:`1.x style` ORM queries.
+:meth:`_orm.Query.autoflush` method in :term:` 1.x style` ORM queries.
 
 .. seealso::
 
-    :ref:`session_flushing`
+    :ref:`session_flushing` 
 
 .. _orm_queryguide_yield_per:
 
@@ -172,19 +172,19 @@ sub-collections and yield rows from each sub-collection individually as the
 doesn't need to declare very large areas of memory which is both time consuming
 and leads to excessive memory use. The option affects both the way the database
 cursor is used as well as how the ORM constructs rows and objects to be passed
-to the :class:`_engine.Result`.
+to the :class:`_engine.Result` .
 
 .. tip::
 
     From the above, it follows that the :class:`_engine.Result` must be
     consumed in an iterable fashion, that is, using iteration such as
     ``for row in result`` or using partial row methods such as
-    :meth:`_engine.Result.fetchmany` or :meth:`_engine.Result.partitions`.
+    :meth:`_engine.Result.fetchmany` or :meth:` _engine.Result.partitions`.
     Calling :meth:`_engine.Result.all` will defeat the purpose of using
     ``yield_per``.
 
 Using ``yield_per`` is equivalent to making use
-of both the :paramref:`_engine.Connection.execution_options.stream_results`
+of both the :paramref:`_engine.Connection.execution_options.stream_results` 
 execution option, which selects for server side cursors to be used
 by the backend if supported, and the :meth:`_engine.Result.yield_per` method
 on the returned :class:`_engine.Result` object,
@@ -194,16 +194,16 @@ corresponding limit to how many ORM objects will be constructed at once.
 .. tip::
 
     ``yield_per`` is now available as a Core execution option as well,
-    described in detail at :ref:`engine_stream_results`.  This section details
+    described in detail at :ref:`engine_stream_results` .  This section details
     the use of ``yield_per`` as an execution option with an ORM
-    :class:`_orm.Session`.  The option behaves as similarly as possible
+    :class:`_orm.Session` .  The option behaves as similarly as possible
     in both contexts.
 
 When used with the ORM, ``yield_per`` must be established either
 via the :meth:`.Executable.execution_options` method on the given statement
-or by passing it to the :paramref:`_orm.Session.execute.execution_options`
-parameter of :meth:`_orm.Session.execute` or other similar :class:`_orm.Session`
-method such as :meth:`_orm.Session.scalars`.  Typical use for fetching
+or by passing it to the :paramref:`_orm.Session.execute.execution_options` 
+parameter of :meth:`_orm.Session.execute` or other similar :class:` _orm.Session`
+method such as :meth:`_orm.Session.scalars` .  Typical use for fetching
 ORM objects is illustrated below::
 
     >>> stmt = select(User).execution_options(yield_per=10)
@@ -218,10 +218,10 @@ ORM objects is illustrated below::
     >>> # ... rows continue ...
 
 The above code is equivalent to the example below, which uses
-:paramref:`_engine.Connection.execution_options.stream_results`
+:paramref:`_engine.Connection.execution_options.stream_results` 
 and :paramref:`_engine.Connection.execution_options.max_row_buffer` Core-level
-execution options in conjunction with the :meth:`_engine.Result.yield_per`
-method of :class:`_engine.Result`::
+execution options in conjunction with the :meth:`_engine.Result.yield_per` 
+method of :class:`_engine.Result` ::
 
     # equivalent code
     >>> stmt = select(User).execution_options(stream_results=True, max_row_buffer=10)
@@ -268,17 +268,17 @@ large number of rows.
 
 .. versionchanged:: 1.4.6  An exception is raised when ORM rows are fetched
    from a :class:`_engine.Result` object that makes use of the
-   :meth:`_engine.Result.unique` filter, at the same time as the ``yield_per``
+   :meth:`_engine.Result.unique` filter, at the same time as the ` `yield_per``
    execution option is used.
 
 When using the legacy :class:`_orm.Query` object with
-:term:`1.x style` ORM use, the :meth:`_orm.Query.yield_per` method
+:term:`1.x style` ORM use, the :meth:` _orm.Query.yield_per` method
 will have the same result as that of the ``yield_per`` execution option.
 
 
 .. seealso::
 
-    :ref:`engine_stream_results`
+    :ref:`engine_stream_results` 
 
 .. _queryguide_identity_token:
 
@@ -290,7 +290,7 @@ Identity Token
 .. deepalchemy::   This option is an advanced-use feature mostly intended
    to be used with the :ref:`horizontal_sharding_toplevel` extension. For
    typical cases of loading objects with identical primary keys from different
-   "shards" or partitions, consider using individual :class:`_orm.Session`
+   "shards" or partitions, consider using individual :class:`_orm.Session` 
    objects per shard first.
 
 
@@ -333,7 +333,7 @@ within the scope of queries.  Given a mapping as:
 
 The default "schema" name for the class above is ``None``, meaning, no
 schema qualification will be written into SQL statements.  However,
-if we make use of :paramref:`_engine.Connection.execution_options.schema_translate_map`,
+if we make use of :paramref:`_engine.Connection.execution_options.schema_translate_map` ,
 mapping ``None`` to an alternate schema, we can place instances of
 ``MyTable`` into two different schemas:
 
@@ -388,7 +388,7 @@ However, we can illustrate querying for these objects in one session as follows:
 Both ``obj1`` and ``obj2`` are distinct from each other.  However, they both
 refer to primary key id 1 for the ``MyTable`` class, yet are distinct.
 This is how the ``identity_token`` comes into play, which we can see in the
-inspection of each object, where we look at :attr:`_orm.InstanceState.key`
+inspection of each object, where we look at :attr:`_orm.InstanceState.key` 
 to view the two distinct identity tokens::
 
     >>> from sqlalchemy import inspect
@@ -406,7 +406,7 @@ The above logic takes place automatically when using the
 
 .. seealso::
 
-    :ref:`examples_sharding` - in the :ref:`examples_toplevel` section.
+    :ref:`examples_sharding` - in the :ref:` examples_toplevel` section.
     See the script ``separate_schema_translates.py`` for a demonstration of
     the above use case using the full sharding API.
 
@@ -418,7 +418,7 @@ The above logic takes place automatically when using the
 Inspecting entities and columns from ORM-enabled SELECT and DML statements
 ==========================================================================
 
-The :func:`_sql.select` construct, as well as the :func:`_sql.insert`, :func:`_sql.update`
+The :func:`_sql.select` construct, as well as the :func:` _sql.insert`, :func:`_sql.update` 
 and :func:`_sql.delete` constructs (for the latter DML constructs, as of SQLAlchemy
 1.4.33), all support the ability to inspect the entities in which these
 statements are created against, as well as the columns and datatypes that would
@@ -451,7 +451,7 @@ returned is a list of dictionaries::
 
 
 When :attr:`.Select.column_descriptions` is used with non-ORM objects
-such as plain :class:`.Table` or :class:`.Column` objects, the entries
+such as plain :class:`.Table` or :class:` .Column` objects, the entries
 will contain basic information about individual columns returned in all
 cases::
 
@@ -475,7 +475,7 @@ cases::
    this would raise ``NotImplementedError``.
 
 
-For :func:`_sql.insert`, :func:`.update` and :func:`.delete` constructs, there are
+For :func:`_sql.insert` , :func:`.update` and :func:` .delete` constructs, there are
 two separate attributes. One is :attr:`.UpdateBase.entity_description` which
 returns information about the primary ORM entity and database table which the
 DML construct would be affecting::
@@ -498,7 +498,7 @@ DML construct would be affecting::
 
 The other is :attr:`.UpdateBase.returning_column_descriptions` which
 delivers information about the columns present in the RETURNING collection
-in a manner roughly similar to that of :attr:`.Select.column_descriptions`::
+in a manner roughly similar to that of :attr:`.Select.column_descriptions` ::
 
     >>> pprint(stmt.returning_column_descriptions)
     [{'aliased': False,
@@ -507,7 +507,7 @@ in a manner roughly similar to that of :attr:`.Select.column_descriptions`::
       'name': 'id',
       'type': Integer()}]
 
-.. versionadded:: 1.4.33 Added the :attr:`.UpdateBase.entity_description`
+.. versionadded:: 1.4.33 Added the :attr:`.UpdateBase.entity_description` 
    and :attr:`.UpdateBase.returning_column_descriptions` attributes.
 
 

@@ -37,9 +37,9 @@ SQLAlchemy从``MapperExtension``类开始，为映射器的持久化周期提供
 
 .. seealso::
 
-  :ref:`event_toplevel`
+    :ref:`event_toplevel` 
 
-:ticket:`1902`
+  :ticket:`1902`  
 
 混合属性，实现/替换同义词(), comparable_property()
 ---------------------------------------------------------
@@ -51,9 +51,9 @@ mapper/query/property模块并不真正知道它们。
 
 .. seealso::
 
-  :ref:`hybrids_toplevel`
+    :ref:`hybrids_toplevel` 
 
-:ticket:`1903`
+  :ticket:`1903`  
 
 速度增强
 ----------
@@ -82,11 +82,11 @@ https://techspot.zzzeek.org/2010/12/12/a-tale-of-three-profiles/
 
 .. seealso::
 
-  :ref:`mapper_composite`
+    :ref:`mapper_composite` 
 
-  :ref:`mutable_toplevel`
+    :ref:`mutable_toplevel` 
 
-:ticket:`2008` ：ticket:`2024`
+  :ticket:`2008`   ：ticket:` 2024`
 
 更简洁的查询.join(target，onclause)格式
 ------------------------------------------------
@@ -113,18 +113,18 @@ https://techspot.zzzeek.org/2010/12/12/a-tale-of-three-profiles/
 `使用连接进行查询
 <https://www.sqlalchemy.org/docs/07/orm/tutorial.html#querying-with-joins>`_
 
-:ticket:`1923`
+  :ticket:`1923`  
 
 .. _07_migration_mutation_extension:
 
 突变事件扩展，取代“mutable = True”
 ---------------------------------------------
 
-新扩展程序：ref:`mutable_toplevel`，提供了一种机制，通过该机制，用户定义的数据类型可以将更改事件提供给其所拥有的一个或多个父级。扩展包括标量数据库值的方法，例如由:class:`.PickleType`管理的值，`postgresql.ARRAY`或其他自定义``MutableType``类，以及ORM“组合体”，使用:func:`~.sqlalchemy.orm.composite`进行配置。
+新扩展程序：ref:`mutable_toplevel`，提供了一种机制，通过该机制，用户定义的数据类型可以将更改事件提供给其所拥有的一个或多个父级。扩展包括标量数据库值的方法，例如由  :class:`.PickleType` ` MutableType``类，以及ORM“组合体”，使用 :func:`~.sqlalchemy.orm.composite` 进行配置。
 
 .. seealso::
 
-    :ref:`mutable_toplevel`
+      :ref:`mutable_toplevel` 
 
 NULLS FIRST / NULLS LAST操作符
 ------------------------------------------
@@ -133,11 +133,11 @@ NULLS FIRST / NULLS LAST操作符
 
 .. seealso::
 
-    :func:`.nullsfirst`
+      :func:`.nullsfirst` 
 
-    :func:`.nullslast`
+      :func:`.nullslast` 
 
-:ticket:`723`
+  :ticket:`723`  
 
 select.distinct()，query.distinct()对于PostgreSQL DISTINCT ON现在支持\*args
 ----------------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ on_api.html#sqlalchemy.sql.expression.Select.distinct>`_
 `Query.distinct() <https://www.sqlalchemy.org/docs/07/orm/que
 ry.html#sqlalchemy.orm.query.Query.distinct>`_
 
-:ticket:`1069`
+  :ticket:`1069`  
 
 ``Index()``可以内联放置在``Table``，``__table_args__``内
 -------------------------------------------------------------------
@@ -226,7 +226,7 @@ SQL:
 ocs/07/core/expression_api.html#sqlalchemy.sql.expression.ov
 er>`_
 
-:ticket:`1844`
+  :ticket:`1844`  
 
 Connection中的execution_options（）接受“isolation_level”参数
 -------------------------------------------------- -------
@@ -239,14 +239,14 @@ Connection中的execution_options（）接受“isolation_level”参数
 /connections.html#sqlalchemy.engine.base.Connection.executio
 n_options>`_
 
-:ticket:`2001`
+  :ticket:`2001`  
 
 ``TypeDecorator``可与整数主键列一起使用
 -----------------------------------------------------------
 
 扩展了``Integer``行为的``TypeDecorator``可以与主键列一起使用。 ``Column``的“自动递增”功能现在将识别底层数据库列仍然是整数，使得lastrowid机制继续正常工作。自动生成的主键也将应用其结果值处理器，包括DBAPI ``cursor.lastrowid``访问器所接收的值。
 
-:ticket:`2005` ：ticket:`2006`
+  :ticket:`2005`   ：ticket:` 2006`
 
 ``TypeDecorator``在“sqlalchemy”导入空间中存在
 -----------------------------------------------------------
@@ -292,7 +292,7 @@ n_options>`_
 
 这种逻辑在复杂情况，特别是涉及联接表继承时失败，因此在更全面的``.from_self（）` `调用之前已经过时。 通过这种方式的“孤儿”行为发生在将具有“delete-orphan”级联的``relationship()``关联对象新添加到INSERT中，而没有建立父关系。多年前，此检查是为了适应一些测试案例，这些测试案例测试孤儿的行为的一致性。在现代SQLA中，不再需要这种检查。该对象的父外键引用与数据库列的数据一致性相同，而SQLA则允许大多数其他操作完成工作。如果对象的父外键是可空的，那么可以插入行。当对象以特定父级持久化，然后与该父级解除联系时，将运行“孤儿”行为，导致删除语句发出。
 
-:ticket:`1912`
+  :ticket:`1912`  
 
 查询中含有集合成员，标量引用不属于flush
 -----------------------------------------------
@@ -301,14 +301,14 @@ n_options>`_
 
 ``save-update``级联在将对象添加到``Session``或首次将对象与父级相关联时生效，因此对象及其相关对象通常都存在同一个``Session``中。但是，如果禁用了特定``relationship()``的“save-update”级联，则不会发生此行为，并且刷新过程不会尝试纠正它，而是保持一致与配置的级联行为一致。以前，在刷新过程中检测到这些对象时，它们会被默默地跳过。新行为是发出警告，目的是警示导致意外行为的情况。
 
-:ticket:`1973`
+  :ticket:`1973`  
 
 不再装置安装Nose插件
 -----------------------------------------
 
 自从我们使用鼻子以来，我们就使用了一个插件，通过setuptools安装该插件，以便``nosetests``脚本会自动运行SQLA的插件代码，从而使我们的测试具有完整的环境。在0.6中途，我们意识到这种导入模式意味着“coverage”将损坏，“coverage”要求在导入要覆盖的任何模块之前启动;因此，在0.6中间期间，我们为此特定情况添加了检测和错误消息，因为这是如此普遍。在0.7中，由于该模式确实检测到了准确的模式，并且由于为无缘无故地为整个引擎创建多个Nose配置选项会产生额外的标识字符串，因此不再尝试使“nosetests”自动工作。 SQLAlchemy模块将在所有``nosetests``的使用中产生大量nose配置选项，而不仅仅是SQLAlchemy单元测试本身，并且额外的``sqlalchemy-nose``安装是更糟的想法，因为Python环境中会产生额外的软件包。0.7中的``sqla_nose.py``脚本现在是使用nose进行测试的唯一方法。
 
-:ticket:`1949`
+  :ticket:`1949`  
 
 非由“Table”派生的构造适用映射
 ------------------------------------------------

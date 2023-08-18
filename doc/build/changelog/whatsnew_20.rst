@@ -25,7 +25,7 @@ What's New in SQLAlchemy 2.0?
 
     This document describes changes between SQLAlchemy version 1.4
     and SQLAlchemy version 2.0, **independent** of the major changes between
-    :term:`1.x style` and :term:`2.0 style` usage.   Readers should start
+    :term:`1.x style` and :term:` 2.0 style` usage.   Readers should start
     with the :ref:`migration_20_toplevel` document to get an overall picture
     of the major compatibility changes between the 1.x and 2.x series.
 
@@ -63,7 +63,7 @@ New Typing Support in Core and ORM - Stubs / Extensions no longer used
 The approach to typing for Core and ORM has been completely reworked, compared
 to the interim approach that was provided in version 1.4 via the
 sqlalchemy2-stubs_ package.   The new approach begins at the most fundamental
-element in SQLAlchemy which is the :class:`_schema.Column`, or more
+element in SQLAlchemy which is the :class:`_schema.Column` , or more
 accurately the :class:`.ColumnElement` that underlies all SQL
 expressions that have a type.   This expression-level typing then extends into the area of
 statement construction, statement execution, and result sets, and finally into the ORM
@@ -80,7 +80,7 @@ SQL Expression / Statement / Result Set Typing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section provides background and examples for SQLAlchemy's new
-SQL expression typing approach, which extends from base :class:`.ColumnElement`
+SQL expression typing approach, which extends from base :class:`.ColumnElement` 
 constructs through SQL statements and result sets and into realm of ORM mapping.
 
 Rationale and Overview
@@ -93,23 +93,23 @@ Rationale and Overview
   looks like.
 
 In sqlalchemy2-stubs_, SQL expressions were typed as generics_ that then
-referred to a :class:`.TypeEngine` object such as :class:`.Integer`,
-:class:`.DateTime`, or :class:`.String` as their generic argument
+referred to a :class:`.TypeEngine` object such as :class:` .Integer`,
+:class:`.DateTime` , or :class:`.String` as their generic argument
 (such as ``Column[Integer]``). This was itself a departure from what
 the original Dropbox sqlalchemy-stubs_ package did, where
 :class:`.Column` and its foundational constructs were directly generic on
 Python types, such as ``int``, ``datetime`` and ``str``.   It was hoped
-that since :class:`.Integer` / :class:`.DateTime` / :class:`.String` themselves
+that since :class:`.Integer` / :class:` .DateTime` / :class:`.String` themselves
 are generic against ``int`` / ``datetime`` / ``str``, there would be ways
 to maintain both levels of information and to be able to extract the Python
 type from a column expression via the :class:`.TypeEngine` as an intermediary
-construct.  However, this is not the case, as :pep:`484`
+construct.  However, this is not the case, as :pep:`484` 
 doesn't really have a rich enough feature set for this to be viable,
 lacking capabilities such as
 `higher kinded TypeVars <https://github.com/python/typing/issues/548>`_.
 
 So after a `deep assessment <https://github.com/python/typing/discussions/999>`_
-of the current capabilities of :pep:`484`, SQLAlchemy 2.0 has realized the
+of the current capabilities of :pep:`484` , SQLAlchemy 2.0 has realized the
 original wisdom of sqlalchemy-stubs_ in this area and returned to linking
 column expressions directly to Python types.  This does mean that if one
 has SQL expressions to different subtypes, like ``Column(VARCHAR)`` vs.
@@ -123,17 +123,17 @@ Concretely, this means that an expression like ``Column('id', Integer)``
 is typed as ``Column[int]``.    This allows for a viable pipeline of
 SQLAlchemy construct -> Python datatype to be set up, without the need for
 typing plugins.  Crucially, it allows full interoperability with
-the ORM's paradigm of using :func:`_sql.select` and :class:`_engine.Row`
-constructs that reference ORM mapped class types (e.g. a :class:`_engine.Row`
+the ORM's paradigm of using :func:`_sql.select` and :class:` _engine.Row`
+constructs that reference ORM mapped class types (e.g. a :class:`_engine.Row` 
 containing instances of user-mapped instances, such as the ``User`` and
 ``Address`` examples used in our tutorials).   While Python typing currently has very limited
-support for customization of tuple-types (where :pep:`646`, the first pep that
+support for customization of tuple-types (where :pep:`646` , the first pep that
 attempts to deal with tuple-like objects, was `intentionally limited
 in its functionality <https://mail.python.org/archives/list/typing-sig@python.org/message/G2PNHRR32JMFD3JR7ACA2NDKWTDSEPUG/>`_
 and by itself is not yet viable for arbitrary tuple
 manipulation),
 a fairly decent approach has been devised that allows for basic
-:func:`_sql.select()` -> :class:`_engine.Result` -> :class:`_engine.Row` typing
+:func:`_sql.select()` -> :class:` _engine.Result` -> :class:`_engine.Row` typing
 to function, including for ORM classes, where at the point at which a
 :class:`_engine.Row` object is to be unpacked into individual column entries,
 a small typing-oriented accessor is added that allows the individual Python
@@ -177,7 +177,7 @@ helper):
 
 * Individual SQL expressions assigned to :func:`_sql.select` constructs, as well as any
   row-returning construct, including row-returning DML
-  such as :class:`_sql.Insert` with :meth:`_sql.Insert.returning`, are packed
+  such as :class:`_sql.Insert` with :meth:` _sql.Insert.returning`, are packed
   into a ``Tuple[]`` type which retains the Python type for each element.
 
   ::
@@ -189,9 +189,9 @@ helper):
     ins_stmt = insert(table("t")).returning(str_col, int_col)
 
 * The ``Tuple[]`` type from any row returning construct, when invoked with an
-  ``.execute()`` method, carries through to :class:`_engine.Result`
-  and :class:`_engine.Row`.  In order to unpack the :class:`_engine.Row`
-  object as a tuple, the :meth:`_engine.Row.tuple` or :attr:`_engine.Row.t`
+  ``.execute()`` method, carries through to :class:`_engine.Result` 
+  and :class:`_engine.Row` .  In order to unpack the :class:`_engine.Row` 
+  object as a tuple, the :meth:`_engine.Row.tuple` or :attr:` _engine.Row.t`
   accessor essentially casts the :class:`_engine.Row` into the corresponding
   ``Tuple[]`` (though remains the same :class:`_engine.Row` object at runtime).
 
@@ -219,7 +219,7 @@ helper):
             intval
 
 * Scalar values for single-column statements do the right thing with
-  methods like :meth:`_engine.Connection.scalar`, :meth:`_engine.Result.scalars`,
+  methods like :meth:`_engine.Connection.scalar` , :meth:`_engine.Result.scalars` ,
   etc.
 
   ::
@@ -230,7 +230,7 @@ helper):
 * The above support for row-returning constructs works the best with
   ORM mapped classes, as a mapped class can list out specific types
   for its members.  The example below sets up a class using
-  :ref:`new type-aware syntaxes <whatsnew_20_orm_declarative_typing>`,
+  :ref:`new type-aware syntaxes <whatsnew_20_orm_declarative_typing>` ,
   described in the following section::
 
       from sqlalchemy.orm import DeclarativeBase
@@ -303,10 +303,10 @@ helper):
           result = session.execute(stmt)
 
 * Core Table does not yet have a decent way to maintain typing of
-  :class:`_schema.Column` objects when accessing them via the :attr:`.Table.c` accessor.
+  :class:`_schema.Column` objects when accessing them via the :attr:` .Table.c` accessor.
 
   Since :class:`.Table` is set up as an instance of a class, and the
-  :attr:`.Table.c` accessor typically accesses :class:`.Column` objects
+  :attr:`.Table.c` accessor typically accesses :class:` .Column` objects
   dynamically by name, there's not yet an established typing approach for this; some
   alternative syntax would be needed.
 
@@ -367,7 +367,7 @@ ORM Declarative Models
 ~~~~~~~~~~~~~~~~~~~~~~
 
 SQLAlchemy 1.4 introduced the first SQLAlchemy-native ORM typing support
-using a combination of sqlalchemy2-stubs_ and the :ref:`Mypy Plugin <mypy_toplevel>`.
+using a combination of sqlalchemy2-stubs_ and the :ref:`Mypy Plugin <mypy_toplevel>` .
 In SQLAlchemy 2.0, the Mypy plugin **remains available, and has been updated
 to work with SQLAlchemy 2.0's typing system**.  However, it should now be
 considered **deprecated**, as applications now have a straightforward path to adopting the
@@ -420,7 +420,7 @@ fully. The following steps detail a typical transition and then continue
 on to illustrate some more options.
 
 
-Step one - :func:`_orm.declarative_base` is superseded by :class:`_orm.DeclarativeBase`.
+Step one - :func:`_orm.declarative_base` is superseded by :class:` _orm.DeclarativeBase`.
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 One observed limitation in Python typing is that there seems to be
@@ -436,11 +436,11 @@ with using the :class:`_orm.DeclarativeBase` class, which produces the same
     class Base(DeclarativeBase):
         pass
 
-Step two - replace Declarative use of :class:`_schema.Column` with :func:`_orm.mapped_column`
+Step two - replace Declarative use of :class:`_schema.Column` with :func:` _orm.mapped_column`
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 The :func:`_orm.mapped_column` is an ORM-typing aware construct that can
-be swapped directly for the use of :class:`_schema.Column`.  Given a
+be swapped directly for the use of :class:`_schema.Column` .  Given a
 1.x style mapping as::
 
     from sqlalchemy import Column
@@ -469,7 +469,7 @@ be swapped directly for the use of :class:`_schema.Column`.  Given a
         user_id = Column(ForeignKey("user_account.id"), nullable=False)
         user = relationship("User", back_populates="addresses")
 
-We replace :class:`_schema.Column` with :func:`_orm.mapped_column`; no
+We replace :class:`_schema.Column` with :func:` _orm.mapped_column`; no
 arguments need to change::
 
     from sqlalchemy.orm import DeclarativeBase
@@ -509,7 +509,7 @@ set up for all attributes and may be used in queries as well as for
 instance-level manipulation, all of which will **pass mypy --strict mode** with no
 plugins.
 
-Step three - apply exact Python types as needed using :class:`_orm.Mapped`.
+Step three - apply exact Python types as needed using :class:`_orm.Mapped` .
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 This can be done for all attributes for which exact typing is desired;
@@ -550,7 +550,7 @@ be combined with subsequent steps to update mappings more directly::
         user: Mapped["User"] = relationship("User", back_populates="addresses")
 
 At this point, our ORM mapping is fully typed and will produce exact-typed
-:func:`_sql.select`, :class:`_orm.Query` and :class:`_engine.Result`
+:func:`_sql.select` , :class:`_orm.Query` and :class:` _engine.Result`
 constructs.   We now can proceed to pare down redundancy in the mapping
 declaration.
 
@@ -605,11 +605,11 @@ oriented configuration, and also replaces the need for
 :class:`_orm.declared_attr` decorated functions in most cases.
 
 First, the Declarative mapping allows the mapping of Python type to
-SQL type, such as ``str`` to :class:`_types.String`, to be customized
-using :paramref:`_orm.registry.type_annotation_map`.   Using :pep:`593`
+SQL type, such as ``str`` to :class:`_types.String` , to be customized
+using :paramref:`_orm.registry.type_annotation_map` .   Using :pep:`593` 
 ``Annotated`` allows us to create variants of a particular Python type so that
 the same type, such as ``str``, may be used which each provide variants
-of :class:`_types.String`, as below where use of an ``Annotated`` ``str`` called
+of :class:`_types.String` , as below where use of an ``Annotated`` ``str`` called
 ``str50`` will indicate ``String(50)``::
 
     from typing_extensions import Annotated
@@ -630,8 +630,8 @@ Second, Declarative will extract full
 ``Annotated[]`` is used, by passing a :func:`_orm.mapped_column` construct
 as any argument to the ``Annotated[]`` construct (credit to `@adriangb01 <https://twitter.com/adriangb01/status/1532841383647657988>`_
 for illustrating this idea).   This capability may be extended in future releases
-to also include :func:`_orm.relationship`, :func:`_orm.composite` and other
-constructs, but currently is limited to :func:`_orm.mapped_column`.  The
+to also include :func:`_orm.relationship` , :func:`_orm.composite` and other
+constructs, but currently is limited to :func:`_orm.mapped_column` .  The
 example below adds additional ``Annotated`` types in addition to our
 ``str50`` example to illustrate this feature::
 
@@ -701,7 +701,7 @@ Typing is supported from step 3 onwards
 With the above examples, any example from "step 3" on forward will include
 that the attributes
 of the model are typed
-and will populate through to :func:`_sql.select`, :class:`_orm.Query`,
+and will populate through to :func:`_sql.select` , :class:`_orm.Query` ,
 and :class:`_engine.Row` objects::
 
     # (variable) stmt: Select[Tuple[int, str]]
@@ -731,7 +731,7 @@ Using Legacy Mypy-Typed Models
 SQLAlchemy applications that use the :ref:`Mypy plugin <mypy_toplevel>` with
 explicit annotations that don't use :class:`_orm.Mapped` in their annotations
 are subject to errors under the new system, as such annotations are flagged as
-errors when using constructs such as :func:`_orm.relationship`.
+errors when using constructs such as :func:`_orm.relationship` .
 
 The section :ref:`migration_20_step_six` illustrates how to temporarily
 disable these errors from being raised for a legacy ORM model that uses
@@ -739,7 +739,7 @@ explicit annotations.
 
 .. seealso::
 
-    :ref:`migration_20_step_six`
+    :ref:`migration_20_step_six` 
 
 
 .. _whatsnew_20_dataclasses:
@@ -750,7 +750,7 @@ Native Support for Dataclasses Mapped as ORM Models
 The new ORM Declarative features introduced above at
 :ref:`whatsnew_20_orm_declarative_typing` introduced the
 new :func:`_orm.mapped_column` construct and illustrated type-centric
-mapping with optional use of :pep:`593` ``Annotated``.  We can take
+mapping with optional use of :pep:`593` ` `Annotated``.  We can take
 the mapping one step further by integrating this with Python
 dataclasses_.   This new feature is made possible via :pep:`681` which
 allows for type checkers to recognize classes that are dataclass compatible,
@@ -773,9 +773,9 @@ makes use of the existing dataclass feature introduced in SQLAlchemy 1.4 at
 configuration style, which is also more correctly typed than was possible
 with the previous approach.
 
-To support dataclasses in compliance with :pep:`681`, ORM constructs like
-:func:`_orm.mapped_column` and :func:`_orm.relationship` accept additional
-:pep:`681` arguments ``init``, ``default``, and ``default_factory`` which
+To support dataclasses in compliance with :pep:`681` , ORM constructs like
+:func:`_orm.mapped_column` and :func:` _orm.relationship` accept additional
+:pep:`681` arguments ` `init``, ``default``, and ``default_factory`` which
 are passed along to the dataclass creation process.  These
 arguments currently must be present in an explicit directive on the right side,
 just as they would be used with ``dataclasses.field()``; they currently
@@ -783,14 +783,14 @@ can't be local to an ``Annotated`` construct on the left side.   To support
 the convenient use of ``Annotated`` while still supporting dataclass
 configuration, :func:`_orm.mapped_column` can merge
 a minimal set of right-hand arguments with that of an existing
-:func:`_orm.mapped_column` construct located on the left side within an ``Annotated``
+:func:`_orm.mapped_column` construct located on the left side within an ` `Annotated``
 construct, so that most of the succinctness is maintained, as will be seen
 below.
 
 To enable dataclasses using class inheritance we make
 use of the :class:`.MappedAsDataclass` mixin, either directly on each class, or
 on the ``Base`` class, as illustrated below where we further modify the
-example mapping from "Step 5" of :ref:`whatsnew_20_orm_declarative_typing`::
+example mapping from "Step 5" of :ref:`whatsnew_20_orm_declarative_typing` ::
 
     from typing_extensions import Annotated
     from typing import List
@@ -845,7 +845,7 @@ positional arguments as configured::
 
 .. seealso::
 
-    :ref:`orm_declarative_native_dataclasses`
+    :ref:`orm_declarative_native_dataclasses` 
 
 
 .. _change_6047:
@@ -921,12 +921,12 @@ extremely slow.
 Operations that are improved by this feature include:
 
 * unit of work flushes for objects added to the session using
-  :meth:`_orm.Session.add` and :meth:`_orm.Session.add_all`.
+  :meth:`_orm.Session.add` and :meth:` _orm.Session.add_all`.
 * The new :ref:`ORM Bulk Insert Statement <orm_queryguide_bulk_insert>` feature,
   which improves upon the experimental version of this feature first introduced
   in SQLAlchemy 1.4.
 * the :class:`_orm.Session` "bulk" operations described at
-  :ref:`bulk_operations`, which are superseded by the above mentioned
+  :ref:`bulk_operations` , which are superseded by the above mentioned
   ORM Bulk Insert feature.
 
 To get a sense of the scale of the operation, below are performance
@@ -1003,13 +1003,13 @@ Summary of Changes
 The following bullets list the individual changes made within 2.0 in order to
 get all drivers to this state:
 
-* RETURNING implemented for SQLite - :ticket:`6195`
-* RETURNING implemented for MariaDB - :ticket:`7011`
-* Fix multi-row RETURNING for Oracle - :ticket:`6245`
+* RETURNING implemented for SQLite - :ticket:`6195` 
+* RETURNING implemented for MariaDB - :ticket:`7011` 
+* Fix multi-row RETURNING for Oracle - :ticket:`6245` 
 * make insert() executemany() support RETURNING for as many dialects as
-  possible, usually with VALUES() - :ticket:`6047`
+  possible, usually with VALUES() - :ticket:`6047` 
 * Emit a warning when RETURNING w/ executemany is used for non-supporting
-  backend (currently no RETURNING backend has this limitation) - :ticket:`7907`
+  backend (currently no RETURNING backend has this limitation) - :ticket:`7907` 
 * The ORM :paramref:`_orm.Mapper.eager_defaults` parameter now defaults to a
   a new setting ``"auto"``, which will enable "eager defaults" automatically
   for INSERT statements, when the backend in use supports RETURNING with
@@ -1027,28 +1027,28 @@ ORM-enabled Insert, Upsert, Update and Delete Statements, with ORM RETURNING
 -----------------------------------------------------------------------------
 
 SQLAlchemy 1.4 ported the features of the legacy :class:`_orm.Query` object to
-:term:`2.0 style` execution, which meant that the :class:`.Select` construct
+:term:`2.0 style` execution, which meant that the :class:` .Select` construct
 could be passed to :meth:`_orm.Session.execute` to deliver ORM results. Support
-was also added for :class:`.Update` and :class:`.Delete` to be passed to
-:meth:`_orm.Session.execute`, to the degree that they could provide
-implementations of :meth:`_orm.Query.update` and :meth:`_orm.Query.delete`.
+was also added for :class:`.Update` and :class:` .Delete` to be passed to
+:meth:`_orm.Session.execute` , to the degree that they could provide
+implementations of :meth:`_orm.Query.update` and :meth:` _orm.Query.delete`.
 
 The major missing element has been support for the :class:`_dml.Insert` construct.
 The 1.4 documentation addressed this with some recipes for "inserts" and "upserts"
 with use of :meth:`.Select.from_statement` to integrate RETURNING
 into an ORM context.  2.0 now fully closes the gap by integrating direct support for
-:class:`_dml.Insert` as an enhanced version of the :meth:`_orm.Session.bulk_insert_mappings`
+:class:`_dml.Insert` as an enhanced version of the :meth:` _orm.Session.bulk_insert_mappings`
 method, along with full ORM RETURNING support for all DML structures.
 
 Bulk Insert with RETURNING
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:class:`_dml.Insert` can be passed to :meth:`_orm.Session.execute`, with
-or without :meth:`_dml.Insert.returning`, which when passed with a
+:class:`_dml.Insert` can be passed to :meth:` _orm.Session.execute`, with
+or without :meth:`_dml.Insert.returning` , which when passed with a
 separate parameter list will invoke the same process as was previously
 implemented by
-:meth:`_orm.Session.bulk_insert_mappings`, with additional enhancements.  This will optimize the
-batching of rows making use of the new :ref:`fast insertmany <change_6047>`
+:meth:`_orm.Session.bulk_insert_mappings` , with additional enhancements.  This will optimize the
+batching of rows making use of the new :ref:`fast insertmany <change_6047>` 
 feature, while also adding support for
 heterogenous parameter sets and multiple-table mappings like joined table
 inheritance::
@@ -1075,17 +1075,17 @@ a full result set from multiple statement invocations.
 
 .. seealso::
 
-    :ref:`orm_queryguide_bulk_insert`
+    :ref:`orm_queryguide_bulk_insert` 
 
 Bulk UPDATE
 ~~~~~~~~~~~
 
-In a similar manner as that of :class:`_dml.Insert`, passing the
+In a similar manner as that of :class:`_dml.Insert` , passing the
 :class:`_dml.Update` construct along with a parameter list that includes
 primary key values to :meth:`_orm.Session.execute` will invoke the same process
-as previously supported by the :meth:`_orm.Session.bulk_update_mappings`
+as previously supported by the :meth:`_orm.Session.bulk_update_mappings` 
 method.  This feature does not however support RETURNING, as it uses
-a SQL UPDATE statement that is invoked using DBAPI :term:`executemany`::
+a SQL UPDATE statement that is invoked using DBAPI :term:`executemany` ::
 
     >>> from sqlalchemy import update
     >>> session.execute(
@@ -1098,12 +1098,12 @@ a SQL UPDATE statement that is invoked using DBAPI :term:`executemany`::
 
 .. seealso::
 
-    :ref:`orm_queryguide_bulk_update`
+    :ref:`orm_queryguide_bulk_update` 
 
 INSERT / upsert ... VALUES ... RETURNING
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using :class:`_dml.Insert` with :meth:`_dml.Insert.values`, the set of
+When using :class:`_dml.Insert` with :meth:` _dml.Insert.values`, the set of
 parameters may include SQL expressions. Additionally, upsert variants
 such as those for SQLite, PostgreSQL and MariaDB are also supported.
 These statements may now include :meth:`_dml.Insert.returning` clauses
@@ -1132,16 +1132,16 @@ with column expressions or full ORM entities::
 
 .. seealso::
 
-    :ref:`orm_queryguide_insert_values`
+    :ref:`orm_queryguide_insert_values` 
 
-    :ref:`orm_queryguide_upsert`
+    :ref:`orm_queryguide_upsert` 
 
 ORM UPDATE / DELETE with WHERE ... RETURNING
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SQLAlchemy 1.4 also had some modest support for the RETURNING feature to be
-used with the :func:`_dml.update` and :func:`_dml.delete` constructs, when
-used with :meth:`_orm.Session.execute`.  This support has now been upgraded
+used with the :func:`_dml.update` and :func:` _dml.delete` constructs, when
+used with :meth:`_orm.Session.execute` .  This support has now been upgraded
 to be fully native, including that the ``fetch`` synchronization strategy
 may also proceed whether or not explicit use of RETURNING is present::
 
@@ -1158,14 +1158,14 @@ may also proceed whether or not explicit use of RETURNING is present::
 
 .. seealso::
 
-    :ref:`orm_queryguide_update_delete_where`
+    :ref:`orm_queryguide_update_delete_where` 
 
-    :ref:`orm_queryguide_update_delete_where_returning`
+    :ref:`orm_queryguide_update_delete_where_returning` 
 
 Improved ``synchronize_session`` behavior for ORM UPDATE / DELETE
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The default strategy for :ref:`synchronize_session <orm_queryguide_update_delete_sync>`
+The default strategy for :ref:`synchronize_session <orm_queryguide_update_delete_sync>` 
 is now a new value ``"auto"``.  This strategy will attempt to use the
 ``"evaluate"`` strategy and then automatically fall back to the ``"fetch"``
 strategy.   For all backends other than MySQL / MariaDB, ``"fetch"`` uses
@@ -1175,7 +1175,7 @@ same statement, so is generally more efficient than previous versions
 
 .. seealso::
 
-    :ref:`orm_queryguide_update_delete_sync`
+    :ref:`orm_queryguide_update_delete_sync` 
 
 Summary of Changes
 ~~~~~~~~~~~~~~~~~~
@@ -1183,11 +1183,11 @@ Summary of Changes
 Listed tickets for new ORM DML with RETURNING features:
 
 * convert ``insert()`` at ORM level to interpret ``values()`` in an ORM
-  context - :ticket:`7864`
+  context - :ticket:`7864` 
 * evaluate feasibility of dml.returning(Entity) to deliver ORM expressions,
-  automatically apply select().from_statement equiv - :ticket:`7865`
+  automatically apply select().from_statement equiv - :ticket:`7865` 
 * given ORM insert, try to carry the bulk methods along, re: inheritance -
-  :ticket:`8360`
+  :ticket:`8360` 
 
 .. _change_7123:
 
@@ -1195,7 +1195,7 @@ New "Write Only" relationship strategy supersedes "dynamic"
 -----------------------------------------------------------
 
 The ``lazy="dynamic"`` loader strategy becomes legacy, in that it is hardcoded
-to make use of legacy :class:`_orm.Query`. This loader strategy is both not
+to make use of legacy :class:`_orm.Query` . This loader strategy is both not
 compatible with asyncio, and additionally has many behaviors that implicitly
 iterate its contents, which defeat the original purpose of the "dynamic"
 relationship as being for very large collections that should not be implicitly
@@ -1203,8 +1203,8 @@ fully loaded into memory at any time.
 
 The "dynamic" strategy is now superseded by a new strategy
 ``lazy="write_only"``.  Configuration of "write only" may be achieved using
-the :paramref:`_orm.relationship.lazy` parameter of :func:`_orm.relationship`,
-or when using :ref:`type annotated mappings <whatsnew_20_orm_declarative_typing>`,
+the :paramref:`_orm.relationship.lazy` parameter of :func:` _orm.relationship`,
+or when using :ref:`type annotated mappings <whatsnew_20_orm_declarative_typing>` ,
 indicating the :class:`.WriteOnlyMapped` annotation as the mapping style::
 
     from sqlalchemy.orm import WriteOnlyMapped
@@ -1237,7 +1237,7 @@ indicating the :class:`.WriteOnlyMapped` annotation as the mapping style::
 
 The write-only-mapped collection resembles ``lazy="dynamic"`` in that
 the collection may be assigned up front, and also has methods such as
-:meth:`_orm.WriteOnlyCollection.add` and :meth:`_orm.WriteOnlyCollection.remove`
+:meth:`_orm.WriteOnlyCollection.add` and :meth:` _orm.WriteOnlyCollection.remove`
 to modify the collection on an individual item basis::
 
     new_account = Account(
@@ -1268,11 +1268,11 @@ using :term:`2.0 style` to load the desired objects in an explicit way::
 The :class:`_orm.WriteOnlyCollection` also integrates with the new
 :ref:`ORM bulk dml <change_8360>` features, including support for bulk INSERT
 and UPDATE/DELETE with WHERE criteria, all including RETURNING support as
-well.   See the complete documentation at :ref:`write_only_relationship`.
+well.   See the complete documentation at :ref:`write_only_relationship` .
 
 .. seealso::
 
-    :ref:`write_only_relationship`
+    :ref:`write_only_relationship` 
 
 New pep-484 / type annotated mapping support for Dynamic Relationships
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1281,7 +1281,7 @@ Even though "dynamic" relationships are legacy in 2.0, as these patterns
 are expected to have a long lifespan,
 :ref:`type annotated mapping <whatsnew_20_orm_declarative_typing>` support
 is now added for "dynamic" relationships in the same way that its available
-for the new ``lazy="write_only"`` approach, using the :class:`_orm.DynamicMapped`
+for the new ``lazy="write_only"`` approach, using the :class:`_orm.DynamicMapped` 
 annotation::
 
     from sqlalchemy.orm import DynamicMapped
@@ -1320,10 +1320,10 @@ as ``AccountTransaction``.
 
 .. seealso::
 
-    :ref:`dynamic_relationship`
+    :ref:`dynamic_relationship` 
 
 
-:ticket:`7123`
+:ticket:`7123` 
 
 
 .. _change_7311:
@@ -1335,7 +1335,7 @@ The source distribution now includes a ``pyproject.toml`` file to allow for
 complete :pep:`517` support. In particular this allows a local source build
 using ``pip`` to automatically install the Cython_ optional dependency.
 
-:ticket:`7311`
+:ticket:`7311` 
 
 .. _change_7256:
 
@@ -1377,10 +1377,10 @@ of the Cython requirement.
 
 .. seealso::
 
-    :ref:`c_extensions`
+    :ref:`c_extensions` 
 
 
-:ticket:`7256`
+:ticket:`7256` 
 
 
 .. _change_4379:
@@ -1394,7 +1394,7 @@ allow high performance bulk reflection of thousands of tables at once for
 participating dialects. Currently, the **PostgreSQL** and **Oracle** dialects
 participate in the new architecture, where the PostgreSQL dialect can now
 reflect a large series of :class:`.Table` objects nearly three times faster,
-and the Oracle dialect can now reflect a large series of :class:`.Table`
+and the Oracle dialect can now reflect a large series of :class:`.Table` 
 objects ten times faster.
 
 The rearchitecture applies most directly to dialects that make use of SELECT
@@ -1409,7 +1409,7 @@ require no changes to third party dialects to retain compatibility; third party
 dialects can also opt into the new system by implementing batched queries for
 schema reflection.
 
-Along with this change, the API and behavior of the :class:`.Inspector`
+Along with this change, the API and behavior of the :class:`.Inspector` 
 object has been improved and enhanced with more consistent cross-dialect
 behaviors as well as new methods and new performance features.
 
@@ -1420,7 +1420,7 @@ The source distribution includes a script
 ``test/perf/many_table_reflection.py`` which benches both existing reflection
 features as well as new ones. A limited set of its tests may be run on older
 versions of SQLAlchemy, where here we use it to illustrate differences in
-performance to invoke ``metadata.reflect()`` to reflect 250 :class:`.Table`
+performance to invoke ``metadata.reflect()`` to reflect 250 :class:`.Table` 
 objects at once over a local network connection:
 
 ===========================  ==================================  ====================    ====================
@@ -1436,17 +1436,17 @@ Behavioral Changes for ``Inspector()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For SQLAlchemy-included dialects for SQLite, PostgreSQL, MySQL/MariaDB,
-Oracle, and SQL Server, the :meth:`.Inspector.has_table`,
-:meth:`.Inspector.has_sequence`, :meth:`.Inspector.has_index`,
+Oracle, and SQL Server, the :meth:`.Inspector.has_table` ,
+:meth:`.Inspector.has_sequence` , :meth:`.Inspector.has_index` ,
 :meth:`.Inspector.get_table_names` and
 :meth:`.Inspector.get_sequence_names` now all behave consistently in terms
 of caching: they all fully cache their result after being called the first
 time for a particular :class:`.Inspector` object. Programs that create or
-drop tables/sequences while calling upon the same :class:`.Inspector`
+drop tables/sequences while calling upon the same :class:`.Inspector` 
 object will not receive updated status after the state of the database has
 changed. A call to :meth:`.Inspector.clear_cache` or a new
 :class:`.Inspector` should be used when DDL changes are to be executed.
-Previously, the :meth:`.Inspector.has_table`,
+Previously, the :meth:`.Inspector.has_table` ,
 :meth:`.Inspector.has_sequence` methods did not implement caching nor did
 the :class:`.Inspector` support caching for these methods, while the
 :meth:`.Inspector.get_table_names` and
@@ -1477,7 +1477,7 @@ New Methods and Improvements for ``Inspector()``
   :meth:`.Inspector.get_materialized_view_names` methods.
 
 
-:ticket:`4379`
+:ticket:`4379` 
 
 
 .. _ticket_6842:
@@ -1494,14 +1494,14 @@ supports concepts such as prepared statements as well as Python asyncio.
 
 ``psycopg`` is the first DBAPI supported by SQLAlchemy which provides
 both a pep-249 synchronous API as well as an asyncio driver.  The same
-``psycopg`` database URL may be used with the :func:`_sa.create_engine`
+``psycopg`` database URL may be used with the :func:`_sa.create_engine` 
 and :func:`_asyncio.create_async_engine` engine-creation functions, and the
 corresponding sync or asyncio version of the dialect will be selected
 automatically.
 
 .. seealso::
 
-    :ref:`postgresql_psycopg`
+    :ref:`postgresql_psycopg` 
 
 
 .. _ticket_8054:
@@ -1514,17 +1514,17 @@ DBAPI, which is the renamed, new major release of the popular cx_Oracle driver.
 
 .. seealso::
 
-    :ref:`oracledb`
+    :ref:`oracledb` 
 
 .. _ticket_7631:
 
 New Conditional DDL for Constraints and Indexes
 -----------------------------------------------
 
-A new method :meth:`_schema.Constraint.ddl_if` and :meth:`_schema.Index.ddl_if`
-allows constructs such as :class:`_schema.CheckConstraint`, :class:`_schema.UniqueConstraint`
+A new method :meth:`_schema.Constraint.ddl_if` and :meth:` _schema.Index.ddl_if`
+allows constructs such as :class:`_schema.CheckConstraint` , :class:`_schema.UniqueConstraint` 
 and :class:`_schema.Index` to be rendered conditionally for a given
-:class:`_schema.Table`, based on the same kinds of criteria that are accepted
+:class:`_schema.Table` , based on the same kinds of criteria that are accepted
 by the :meth:`_schema.DDLElement.execute_if` method.  In the example below,
 the CHECK constraint and index will only be produced against a PostgreSQL
 backend::
@@ -1551,9 +1551,9 @@ backend::
 
 .. seealso::
 
-    :ref:`schema_ddl_ddl_if`
+    :ref:`schema_ddl_ddl_if` 
 
-:ticket:`7631`
+:ticket:`7631` 
 
 .. _change_5052:
 
@@ -1592,7 +1592,7 @@ Previously, such literal rendering only worked when stringifying statements
 without any dialect given; when attempting to render with a dialect-specific
 type, a ``NotImplementedError`` would be raised, up until
 SQLAlchemy 1.4.45 where this became a :class:`.CompileError` (part of
-:ticket:`8800`).
+:ticket:`8800` ).
 
 The default rendering is modified ISO-8601 rendering (i.e. ISO-8601 with the T
 converted to a space) when using ``literal_binds`` with the SQL compilers
@@ -1603,7 +1603,7 @@ rendering for date values.
 
 
 
-:ticket:`5052`
+:ticket:`5052` 
 
 .. _change_8710:
 
@@ -1623,7 +1623,7 @@ exceptions have occurred::
             for row in result:
                 print(f"{row}")
 
-With asyncio use, the :class:`.AsyncResult` and :class:`.AsyncConnection` have
+With asyncio use, the :class:`.AsyncResult` and :class:` .AsyncConnection` have
 been altered to provide for optional async context manager use, as in::
 
     async with async_engine.connect() as conn:
@@ -1633,7 +1633,7 @@ been altered to provide for optional async context manager use, as in::
             for row in result:
                 print(f"{row}")
 
-:ticket:`8710`
+:ticket:`8710` 
 
 Behavioral Changes
 ------------------
@@ -1650,7 +1650,7 @@ New transaction join modes for ``Session``
 
 The behavior of "joining an external transaction into a Session" has been
 revised and improved, allowing explicit control over how the
-:class:`_orm.Session` will accommodate an incoming :class:`_engine.Connection`
+:class:`_orm.Session` will accommodate an incoming :class:` _engine.Connection`
 that already has a transaction and possibly a savepoint already established.
 The new parameter :paramref:`_orm.Session.join_transaction_mode` includes a
 series of option values which can accommodate the existing transaction in
@@ -1661,7 +1661,7 @@ circumstances, allowing test suites to rollback all changes that take place
 within tests.
 
 The primary improvement this allows is that the recipe documented at
-:ref:`session_external_transaction`, which also changed from SQLAlchemy 1.3
+:ref:`session_external_transaction` , which also changed from SQLAlchemy 1.3
 to 1.4, is now simplified to no longer require explicit use of an event
 handler or any mention of an explicit savepoint; by using
 ``join_transaction_mode="create_savepoint"``, the :class:`_orm.Session` will
@@ -1669,7 +1669,7 @@ never affect the state of an incoming transaction, and will instead create a
 savepoint (i.e. "nested transaction") as its root transaction.
 
 The following illustrates part of the example given at
-:ref:`session_external_transaction`; see that section for a full example::
+:ref:`session_external_transaction` ; see that section for a full example::
 
     class SomeTest(TestCase):
         def setUp(self):
@@ -1694,7 +1694,7 @@ The following illustrates part of the example given at
             # return connection to the Engine
             self.connection.close()
 
-The default mode selected for :paramref:`_orm.Session.join_transaction_mode`
+The default mode selected for :paramref:`_orm.Session.join_transaction_mode` 
 is ``"conditional_savepoint"``, which uses ``"create_savepoint"`` behavior
 if the given :class:`_engine.Connection` is itself already on a savepoint.
 If the given :class:`_engine.Connection` is in a transaction but not a
@@ -1728,11 +1728,11 @@ in SQLAlchemy 1.4, and is now restored in SQLAlchemy 2.0::
     nested.rollback()
     trans.rollback()
 
-Where above, a :class:`_orm.Session` is joined to a :class:`_engine.Connection`
+Where above, a :class:`_orm.Session` is joined to a :class:` _engine.Connection`
 that has a savepoint started on it; the state of these two units remains
 unchanged after the :class:`_orm.Session` has worked with the transaction. In
 SQLAlchemy 1.3, the above case worked because the :class:`_orm.Session` would
-begin a "subtransaction" upon the :class:`_engine.Connection`, which would
+begin a "subtransaction" upon the :class:`_engine.Connection` , which would
 allow the outer savepoint / transaction to remain unaffected for simple cases
 as above. Since subtransactions were deprecated in 1.4 and are now removed in
 2.0, this behavior was no longer available. The new default behavior improves
@@ -1746,7 +1746,7 @@ a :class:`_orm.Session` should however select a
 :paramref:`_orm.Session.join_transaction_mode` explicitly, so that the desired
 behavior is explicitly defined.
 
-:ticket:`9015`
+:ticket:`9015` 
 
 
 .. _Cython: https://cython.org/
@@ -1785,7 +1785,7 @@ as ``False``::
     >>> e2 = create_engine(url_string)
 
 
-:ticket:`8567`
+:ticket:`8567` 
 
 .. _change_8925:
 
@@ -1796,7 +1796,7 @@ Stricter rules are in place for appending of :class:`.Column` objects to
 :class:`.Table` objects, both moving some previous deprecation warnings to
 exceptions, and preventing some previous scenarios that would cause
 duplicate columns to appear in tables, when
-:paramref:`.Table.extend_existing` were set to ``True``, for both
+:paramref:`.Table.extend_existing` were set to ` `True``, for both
 programmatic :class:`.Table` construction as well as during reflection
 operations.
 
@@ -1804,19 +1804,19 @@ operations.
   :class:`.Column` objects with the same name, regardless of what .key they
   have.  An edge case where this was still possible was identified and fixed.
 
-* Adding a :class:`.Column` to a :class:`.Table` that has the same name or
+* Adding a :class:`.Column` to a :class:` .Table` that has the same name or
   key as an existing :class:`.Column` will always raise
-  :class:`.DuplicateColumnError` (a new subclass of :class:`.ArgumentError` in
+  :class:`.DuplicateColumnError` (a new subclass of :class:` .ArgumentError` in
   2.0.0b4) unless additional parameters are present;
   :paramref:`.Table.append_column.replace_existing` for
-  :meth:`.Table.append_column`, and :paramref:`.Table.extend_existing` for
+  :meth:`.Table.append_column` , and :paramref:`.Table.extend_existing` for
   construction of a same-named :class:`.Table` as an existing one, with or
   without reflection being used. Previously, there was a deprecation warning in
   place for this scenario.
 
 * A warning is now emitted if a :class:`.Table` is created, that does
-  include :paramref:`.Table.extend_existing`, where an incoming
-  :class:`.Column` that has no separate :attr:`.Column.key` would fully
+  include :paramref:`.Table.extend_existing` , where an incoming
+  :class:`.Column` that has no separate :attr:` .Column.key` would fully
   replace an existing :class:`.Column` that does have a key, which suggests
   the operation is not what the user intended.  This can happen particularly
   during a secondary reflection step, such as ``metadata.reflect(extend_existing=True)``.
@@ -1828,7 +1828,7 @@ operations.
   when this occurs.
 
 
-:ticket:`8925`
+:ticket:`8925` 
 
 .. _change_9297:
 
@@ -1910,7 +1910,7 @@ This now produces CREATE TABLE output as:
     )
 
 To solve this issue, SQLAlchemy 2.0.4 introduces a new parameter on
-:func:`_orm.mapped_column` called :paramref:`_orm.mapped_column.sort_order`,
+:func:`_orm.mapped_column` called :paramref:` _orm.mapped_column.sort_order`,
 which is an integer value, defaulting to ``0``,
 that can be set to a positive or negative value so that columns are placed
 before or after other columns, as in the example below::
@@ -1973,7 +1973,7 @@ version 1.4 decided to default the DDL to emit a start value of 1, if
 
 This change has introduced other complexities, including that when
 the :paramref:`.Sequence.min_value` parameter is included, this default of
-``1`` should in fact default to what :paramref:`.Sequence.min_value`
+``1`` should in fact default to what :paramref:`.Sequence.min_value` 
 states, else a min_value that's below the start_value may be seen as
 contradictory.     As looking at this issue started to become a bit of a
 rabbit hole of other various edge cases, we decided to instead revert this
@@ -1994,12 +1994,12 @@ Therefore, to ensure that the start value is 1 on all backends,
     {printsql}CREATE SEQUENCE my_seq START WITH 1
 
 Beyond all of that, for autogeneration of integer primary keys on modern
-backends including PostgreSQL, Oracle, SQL Server, the :class:`.Identity`
+backends including PostgreSQL, Oracle, SQL Server, the :class:`.Identity` 
 construct should be preferred, which also works the same way in 1.4 and 2.0
 with no changes in behavior.
 
 
-:ticket:`7211`
+:ticket:`7211` 
 
 
 .. _change_6980:
@@ -2038,7 +2038,7 @@ In addition, as illustrated above, multiple dialect names may be passed for
 single type, in particular this is helpful for the pair of ``"mysql"`` and
 ``"mariadb"`` dialects which are considered separately as of SQLAlchemy 1.4.
 
-:ticket:`6980`
+:ticket:`6980` 
 
 
 .. _change_4926:
@@ -2095,7 +2095,7 @@ SQLAlchemy version, the floor function::
 The above form would be needed on any SQLAlchemy version prior to 2.0
 in order to provide backend-agnostic floor division.
 
-:ticket:`4926`
+:ticket:`4926` 
 
 .. _change_7433:
 
@@ -2113,10 +2113,10 @@ completely cryptic. This error occurs when a thread calls
 :meth:`_orm.Session.commit` which internally invokes the
 :meth:`_orm.SessionTransaction.close` method to end the transactional context,
 at the same time that another thread is in progress running a query
-as from :meth:`_orm.Session.execute`.  Within :meth:`_orm.Session.execute`,
+as from :meth:`_orm.Session.execute` .  Within :meth:`_orm.Session.execute` ,
 the internal method that acquires a database connection for the current
 transaction first begins by asserting that the session is "active", but
-after this assertion passes, the concurrent call to :meth:`_orm.Session.close`
+after this assertion passes, the concurrent call to :meth:`_orm.Session.close` 
 interferes with this state which leads to the undefined condition above.
 
 The change applies guards to all state-changing methods surrounding the
@@ -2125,7 +2125,7 @@ The change applies guards to all state-changing methods surrounding the
 the state to one that is disallowed for the duration of the already-in-progress
 method that wants to get the current connection to run a database query.
 
-Using the test script illustrated at :ticket:`7433`, the previous
+Using the test script illustrated at :ticket:`7433` , the previous
 error case looks like:
 
 .. sourcecode:: text
@@ -2168,7 +2168,7 @@ asyncio if a particular :class:`_orm.Session` were shared among multiple
 asyncio tasks, as well as when using patching-style concurrency approaches
 such as gevent.
 
-:ticket:`7433`
+:ticket:`7433` 
 
 
 .. _change_7490:
@@ -2179,17 +2179,17 @@ The SQLite dialect uses QueuePool for file-based databases
 The SQLite dialect now defaults to :class:`_pool.QueuePool` when a file
 based database is used. This is set along with setting the
 ``check_same_thread`` parameter to ``False``. It has been observed that the
-previous approach of defaulting to :class:`_pool.NullPool`, which does not
+previous approach of defaulting to :class:`_pool.NullPool` , which does not
 hold onto database connections after they are released, did in fact have a
 measurable negative performance impact. As always, the pool class is
 customizable via the :paramref:`_sa.create_engine.poolclass` parameter.
 
 .. seealso::
 
-    :ref:`pysqlite_threading_pooling`
+    :ref:`pysqlite_threading_pooling` 
 
 
-:ticket:`7490`
+:ticket:`7490` 
 
 .. _change_5465_oracle:
 
@@ -2198,8 +2198,8 @@ New Oracle FLOAT type with binary precision; decimal precision not accepted dire
 
 A new datatype :class:`_oracle.FLOAT` has been added to the Oracle dialect, to
 accompany the addition of :class:`_sqltypes.Double` and database-specific
-:class:`_sqltypes.DOUBLE`, :class:`_sqltypes.DOUBLE_PRECISION` and
-:class:`_sqltypes.REAL` datatypes. Oracle's ``FLOAT`` accepts a so-called
+:class:`_sqltypes.DOUBLE` , :class:`_sqltypes.DOUBLE_PRECISION` and
+:class:`_sqltypes.REAL` datatypes. Oracle's ` `FLOAT`` accepts a so-called
 "binary precision" parameter that per Oracle documentation is roughly a
 standard "precision" value divided by 0.3103::
 
@@ -2239,14 +2239,14 @@ RANGE / MULTIRANGE support has been fully implemented for psycopg2, psycopg3,
 and asyncpg dialects.  The new support uses a new SQLAlchemy-specific
 :class:`_postgresql.Range` object that is agnostic of the different backends
 and does not require the use of backend-specific imports or extension
-steps.  For multirange support, lists of :class:`_postgresql.Range`
+steps.  For multirange support, lists of :class:`_postgresql.Range` 
 objects are used.
 
 Code that used the previous psycopg2-specific types should be modified
-to use :class:`_postgresql.Range`, which presents a compatible interface.
+to use :class:`_postgresql.Range` , which presents a compatible interface.
 
 The :class:`_postgresql.Range` object also features comparison support which
-mirrors that of PostgreSQL.  Implemented so far are :meth:`_postgresql.Range.contains`
+mirrors that of PostgreSQL.  Implemented so far are :meth:`_postgresql.Range.contains` 
 and :meth:`_postgresql.Range.contained_by` methods which work in the same way as
 the PostgreSQL ``@>`` and ``<@``.  Additional operator support may be added
 in future releases.
@@ -2257,10 +2257,10 @@ using the new feature.
 
 .. seealso::
 
-    :ref:`postgresql_ranges`
+    :ref:`postgresql_ranges` 
 
-:ticket:`7156`
-:ticket:`8706`
+:ticket:`7156` 
+:ticket:`8706` 
 
 .. _change_7086:
 
@@ -2275,15 +2275,15 @@ cross-compatible with other backends.
 
 All PostgreSQL search functions and operators are available through use of
 :data:`.func` to generate PostgreSQL-specific functions and
-:meth:`.Operators.bool_op` (a boolean-typed version of :meth:`.Operators.op`)
+:meth:`.Operators.bool_op` (a boolean-typed version of :meth:` .Operators.op`)
 to generate arbitrary operators, in the same manner as they are available
-in previous versions.  See the examples at :ref:`postgresql_match`.
+in previous versions.  See the examples at :ref:`postgresql_match` .
 
 Existing SQLAlchemy projects that make use of PG-specific directives within
-:meth:`.Operators.match` should make use of ``func.to_tsquery()`` directly.
+:meth:`.Operators.match` should make use of ` `func.to_tsquery()`` directly.
 To render SQL in exactly the same form as would be present
-in 1.4, see the version note at :ref:`postgresql_simple_match`.
+in 1.4, see the version note at :ref:`postgresql_simple_match` .
 
 
 
-:ticket:`7086`
+:ticket:`7086` 

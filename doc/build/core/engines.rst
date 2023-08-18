@@ -5,8 +5,8 @@ Engine Configuration
 ====================
 
 The :class:`_engine.Engine` is the starting point for any SQLAlchemy application. It's
-"home base" for the actual database and its :term:`DBAPI`, delivered to the SQLAlchemy
-application through a connection pool and a :class:`.Dialect`, which describes how
+"home base" for the actual database and its :term:`DBAPI` , delivered to the SQLAlchemy
+application through a connection pool and a :class:`.Dialect` , which describes how
 to talk to a specific kind of database/DBAPI combination.
 
 The general structure can be illustrated as follows:
@@ -14,12 +14,12 @@ The general structure can be illustrated as follows:
 .. image:: sqla_engine_arch.png
 
 Where above, an :class:`_engine.Engine` references both a
-:class:`.Dialect` and a :class:`_pool.Pool`,
+:class:`.Dialect` and a :class:` _pool.Pool`,
 which together interpret the DBAPI's module functions as well as the behavior
 of the database.
 
 Creating an engine is just a matter of issuing a single call,
-:func:`_sa.create_engine()`::
+:func:`_sa.create_engine()` ::
 
     from sqlalchemy import create_engine
 
@@ -28,15 +28,15 @@ Creating an engine is just a matter of issuing a single call,
 The above engine creates a :class:`.Dialect` object tailored towards
 PostgreSQL, as well as a :class:`_pool.Pool` object which will establish a DBAPI
 connection at ``localhost:5432`` when a connection request is first received.
-Note that the :class:`_engine.Engine` and its underlying :class:`_pool.Pool` do **not**
-establish the first actual DBAPI connection until the :meth:`_engine.Engine.connect`
+Note that the :class:`_engine.Engine` and its underlying :class:` _pool.Pool` do **not**
+establish the first actual DBAPI connection until the :meth:`_engine.Engine.connect` 
 method is called, or an operation which is dependent on this method such as
-:meth:`_engine.Engine.execute` is invoked. In this way, :class:`_engine.Engine` and
+:meth:`_engine.Engine.execute` is invoked. In this way, :class:` _engine.Engine` and
 :class:`_pool.Pool` can be said to have a *lazy initialization* behavior.
 
-The :class:`_engine.Engine`, once created, can either be used directly to interact with the database,
+The :class:`_engine.Engine` , once created, can either be used directly to interact with the database,
 or can be passed to a :class:`.Session` object to work with the ORM.   This section
-covers the details of configuring an :class:`_engine.Engine`.   The next section, :ref:`connections_toplevel`,
+covers the details of configuring an :class:`_engine.Engine` .   The next section, :ref:`connections_toplevel` ,
 will detail the usage API of the :class:`_engine.Engine` and similar, typically for non-ORM
 applications.
 
@@ -56,7 +56,7 @@ See the section :ref:`dialect_toplevel` for information on the various backends 
 Database URLs
 =============
 
-The :func:`_sa.create_engine` function produces an :class:`_engine.Engine`
+The :func:`_sa.create_engine` function produces an :class:` _engine.Engine`
 object based on a URL. The format of the URL generally follows `RFC-1738
 <https://www.ietf.org/rfc/rfc1738.txt>`_, with some exceptions, including that
 underscores, not dashes or periods, are accepted within the "scheme" portion.
@@ -80,7 +80,7 @@ Escaping Special Characters such as @ signs in Passwords
 ----------------------------------------------------------
 
 When constructing a fully formed URL string to pass to
-:func:`_sa.create_engine`, **special characters such as those that may
+:func:`_sa.create_engine` , **special characters such as those that may
 be used in the user and password need to be URL encoded to be parsed correctly.**.
 **This includes the @ sign**.
 
@@ -100,7 +100,7 @@ The encoding for the above password can be generated using
   >>> urllib.parse.quote_plus("kx@jj5/g")
   'kx%40jj5%2Fg'
 
-The URL may then be passed as a string to :func:`_sa.create_engine`::
+The URL may then be passed as a string to :func:`_sa.create_engine` ::
 
     from sqlalchemy import create_engine
 
@@ -122,11 +122,11 @@ Creating URLs Programmatically
 -------------------------------
 
 The value passed to :func:`_sa.create_engine` may be an instance of
-:class:`.URL`, instead of a plain string, which bypasses the need for string
+:class:`.URL` , instead of a plain string, which bypasses the need for string
 parsing to be used, and therefore does not need an escaped URL string to be
 provided.
 
-The :class:`.URL` object is created using the :meth:`_engine.URL.create()`
+The :class:`.URL` object is created using the :meth:` _engine.URL.create()`
 constructor method, passing all fields individually.   Special characters
 such as those within passwords may be passed without any modification::
 
@@ -149,16 +149,16 @@ The constructed :class:`.URL` object may then be passed directly to
 
 .. seealso::
 
-    :class:`.URL`
+    :class:`.URL` 
 
-    :meth:`.URL.create`
+    :meth:`.URL.create` 
 
 Backend-Specific URLs
 ----------------------
 
 Examples for common connection styles follow below.  For a full index of
 detailed information on all included dialects as well as links to third-party
-dialects, see :ref:`dialect_toplevel`.
+dialects, see :ref:`dialect_toplevel` .
 
 PostgreSQL
 ^^^^^^^^^^
@@ -175,7 +175,7 @@ PostgreSQL DBAPIs include pg8000 and asyncpg::
     # pg8000
     engine = create_engine("postgresql+pg8000://scott:tiger@localhost/mydatabase")
 
-More notes on connecting to PostgreSQL at :ref:`postgresql_toplevel`.
+More notes on connecting to PostgreSQL at :ref:`postgresql_toplevel` .
 
 MySQL
 ^^^^^^^^^^
@@ -192,7 +192,7 @@ MySQL DBAPIs available, including PyMySQL::
     # PyMySQL
     engine = create_engine("mysql+pymysql://scott:tiger@localhost/foo")
 
-More notes on connecting to MySQL at :ref:`mysql_toplevel`.
+More notes on connecting to MySQL at :ref:`mysql_toplevel` .
 
 Oracle
 ^^^^^^^^^^
@@ -203,7 +203,7 @@ The Oracle dialect uses cx_oracle as the default DBAPI::
 
     engine = create_engine("oracle+cx_oracle://scott:tiger@tnsname")
 
-More notes on connecting to Oracle at :ref:`oracle_toplevel`.
+More notes on connecting to Oracle at :ref:`oracle_toplevel` .
 
 Microsoft SQL Server
 ^^^^^^^^^^^^^^^^^^^^
@@ -217,7 +217,7 @@ also available::
     # pymssql
     engine = create_engine("mssql+pymssql://scott:tiger@hostname:port/dbname")
 
-More notes on connecting to SQL Server at :ref:`mssql_toplevel`.
+More notes on connecting to SQL Server at :ref:`mssql_toplevel` .
 
 SQLite
 ^^^^^^^
@@ -248,12 +248,12 @@ To use a SQLite ``:memory:`` database, specify an empty URL::
 
     engine = create_engine("sqlite://")
 
-More notes on connecting to SQLite at :ref:`sqlite_toplevel`.
+More notes on connecting to SQLite at :ref:`sqlite_toplevel` .
 
 Others
 ^^^^^^
 
-See :ref:`dialect_toplevel`, the top-level page for all additional dialect
+See :ref:`dialect_toplevel` , the top-level page for all additional dialect
 documentation.
 
 .. _create_engine_args:
@@ -279,7 +279,7 @@ Pooling
 
 The :class:`_engine.Engine` will ask the connection pool for a
 connection when the ``connect()`` or ``execute()`` methods are called. The
-default connection pool, :class:`~.QueuePool`, will open connections to the
+default connection pool, :class:`~.QueuePool` , will open connections to the
 database on an as-needed basis. As concurrent statements are executed,
 :class:`.QueuePool` will grow its pool of connections to a
 default size of five, and will allow a default "overflow" of ten. Since the
@@ -293,7 +293,7 @@ application, rather than creating a new one for each connection.
    :class:`.QueuePool` is not used by default for SQLite engines.  See
    :ref:`sqlite_toplevel` for details on SQLite connection pool usage.
 
-For more information on connection pooling, see :ref:`pooling_toplevel`.
+For more information on connection pooling, see :ref:`pooling_toplevel` .
 
 
 .. _custom_dbapi_args:
@@ -338,7 +338,7 @@ supported at this level.
 .. tip::
 
   A general technique to display the exact arguments passed to the DBAPI
-  for a given URL may be performed using the :meth:`.Dialect.create_connect_args`
+  for a given URL may be performed using the :meth:`.Dialect.create_connect_args` 
   method directly as follows::
 
     >>> from sqlalchemy import create_engine
@@ -409,7 +409,7 @@ Generating dynamic authentication tokens
 
 :meth:`.DialectEvents.do_connect` is also an ideal way to dynamically
 insert an authentication token that might change over the lifespan of an
-:class:`_sa.engine.Engine`. For example, if the token gets generated by
+:class:`_sa.engine.Engine` . For example, if the token gets generated by
 ``get_authentication_token()`` and passed to the DBAPI in  a ``token``
 parameter, this could be implemented as::
 
@@ -470,7 +470,7 @@ The :meth:`.DialectEvents.do_connect` hook supersedes the previous
 :paramref:`_sa.create_engine.creator` hook, which remains available.
 :meth:`.DialectEvents.do_connect` has the distinct advantage that the
 complete arguments parsed from the URL are also passed to the user-defined
-function which is not the case with :paramref:`_sa.create_engine.creator`.
+function which is not the case with :paramref:`_sa.create_engine.creator` .
 
 .. _dbengine_logging:
 
@@ -482,8 +482,8 @@ Python's standard `logging
 implement informational and debug log output with SQLAlchemy. This allows
 SQLAlchemy's logging to integrate in a standard way with other applications
 and libraries.   There are also two parameters
-:paramref:`_sa.create_engine.echo` and :paramref:`_sa.create_engine.echo_pool`
-present on :func:`_sa.create_engine` which allow immediate logging to ``sys.stdout``
+:paramref:`_sa.create_engine.echo` and :paramref:` _sa.create_engine.echo_pool`
+present on :func:`_sa.create_engine` which allow immediate logging to ` `sys.stdout``
 for the purposes of local development; these parameters ultimately interact
 with the regular Python loggers described below.
 
@@ -496,13 +496,13 @@ namespace of SA loggers that can be turned on is as follows:
 * ``sqlalchemy.engine`` - controls SQL echoing.  Set to ``logging.INFO`` for
   SQL query output, ``logging.DEBUG`` for query + result set output.  These
   settings are equivalent to ``echo=True`` and ``echo="debug"`` on
-  :paramref:`_sa.create_engine.echo`, respectively.
+  :paramref:`_sa.create_engine.echo` , respectively.
 
 * ``sqlalchemy.pool`` - controls connection pool logging.  Set to
   ``logging.INFO`` to log connection invalidation and recycle events; set to
   ``logging.DEBUG`` to additionally log all pool checkins and checkouts.
   These settings are equivalent to ``pool_echo=True`` and ``pool_echo="debug"``
-  on :paramref:`_sa.create_engine.echo_pool`, respectively.
+  on :paramref:`_sa.create_engine.echo_pool` , respectively.
 
 * ``sqlalchemy.dialects`` - controls custom logging for SQL dialects, to the
   extend that logging is used within specific dialects, which is generally
@@ -535,13 +535,13 @@ application that has logging enabled otherwise.
    :class:`~.orm.session.Session` object that's active in a transaction, won't
    log any SQL according to the new configuration until a new
    :class:`_engine.Connection` is procured (in the case of
-   :class:`~.orm.session.Session`, this is after the current transaction ends
+   :class:`~.orm.session.Session` , this is after the current transaction ends
    and a new one begins).
 
 More on the Echo Flag
 ---------------------
 
-As mentioned previously, the :paramref:`_sa.create_engine.echo` and :paramref:`_sa.create_engine.echo_pool`
+As mentioned previously, the :paramref:`_sa.create_engine.echo` and :paramref:` _sa.create_engine.echo_pool`
 parameters are a shortcut to immediate logging to ``sys.stdout``::
 
 
@@ -580,7 +580,7 @@ The logger name of instance such as an :class:`~sqlalchemy.engine.Engine` or
 string. To set this to a specific name, use the
 :paramref:`_sa.create_engine.logging_name` and
 :paramref:`_sa.create_engine.pool_logging_name`  with
-:func:`sqlalchemy.create_engine`::
+:func:`sqlalchemy.create_engine` ::
 
     >>> from sqlalchemy import create_engine
     >>> from sqlalchemy import text
@@ -604,7 +604,7 @@ to accommodate for an arbitrarily large list of names, for the case of
 tracking individual connections and/or transactions in log messages.
 
 For this use case, the log message itself generated by the
-:class:`_engine.Connection` and :class:`_engine.Result` objects may be
+:class:`_engine.Connection` and :class:` _engine.Result` objects may be
 augmented with additional tokens such as transaction or request identifiers.
 The :paramref:`_engine.Connection.execution_options.logging_token` parameter
 accepts a string argument that may be used to establish per-connection tracking
@@ -621,7 +621,7 @@ tokens::
 
 The :paramref:`_engine.Connection.execution_options.logging_token` parameter
 may also be established on engines or sub-engines via
-:paramref:`_sa.create_engine.execution_options` or :meth:`_engine.Engine.execution_options`.
+:paramref:`_sa.create_engine.execution_options` or :meth:` _engine.Engine.execution_options`.
 This may be useful to apply different logging tokens to different components
 of an application without creating new engines::
 

@@ -1,10 +1,10 @@
-.. |prev| replace:: :doc:`orm_related_objects`
+.. |prev| replace:: :doc:`orm_related_objects` 
 
 .. |tutorial_title| replace:: SQLAlchemy 1.4 / 2.0 Tutorial
 
 .. topic:: |tutorial_title|
 
-      This page is part of the :doc:`index`.
+      This page is part of the :doc:`index` .
 
       Previous: |prev|
 
@@ -20,20 +20,20 @@ of each subsystem.
 
 Core Essential Reference
 
-* :ref:`connections_toplevel`
+* :ref:`connections_toplevel` 
 
-* :ref:`schema_toplevel`
+* :ref:`schema_toplevel` 
 
-* :ref:`expression_api_toplevel`
+* :ref:`expression_api_toplevel` 
 
-* :ref:`types_toplevel`
+* :ref:`types_toplevel` 
 
 ORM Essential Reference
 
-* :ref:`mapper_config_toplevel`
+* :ref:`mapper_config_toplevel` 
 
-* :ref:`relationship_config_toplevel`
+* :ref:`relationship_config_toplevel` 
 
-* :ref:`session_toplevel`
+* :ref:`session_toplevel` 
 
-* :doc:`../orm/queryguide/index`
+* :doc:`../orm/queryguide/index` 

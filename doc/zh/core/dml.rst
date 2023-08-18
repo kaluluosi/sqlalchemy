@@ -1,16 +1,16 @@
 插入、更新、删除
 ========================
 
-INSERT、UPDATE、DELETE语句的构建从:class:`.UpdateBase`开始。:class:`_expression.Insert`和:class:`_expression.Update`构建于中间层 :class:`.ValuesBase`。
+INSERT、UPDATE 和 DELETE语句基于   :class:`.UpdateBase`  开始的层次结构。  :class:` _expression.Insert`  和   :class:`_expression.Update`  结构以中介者   :class:` .ValuesBase`  为基础。
 
 .. currentmodule:: sqlalchemy.sql.expression
 
 .. _dml_foundational_consructors:
 
-DML基础构造器
+DML 基础构造
 --------------------------------------
 
-顶层"INSERT"、"UPDATE"、"DELETE"构造器
+顶级的 "INSERT"、"UPDATE" 和 "DELETE" 构造器。
 
 .. autofunction:: delete
 
@@ -19,10 +19,10 @@ DML基础构造器
 .. autofunction:: update
 
 
-DML类文档构造器
+DML 类构造函数文档
 --------------------------------------
 
-:ref:`dml_foundational_consructors`列出的构造器的类文档
+构造器列表的类文档   :ref:`dml_foundational_consructors`  。
 
 .. autoclass:: Delete
    :members:

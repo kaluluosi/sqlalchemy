@@ -8,7 +8,7 @@ SQLite
 SQLite 数据类型
 -----------------
 
-与所有SQLAlchemy语言方言一样，所有已知可用于SQLite的大写类型都可以从顶级方言导入，无论它们是源自 :mod:`sqlalchemy.types` 还是本地方言::
+与所有SQLAlchemy方言一样，所有大写类型，如果已知在SQLite中有效，则可以从顶级方言导入，无论它们是来自：mod：`sqlalchemy.types` 还是本地方言：
 
     from sqlalchemy.dialects.sqlite import (
         BLOB,
@@ -31,11 +31,14 @@ SQLite 数据类型
 .. module:: sqlalchemy.dialects.sqlite
 
 .. autoclass:: DATETIME
+
 .. autoclass:: DATE
+
 .. autoclass:: JSON
+
 .. autoclass:: TIME
 
-SQLite DML构造
+SQLite DML 语法
 -------------------------
 
 .. autofunction:: sqlalchemy.dialects.sqlite.insert
@@ -43,16 +46,22 @@ SQLite DML构造
 .. autoclass:: sqlalchemy.dialects.sqlite.Insert
   :members:
 
+.. _pysqlite:
 
 Pysqlite
 --------
 
 .. automodule:: sqlalchemy.dialects.sqlite.pysqlite
 
+.. _aiosqlite:
+
 Aiosqlite
 ---------
 
 .. automodule:: sqlalchemy.dialects.sqlite.aiosqlite
+
+
+.. _pysqlcipher:
 
 Pysqlcipher
 -----------

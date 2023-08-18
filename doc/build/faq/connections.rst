@@ -10,7 +10,7 @@ Connections / Engines
 How do I configure logging?
 ---------------------------
 
-See :ref:`dbengine_logging`.
+See :ref:`dbengine_logging` .
 
 How do I pool database connections?   Are my connections pooled?
 ----------------------------------------------------------------
@@ -20,7 +20,7 @@ in most cases.  For all included dialects (except SQLite when using a
 "memory" database), a :class:`_engine.Engine` object refers to a 
 :class:`.QueuePool` as a source of connectivity.
 
-For more detail, see :ref:`engines_toplevel` and :ref:`pooling_toplevel`.
+For more detail, see :ref:`engines_toplevel` and :ref:` pooling_toplevel`.
 
 How do I pass custom connect arguments to my database API?
 ----------------------------------------------------------
@@ -39,7 +39,7 @@ in the query string of the URL::
 
 .. seealso::
 
-    :ref:`custom_dbapi_args`
+    :ref:`custom_dbapi_args` 
 
 "MySQL Server has gone away"
 ----------------------------
@@ -62,7 +62,7 @@ the "pessimistic" approach.
 
 .. seealso::
 
-    :ref:`pool_disconnects`
+    :ref:`pool_disconnects` 
 
 .. _mysql_sync_errors:
 
@@ -115,11 +115,11 @@ which have been improved across SQLAlchemy versions but others which are unavoid
   This scenario can occur very easily if a program uses Python's "multiprocessing"
   module and makes use of an :class:`_engine.Engine` that was created in the parent
   process.  It's common that "multiprocessing" is in use when using tools like
-  Celery.  The correct approach should be either that a new :class:`_engine.Engine`
-  is produced when a child process first starts, discarding any :class:`_engine.Engine`
+  Celery.  The correct approach should be either that a new :class:`_engine.Engine` 
+  is produced when a child process first starts, discarding any :class:`_engine.Engine` 
   that came down from the parent process; or, the :class:`_engine.Engine` that's inherited
   from the parent process can have it's internal pool of connections disposed by
-  calling :meth:`_engine.Engine.dispose`.
+  calling :meth:`_engine.Engine.dispose` .
 
 * **Greenlet Monkeypatching w/ Exits** - When using a library like gevent or eventlet
   that monkeypatches the Python networking API, libraries like PyMySQL are now
@@ -393,7 +393,7 @@ I am using multiple connections with a SQLite database (typically to test transa
 ----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 If using a SQLite ``:memory:`` database the default connection pool is the 
-:class:`.SingletonThreadPool`, which maintains exactly one SQLite connection
+:class:`.SingletonThreadPool` , which maintains exactly one SQLite connection
 per thread.  So two connections in use in the same thread will actually be 
 the same SQLite connection.  Make sure you're not using a :memory: database
 so that the engine will use :class:`.QueuePool` (the default for non-memory 
@@ -410,7 +410,7 @@ How do I get at the raw DBAPI connection when using an Engine?
 
 With a regular SA engine-level Connection, you can get at a pool-proxied
 version of the DBAPI connection via the :attr:`_engine.Connection.connection` attribute on
-:class:`_engine.Connection`, and for the really-real DBAPI connection you can call the
+:class:`_engine.Connection` , and for the really-real DBAPI connection you can call the
 :attr:`.PoolProxiedConnection.dbapi_connection` attribute on that.  On regular sync drivers
 there is usually no need to access the non-pool-proxied DBAPI connection,
 as all methods are proxied through::
@@ -439,7 +439,7 @@ as all methods are proxied through::
    which supersedes the previous
    :attr:`.PoolProxiedConnection.connection` attribute which still remains
    available; this attribute always provides a pep-249 synchronous style
-   connection object.  The :attr:`.PoolProxiedConnection.driver_connection`
+   connection object.  The :attr:`.PoolProxiedConnection.driver_connection` 
    attribute is also added which will always refer to the real driver-level
    connection regardless of what API it presents.
 
@@ -447,11 +447,11 @@ Accessing the underlying connection for an asyncio driver
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When an asyncio driver is in use, there are two changes to the above
-scheme.  The first is that when using an :class:`_asyncio.AsyncConnection`,
+scheme.  The first is that when using an :class:`_asyncio.AsyncConnection` ,
 the :class:`.PoolProxiedConnection` must be accessed using the awaitable method
-:meth:`_asyncio.AsyncConnection.get_raw_connection`.   The
+:meth:`_asyncio.AsyncConnection.get_raw_connection` .   The
 returned :class:`.PoolProxiedConnection` in this case retains a sync-style
-pep-249 usage pattern, and the :attr:`.PoolProxiedConnection.dbapi_connection`
+pep-249 usage pattern, and the :attr:`.PoolProxiedConnection.dbapi_connection` 
 attribute refers to a
 a SQLAlchemy-adapted connection object which adapts the asyncio
 connection to a sync style pep-249 API, in other words there are *two* levels
@@ -480,7 +480,7 @@ To restate the previous example in terms of asyncio looks like::
         result = await raw_asyncio_connection.execute(...)
 
 .. versionchanged:: 1.4.24  Added the
-   :attr:`.PoolProxiedConnection.dbapi_connection`
+   :attr:`.PoolProxiedConnection.dbapi_connection` 
    and :attr:`.PoolProxiedConnection.driver_connection` attributes to allow access
    to pep-249 connections, pep-249 adaption layers, and underlying driver
    connections using a consistent interface.
@@ -491,8 +491,8 @@ pep-249 style API.  To access the actual
 asyncio driver connection, which will present the original asyncio API
 of the driver in use, this can be accessed via the
 :attr:`.PoolProxiedConnection.driver_connection` attribute of
-:class:`.PoolProxiedConnection`.
-For a standard pep-249 driver, :attr:`.PoolProxiedConnection.dbapi_connection`
+:class:`.PoolProxiedConnection` .
+For a standard pep-249 driver, :attr:`.PoolProxiedConnection.dbapi_connection` 
 and :attr:`.PoolProxiedConnection.driver_connection` are synonymous.
 
 You must ensure that you revert any isolation level settings or other
@@ -500,9 +500,9 @@ operation-specific settings on the connection back to normal before returning
 it to the pool.
 
 As an alternative to reverting settings, you can call the
-:meth:`_engine.Connection.detach` method on either :class:`_engine.Connection`
+:meth:`_engine.Connection.detach` method on either :class:` _engine.Connection`
 or the proxied connection, which will de-associate the connection from the pool
-such that it will be closed and discarded when :meth:`_engine.Connection.close`
+such that it will be closed and discarded when :meth:`_engine.Connection.close` 
 is called:
 
 .. sourcecode:: text
@@ -515,5 +515,5 @@ is called:
 How do I use engines / connections / sessions with Python multiprocessing, or os.fork()?
 ----------------------------------------------------------------------------------------
 
-This is covered in the section :ref:`pooling_multiprocessing`.
+This is covered in the section :ref:`pooling_multiprocessing` .
 

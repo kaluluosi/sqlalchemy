@@ -32,9 +32,9 @@ as things like "extras", ``setup.py`` now depends on Setuptools fully.
 
 .. seealso::
 
-    :ref:`installation`
+    :ref:`installation` 
 
-:ticket:`3489`
+:ticket:`3489` 
 
 Enabling / Disabling C Extension builds is only via environment variable
 ------------------------------------------------------------------------
@@ -47,9 +47,9 @@ as it relies on deprecated features of setuptools.
 
 .. seealso::
 
-    :ref:`c_extensions`
+    :ref:`c_extensions` 
 
-:ticket:`3500`
+:ticket:`3500` 
 
 
 New Features and Improvements - ORM
@@ -62,9 +62,9 @@ New Session lifecycle events
 
 The :class:`.Session` has long supported events that allow some degree
 of tracking of state changes to objects, including
-:meth:`.SessionEvents.before_attach`, :meth:`.SessionEvents.after_attach`,
-and :meth:`.SessionEvents.before_flush`.  The Session documentation also
-documents major object states at :ref:`session_object_states`.  However,
+:meth:`.SessionEvents.before_attach` , :meth:`.SessionEvents.after_attach` ,
+and :meth:`.SessionEvents.before_flush` .  The Session documentation also
+documents major object states at :ref:`session_object_states` .  However,
 there has never been system of tracking objects specifically as they
 pass through these transitions.  Additionally, the status of "deleted" objects
 has historically been murky as the objects act somewhere between
@@ -79,22 +79,22 @@ its own official state name within the realm of session object states.
 New State Transition Events
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Transitions between all states of an object such as :term:`persistent`,
+Transitions between all states of an object such as :term:`persistent` ,
 :term:`pending` and others can now be intercepted in terms of a
 session-level event intended to cover a specific transition.
-Transitions as objects move into a :class:`.Session`, move out of a
-:class:`.Session`, and even all the transitions which occur when the
-transaction is rolled back using :meth:`.Session.rollback`
-are explicitly present in the interface of :class:`.SessionEvents`.
+Transitions as objects move into a :class:`.Session` , move out of a
+:class:`.Session` , and even all the transitions which occur when the
+transaction is rolled back using :meth:`.Session.rollback` 
+are explicitly present in the interface of :class:`.SessionEvents` .
 
 In total, there are **ten new events**.  A summary of these events is in a
-newly written documentation section :ref:`session_lifecycle_events`.
+newly written documentation section :ref:`session_lifecycle_events` .
 
 
 New Object State "deleted" is added, deleted objects no longer "persistent"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :term:`persistent` state of an object in the :class:`.Session` has
+The :term:`persistent` state of an object in the :class:` .Session` has
 always been documented as an object that has a valid database identity;
 however in the case of objects that were deleted within a flush, they
 have always been in a grey area where they are not really "detached"
@@ -107,7 +107,7 @@ To resolve this grey area given the new events, a new object state
 "detached" states.  An object that is marked for deletion via
 :meth:`.Session.delete` remains in the "persistent" state until a flush
 proceeds; at that point, it is removed from the identity map, moves
-to the "deleted" state, and the :meth:`.SessionEvents.persistent_to_deleted`
+to the "deleted" state, and the :meth:`.SessionEvents.persistent_to_deleted` 
 hook is invoked.  If the :class:`.Session` object's transaction is rolled
 back, the object is restored as persistent; the
 :meth:`.SessionEvents.deleted_to_persistent` transition is called.  Otherwise
@@ -117,7 +117,7 @@ the :meth:`.SessionEvents.deleted_to_detached` transition is invoked.
 Additionally, the :attr:`.InstanceState.persistent` accessor **no longer returns
 True** for an object that is in the new "deleted" state; instead, the
 :attr:`.InstanceState.deleted` accessor has been enhanced to reliably
-report on this new state.   When the object is detached, the :attr:`.InstanceState.deleted`
+report on this new state.   When the object is detached, the :attr:`.InstanceState.deleted` 
 returns False and the :attr:`.InstanceState.detached` accessor is True
 instead.  To determine if an object was deleted either in the current
 transaction or in a previous transaction, use the
@@ -141,7 +141,7 @@ new event model allows even the exact behavior of the strong identity map
 to be replicated.   See :ref:`session_referencing_behavior` for a new
 recipe illustrating how to replace the strong identity map.
 
-:ticket:`2677`
+:ticket:`2677` 
 
 .. _change_1311:
 
@@ -157,7 +157,7 @@ set is first accessed, for a non-persistent object::
 
 There's a use case for this in-Python value to correspond to that of a
 Core-generated default value, even before the object is persisted.
-To suit this use case a new event :meth:`.AttributeEvents.init_scalar`
+To suit this use case a new event :meth:`.AttributeEvents.init_scalar` 
 is added.   The new example ``active_column_defaults.py`` at
 :ref:`examples_instrumentation` illustrates a sample use, so the effect
 can instead be::
@@ -166,7 +166,7 @@ can instead be::
     >>> obj.some_value
     "my default"
 
-:ticket:`1311`
+:ticket:`1311` 
 
 .. _change_3499:
 
@@ -184,14 +184,14 @@ of filtering on additional columns.
 
 This deduplication relies upon the hashability of the elements within
 the row.  With the introduction of PostgreSQL's special types like
-:class:`_postgresql.ARRAY`, :class:`_postgresql.HSTORE` and
-:class:`_postgresql.JSON`, the experience of types within rows being
+:class:`_postgresql.ARRAY` , :class:`_postgresql.HSTORE` and
+:class:`_postgresql.JSON` , the experience of types within rows being
 unhashable and encountering problems here is more prevalent than
 it was previously.
 
 In fact, SQLAlchemy has since version 0.8 included a flag on datatypes that
 are noted as "unhashable", however this flag was not used consistently
-on built in types.  As described in :ref:`change_3499_postgresql`, this
+on built in types.  As described in :ref:`change_3499_postgresql` , this
 flag is now set consistently for all of PostgreSQL's "structural" types.
 
 The "unhashable" flag is also set on the :class:`.NullType` type,
@@ -199,7 +199,7 @@ as :class:`.NullType` is used to refer to any expression of unknown
 type.
 
 Since :class:`.NullType` is applied to most
-usages of :attr:`.func`, as :attr:`.func` doesn't actually know anything
+usages of :attr:`.func` , as :attr:`.func` doesn't actually know anything
 about the function names given in most cases, **using func() will
 often disable row deduping unless explicit typing is applied**.
 The following examples illustrate ``func.substr()`` applied to a string
@@ -243,7 +243,7 @@ the ``id()`` function to get a "hash value" from these structures, just
 as we would any ordinary mapped object.   This replaces the previous
 approach which applied a counter to the object.
 
-:ticket:`3499`
+:ticket:`3499` 
 
 .. _change_3321:
 
@@ -284,7 +284,7 @@ relationship attribute to an object, which is handled distinctly::
     >>> q = s.query(Address).filter(Address.user == some_user)
 
 
-:ticket:`3321`
+:ticket:`3321` 
 
 .. _feature_indexable:
 
@@ -318,7 +318,7 @@ to track this change.
 
 .. seealso::
 
-    :ref:`indexable_toplevel`
+    :ref:`indexable_toplevel` 
 
 .. _change_3250:
 
@@ -326,7 +326,7 @@ New options allowing explicit persistence of NULL over a default
 ----------------------------------------------------------------
 
 Related to the new JSON-NULL support added to PostgreSQL as part of
-:ref:`change_3514`, the base :class:`.TypeEngine` class now supports
+:ref:`change_3514` , the base :class:`.TypeEngine` class now supports
 a method :meth:`.TypeEngine.evaluates_none` which allows a positive set
 of the ``None`` value on an attribute to be persisted as NULL, rather than
 omitting the column from the INSERT statement, which has the effect of using
@@ -336,9 +336,9 @@ configuration of the existing object-level technique of assigning
 
 .. seealso::
 
-    :ref:`session_forcing_null`
+    :ref:`session_forcing_null` 
 
-:ticket:`3250`
+:ticket:`3250` 
 
 
 .. _change_3582:
@@ -346,7 +346,7 @@ configuration of the existing object-level technique of assigning
 Further Fixes to single-table inheritance querying
 --------------------------------------------------
 
-Continuing from 1.0's :ref:`migration_3177`, the :class:`_query.Query` should
+Continuing from 1.0's :ref:`migration_3177` , the :class:`_query.Query` should
 no longer inappropriately add the "single inheritance" criteria when the
 query is against a subquery expression such as an exists::
 
@@ -378,7 +378,7 @@ The IN clause on the inside is appropriate, in order to limit to FooWidget
 objects, however previously the IN clause would also be generated a second
 time on the outside of the subquery.
 
-:ticket:`3582`
+:ticket:`3582` 
 
 .. _change_3680:
 
@@ -416,7 +416,7 @@ the SAVEPOINT exception takes precedence.  On Python 3, exceptions are chained
 so both failures are reported individually.
 
 
-:ticket:`3680`
+:ticket:`3680` 
 
 .. _change_3677:
 
@@ -512,7 +512,7 @@ The expense of this SELECT is only incurred in the case when we would have
 erroneously raised an exception in any case.
 
 
-:ticket:`3677`
+:ticket:`3677` 
 
 .. _change_2349:
 
@@ -520,7 +520,7 @@ passive_deletes feature for joined-inheritance mappings
 -------------------------------------------------------
 
 A joined-table inheritance mapping may now allow a DELETE to proceed
-as a result of :meth:`.Session.delete`, which only emits DELETE for the
+as a result of :meth:`.Session.delete` , which only emits DELETE for the
 base table, and not the subclass table, allowing configured ON DELETE CASCADE
 to take place for the configured foreign keys.  This is configured using
 the :paramref:`.orm.mapper.passive_deletes` option::
@@ -573,7 +573,7 @@ Will emit SQL as:
 As always, the target database must have foreign key support with
 ON DELETE CASCADE enabled.
 
-:ticket:`2349`
+:ticket:`2349` 
 
 .. _change_3630:
 
@@ -634,7 +634,7 @@ The fix enhances the backref feature so that an error is not emitted,
 as well as an additional check within the mapper logic to bypass warning
 for an attribute being replaced.
 
-:ticket:`3630`
+:ticket:`3630` 
 
 .. _change_3749:
 
@@ -674,7 +674,7 @@ some new issue with this pattern may be identified.
 
 .. versionadded:: 1.1.0b3
 
-:ticket:`3749`
+:ticket:`3749` 
 
 .. _change_3653:
 
@@ -732,9 +732,9 @@ Note that this ``.info`` dictionary is **separate** from that of a mapped attrib
 which the hybrid descriptor may be proxying directly; this is a behavioral
 change from 1.0.   The wrapper will still proxy other useful attributes
 of a mirrored attribute such as :attr:`.QueryableAttribute.property` and
-:attr:`.QueryableAttribute.class_`.
+:attr:`.QueryableAttribute.class_` .
 
-:ticket:`3653`
+:ticket:`3653` 
 
 .. _change_3601:
 
@@ -771,7 +771,7 @@ primary key "1", we can see that the ``email_address`` field of the ``Address``
 will be overwritten three times, in this case with the values a, b and finally
 c.
 
-However, if the ``Address`` row for primary key "1" were not present, :meth:`.Session.merge`
+However, if the ``Address`` row for primary key "1" were not present, :meth:`.Session.merge` 
 would instead create three separate ``Address`` instances, and we'd then get
 a primary key conflict upon INSERT.  The new behavior is that the proposed
 primary key for these ``Address`` objects are tracked in a separate dictionary
@@ -787,7 +787,7 @@ cases but would add considerable performance overhead as each column value
 would have to be compared during the merge.
 
 
-:ticket:`3601`
+:ticket:`3601` 
 
 .. _change_3708:
 
@@ -835,7 +835,7 @@ relationships to emit lazy loads based on in-memory foreign key values that
 aren't persisted.   Whether or not these features are in use, this behavioral
 improvement will now be apparent.
 
-:ticket:`3708`
+:ticket:`3708` 
 
 .. _change_3662:
 
@@ -909,31 +909,31 @@ The :func:`.aliased` construct guarantees that the "polymorphic selectable"
 is wrapped in a subquery.  By referring to it explicitly in the correlated
 subquery, the polymorphic form is correctly used.
 
-:ticket:`3662`
+:ticket:`3662` 
 
 .. _change_3081:
 
 Stringify of Query will consult the Session for the correct dialect
 -------------------------------------------------------------------
 
-Calling ``str()`` on a :class:`_query.Query` object will consult the :class:`.Session`
+Calling ``str()`` on a :class:`_query.Query` object will consult the :class:` .Session`
 for the correct "bind" to use, in order to render the SQL that would be
 passed to the database.  In particular this allows a :class:`_query.Query` that
 refers to dialect-specific SQL constructs to be renderable, assuming the
-:class:`_query.Query` is associated with an appropriate :class:`.Session`.
-Previously, this behavior would only take effect if the :class:`_schema.MetaData`
+:class:`_query.Query` is associated with an appropriate :class:` .Session`.
+Previously, this behavior would only take effect if the :class:`_schema.MetaData` 
 to which the mappings were associated were itself bound to the target
-:class:`_engine.Engine`.
+:class:`_engine.Engine` .
 
-If neither the underlying :class:`_schema.MetaData` nor the :class:`.Session` are
-associated with any bound :class:`_engine.Engine`, then the fallback to the
+If neither the underlying :class:`_schema.MetaData` nor the :class:` .Session` are
+associated with any bound :class:`_engine.Engine` , then the fallback to the
 "default" dialect is used to generate the SQL string.
 
 .. seealso::
 
-    :ref:`change_3631`
+    :ref:`change_3631` 
 
-:ticket:`3081`
+:ticket:`3081` 
 
 .. _change_3431:
 
@@ -1026,17 +1026,17 @@ not others.
 The fix includes tests for two variants of the "multiple paths to one entity"
 case, and the fix should hopefully cover all other scenarios of this nature.
 
-:ticket:`3431`
+:ticket:`3431` 
 
 
 New MutableList and MutableSet helpers added to the mutation tracking extension
 -------------------------------------------------------------------------------
 
-New helper classes :class:`.MutableList` and :class:`.MutableSet` have been
+New helper classes :class:`.MutableList` and :class:` .MutableSet` have been
 added to the :ref:`mutable_toplevel` extension, to complement the existing
 :class:`.MutableDict` helper.
 
-:ticket:`3297`
+:ticket:`3297` 
 
 .. _change_3512:
 
@@ -1068,7 +1068,7 @@ Or a lazy load only where SQL would be emitted::
     ...
     sqlalchemy.exc.InvalidRequestError: 'A.bs' is not available due to lazy='raise_on_sql'
 
-:ticket:`3512`
+:ticket:`3512` 
 
 .. _change_3394:
 
@@ -1078,7 +1078,7 @@ Mapper.order_by is deprecated
 This old parameter from the very first versions of SQLAlchemy was part of
 the original design of the ORM which featured the :class:`_orm.Mapper` object
 as a public-facing query structure.   This role has long since been replaced
-by the :class:`_query.Query` object, where we use :meth:`_query.Query.order_by` to
+by the :class:`_query.Query` object, where we use :meth:` _query.Query.order_by` to
 indicate the ordering of results in a way that works consistently for any
 combination of SELECT statements, entities and SQL expressions.   There are
 many areas in which :paramref:`_orm.Mapper.order_by` doesn't work as expected
@@ -1086,7 +1086,7 @@ many areas in which :paramref:`_orm.Mapper.order_by` doesn't work as expected
 into unions; these cases are not supported.
 
 
-:ticket:`3394`
+:ticket:`3394` 
 
 New Features and Improvements - Core
 ====================================
@@ -1103,15 +1103,15 @@ The Python ``BaseException`` class is below that of ``Exception`` but is the
 identifiable base for system-level exceptions such as ``KeyboardInterrupt``,
 ``SystemExit``, and notably the ``GreenletExit`` exception that's used by
 eventlet and gevent. This exception class is now intercepted by the exception-
-handling routines of :class:`_engine.Connection`, and includes handling by the
-:meth:`_events.ConnectionEvents.handle_error` event.  The :class:`_engine.Connection` is now
+handling routines of :class:`_engine.Connection` , and includes handling by the
+:meth:`_events.ConnectionEvents.handle_error` event.  The :class:` _engine.Connection` is now
 **invalidated** by default in the case of a system level exception that is not
 a subclass of ``Exception``, as it is assumed an operation was interrupted and
 the connection may be in an unusable state.  The MySQL drivers are most
 targeted by this change however the change is across all DBAPIs.
 
 Note that upon invalidation, the immediate DBAPI connection used by
-:class:`_engine.Connection` is disposed, and the :class:`_engine.Connection`, if still
+:class:`_engine.Connection` is disposed, and the :class:` _engine.Connection`, if still
 being used subsequent to the exception raise, will use a new
 DBAPI connection for subsequent operations upon next use; however, the state of
 any transaction in progress is lost and the appropriate ``.rollback()`` method
@@ -1152,7 +1152,7 @@ for specific exceptions::
             if isinstance(ctx.original_exception, KeyboardInterrupt):
                 ctx.is_disconnect = False
 
-:ticket:`3803`
+:ticket:`3803` 
 
 
 .. _change_2551:
@@ -1215,14 +1215,14 @@ statement:
                    upsert.product, upsert.quantity
             FROM upsert))
 
-:ticket:`2551`
+:ticket:`2551` 
 
 .. _change_3049:
 
 Support for RANGE and ROWS specification within window functions
 ----------------------------------------------------------------
 
-New :paramref:`.expression.over.range_` and :paramref:`.expression.over.rows` parameters allow
+New :paramref:`.expression.over.range_` and :paramref:` .expression.over.rows` parameters allow
 RANGE and ROWS expressions for window functions:
 
 .. sourcecode:: pycon+sql
@@ -1238,15 +1238,15 @@ RANGE and ROWS expressions for window functions:
     >>> print(func.row_number().over(order_by="x", range_=(-2, None)))
     {printsql}row_number() OVER (ORDER BY x RANGE BETWEEN :param_1 PRECEDING AND UNBOUNDED FOLLOWING){stop}
 
-:paramref:`.expression.over.range_` and :paramref:`.expression.over.rows` are specified as
+:paramref:`.expression.over.range_` and :paramref:` .expression.over.rows` are specified as
 2-tuples and indicate negative and positive values for specific ranges,
 0 for "CURRENT ROW", and None for UNBOUNDED.
 
 .. seealso::
 
-    :ref:`tutorial_window_functions`
+    :ref:`tutorial_window_functions` 
 
-:ticket:`3049`
+:ticket:`3049` 
 
 .. _change_2857:
 
@@ -1278,14 +1278,14 @@ selectable, e.g. lateral correlation:
 
 .. seealso::
 
-    :ref:`tutorial_lateral_correlation`
+    :ref:`tutorial_lateral_correlation` 
 
-    :class:`_expression.Lateral`
+    :class:`_expression.Lateral` 
 
-    :meth:`_expression.Select.lateral`
+    :meth:`_expression.Select.lateral` 
 
 
-:ticket:`2857`
+:ticket:`2857` 
 
 .. _change_3718:
 
@@ -1293,7 +1293,7 @@ Support for TABLESAMPLE
 -----------------------
 
 The SQL standard TABLESAMPLE can be rendered using the
-:meth:`_expression.FromClause.tablesample` method, which returns a :class:`_expression.TableSample`
+:meth:`_expression.FromClause.tablesample` method, which returns a :class:` _expression.TableSample`
 construct similar to an alias::
 
     from sqlalchemy import func
@@ -1310,7 +1310,7 @@ statement would render as:
     people AS alias TABLESAMPLE bernoulli(:bernoulli_1)
     REPEATABLE (random())
 
-:ticket:`3718`
+:ticket:`3718` 
 
 .. _change_3216:
 
@@ -1387,7 +1387,7 @@ An INSERT emitted with no values for this table will produce this warning:
 
 For a column that is receiving primary key values from a server-side
 default or something less common such as a trigger, the presence of a
-value generator can be indicated using :class:`.FetchedValue`::
+value generator can be indicated using :class:`.FetchedValue` ::
 
     Table(
         "b",
@@ -1414,9 +1414,9 @@ will not have much impact on the behavior of the column during an INSERT.
 
 .. seealso::
 
-    :ref:`change_mysql_3216`
+    :ref:`change_mysql_3216` 
 
-:ticket:`3216`
+:ticket:`3216` 
 
 .. _change_is_distinct_from:
 
@@ -1453,7 +1453,7 @@ which on SQLite works for NULL unlike other backends:
 Core and ORM support for FULL OUTER JOIN
 ----------------------------------------
 
-The new flag :paramref:`.FromClause.outerjoin.full`, available at the Core
+The new flag :paramref:`.FromClause.outerjoin.full` , available at the Core
 and ORM level, instructs the compiler to render ``FULL OUTER JOIN``
 where it would normally render ``LEFT OUTER JOIN``::
 
@@ -1463,7 +1463,7 @@ The flag also works at the ORM level::
 
     q = session.query(MyClass).outerjoin(MyOtherClass, full=True)
 
-:ticket:`1957`
+:ticket:`1957` 
 
 .. _change_3501:
 
@@ -1471,7 +1471,7 @@ ResultSet column matching enhancements; positional column setup for textual SQL
 -------------------------------------------------------------------------------
 
 A series of improvements were made to the :class:`_engine.ResultProxy` system
-in the 1.0 series as part of :ticket:`918`, which reorganizes the internals
+in the 1.0 series as part of :ticket:`918` , which reorganizes the internals
 to match cursor-bound result columns with table/ORM metadata positionally,
 rather than by matching names, for compiled SQL constructs that contain full
 information about the result rows to be returned.   This allows a dramatic savings
@@ -1490,7 +1490,7 @@ The key advantage here is that textual SQL can now be linked to an ORM-
 level result set without the need to deal with ambiguous or duplicate column
 names, or with having to match labeling schemes to ORM-level labeling schemes.  All
 that's needed now is the same ordering of columns within the textual SQL
-and the column arguments passed to :meth:`_expression.TextClause.columns`::
+and the column arguments passed to :meth:`_expression.TextClause.columns` ::
 
 
     from sqlalchemy import text
@@ -1519,11 +1519,11 @@ method has always been documented illustrating the columns being passed in the s
 textual SQL statement, as would seem intuitive, even though the internals
 weren't checking for this.  The method itself was only added as of 0.9 in
 any case and may not yet have widespread use.  Notes on exactly how to handle
-this behavioral change for applications using it are at :ref:`behavior_change_3501`.
+this behavioral change for applications using it are at :ref:`behavior_change_3501` .
 
 .. seealso::
 
-  :ref:`tutorial_select_arbitrary_text`
+  :ref:`tutorial_select_arbitrary_text` 
 
     :ref:`behavior_change_3501` - backwards compatibility remarks
 
@@ -1575,7 +1575,7 @@ to the actual ambiguous name from the rendered SQL statement itself,
 rather than indicating the key or name that was local to the construct being
 used for the fetch.
 
-:ticket:`3501`
+:ticket:`3501` 
 
 .. _change_3292:
 
@@ -1608,12 +1608,12 @@ string/integer/etc values::
 The ``Enum.enums`` collection is now a list instead of a tuple
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As part of the changes to :class:`.Enum`, the :attr:`.Enum.enums` collection
+As part of the changes to :class:`.Enum` , the :attr:`.Enum.enums` collection
 of elements is now a list instead of a tuple.  This because lists
 are appropriate for variable length sequences of homogeneous items where
 the position of the element is not semantically significant.
 
-:ticket:`3292`
+:ticket:`3292` 
 
 .. _change_gh_231:
 
@@ -1638,7 +1638,7 @@ The ``Enum`` type now does in-Python validation of values
 To accommodate for Python native enumerated objects, as well as for edge
 cases such as that of where a non-native ENUM type is used within an ARRAY
 and a CHECK constraint is infeasible, the :class:`.Enum` datatype now adds
-in-Python validation of input values when the :paramref:`.Enum.validate_strings`
+in-Python validation of input values when the :paramref:`.Enum.validate_strings` 
 flag is used (1.1.0b2)::
 
 
@@ -1669,7 +1669,7 @@ CHECK constraint when a non-native enumerated type is used.  The creation of
 this CHECK constraint can now be disabled using the new
 :paramref:`.Enum.create_constraint` flag.
 
-:ticket:`3095`
+:ticket:`3095` 
 
 .. _change_3730:
 
@@ -1681,7 +1681,7 @@ for backends that don't have a native boolean type, such as SQLite and
 MySQL.  On these backends, a CHECK constraint is normally set up which
 ensures the values in the database are in fact one of these two values.
 However, MySQL ignores CHECK constraints, the constraint is optional, and
-an existing database might not have this constraint.  The :class:`.Boolean`
+an existing database might not have this constraint.  The :class:`.Boolean` 
 datatype has been repaired such that an incoming Python-side value that is
 already an integer value is coerced to zero or one, not just passed as-is;
 additionally, the C-extension version of the int-to-boolean processor for
@@ -1703,10 +1703,10 @@ retained as None/NULL.
    any other value outside of ``None``, ``True``, ``False``, ``1``, ``0`` to
    the :class:`.Boolean` datatype is **not supported** and version 1.2 will
    raise an error for this scenario (or possibly just emit a warning, TBD).
-   See also :ticket:`4102`.
+   See also :ticket:`4102` .
 
 
-:ticket:`3730`
+:ticket:`3730` 
 
 .. _change_2837:
 
@@ -1745,7 +1745,7 @@ within logging, exception reporting, as well as ``repr()`` of the row itself::
     MK:;5OLPM@JR;R:J6<SOTTT=>Q>7T@I::OTDC:CC<=NGP6C>BC8N',)
 
 
-:ticket:`2837`
+:ticket:`2837` 
 
 
 .. _change_3619:
@@ -1764,23 +1764,23 @@ NULL values as well as expression handling.
 
 .. seealso::
 
-    :ref:`change_3547`
+    :ref:`change_3547` 
 
-    :class:`_types.JSON`
+    :class:`_types.JSON` 
 
-    :class:`_postgresql.JSON`
+    :class:`_postgresql.JSON` 
 
-    :class:`.mysql.JSON`
+    :class:`.mysql.JSON` 
 
-:ticket:`3619`
+:ticket:`3619` 
 
 .. _change_3514:
 
 JSON "null" is inserted as expected with ORM operations, omitted when not present
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :class:`_types.JSON` type and its descendant types :class:`_postgresql.JSON`
-and :class:`.mysql.JSON` have a flag :paramref:`.types.JSON.none_as_null` which
+The :class:`_types.JSON` type and its descendant types :class:` _postgresql.JSON`
+and :class:`.mysql.JSON` have a flag :paramref:` .types.JSON.none_as_null` which
 when set to True indicates that the Python value ``None`` should translate
 into a SQL NULL rather than a JSON NULL value.  This flag defaults to False,
 which means that the Python value ``None`` should result in a JSON NULL value.
@@ -1828,7 +1828,7 @@ that was relying upon this to default a missing value as JSON null.  This
 essentially establishes that a **missing value is distinguished from a present
 value of None**.  See :ref:`behavior_change_3514` for further detail.
 
-3. When the :meth:`.Session.bulk_insert_mappings` method were used, ``None``
+3. When the :meth:`.Session.bulk_insert_mappings` method were used, ` `None``
 would be ignored in all cases::
 
     # would insert SQL NULL and/or trigger defaults,
@@ -1838,14 +1838,14 @@ would be ignored in all cases::
 The :class:`_types.JSON` type now implements the
 :attr:`.TypeEngine.should_evaluate_none` flag,
 indicating that ``None`` should not be ignored here; it is configured
-automatically based on the value of :paramref:`.types.JSON.none_as_null`.
-Thanks to :ticket:`3061`, we can differentiate when the value ``None`` is actively
+automatically based on the value of :paramref:`.types.JSON.none_as_null` .
+Thanks to :ticket:`3061` , we can differentiate when the value ``None`` is actively
 set by the user versus when it was never set at all.
 
 The feature applies as well to the new base :class:`_types.JSON` type
 and its descendant types.
 
-:ticket:`3514`
+:ticket:`3514` 
 
 .. _change_3514_jsonnull:
 
@@ -1853,7 +1853,7 @@ New JSON.NULL Constant Added
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To ensure that an application can always have full control at the value level
-of whether a :class:`_types.JSON`, :class:`_postgresql.JSON`, :class:`.mysql.JSON`,
+of whether a :class:`_types.JSON` , :class:`_postgresql.JSON` , :class:`.mysql.JSON` ,
 or :class:`_postgresql.JSONB` column
 should receive a SQL NULL or JSON ``"null"`` value, the constant
 :attr:`.types.JSON.NULL` has been added, which in conjunction with
@@ -1873,16 +1873,16 @@ to::
 The feature applies as well to the new base :class:`_types.JSON` type
 and its descendant types.
 
-:ticket:`3514`
+:ticket:`3514` 
 
 .. _change_3516:
 
 Array support added to Core; new ANY and ALL operators
 ------------------------------------------------------
 
-Along with the enhancements made to the PostgreSQL :class:`_postgresql.ARRAY`
-type described in :ref:`change_3503`, the base class of :class:`_postgresql.ARRAY`
-itself has been moved to Core in a new class :class:`_types.ARRAY`.
+Along with the enhancements made to the PostgreSQL :class:`_postgresql.ARRAY` 
+type described in :ref:`change_3503` , the base class of :class:`_postgresql.ARRAY` 
+itself has been moved to Core in a new class :class:`_types.ARRAY` .
 
 Arrays are part of the SQL standard, as are several array-oriented functions
 such as ``array_agg()`` and ``unnest()``.  In support of these constructs
@@ -1899,10 +1899,10 @@ use cases such as indexed access, as well as support for the ANY and ALL::
     expr = mytable.c.data[5].any(12)
 
 In support of ANY and ALL, the :class:`_types.ARRAY` type retains the same
-:meth:`.types.ARRAY.Comparator.any` and :meth:`.types.ARRAY.Comparator.all` methods
+:meth:`.types.ARRAY.Comparator.any` and :meth:` .types.ARRAY.Comparator.all` methods
 from the PostgreSQL type, but also exports these operations to new
 standalone operator functions :func:`_expression.any_` and
-:func:`_expression.all_`.  These two functions work in more
+:func:`_expression.all_` .  These two functions work in more
 of the traditional SQL way, allowing a right-side expression form such
 as::
 
@@ -1911,11 +1911,11 @@ as::
     select([mytable]).where(12 == any_(mytable.c.data[5]))
 
 For the PostgreSQL-specific operators "contains", "contained_by", and
-"overlaps", one should continue to use the :class:`_postgresql.ARRAY`
-type directly, which provides all functionality of the :class:`_types.ARRAY`
+"overlaps", one should continue to use the :class:`_postgresql.ARRAY` 
+type directly, which provides all functionality of the :class:`_types.ARRAY` 
 type as well.
 
-The :func:`_expression.any_` and :func:`_expression.all_` operators
+The :func:`_expression.any_` and :func:` _expression.all_` operators
 are open-ended at the Core level, however their interpretation by backend
 databases is limited.  On the PostgreSQL backend, the two operators
 **only accept array values**.  Whereas on the MySQL backend, they
@@ -1927,7 +1927,7 @@ such as::
     subq = select([mytable.c.value])
     select([mytable]).where(12 > any_(subq))
 
-:ticket:`3516`
+:ticket:`3516` 
 
 .. _change_3132:
 
@@ -1936,14 +1936,14 @@ New Function features, "WITHIN GROUP", array_agg and set aggregate functions
 
 With the new :class:`_types.ARRAY` type we can also implement a pre-typed
 function for the ``array_agg()`` SQL function that returns an array,
-which is now available using :class:`_functions.array_agg`::
+which is now available using :class:`_functions.array_agg` ::
 
     from sqlalchemy import func
 
     stmt = select([func.array_agg(table.c.value)])
 
 A PostgreSQL element for an aggregate ORDER BY is also added via
-:class:`_postgresql.aggregate_order_by`::
+:class:`_postgresql.aggregate_order_by` ::
 
     from sqlalchemy.dialects.postgresql import aggregate_order_by
 
@@ -1985,22 +1985,22 @@ The above statement would produce SQL similar to:
   WITHIN GROUP (ORDER BY department.salary DESC)
 
 Placeholders with correct return types are now provided for these functions,
-and include :class:`.percentile_cont`, :class:`.percentile_disc`,
-:class:`.rank`, :class:`.dense_rank`, :class:`.mode`, :class:`.percent_rank`,
-and :class:`.cume_dist`.
+and include :class:`.percentile_cont` , :class:`.percentile_disc` ,
+:class:`.rank` , :class:`.dense_rank` , :class:`.mode` , :class:`.percent_rank` ,
+and :class:`.cume_dist` .
 
-:ticket:`3132` :ticket:`1370`
+:ticket:`3132` :ticket:` 1370`
 
 .. _change_2919:
 
 TypeDecorator now works with Enum, Boolean, "schema" types automatically
 ------------------------------------------------------------------------
 
-The :class:`.SchemaType` types include types such as :class:`.Enum`
+The :class:`.SchemaType` types include types such as :class:` .Enum`
 and :class:`.Boolean` which, in addition to corresponding to a database
 type, also generate either a CHECK constraint or in the case of PostgreSQL
 ENUM a new CREATE TYPE statement, will now work automatically with
-:class:`.TypeDecorator` recipes.  Previously, a :class:`.TypeDecorator` for
+:class:`.TypeDecorator` recipes.  Previously, a :class:` .TypeDecorator` for
 an :class:`_postgresql.ENUM` had to look like this::
 
     # old way
@@ -2017,7 +2017,7 @@ can be done like any other type::
     class MyEnum(TypeDecorator):
         impl = postgresql.ENUM("one", "two", "three", name="myenum")
 
-:ticket:`2919`
+:ticket:`2919` 
 
 .. _change_2685:
 
@@ -2026,8 +2026,8 @@ Multi-Tenancy Schema Translation for Table objects
 
 To support the use case of an application that uses the same set of
 :class:`_schema.Table` objects in many schemas, such as schema-per-user, a new
-execution option :paramref:`.Connection.execution_options.schema_translate_map`
-is added.  Using this mapping, a set of :class:`_schema.Table`
+execution option :paramref:`.Connection.execution_options.schema_translate_map` 
+is added.  Using this mapping, a set of :class:`_schema.Table` 
 objects can be made on a per-connection basis to refer to any set of schemas
 instead of the :paramref:`_schema.Table.schema` to which they were assigned.  The
 translation works for DDL and SQL generation, as well as with the ORM.
@@ -2053,9 +2053,9 @@ different schema each time::
 
 .. seealso::
 
-    :ref:`schema_translating`
+    :ref:`schema_translating` 
 
-:ticket:`2685`
+:ticket:`2685` 
 
 .. _change_3631:
 
@@ -2081,9 +2081,9 @@ to this dialect/compiler without impacting behaviors on real dialects.
 
 .. seealso::
 
-    :ref:`change_3081`
+    :ref:`change_3081` 
 
-:ticket:`3631`
+:ticket:`3631` 
 
 .. _change_3531:
 
@@ -2091,10 +2091,10 @@ The type_coerce function is now a persistent SQL element
 --------------------------------------------------------
 
 The :func:`_expression.type_coerce` function previously would return
-an object either of type :class:`.BindParameter` or :class:`.Label`, depending
+an object either of type :class:`.BindParameter` or :class:` .Label`, depending
 on the input.  An effect this would have was that in the case where expression
 transformations were used, such as the conversion of an element from a
-:class:`_schema.Column` to a :class:`.BindParameter` that's critical to ORM-level
+:class:`_schema.Column` to a :class:` .BindParameter` that's critical to ORM-level
 lazy loading, the type coercion information would not be used since it would
 have been lost already.
 
@@ -2145,7 +2145,7 @@ lazyloading as integers, since we already know these will come from
 our ``StringAsInt`` type which maintains the value as an integer in
 Python. We are then using :func:`.cast` so that as a SQL expression,
 the VARCHAR "id"  column will be CAST to an integer for a regular non-
-converted join as with :meth:`_query.Query.join` or :func:`_orm.joinedload`.
+converted join as with :meth:`_query.Query.join` or :func:` _orm.joinedload`.
 That is, a joinedload of ``.pets`` looks like:
 
 .. sourcecode:: sql
@@ -2192,7 +2192,7 @@ needless CAST that's in part of the ``StringAsInt`` custom type is removed
 as intended by the :func:`.type_coerce` function.
 
 
-:ticket:`3531`
+:ticket:`3531` 
 
 Key Behavioral Changes - ORM
 ============================
@@ -2202,7 +2202,7 @@ Key Behavioral Changes - ORM
 JSON Columns will not insert JSON NULL if no value is supplied and no default is established
 --------------------------------------------------------------------------------------------
 
-As detailed in :ref:`change_3514`, :class:`_types.JSON` will not render
+As detailed in :ref:`change_3514` , :class:`_types.JSON` will not render
 a JSON "null" value if the value is missing entirely.  To prevent SQL NULL,
 a default should be set up.  Given the following mapping::
 
@@ -2232,15 +2232,15 @@ Or, ensure the value is present on the object::
     session.commit()  # will insert JSON NULL
 
 Note that setting ``None`` for the default is the same as omitting it entirely;
-the :paramref:`.types.JSON.none_as_null` flag does not impact the value of ``None``
-passed to :paramref:`_schema.Column.default` or :paramref:`_schema.Column.server_default`::
+the :paramref:`.types.JSON.none_as_null` flag does not impact the value of ` `None``
+passed to :paramref:`_schema.Column.default` or :paramref:` _schema.Column.server_default`::
 
     # default=None is the same as omitting it entirely, does not apply JSON NULL
     json_value = Column(JSON(none_as_null=False), nullable=False, default=None)
 
 .. seealso::
 
-    :ref:`change_3514`
+    :ref:`change_3514` 
 
 .. _change_3641:
 
@@ -2277,7 +2277,7 @@ would not be affected, as the additional columns are not included in the
 result in any case, but the columns are unnecessary.
 
 Additionally, when the PostgreSQL DISTINCT ON format is used by passing
-expressions to :meth:`_query.Query.distinct`, the above "column adding" logic
+expressions to :meth:`_query.Query.distinct` , the above "column adding" logic
 is disabled entirely.
 
 When the query is being bundled into a subquery for the purposes of
@@ -2285,7 +2285,7 @@ joined eager loading, the "augment column list" rules are necessarily
 more aggressive so that the ORDER BY can still be satisfied, so this case
 remains unchanged.
 
-:ticket:`3641`
+:ticket:`3641` 
 
 .. _change_3776:
 
@@ -2321,7 +2321,7 @@ Will raise:
     sqlalchemy.exc.InvalidRequestError: A validation function for mapped attribute 'data'
     on mapper Mapper|A|a already exists.
 
-:ticket:`3776`
+:ticket:`3776` 
 
 Key Behavioral Changes - Core
 =============================
@@ -2342,7 +2342,7 @@ textual SQL statement, as would seem intuitive, even though the internals
 weren't checking for this.
 
 An application that is using this method by passing :class:`_schema.Column` objects
-to it positionally must ensure that the position of those :class:`_schema.Column`
+to it positionally must ensure that the position of those :class:`_schema.Column` 
 objects matches the position in which these columns are stated in the
 textual SQL.
 
@@ -2367,13 +2367,13 @@ Possibly more likely, a statement that worked like this::
 is now slightly risky, as the "*" specification will generally deliver columns
 in the order in which they are present in the table itself.  If the structure
 of the table changes due to schema changes, this ordering may no longer be the same.
-Therefore when using :meth:`_expression.TextClause.columns`, it's advised to list out
+Therefore when using :meth:`_expression.TextClause.columns` , it's advised to list out
 the desired columns explicitly in the textual SQL, though it's no longer
 necessary to worry about the names themselves in the textual SQL.
 
 .. seealso::
 
-    :ref:`change_3501`
+    :ref:`change_3501` 
 
 .. _change_3809:
 
@@ -2399,7 +2399,7 @@ incompatible for applications with such a use case who were working around
 the issue.
 
 
-:ticket:`3809`
+:ticket:`3809` 
 
 .. _change_2528:
 
@@ -2451,14 +2451,14 @@ This workaround works on all SQLAlchemy versions.  In the ORM, it looks like::
     stmt = session.query(Model1).from_statement(stmt1.union(stmt2))
 
 The behavior here has many parallels to the "join rewriting" behavior
-introduced in SQLAlchemy 0.9 in :ref:`feature_joins_09`; however in this case
+introduced in SQLAlchemy 0.9 in :ref:`feature_joins_09` ; however in this case
 we have opted not to add new rewriting behavior to accommodate this
 case for SQLite.
 The existing rewriting behavior is very complicated already, and the case of
 UNIONs with parenthesized SELECT statements is much less common than the
 "right-nested-join" use case of that feature.
 
-:ticket:`2528`
+:ticket:`2528` 
 
 
 Dialect Improvements and Changes - PostgreSQL
@@ -2471,8 +2471,8 @@ Support for INSERT..ON CONFLICT (DO UPDATE | DO NOTHING)
 
 The ``ON CONFLICT`` clause of ``INSERT`` added to PostgreSQL as of
 version 9.5 is now supported using a PostgreSQL-specific version of the
-:class:`_expression.Insert` object, via :func:`sqlalchemy.dialects.postgresql.dml.insert`.
-This :class:`_expression.Insert` subclass adds two new methods :meth:`_expression.Insert.on_conflict_do_update`
+:class:`_expression.Insert` object, via :func:` sqlalchemy.dialects.postgresql.dml.insert`.
+This :class:`_expression.Insert` subclass adds two new methods :meth:` _expression.Insert.on_conflict_do_update`
 and :meth:`_expression.Insert.on_conflict_do_nothing` which implement the full syntax
 supported by PostgreSQL 9.5 in this area::
 
@@ -2496,40 +2496,40 @@ The above will render:
 
 .. seealso::
 
-    :ref:`postgresql_insert_on_conflict`
+    :ref:`postgresql_insert_on_conflict` 
 
-:ticket:`3529`
+:ticket:`3529` 
 
 .. _change_3499_postgresql:
 
 ARRAY and JSON types now correctly specify "unhashable"
 -------------------------------------------------------
 
-As described in :ref:`change_3499`, the ORM relies upon being able to
+As described in :ref:`change_3499` , the ORM relies upon being able to
 produce a hash function for column values when a query's selected entities
 mixes full ORM entities with column expressions.   The ``hashable=False``
 flag is now correctly set on all of PG's "data structure" types, including
-:class:`_postgresql.ARRAY` and :class:`_postgresql.JSON`.
-The :class:`_postgresql.JSONB` and :class:`.HSTORE`
-types already included this flag.  For :class:`_postgresql.ARRAY`,
-this is conditional based on the :paramref:`.postgresql.ARRAY.as_tuple`
+:class:`_postgresql.ARRAY` and :class:` _postgresql.JSON`.
+The :class:`_postgresql.JSONB` and :class:` .HSTORE`
+types already included this flag.  For :class:`_postgresql.ARRAY` ,
+this is conditional based on the :paramref:`.postgresql.ARRAY.as_tuple` 
 flag, however it should no longer be necessary to set this flag
 in order to have an array value present in a composed ORM row.
 
 .. seealso::
 
-    :ref:`change_3499`
+    :ref:`change_3499` 
 
-    :ref:`change_3503`
+    :ref:`change_3503` 
 
-:ticket:`3499`
+:ticket:`3499` 
 
 .. _change_3503:
 
 Correct SQL Types are Established from Indexed Access of ARRAY, JSON, HSTORE
 ----------------------------------------------------------------------------
 
-For all three of :class:`_postgresql.ARRAY`, :class:`_postgresql.JSON` and :class:`.HSTORE`,
+For all three of :class:`_postgresql.ARRAY` , :class:`_postgresql.JSON` and :class:` .HSTORE`,
 the SQL type assigned to the expression returned by indexed access, e.g.
 ``col[someindex]``, should be correct in all cases.
 
@@ -2545,12 +2545,12 @@ This includes:
 
   Previously, the indexed access to ``col[5]`` would return an expression of
   type :class:`.Integer` where we could no longer perform indexed access
-  for the remaining dimensions, unless we used :func:`.cast` or :func:`.type_coerce`.
+  for the remaining dimensions, unless we used :func:`.cast` or :func:` .type_coerce`.
 
-* The :class:`_postgresql.JSON` and :class:`_postgresql.JSONB` types now mirror what PostgreSQL
+* The :class:`_postgresql.JSON` and :class:` _postgresql.JSONB` types now mirror what PostgreSQL
   itself does for indexed access.  This means that all indexed access for
-  a :class:`_postgresql.JSON` or :class:`_postgresql.JSONB` type returns an expression that itself
-  is *always* :class:`_postgresql.JSON` or :class:`_postgresql.JSONB` itself, unless the
+  a :class:`_postgresql.JSON` or :class:` _postgresql.JSONB` type returns an expression that itself
+  is *always* :class:`_postgresql.JSON` or :class:` _postgresql.JSONB` itself, unless the
   :attr:`~.postgresql.JSON.Comparator.astext` modifier is used.   This means that whether
   the indexed access of the JSON structure ultimately refers to a string,
   list, number, or other JSON structure, PostgreSQL always considers it
@@ -2560,9 +2560,9 @@ This includes:
 
     json_expr = json_col["key1"]["attr1"][5]
 
-* The "textual" type that is returned by indexed access of :class:`.HSTORE`
+* The "textual" type that is returned by indexed access of :class:`.HSTORE` 
   as well as the "textual" type that is returned by indexed access of
-  :class:`_postgresql.JSON` and :class:`_postgresql.JSONB` in conjunction with the
+  :class:`_postgresql.JSON` and :class:` _postgresql.JSONB` in conjunction with the
   :attr:`~.postgresql.JSON.Comparator.astext` modifier is now configurable; it defaults
   to :class:`_expression.TextClause` in both cases but can be set to a user-defined
   type using the :paramref:`.postgresql.JSON.astext_type` or
@@ -2570,18 +2570,18 @@ This includes:
 
 .. seealso::
 
-  :ref:`change_3503_cast`
+  :ref:`change_3503_cast` 
 
-:ticket:`3499`
-:ticket:`3487`
+:ticket:`3499` 
+:ticket:`3487` 
 
 .. _change_3503_cast:
 
 The JSON cast() operation now requires ``.astext`` is called explicitly
 -----------------------------------------------------------------------
 
-As part of the changes in :ref:`change_3503`, the workings of the
-:meth:`_expression.ColumnElement.cast` operator on :class:`_postgresql.JSON` and
+As part of the changes in :ref:`change_3503` , the workings of the
+:meth:`_expression.ColumnElement.cast` operator on :class:` _postgresql.JSON` and
 :class:`_postgresql.JSONB` no longer implicitly invoke the
 :attr:`.postgresql.JSON.Comparator.astext` modifier; PostgreSQL's JSON/JSONB types
 support CAST operations to each other without the "astext" aspect.
@@ -2641,20 +2641,20 @@ emits:
     )
 
 
-:ticket:`2729`
+:ticket:`2729` 
 
 Check constraints now reflect
 -----------------------------
 
 The PostgreSQL dialect now supports reflection of CHECK constraints
 both within the method :meth:`_reflection.Inspector.get_check_constraints` as well
-as within :class:`_schema.Table` reflection within the :attr:`_schema.Table.constraints`
+as within :class:`_schema.Table` reflection within the :attr:` _schema.Table.constraints`
 collection.
 
 "Plain" and "Materialized" views can be inspected separately
 ------------------------------------------------------------
 
-The new argument :paramref:`.PGInspector.get_view_names.include`
+The new argument :paramref:`.PGInspector.get_view_names.include` 
 allows specification of which sub-types of views should be returned::
 
     from sqlalchemy import inspect
@@ -2664,21 +2664,21 @@ allows specification of which sub-types of views should be returned::
     plain_views = insp.get_view_names(include="plain")
     all_views = insp.get_view_names(include=("plain", "materialized"))
 
-:ticket:`3588`
+:ticket:`3588` 
 
 
 Added tablespace option to Index
 --------------------------------
 
-The :class:`.Index` object now accepts the argument ``postgresql_tablespace``
+The :class:`.Index` object now accepts the argument ` `postgresql_tablespace``
 in order to specify TABLESPACE, the same way as accepted by the
 :class:`_schema.Table` object.
 
 .. seealso::
 
-    :ref:`postgresql_index_storage`
+    :ref:`postgresql_index_storage` 
 
-:ticket:`3720`
+:ticket:`3720` 
 
 Support for PyGreSQL
 --------------------
@@ -2698,8 +2698,8 @@ however.
 Support for FOR UPDATE SKIP LOCKED  / FOR NO KEY UPDATE / FOR KEY SHARE
 -----------------------------------------------------------------------
 
-The new parameters :paramref:`.GenerativeSelect.with_for_update.skip_locked`
-and :paramref:`.GenerativeSelect.with_for_update.key_share`
+The new parameters :paramref:`.GenerativeSelect.with_for_update.skip_locked` 
+and :paramref:`.GenerativeSelect.with_for_update.key_share` 
 in both Core and ORM apply a modification to a "SELECT...FOR UPDATE"
 or "SELECT...FOR SHARE" query on the PostgreSQL backend:
 
@@ -2732,9 +2732,9 @@ common to both MySQL and PostgreSQL.
 
 .. seealso::
 
-    :ref:`change_3619`
+    :ref:`change_3619` 
 
-:ticket:`3547`
+:ticket:`3547` 
 
 .. _change_3332:
 
@@ -2743,7 +2743,7 @@ Added support for AUTOCOMMIT "isolation level"
 
 The MySQL dialect now accepts the value "AUTOCOMMIT" for the
 :paramref:`_sa.create_engine.isolation_level` and
-:paramref:`.Connection.execution_options.isolation_level`
+:paramref:`.Connection.execution_options.isolation_level` 
 parameters::
 
     connection = engine.connect()
@@ -2752,7 +2752,7 @@ parameters::
 The isolation level makes use of the various "autocommit" attributes
 provided by most MySQL DBAPIs.
 
-:ticket:`3332`
+:ticket:`3332` 
 
 .. _change_mysql_3216:
 
@@ -2811,9 +2811,9 @@ use the :class:`.PrimaryKeyConstraint` construct explicitly (1.1.0b2)
         mysql_engine="InnoDB",
     )
 
-Along with the change :ref:`change_3216`, composite primary keys with
+Along with the change :ref:`change_3216` , composite primary keys with
 or without auto increment are now easier to specify;
-:paramref:`_schema.Column.autoincrement`
+:paramref:`_schema.Column.autoincrement` 
 now defaults to the value ``"auto"`` and the ``autoincrement=False``
 directives are no longer needed::
 
@@ -2847,7 +2847,7 @@ to any issue number, change number, or further explanation), and the workarounds
 present in this change are now lifted for SQLite when the DBAPI reports
 that version 3.7.16 or greater is in effect.
 
-:ticket:`3634`
+:ticket:`3634` 
 
 .. _change_3633:
 
@@ -2857,13 +2857,13 @@ Dotted column names workaround lifted for SQLite version 3.10.0
 The SQLite dialect has long had a workaround for an issue where the database
 driver does not report the correct column names for some SQL result sets, in
 particular when UNION is used.  The workaround is detailed at
-:ref:`sqlite_dotted_column_names`, and requires that SQLAlchemy assume that any
+:ref:`sqlite_dotted_column_names` , and requires that SQLAlchemy assume that any
 column name with a dot in it is actually a ``tablename.columnname`` combination
 delivered via this buggy behavior, with an option to turn it off via the
 ``sqlite_raw_colnames`` execution option.
 
 As of SQLite version 3.10.0, the bug in UNION and other queries has been fixed;
-like the change described in :ref:`change_3634`, SQLite's changelog only
+like the change described in :ref:`change_3634` , SQLite's changelog only
 identifies it cryptically as "Added the colUsed field to sqlite3_index_info for
 use by the sqlite3_module.xBestIndex method", however SQLAlchemy's translation
 of these dotted column names is no longer required with this version, so is
@@ -2874,13 +2874,13 @@ less on column names in result sets when delivering results for Core and ORM
 SQL constructs, so the importance of this issue was already lessened in any
 case.
 
-:ticket:`3633`
+:ticket:`3633` 
 
 .. _change_sqlite_schemas:
 
 Improved Support for Remote Schemas
 -----------------------------------
-The SQLite dialect now implements :meth:`_reflection.Inspector.get_schema_names`
+The SQLite dialect now implements :meth:`_reflection.Inspector.get_schema_names` 
 and additionally has improved support for tables and indexes that are
 created and reflected from a remote schema, which in SQLite is a
 database that is assigned a name via the ``ATTACH`` statement; previously,
@@ -2898,14 +2898,14 @@ of SQLite in order to extract the name of the primary key constraint
 of a table from the original DDL, in the same way that is achieved for
 foreign key constraints in recent SQLAlchemy versions.
 
-:ticket:`3629`
+:ticket:`3629` 
 
 Check constraints now reflect
 -----------------------------
 
 The SQLite dialect now supports reflection of CHECK constraints
 both within the method :meth:`_reflection.Inspector.get_check_constraints` as well
-as within :class:`_schema.Table` reflection within the :attr:`_schema.Table.constraints`
+as within :class:`_schema.Table` reflection within the :attr:` _schema.Table.constraints`
 collection.
 
 ON DELETE and ON UPDATE foreign key phrases now reflect
@@ -2926,7 +2926,7 @@ Added transaction isolation level support for SQL Server
 
 All SQL Server dialects support transaction isolation level settings
 via the :paramref:`_sa.create_engine.isolation_level` and
-:paramref:`.Connection.execution_options.isolation_level`
+:paramref:`.Connection.execution_options.isolation_level` 
 parameters.  The four standard levels are supported as well as
 ``SNAPSHOT``::
 
@@ -2936,16 +2936,16 @@ parameters.  The four standard levels are supported as well as
 
 .. seealso::
 
-    :ref:`mssql_isolation_level`
+    :ref:`mssql_isolation_level` 
 
-:ticket:`3534`
+:ticket:`3534` 
 
 .. _change_3504:
 
 String / varlength types no longer represent "max" explicitly on reflection
 ---------------------------------------------------------------------------
 
-When reflecting a type such as :class:`.String`, :class:`_expression.TextClause`, etc.
+When reflecting a type such as :class:`.String` , :class:`_expression.TextClause` , etc.
 which includes a length, an "un-lengthed" type under SQL Server would
 copy the "length" parameter as the value ``"max"``::
 
@@ -2972,19 +2972,19 @@ Applications which may have been relying on a direct comparison of the "length"
 value to the string "max" should consider the value of ``None`` to mean
 the same thing.
 
-:ticket:`3504`
+:ticket:`3504` 
 
 Support for "non clustered" on primary key to allow clustered elsewhere
 -----------------------------------------------------------------------
 
-The ``mssql_clustered`` flag available on :class:`.UniqueConstraint`,
-:class:`.PrimaryKeyConstraint`, :class:`.Index` now defaults to ``None``, and
+The ``mssql_clustered`` flag available on :class:`.UniqueConstraint` ,
+:class:`.PrimaryKeyConstraint` , :class:`.Index` now defaults to ` `None``, and
 can be set to False which will render the NONCLUSTERED keyword in particular
 for a primary key, allowing a different index to be used as "clustered".
 
 .. seealso::
 
-    :ref:`mssql_indexes`
+    :ref:`mssql_indexes` 
 
 .. _change_3434:
 
@@ -3023,7 +3023,7 @@ normally with schema-qualified tables.  For applications which may rely
 on this behavior, set the flag back to True.
 
 
-:ticket:`3434`
+:ticket:`3434` 
 
 Dialect Improvements and Changes - Oracle
 =========================================
@@ -3031,6 +3031,6 @@ Dialect Improvements and Changes - Oracle
 Support for SKIP LOCKED
 -----------------------
 
-The new parameter :paramref:`.GenerativeSelect.with_for_update.skip_locked`
+The new parameter :paramref:`.GenerativeSelect.with_for_update.skip_locked` 
 in both Core and ORM will generate the "SKIP LOCKED" suffix for a
 "SELECT...FOR UPDATE" or "SELECT.. FOR SHARE" query.

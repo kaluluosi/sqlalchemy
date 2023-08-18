@@ -1,7 +1,9 @@
-ORM内部结构
-=============
+.. _orm_internal_toplevel:
 
-在其他部分没有涵盖到的情况下，本文列出了ORM的关键构造。
+ORM 内核
+========
+
+列举出在其它章节中未被涵盖的主要 ORM 构建。
 
 .. currentmodule:: sqlalchemy.orm
 
@@ -74,7 +76,7 @@ ORM内部结构
     :members:
 
 .. autoclass:: RelationshipProperty
-  :members:
+    :members:
 
 .. autoclass:: SQLORMExpression
 

@@ -5,7 +5,7 @@ Setup for ORM Queryguide: DML
 ======================================
 
 This page illustrates the mappings and fixture data used by the
-:doc:`dml` document of the :ref:`queryguide_toplevel`.
+:doc:`dml` document of the :ref:` queryguide_toplevel`.
 
 ..  sourcecode:: python
 

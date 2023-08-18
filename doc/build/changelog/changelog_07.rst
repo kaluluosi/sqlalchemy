@@ -135,9 +135,9 @@
         :versions: 0.8.0b2
 
       Fixed :meth:`_schema.MetaData.reflect` to correctly use
-      the given :class:`_engine.Connection`, if given, without
+      the given :class:`_engine.Connection` , if given, without
       opening a second connection from that connection's
-      :class:`_engine.Engine`.
+      :class:`_engine.Engine` .
 
     .. change::
         :tags: mssql, bug
@@ -166,7 +166,7 @@
         :tickets: 2594, 2584
 
         Backported adjustment to ``__repr__`` for
-        :class:`.TypeDecorator` to 0.7, allows :class:`.PickleType`
+        :class:`.TypeDecorator` to 0.7, allows :class:` .PickleType`
         to produce a clean ``repr()`` to help with Alembic.
 
     .. change::
@@ -4186,7 +4186,7 @@
 
       .. seealso::
 
-          :ref:`07_migration_mutation_extension`
+          :ref:`07_migration_mutation_extension` 
 
     .. change::
         :tags: orm

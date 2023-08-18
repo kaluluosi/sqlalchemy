@@ -13,7 +13,7 @@ Using a Hybrid
 
 The easiest and most flexible way to link relatively simple SQL expressions to a class is to use a so-called
 "hybrid attribute",
-described in the section :ref:`hybrids_toplevel`.  The hybrid provides
+described in the section :ref:`hybrids_toplevel` .  The hybrid provides
 for an expression that works at both the Python level as well as at the
 SQL expression level.  For example, below we map a class ``User``,
 containing attributes ``firstname`` and ``lastname``, and include a hybrid that
@@ -47,7 +47,7 @@ as well as usable within queries::
 The string concatenation example is a simple one, where the Python expression
 can be dual purposed at the instance and class level.  Often, the SQL expression
 must be distinguished from the Python expression, which can be achieved using
-:meth:`.hybrid_property.expression`.  Below we illustrate the case where a conditional
+:meth:`.hybrid_property.expression` .  Below we illustrate the case where a conditional
 needs to be present inside the hybrid, using the ``if`` statement in Python and the
 :func:`_expression.case` construct for SQL expressions::
 
@@ -81,7 +81,7 @@ Using column_property
 ---------------------
 
 The :func:`_orm.column_property` function can be used to map a SQL
-expression in a manner similar to a regularly mapped :class:`_schema.Column`.
+expression in a manner similar to a regularly mapped :class:`_schema.Column` .
 With this technique, the attribute is loaded
 along with all other column-mapped attributes at load time.  This is in some
 cases an advantage over the usage of hybrids, as the value can be loaded
@@ -109,7 +109,7 @@ follows::
         fullname = column_property(firstname + " " + lastname)
 
 Correlated subqueries may be used as well. Below we use the
-:func:`_expression.select` construct to create a :class:`_sql.ScalarSelect`,
+:func:`_expression.select` construct to create a :class:` _sql.ScalarSelect`,
 representing a column-oriented SELECT statement, that links together the count
 of ``Address`` objects available for a particular ``User``::
 
@@ -149,14 +149,14 @@ In the above example, we define a :func:`_expression.ScalarSelect` construct lik
         .scalar_subquery()
     )
 
-Above, we first use :func:`_sql.select` to create a :class:`_sql.Select`
+Above, we first use :func:`_sql.select` to create a :class:` _sql.Select`
 construct, which we then convert into a :term:`scalar subquery` using the
 :meth:`_sql.Select.scalar_subquery` method, indicating our intent to use this
 :class:`_sql.Select` statement in a column expression context.
 
-Within the :class:`_sql.Select` itself, we select the count of ``Address.id`` rows
+Within the :class:`_sql.Select` itself, we select the count of ` `Address.id`` rows
 where the ``Address.user_id`` column is equated to ``id``, which in the context
-of the ``User`` class is the :class:`_schema.Column` named ``id`` (note that ``id`` is
+of the ``User`` class is the :class:`_schema.Column` named ` `id`` (note that ``id`` is
 also the name of a Python built in function, which is not what we want to use
 here - if we were outside of the ``User`` class definition, we'd use ``User.id``).
 
@@ -196,8 +196,8 @@ If import issues prevent the :func:`.column_property` from being defined
 inline with the class, it can be assigned to the class after both
 are configured.   When using mappings that make use of a Declarative
 base class (i.e. produced by the :class:`_orm.DeclarativeBase` superclass
-or legacy functions such as :func:`_orm.declarative_base`),
-this attribute assignment has the effect of calling :meth:`_orm.Mapper.add_property`
+or legacy functions such as :func:`_orm.declarative_base` ),
+this attribute assignment has the effect of calling :meth:`_orm.Mapper.add_property` 
 to add an additional property after the fact::
 
     # only works if a declarative base class is in use
@@ -206,9 +206,9 @@ to add an additional property after the fact::
     )
 
 When using mapping styles that don't use Declarative base classes
-such as the :meth:`_orm.registry.mapped` decorator, the :meth:`_orm.Mapper.add_property`
+such as the :meth:`_orm.registry.mapped` decorator, the :meth:` _orm.Mapper.add_property`
 method may be invoked explicitly on the underlying :class:`_orm.Mapper` object,
-which can be obtained using :func:`_sa.inspect`::
+which can be obtained using :func:`_sa.inspect` ::
 
     from sqlalchemy.orm import registry
 
@@ -237,7 +237,7 @@ which can be obtained using :func:`_sa.inspect`::
 
 .. seealso::
 
-  :ref:`orm_declarative_table_adding_columns`
+  :ref:`orm_declarative_table_adding_columns` 
 
 
 .. _mapper_column_property_sql_expressions_composed:
@@ -246,7 +246,7 @@ Composing from Column Properties at Mapping Time
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It is possible to create mappings that combine multiple
-:class:`.ColumnProperty` objects together.  The :class:`.ColumnProperty` will
+:class:`.ColumnProperty` objects together.  The :class:` .ColumnProperty` will
 be interpreted as a SQL expression when used in a Core expression context,
 provided that it is targeted by an existing expression object; this works by
 the Core detecting that the object has a ``__clause_element__()`` method which
@@ -256,7 +256,7 @@ object to target it, the :attr:`.ColumnProperty.expression` attribute will
 return the underlying SQL expression so that it can be used to build SQL
 expressions consistently.  Below, the ``File`` class contains an attribute
 ``File.path`` that concatenates a string token to the ``File.filename``
-attribute, which is itself a :class:`.ColumnProperty`::
+attribute, which is itself a :class:`.ColumnProperty` ::
 
 
     class File(Base):
@@ -278,10 +278,10 @@ the :class:`.ColumnProperty` directly within the mapping definition::
 Using Column Deferral with ``column_property()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The column deferral feature introduced in the :ref:`queryguide_toplevel`
+The column deferral feature introduced in the :ref:`queryguide_toplevel` 
 at :ref:`orm_queryguide_column_deferral` may be applied at mapping time
 to a SQL expression mapped by :func:`_orm.column_property` by using the
-:func:`_orm.deferred` function in place of :func:`_orm.column_property`::
+:func:`_orm.deferred` function in place of :func:` _orm.column_property`::
 
     from sqlalchemy.orm import deferred
 
@@ -296,19 +296,19 @@ to a SQL expression mapped by :func:`_orm.column_property` by using the
 
 .. seealso::
 
-    :ref:`orm_queryguide_deferred_imperative`
+    :ref:`orm_queryguide_deferred_imperative` 
 
 
 
 Using a plain descriptor
 ------------------------
 
-In cases where a SQL query more elaborate than what :func:`_orm.column_property`
+In cases where a SQL query more elaborate than what :func:`_orm.column_property` 
 or :class:`.hybrid_property` can provide must be emitted, a regular Python
 function accessed as an attribute can be used, assuming the expression
 only needs to be available on an already-loaded instance.   The function
 is decorated with Python's own ``@property`` decorator to mark it as a read-only
-attribute.   Within the function, :func:`.object_session`
+attribute.   Within the function, :func:`.object_session` 
 is used to locate the :class:`.Session` corresponding to the current object,
 which is then used to emit a query::
 

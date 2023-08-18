@@ -1,13 +1,13 @@
-.. 注意 *_include.rst 是 conf.py 中的一种命名约定。
+.. 注意 *_include.rst 是 conf.py 中的命名约定。
 
-.. |tutorial_title| 替换为:: SQLAlchemy 1.4 / 2.0 教程
+.. |tutorial_title| replace:: SQLAlchemy 1.4 / 2.0 教程
 
-.. 专题:: |tutorial_title|
+.. 主题:: |tutorial_title|
 
-      本页面是 :doc:`index` 的一部分。
+      本页是  :doc:`索引页<index>`  的一部分。
 
-      上一页：|prev|   |   下一页：|next|
+      上一篇：|prev|   |   下一篇：|next|
 
-.. 底部专题:: |tutorial_title|
+.. 底部主题:: |tutorial_title|
 
-      下一教程部分：|next|
+      下一篇教程章节：|next|

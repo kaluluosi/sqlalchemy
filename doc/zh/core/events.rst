@@ -1,17 +1,15 @@
 .. _core_event_toplevel:
 
-核心事件
-===========
+Core事件
+========
 
-本节描述SQLAlchemy Core提供的事件接口。
-有关事件侦听API的介绍，请参见：:ref:`event_toplevel`。
-ORM事件请参见：:ref:`orm_event_toplevel`。
+本节描述SQLAlchemy Core提供的事件接口。有关事件监听API的介绍，请参见   :ref:`event_toplevel` 。ORM事件请参见   :ref:` orm_event_toplevel` 。
 
 .. autoclass:: sqlalchemy.event.base.Events
    :members:
 
-连接池事件
-----------------------
+链接池事件
+----------
 
 .. autoclass:: sqlalchemy.events.PoolEvents
    :members:
@@ -21,17 +19,17 @@ ORM事件请参见：:ref:`orm_event_toplevel`。
 
 .. _core_sql_events:
 
-SQL执行和连接事件
------------------------------------
+SQL执行和链接事件
+------------------
 
 .. autoclass:: sqlalchemy.events.ConnectionEvents
-    :members:
+   :members:
 
 .. autoclass:: sqlalchemy.events.DialectEvents
-    :members:
+   :members:
 
-架构事件
--------------
+模式事件
+--------
 
 .. autoclass:: sqlalchemy.events.DDLEvents
     :members:

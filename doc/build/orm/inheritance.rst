@@ -14,12 +14,12 @@ The most common forms of inheritance are single and joined table, while
 concrete inheritance presents more configurational challenges.
 
 When mappers are configured in an inheritance relationship, SQLAlchemy has the
-ability to load elements :term:`polymorphically`, meaning that a single query can
+ability to load elements :term:`polymorphically` , meaning that a single query can
 return objects of multiple types.
 
 .. seealso::
 
-    :ref:`loading_joined_inheritance` - in the :ref:`queryguide_toplevel`
+    :ref:`loading_joined_inheritance` - in the :ref:` queryguide_toplevel`
 
     :ref:`examples_inheritance` - complete examples of joined, single and
     concrete inheritance
@@ -73,7 +73,7 @@ In the above example, the discriminator is the ``type`` column, whichever is
 configured using the :paramref:`_orm.Mapper.polymorphic_on` parameter. This
 parameter accepts a column-oriented expression, specified either as a string
 name of the mapped attribute to use or as a column expression object such as
-:class:`_schema.Column` or :func:`_orm.mapped_column` construct.
+:class:`_schema.Column` or :func:` _orm.mapped_column` construct.
 
 The discriminator column will store a value which indicates the type of object
 represented within the row. The column may be of any datatype, though string
@@ -377,8 +377,8 @@ will result in an error:
     resolve conflicts.
 
 The above scenario presents an ambiguity to the Declarative mapping system that
-may be resolved by using the :paramref:`_orm.mapped_column.use_existing_column`
-parameter on :func:`_orm.mapped_column`, which instructs :func:`_orm.mapped_column`
+may be resolved by using the :paramref:`_orm.mapped_column.use_existing_column` 
+parameter on :func:`_orm.mapped_column` , which instructs :func:`_orm.mapped_column` 
 to look on the inheriting superclass present and use the column that's already
 mapped, if already present, else to map a new column::
 
@@ -419,23 +419,23 @@ mapped, if already present, else to map a new column::
 
 Above, when ``Manager`` is mapped, the ``start_date`` column is
 already present on the ``Employee`` class, having been provided by the
-``Engineer`` mapping already.   The :paramref:`_orm.mapped_column.use_existing_column`
+``Engineer`` mapping already.   The :paramref:`_orm.mapped_column.use_existing_column` 
 parameter indicates to :func:`_orm.mapped_column` that it should look for the
-requested :class:`_schema.Column` on the mapped :class:`.Table` for
+requested :class:`_schema.Column` on the mapped :class:` .Table` for
 ``Employee`` first, and if present, maintain that existing mapping.  If not
 present, :func:`_orm.mapped_column` will map the column normally, adding it
 as one of the columns in the :class:`.Table` referred towards by the
 ``Employee`` superclass.
 
 
-.. versionadded:: 2.0.0b4 - Added :paramref:`_orm.mapped_column.use_existing_column`,
+.. versionadded:: 2.0.0b4 - Added :paramref:`_orm.mapped_column.use_existing_column` ,
    which provides a 2.0-compatible means of mapping a column on an inheriting
    subclass conditionally.  The previous approach which combines
-   :class:`.declared_attr` with a lookup on the parent ``.__table__``
+   :class:`.declared_attr` with a lookup on the parent ` `.__table__``
    continues to function as well, but lacks :pep:`484` typing support.
 
 
-A similar concept can be used with mixin classes (see :ref:`orm_mixins_toplevel`)
+A similar concept can be used with mixin classes (see :ref:`orm_mixins_toplevel` )
 to define a particular series of columns and/or other mapped attributes
 from a reusable mixin class::
 
@@ -567,10 +567,10 @@ Building Deeper Hierarchies with ``polymorphic_abstract``
 .. versionadded:: 2.0
 
 When building any kind of inheritance hierarchy, a mapped class may include the
-:paramref:`_orm.Mapper.polymorphic_abstract` parameter set to ``True``, which
+:paramref:`_orm.Mapper.polymorphic_abstract` parameter set to ` `True``, which
 indicates that the class should be mapped normally, however would not expect to
 be instantiated directly and would not include a
-:paramref:`_orm.Mapper.polymorphic_identity`. Subclasses may then be declared
+:paramref:`_orm.Mapper.polymorphic_identity` . Subclasses may then be declared
 as subclasses of this mapped class, which themselves can include a
 :paramref:`_orm.Mapper.polymorphic_identity` and therefore be used normally.
 This allows a series of subclasses to be referenced at once by a common base
@@ -586,7 +586,7 @@ As an example, suppose ``Manager`` and ``Principal`` were both to be classified
 against a superclass ``Executive``, and ``Engineer`` and ``Sysadmin`` were
 classified against a superclass ``Technologist``. Neither ``Executive`` or
 ``Technologist`` is ever instantiated, therefore have no
-:paramref:`_orm.Mapper.polymorphic_identity`. These classes can be configured
+:paramref:`_orm.Mapper.polymorphic_identity` . These classes can be configured
 using :paramref:`_orm.Mapper.polymorphic_abstract` as follows::
 
     class Employee(Base):
@@ -643,12 +643,12 @@ using :paramref:`_orm.Mapper.polymorphic_abstract` as follows::
 In the above example, the new classes ``Technologist`` and ``Executive``
 are ordinary mapped classes, and also indicate new columns to be added to the
 superclass called ``executive_background`` and ``competencies``.   However,
-they both lack a setting for :paramref:`_orm.Mapper.polymorphic_identity`;
+they both lack a setting for :paramref:`_orm.Mapper.polymorphic_identity` ;
 this is because it's not expected that ``Technologist`` or ``Executive`` would
 ever be instantiated directly; we'd always have one of ``Manager``, ``Principal``,
 ``Engineer`` or ``SysAdmin``.   We can however query for
 ``Principal`` and ``Technologist`` roles, as well as have them be targets
-of :func:`_orm.relationship`.  The example below demonstrates a SELECT
+of :func:`_orm.relationship` .  The example below demonstrates a SELECT
 statement for ``Technologist`` objects:
 
 
@@ -772,7 +772,7 @@ is not required**.   Establishing relationships that involve concrete inheritanc
 classes is also more awkward.
 
 To establish a class as using concrete inheritance, add the
-:paramref:`_orm.Mapper.concrete` parameter within the ``__mapper_args__``.
+:paramref:`_orm.Mapper.concrete` parameter within the ` `__mapper_args__``.
 This indicates to Declarative as well as the mapping that the superclass
 table should not be considered as part of the mapping::
 
@@ -827,15 +827,15 @@ Polymorphic loading with concrete inheritance requires that a specialized
 SELECT is configured against each base class that should have polymorphic
 loading.  This SELECT needs to be capable of accessing all the
 mapped tables individually, and is typically a UNION statement that is
-constructed using a SQLAlchemy helper :func:`.polymorphic_union`.
+constructed using a SQLAlchemy helper :func:`.polymorphic_union` .
 
-As discussed in :ref:`inheritance_loading_toplevel`, mapper inheritance
+As discussed in :ref:`inheritance_loading_toplevel` , mapper inheritance
 configurations of any type can be configured to load from a special selectable
 by default using the :paramref:`_orm.Mapper.with_polymorphic` argument.  Current
 public API requires that this argument is set on a :class:`_orm.Mapper` when
 it is first constructed.
 
-However, in the case of Declarative, both the mapper and the :class:`_schema.Table`
+However, in the case of Declarative, both the mapper and the :class:`_schema.Table` 
 that is mapped are created at once, the moment the mapped class is defined.
 This means that the :paramref:`_orm.Mapper.with_polymorphic` argument cannot
 be provided yet, since the :class:`_schema.Table` objects that correspond to the
@@ -845,7 +845,7 @@ There are a few strategies available to resolve this cycle, however
 Declarative provides helper classes :class:`.ConcreteBase` and
 :class:`.AbstractConcreteBase` which handle this issue behind the scenes.
 
-Using :class:`.ConcreteBase`, we can set up our concrete mapping in
+Using :class:`.ConcreteBase` , we can set up our concrete mapping in
 almost the same way as we do other forms of inheritance mappings::
 
     from sqlalchemy.ext.declarative import ConcreteBase
@@ -892,7 +892,7 @@ almost the same way as we do other forms of inheritance mappings::
 
 Above, Declarative sets up the polymorphic selectable for the
 ``Employee`` class at mapper "initialization" time; this is the late-configuration
-step for mappers that resolves other dependent mappers.  The :class:`.ConcreteBase`
+step for mappers that resolves other dependent mappers.  The :class:`.ConcreteBase` 
 helper uses the
 :func:`.polymorphic_union` function to create a UNION of all concrete-mapped
 tables after all the other classes are set up, and then configures this statement
@@ -942,7 +942,7 @@ particular subclass.
 
 .. seealso::
 
-    :class:`.ConcreteBase`
+    :class:`.ConcreteBase` 
 
 .. _abstract_concrete_base:
 
@@ -999,7 +999,7 @@ table, however the ``Employee`` mapper will be mapped directly to the
 "polymorphic union", rather than specifying it locally to the
 :paramref:`_orm.Mapper.with_polymorphic` parameter.
 
-To help with this, Declarative offers a variant of the :class:`.ConcreteBase`
+To help with this, Declarative offers a variant of the :class:`.ConcreteBase` 
 class called :class:`.AbstractConcreteBase` which achieves this automatically::
 
     from sqlalchemy.ext.declarative import AbstractConcreteBase
@@ -1046,7 +1046,7 @@ Above, the :meth:`_orm.registry.configure` method is invoked, which will
 trigger the ``Employee`` class to be actually mapped; before the configuration
 step, the class has no mapping as the sub-tables which it will query from
 have not yet been defined.   This process is more complex than that of
-:class:`.ConcreteBase`, in that the entire mapping
+:class:`.ConcreteBase` , in that the entire mapping
 of the base class must be delayed until all the subclasses have been declared.
 With a mapping like the above, only instances of ``Manager`` and ``Engineer``
 may be persisted; querying against the ``Employee`` class will always produce
@@ -1077,7 +1077,7 @@ The :paramref:`.AbstractConcreteBase.strict_attrs` parameter indicates that the
 the ``Employee`` class, in this case the ``Employee.name`` attribute. Other
 attributes such as ``Manager.manager_data`` and ``Engineer.engineer_info`` are
 present only on their corresponding subclass.
-When :paramref:`.AbstractConcreteBase.strict_attrs`
+When :paramref:`.AbstractConcreteBase.strict_attrs` 
 is not set, then all subclass attributes such as ``Manager.manager_data`` and
 ``Engineer.engineer_info`` get mapped onto the base ``Employee`` class.  This
 is a legacy mode of use which may be more convenient for querying but has the
@@ -1087,7 +1087,7 @@ using :paramref:`.AbstractConcreteBase.strict_attrs` would have the effect
 of generating non-useful ``Engineer.manager_name`` and ``Manager.engineer_info``
 attributes.
 
-.. versionadded:: 2.0  Added :paramref:`.AbstractConcreteBase.strict_attrs`
+.. versionadded:: 2.0  Added :paramref:`.AbstractConcreteBase.strict_attrs` 
    parameter to :class:`.AbstractConcreteBase` which produces a cleaner
    mapping; the default is False to allow legacy mappings to continue working
    as they did in 1.x versions.
@@ -1096,13 +1096,13 @@ attributes.
 
 .. seealso::
 
-    :class:`.AbstractConcreteBase`
+    :class:`.AbstractConcreteBase` 
 
 
 Classical and Semi-Classical Concrete Polymorphic Configuration
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-The Declarative configurations illustrated with :class:`.ConcreteBase`
+The Declarative configurations illustrated with :class:`.ConcreteBase` 
 and :class:`.AbstractConcreteBase` are equivalent to two other forms
 of configuration that make use of :func:`.polymorphic_union` explicitly.
 These configurational forms make use of the :class:`_schema.Table` object explicitly
@@ -1138,7 +1138,7 @@ establishes the :class:`_schema.Table` objects separately::
         Column("engineer_info", String(50)),
     )
 
-Next, the UNION is produced using :func:`.polymorphic_union`::
+Next, the UNION is produced using :func:`.polymorphic_union` ::
 
     from sqlalchemy.orm import polymorphic_union
 
@@ -1337,7 +1337,7 @@ such a configuration is as follows::
 The next complexity with concrete inheritance and relationships involves
 when we'd like one or all of ``Employee``, ``Manager`` and ``Engineer`` to
 themselves refer back to ``Company``.   For this case, SQLAlchemy has
-special behavior in that a :func:`_orm.relationship` placed on ``Employee``
+special behavior in that a :func:`_orm.relationship` placed on ` `Employee``
 which links to ``Company`` **does not work**
 against the ``Manager`` and ``Engineer`` classes, when exercised at the
 instance level.  Instead, a distinct
@@ -1407,7 +1407,7 @@ Loading Concrete Inheritance Mappings
 The options for loading with concrete inheritance are limited; generally,
 if polymorphic loading is configured on the mapper using one of the
 declarative concrete mixins, it can't be modified at query time
-in current SQLAlchemy versions.   Normally, the :func:`_orm.with_polymorphic`
+in current SQLAlchemy versions.   Normally, the :func:`_orm.with_polymorphic` 
 function would be able to override the style of loading used by concrete,
 however due to current limitations this is not yet supported.
 

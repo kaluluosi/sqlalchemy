@@ -1,5 +1,5 @@
 .. |tutorial_title| replace:: SQLAlchemy Unified Tutorial
-.. |next| replace:: :doc:`engine`
+.. |next| replace:: :doc:`engine` 
 
 .. footer_topic:: |tutorial_title|
 
@@ -110,7 +110,7 @@ The major sections of this tutorial are as follows:
   :class:`_engine.Engine` object; here's how to create one.
 
 * :ref:`tutorial_working_with_transactions` - the usage API of the
-  :class:`_engine.Engine` and its related objects :class:`_engine.Connection`
+  :class:`_engine.Engine` and its related objects :class:` _engine.Connection`
   and :class:`_result.Result` are presented here. This content is Core-centric
   however ORM users will want to be familiar with at least the
   :class:`_result.Result` object.
@@ -121,7 +121,7 @@ The major sections of this tutorial are as follows:
   an ORM perspective.
 
 * :ref:`tutorial_working_with_data` - here we learn how to create, select,
-  update and delete data in the database.   The so-called :term:`CRUD`
+  update and delete data in the database.   The so-called :term:`CRUD` 
   operations here are given in terms of SQLAlchemy Core with links out towards
   their ORM counterparts.  The SELECT operation that is introduced in detail at
   :ref:`tutorial_selecting_data` applies equally well to Core and ORM.

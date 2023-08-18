@@ -1,1 +1,1 @@
-该文档已移动至:doc:`queryguide/relationships`
+此文档已移动到  :doc:`queryguide/relationships` 。

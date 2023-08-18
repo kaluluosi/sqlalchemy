@@ -29,9 +29,9 @@ Declarative vs. Imperative Forms
 As SQLAlchemy has evolved, different ORM configurational styles have emerged.
 For examples in this section and others that use annotated
 :ref:`Declarative <orm_explicit_declarative_base>` mappings with
-:class:`_orm.Mapped`, the corresponding non-annotated form should use the
+:class:`_orm.Mapped` , the corresponding non-annotated form should use the
 desired class, or string class name, as the first argument passed to
-:func:`_orm.relationship`.  The example below illustrates the form used in
+:func:`_orm.relationship` .  The example below illustrates the form used in
 this document, which is a fully Declarative example using :pep:`484` annotations,
 where the :func:`_orm.relationship` construct is also deriving the target
 class and collection type from the :class:`_orm.Mapped` annotation,
@@ -52,7 +52,7 @@ which is the most modern form of SQLAlchemy Declarative mapping::
         parent: Mapped["Parent"] = relationship(back_populates="children")
 
 In contrast, using a Declarative mapping **without** annotations is
-the more "classic" form of mapping, where :func:`_orm.relationship`
+the more "classic" form of mapping, where :func:`_orm.relationship` 
 requires all parameters passed to it directly, as in the example below::
 
     class Parent(Base):
@@ -69,7 +69,7 @@ requires all parameters passed to it directly, as in the example below::
         parent_id = mapped_column(ForeignKey("parent_table.id"))
         parent = relationship("Parent", back_populates="children")
 
-Finally, using :ref:`Imperative Mapping <orm_imperative_mapping>`, which
+Finally, using :ref:`Imperative Mapping <orm_imperative_mapping>` , which
 is SQLAlchemy's original mapping form before Declarative was made (which
 nonetheless remains preferred by a vocal minority of users), the above
 configuration looks like::
@@ -97,7 +97,7 @@ it using the :paramref:`_orm.relationship.collection_class` parameter::
         children = relationship("Child", collection_class=set, ...)
 
 Detail on collection configuration for :func:`_orm.relationship` is at
-:ref:`custom_collections`.
+:ref:`custom_collections` .
 
 Additional differences between annotated and non-annotated / imperative
 styles will be noted as needed.
@@ -127,7 +127,7 @@ a collection of items represented by the child::
 To establish a bidirectional relationship in one-to-many, where the "reverse"
 side is a many to one, specify an additional :func:`_orm.relationship` and connect
 the two using the :paramref:`_orm.relationship.back_populates` parameter,
-using the attribute name of each :func:`_orm.relationship`
+using the attribute name of each :func:`_orm.relationship` 
 as the value for :paramref:`_orm.relationship.back_populates` on the other::
 
 
@@ -171,7 +171,7 @@ class to use as a collection may be passed using the
 .. seealso::
 
     :ref:`custom_collections` - contains further detail on collection
-    configuration including some techniques to map :func:`_orm.relationship`
+    configuration including some techniques to map :func:`_orm.relationship` 
     to dictionaries.
 
 
@@ -183,15 +183,15 @@ when their owning ``Parent`` is deleted.  To configure this behavior,
 the ``delete`` cascade option described at :ref:`cascade_delete` is used.
 An additional option is that a ``Child`` object can itself be deleted when
 it is deassociated from its parent.  This behavior is described at
-:ref:`cascade_delete_orphan`.
+:ref:`cascade_delete_orphan` .
 
 .. seealso::
 
-    :ref:`cascade_delete`
+    :ref:`cascade_delete` 
 
-    :ref:`passive_deletes`
+    :ref:`passive_deletes` 
 
-    :ref:`cascade_delete_orphan`
+    :ref:`cascade_delete_orphan` 
 
 
 .. _relationship_patterns_m2o:
@@ -217,12 +217,12 @@ attribute will be created::
         id: Mapped[int] = mapped_column(primary_key=True)
 
 The above example shows a many-to-one relationship that assumes non-nullable
-behavior; the next section, :ref:`relationship_patterns_nullable_m2o`,
+behavior; the next section, :ref:`relationship_patterns_nullable_m2o` ,
 illustrates a nullable version.
 
-Bidirectional behavior is achieved by adding a second :func:`_orm.relationship`
+Bidirectional behavior is achieved by adding a second :func:`_orm.relationship` 
 and applying the :paramref:`_orm.relationship.back_populates` parameter
-in both directions, using the attribute name of each :func:`_orm.relationship`
+in both directions, using the attribute name of each :func:`_orm.relationship` 
 as the value for :paramref:`_orm.relationship.back_populates` on the other::
 
     class Parent(Base):
@@ -271,9 +271,9 @@ case the configuration would look like::
 Above, the column for ``Parent.child_id`` will be created in DDL to allow
 ``NULL`` values. When using :func:`_orm.mapped_column` with explicit typing
 declarations, the specification of ``child_id: Mapped[Optional[int]]`` is
-equivalent to setting :paramref:`_schema.Column.nullable` to ``True`` on the
-:class:`_schema.Column`, whereas ``child_id: Mapped[int]`` is equivalent to
-setting it to ``False``. See :ref:`orm_declarative_mapped_column_nullability`
+equivalent to setting :paramref:`_schema.Column.nullable` to ` `True`` on the
+:class:`_schema.Column` , whereas ``child_id: Mapped[int]`` is equivalent to
+setting it to ``False``. See :ref:`orm_declarative_mapped_column_nullability` 
 for background on this behavior.
 
 .. tip::
@@ -305,11 +305,11 @@ for background on this behavior.
 One To One
 ~~~~~~~~~~
 
-One To One is essentially a :ref:`relationship_patterns_o2m`
+One To One is essentially a :ref:`relationship_patterns_o2m` 
 relationship from a foreign key perspective, but indicates that there will
 only be one row at any time that refers to a particular parent row.
 
-When using annotated mappings with :class:`_orm.Mapped`, the "one-to-one"
+When using annotated mappings with :class:`_orm.Mapped` , the "one-to-one"
 convention is achieved by applying a non-collection type to the
 :class:`_orm.Mapped` annotation on both sides of the relationship, which will
 imply to the ORM that a collection should not be used on either side, as in the
@@ -353,15 +353,15 @@ are specific :ref:`cascade <unitofwork_cascades>` behaviors set up.
   one ``Child`` row may refer to a particular ``Parent`` row at a time.
 
 .. versionadded:: 2.0  The :func:`_orm.relationship` construct can derive
-   the effective value of the :paramref:`_orm.relationship.uselist`
+   the effective value of the :paramref:`_orm.relationship.uselist` 
    parameter from a given :class:`_orm.Mapped` annotation.
 
 Setting uselist=False for non-annotated configurations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When using :func:`_orm.relationship` without the benefit of :class:`_orm.Mapped`
+When using :func:`_orm.relationship` without the benefit of :class:` _orm.Mapped`
 annotations, the one-to-one pattern can be enabled using the
-:paramref:`_orm.relationship.uselist` parameter set to ``False`` on what
+:paramref:`_orm.relationship.uselist` parameter set to ` `False`` on what
 would normally be the "many" side, illustrated in a non-annotated
 Declarative configuration below::
 
@@ -389,7 +389,7 @@ Many to Many adds an association table between two classes. The association
 table is nearly always given as a Core :class:`_schema.Table` object or
 other Core selectable such as a :class:`_sql.Join` object, and is
 indicated by the :paramref:`_orm.relationship.secondary` argument to
-:func:`_orm.relationship`. Usually, the :class:`_schema.Table` uses the
+:func:`_orm.relationship` . Usually, the :class:`_schema.Table` uses the
 :class:`_schema.MetaData` object associated with the declarative base class, so
 that the :class:`_schema.ForeignKey` directives can locate the remote tables
 with which to link::
@@ -455,7 +455,7 @@ Setting Bi-Directional Many-to-many
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For a bidirectional relationship, both sides of the relationship contain a
-collection.  Specify using :paramref:`_orm.relationship.back_populates`, and
+collection.  Specify using :paramref:`_orm.relationship.back_populates` , and
 for each :func:`_orm.relationship` specify the common association table::
 
     from __future__ import annotations
@@ -513,9 +513,9 @@ Using Sets, Lists, or other Collection Types for Many To Many
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Configuration of collections for a Many to Many relationship is identical
-to that of :ref:`relationship_patterns_o2m`, as described at
-:ref:`relationship_patterns_o2m_collection`.    For an annotated mapping
-using :class:`_orm.Mapped`, the collection can be indicated by the
+to that of :ref:`relationship_patterns_o2m` , as described at
+:ref:`relationship_patterns_o2m_collection` .    For an annotated mapping
+using :class:`_orm.Mapped` , the collection can be indicated by the
 type of collection used within the :class:`_orm.Mapped` generic class,
 such as ``set``::
 
@@ -533,7 +533,7 @@ class to use as a collection may be passed using the
 .. seealso::
 
     :ref:`custom_collections` - contains further detail on collection
-    configuration including some techniques to map :func:`_orm.relationship`
+    configuration including some techniques to map :func:`_orm.relationship` 
     to dictionaries.
 
 .. _relationships_many_to_many_deletion:
@@ -541,8 +541,8 @@ class to use as a collection may be passed using the
 Deleting Rows from the Many to Many Table
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-A behavior which is unique to the :paramref:`_orm.relationship.secondary`
-argument to :func:`_orm.relationship` is that the :class:`_schema.Table` which
+A behavior which is unique to the :paramref:`_orm.relationship.secondary` 
+argument to :func:`_orm.relationship` is that the :class:` _schema.Table` which
 is specified here is automatically subject to INSERT and DELETE statements, as
 objects are added or removed from the collection. There is **no need to delete
 from this table manually**.   The act of removing a record from the collection
@@ -553,13 +553,13 @@ will have the effect of the row being deleted on flush::
     myparent.children.remove(somechild)
 
 A question which often arises is how the row in the "secondary" table can be deleted
-when the child object is handed directly to :meth:`.Session.delete`::
+when the child object is handed directly to :meth:`.Session.delete` ::
 
     session.delete(somechild)
 
 There are several possibilities here:
 
-* If there is a :func:`_orm.relationship` from ``Parent`` to ``Child``, but there is
+* If there is a :func:`_orm.relationship` from ` `Parent`` to ``Child``, but there is
   **not** a reverse-relationship that links a particular ``Child`` to each ``Parent``,
   SQLAlchemy will not have any awareness that when deleting this particular
   ``Child`` object, it needs to maintain the "secondary" table that links it to
@@ -569,30 +569,30 @@ There are several possibilities here:
   the ``Child.parents`` collection to locate all ``Parent`` objects, and remove
   each row from the "secondary" table which establishes this link.  Note that
   this relationship does not need to be bidirectional; SQLAlchemy is strictly
-  looking at every :func:`_orm.relationship` associated with the ``Child`` object
+  looking at every :func:`_orm.relationship` associated with the ` `Child`` object
   being deleted.
 * A higher performing option here is to use ON DELETE CASCADE directives
   with the foreign keys used by the database.   Assuming the database supports
   this feature, the database itself can be made to automatically delete rows in the
   "secondary" table as referencing rows in "child" are deleted.   SQLAlchemy
   can be instructed to forego actively loading in the ``Child.parents``
-  collection in this case using the :paramref:`_orm.relationship.passive_deletes`
-  directive on :func:`_orm.relationship`; see :ref:`passive_deletes` for more details
+  collection in this case using the :paramref:`_orm.relationship.passive_deletes` 
+  directive on :func:`_orm.relationship` ; see :ref:`passive_deletes` for more details
   on this.
 
 Note again, these behaviors are *only* relevant to the
 :paramref:`_orm.relationship.secondary` option used with
-:func:`_orm.relationship`.   If dealing with association tables that are mapped
-explicitly and are *not* present in the :paramref:`_orm.relationship.secondary`
-option of a relevant :func:`_orm.relationship`, cascade rules can be used
+:func:`_orm.relationship` .   If dealing with association tables that are mapped
+explicitly and are *not* present in the :paramref:`_orm.relationship.secondary` 
+option of a relevant :func:`_orm.relationship` , cascade rules can be used
 instead to automatically delete entities in reaction to a related entity being
 deleted - see :ref:`unitofwork_cascades` for information on this feature.
 
 .. seealso::
 
-    :ref:`cascade_delete_many_to_many`
+    :ref:`cascade_delete_many_to_many` 
 
-    :ref:`passive_deletes_many_to_many`
+    :ref:`passive_deletes_many_to_many` 
 
 
 .. _association_pattern:
@@ -607,18 +607,18 @@ ideally mapped to their own ORM mapped class. This mapped class is mapped
 against the :class:`.Table` that would otherwise be noted as
 :paramref:`_orm.relationship.secondary` when using the many-to-many pattern.
 
-In the association object pattern, the :paramref:`_orm.relationship.secondary`
+In the association object pattern, the :paramref:`_orm.relationship.secondary` 
 parameter is not used; instead, a class is mapped directly to the association
 table. Two individual :func:`_orm.relationship` constructs then link first the
 parent side to the mapped association class via one to many, and then the
 mapped association class to the child side via many-to-one, to form a
 uni-directional association object relationship from parent, to association, to
-child. For a bi-directional relationship, four :func:`_orm.relationship`
+child. For a bi-directional relationship, four :func:`_orm.relationship` 
 constructs are used to link the mapped association class to both parent and
 child in both directions.
 
 The example below illustrates a new class ``Association`` which maps
-to the :class:`.Table` named ``association``; this table now includes
+to the :class:`.Table` named ` `association``; this table now includes
 an additional column called ``extra_data``, which is a string value that
 is stored along with each association between ``Parent`` and
 ``Child``.   By mapping the table to an explicit class, rudimental access
@@ -658,8 +658,8 @@ from ``Parent`` to ``Child`` makes explicit use of ``Association``::
         __tablename__ = "right_table"
         id: Mapped[int] = mapped_column(primary_key=True)
 
-To illustrate the bi-directional version, we add two more :func:`_orm.relationship`
-constructs, linked to the existing ones using :paramref:`_orm.relationship.back_populates`::
+To illustrate the bi-directional version, we add two more :func:`_orm.relationship` 
+constructs, linked to the existing ones using :paramref:`_orm.relationship.back_populates` ::
 
     from typing import Optional
 
@@ -728,13 +728,13 @@ associated object, and a second to a target attribute.
 
 .. warning::
 
-  Avoid mixing the association object pattern with the :ref:`many-to-many <relationships_many_to_many>`
+  Avoid mixing the association object pattern with the :ref:`many-to-many <relationships_many_to_many>` 
   pattern directly, as this produces conditions where data may be read
   and written in an inconsistent fashion without special steps;
   the :ref:`association proxy <associationproxy_toplevel>` is typically
   used to provide more succinct access.  For more detailed background
   on the caveats introduced by this combination, see the next section
-  :ref:`association_pattern_w_m2m`.
+  :ref:`association_pattern_w_m2m` .
 
 .. _association_pattern_w_m2m:
 
@@ -821,7 +821,7 @@ When using this ORM model to make changes, changes made to
 while all of these relationships will continue to function normally by
 themselves, changes on one will not show up in another until the
 :class:`.Session` is expired, which normally occurs automatically after
-:meth:`.Session.commit`.
+:meth:`.Session.commit` .
 
 Additionally, if conflicting changes are made,
 such as adding a new ``Association`` object while also appending the same
@@ -892,14 +892,14 @@ if changes are being made to these collections within the same transaction
 or :class:`.Session` as where the viewonly collections are being read.  If
 use of the association object relationships is infrequent and is carefully
 organized against code that accesses the many-to-many collections to avoid
-stale reads (in extreme cases, making direct use of :meth:`_orm.Session.expire`
+stale reads (in extreme cases, making direct use of :meth:`_orm.Session.expire` 
 to cause collections to be refreshed within the current transaction), the pattern may be feasible.
 
 A popular alternative to the above pattern is one where the direct many-to-many
 ``Parent.children`` and ``Child.parents`` relationships are replaced with
 an extension that will transparently proxy through the ``Association``
 class, while keeping everything consistent from the ORM's point of
-view.  This extension is known as the :ref:`Association Proxy <associationproxy_toplevel>`.
+view.  This extension is known as the :ref:`Association Proxy <associationproxy_toplevel>` .
 
 .. seealso::
 
@@ -914,7 +914,7 @@ Late-Evaluation of Relationship Arguments
 Most of the examples in the preceding sections illustrate mappings
 where the various :func:`_orm.relationship` constructs refer to their target
 classes using a string name, rather than the class itself, such as when
-using :class:`_orm.Mapped`, a forward reference is generated that exists
+using :class:`_orm.Mapped` , a forward reference is generated that exists
 at runtime only as a string::
 
     class Parent(Base):
@@ -950,7 +950,7 @@ been defined and is normally triggered by the first usage of the mappings
 themselves.     The :class:`_orm.registry` object is the container in which
 these names are stored and resolved to the mapped classes they refer towards.
 
-In addition to the main class argument for :func:`_orm.relationship`,
+In addition to the main class argument for :func:`_orm.relationship` ,
 other arguments which depend upon the columns present on an as-yet
 undefined class may also be specified either as Python functions, or more
 commonly as strings.   For most of these
@@ -967,7 +967,7 @@ as they are intended to receive complete SQL expressions.
 The full namespace available within this evaluation includes all classes mapped
 for this declarative base, as well as the contents of the ``sqlalchemy``
 package, including expression functions like :func:`_sql.desc` and
-:attr:`_functions.func`::
+:attr:`_functions.func` ::
 
     class Parent(Base):
         # ...
@@ -989,12 +989,12 @@ within any of these string expressions::
             primaryjoin="myapp.mymodel.Parent.id == myapp.mymodel.Child.parent_id",
         )
 
-In an example like the above, the string passed to :class:`_orm.Mapped`
+In an example like the above, the string passed to :class:`_orm.Mapped` 
 can be disambiguated from a specific class argument by passing the class
 location string directly to :paramref:`_orm.relationship.argument` as well.
 Below illustrates a typing-only import for ``Child``, combined with a
 runtime specifier for the target class that will search for the correct
-name within the :class:`_orm.registry`::
+name within the :class:`_orm.registry` ::
 
     import typing
 
@@ -1055,23 +1055,23 @@ like the following::
 The full list of parameters which accept Python functions/lambdas or strings
 that will be passed to ``eval()`` are:
 
-* :paramref:`_orm.relationship.order_by`
+* :paramref:`_orm.relationship.order_by` 
 
-* :paramref:`_orm.relationship.primaryjoin`
+* :paramref:`_orm.relationship.primaryjoin` 
 
-* :paramref:`_orm.relationship.secondaryjoin`
+* :paramref:`_orm.relationship.secondaryjoin` 
 
-* :paramref:`_orm.relationship.secondary`
+* :paramref:`_orm.relationship.secondary` 
 
-* :paramref:`_orm.relationship.remote_side`
+* :paramref:`_orm.relationship.remote_side` 
 
-* :paramref:`_orm.relationship.foreign_keys`
+* :paramref:`_orm.relationship.foreign_keys` 
 
-* :paramref:`_orm.relationship._user_defined_foreign_keys`
+* :paramref:`_orm.relationship._user_defined_foreign_keys` 
 
 .. warning::
 
-    As stated previously, the above parameters to :func:`_orm.relationship`
+    As stated previously, the above parameters to :func:`_orm.relationship` 
     are **evaluated as Python code expressions using eval().  DO NOT PASS
     UNTRUSTED INPUT TO THESE ARGUMENTS.**
 
@@ -1079,10 +1079,10 @@ Adding Relationships to Mapped Classes After Declaration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 It should also be noted that in a similar way as described at
-:ref:`orm_declarative_table_adding_columns`, any :class:`_orm.MapperProperty`
+:ref:`orm_declarative_table_adding_columns` , any :class:`_orm.MapperProperty` 
 construct can be added to a declarative base mapping at any time
 (noting that annotated forms are not supported in this context).  If
-we wanted to implement this :func:`_orm.relationship` after the ``Address``
+we wanted to implement this :func:`_orm.relationship` after the ` `Address``
 class were available, we could also apply it afterwards::
 
     # first, module A, where Child has not been created yet,
@@ -1117,14 +1117,14 @@ the target class.
     properties to an already mapped class will only
     function correctly if the "declarative base" class is used, meaning
     the user-defined subclass of :class:`_orm.DeclarativeBase` or the
-    dynamically generated class returned by :func:`_orm.declarative_base`
-    or :meth:`_orm.registry.generate_base`.   This "base" class includes
+    dynamically generated class returned by :func:`_orm.declarative_base` 
+    or :meth:`_orm.registry.generate_base` .   This "base" class includes
     a Python metaclass which implements a special ``__setattr__()`` method
     that intercepts these operations.
 
     Runtime assignment of class-mapped attributes to a mapped class will **not** work
-    if the class is mapped using decorators like :meth:`_orm.registry.mapped`
-    or imperative functions like :meth:`_orm.registry.map_imperatively`.
+    if the class is mapped using decorators like :meth:`_orm.registry.mapped` 
+    or imperative functions like :meth:`_orm.registry.map_imperatively` .
 
 
 .. _orm_declarative_relationship_secondary_eval:
@@ -1134,18 +1134,18 @@ Using a late-evaluated form for the "secondary" argument of many-to-many
 
 Many-to-many relationships make use of the
 :paramref:`_orm.relationship.secondary` parameter, which ordinarily
-indicates a reference to a typically non-mapped :class:`_schema.Table`
+indicates a reference to a typically non-mapped :class:`_schema.Table` 
 object or other Core selectable object.  Late evaluation
 using either a lambda callable or string name is supported, where string
 resolution works by evaluation of given Python expression which links
 identifier names to same-named :class:`_schema.Table` objects that
 are present in the same
 :class:`_schema.MetaData` collection referred towards by the current
-:class:`_orm.registry`.
+:class:`_orm.registry` .
 
-For the example given at :ref:`relationships_many_to_many`, if we assumed
+For the example given at :ref:`relationships_many_to_many` , if we assumed
 that the ``association_table`` :class:`.Table` object would be defined at a point later on in the
-module than the mapped class itself, we may write the :func:`_orm.relationship`
+module than the mapped class itself, we may write the :func:`_orm.relationship` 
 using a lambda as::
 
     class Parent(Base):

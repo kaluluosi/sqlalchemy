@@ -1,5 +1,5 @@
-.. _functions_toplevel:
-.. _generic_functions:
+.. _功能_toplevel:
+.. _通用函数:
 
 =========================
 SQL和通用函数
@@ -7,16 +7,16 @@ SQL和通用函数
 
 .. currentmodule:: sqlalchemy.sql.functions
 
-SQL函数可通过使用 :data:`_sql.func` 命名空间来调用。有关如何在语句中使用 :data:`_sql.func` 对象渲染 SQL 函数的背景信息，请参见 :ref:`tutorial_functions` 中的教程。
+使用  :data:`_sql.func`  命名空间调用SQL函数。如何使用  :data:` _sql.func`  对象在语句中渲染SQL函数的背景信息请参见 :ref:`tutorial_functions` 中的教程。
 
-.. seealso::
+.. 参见::
 
-    :ref:`unified_tutorial` 中的 :ref:`tutorial_functions`
+      :ref:`unified_tutorial` 
 
-函数 API
+函数API
 ------------
 
-SQL函数的基本 API，提供 :data:`_sql.func` 命名空间和可用于可扩展性的类。
+SQL函数的基本API，它为  :data:`_sql.func`  命名空间提供类和提供可扩展性的类。
 
 .. autoclass:: AnsiFunction
    :exclude-members: inherit_cache, __new__
@@ -33,14 +33,14 @@ SQL函数的基本 API，提供 :data:`_sql.func` 命名空间和可用于可扩
 .. autofunction:: register_function
 
 
-"已知"函数
+选择“已知”函数
 --------------------------
 
-以下是某个常见 SQL 函数的 :class:`.GenericFunction` 实现，自动设置每个函数的预期返回类型。它们的调用方式与 :data:`_sql.func` 命名空间的任何其他成员相同::
+这些是基于  :class:`.GenericFunction`  命名空间的任何其他成员以相同的方式调用:：
 
     select(func.count("*")).select_from(some_table)
 
-请注意，任何名称未知于 :data:`_sql.func` 的内容都会生成函数名称 - 没有限制，可以调用任何 SQL 函数，无论是 SQLAlchemy 知道还是不知道，内置的或用户定义的。本节仅描述 SQLAlchemy 已经知道使用了什么参数和返回类型的那些函数。
+请注意，任何未知于  :data:`_sql.func`  的名称都会按照原样生成函数名称——没有限制可以调用什么SQL函数，无论是SQLAlchemy所知，还是内置或用户定义的。本节仅描述SQLAlchemy已经知道何种参数和返回类型的函数。
 
 .. autoclass:: array_agg
     :no-members:

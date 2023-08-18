@@ -25,7 +25,7 @@ Python type::
 
 Non-dataclass forms are also accepted, but require additional methods
 to be implemented.  For an example using a non-dataclass class, see the section
-:ref:`composite_legacy_no_dataclass`.
+:ref:`composite_legacy_no_dataclass` .
 
 .. versionadded:: 2.0 The :func:`_orm.composite` construct fully supports
    Python dataclasses including the ability to derive mapped column datatypes
@@ -37,12 +37,12 @@ the mapped columns using the :func:`_orm.composite` construct.
 
 The example below illustrates the most modern form of :func:`_orm.composite` as
 used with a fully
-:ref:`Annotated Declarative Table <orm_declarative_mapped_column>`
+:ref:`Annotated Declarative Table <orm_declarative_mapped_column>` 
 configuration. :func:`_orm.mapped_column` constructs representing each column
-are passed directly to :func:`_orm.composite`, indicating zero or more aspects
+are passed directly to :func:`_orm.composite` , indicating zero or more aspects
 of the columns to be generated, in this case the names; the
 :func:`_orm.composite` construct derives the column types (in this case
-``int``, corresponding to :class:`_types.Integer`) from the dataclass directly::
+``int``, corresponding to :class:`_types.Integer` ) from the dataclass directly::
 
     from sqlalchemy.orm import DeclarativeBase, Mapped
     from sqlalchemy.orm import composite, mapped_column
@@ -106,10 +106,10 @@ well as with instances of the ``Vertex`` class, where the ``.start`` and
 
 * **Selecting Point objects as columns**
 
-  :func:`_orm.composite` will allow the ``Vertex.start`` and ``Vertex.end``
+  :func:`_orm.composite` will allow the ` `Vertex.start`` and ``Vertex.end``
   attributes to behave like a single SQL expression to as much an extent
   as possible when using the ORM :class:`_orm.Session` (including the legacy
-  :class:`_orm.Query` object) to select ``Point`` objects:
+  :class:`_orm.Query` object) to select ` `Point`` objects:
 
   .. sourcecode:: pycon+sql
 
@@ -141,7 +141,7 @@ well as with instances of the ``Vertex`` class, where the ``.start`` and
 
   .. tip::  The "ordering" comparison above using the "less than" operator (``<``)
      as well as the "equality" comparison using ``==``, when used to generate
-     SQL expressions, are implemented by the :class:`_orm.Composite.Comparator`
+     SQL expressions, are implemented by the :class:`_orm.Composite.Comparator` 
      class, and don't make use of the comparison methods on the composite class
      itself, e.g. the ``__lt__()`` or ``__eq__()`` methods. From this it
      follows that the ``Point`` dataclass above also need not implement the
@@ -180,7 +180,7 @@ Other mapping forms for composites
 ----------------------------------
 
 The :func:`_orm.composite` construct may be passed the relevant columns
-using a :func:`_orm.mapped_column` construct, a :class:`_schema.Column`,
+using a :func:`_orm.mapped_column` construct, a :class:` _schema.Column`,
 or the string name of an existing mapped column.   The following examples
 illustrate an equvalent mapping as that of the main section above.
 
@@ -189,7 +189,7 @@ illustrate an equvalent mapping as that of the main section above.
   Here we pass the existing :func:`_orm.mapped_column` instances to the
   :func:`_orm.composite` construct, as in the non-annotated example below
   where we also pass the ``Point`` class as the first argument to
-  :func:`_orm.composite`::
+  :func:`_orm.composite` ::
 
     from sqlalchemy import Integer
     from sqlalchemy.orm import mapped_column, composite
@@ -280,7 +280,7 @@ not using a dataclass::
 
 Usage with :func:`_orm.composite` then proceeds where the columns to be
 associated with the ``Point`` class must also be declared with explicit
-types, using one of the forms at :ref:`orm_composite_other_forms`.
+types, using one of the forms at :ref:`orm_composite_other_forms` .
 
 
 Tracking In-Place Mutations on Composites
@@ -291,7 +291,7 @@ not tracked automatically.  Instead, the composite class needs to provide
 events to its parent object explicitly.   This task is largely automated
 via the usage of the :class:`.MutableComposite` mixin, which uses events
 to associate each user-defined composite object with all parent associations.
-Please see the example in :ref:`mutable_composites`.
+Please see the example in :ref:`mutable_composites` .
 
 .. _composite_operations:
 
@@ -300,7 +300,7 @@ Redefining Comparison Operations for Composites
 
 The "equals" comparison operation by default produces an AND of all
 corresponding columns equated to one another. This can be changed using
-the ``comparator_factory`` argument to :func:`.composite`, where we
+the ``comparator_factory`` argument to :func:`.composite` , where we
 specify a custom :class:`.CompositeProperty.Comparator` class
 to define existing or new operations.
 Below we illustrate the "greater than" operator, implementing
@@ -383,7 +383,7 @@ method.
 
 We will also implement the ``__composite_values__()`` method, which is a fixed
 name recognized by the :func:`_orm.composite` construct (introduced previously
-at :ref:`composite_legacy_no_dataclass`) that indicates a standard way of
+at :ref:`composite_legacy_no_dataclass` ) that indicates a standard way of
 receiving the object as a flat tuple of column values, which in this case will
 supersede the usual dataclass-oriented methodology.
 
@@ -393,7 +393,7 @@ a flat tuple of columns and ``Vertex`` objects that contain ``Point``
 instances.   The ``Vertex._generate`` method is passed as the
 first argument to the :func:`_orm.composite` construct as the source of new
 ``Vertex`` instances, and the ``__composite_values__()`` method will be
-used implicitly by :func:`_orm.composite`.
+used implicitly by :func:`_orm.composite` .
 
 For the purposes of the example, the ``Vertex`` composite is then mapped to a
 class called ``HasVertex``, which is where the :class:`.Table` containing the

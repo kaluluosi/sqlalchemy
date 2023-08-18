@@ -34,7 +34,7 @@ SQLAlchemy Documentation
 
     New users of SQLAlchemy, as well as veterans of older SQLAlchemy
     release series, should start with the
-    :doc:`/tutorial/index`, which covers everything an Alchemist needs
+    :doc:`/tutorial/index` , which covers everything an Alchemist needs
     to know when using the ORM or just Core.
 
     * **For a quick glance:** :doc:`/orm/quickstart` - a glimpse at what working with the ORM looks like
@@ -75,25 +75,25 @@ SQLAlchemy Documentation
 
     * **Mapping Classes:**
       :doc:`Mapping Python Classes <orm/mapper_config>` |
-      :doc:`Relationship Configuration <orm/relationships>`
+      :doc:`Relationship Configuration <orm/relationships>` 
 
     * **Using the ORM:**
       :doc:`Using the ORM Session <orm/session>` |
       :doc:`ORM Querying Guide <orm/queryguide/index>` |
-      :doc:`Using AsyncIO <orm/extensions/asyncio>`
+      :doc:`Using AsyncIO <orm/extensions/asyncio>` 
 
     * **Configuration Extensions:**
       :doc:`Association Proxy <orm/extensions/associationproxy>` |
       :doc:`Hybrid Attributes <orm/extensions/hybrid>` |
       :doc:`Mutable Scalars <orm/extensions/mutable>` |
       :doc:`Automap <orm/extensions/automap>` |
-      :doc:`All extensions <orm/extensions/index>`
+      :doc:`All extensions <orm/extensions/index>` 
 
     * **Extending the ORM:**
-      :doc:`ORM Events and Internals <orm/extending>`
+      :doc:`ORM Events and Internals <orm/extending>` 
 
     * **Other:**
-      :doc:`Introduction to Examples <orm/examples>`
+      :doc:`Introduction to Examples <orm/examples>` 
 
   .. container:: core
 
@@ -103,7 +103,7 @@ SQLAlchemy Documentation
       :doc:`Engine Configuration <core/engines>` |
       :doc:`Connections, Transactions, Results <core/connections>` |
       :doc:`AsyncIO Support <orm/extensions/asyncio>` |
-      :doc:`Connection Pooling <core/pooling>`
+      :doc:`Connection Pooling <core/pooling>` 
 
     * **Schema Definition:**
       :doc:`Overview <core/schema>` |
@@ -111,7 +111,7 @@ SQLAlchemy Documentation
       :ref:`Database Introspection (Reflection) <metadata_reflection_toplevel>` |
       :ref:`Insert/Update Defaults <metadata_defaults_toplevel>` |
       :ref:`Constraints and Indexes <metadata_constraints_toplevel>` |
-      :ref:`Using Data Definition Language (DDL) <metadata_ddl_toplevel>`
+      :ref:`Using Data Definition Language (DDL) <metadata_ddl_toplevel>` 
 
     * **SQL Statements:**
       :doc:`SQL Expression Elements <core/sqlelement>` |
@@ -119,21 +119,21 @@ SQLAlchemy Documentation
       :doc:`SELECT and related constructs <core/selectable>` |
       :doc:`INSERT, UPDATE, DELETE <core/dml>` |
       :doc:`SQL Functions <core/functions>` |
-      :doc:`Table of Contents <core/expression_api>`
+      :doc:`Table of Contents <core/expression_api>` 
 
 
 
     * **Datatypes:**
       :ref:`Overview <types_toplevel>` |
       :ref:`Building Custom Types <types_custom>` |
-      :ref:`Type API Reference <types_api>`
+      :ref:`Type API Reference <types_api>` 
 
     * **Core Basics:**
       :doc:`Overview <core/api_basics>` |
       :doc:`Runtime Inspection API <core/inspection>` |
       :doc:`Event System <core/event>` |
       :doc:`Core Event Interfaces <core/events>` |
-      :doc:`Creating Custom SQL Constructs <core/compiler>`
+      :doc:`Creating Custom SQL Constructs <core/compiler>` 
 
 .. container:: left_right_container
 
@@ -152,9 +152,9 @@ SQLAlchemy Documentation
       :doc:`MySQL <dialects/mysql>` |
       :doc:`SQLite <dialects/sqlite>` |
       :doc:`Oracle <dialects/oracle>` |
-      :doc:`Microsoft SQL Server <dialects/mssql>`
+      :doc:`Microsoft SQL Server <dialects/mssql>` 
 
-      :doc:`More Dialects ... <dialects/index>`
+      :doc:`More Dialects ... <dialects/index>` 
 
 .. container:: left_right_container
 
@@ -169,6 +169,6 @@ SQLAlchemy Documentation
     * :doc:`Frequently Asked Questions <faq/index>` - A collection of common problems and solutions
     * :doc:`Glossary <glossary>` - Terms used in SQLAlchemy's documentation
     * :doc:`Error Message Guide <errors>` - Explainations of many SQLAlchemy Errors
-    * :doc:`Complete table of of contents <contents>`
-    * :ref:`Index <genindex>`
+    * :doc:`Complete table of of contents <contents>` 
+    * :ref:`Index <genindex>` 
 

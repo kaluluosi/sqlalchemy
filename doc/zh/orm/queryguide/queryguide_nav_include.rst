@@ -1,13 +1,13 @@
-.. 注意 *_include.rst 是在 conf.py 中约定的命名规范。
+.. 注意 *_include.rst 是 conf.py 中的一种命名约定
 
-.. |tutorial_title| 替换成：ORM 查询指南
+.. |tutorial_title| replace:: ORM 查询指南
 
-.. 专题:: |tutorial_title|
+.. topic:: |tutorial_title|
 
-      本页是 :doc:`index` 的一部分。
+      本页面是  :doc:`index`  的一部分。
 
-      上一章：|prev|   |   下一章：|next|
+      上一页: |prev|   |   下一页: |next|
 
-.. 页脚专题:: |tutorial_title|
+.. footer_topic:: |tutorial_title|
 
-      下一章查询指南部分：|next|
+      下一个查询指南章节: |next|

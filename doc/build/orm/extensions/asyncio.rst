@@ -58,13 +58,13 @@ Synopsis - Core
 For Core use, the :func:`_asyncio.create_async_engine` function creates an
 instance of :class:`_asyncio.AsyncEngine` which then offers an async version of
 the traditional :class:`_engine.Engine` API.   The
-:class:`_asyncio.AsyncEngine` delivers an :class:`_asyncio.AsyncConnection` via
-its :meth:`_asyncio.AsyncEngine.connect` and :meth:`_asyncio.AsyncEngine.begin`
+:class:`_asyncio.AsyncEngine` delivers an :class:` _asyncio.AsyncConnection` via
+its :meth:`_asyncio.AsyncEngine.connect` and :meth:` _asyncio.AsyncEngine.begin`
 methods which both deliver asynchronous context managers.   The
 :class:`_asyncio.AsyncConnection` can then invoke statements using either the
 :meth:`_asyncio.AsyncConnection.execute` method to deliver a buffered
-:class:`_engine.Result`, or the :meth:`_asyncio.AsyncConnection.stream` method
-to deliver a streaming server-side :class:`_asyncio.AsyncResult`::
+:class:`_engine.Result` , or the :meth:`_asyncio.AsyncConnection.stream` method
+to deliver a streaming server-side :class:`_asyncio.AsyncResult` ::
 
     import asyncio
 
@@ -139,7 +139,7 @@ cursor and provides an async/await API, such as an async iterator::
 Synopsis - ORM
 ---------------
 
-Using :term:`2.0 style` querying, the :class:`_asyncio.AsyncSession` class
+Using :term:`2.0 style` querying, the :class:` _asyncio.AsyncSession` class
 provides full ORM functionality.
 
 Within the default mode of use, special care must be taken to avoid :term:`lazy
@@ -151,7 +151,7 @@ this.
 
     A single instance of :class:`_asyncio.AsyncSession` is **not safe for
     use in multiple, concurrent tasks**.  See the sections
-    :ref:`asyncio_concurrency` and :ref:`session_faq_threadsafe` for background.
+    :ref:`asyncio_concurrency` and :ref:` session_faq_threadsafe` for background.
 
 The example below illustrates a complete example including mapper and session
 configuration::
@@ -286,7 +286,7 @@ example, should use a **separate** :class:`_asyncio.AsyncSession` **per individu
 task**.
 
 See the section :ref:`session_faq_threadsafe` for a general description of
-the :class:`_orm.Session` and :class:`_asyncio.AsyncSession` with regards to
+the :class:`_orm.Session` and :class:` _asyncio.AsyncSession` with regards to
 how they should be used with concurrent workloads.
 
 .. _asyncio_orm_avoid_lazyloads:
@@ -302,7 +302,7 @@ this are below, many of which are illustrated in the preceding example.
   expressions, or are being accessed in expiration scenarios can take advantage
   of the  :class:`_asyncio.AsyncAttrs` mixin.  This mixin, when added to a
   specific class or more generally to the Declarative ``Base`` superclass,
-  provides an accessor :attr:`_asyncio.AsyncAttrs.awaitable_attrs`
+  provides an accessor :attr:`_asyncio.AsyncAttrs.awaitable_attrs` 
   which delivers any attribute as an awaitable::
 
     from __future__ import annotations
@@ -333,11 +333,11 @@ this are below, many of which are illustrated in the preceding example.
         # ... rest of mapping ...
 
   Accessing the ``A.bs`` collection on newly loaded instances of ``A`` when
-  eager loading is not in use will normally use :term:`lazy loading`, which in
+  eager loading is not in use will normally use :term:`lazy loading` , which in
   order to succeed will usually emit IO to the database, which will fail under
   asyncio as no implicit IO is allowed. To access this attribute directly under
   asyncio without any prior loading operations, the attribute can be accessed
-  as an awaitable by indicating the :attr:`_asyncio.AsyncAttrs.awaitable_attrs`
+  as an awaitable by indicating the :attr:`_asyncio.AsyncAttrs.awaitable_attrs` 
   prefix::
 
     a1 = (await session.scalars(select(A))).one()
@@ -353,7 +353,7 @@ this are below, many of which are illustrated in the preceding example.
 
   .. seealso::
 
-      :class:`_asyncio.AsyncAttrs`
+      :class:`_asyncio.AsyncAttrs` 
 
 
 * Collections can be replaced with **write only collections** that will never
@@ -370,7 +370,7 @@ this are below, many of which are illustrated in the preceding example.
   bullets below address specific techniques when using traditional lazy-loaded
   relationships with asyncio, which requires more care.
 
-* If not using :class:`_asyncio.AsyncAttrs`, relationships can be declared
+* If not using :class:`_asyncio.AsyncAttrs` , relationships can be declared
   with ``lazy="raise"`` so that by default they will not attempt to emit SQL.
   In order to load collections, :term:`eager loading` would be used instead.
 
@@ -394,7 +394,7 @@ this are below, many of which are illustrated in the preceding example.
 * The :class:`_asyncio.AsyncSession` is configured using
   :paramref:`_orm.Session.expire_on_commit` set to False, so that we may access
   attributes on an object subsequent to a call to
-  :meth:`_asyncio.AsyncSession.commit`, as in the line at the end where we
+  :meth:`_asyncio.AsyncSession.commit` , as in the line at the end where we
   access an attribute::
 
       # create AsyncSession with expire_on_commit=False
@@ -418,15 +418,15 @@ this are below, many of which are illustrated in the preceding example.
 Other guidelines include:
 
 * Methods like :meth:`_asyncio.AsyncSession.expire` should be avoided in favor of
-  :meth:`_asyncio.AsyncSession.refresh`; **if** expiration is absolutely needed.
+  :meth:`_asyncio.AsyncSession.refresh` ; **if** expiration is absolutely needed.
   Expiration should generally **not** be needed as
-  :paramref:`_orm.Session.expire_on_commit`
+  :paramref:`_orm.Session.expire_on_commit` 
   should normally be set to ``False`` when using asyncio.
 
 * A lazy-loaded relationship **can be loaded explicitly under asyncio** using
-  :meth:`_asyncio.AsyncSession.refresh`, **if** the desired attribute name
+  :meth:`_asyncio.AsyncSession.refresh` , **if** the desired attribute name
   is passed explicitly to
-  :paramref:`_orm.Session.refresh.attribute_names`, e.g.::
+  :paramref:`_orm.Session.refresh.attribute_names` , e.g.::
 
     # assume a_obj is an A that has lazy loaded A.bs collection
     a_obj = await async_session.get(A, [1])
@@ -448,16 +448,16 @@ Other guidelines include:
      In previous versions, the relationship would be silently skipped even
      if named in the parameter.
 
-* Avoid using the ``all`` cascade option documented at :ref:`unitofwork_cascades`
+* Avoid using the ``all`` cascade option documented at :ref:`unitofwork_cascades` 
   in favor of listing out the desired cascade features explicitly.   The
-  ``all`` cascade option implies among others the :ref:`cascade_refresh_expire`
+  ``all`` cascade option implies among others the :ref:`cascade_refresh_expire` 
   setting, which means that the :meth:`.AsyncSession.refresh` method will
   expire the attributes on related objects, but not necessarily refresh those
   related objects assuming eager loading is not configured within the
-  :func:`_orm.relationship`, leaving them in an expired state.
+  :func:`_orm.relationship` , leaving them in an expired state.
 
-* Appropriate loader options should be employed for :func:`_orm.deferred`
-  columns, if used at all, in addition to that of :func:`_orm.relationship`
+* Appropriate loader options should be employed for :func:`_orm.deferred` 
+  columns, if used at all, in addition to that of :func:`_orm.relationship` 
   constructs as noted above.  See :ref:`orm_queryguide_column_deferral` for
   background on deferred column loading.
 
@@ -467,7 +467,7 @@ Other guidelines include:
   :ref:`dynamic_relationship` is not compatible by default with the asyncio approach.
   It can be used directly only if invoked within the
   :meth:`_asyncio.AsyncSession.run_sync` method described at
-  :ref:`session_run_sync`, or by using its ``.statement`` attribute
+  :ref:`session_run_sync` , or by using its ``.statement`` attribute
   to obtain a normal select::
 
       user = await session.get(User, 42)
@@ -516,9 +516,9 @@ Python function inside of a greenlet, where traditional synchronous
 programming concepts will be translated to use ``await`` when they reach the
 database driver.   A hypothetical approach here is an asyncio-oriented
 application can package up database-related methods into functions that are
-invoked using :meth:`_asyncio.AsyncSession.run_sync`.
+invoked using :meth:`_asyncio.AsyncSession.run_sync` .
 
-Altering the above example, if we didn't use :func:`_orm.selectinload`
+Altering the above example, if we didn't use :func:`_orm.selectinload` 
 for the ``A.bs`` collection, we could accomplish our treatment of these
 attribute accesses within a separate function::
 
@@ -628,32 +628,32 @@ asyncio-facing APIs:
   :attr:`_asyncio.AsyncEngine.sync_engine` attribute as target. Targets
   include:
 
-      :attr:`_asyncio.AsyncEngine.sync_engine`
+      :attr:`_asyncio.AsyncEngine.sync_engine` 
 
-      :attr:`_asyncio.AsyncConnection.sync_connection`
+      :attr:`_asyncio.AsyncConnection.sync_connection` 
 
-      :attr:`_asyncio.AsyncConnection.sync_engine`
+      :attr:`_asyncio.AsyncConnection.sync_engine` 
 
-      :attr:`_asyncio.AsyncSession.sync_session`
+      :attr:`_asyncio.AsyncSession.sync_session` 
 
 * To register an event at the class level, targeting all instances of the same type (e.g.
   all :class:`_asyncio.AsyncSession` instances), use the corresponding
   sync-style class. For example to register the
   :meth:`_ormevents.SessionEvents.before_commit` event against the
-  :class:`_asyncio.AsyncSession` class, use the :class:`_orm.Session` class as
+  :class:`_asyncio.AsyncSession` class, use the :class:` _orm.Session` class as
   the target.
 
 * To register at the :class:`_orm.sessionmaker` level, combine an explicit
-  :class:`_orm.sessionmaker` with an :class:`_asyncio.async_sessionmaker`
-  using :paramref:`_asyncio.async_sessionmaker.sync_session_class`, and
-  associate events with the :class:`_orm.sessionmaker`.
+  :class:`_orm.sessionmaker` with an :class:` _asyncio.async_sessionmaker`
+  using :paramref:`_asyncio.async_sessionmaker.sync_session_class` , and
+  associate events with the :class:`_orm.sessionmaker` .
 
 When working within an event handler that is within an asyncio context, objects
 like the :class:`_engine.Connection` continue to work in their usual
 "synchronous" way without requiring ``await`` or ``async`` usage; when messages
 are ultimately received by the asyncio database adapter, the calling style is
 transparently adapted back into the asyncio calling style.  For events that
-are passed a DBAPI level connection, such as :meth:`_events.PoolEvents.connect`,
+are passed a DBAPI level connection, such as :meth:`_events.PoolEvents.connect` ,
 the object is a :term:`pep-249` compliant "connection" object which will adapt
 sync-style calls into the asyncio driver.
 
@@ -665,9 +665,9 @@ constructs are illustrated below:
 
 * **Core Events on AsyncEngine**
 
-  In this example, we access the :attr:`_asyncio.AsyncEngine.sync_engine`
+  In this example, we access the :attr:`_asyncio.AsyncEngine.sync_engine` 
   attribute of :class:`_asyncio.AsyncEngine` as the target for
-  :class:`.ConnectionEvents` and :class:`.PoolEvents`::
+  :class:`.ConnectionEvents` and :class:` .PoolEvents`::
 
     import asyncio
 
@@ -722,7 +722,7 @@ constructs are illustrated below:
 * **ORM Events on AsyncSession**
 
   In this example, we access :attr:`_asyncio.AsyncSession.sync_session` as the
-  target for :class:`_orm.SessionEvents`::
+  target for :class:`_orm.SessionEvents` ::
 
     import asyncio
 
@@ -870,7 +870,7 @@ ultimate "driver" connection directly, using awaitable only methods on that
 driver connection.  One such example is the ``.set_type_codec()`` method
 supplied by the asyncpg driver.
 
-To accommodate this use case, SQLAlchemy's :class:`.AdaptedConnection`
+To accommodate this use case, SQLAlchemy's :class:`.AdaptedConnection` 
 class provides a method :meth:`.AdaptedConnection.run_async` that allows
 an awaitable function to be invoked within the "synchronous" context of
 an event handler or other SQLAlchemy internal.  This method is directly
@@ -879,7 +879,7 @@ allows a sync-style method to run under async.
 
 :meth:`.AdaptedConnection.run_async` should be passed a function that will
 accept the innermost "driver" connection as a single argument, and return
-an awaitable that will be invoked by the :meth:`.AdaptedConnection.run_async`
+an awaitable that will be invoked by the :meth:`.AdaptedConnection.run_async` 
 method.  The given function itself does not need to be declared as ``async``;
 it's perfectly fine for it to be a Python ``lambda:``, as the return awaitable
 value will be invoked after being returned::
@@ -901,7 +901,7 @@ value will be invoked after being returned::
         )
 
 Above, the object passed to the ``register_custom_types`` event handler
-is an instance of :class:`.AdaptedConnection`, which provides a DBAPI-like
+is an instance of :class:`.AdaptedConnection` , which provides a DBAPI-like
 interface to an underlying async-only driver-level connection object.
 The :meth:`.AdaptedConnection.run_async` method then provides access to an
 awaitable environment where the underlying driver level connection may be
@@ -925,7 +925,7 @@ along the lines of
 ``Task <Task pending ...> got Future attached to a different loop``
 
 If the same engine must be shared between different loop, it should be configured
-to disable pooling using :class:`~sqlalchemy.pool.NullPool`, preventing the Engine
+to disable pooling using :class:`~sqlalchemy.pool.NullPool` , preventing the Engine
 from using any connection more than once::
 
     from sqlalchemy.ext.asyncio import create_async_engine
@@ -943,7 +943,7 @@ Using asyncio scoped session
 
 The "scoped session" pattern used in threaded SQLAlchemy with the
 :class:`.scoped_session` object is also available in asyncio, using
-an adapted version called :class:`_asyncio.async_scoped_session`.
+an adapted version called :class:`_asyncio.async_scoped_session` .
 
 .. tip::  SQLAlchemy generally does not recommend the "scoped" pattern
    for new development as it relies upon mutable global state that must also be
@@ -952,7 +952,7 @@ an adapted version called :class:`_asyncio.async_scoped_session`.
    :class:`_asyncio.AsyncSession` directly to the awaitable functions that need
    it.
 
-When using :class:`_asyncio.async_scoped_session`, as there's no "thread-local"
+When using :class:`_asyncio.async_scoped_session` , as there's no "thread-local"
 concept in the asyncio context, the "scopefunc" parameter must be provided to
 the constructor. The example below illustrates using the
 ``asyncio.current_task()`` function for this purpose::
@@ -974,7 +974,7 @@ the constructor. The example below illustrates using the
     )
     some_async_session = AsyncScopedSession()
 
-.. warning:: The "scopefunc" used by :class:`_asyncio.async_scoped_session`
+.. warning:: The "scopefunc" used by :class:`_asyncio.async_scoped_session` 
    is invoked **an arbitrary number of times** within a task, once for each
    time the underlying :class:`_asyncio.AsyncSession` is accessed. The function
    should therefore be **idempotent** and lightweight, and should not attempt
@@ -986,10 +986,10 @@ the constructor. The example below illustrates using the
    registry when the task is complete, otherwise the task handle as well as
    the :class:`_asyncio.AsyncSession` will remain in memory, essentially
    creating a memory leak.  See the following example which illustrates
-   the correct use of :meth:`_asyncio.async_scoped_session.remove`.
+   the correct use of :meth:`_asyncio.async_scoped_session.remove` .
 
 :class:`_asyncio.async_scoped_session` includes **proxy
-behavior** similar to that of :class:`.scoped_session`, which means it can be
+behavior** similar to that of :class:`.scoped_session` , which means it can be
 treated as a :class:`_asyncio.AsyncSession` directly, keeping in mind that
 the usual ``await`` keywords are necessary, including for the
 :meth:`_asyncio.async_scoped_session.remove` method::
@@ -1015,10 +1015,10 @@ Using the Inspector to inspect schema objects
 ---------------------------------------------------
 
 SQLAlchemy does not yet offer an asyncio version of the
-:class:`_reflection.Inspector` (introduced at :ref:`metadata_reflection_inspector`),
+:class:`_reflection.Inspector` (introduced at :ref:` metadata_reflection_inspector`),
 however the existing interface may be used in an asyncio context by
 leveraging the :meth:`_asyncio.AsyncConnection.run_sync` method of
-:class:`_asyncio.AsyncConnection`::
+:class:`_asyncio.AsyncConnection` ::
 
     import asyncio
 
@@ -1045,9 +1045,9 @@ leveraging the :meth:`_asyncio.AsyncConnection.run_sync` method of
 
 .. seealso::
 
-    :ref:`metadata_reflection`
+    :ref:`metadata_reflection` 
 
-    :ref:`inspection_toplevel`
+    :ref:`inspection_toplevel` 
 
 Engine API Documentation
 -------------------------
@@ -1072,7 +1072,7 @@ Result Set API Documentation
 
 The :class:`_asyncio.AsyncResult` object is an async-adapted version of the
 :class:`_result.Result` object.  It is only returned when using the
-:meth:`_asyncio.AsyncConnection.stream` or :meth:`_asyncio.AsyncSession.stream`
+:meth:`_asyncio.AsyncConnection.stream` or :meth:` _asyncio.AsyncSession.stream`
 methods, which return a result object that is on top of an active database
 cursor.
 

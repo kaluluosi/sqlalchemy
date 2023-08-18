@@ -45,14 +45,14 @@
         :tickets: 3418
         :versions: 1.0.5
 
-        在:meth:`_expression.Insert.from_select` 中添加了官方支持子查询中使用的CTE。在0.9.9之前，该行为是偶然发生的，当时更改了与:ticket：'3248'相关联的内容。请注意，这是将WITH子句呈现为INSERT之后，SELECT之前的内容。在INSERT，UPDATE，DELETE的顶层呈现CTE的全部功能是针对以后的版本的新功能。
+        在  :meth:`_expression.Insert.from_select`   中添加了官方支持子查询中使用的CTE。在0.9.9之前，该行为是偶然发生的，当时更改了与:ticket：'3248'相关联的内容。请注意，这是将WITH子句呈现为INSERT之后，SELECT之前的内容。在INSERT，UPDATE，DELETE的顶层呈现CTE的全部功能是针对以后的版本的新功能。
 
     .. change::
         :tags: bug, ext
         :tickets: 3408
         :versions: 1.0.4
 
-        修复了使用扩展属性仪器系统时会发生的错误，当:meth:`.class_mapper`使用无效的输入调用并且也不是弱引用时（如整数）时，将无法正确引发异常。
+        修复了使用扩展属性仪器系统时会发生的错误，当  :meth:`.class_mapper`  使用无效的输入调用并且也不是弱引用时（如整数）时，将无法正确引发异常。
 
     .. change::
         :tags: bug, tests, pypy
@@ -66,34 +66,34 @@
         :tickets: 3375
         :versions: 1.0.1
 
-        向:paramref:`_pool.Pool.reset_on_return`参数接受的字符串值中添加了字符串值“none”作为“None”的同义词，因此可以使用字符串值来使用诸如:func:`.engine_from_config`之类的实用程序而不会出现问题。
+        向  :paramref:`_pool.Pool.reset_on_return`  参数接受的字符串值中添加了字符串值“none”作为“None”的同义词，因此可以使用字符串值来使用诸如 :func:` .engine_from_config`之类的实用程序而不会出现问题。
 
     .. change::
         :tags: bug, sql
         :tickets: 3362
         :versions: 1.0.0
 
-        修复了使用命名约定的:class:`_schema.MetaData`对象不能正确使用pickle的问题。跳过了该属性导致从中基于其他表创建额外表时出现不一致和失败的情况。
+        修复了使用命名约定的 :class:`_schema.MetaData` 对象不能正确使用pickle的问题。跳过了该属性导致从中基于其他表创建额外表时出现不一致和失败的情况。
 
     .. change::
         :tags: bug, postgresql
         :tickets: 3354
         :versions: 1.0.0
 
-        修复了长期存在的错误，即在将:class:`.Enum`类型与psycopg2方言一起使用且非ASCII值和“native_enum = False”结合使用时，无法正确解码返回结果。这源自于PG: class:`_postgresql.ENUM`类型曾经是没有“非本地”选项的独立类型。
+        修复了长期存在的错误，即在将 :class:`.Enum` 类型与psycopg2方言一起使用且非ASCII值和“native_enum = False”结合使用时，无法正确解码返回结果。这源自于PG: class:`_postgresql.ENUM`类型曾经是没有“非本地”选项的独立类型。
 
     .. change::
         :tags: bug, orm
         :tickets: 3349
 
-        在使用:meth:`_query.Query.update`或:meth:`_query.Query.delete`方法时，:class:`_query.Query`不支持连接，子查询或特殊FROM子句;如果调用了:meth:`_query.Query.join`或:meth:`_query.Query.select_from`之类的方法，则会发出警告而不是静默地忽略这些字段，并且自1.0.0b5起，这将引发错误。
+        在使用  :meth:`_query.Query.update`  或  :meth:` _query.Query.delete`  方法时，  :class:`_query.Query`  或  :meth:` _query.Query.select_from`  之类的方法，则会发出警告而不是静默地忽略这些字段，并且自1.0.0b5起，这将引发错误。
 
     .. change::
         :tags: bug, orm
         :tickets: 3352
         :versions: 1.0.0b5
 
-        修复了多个嵌套:meth:`.Session.begin_nested`操作内的状态跟踪将无法传播在内部保存点中已经更新的对象的"dirty"标志的错误，因此，如果回滚封闭保存点，则该对象将不是过期状态的一部分，因此会被还原为其数据库状态。
+        修复了多个嵌套  :meth:`.Session.begin_nested`  操作内的状态跟踪将无法传播在内部保存点中已经更新的对象的"dirty"标志的错误，因此，如果回滚封闭保存点，则该对象将不是过期状态的一部分，因此会被还原为其数据库状态。
 
     .. change::
         :tags: bug, mysql, pymysql
@@ -107,20 +107,20 @@
         :tickets: 3333
         :versions: 1.0.0b2
 
-        修复了Py3K上:class:`.mysql.BIT`类型未正确使用“ord（）”函数的错误。David Marin提供了请求拉取。
+        修复了Py3K上 :class:`.mysql.BIT` 类型未正确使用“ord（）”函数的错误。David Marin提供了请求拉取。
 
     .. change::
         :tags: bug, ext
         :tickets: 3324
 
-        修复了0.9.9中从sqlalchemy.ext.declarative中删除:func:`.as_declarative`符号的回归。
+        修复了0.9.9中从sqlalchemy.ext.declarative中删除 :func:`.as_declarative` 符号的回归。
 
     .. change::
         :tags: feature, orm
         :tickets: 3320
         :versions: 1.0.0b1
 
-        :attr:`_query.Query.column_descriptions`中添加了一个新条目“entity”的字典。这是指由表达式引用的主ORM映射类或别名类。与现有的“type”条目相比，它将始终是一个映射实体，即使是从列表达式中提取的，或者是纯核心表达式的情况下也是如此。如果在0.9.10中未发布的定义中次要分类，此功能的:ticket：'3403'也发生了回归。
+        :attr:`_query.Query.column_descriptions` 中添加了一个新条目“entity”的字典。这是指由表达式引用的主ORM映射类或别名类。与现有的“type”条目相比，它将始终是一个映射实体，即使是从列表达式中提取的，或者是纯核心表达式的情况下也是如此。如果在0.9.10中未发布的定义中次要分类，此功能的:ticket：'3403'也发生了回归。
 
 .. changelog ::
     :version: 0.9.9
@@ -134,7 +134,7 @@
 
         .. seealso::
 
-            :ref:`postgresql_index_concurrently`
+              :ref:`postgresql_index_concurrently` 
 
     .. change::
         :tags: bug, ext, py3k
@@ -150,7 +150,7 @@
 
         .. seealso::
 
-            :ref:`sqlite_partial_index`
+              :ref:`sqlite_partial_index` 
 
     .. change::
         :tags: bug, orm
@@ -164,7 +164,7 @@
         :tickets: 3309
         :versions: 1.0.0b1
 
-        修复了在:class:`.Session`上的“after_rollback（）”处理程序内不正确地向该: class:`.Session`添加状态，并且任务警告和删除此状态(由:ticket: `2389`)会尝试继续时，将引发TypeError的情况。正确的行为是放弃添加状态，要么是在检测到这样的添加之后，要么是在ISessionTransaction`.`rollback was called之后。
+        修复了在  :class:`.Session` .Session` 添加状态，并且任务警告和删除此状态(由:ticket:`2389` )会尝试继续时，将引发TypeError的情况。正确的行为是放弃添加状态，要么是在检测到这样的添加之后，要么是在ISessionTransaction`.`rollback was called之后。
 
     .. change::
         :tags: bug, orm
@@ -178,13 +178,13 @@
         :tickets: 2940
         :versions: 1.0.0b1
 
-        在与psycopg2方言一起使用PG `UUID`类型的情况下，修复了与ARRAY类型的兼容性问题。psycopg2方言现在使用psycopg2.extras.register_uuid()钩子，以便始终将UUID值作为UUID()对象传递/从DBAPI传递。:paramref:`.UUID.as_uuid`标志仍然受到尊重，但是，如果禁用了返回的UUID对象，则需要将其转换回字符串。
+        在与psycopg2方言一起使用PG `UUID`类型的情况下，修复了与ARRAY类型的兼容性问题。psycopg2方言现在使用psycopg2.extras.register_uuid()钩子，以便始终将UUID值作为UUID()对象传递/从DBAPI传递。  :paramref:`.UUID.as_uuid`  标志仍然受到尊重，但是，如果禁用了返回的UUID对象，则需要将其转换回字符串。
 
     .. change::
         :tags: bug, postgresql
         :versions: 1.0.0b1
 
-        在使用psycopg2 2.5.4或更高版本时，为:class:`postgresql.JSONB`数据类型添加了支持，该版本具有本机转换JSONB数据的功能，因此必须禁用SQLAlchemy的转换器;此外，通过新增加的psycopg2扩展“ extras.register_default_jsonb”，在使用用户定义的``json_deserializer``时建立了传递给方言的JSON反序列化器。还修复了实际上没有往返JSONB类型而不是JSON类型的PostgreSQL集成测试。Mateusz Susik提供了请求拉取。
+        在使用psycopg2 2.5.4或更高版本时，为  :class:`postgresql.JSONB` ` json_deserializer``时建立了传递给方言的JSON反序列化器。还修复了实际上没有往返JSONB类型而不是JSON类型的PostgreSQL集成测试。Mateusz Susik提供了请求拉取。
 
     .. change::
         :tags: bug, postgresql
@@ -216,13 +216,13 @@
         :tags: bug, ext
         :versions: 1.0.0b1
 
-        修复了:class:`.ext.mutable.MutableDict`未实现“update（）”字典方法的错误，因此未捕获更改。Matt Chisholm提供了请求拉取。
+        修复了 :class:`.ext.mutable.MutableDict` 未实现“update（）”字典方法的错误，因此未捕获更改。Matt Chisholm提供了请求拉取。
 
     .. change::
         :tags: bug, ext
         :versions: 1.0.0b1
 
-        修复了无法在“强制”操作中看到:class:`.ext.mutable.MutableDict`的自定义子类，并且会返回一个普通的:class:`.ext.mutable.MutableDict`而不是进行“虎变”操作。Matt Chisholm 提供了请求拉取。
+        修复了无法在“强制”操作中看到  :class:`.ext.mutable.MutableDict` .ext.mutable.MutableDict` 而不是进行“虎变”操作。Matt Chisholm 提供了请求拉取。
 
     .. change::
         :tags: bug, pool
@@ -260,7 +260,7 @@
 
         *现在可以指定值：func:`.null`，这将始终导致结果语句中的NULL值。
 
-        *添加了一个新的参数:paramref:`_types.JSON.none_as_null`，当为True时指示应将Python“None”值持久化为SQL NULL，而不是JSON编码的“null”。
+        *添加了一个新的参数  :paramref:`_types.JSON.none_as_null`  ，当为True时指示应将Python“None”值持久化为SQL NULL，而不是JSON编码的“null”。
 
         检索NULL作为None也已被修复，而不是使用psycopg2之外的DBAPI，即pg8000。
 
@@ -290,7 +290,7 @@
         :versions: 1.0.0b1
         :tickets: 3141
 
-        修复了:class:`_postgresql.array`对象中的bug，其中与普通的Python列表进行比较会失败，而不能使用正确的数组构造函数。由Andrew发起的拉取请求。
+        修复了 :class:`_postgresql.array` 对象中的bug，其中与普通的Python列表进行比较会失败，而不能使用正确的数组构造函数。由Andrew发起的拉取请求。
 
     .. change::
         :tags: bug, postgresql
@@ -336,7 +336,7 @@
         :tickets: 3067
         :versions: 1.0.0b1
 
-        修复了命名约定功能中的错误，其中使用了包括“constraint_name”的检查约束约定，然后将强制所有:class:`.Boolean`和：class：`的类型`.Enum`也需要名称，因为它们隐含地创建一个约束条件，即使最终目标后端是一个不需要生成约束的后端，例如PostgreSQL。对于这些特定约束的命名约定的机制已重新组织，使得命名确定是在DDL编译时完成的，而不是在约束/表构建时间完成的。
+        修复了命名约定功能中的错误，其中使用了包括“constraint_name”的检查约束约定，然后将强制所有  :class:`.Boolean` .Enum` 也需要名称，因为它们隐含地创建一个约束条件，即使最终目标后端是一个不需要生成约束的后端，例如PostgreSQL。对于这些特定约束的命名约定的机制已重新组织，使得命名确定是在DDL编译时完成的，而不是在约束/表构建时间完成的。
 
     .. change::
         :tags: bug, mssql
@@ -349,7 +349,7 @@
         :tickets: 3083, 2736
         :versions: 1.0.0b1
 
-        由于：ticket：'2736'引起的0.9.0中的回归，对于:meth:`_query.Query.select_from`方法现在不再设置查询的“from entity”属性正确，因此在使用字符串名称搜索属性时可能无法检查适当的“from”实体。
+        由于：ticket：'2736'引起的0.9.0中的回归，对于  :meth:`_query.Query.select_from`  方法现在不再设置查询的“from entity”属性正确，因此在使用字符串名称搜索属性时可能无法检查适当的“from”实体。
 
     .. change::
         :tags: bug, sql
@@ -377,7 +377,7 @@
         :tickets: 3122
         :versions: 1.0.0b1
 
-        :meth:`.TypeEngine.with_variant`方法现在将接受类别类作为参数，该参数会在内部转换为实例，使用其他构造如：class:`_schema.Column` long established 的同样惯例。
+         :meth:`.TypeEngine.with_variant`  long established 的同样惯例。
 
     .. change::
         :tags: bug, orm
@@ -402,7 +402,7 @@
         :tags: feature, postgresql
         :versions: 1.0.0b1
 
-        通过:class:`_postgresql.JSONB`添加了对PostgreSQL JSONB的支持。Pull request courtesy Damian Dimmich。
+        通过 :class:`_postgresql.JSONB` 添加了对PostgreSQL JSONB的支持。Pull request courtesy Damian Dimmich。
 
     .. change::
         :tags: feature, mssql
@@ -429,7 +429,7 @@
         :tickets: 3106
         :versions: 1.0.0b1
 
-        修复了与:func:`.with_polymorphic`结合使用的子查询急切加载的问题，其中子查询负载的实体和列的定向已与此类型的实体和其他实现更准确。
+        修复了与 :func:`.with_polymorphic` 结合使用的子查询急切加载的问题，其中子查询负载的实体和列的定向已与此类型的实体和其他实现更准确。
 
     .. change::
         :tags: bug, orm
@@ -452,7 +452,7 @@
         :tags: bug, orm
         :tickets: 3060
 
-        取消了对:ticket:`3060`的更改--这是针对单元的修补程序
+        取消了对  :ticket:`3060`  的更改--这是针对单元的修补程序
         工作，最终在1.0中通过:ticket：`3061`更全面地更新。
         定位于由UPDATE转换为DELETE/INSERT的情况中由于lazy
         load可能产生事件的问题。
@@ -507,7 +507,7 @@
         :tags: feature, engine
         :tickets: 2978
 
-        可以在:class:`_engine.Engine`中关联事件侦听器，创建一个或多个:class:`_engine.Connection`对象之后（例如通过orm :class：`.Session`或通过显式连接）并且侦听器将从这些连接中获取事件。以前，性能问题使事件转移从:class:`_engine.Engine`到：class:`_engine.Connection`请勿随意打开事件转移。
+        可以在  :class:`_engine.Engine` .Session` 或通过显式连接）并且侦听器将从这些连接中获取事件。以前，性能问题使事件转移从 :class:`_engine.Engine` 到：class:`_engine.Connection`请勿随意打开事件转移。
 
     .. change::
         :tags: bug, tests
@@ -519,7 +519,7 @@
         :tags: bug, engine
         :tickets: 2985
 
-        改进了:class:`_engine.Engine`在检测到“断开”条件时如何回收连接池的机制；现在，而不是丢弃池并明确关闭连接，
+        改进了 :class:`_engine.Engine` 在检测到“断开”条件时如何回收连接池的机制；现在，而不是丢弃池并明确关闭连接，
         池被保留并更新为反映当前时间的“生成”时间戳，从而导致在下一次它们被检查时，将回收所有现有连接。这极大地简化了回收过程，
         消除了等待旧池的连接尝试的“唤醒”并消除了可能立即丢弃“池”对象的竞争条件             在回收操作期间创建。
 
@@ -527,7 +527,7 @@
         :tags: bug, oracle
         :tickets: 2987
 
-        添加了新的datatype :class:`_oracle.DATE`，它是:class:`.DateTime`的子类。由于Oracle没有“datetime”类型，因此它只有“DATE”，因此在尽可能运行的情况下，将日期类型强制转换而来。.. changelog::
+        添加了新的datatype   :class:`_oracle.DATE` ，它是 :class:` .DateTime`的子类。由于Oracle没有“datetime”类型，因此它只有“DATE”，因此在尽可能运行的情况下，将日期类型强制转换而来。.. changelog::
     :version: 0.9.1
     :released: January 15, 2014
 
@@ -544,7 +544,7 @@
     .. change::
         :tags: feature, sql
 
-        Added :meth:`_engine.result.ResultProxy.scalars` to allow more
+        Added  :meth:`_engine.result.ResultProxy.scalars`  to allow more
         convenient access to a simple column scalar value from a single-row
         result set.
 
@@ -573,10 +573,10 @@
     .. change::
         :tags: feature, orm
 
-        Added support for "skipping" a :paramref:`_orm.relationship` loader for a specific
+        Added support for "skipping" a  :paramref:`_orm.relationship`  loader for a specific
         row, most specifically for the purpose of "bulk refreshing" against
         identity map-enabled sessions.  Usage is to call
-        :meth:`_orm.session.SkipLoader.populate_existing`,
+         :meth:`_orm.session.SkipLoader.populate_existing` ,
         passing the primary key value(s), e.g.::
 
             session.query(MyClass).populate_existing([1, 2, 3])
@@ -588,9 +588,9 @@
         :tickets: 2899
 
         Added support for common table expressions (CTEs) to the ORM's
-        :meth:`_query.Query.cte` method which generates a :class:`_expression.Alias` object
-        with a contained :class:`_expression.Select` rendered as a "WITH ..."
-        clause.  The new method also returns the :class:`_expression.Alias` object
+         :meth:`_query.Query.cte`  method which generates a   :class:` _expression.Alias`  object
+        with a contained   :class:`_expression.Select`  rendered as a "WITH ..."
+        clause.  The new method also returns the   :class:`_expression.Alias`  object
         such that it can be used in filtering, ordering, and included
         in other SELECT statements.  A fourth example is added to the
         ORM tutorial to illustrate this.
@@ -598,13 +598,13 @@
     .. change::
         :tags: feature, sql
 
-        Added a new function :func:`_engine.result.RowProxy._fields` which
-        returns the column keys of the enclosing :class:`_engine.result.RowProxy`.
+        Added a new function   :func:`_engine.result.RowProxy._fields`  which
+        returns the column keys of the enclosing   :class:`_engine.result.RowProxy` .
 
     .. change::
         :tags: feature, sql
 
-        Added the ability for :class:`_expression.Annotated` to key expressions
+        Added the ability for   :class:`_expression.Annotated`  to key expressions
         off of other expressions, rather than just on columns.  E.g.::
 
             from sqlalchemy.sql import column, text
@@ -616,27 +616,27 @@
     .. change::
         :tags: feature, sql
 
-        Added a new module-level function :func:`_expression.literal_column`
-        which generates a :class:`_expression.ColumnClause` object that
+        Added a new module-level function   :func:`_expression.literal_column` 
+        which generates a   :class:`_expression.ColumnClause`  object that
         is unsupported for rendering within any SQL expressions except
         for those that render plain column references.
 
     .. change::
         :tags: feature, sql
 
-        Added a new :func:`_expression.type_coerce` function which applies
+        Added a new   :func:`_expression.type_coerce`  function which applies
         a CAST expression to an expression in order to coerce it to a new type.
 
     .. change::
         :tags: bug, ext
 
-        Fixed regression whereby the :class:`.AssociationProxy` class did
+        Fixed regression whereby the   :class:`.AssociationProxy`  class did
         not work with the new features of partial mapping and dictionaries.
 
     .. change::
         :tags: feature, ext
 
-        Added convenience methods to :class:`.AssociationProxy` for
+        Added convenience methods to   :class:`.AssociationProxy`  for
         generating association objects from single-attribute references,
         as well as a new "proxy dict" mode that allows the value of the
         proxied attribute to be accessed like a key/value mapping.
@@ -670,14 +670,14 @@
 
         .. seealso::
 
-            :ref:`examples_inheritance_partial`
+              :ref:`examples_inheritance_partial` 
 
     .. change::
         :tags: feature, orm
 
         Parent tables for joined-table inheritance can now be fully specified
-        using either the :class:`_schema.Table` object or a class, using
-        the standard class:table syntax used by :paramref:`_orm.relationship`
+        using either the   :class:`_schema.Table`  object or a class, using
+        the standard class:table syntax used by  :paramref:`_orm.relationship` 
         and other arguments.  Previously the class specification would
         always be applied to the secondary table.
 
@@ -698,20 +698,20 @@
     .. change::
         :tags: feature, sql
 
-        Added support for using :class:`_expression.Literal` within UNION, both in
+        Added support for using   :class:`_expression.Literal`  within UNION, both in
         the SELECT list as expressions as well as within the ROW and
         VALUE expressions of UNION.
 
     .. change::
         :tags: feature, orm
 
-        Added a new construct :class:`_sql.Selectable` which may be used in
+        Added a new construct   :class:`_sql.Selectable`  which may be used in
         any context that a table can be used.   It represents a SELECT or other
         selectable construct that has no FROM clause; it is thus typically
         used with any number of "scalar select" queries as well as as a
         simple wrapper around subqueries or literal SQL.
 
-        :class:`_sql.Selectable` features a number of enhancements over using
+          :class:`_sql.Selectable`  features a number of enhancements over using
         text("SELECT ...") for cases where a SELECT expression needs to be
         embedded within a larger statement: it provides enhanced compatibility
         with ORM queries as well as with core constructs such as INSERT
@@ -732,8 +732,8 @@
         SQL expression rather than the default SELECT of the primary table.
 
         This is accommodated using a new parameter ``_refresh_expire_via_joins``
-        which is accepted by :meth:`_orm.mapper` or at the class level via
-        :class:`_orm.Declarative`, and is passed a SQL expression used
+        which is accepted by  :meth:`_orm.mapper`  or at the class level via
+          :class:`_orm.Declarative` , and is passed a SQL expression used
         to locate rows to be refreshed, as well as an optional dictionary
         of parameter/argument pairs that will supply values to the expression.
 
@@ -741,12 +741,12 @@
         :tags: bug, orm
 
         Fixed regression introduced in 0.9.0 whereby NULL were interpreted
-        as being truthy when using :meth:`_query.Query.exists`.
+        as being truthy when using  :meth:`_query.Query.exists` .
 
     .. change::
         :tags: feature, orm
 
-        Added a new method :meth:`_orm.attributes.QueryableAttribute.cmp_op`
+        Added a new method  :meth:`_orm.attributes.QueryableAttribute.cmp_op` 
         which generates comparison operations for a fixed operator.
         E.g.::
 
@@ -765,13 +765,13 @@
     .. change::
         :tags: feature, orm
 
-        A new :paramref:`.relationship.order_by` value, "random", is available
+        A new  :paramref:`.relationship.order_by`  value, "random", is available
         which produces a new "ORDER BY rand()" directive on the related table each
         time the relationship is loaded.
         
         .. seealso::
 
-            :ref:`relationship_orderby_random`
+              :ref:`relationship_orderby_random` 
                     
 
 .. changelog::
@@ -804,10 +804,10 @@
         release, and will be removed in SQLAlchemy 1.0.
 
     .. deprecated:: 0.9
-        The :func:`.orm.reconstruct_instance()` function has been marked as
+        The   :func:`.orm.reconstruct_instance()`  function has been marked as
         deprecated, with the given alternate instruction to make use of
         more specific means of creating objects which produce the needed
-        state, such as :func:`.attributes.flag_modified()` and other
+        state, such as   :func:`.attributes.flag_modified()`  and other
         modifier functions.
 
     .. deprecated:: 0.9
@@ -859,15 +859,15 @@
 
         .. seealso::
 
-            :ref:`querying_with_polymorphic`
+              :ref:`querying_with_polymorphic` 
 
 
     .. change::
         :tags: feature, orm
         :tickets: 1444
 
-        Added a new hook, :meth:`.SessionEvents.populate_existing`, to allow
-        an existing row in the :class:`.Session`'s identity map to be refreshed
+        Added a new hook,  :meth:`.SessionEvents.populate_existing` , to allow
+        an existing row in the   :class:`.Session` 's identity map to be refreshed
         from the database so that it can present the current state of the
         database, bypassing any locally modified state.
 
@@ -884,7 +884,7 @@
         :tickets: 2021, 2356
 
         A new parameter ``raiseerr`` is now available within the ORM's
-        :meth:`_session.Session.begin_nested` method.  This parameter controls
+         :meth:`_session.Session.begin_nested`  method.  This parameter controls
         whether or not the `rollback` method is called automatically upon
         a rollback at the end of the block.
 
@@ -893,7 +893,7 @@
         :tickets: 157
 
         A new flag has been added to the ORM’s
-        :meth:`_orm.Registry.map_imperatively`
+         :meth:`_orm.Registry.map_imperatively` 
         method to specify that the class be explicitly excluded from
         querying, rendering it effectively the same as a non-mapped class.
 
@@ -901,7 +901,7 @@
         :tags: feature, orm
         :tickets: 1781
 
-        Added :meth:`_orm.Query.join()` method, which
+        Added  :meth:`_orm.Query.join()`  method, which
         takes a target attribute name or column argument name - in conjunction
         with a new optional `from_joinpoint` parameter - to indicate that a
         join should begin from an alternate point.  This allows for more
@@ -913,7 +913,7 @@
 
         Schema-level attributes and entities (tables, constraints,
         sequences) can now have their name format adjusted using a
-        new :paramref:`_schema.MetaData.naming_convention` parameter.
+        new  :paramref:`_schema.MetaData.naming_convention`  parameter.
         A "underscore" naming convention, as well as a "foreign key target"
         naming convention, are available in the default implementation.
 
@@ -921,12 +921,12 @@
         :tags: feature, orm
         :tickets: 219, 1966, 2171, 2619
 
-        The legacy :func:`_orm.reconstruct_instance` function, used internally by
+        The legacy   :func:`_orm.reconstruct_instance`  function, used internally by
         the ORM since the beginning of time, has been refactored and made
         public.  This function provides basic object state transliteration
         services, in which a dictionary of simple attribute names and values
         is converted to an object state.  The function is also extensible
-        via the :paramref:`_orm.MapperExtension.reconstruct_instance`
+        via the  :paramref:`_orm.MapperExtension.reconstruct_instance` 
         method, which allows post-processing of object state as it is being
         built up.
 
@@ -934,7 +934,7 @@
         :tags: feature, orm
         :tickets: 1810
 
-        The "class_" argument to the :meth:`_orm.mapper` function has been
+        The "class_" argument to the  :meth:`_orm.mapper`  function has been
         deprecated in favor of the more identifiable "class_".
 
     .. change::
@@ -949,10 +949,10 @@
         :tags: feature, orm
         :tickets: 2768
 
-        Added :meth:`_orm.relationship.cascading_iterator`, a
+        Added  :meth:`_orm.relationship.cascading_iterator` , a
         specialization of the standard Python ``iterator`` that iterates
         through an entire hierarchical tree of objects, fully expanding
-        sub-relationships based on the current :class:`_orm.Session` state.
+        sub-relationships based on the current   :class:`_orm.Session`  state.
 
     .. change::
         :tags: feature, orm
@@ -960,32 +960,32 @@
 
         Polymorphic query strategies now supported on a per-mapper basis;
         strategies can be declared via the existing ``polymorphic_on`` attribute
-        together with ``with_polymorphic()`` or directly on the :meth:`_orm.mapper`
-        using a new :paramref:`_orm.mapper.polymorphic_identity` parameter.
+        together with ``with_polymorphic()`` or directly on the  :meth:`_orm.mapper` 
+        using a new  :paramref:`_orm.mapper.polymorphic_identity`  parameter.
 
         .. seealso::
 
-            :ref:`mapping_inheritance`
+              :ref:`mapping_inheritance` 
 
 
     .. change::
         :tags: feature, orm
         :tickets: 2606
 
-        Added :func:`_orm.with_polymorphic` construct which allows for
+        Added   :func:`_orm.with_polymorphic`  construct which allows for
         more concise usage of polymorphic loading.   The construct can be embedded
-        directly in a query, or applied to a :class:`_orm.relationship`.
+        directly in a query, or applied to a   :class:`_orm.relationship` .
 
     .. change::
         :tags: feature, orm
         :tickets: 2722
 
         Added support for using subset of columns from an inherited table
-        in a :class:`_orm.relationship`, by specifying the list of columns directly.
+        in a   :class:`_orm.relationship` , by specifying the list of columns directly.
 
         .. seealso::
 
-            :ref:`inheritance_relationship_supported_column_subset`
+              :ref:`inheritance_relationship_supported_column_subset` 
 
 
     .. change::
@@ -993,42 +993,42 @@
         :tickets: 2646
 
         Postgresql generate_series() is now available as an element in a SQL expression via the
-        new :class:`_postgresql.generate_series` class.
+        new   :class:`_postgresql.generate_series`  class.
 
     .. change::
         :tags: enhancement, sql
 
         Added the ability to generate "ON CONFLICT" clauses via the
-        :meth:`_expression.Insert.on_conflict_do_update`, :meth:`_expression.Insert.on_conflict_do_nothing`
-        and related constructs.  A :meth:`_.UpdateStatement.on_conflict_do_update`,
-        class, based off of :class:`_expression.Insert.on_conflict_do_update`, is also
+         :meth:`_expression.Insert.on_conflict_do_update` ,  :meth:` _expression.Insert.on_conflict_do_nothing` 
+        and related constructs.  A  :meth:`_.UpdateStatement.on_conflict_do_update` ,
+        class, based off of   :class:`_expression.Insert.on_conflict_do_update` , is also
         now available.
 
         .. seealso::
 
-            :ref:`postgresql_on_conflict`
+              :ref:`postgresql_on_conflict` 
 
 
     .. change::
         :tags: feature, postgresql
         :tickets: 2523
 
-        Added :meth:`_ddl.SchemaDropper.remove_from_metadata`, and
+        Added  :meth:`_ddl.SchemaDropper.remove_from_metadata` , and
         related methods for triggers, sequences, and views.
 
     .. change::
         :tags: feature, sql
         :tickets: 2604
 
-        Added :class:`_expression.Insert` support for per-row default value generation
-        using a dictionary-based convention or the new :class:`_expression.Insert.frozenset_defaults()`
+        Added   :class:`_expression.Insert`  support for per-row default value generation
+        using a dictionary-based convention or the new   :class:`_expression.Insert.frozenset_defaults()` 
         method.
 
     .. change::
         :tags: enhancement, postgresql
         :tickets: 2486
 
-        Added support for :class:`postgresql.ENUM` constructs to be rendered
+        Added support for   :class:`postgresql.ENUM`  constructs to be rendered
         inline within expressions, allowing them to be inserted into "SELECT"
         lists and expressions, or used within SQL constructs such as text().
 
@@ -1037,7 +1037,7 @@
         :tickets: 2669
 
         Added support for Postgresql partial indexes on columns, via the
-        :meth:`_postgresql.Index.where` method.
+         :meth:`_postgresql.Index.where`  method.
 
     .. change::
         :tags: feature, postgresql
@@ -1051,8 +1051,8 @@
 
         Added support for Postgresql multi-column "INCLUDE" indexes, as
         well as "fillfactor" and "fastupdate" parameters via the
-        :meth:`_postgresql.Index.include`, :meth:`_postgresql.Index.fillfactor`,
-        and :meth:`_postgresql.Index.fastupdate` methods.
+         :meth:`_postgresql.Index.include` ,  :meth:` _postgresql.Index.fillfactor` ,
+        and  :meth:`_postgresql.Index.fastupdate`  methods.
 
     .. change::
         :tags: feature, pymysql
@@ -1077,19 +1077,19 @@
         :tickets: 2349
 
         Added support for the "ON DUPLICATE KEY UPDATE" MySQL syntax to
-        the :class:`_expression.Insert` construct, so that this SQL syntax can be
-        produced automatically when using :meth:`_engine.Engine.execute` or :class:`_orm.session.Session.commit`.
+        the   :class:`_expression.Insert`  construct, so that this SQL syntax can be
+        produced automatically when using  :meth:`_engine.Engine.execute`  or   :class:` _orm.session.Session.commit` .
 
         .. seealso::
 
-            :ref:`mysql_on_duplicate_key_update`
+              :ref:`mysql_on_duplicate_key_update` 
 
 
     .. change::
         :tags: feature, sql
         :tickets: 2176
 
-        Added :meth:`_expression.Update.prefix_with()` method,
+        Added  :meth:`_expression.Update.prefix_with()`  method,
         which allows prefixing an UPDATE statement via a "prefix" string
         (e.g. "UPDATE [prefix] mytable SET column=value").
 
@@ -1098,12 +1098,12 @@
         :tickets: 2076
 
         Added support for SQLite "partial indexes" with the new
-        :meth:`_sqlite.Index.where` method.
+         :meth:`_sqlite.Index.where`  method.
 
     .. change::
         :tags: enhancement, sql
 
-        Added the :meth:`_expression.TextClause.cte` method to allow a CTE to be
+        Added the  :meth:`_expression.TextClause.cte`  method to allow a CTE to be
         associated with an ad-hoc textual SQL expression.
 
     .. change::
@@ -1118,14 +1118,14 @@
         :tags: enhancement, sql
         :tickets: 2605
 
-        Added :class:`_expression.values` as a shorthand to the VALUES
+        Added   :class:`_expression.values`  as a shorthand to the VALUES
         clause in INSERT.
 
     .. change::
         :tags: feature, sql
         :tickets: 2080
 
-        Added a new :meth:`_expression.Insert.return_defaults` method; for
+        Added a new  :meth:`_expression.Insert.return_defaults`  method; for
         Postgresql, this emits a RETURNING clause that returns the latest values
         of all columns inserted or updated, in effect returning the new primary
         key value for an inserted row.
@@ -1142,7 +1142,7 @@
         :tickets: 869
 
         Added support for natural FULL and RIGHT joins and FULL OUTER
-        JOINs within the :meth:`_sql.Select.join` method.
+        JOINs within the  :meth:`_sql.Select.join`  method.
 
     .. change::
         :tags: enhancement, sql
@@ -1153,7 +1153,7 @@
 
         .. seealso::
 
-            :ref:`dialects_pyodbc`
+              :ref:`dialects_pyodbc` 
 
 
     .. change::
@@ -1166,7 +1166,7 @@
         :tags: bug, oracle
         :tickets: 297
 
-        The :meth:`_oracle.OracleDialect.connect` method now sets
+        The  :meth:`_oracle.OracleDialect.connect`  method now sets
         the ORA_SDTZ environment variable, providing Oracle servers
         with the correct session time zone.
 
@@ -1175,10 +1175,10 @@
         :tickets: 1865, 1882
 
         Added support for foreign key constraints on partitioned tables via
-        the new :paramref:`_postgresql.ForeignKeyConstraint.constrained_columns`
+        the new  :paramref:`_postgresql.ForeignKeyConstraint.constrained_columns` 
         parameter.  Also added support for "DEFERRABLE" and "INITIALLY IMMEDIATE"
-        constraints using the new :paramref:`_postgresql.ForeignKeyConstraint.deferrable`
-        and :paramref:`_postgresql.ForeignKeyConstraint.initially` parameters.
+        constraints using the new  :paramref:`_postgresql.ForeignKeyConstraint.deferrable` 
+        and  :paramref:`_postgresql.ForeignKeyConstraint.initially`  parameters.
 
     .. change::
         :tags: feature, postgresql
@@ -1192,21 +1192,21 @@
         :tickets: 1501
 
         Multi-table UPDATEs can now make use of a "ORDER BY" clause via the
-        new :meth:`_expression.Update.order_by()` method.
+        new  :meth:`_expression.Update.order_by()`  method.
 
     .. change::
         :tags: feature, sql
         :tickets: 2462
 
-        Added a new module-level function :func:`_sql.column` which provides
-        a convenient shorthand for :class:`_expression.ColumnElement` generation.
+        Added a new module-level function   :func:`_sql.column`  which provides
+        a convenient shorthand for   :class:`_expression.ColumnElement`  generation.
 
     .. change::
         :tags: feature, sql
         :tickets: 1867
 
-        The :class:`_sql.Join` construct can now generate "CROSS JOINs" by
-        using the :attr:`_sql.Join.isouter` flag or using the string 'CROSS JOIN'
+        The   :class:`_sql.Join`  construct can now generate "CROSS JOINs" by
+        using the  :attr:`_sql.Join.isouter`  flag or using the string 'CROSS JOIN'
         directly.
 
     .. change::
@@ -1220,11 +1220,11 @@
         :tickets: 2085
 
         Added support for the "pragma" construct in SQLite via the new
-        :meth:`_sqlite.SQLiteConnection.execution_options` method.
+         :meth:`_sqlite.SQLiteConnection.execution_options`  method.
 
         .. seealso::
 
-            :ref:`sqlite_pragma`
+              :ref:`sqlite_pragma` 
 
 
     .. change::
@@ -1237,7 +1237,7 @@
 
         .. seealso::
 
-            :ref:`coretutorial_unions`
+              :ref:`coretutorial_unions` 
 
 
     .. change::
@@ -1250,14 +1250,14 @@
 
         .. seealso::
 
-            :ref:`sql_expression_names_bindparam`
+              :ref:`sql_expression_names_bindparam` 
 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 2474, 2473
 
-        The :class:`_postgresql.COMPOSITE` type is now more fully supported within the
+        The   :class:`_postgresql.COMPOSITE`  type is now more fully supported within the
         ORM, allowing values passed to/from the DB to be treated as if they were
         a row of columns when embedded within a row of columns or nested structure.
 
@@ -1302,7 +1302,7 @@
         :tags: feature, sql
         :tickets: 2237
 
-        A new :meth:`_expression.Select.literal_column` method has been added to SQLAlchemy
+        A new  :meth:`_expression.Select.literal_column`  method has been added to SQLAlchemy
         which returns a column expression object which does not support typical
         "bind parameter" behavior, but is useful in SELECT statements where columns
         need to be produced that represent specific fixed expressions.
@@ -1319,7 +1319,7 @@
         :tags: feature, sql
         :tickets: 1396
 
-        A new :func:`_expression.bound_expression` construct has been added to
+        A new   :func:`_expression.bound_expression`  construct has been added to
         provide a way to specify the type of a bound expression as well as an
         optional function or callable that will be used to convert
         Python values passed to the select or statement parameter.
@@ -1329,7 +1329,7 @@
         :tickets: 2312
 
         Bound parameters can now be coerced to one of several Python types
-        upon execution by passing a dictionary to the :meth:`_engine.Connection.execute`
+        upon execution by passing a dictionary to the  :meth:`_engine.Connection.execute` 
         method via the "type\_coerce" key.
 
 
@@ -1355,7 +1355,7 @@ Bug Fixes
 
 - schema
   - Fixed a bug involving the new flattened JOIN structures which are used with 
-    :func:`_orm.joinedload()`.
+      :func:`_orm.joinedload()` .
 
 .. _change_0_9_1_bug_02:
 
@@ -1366,8 +1366,8 @@ Bug Fixes
 .. _change_0_9_1_bug_03:
 
 - orm
-  - Fixed bug where using a :attr:`.Session.info` attribute would fail if the 
-    ``.info`` argument were only passed to the :class:`.sessionmaker` creation 
+  - Fixed bug where using a  :attr:`.Session.info`  attribute would fail if the 
+    ``.info`` argument were only passed to the   :class:`.sessionmaker`  creation 
     call but not to the object itself.
     
 .. _change_0_9_1_bug_04:
@@ -1379,16 +1379,16 @@ Bug Fixes
 .. _change_0_9_1_bug_05:
 
 - sql
-  - The precedence rules for the :meth:`.ColumnOperators.collate` operator have been 
+  - The precedence rules for the  :meth:`.ColumnOperators.collate`  operator have been 
     modified, such that the COLLATE operator is now of lower precedence than the 
     comparison operators.
     
 .. _change_0_9_1_bug_06:
 
 - sqlalchemy.ext.automap
-  - Fixed an extremely unlikely memory issue where when using :class:`.DeferredReflection` 
+  - Fixed an extremely unlikely memory issue where when using   :class:`.DeferredReflection`  
     to define classes pending for reflection, if some subset of those classes were 
-    discarded before the :meth:`.DeferredReflection.prepare` method were called to 
+    discarded before the  :meth:`.DeferredReflection.prepare`  method were called to 
     reflect and map the class, a strong reference to the class would remain held 
     within the declarative internals.
     
@@ -1401,18 +1401,18 @@ Bug Fixes
 .. _change_0_9_1_bug_08:
 
 - orm
-  - The ``viewonly`` flag on :func:`_orm.relationship` will now prevent attribute history 
+  - The ``viewonly`` flag on   :func:`_orm.relationship`  will now prevent attribute history 
     from being written on behalf of the target attribute.
     
 .. _change_0_9_1_bug_09:
 
 - orm
-  - Added support for new :attr:`.Session.info` attribute to :class:`.scoped_session`.
+  - Added support for new  :attr:`.Session.info`  attribute to   :class:` .scoped_session` .
 
 .. _change_0_9_1_bug_10:
 
 - orm
-  - Fixed bug where usage of new :class:`.Bundle` object would cause the :attr:`_query.Query.column_descriptions` 
+  - Fixed bug where usage of new   :class:`.Bundle`  object would cause the  :attr:` _query.Query.column_descriptions`  
     attribute to fail.
 
 .. _change_0_9_1_bug_11:
@@ -1430,185 +1430,185 @@ Bug Fixes
 Feature Enhancements
 --------------------
 
-This release does not contain any feature enhancements.修复和测试从反射中解析MySQL外键选项的问题；这与 :ticket:`2183` 中完成对外键选项（如 ON UPDATE/ON DELETE cascade 等）的反射支持相补充。
+This release does not contain any feature enhancements.修复和测试从反射中解析MySQL外键选项的问题；这与  :ticket:`2183`  中完成对外键选项（如 ON UPDATE/ON DELETE cascade 等）的反射支持相补充。
 
 .. change::
     :tags: bug, orm
     :tickets: 2787
 
-    当与标量列映射的属性一起使用时，:func:`.attributes.get_history()` 现在会遵循传递给它的“passive”标志；
+    当与标量列映射的属性一起使用时，  :func:`.attributes.get_history()`  现在会遵循传递给它的“passive”标志；
     因为默认值为 ``PASSIVE_OFF``，所以如果值不存在，该函数将默认查询数据库。
     这是与0.8中的行为不同的行为更改。
 
     .. seealso::
 
-        :ref:`change_2787`
+          :ref:`change_2787` 
 
 .. change::
     :tags: feature, orm
     :tickets: 2787
 
-    添加新方法 :meth:`.AttributeState.load_history`，与 :attr:`.AttributeState.history` 类似，
+    添加新方法  :meth:`.AttributeState.load_history` ，与  :attr:` .AttributeState.history`  类似，
     但也触发加载器可调用函数。
 
     .. seealso::
 
-        :ref:`change_2787`
+          :ref:`change_2787` 
 
 
 .. change::
     :tags: feature, sql
     :tickets: 2850
 
-    当在类型化的表达式中使用没有指定类型的 :func:`.bindparam` 构造时，会复制该构造当时的状态，并将新副本分配给与之进行比较的列的实际类型。
-    以前，这种逻辑会就地在给定的 :func:`.bindparam` 上进行。
-    此外，在编译阶段的 :meth:`.ValuesBase.values` 用于 :class:`_expression.Insert` 或 :class:`_expression.Update` 构造中，现在也会发生类似的过程，这些构造在 :func:`.bindparam` 构造中使用。
+    当在类型化的表达式中使用没有指定类型的   :func:`.bindparam`  构造时，会复制该构造当时的状态，并将新副本分配给与之进行比较的列的实际类型。
+    以前，这种逻辑会就地在给定的   :func:`.bindparam`  上进行。
+    此外，在编译阶段的  :meth:`.ValuesBase.values`  用于   :class:` _expression.Insert`  或   :class:`_expression.Update`  构造中，现在也会发生类似的过程，这些构造在   :func:` .bindparam`  构造中使用。
 
     这两个都是微妙的行为更改，可能会影响一些用法。
 
     .. seealso::
 
-        :ref:`migration_2850`
+          :ref:`migration_2850` 
 
 .. change::
     :tags: feature, sql
     :tickets: 2804， 2823， 2734
 
     对特殊符号的表达式处理进行了修订，特别是与连接相关的符号，例如
-    ``None`` :func:`_expression.null` :func:`_expression.true`
-    :func:`_expression.false`，
+    ``None``   :func:`_expression.null`    :func:` _expression.true` 
+      :func:`_expression.false` ，
     包括在连锁的且 / 或表达式中呈现 NULL 的一致性，
     包含在布尔常量和表达式的后端的形式为“1”或“0”。
     对于没有“true”/“false”常量的后端系统，这些常量和表达式的呈现方式。
 
     .. seealso::
 
-        :ref:`migration_2804`
+          :ref:`migration_2804` 
 
 .. change::
     :tags: feature, sql
     :tickets: 2838
 
     类型系统现在处理呈现“文字绑定”值的任务，例如通常将绑定参数绑定为字符串，
-    但是由于上下文必须在 DDL 结构内呈现，例如 CHECK 约束和索引（请注意，“文字绑定”值作为 :ticket:`2742` 的 DDL 的一部分而被使用）。
-    一个新方法 :meth:`.TypeEngine.literal_processor` 作为基础，
-    并添加了 :meth:`.TypeDecorator.process_literal_param` 以允许包装本地文字呈现方法。
+    但是由于上下文必须在 DDL 结构内呈现，例如 CHECK 约束和索引（请注意，“文字绑定”值作为  :ticket:`2742`  的 DDL 的一部分而被使用）。
+    一个新方法  :meth:`.TypeEngine.literal_processor`  作为基础，
+    并添加了  :meth:`.TypeDecorator.process_literal_param`  以允许包装本地文字呈现方法。
 
     .. seealso::
 
-        :ref:`change_2838`
+          :ref:`change_2838` 
 
 .. change::
     :tags: feature, sql
     :tickets: 2716
 
-    现在 :meth:`_schema.Table.tometadata` 方法会复制该结构中所有 :class:`.SchemaItem` 对象的 :attr:`.SchemaItem.info` 字典，
+    现在  :meth:`_schema.Table.tometadata`  方法会复制该结构中所有   :class:` .SchemaItem`  对象的  :attr:`.SchemaItem.info`  字典，
     包括列，约束，外键等。由于这些字典是副本，因此它们独立于原始字典。
-    以前，此操作仅传输了 :class:`_schema.Column` 的 ``.info`` 字典，并且它仅被链接而非复制。
+    以前，此操作仅传输了   :class:`_schema.Column`  的 ` `.info`` 字典，并且它仅被链接而非复制。
 
 .. change::
     :tags: feature, postgresql
     :tickets: 2840
 
     使用 PostgreSQL 版本 9.2 或更高版本的服务器版本检测时，
-    当在主键自动递增列上使用 :class:`.SmallInteger` 类型时，添加了对“SMALLSERIAL”的渲染支持。
+    当在主键自动递增列上使用   :class:`.SmallInteger`  类型时，添加了对“SMALLSERIAL”的渲染支持。
 
 .. change::
     :tags: feature, mysql
     :tickets: 2817
 
-    MySQL 的 :class:`.mysql.SET` 类型现在具有与 :class:`.mysql.ENUM` 相同的自动引号行为。
+    MySQL 的   :class:`.mysql.SET`  类型现在具有与   :class:` .mysql.ENUM`  相同的自动引号行为。
     在设置值时不需要引号，但是将自动检测到存在的引号，并发出警告。
     这还有助于 Alembic，其中 SET 类型不使用引用呈现。
 
 .. change::
     :tags: feature, sql
 
-    现在 :class:`_schema.Column` 的 ``default`` 参数接受类或对象方法作为参数，除了作为独立函数外；
+    现在   :class:`_schema.Column`  的 ` `default`` 参数接受类或对象方法作为参数，除了作为独立函数外；
     它会正确检测是否接受了“context”参数或未接受它。
 
 .. change::
     :tags: bug, sql
     :tickets: 2835
 
-    在“attach”事件被调用之前，将“name”属性设置到 :class:`.Index` 上，
+    在“attach”事件被调用之前，将“name”属性设置到   :class:`.Index`  上，
     以便可以使用附加事件基于父表或列动态为索引生成名称。
 
 .. change::
     :tags: bug, engine
     :tickets: 2748
 
-    已经改进了 :meth:`.Dialect.reflecttable` 的方法签名，该签名在现有情况下通常由 :class:`.DefaultDialect` 提供，
+    已经改进了  :meth:`.Dialect.reflecttable`  的方法签名，该签名在现有情况下通常由   :class:` .DefaultDialect`  提供，
     带有 ``include_columns`` 和 ``exclude_columns`` 参数，而没有任何关键字选项，从而减少了歧义；先前丢失了 ``exclude_columns``。
 
 .. change::
     :tags: bug, sql
     :tickets: 2831
 
-    :class:`_schema.ForeignKey` 对象中的错误 kw arg “schema”已被删除。
+      :class:`_schema.ForeignKey`  对象中的错误 kw arg “schema”已被删除。
     这是一个意外的提交，未生效 ; 在使用此 kw arg 时，会在0.8.3中引发警告。
 
 .. change::
     :tags: feature, orm
     :tickets: 1418
 
-    添加了一个新的加载选项 :func:`_orm.load_only`。
+    添加了一个新的加载选项   :func:`_orm.load_only` 。
     这允许指定一系列列名以仅加载这些属性，推迟其余部分。
 
 .. change::
     :tags: feature, orm
     :tickets: 1418
 
-    接口函数的系统已完全重新架构为建立在更全面的基础上，即 :class:`_orm.Load` 对象。
-    此基为通用加载选项（如 :func:`_orm.joinedload`，:func:`.defer` 等）提供了一种连接样式，
+    接口函数的系统已完全重新架构为建立在更全面的基础上，即   :class:`_orm.Load`  对象。
+    此基为通用加载选项（如   :func:`_orm.joinedload` ，  :func:` .defer`  等）提供了一种连接样式，
     用于指定路径下的选项，例如 “joinedload(“foo”).subqueryload(“bar”)”。
     新系统取代了点分隔路径名称，选项中的多个属性以及使用 ``_all()`` 选项的用法。
 
     .. seealso::
 
-        :ref:`feature_1418`
+          :ref:`feature_1418` 
 
 .. change::
     :tags: feature, orm
     :tickets: 2824
 
-    :func:`.composite` 构造现在在基于列的 :class:`_query.Query` 中维护返回对象，
-    而不是展开为单独的列。这在内部使用了新的 :class:`.Bundle` 功能。
+      :func:`.composite`  构造现在在基于列的   :class:` _query.Query`  中维护返回对象，
+    而不是展开为单独的列。这在内部使用了新的   :class:`.Bundle`  功能。
     此行为与旧版不兼容；要选择展开的复合列，可使用 ``MyClass.some_composite.clauses``。
 
     .. seealso::
 
-        :ref:`migration_2824`
+          :ref:`migration_2824` 
 
 .. change::
     :tags: feature, orm
     :tickets: 2824
 
-    添加了一个新的构造 :class:`.Bundle`，它允许将列表的组合指定给 :class:`_query.Query` 构造。
-    默认情况下，这些列的组合作为元组返回。:class:`.Bundle` 的行为可以被覆盖，以提供任何类型的结果处理。
-    此外，在列导向的 :class:`_query.Query` 中使用复合属性时，现在将内置 :class:`.Bundle` 功能嵌入到其中。
+    添加了一个新的构造   :class:`.Bundle` ，它允许将列表的组合指定给   :class:` _query.Query`  构造。
+    默认情况下，这些列的组合作为元组返回。  :class:`.Bundle`  的行为可以被覆盖，以提供任何类型的结果处理。
+    此外，在列导向的   :class:`_query.Query`  中使用复合属性时，现在将内置   :class:` .Bundle`  功能嵌入到其中。
 
     .. seealso::
 
-        :ref:`change_2824`
+          :ref:`change_2824` 
 
-        :ref:`migration_2824`
+          :ref:`migration_2824` 
 
 .. change::
     :tags: bug, sql
     :tickets: 2812
 
     “引用”标识符的处理方式进行了大幅更改，不再依赖于传递各种 ``quote=True`` 标志，
-    而是将这些标志转换为富字符串对象，这些对象包含在常用模式构造中传递的引号信息，例如 :class:`_schema.Table`、
-    :class:`_schema.Column` 等。这解决了许多方法无法正确遵守“引用”标志的问题，
-    例如 :meth:`_engine.Engine.has_table` 和相关方法。:class:`.quoted_name` 对象是一个字符串子类，
+    而是将这些标志转换为富字符串对象，这些对象包含在常用模式构造中传递的引号信息，例如   :class:`_schema.Table` 、
+      :class:`_schema.Column`  等。这解决了许多方法无法正确遵守“引用”标志的问题，
+    例如  :meth:`_engine.Engine.has_table`  和相关方法。  :class:` .quoted_name`  对象是一个字符串子类，
     如果需要，也可以显式使用该对象；该对象将保持传递的引号首选项，
     并且还将绕过面向大小写符号的方言所执行的“名称规范化”。例如 Oracle、Firebird 和 DB2。
     结果是，“大写”后端现在可以使用强制引用名称，例如小写引用名称和新保留字。
 
     .. seealso::
 
-        :ref:`change_2812`
+          :ref:`change_2812` 
 
 .. change::
     :tags: feature, orm
@@ -1623,16 +1623,16 @@ This release does not contain any feature enhancements.修复和测试从反射�
     :tags: feature, orm
     :tickets: 2793
 
-    现在 :class:`_orm.Mapper` 的 ``eager_defaults`` 标志允许使用内联 RETURNING 子句而不是第二个 SELECT 语句来获取新生成的默认值，
+    现在   :class:`_orm.Mapper`  的 ` `eager_defaults`` 标志允许使用内联 RETURNING 子句而不是第二个 SELECT 语句来获取新生成的默认值，
     对于支持 RETURNING 的后端。
 
 .. change::
     :tags: feature, core
     :tickets: 2793
 
-    添加了一个 :meth:`.UpdateBase.returning` 的新变体，称为 :meth:`.ValuesBase.return_defaults`；
+    添加了一个  :meth:`.UpdateBase.returning`  的新变体，称为  :meth:` .ValuesBase.return_defaults` ；
     这允许向语句的 RETURNING 子句添加任意列，而不会影响编译器的通常“隐式返回”功能，该功能用于有效地获取新生成的主键值。
-    对于支持的后端，所有获取的值的字典存在于 :attr:`_engine.ResultProxy.returned_defaults` 中。
+    对于支持的后端，所有获取的值的字典存在于  :attr:`_engine.ResultProxy.returned_defaults`  中。
 
 .. change::
     :tags: bug, mysql
@@ -1651,52 +1651,52 @@ This release does not contain any feature enhancements.修复和测试从反射�
 .. change::
     :tags: orm, feature, orm
 
-    添加了一个新属性 :attr:`.Session.info` 给 :class:`.Session`；
-    这是一个字典，应用程序可以将任意数据存储在 :class:`.Session` 中。
-    :attr:`.Session.info` 的内容还可以使用 :class:`.Session` 或 :class:`.sessionmaker` 的“info”参数来初始化。
+    添加了一个新属性  :attr:`.Session.info`  给   :class:` .Session` ；
+    这是一个字典，应用程序可以将任意数据存储在   :class:`.Session`  中。
+     :attr:`.Session.info`  的内容还可以使用   :class:` .Session`  或   :class:`.sessionmaker`  的“info”参数来初始化。
 
 
 .. change::
     :tags: feature, general, py3k
     :tickets: 2161
 
-    :func:`~sqlalchemy.sql.expression.label` 构造现在在 ``ORDER BY`` 子句中会仅呈现其名称，而不是重写整个表达式的名称，如果也在 select 的列子句中引用了该标签。
+      :func:`~sqlalchemy.sql.expression.label`  构造现在在 ` `ORDER BY`` 子句中会仅呈现其名称，而不是重写整个表达式的名称，如果也在 select 的列子句中引用了该标签。
     这给数据库更好的机会在两个不同的上下文中评估同一表达式。
 
     .. seealso::
 
-        :ref:`migration_1068`
+          :ref:`migration_1068` 
 
 .. change::
     :tags: feature, engine
     :tickets: 2770
 
-    :class:`_events.ConnectionEvents` 增加了新事件：
+      :class:`_events.ConnectionEvents`  增加了新事件：
 
-    * :meth:`_events.ConnectionEvents.engine_connect`
-    * :meth:`_events.ConnectionEvents.set_connection_execution_options`
-    * :meth:`_events.ConnectionEvents.set_engine_execution_options`
+    *  :meth:`_events.ConnectionEvents.engine_connect` 
+    *  :meth:`_events.ConnectionEvents.set_connection_execution_options` 
+    *  :meth:`_events.ConnectionEvents.set_engine_execution_options` 
 
 .. change::
     :tags: bug, sql
     :tickets: 1765
 
-    将 :class:`_schema.ForeignKey` 对象解析为其目标 :class:`_schema.Column` 的方式已进行了重新处理，
-    以尽可能即时地进行关联到具有相同 :class:`_schema.MetaData` 的对象的目标 :class:`_schema.Column`，
+    将   :class:`_schema.ForeignKey`  对象解析为其目标   :class:` _schema.Column`  的方式已进行了重新处理，
+    以尽可能即时地进行关联到具有相同   :class:`_schema.MetaData`  的对象的目标   :class:` _schema.Column` ，
     而不是等待第一次构建联接或类似操作。这连同其他一些改进使得更早地检测到某些外键配置问题。
-    此外，对于通过 :class:`_schema.ForeignKey` 引用另一个列的任何 :class:`_schema.Column`，
+    此外，对于通过   :class:`_schema.ForeignKey`  引用另一个列的任何   :class:` _schema.Column` ，
     应该现在可以可靠地将类型设置为 ``None`` - 该类型将在关联的那一侧列关联时从目标列复制，
     现在也支持复合外键。
 
     .. seealso::
 
-        :ref:`migration_1765`
+          :ref:`migration_1765` 
 
 .. change::
     :tags: feature, sql
     :tickets: 2744, 2734
 
-    为 :class:`.TypeDecorator` 添加了一种名为 :attr:`.TypeDecorator.coerce_to_is_types` 的新属性，
+    为   :class:`.TypeDecorator`  添加了一种名为  :attr:` .TypeDecorator.coerce_to_is_types`  的新属性，
     以便更轻松地控制如何进行使用“==”或“！=”到 None 和布尔类型的比较，
     生成“IS”表达式或带有绑定参数的普通等式表达式。
 
@@ -1726,7 +1726,7 @@ This release does not contain any feature enhancements.修复和测试从反射�
 
     .. seealso::
 
-        :ref:`migration_2751`
+          :ref:`migration_2751` 
 
 .. change::
     :tags: feature, orm
@@ -1738,13 +1738,13 @@ This release does not contain any feature enhancements.修复和测试从反射�
     长达多年一直阻碍此更改的唯一数据库后端—— SQLite，现已通过将“SELECT” 子查询的生成从 ORM 移动到 SQL 编译器来解决。
     因此，SQLite 上的右侧嵌套联接仍将最终呈现为“SELECT”，而所有其他后端则不再受此解决方案的影响。
 
-    作为此更改的一部分，已将新参数 ``flat=True`` 添加到 :func:`_orm.aliased`、:meth:`_expression.Join.alias` 和
-    :func:`_orm.with_polymorphic` 函数中，该参数允许生成连接的“别名”，该别名为连接内的每个组件表应用匿名别名，
+    作为此更改的一部分，已将新参数 ``flat=True`` 添加到   :func:`_orm.aliased` 、  :meth:` _expression.Join.alias`   和
+      :func:`_orm.with_polymorphic`  函数中，该参数允许生成连接的“别名”，该别名为连接内的每个组件表应用匿名别名，
     而不是产生子查询。
 
     .. seealso::
 
-        :ref:`feature_joins_09`
+          :ref:`feature_joins_09` 
 
 .. change::
     :tags: bug, orm
@@ -1752,11 +1752,11 @@ This release does not contain any feature enhancements.修复和测试从反射�
 
     修复了一个晦涩的错误，在跨越多对多关系连接或联接跨越单个表继承子类时，将具有特定鉴别器值错误地获取错误的结果，由于“secondary”行。
     现在，在所有ORM连接的多对多关系上，将“secondary”和右侧表内部连接在括号中，以便左->右连接可以准确进行过滤。
-    此更改是通过终于解决 :ticket:`2587` 中概述的右嵌套连接问题而实现的。
+    此更改是通过终于解决  :ticket:`2587`  中概述的右嵌套连接问题而实现的。
 
     .. seealso::
 
-        :ref:`feature_joins_09`
+          :ref:`feature_joins_09` 
 
 .. change::
     :tags: bug, mssql, pyodbc
@@ -1768,12 +1768,12 @@ This release does not contain any feature enhancements.修复和测试从反射�
     :tags: feature, sql
     :tickets: 1068
 
-    如果在选择的列子句中也引用该标签，则 :func:`~sqlalchemy.sql.expression.label` 构造现在在 ``ORDER BY`` 子句中仅将其名称呈现为名称，
+    如果在选择的列子句中也引用该标签，则   :func:`~sqlalchemy.sql.expression.label`  构造现在在 ` `ORDER BY`` 子句中仅将其名称呈现为名称，
     而不是重写完整表达式。这使数据库更有机会优化不同上下文中同一表达式的评估。
 
     .. seealso::
 
-        :ref:`migration_1068`
+          :ref:`migration_1068` 
 
 .. change::
     :tags: feature, firebird
@@ -1798,11 +1798,11 @@ This release does not contain any feature enhancements.修复和测试从反射�
     :tags: bug, orm
     :tickets: 2736
 
-    :meth:`_query.Query.select_from` 方法的“自动别名”行为已关闭。特定行为现在可通过一个新方法 :meth:`_query.Query.select_entity_from` 实现。
+     :meth:`_query.Query.select_from`  方法的“自动别名”行为已关闭。特定行为现在可通过一个新方法  :meth:` _query.Query.select_entity_from`  实现。
     此处的自动别名行为从未有过很好的记录，并且通常不是所需的，
-    因为 :meth:`_query.Query.select_from` 变得更加定位于控制如何呈现 JOIN。:meth:`_query.Query.select_entity_from` 
+    因为  :meth:`_query.Query.select_from`  变得更加定位于控制如何呈现 JOIN。  :meth:` _query.Query.select_entity_from`   
     也将在 0.8 中提供，以便依赖自动别名的应用程序可以将其应用程序转向使用此方法。
 
     .. seealso::
 
-        :ref:`migration_2736`
+          :ref:`migration_2736` 

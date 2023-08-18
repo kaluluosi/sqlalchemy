@@ -1,1 +1,1 @@
-本文档已经移动到 :doc:`queryguide/query`。
+该文档已经移动至  :doc:`queryguide/query`  

@@ -1,7 +1,7 @@
-.. _orm_exceptions_toplevel:
+.. _ORM异常:
 
-ORM 异常
-==============
+ORM异常
+=======
 
 .. automodule:: sqlalchemy.orm.exc
     :members:

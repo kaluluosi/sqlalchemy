@@ -5,7 +5,7 @@ Setup for ORM Queryguide: Column Loading
 ========================================
 
 This page illustrates the mappings and fixture data used by the
-:doc:`columns` document of the :ref:`queryguide_toplevel`.
+:doc:`columns` document of the :ref:` queryguide_toplevel`.
 
 ..  sourcecode:: python
 

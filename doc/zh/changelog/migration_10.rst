@@ -24,13 +24,13 @@ SQLAlchemy 1.0有哪些新特性？
 新的Session批量INSERT/UPDATE API
 ----------------------------------
 
-创建了一系列新的:class:`.Session` 方法，这些方法直接提供了向队列操作单元中的插入和更新语句发送钩子的功能。在正确使用的情况下，这个专家级的系统可以允许ORM-mappings生成批量插入和更新语句，并分组进行执行，以便让这些语句速度与核心的直接使用竞争。
+创建了一系列新的  :class:`.Session`  方法，这些方法直接提供了向队列操作单元中的插入和更新语句发送钩子的功能。在正确使用的情况下，这个专家级的系统可以允许ORM-mappings生成批量插入和更新语句，并分组进行执行，以便让这些语句速度与核心的直接使用竞争。
 
 .. seealso::
 
-    :ref:`bulk_operations (批量操作)` - 引言和完整文档
+      :ref:`bulk_operations (批量操作)`  - 引言和完整文档
 
-:ticket:`3100`
+  :ticket:`3100`  
 
 新的性能范例套件
 -----------------------------
@@ -39,12 +39,12 @@ SQLAlchemy 1.0有哪些新特性？
 
 .. seealso::
 
-    :ref:`examples_performance (性能示例)`
+      :ref:`examples_performance (性能示例)` 
 
 “烘培”查询
 ---------------
 
-“烘培”查询是一种不同寻常的新方法，它允许简单地构造和调用：class:`_query.Query` 对象，使用缓存，每次调用时都使用比Python函数调用开销减少75%以上的方法。通过指定:class:`_query.Query` 对象为一系列仅被调用一次的lambdas，查询作为预编译单元开头的映射变得可行：
+“烘培”查询是一种不同寻常的新方法，它允许简单地构造和调用：class:`_query.Query` 对象，使用缓存，每次调用时都使用比Python函数调用开销减少75%以上的方法。通过指定  :class:`_query.Query`  对象为一系列仅被调用一次的lambdas，查询作为预编译单元开头的映射变得可行：
 
     from sqlalchemy.ext import baked
     from sqlalchemy import bindparam
@@ -67,18 +67,18 @@ SQLAlchemy 1.0有哪些新特性？
 
 .. seealso::
 
-    :ref:`baked_toplevel`
+      :ref:`baked_toplevel` 
 
-:ticket:`3054`
+  :ticket:`3054`  
 
 .. _feature_3150:
 
 提高declarative mixins，“@declared_attr”和相关功能
 ---------------------------------------------------------------------------
 
-在:class:`.declared_attr`与声明式系统联合使用时，支持新的能力进行了重大的改进。
+在 :class:`.declared_attr` 与声明式系统联合使用时，支持新的能力进行了重大的改进。
 
-用:class:`.declared_attr`装饰的函数现在仅在生成基于冗余的列副本之后才会被调用。这意味着函数可以调用利用冗余建立的列，并将会接收与正确的:class:`_schema.Column`对象相关的引用：
+用 :class:`.declared_attr` 装饰的函数现在仅在生成基于冗余的列副本之后才会被调用。这意味着函数可以调用利用冗余建立的列，并将会接收与正确的 :class:`_schema.Column` 对象相关的引用：
 
     class HasFooBar(object):
         foobar = Column(Integer)
@@ -92,9 +92,9 @@ SQLAlchemy 1.0有哪些新特性？
         __tablename__ = "some_table"
         id = Column(Integer, primary_key=True)
 
-例如，上面的“SomeClass.foobar_prop”将用于“SomeClass”，而“SomeClass.foobar”将作为最终映射到“SomeClass”的:class:`_schema.Column`对象，而不是直接存在于“HasFooBar”上的未复制对象上。
+例如，上面的“SomeClass.foobar_prop”将用于“SomeClass”，而“SomeClass.foobar”将作为最终映射到“SomeClass”的 :class:`_schema.Column` 对象，而不是直接存在于“HasFooBar”上的未复制对象上。
 
-:class:`.declared_attr`函数现在**记忆**它以类为基础返回的值，以使得对同一属性的重复调用返回相同的值。我们可以修改以下示例以说明这一点：
+ :class:`.declared_attr` 函数现在**记忆**它以类为基础返回的值，以使得对同一属性的重复调用返回相同的值。我们可以修改以下示例以说明这一点：
 
     class HasFooBar(object):
         @declared_attr
@@ -112,9 +112,9 @@ SQLAlchemy 1.0有哪些新特性？
 
 以前，“SomeClass”将被映射为某个特定的“foobar”列的一个拷贝，但是无论属性被映射多少次，“foobar_prop”每次调用“foobar”都会生成一个不同的列。在声明式设置时间内，“SomeClass.foobar”的值现在已被记忆下来，因此即使属性被映射器映射之前，中间列值的值始终保持一致，而不管被调用多少次。
 
-以上的两个行为应该有助于很多类型的映射器属性的声明式定义，这些属性可以导出自其他属性，其中:class:`.declared_attr`函数在类实际映射之前被本地存在。
+以上的两个行为应该有助于很多类型的映射器属性的声明式定义，这些属性可以导出自其他属性，其中 :class:`.declared_attr` 函数在类实际映射之前被本地存在。
 
-对于一种较瘦的特例，希望构建一个声明性mixin，该mixin根据子类分别建立不同的列，添加了一个新的修饰符:attr:`.declared_attr.cascading`。使用这个修饰符，装饰的函数将为映射继承层次结构中的每个类单独调用。尽管这已经是类似于“__table_args__”和“__mapper_args__”等特殊属性的行为，对于默认情况下假定属性仅附加到基类并且只继承自子类的列和其他属性，可以应用单独的行为：
+对于一种较瘦的特例，希望构建一个声明性mixin，该mixin根据子类分别建立不同的列，添加了一个新的修饰符  :attr:`.declared_attr.cascading`  。使用这个修饰符，装饰的函数将为映射继承层次结构中的每个类单独调用。尽管这已经是类似于“__table_args__”和“__mapper_args__”等特殊属性的行为，对于默认情况下假定属性仅附加到基类并且只继承自子类的列和其他属性，可以应用单独的行为：
 
     class HasIdMixin(object):
         @declared_attr.cascading
@@ -137,9 +137,9 @@ SQLAlchemy 1.0有哪些新特性？
 
 .. seealso::
 
-    :ref:`mixin_inheritance_columns`
+      :ref:`mixin_inheritance_columns` 
 
-最后，:class:`.AbstractConcreteBase`类已经重新进行了改进，以便可以在抽象基类中内联地设置第二个关系或其他映射器属性：
+最后， :class:`.AbstractConcreteBase` 类已经重新进行了改进，以便可以在抽象基类中内联地设置第二个关系或其他映射器属性：
 
     from sqlalchemy import Column, Integer, ForeignKey
     from sqlalchemy.orm import relationship
@@ -175,7 +175,7 @@ SQLAlchemy 1.0有哪些新特性？
 
 上面的映射将设置一个带有“id”和“something_id”列的“cca”表，而“Concrete”还将具有一个名为“something”的关系。新功能是，“Abstract”还将具有针对基础的多态联接的独立配置关系“something”。
 
-:ticket:`3150` :ticket:`2670` :ticket:`3149` :ticket:`2952` :ticket:`3050`
+  :ticket:`3150`    :ticket:` 2670`   :ticket:`3149`   :ticket:` 2952`   :ticket:`3050` 
 
 ORM完整对象获取的速度提高了25%
 ----------------------------------
@@ -220,11 +220,11 @@ ORM完整对象获取的速度提高了25%
 新的KeyedTuple实现速度大大提高
 -------------------------------------------------
 
-我们研究了:class:`.KeyedTuple`实现，以期提高以下查询的性能::
+我们研究了 :class:`.KeyedTuple` 实现，以期提高以下查询的性能::
 
     rows = sess.query(Foo.a, Foo.b, Foo.c).all()
 
-使用:class:`.KeyedTuple`类来替换Python的“collections.namedtuple()”，因为后者具有非常复杂的类型创建过程，而且跑大量的row，``collections.namedtuple()``的benchmark要比:class:`.KeyedTuple`更慢。在获取几十万行时，``collections.namedtuple()``很快就超过了：class:`.KeyedTuple`，因为实例调用增加。
+使用  :class:`.KeyedTuple` ` collections.namedtuple()``的benchmark要比  :class:`.KeyedTuple` ` collections.namedtuple()``很快就超过了：class:`.KeyedTuple`，因为实例调用增加。
 
 该怎么办？一个新型号既兼顾了两种方法的优点。对于“大小”（返回行数）和“编号”（返回不同查询的数量）对所有三个类型进行基准测试，新的“轻量级键值元组”无论是在哪种情况下，都优于另外两种类型，而是基于哪种方案，性能会略有不同::
 
@@ -251,7 +251,7 @@ ORM完整对象获取的速度提高了25%
     keyedtuple: 28.856498003          # KeyedTuple不行
     lw keyed tuple: 6.74346804619     #轻量级键值快于namedtuple
 
-:ticket:`3176`
+  :ticket:`3176`  
 
 .. _feature_slots:
 
@@ -295,7 +295,7 @@ UPDATE语句现在可以在ORM flush中批量处理为更高效的executemany()�
 Session.get_bind()现在可以处理更广泛的继承场景
 -------------------------------------------------------------------
 
-当一个查询或工作单元内的刷新进程试图定位与特定类相对应的数据库引擎时，将调用:meth:`.Session.get_bind`方法。方法已经改进，以处理各种面向继承的场景，包括以下：
+当一个查询或工作单元内的刷新进程试图定位与特定类相对应的数据库引擎时，将调用  :meth:`.Session.get_bind`  方法。方法已经改进，以处理各种面向继承的场景，包括以下：
 
 ● 绑定到Mixin或抽象类::
 
@@ -324,7 +324,7 @@ Session.get_bind()现在可以处理更广泛的继承场景
 
         session = Session(binds={base_table: some_engine, concrete_table: some_other_engine})
 
-:ticket:`3035`
+  :ticket:`3035`  
 
 
 .. _bug_3227:
@@ -332,15 +332,15 @@ Session.get_bind()现在可以处理更广泛的继承场景
 Session.get_bind()现在通过所有相关的查询用例接收Mapper
 ----------------------------------------------------------------------
 
-一系列问题已得到修复，之前：meth:`.Session.get_bind`并没有接收到主要的:class:`_orm.Mapper`，即使该映射器是可用的（主要的映射器是单个映射器，或者也可以是第一个映射器，与:class:`_query.Query`对象关联）。这个事情可以像还有一个参数:paramref:`.Session.binds`一样运用到这个问题上，这个参数使映射器与一系列引擎相关联（尽管在这个用例中，即使在映射表对象获得了绑定时，大多数情况下仍会“工作”）。或者更具体地实现用户定义的:meth:`.Session.get_bind`方法来提供基于Mapper的一些选择引擎的方式，例如水平分片或所谓的“路由”会话，该会话路由查询到不同的后端。
+一系列问题已得到修复，之前：meth:`.Session.get_bind`并没有接收到主要的  :class:`_orm.Mapper` ，即使该映射器是可用的（主要的映射器是单个映射器，或者也可以是第一个映射器，与  :class:` _query.Query` .Session.binds` 一样运用到这个问题上，这个参数使映射器与一系列引擎相关联（尽管在这个用例中，即使在映射表对象获得了绑定时，大多数情况下仍会“工作”）。或者更具体地实现用户定义的  :meth:`.Session.get_bind`  方法来提供基于Mapper的一些选择引擎的方式，例如水平分片或所谓的“路由”会话，该会话路由查询到不同的后端。
 
 这几个场景包括：
 
-●:meth:`_query.Query.count`::
+●  :meth:`_query.Query.count`  ::
 
         session.query(User).count()
 
-●:meth:`_query.Query.update`和:meth:`_query.Query.delete`，都是针对UPDATE/DELETE的
+●  :meth:`_query.Query.update`  和  :meth:` _query.Query.delete`  ，都是针对UPDATE/DELETE的
   语句以及由“fetch”策略使用的SELECT：
 
         session.query(User).filter(User.id == 15).update(
@@ -353,7 +353,7 @@ Session.get_bind()现在通过所有相关的查询用例接收Mapper
 
         session.query(User.id, User.name).all()
 
-●针对间接映射对象（如:obj:`.column_property`）的SQL函数和其他表达：
+●针对间接映射对象（如  :obj:`.column_property`  ）的SQL函数和其他表达：
 
         class User(Base):
             ...
@@ -363,14 +363,14 @@ Session.get_bind()现在通过所有相关的查询用例接收Mapper
 
         session.query(func.max(User.score)).scalar()
 
-:ticket:`3227` :ticket:`3242` :ticket:`1326`
+  :ticket:`3227`    :ticket:` 3242`   :ticket:`1326` 
 
 .. _feature_2963:
 
 .info词典改进
 -----------------------------
 
-现在，:attr:`.InspectionAttr.info`集合可以适用于从 :attr:`_orm.Mapper.all_orm_descriptors`集合中检索的任何类型的对象。这包括：class:`.hybrid_property`和:func:`.association_proxy`。但是，由于这些对象是类绑定描述符，因此必须**分别**访问这些对象以获取属性。一下使用:attr:`_orm.Mapper.all_orm_descriptors`命名空间进行说明：
+现在，  :attr:`.InspectionAttr.info`  集合可以适用于从  :attr:` _orm.Mapper.all_orm_descriptors` .hybrid_property`和  :func:`.association_proxy` 。但是，由于这些对象是类绑定描述符，因此必须**分别**访问这些对象以获取属性。一下使用  :attr:` _orm.Mapper.all_orm_descriptors`  命名空间进行说明：
 
     class SomeObject(Base):
         # ...
@@ -382,18 +382,18 @@ Session.get_bind()现在通过所有相关的查询用例接收Mapper
 
     inspect(SomeObject).all_orm_descriptors.some_prop.info["foo"] = "bar"
 
-它也可用作所有:class:`.SchemaItem`对象（例如:class:`_schema.ForeignKey`，:class:`.UniqueConstraint`等）以及其余ORM构建（如：func:`_orm.synonym`）的构造函数参数。
+它也可用作所有  :class:`.SchemaItem` ，  :class:` .UniqueConstraint` ）的构造函数参数。
 
-:ticket:`2971`
+  :ticket:`2971`  
 
-:ticket:`2963`
+  :ticket:`2963`  
 
 .. _bug_3188:
 
 ColumnProperty结构与别名以及order_by较好地生成
 ------------------------------------------------------------------
 
-已经修复了有关:func:`.column_property`的各种问题，最具体的问题是与：func:`.aliased`构造以及在0.9中引入的“order by label”的逻辑有关（参见：ref :`migration_1068`）。
+已经修复了有关  :func:`.column_property` .aliased` 构造以及在0.9中引入的“order by label”的逻辑有关（参见：ref :`migration_1068`）。
 
 给定以下映射::
 
@@ -462,7 +462,7 @@ ColumnProperty结构与别名以及order_by较好地生成
 
 这些问题的包括各种heisenbug，可能会破坏“aliased()”构造的状态，使标记逻辑再次失效；这些均已得到修复。
 
-:ticket:`3148` :ticket:`3188`
+  :ticket:`3148`    :ticket:` 3188` 
 
 新功能和改进-Core
 ====================================
@@ -472,35 +472,35 @@ ColumnProperty结构与别名以及order_by较好地生成
 选择/查询LIMIT/OFFSET可以指定为任意的SQL表达式
 ---------------------------------------------------------------------------
 
-现在，:meth:`_expression.Select.limit` 和 :meth:`_expression.Select.offset` 方法接受任何SQL表达式作为参数，同时也适用于ORM:class:`_query.Query`对象。通常，这通常用于允许通过绑定参数传递完整SQL表达式，稍后可以将该参数替换为一个值：
+现在，  :meth:`_expression.Select.limit`   和  :meth:` _expression.Select.offset`  方法接受任何SQL表达式作为参数，同时也适用于ORM :class:`_query.Query` 对象。通常，这通常用于允许通过绑定参数传递完整SQL表达式，稍后可以将该参数替换为一个值：
 
     sel = select([table]).limit(bindparam("mylimit")).offset(bindparam("myoffset"))
 
-不支持非整数LIMIT或OFFSET表达式的方言可能继续不支持这种行为。比第三方方言可能需要修改以便利用新的行为。目前使用“._limit”或“._offset”属性的方言将在访问这两个属性时继续为指定为简单整数值的限制/偏移量。如果指定了SQL表达式，则这两个属性将在访问时抛出一个:class:`.CompileError`。如果第三方方言希望支持新功能，它应该现在调用``._limit_clause``和``._offset_clause``属性来获取完整的SQL表达式，而不是整数值。
+不支持非整数LIMIT或OFFSET表达式的方言可能继续不支持这种行为。比第三方方言可能需要修改以便利用新的行为。目前使用“._limit”或“._offset”属性的方言将在访问这两个属性时继续为指定为简单整数值的限制/偏移量。如果指定了SQL表达式，则这两个属性将在访问时抛出一个  :class:`.CompileError` 。如果第三方方言希望支持新功能，它应该现在调用` `._limit_clause``和``._offset_clause``属性来获取完整的SQL表达式，而不是整数值。
 
 .. _feature_3282:
 
 除了在生成整体性的外键约束时指定use_alter标志外
 --------------------------------------------------------------------------------
 
-现在，:meth:`_schema.MetaData.create_all`和:meth:`_schema.MetaData.drop_all`方法将自动生成ALTER语句用于外键约束，这些约束涉及表之间的相互依赖循环，而不需要指定,:paramref:`_schema.ForeignKeyConstraint.use_alter`。此外，外键约束现在不需要名称即可通过ALTER创建；只需要在DROP操作中需要名称。在DROP的情况下，如果没有名称，这个功能将确保只有显式名称的约束才会实际上包括在ALTER语句中。在不存在可解决的循环的情况下执行DROP，如果DROP无法继续，则该功能会输出简明和清晰的错误信息。
+现在，  :meth:`_schema.MetaData.create_all`  和  :meth:` _schema.MetaData.drop_all`  方法将自动生成ALTER语句用于外键约束，这些约束涉及表之间的相互依赖循环，而不需要指定,  :paramref:`_schema.ForeignKeyConstraint.use_alter`  。此外，外键约束现在不需要名称即可通过ALTER创建；只需要在DROP操作中需要名称。在DROP的情况下，如果没有名称，这个功能将确保只有显式名称的约束才会实际上包括在ALTER语句中。在不存在可解决的循环的情况下执行DROP，如果DROP无法继续，则该功能会输出简明和清晰的错误信息。
 
-:paramref:`_schema.ForeignKeyConstraint.use_alter`和:paramref:`_schema.ForeignKey.use_alter`标志仍然存在，并且继续具有相同的效果来确定需要ALTER的约束，例如在CREATE/DROP场景中需要的约束。
+  :paramref:`_schema.ForeignKeyConstraint.use_alter`  和  :paramref:` _schema.ForeignKey.use_alter`  标志仍然存在，并且继续具有相同的效果来确定需要ALTER的约束，例如在CREATE/DROP场景中需要的约束。
 
-从版本1.0.1开始，在SQLite的情况下，特殊逻辑会接管，如果在DROP过程中给定表存在一个无法解决的循环，则发出警告，而表已按**无序**排列删除，这通常对于SQLite来说是可以的，除非启用了约束。要解决警告并在SQLite数据库上进行至少部分排序，特别是在启用了约束的SQLite数据库上进行至少部分排序，请将“use_alter”标志重新应用于那些应显式省略拍摄的:class:`_schema.ForeignKey`和:class:`.ForeignKeyConstraint`对象。
+从版本1.0.1开始，在SQLite的情况下，特殊逻辑会接管，如果在DROP过程中给定表存在一个无法解决的循环，则发出警告，而表已按**无序**排列删除，这通常对于SQLite来说是可以的，除非启用了约束。要解决警告并在SQLite数据库上进行至少部分排序，特别是在启用了约束的SQLite数据库上进行至少部分排序，请将“use_alter”标志重新应用于那些应显式省略拍摄的  :class:`_schema.ForeignKey` .ForeignKeyConstraint` 对象。
 
 .. seealso::
 
-    :ref:`use_alter`-全新行为的完整描述。
+      :ref:`use_alter` -全新行为的完整描述。
 
-:ticket:`3282`
+  :ticket:`3282`  
 
 .. _change_3330:
 
 ResultProxy的“自动关闭”现在是“软关闭”
 ----------------------------------------------
 
-多个版本中，:类:`_engine.ResultProxy`对象始终在提取所有结果行时自动关闭。这是为了允许在不需要显式“调用:meth:`_engine.ResultProxy.close`的情况下`使用对象；由于所有DBAPI资源都已被释放，该对象是安全的，可以丢弃。然而，对象保持严格的“关闭”状态，这意味着任何:meth:`_engine.ResultProxy.fetchone`,`_engine.ResultProxy.fetchmany`或:meth:`_engine.ResultProxy.fetchall`的后续调用都会引发`:.ResourceClosedError`：
+多个版本中， :meth:`_engine.ResultProxy.close`  的情况下` 使用对象；由于所有DBAPI资源都已被释放，该对象是安全的，可以丢弃。然而，对象保持严格的“关闭”状态，这意味着任何  :meth:`_engine.ResultProxy.fetchone`  ,` _engine.ResultProxy.fetchmany`或  :meth:`_engine.ResultProxy.fetchall`  的后续调用都会引发` :.ResourceClosedError`：
 
     >>> result = connection.execute(stmt)
     >>> result.fetchone()
@@ -510,13 +510,13 @@ ResultProxy的“自动关闭”现在是“软关闭”
     >>> result.fetchone()
     exception: ResourceClosedError
 
-这个行为与pep-249中的描述不一致，pep-249（Python的DBAPI接口）认为即使在结果已用完的情况下，也可以反复调用fetch方法。它也干扰了某些实现的result proxy的行为，如cy_oracle方言使用的:class:`.BufferedColumnResultProxy`。
+这个行为与pep-249中的描述不一致，pep-249（Python的DBAPI接口）认为即使在结果已用完的情况下，也可以反复调用fetch方法。它也干扰了某些实现的result proxy的行为，如cy_oracle方言使用的  :class:`.BufferedColumnResultProxy` 。
 
 为了解决这个问题，“关闭”的状态已经
 
 被拆分为两个状态；"soft close" 和 "closed"。
 "soft close"会释放DBAPI游标和连接，"close with result"对象将释放连接，但不会影响cursor。
-:meth:`_engine.ResultProxy.close`不再被隐式调用，只有:meth:`_engine.ResultProxy._soft_close`被非公开地调用：
+  :meth:`_engine.ResultProxy.close`  不再被隐式调用，只有  :meth:` _engine.ResultProxy._soft_close`  被非公开地调用：
 
     >>> result = connection.execute(stmt)
     >>> result.fetchone()
@@ -534,7 +534,7 @@ ResultProxy的“自动关闭”现在是“软关闭”
 CHECK约束现在支持命名约定中的"column_0_name"标记
 -----------------------------------------------------------------------------------
 
-"column_0_name"将从:class:`.CheckConstraint`表达式的第一个列派生::
+"column_0_name"将从 :class:`.CheckConstraint` 表达式的第一个列派生::
 
     metadata = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
 
@@ -551,22 +551,22 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
         CONSTRAINT ck_foo_value CHECK (value > 5)
     )
 
-此命名约定结合:class:`.Boolean`或:class:`.Enum`等:class:`.SchemaType`约束的约束也将使用所有CHECK约束约定。
+此命名约定结合  :class:`.Boolean` .Enum` 等 :class:`.SchemaType` 约束的约束也将使用所有CHECK约束约定。
 
 .. seealso::
 
-    :ref:`naming_check_constraints`
+      :ref:`naming_check_constraints` 
 
-    :ref:`naming_schematypes`
+      :ref:`naming_schematypes` 
 
-:ticket:`3299`
+  :ticket:`3299`  
 
 .. _change_3341:
 
 引用未附加列的约束可以在列关联到表时自动附加到表上
 -----------------------------------------------------------------------------------------------------------------
 
-从版本0.8开始，:class:`.Constraint`已支持"auto-attach"功能，基于传递的table-attached columns自动将自身 "附加"到 :class:`_schema.Table`::
+从版本0.8开始，  :class:`.Constraint` ::
 
     from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
 
@@ -578,7 +578,7 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
 
     assert uq in t.constraints
 
-为了帮助声明式产生的某些情况，即使 :class:`_schema.Column` 对象尚未关联到 :class:`_schema.Table` 中，也可以让此自动附加逻辑执行；指定了附加到 :class:`.Constraint` 的列时，当 :class:`_schema.Column` 对象关联到 :class:`_schema.Table` 后， :class:`.Constraint` 也会被添加::
+为了帮助声明式产生的某些情况，即使   :class:`_schema.Column`  对象尚未关联到   :class:` _schema.Table`  中，也可以让此自动附加逻辑执行；指定了附加到   :class:`.Constraint`  的列时，当   :class:` _schema.Column`  对象关联到   :class:`_schema.Table`  后，   :class:` .Constraint`  也会被添加::
 
     from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
 
@@ -593,9 +593,9 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
 
     assert uq in t.constraints  # constraint自动附加
 
-以上功能是自1.0.0b3版本后的一个过晚的补丁。1.0.4版本的修复脚本为:ticket:`3411`。
-如果约束引用了一组混合类型的 :class:`_schema.Column` 对象和字符串列名，则忽略此逻辑。
-因为我们尚未对:class:`_schema.Table`上的名称添加进行跟踪::
+以上功能是自1.0.0b3版本后的一个过晚的补丁。1.0.4版本的修复脚本为  :ticket:`3411`  。
+如果约束引用了一组混合类型的   :class:`_schema.Column`  对象和字符串列名，则忽略此逻辑。
+因为我们尚未对 :class:`_schema.Table` 上的名称添加进行跟踪::
 
     from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
 
@@ -616,7 +616,7 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
 查询不知道何时olumn "b"将被附加，约束将无法获取"b"，因此将不会进行自动附加的操作。因此，
 如果约束使用任何字符串名称，则跳过自动添加-on-column-attach逻辑。
 
-如果在:class:`_schema.Table`上下文中已经存在所需的 :class:`_schema.Column`对象，则原始的自动附加逻辑仍然适用。
+如果在 :class:`_schema.Table` 上下文中已经存在所需的  :class:`_schema.Column` 对象，则原始的自动附加逻辑仍然适用。
 
     from sqlalchemy import Table, Column, MetaData, Integer, UniqueConstraint
 
@@ -633,8 +633,8 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
     # 约束自动附加，与较旧的版本相同
     assert uq in t.constraints
 
-:ticket:`3341`
-:ticket:`3411`
+  :ticket:`3341`  
+  :ticket:`3411`  
 
 .. _change_2051:
 
@@ -643,7 +643,7 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
 "INSERT FROM SELECT"现在包括Python和SQL表达式默认值
 ------------------------------------------------------
 
-现在，即使另有说明，:meth:`_expression.Insert.from_select`也会包括Python和SQL表达式默认值。
+现在，即使另有说明，  :meth:`_expression.Insert.from_select`  也会包括Python和SQL表达式默认值。
 此前，约束并未包括在"INSERT FROM SELECT"中的默认值。
 
 例如::
@@ -666,15 +666,15 @@ CHECK约束现在支持命名约定中的"column_0_name"标记
     INSERT INTO t (x, y) SELECT t.x, somefunction() AS somefunction_1
     FROM t
 
-可以使用:paramref:`.Insert.from_select.include_defaults`禁用此功能。
+可以使用  :paramref:`.Insert.from_select.include_defaults`  禁用此功能。
 
-:ticket:`3184`
+  :ticket:`3184`  
 
 
 Column Server Defaults现在呈现为文字值
 ------------------------------------------------
 
-现在，在需要编译SQL表达式时，如果 :class:`.DefaultClause`设置的值是一个文字值，编译器会打开"literal binds"编译器标志。这使得嵌入到SQL中的文字值能够被编译器正确呈现，例如：
+现在，在需要编译SQL表达式时，如果  :class:`.DefaultClause` 设置的值是一个文字值，编译器会打开"literal binds"编译器标志。这使得嵌入到SQL中的文字值能够被编译器正确呈现，例如：
 
     from sqlalchemy import Table, Column, MetaData, Text
     from sqlalchemy.schema import CreateTable
@@ -701,39 +701,39 @@ Column Server Defaults现在呈现为文字值
 
 以前，文字值"foo"、“bar”和“baz”将呈现为绑定参数，这在DDL中是无用的。
 
-:ticket:`3087`
+  :ticket:`3087`  
 
 .. _feature_3184:
 
 ``UniqueConstraint``现在是数据表反射过程的一部分
 --------------------------------------------------------
 
-使用``autoload=True``填充的:class:`_schema.Table`对象现在将包括:class:`.UniqueConstraint`和:class:`.Index`结构。 这对于PostgreSQL和MySQL有一些注意事项：
+使用``autoload=True``填充的  :class:`_schema.Table` .UniqueConstraint` 和 :class:`.Index` 结构。 这对于PostgreSQL和MySQL有一些注意事项：
 
 PostgreSQL
 ^^^^^^^^^^
 
-PostgreSQL的行为是这样的，当创建UNIQUE约束时，它隐含地同时创建了一个对应的唯一的索引。:meth:`_reflection.Inspector.get_indexes`和:meth:`_reflection.Inspector.get_unique_constraints`方法仍然都会分别返回这些条目，其中:meth:`_reflection.Inspector.get_indexes`现在的特性中包括一个令人惊讶的“重复约束”，其中包含：如果检测到相应的约束，则对于具有此标识符的索引条目，将被映射到相应的约束。然而，使用 ``Table(..., autoload=True)``
-执行完整的表反射时， :class:`.Index`结构被检测到是与:class:`.UniqueConstraint`构造有关的，因此不会出现 :attr:`_schema.Table.indexes`，只有:class:`.UniqueConstraint`出现在 :attr:`_schema.Table.constraints` 中。这种去重逻辑通过加入到查询"pg_index"时连接"pg_constraint"表来完成。
+PostgreSQL的行为是这样的，当创建UNIQUE约束时，它隐含地同时创建了一个对应的唯一的索引。  :meth:`_reflection.Inspector.get_indexes`  和  :meth:` _reflection.Inspector.get_unique_constraints`  方法仍然都会分别返回这些条目，其中  :meth:`_reflection.Inspector.get_indexes`  现在的特性中包括一个令人惊讶的“重复约束”，其中包含：如果检测到相应的约束，则对于具有此标识符的索引条目，将被映射到相应的约束。然而，使用 ` `Table(..., autoload=True)``
+执行完整的表反射时，   :class:`.Index` .UniqueConstraint` 构造有关的，因此不会出现  :attr:`_schema.Table.indexes` ，只有  :class:` .UniqueConstraint`  中。这种去重逻辑通过加入到查询"pg_index"时连接"pg_constraint"表来完成。
 
 MySQL
 ^^^^^
 
-MySQL在没有可区分UNIQUE索引和UNIQUE约束的概念。虽然在创建表和索引时支持这两种语法，但实际上不会对它们进行任何不同的存储。:meth:`_reflection.Inspector.get_indexes`和:meth:`_reflection.Inspector.get_unique_constraints`仍然会分别返回UNIQUE索引的条目，在MySQL中只需将其视为UNIQUE约束。但是，在使用 ``Table(..., autoload=True)`` 执行完整的表反射时，无论什么情况下，:class:`.UniqueConstraint`结构都不是完全反映:class:`_schema.Table`对象的一部分;该结构始终由 :class:`.Index` 表示， :attr:`_schema.Table.indexes` 中存在包含“unique=True”的设置。
+MySQL在没有可区分UNIQUE索引和UNIQUE约束的概念。虽然在创建表和索引时支持这两种语法，但实际上不会对它们进行任何不同的存储。  :meth:`_reflection.Inspector.get_indexes`  和  :meth:` _reflection.Inspector.get_unique_constraints`  仍然会分别返回UNIQUE索引的条目，在MySQL中只需将其视为UNIQUE约束。但是，在使用 ``Table(..., autoload=True)`` 执行完整的表反射时，无论什么情况下，  :class:`.UniqueConstraint` .Index` 表示，  :attr:` _schema.Table.indexes`  中存在包含“unique=True”的设置。
 
 .. seealso::
 
-    :ref:`postgresql_index_reflection`
+      :ref:`postgresql_index_reflection` 
 
-    :ref:`mysql_unique_constraints`
+      :ref:`mysql_unique_constraints` 
 
-:ticket:`3184`
+  :ticket:`3184`  
 
 
 新系统安全发出参数化警告
 --------------------------------------------
 
-长期以来，警告消息不能引用数据元素，这意味着某个特定函数可能会发出一个无限数量的唯一警告消息。 :class:`.Unicode`类型部分中的警告消息"Unicode type received non-unicode bind param value"就是这个问题的例子。将数据值放入该消息中将意味着在Python "__warningregistry__"中记录的模块，或在某些情况下是Python全局"warnings.onceregistry"中记录的模块，会不断增加新的unique警告消息。
+长期以来，警告消息不能引用数据元素，这意味着某个特定函数可能会发出一个无限数量的唯一警告消息。  :class:`.Unicode` 类型部分中的警告消息"Unicode type received non-unicode bind param value"就是这个问题的例子。将数据值放入该消息中将意味着在Python "__warningregistry__"中记录的模块，或在某些情况下是Python全局"warnings.onceregistry"中记录的模块，会不断增加新的unique警告消息。
 
 这个改变在实际使用中利用了一个特殊的"string"类型，该类型有意改变了字符串的哈希方式，使得大量参数化消息仅使用一小组可能的哈希值进行哈希，以便例如"Unicode type received non-unicode bind param value"警告可被定制地仅限制发送一定数量的次数; 不再发送新的警告。因此，在执行此类操作时，您可能会看到以下警告:
 
@@ -743,9 +743,9 @@ MySQL在没有可区分UNIQUE索引和UNIQUE约束的概念。虽然在创建表
       for a relationship comparison and will not currently produce an
       IS comparison (but may in a future release)
 
-请注意，这种模式在大多数情况下已经被破坏了，特别是当我们没有将值发送到ORM中时，即没有设置属性，则 :class:`.Unicode` 等类似类型不再将通知我们。如果您的应用程序依赖于"NULL = NULL"在所有情况下都失败的事实，并且运行风险较高，则应该检查 :ticket:`3178`的解决方案。
+请注意，这种模式在大多数情况下已经被破坏了，特别是当我们没有将值发送到ORM中时，即没有设置属性，则   :class:`.Unicode`  等类似类型不再将通知我们。如果您的应用程序依赖于"NULL = NULL"在所有情况下都失败的事实，并且运行风险较高，则应该检查 :ticket:` 3178`的解决方案。
 
-:ticket:`3178`
+  :ticket:`3178`  
 
 Key Behavioral Changes - ORM
 ============================
@@ -755,7 +755,7 @@ Key Behavioral Changes - ORM
 ：meth:`_query.Query.update`现在可以将字符串名称解析为映射属性名称
 --------------------------------------------------------------
 
-方法:meth:`_query.Query.update`的文档说明指示给定的"values"字典是"一个使用属性名称为key的字典"，这暗示这些都是映射属性名称。 但不幸的是，该函数的设计更多考虑了属性和SQL表达式，而没有考虑字符串; 当字符串被传递时，这些字符串将直接通过，进入核心更新语句，而不考虑这些名称在映射类中的表示方式，这意味着该名称必须完全匹配表列，而不是该名称映射到该类上的属性名称。
+方法  :meth:`_query.Query.update`  的文档说明指示给定的"values"字典是"一个使用属性名称为key的字典"，这暗示这些都是映射属性名称。 但不幸的是，该函数的设计更多考虑了属性和SQL表达式，而没有考虑字符串; 当字符串被传递时，这些字符串将直接通过，进入核心更新语句，而不考虑这些名称在映射类中的表示方式，这意味着该名称必须完全匹配表列，而不是该名称映射到该类上的属性名称。
 
 现在，字符串名称已经解析为属性名称::
 
@@ -765,7 +765,7 @@ Key Behavioral Changes - ORM
         id = Column(Integer, primary_key=True)
         name = Column("user_name", String(50))
 
-上面是一个映射，其中列"user_name"映射为"name"。 以前，在:meth:`_query.Query.update`中传递字符串名称，必须这样写::
+上面是一个映射，其中列"user_name"映射为"name"。 以前，在  :meth:`_query.Query.update`  中传递字符串名称，必须这样写::
 
     session.query(User).update({"user_name": "moonbeam"})
 
@@ -791,7 +791,7 @@ Key Behavioral Changes - ORM
 
     session.query(User).update({"fullname": "moonbeam"})
 
-:ticket:`3228`
+  :ticket:`3228`  
 
 .. _bug_3371:
 
@@ -841,14 +841,14 @@ Key Behavioral Changes - ORM
     for a relationship comparison and will not currently produce an
     IS comparison (but may in a future release)
 
-:ticket:`3371`
+  :ticket:`3371`  
 
 .. _bug_3374:
 
 "否定contains或equals"关系比较将使用属性的当前值而不是数据库值
 -------------------------------------------------------------------------------------------------------------------------
 
-此更改从1.0.1开始。现在，在查询将关系定向到目标对象的情况下，将动态地返回每次访问的默认返回值，而不是在首次访问时隐式设置属性状态，调用一个“设置”函数。上面的更改可见的结果是此时不再在__dict__对象上隐式修改值，并且与 :func:`.attributes.get_history` 和相关函数的历史上也存在一些小行为变化。
+此更改从1.0.1开始。现在，在查询将关系定向到目标对象的情况下，将动态地返回每次访问的默认返回值，而不是在首次访问时隐式设置属性状态，调用一个“设置”函数。上面的更改可见的结果是此时不再在__dict__对象上隐式修改值，并且与   :func:`.attributes.get_history`  和相关函数的历史上也存在一些小行为变化。
 
 给出一个没有状态的对象：
 
@@ -893,7 +893,7 @@ Key Behavioral Changes - ORM
 query.update()现在解析字符串名称以映射属性名称
 --------------------------------------------------------------
 
-:meth:`_query.Query.update`的文档说明指出，给定的“values”字典是“一个使用属性名称为键的字典”，这暗示这些都是映射属性名称。 :meth:`_query.Query.update`的设计更多考虑了属性和SQL表达式，而不是字符串; 当字符串被传递时，这些字符串将直接通过核心更新语句，而不考虑这些名称在映射类中的表示方式，这意味着，该名称必须完全匹配表列，而不是该名称映射到该类上的属性名称。
+  :meth:`_query.Query.update`  的文档说明指出，给定的“values”字典是“一个使用属性名称为键的字典”，这暗示这些都是映射属性名称。 :meth:` _query.Query.update`的设计更多考虑了属性和SQL表达式，而不是字符串; 当字符串被传递时，这些字符串将直接通过核心更新语句，而不考虑这些名称在映射类中的表示方式，这意味着，该名称必须完全匹配表列，而不是该名称映射到该类上的属性名称。
 
 现在，字符串名称已经解析为属性名称::
 
@@ -903,7 +903,7 @@ query.update()现在解析字符串名称以映射属性名称
         id = Column(Integer, primary_key=True)
         name = Column("user_name", String(50))
 
-邮件中指出，在 :meth:`_query.Query.update` 中传递字符串名称，必须这样写::
+邮件中指出，在  :meth:`_query.Query.update`  中传递字符串名称，必须这样写::
 
     session.query(User).update({"user_name": "moonbeam"})
 
@@ -929,14 +929,14 @@ query.update()现在解析字符串名称以映射属性名称
 
     session.query(User).update({"fullname": "moonbeam"})
 
-:ticket:`3228`
+  :ticket:`3228`  
 
 .. _bug_3371:
 
 当将对象与None值进行比较时发出警告
 -------------------------------------------------------------------------
 
-这个改动从1.0.1开始。对于长时间以来的查询行为状态在:ref:`migration_3060`中被说明，对于一对多/多对一关系，设置关系绑定属性，可以覆盖为外键所设置的值。 建议使用传统的单列 NULL 值来列出这个模式。 但是，此更改仍支持此查询模式，但是现在会出现警告：
+这个改动从1.0.1开始。对于长时间以来的查询行为状态在 :ref:`migration_3060` 中被说明，对于一对多/多对一关系，设置关系绑定属性，可以覆盖为外键所设置的值。 建议使用传统的单列 NULL 值来列出这个模式。 但是，此更改仍支持此查询模式，但是现在会出现警告：
 
 .. sourcecode:: text
 
@@ -944,14 +944,14 @@ query.update()现在解析字符串名称以映射属性名称
     for a relationship comparison and will not currently produce an
     IS comparison (but may in a future release)
 
-:ticket:`3371`
+  :ticket:`3371`  
 
 .. _bug_3374:
 
 已删除的对象全部深度解绑过程已更正
 -----------------------------------------------------------
 
-此浅实例在:meth:`.Session.expunge`中存在缺陷，导致在删除对象时出现一致性问题。即使在解绑之后，函数：func:`.object_session`和:attr:`.InstanceState.session`属性仍然会将对象视为属于 :class:`.Session` 。 
+此浅实例在  :meth:`.Session.expunge`  中存在缺陷，导致在删除对象时出现一致性问题。即使在解绑之后，函数：func:` .object_session`和  :attr:`.InstanceState.session`  属性仍然会将对象视为属于   :class:` .Session`  。 
 
     assert inspect(u1).session is sess  #提交之前正常
 
@@ -971,7 +971,7 @@ query.update()现在解析字符串名称以映射属性名称
 当使用yield_per时，禁止显式使用Joined/Subquery eager loading + 嵌套加载
 -------------------------------------------------- ----------------
 
-为了使:meth:`_query.Query.yield_per`方法更容易使用，如果任何子查询急加载器，
+为了使  :meth:`_query.Query.yield_per`  方法更容易使用，如果任何子查询急加载器，
 或将使用集合的连接急加载器
 在使用yield-per时生效，则会引发异常，因为这些当前不兼容
 具有yield-per的急加载（子查询可以在理论上设置）。当
@@ -1161,7 +1161,7 @@ SQL输出：
     SELECT related.id AS related_id
     FROM related JOIN widget ON related.id = widget.related_id AND widget.type IN (:type_1)
 
-注意：因为我们连接到一个子类“FooWidget”，所以:meth:`_query.Query.join`
+注意：因为我们连接到一个子类“FooWidget”，所以  :meth:`_query.Query.join`  
 知道要向ON子句添加“AND widget.type IN（'foo'）”条件。
 
 这里的更改是将“AND widget.type IN（）”条件附加到*任何*ON子句，而不仅仅是从关系中生成的，
@@ -1306,7 +1306,7 @@ synchronize_session。新行为是现在显式引发异常，
 
 整个更改的要点是，SQLAlchemy现在希望我们告诉它当发送一个字符串时，此字符串显式地是：func：`_expression.text`构造，列，表等，如果我们将其用作ORDER BY，GROUP BY或其他表达式中的标签名称，SQLAlchemy希望该字符串解析为已知的内容，否则应再次限定为：func：`_expression.text`或类似的构造。
 
-:ticket:`2992`
+  :ticket:`2992`  
 
 .. _bug_3288:
 
@@ -1394,7 +1394,7 @@ synchronize_session。新行为是现在显式引发异常，
     INSERT INTO my_table（data）VALUES（：data_0），（：data_1），（：data_0）
     - {u'data_1'：'d2'，u'data_0'：'d1'}
 
-:ticket:`3288`
+  :ticket:`3288`  
 
 .. _change_3163:
 
@@ -1403,7 +1403,7 @@ synchronize_session。新行为是现在显式引发异常，
 
 从事件自身中删除事件侦听器将导致对列表的元素进行修改，这将导致仍附加的事件侦听器无法触发。为防止这种情况，同时仍然保持性能，使用``collections.deque（）``替换了列表，该列表不允许在迭代期间进行任何添加或删除，并引发``RuntimeError``。
 
-:ticket:`3163`
+  :ticket:`3163`  
 
 .. _change_3169:
 
@@ -1411,20 +1411,20 @@ INSERT...FROM SELECT构造现在暗示“inline = True”
 --------------------------------------------------------------
 
 使用:func：`_expression.from_select`现在意味着在:func：`_expression.insert`上有``inline = True``，从而修复了错误，后端支持“隐式返回”的情况下，INSERT...FROM SELECT结构将错误地被编译为，在该情况下，如果INSERT插入零行（因为implicit返回值需要一行），会导致断点，以及在INSERT插入多个行的情况下，返回任意数据（例如，仅多行中的第一行）。还将类似的更改应用于具有多个参数设置的INSERT..VALUES；此语句不再发出implicit RETURNING。由于这些构造处理可变数量的行，因此
-:attr:`_engine.ResultProxy.inserted_primary_key`访问器不适用。以前，有一条文档注释说，如果某些数据库不支持返回值，可以使用``inline = True``来使用INSERT... FROM SELECT，但在任何情况下，INSERT... FROM SELECT都不需要implicit返回，如果需要返回插入的数据行数，则应使用常规显式:func：`_expression.Insert.returning`.
+  :attr:`_engine.ResultProxy.inserted_primary_key`  访问器不适用。以前，有一条文档注释说，如果某些数据库不支持返回值，可以使用` `inline = True``来使用INSERT... FROM SELECT，但在任何情况下，INSERT... FROM SELECT都不需要implicit返回，如果需要返回插入的数据行数，则应使用常规显式:func：`_expression.Insert.returning`.
 
-:ticket:`3169`
+  :ticket:`3169`  
 
 .. _change_3027:
 
 ``autoload_with``现在意味着``autoload = True``
 ----------------------------------------------
 
-可以通过仅传递:paramref:`_schema.Table.autoload_with`设置反射的:class:`_schema.Table`对象：
+可以通过仅传递  :paramref:`_schema.Table.autoload_with`  设置反射的 :class:` _schema.Table`对象：
 
     my_table = Table("my_table", metadata, autoload_with=some_engine)
 
-:ticket:`3027`
+  :ticket:`3027`  
 
 .. _change_3266:
 
@@ -1432,14 +1432,14 @@ DBAPI异常包装和handle_error（）事件改进
 --------------------------------------------------------------
 
 当使用多行插入的多值版本时，SQLAlchemy对DBAPI异常的包装没有在
-:class:`_engine.Connection`无效后重连并遇到错误时进行。这
+ :class:`_engine.Connection` 无效后重连并遇到错误时进行。这
 已得到解决。此外，最近添加的:meth：`_events.ConnectionEvents.handle_error`
-事件现在在读取期间发生错误时触发，并在通过:paramref:`_sa.create_engine.creator`通过自定义连接使用:func：`_sa.create_engine`时触发。
+事件现在在读取期间发生错误时触发，并在通过  :paramref:`_sa.create_engine.creator`  通过自定义连接使用:func：` _sa.create_engine`时触发。
 
 了上:`.ExceptionContext`对象具有一个新的数据成员
-:attr：`.ExceptionContext.engine`，它将始终引用:class:`_engine.Engine`，在这些情况下，:class:`_engine.Connection`对象不可用（例如，初始连接时）。
+:attr：`.ExceptionContext.engine`，它将始终引用  :class:`_engine.Engine` ，在这些情况下， :class:` _engine.Connection`对象不可用（例如，初始连接时）。
 
-:ticket:`3266`
+  :ticket:`3266`  
 
 .. _change_3243:
 
@@ -1447,9 +1447,9 @@ ForeignKeyConstraint.columns现在是ColumnCollection
 ------------------------------------------------------
 
 :attr：`_schema.ForeignKeyConstraint.columns`先前是一个普通的列表
-包含字符串或:class:`_schema.Column`对象，具体取决于如何进行
-如果使用了:class:`_schema.ForeignKeyConstraintM`的构造并且与表关联，则使用构造顺序。集合现在是一个:class:`_expression.ColumnCollection`，并且仅在:class:`_schema.ForeignKeyConstraint`与:class:`_schema.Table`关联后才初始化。添加了一个新的访问器
-:attr:`_schema.ForeignKeyConstraint.column_keys`
+包含字符串或 :class:`_schema.Column` 对象，具体取决于如何进行
+如果使用了  :class:`_schema.ForeignKeyConstraintM` ，并且仅在 :class:` _schema.ForeignKeyConstraint`与 :class:`_schema.Table` 关联后才初始化。添加了一个新的访问器
+  :attr:`_schema.ForeignKeyConstraint.column_keys`  
 无条件返回本地列集的字符串键，无论如何构造对象或其当前状态如何。
 
 .. _feature_3084:
@@ -1457,11 +1457,11 @@ ForeignKeyConstraint.columns现在是ColumnCollection
 MetaData.sorted_tables访问器是“确定性的”
 --------------------------------------------------
 
-对于:attr:`_schema.MetaData.sorted_tables`访问器所产生的表的排序是“确定性的”，所有情况下的排序应该是相同的，而无需任何Python散列。 通过首先按名称对表进行排序，然后将它们传递给拓扑算法来维护该排序。
+对于  :attr:`_schema.MetaData.sorted_tables`  访问器所产生的表的排序是“确定性的”，所有情况下的排序应该是相同的，而无需任何Python散列。 通过首先按名称对表进行排序，然后将它们传递给拓扑算法来维护该排序。
 
-请注意，此更改尚未应用于在发出:meth:`_schema.MetaData.create_all`或:meth:`_schema.MetaData.drop_all`时应用的排序。
+请注意，此更改尚未应用于在发出  :meth:`_schema.MetaData.create_all`  或  :meth:` _schema.MetaData.drop_all`  时应用的排序。
 
-:ticket:`3084`
+  :ticket:`3084`  
 
 .. _bug_3170:
 
@@ -1473,19 +1473,19 @@ null（），false（）和true（）常量不再是单例
 
     select([null()，null()])
 
-仅呈现``SELECT NULL AS anon_1``，因为两个:func:`.null`
+仅呈现``SELECT NULL AS anon_1``，因为两个  :func:`.null` 
 构造将会成为相同的''NULL''对象，并且SQLAlchemy的核心模型基于对象身份来确定词汇意义。 0.9的更改除了想要节省对象开销之外没有任何重要性;通常，未命名的构造需要保持词汇唯一以获得唯一标识。
 
-:ticket:`3170`
+  :ticket:`3170`  
 
 .. _change_3204:
 
 PostgreSQL / Oracle在报告临时表/视图名称时具有不同的方法
 ---------------------------------------------------------------------------
 
-在PostgreSQL / Oracle的情况下，:meth:`_reflection.Inspector.get_table_names`和:meth:`_reflection.Inspector.get_view_names`在适用于临时表和视图的情况下也会返回名称，而对于任何其他方言都没有提供。 在MySQL的情况下，至少对于临时表来说，它甚至不可能。 在这种情况下，对于名为“临时表”或“临时视图”的名称，重构的 :class:`_schema.Table` 构造将于存在于数据库中的名称进行匹配。
+在PostgreSQL / Oracle的情况下，  :meth:`_reflection.Inspector.get_table_names`  和  :meth:` _reflection.Inspector.get_view_names`  在适用于临时表和视图的情况下也会返回名称，而对于任何其他方言都没有提供。 在MySQL的情况下，至少对于临时表来说，它甚至不可能。 在这种情况下，对于名为“临时表”或“临时视图”的名称，重构的   :class:`_schema.Table`  构造将于存在于数据库中的名称进行匹配。
 
-:ticket:`3204`
+  :ticket:`3204`  
 
 Dialect Improvements and Changes - PostgreSQL
 =============================================
@@ -1495,9 +1495,9 @@ Dialect Improvements and Changes - PostgreSQL
 ENUM类型的创建/删除规则彻底改写
 ---------------------------------------
 
-PostgreSQL的:class:`_postgresql.ENUM`的规则已更严格，以便更好地支持TYPE的创建和删除。
+PostgreSQL的 :class:`_postgresql.ENUM` 的规则已更严格，以便更好地支持TYPE的创建和删除。
 
-创建**未显式**与:class:`_schema.MetaData`对象关联的:class:`_postgresql.ENUM`将创建与:meth:`_schema.Table.create`和:meth:`_schema.Table.drop `对应::
+创建**未显式**与  :class:`_schema.MetaData`  和  :meth:` _schema.Table.drop `  对应::
 
     table = Table(
         "sometable", metadata, Column("some_enum", ENUM("a", "b", "c", name="myenum"))
@@ -1508,7 +1508,7 @@ PostgreSQL的:class:`_postgresql.ENUM`的规则已更严格，以便更好地支
 
 这意味着如果第二个表也具有名为'myenum'的枚举，则上述DROP操作现在将失败。为了适应共享的常见枚举类型使用案例，增强了具有元数据关联枚举的行为。
 
-**显式**与:class:`_schema.MetaData`对象关联的:class:`_postgresql.ENUM`将不会根据:meth:`_schema.Table.create`和:meth:`_schema.Table.drop`创建或删除::tparamref:`_schema.Table.create`调用了``checkfirst = True``标志。
+**显式**与  :class:`_schema.MetaData`  和  :meth:` _schema.Table.drop`  创建或删除:  :tparamref:`_schema.Table.create`  调用了` `checkfirst = True``标志。
 
 :
 
@@ -1525,27 +1525,27 @@ PostgreSQL的:class:`_postgresql.ENUM`的规则已更严格，以便更好地支
     metadata.drop_all(engine)  # 将发出DROP TYPE
     metadata.create_all(engine)  # 将发出CREATE TYPE
 
-:ticket:`3319`
+  :ticket:`3319`  
 
 PostgreSQL表选项
 ----------------------------
 
 添加了表空间，ON COMMIT，WITH（OUT）OIDS和INHERITS的PG表选项，在通过
-:class:`_schema.Table`构造的DDL渲染时提供支持。
+ :class:`_schema.Table` 构造的DDL渲染时提供支持。
 
 .. seealso::
 
-    :ref:`postgresql_table_options`
+      :ref:`postgresql_table_options` 
     
-:ticket:`2051`
+  :ticket:`2051`  
 
 .. _feature_get_enums:
 
 PGInspector.get_enums()方法与PostgreSQL语言配合使用
 ----------------------------------------------
 
-对PostgreSQL的:func:`_sa.inspect`方法返回一个:class:`.PGInspector`对象，在
-可以使用新的:meth:`.PGInspector.get_enums`方法返回所有可用的``ENUM``类型的信息::
+对PostgreSQL的  :func:`_sa.inspect` .PGInspector` 对象，在
+可以使用新的  :meth:`.PGInspector.get_enums`  方法返回所有可用的` `ENUM``类型的信息::
 
 
     from sqlalchemy import inspect, create_engine
@@ -1556,7 +1556,7 @@ PGInspector.get_enums()方法与PostgreSQL语言配合使用
 
 .. seealso::
 
-    :meth:`.PGInspector.get_enums`
+     :meth:`.PGInspector.get_enums` 
 
 .. _feature_2891:
 
@@ -1572,11 +1572,11 @@ PostgreSQL dialect反映Materialized Views，Foreign Tables
 * .._reflection.Inspector.get_table_names对于PostgreSQL**不会更改**，它
   继续仅返回纯表名。
 
-* 新方法:meth:`.PGInspector.get_foreign_table_names`添加，它将返回PostgreSQL模式表中专门标记为"foreign"的表的名称。
+* 新方法  :meth:`.PGInspector.get_foreign_table_names`  添加，它将返回PostgreSQL模式表中专门标记为"foreign"的表的名称。
 
 此更改涉及在查询``pg_class.relkind``时添加“m”和“f”列表限定符，但是对于正在生产中运行0.9的任何人来说，此更改是新的，以避免任何向后不兼容的惊喜。
 
-:ticket:`2891`
+  :ticket:`2891`  
 
 .. _change_3264:
 
@@ -1600,17 +1600,17 @@ MySQL布尔符号“true”、“false”再次有效
 ------------------------------------------------
 
 0.9中IS/IS NOT运算符以及布尔类型中的所有Boolean类型的彻底翻新
-在:ticket:`2682`中导致MySQL方言无法在“IS”/“IS NOT”的上下文中使用“真”和“假”符号。 显然，即使MySQL没有“boolean”类型，但它在使用“true”和“false”符号时支持IS / IS NOT，尽管这些符号在其他地方与“1”和“0”同义（并且IS / IS NOT不能与数字一起使用）。
+在  :ticket:`2682`  中导致MySQL方言无法在“IS”/“IS NOT”的上下文中使用“真”和“假”符号。 显然，即使MySQL没有“boolean”类型，但它在使用“true”和“false”符号时支持IS / IS NOT，尽管这些符号在其他地方与“1”和“0”同义（并且IS / IS NOT不能与数字一起使用）。
 
-因此，这里的更改是MySQL方言仍然是“非本机布尔类型”，但:func:`.true`和:func:`.false`符号再次生成关键字“true”和“false”，因此像``column.is_(true())``表达式在MySQL上再次有效。
+因此，这里的更改是MySQL方言仍然是“非本机布尔类型”，但  :func:`.true` .false` 符号再次生成关键字“true”和“false”，因此像``column.is_(true())``表达式在MySQL上再次有效。
 
-:ticket:`3186`
+  :ticket:`3186`  
 
 .. _change_3263:
 
 match（）运算符现在返回与MySQL的浮点返回值兼容的MatchType
 
-列操作的:meth:`.ColumnOperators.match`表达式的返回类型现在是一个名为:class:`.MatchType`的新类型。这是:class:`.Boolean`的一个子类，可以被方言截获，以便在SQL执行时产生不同的结果类型。
+列操作的  :meth:`.ColumnOperators.match`  表达式的返回类型现在是一个名为  :class:` .MatchType` .Boolean`的一个子类，可以被方言截获，以便在SQL执行时产生不同的结果类型。
 
 现在类似下面的代码将正确地运行，并在MySQL上返回浮点数：
 
@@ -1632,7 +1632,7 @@ match（）运算符现在返回与MySQL的浮点返回值兼容的MatchType
     ]
 
 
-:ticket:`3263`
+  :ticket:`3263`  
 
 .. _change_2984:
 
@@ -1651,9 +1651,9 @@ SQLite有名和无名UNIQUE和FOREIGN KEY约束将检查和反射
 
 为了实现这一点，对于外键和唯一约束，将PRAGMA foreign_keys、index_list和index_info的结果与CREATE TABLE语句的正则表达式解析相结合，形成约束名称的完整图像，并区分作为唯一约束和未命名INDEX创建的UNIQUE约束。
 
-:ticket:`3244`
+  :ticket:`3244`  
 
-:ticket:`3261`
+  :ticket:`3261`  
 
 方言改进和变化 - SQL Server
 =============================================
@@ -1671,12 +1671,12 @@ SQLite有名和无名UNIQUE和FOREIGN KEY约束将检查和反射
 
 SQLAlchemy在Windows上以前硬编码的默认值“SQL Server”已经过时，SQLAlchemy无法通过任务基于操作系统/驱动程序检测来猜测最佳驱动程序。在使用ODBC时，始终首选使用DSN以完全避免此问题。
 
-:票:`3182`
+ $& 
 
 SQL Server 2012大文本/二进制类型呈现为VARCHAR、NVARCHAR、VARBINARY
 --------------------------------------------------------------------------------
 
-对于SQL Server 2012及更高版本，:class:`_expression.TextClause`的呈现、:class:`.Unicode Text`和:class:`.Large Binary`类型已更改，并提供了完全控制行为的选项，这是根据Microsoft的过时指导方针完成的。有关详情，请参见:ref:`mssql_large_type_deprecation`。
+对于SQL Server 2012及更高版本，  :class:`_expression.TextClause` .Unicode Text` 和  :class:`.Large Binary` 。
 
 方言改进和变化 - Oracle
 =========================================
@@ -1686,7 +1686,7 @@ SQL Server 2012大文本/二进制类型呈现为VARCHAR、NVARCHAR、VARBINARY
 改进了Oracle中CTE的支持
 ------------------------
 
-Oracle中的CTE支持已得到修复，还有一个新功能:meth:`_expression.CTE.with_suffixes`，可以帮助Oracle的特殊指令：
+Oracle中的CTE支持已得到修复，还有一个新功能  :meth:`_expression.CTE.with_suffixes`  ，可以帮助Oracle的特殊指令：
 
     included_parts = (
         select([part.c.sub_part, part.c.part, part.c.quantity])
@@ -1699,13 +1699,13 @@ Oracle中的CTE支持已得到修复，还有一个新功能:meth:`_expression.C
         )
     )
 
-:票:`3220`
+ $& 
 
 DDL的新Oracle关键字
 --------------------------
 
 关键字诸如COMPRESS、ON COMMIT、BITMAP：
 
-:ref:`oracle_table_options`
+  :ref:`oracle_table_options` 
 
-:ref:`oracle_index_options`
+  :ref:`oracle_index_options` 

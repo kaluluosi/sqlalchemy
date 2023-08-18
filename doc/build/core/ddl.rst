@@ -6,12 +6,12 @@ Customizing DDL
 ===============
 
 In the preceding sections we've discussed a variety of schema constructs
-including :class:`~sqlalchemy.schema.Table`,
-:class:`~sqlalchemy.schema.ForeignKeyConstraint`,
-:class:`~sqlalchemy.schema.CheckConstraint`, and
-:class:`~sqlalchemy.schema.Sequence`. Throughout, we've relied upon the
+including :class:`~sqlalchemy.schema.Table` ,
+:class:`~sqlalchemy.schema.ForeignKeyConstraint` ,
+:class:`~sqlalchemy.schema.CheckConstraint` , and
+:class:`~sqlalchemy.schema.Sequence` . Throughout, we've relied upon the
 ``create()`` and :func:`~sqlalchemy.schema.MetaData.create_all` methods of
-:class:`~sqlalchemy.schema.Table` and :class:`~sqlalchemy.schema.MetaData` in
+:class:`~sqlalchemy.schema.Table` and :class:` ~sqlalchemy.schema.MetaData` in
 order to issue data definition language (DDL) for all constructs. When issued,
 a pre-determined order of operations is invoked, and DDL to create each table
 is created unconditionally including all constraints and other objects
@@ -51,7 +51,7 @@ Controlling DDL Sequences
 
 The :class:`_schema.DDL` construct introduced previously also has the
 ability to be invoked conditionally based on inspection of the
-database.  This feature is available using the :meth:`.ExecutableDDLElement.execute_if`
+database.  This feature is available using the :meth:`.ExecutableDDLElement.execute_if` 
 method.  For example, if we wanted to create a trigger but only on
 the PostgreSQL backend, we could invoke this as::
 
@@ -145,7 +145,7 @@ Using the built-in DDLElement Classes
 
 The ``sqlalchemy.schema`` package contains SQL expression constructs that
 provide DDL expressions, all of which extend from the common base
-:class:`.ExecutableDDLElement`. For example, to produce a ``CREATE TABLE`` statement,
+:class:`.ExecutableDDLElement` . For example, to produce a ``CREATE TABLE`` statement,
 one can use the :class:`.CreateTable` construct:
 
 .. sourcecode:: python+sql
@@ -169,7 +169,7 @@ All of SQLAlchemy's DDL oriented constructs are subclasses of
 the :class:`.ExecutableDDLElement` base class; this is the base of all the
 objects corresponding to CREATE and DROP as well as ALTER,
 not only in SQLAlchemy but in Alembic Migrations as well.
-A full reference of available constructs is in :ref:`schema_api_ddl`.
+A full reference of available constructs is in :ref:`schema_api_ddl` .
 
 User-defined DDL constructs may also be created as subclasses of
 :class:`.ExecutableDDLElement` itself.   The documentation in
@@ -185,16 +185,16 @@ Controlling DDL Generation of Constraints and Indexes
 While the previously mentioned :meth:`.ExecutableDDLElement.execute_if` method is
 useful for custom :class:`.DDL` classes which need to invoke conditionally,
 there is also a common need for elements that are typically related to a
-particular :class:`.Table`, namely constraints and indexes, to also be
+particular :class:`.Table` , namely constraints and indexes, to also be
 subject to "conditional" rules, such as an index that includes features
 that are specific to a particular backend such as PostgreSQL or SQL Server.
-For this use case, the :meth:`.Constraint.ddl_if` and :meth:`.Index.ddl_if`
-methods may be used against constructs such as :class:`.CheckConstraint`,
-:class:`.UniqueConstraint` and :class:`.Index`, accepting the same
+For this use case, the :meth:`.Constraint.ddl_if` and :meth:` .Index.ddl_if`
+methods may be used against constructs such as :class:`.CheckConstraint` ,
+:class:`.UniqueConstraint` and :class:` .Index`, accepting the same
 arguments as the :meth:`.ExecutableDDLElement.execute_if` method in order to control
 whether or not their DDL will be emitted in terms of their parent
 :class:`.Table` object.  These methods may be used inline when
-creating the definition for a :class:`.Table`
+creating the definition for a :class:`.Table` 
 (or similarly, when using the ``__table_args__`` collection in an ORM
 declarative mapping), such as::
 
@@ -215,7 +215,7 @@ declarative mapping), such as::
     )
 
 In the above example, the :class:`.Table` construct refers to both an
-:class:`.Index` and a :class:`.CheckConstraint` construct, both which
+:class:`.Index` and a :class:` .CheckConstraint` construct, both which
 indicate ``.ddl_if(dialect="postgresql")``, which indicates that these
 elements will be included in the CREATE TABLE sequence only against the
 PostgreSQL dialect.  If we run ``meta.create_all()`` against the SQLite
@@ -266,14 +266,14 @@ statement emitted for the index:
     [no key 0.00013s] {}
     COMMIT
 
-The :meth:`.Constraint.ddl_if` and :meth:`.Index.ddl_if` methods create
+The :meth:`.Constraint.ddl_if` and :meth:` .Index.ddl_if` methods create
 an event hook that may be consulted not just at DDL execution time, as is the
-behavior with :meth:`.ExecutableDDLElement.execute_if`, but also within the SQL compilation
+behavior with :meth:`.ExecutableDDLElement.execute_if` , but also within the SQL compilation
 phase of the :class:`.CreateTable` object, which is responsible for rendering
 the ``CHECK (num > 5)`` DDL inline within the CREATE TABLE statement.
-As such, the event hook that is received by the :meth:`.Constraint.ddl_if.callable_`
+As such, the event hook that is received by the :meth:`.Constraint.ddl_if.callable_` 
 parameter has a richer argument set present, including that there is
-a ``dialect`` keyword argument passed, as well as an instance of :class:`.DDLCompiler`
+a ``dialect`` keyword argument passed, as well as an instance of :class:`.DDLCompiler` 
 via the ``compiler`` keyword argument for the "inline rendering" portion of the
 sequence.  The ``bind`` argument is **not** present when the event is triggered
 within the :class:`.DDLCompiler` sequence, so a modern event hook that wishes
@@ -297,9 +297,9 @@ to inspect the database versioning information would best use the given
 
 .. seealso::
 
-    :meth:`.Constraint.ddl_if`
+    :meth:`.Constraint.ddl_if` 
 
-    :meth:`.Index.ddl_if`
+    :meth:`.Index.ddl_if` 
 
 
 

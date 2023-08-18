@@ -7,7 +7,7 @@ Changing Attribute Behavior
 
 This section will discuss features and techniques used to modify the
 behavior of ORM mapped attributes, including those mapped with
-:func:`_orm.mapped_column`, :func:`_orm.relationship`, and others.
+:func:`_orm.mapped_column` , :func:`_orm.relationship` , and others.
 
 .. _simple_validators:
 
@@ -103,7 +103,7 @@ occurs to ``some_user.addresses`` - the event is caused by a backref.
 Note that the :func:`~.validates` decorator is a convenience function built on
 top of attribute events.   An application that requires more control over
 configuration of attribute change behavior can make use of this system,
-described at :class:`~.AttributeEvents`.
+described at :class:`~.AttributeEvents` .
 
 .. autofunction:: validates
 
@@ -116,7 +116,7 @@ represented in the database, can be achieved by using a custom datatype that is
 applied to the mapped :class:`_schema.Table` metadata.     This is more common in the
 case of some style of encoding / decoding that occurs both as data goes to the
 database and as it is returned; read more about this in the Core documentation
-at :ref:`types_typedecorator`.
+at :ref:`types_typedecorator` .
 
 
 .. _mapper_hybrids:
@@ -125,7 +125,7 @@ Using Descriptors and Hybrids
 -----------------------------
 
 A more comprehensive way to produce modified behavior for an attribute is to
-use :term:`descriptors`.  These are commonly used in Python using the ``property()``
+use :term:`descriptors` .  These are commonly used in Python using the ``property()``
 function. The standard SQLAlchemy technique for descriptors is to create a
 plain descriptor, and to have it read/write from a mapped attribute with a
 different name. Below we illustrate this using Python 2.6-style properties::
@@ -153,7 +153,7 @@ The approach above will work, but there's more we can add. While our
 ``EmailAddress`` object will shuttle the value through the ``email``
 descriptor and into the ``_email`` mapped attribute, the class level
 ``EmailAddress.email`` attribute does not have the usual expression semantics
-usable with :class:`_sql.Select`. To provide these, we instead use the
+usable with :class:`_sql.Select` . To provide these, we instead use the
 :mod:`~sqlalchemy.ext.hybrid` extension as follows::
 
     from sqlalchemy.ext.hybrid import hybrid_property
@@ -252,7 +252,7 @@ attribute, a SQL function is rendered which produces the same effect:
     (0, 12, 'address')
     {stop}
 
-Read more about Hybrids at :ref:`hybrids_toplevel`.
+Read more about Hybrids at :ref:`hybrids_toplevel` .
 
 .. _synonyms:
 
@@ -299,11 +299,11 @@ and at the instance level::
     ('y', 'y')
 
 The :func:`.synonym` can be used for any kind of mapped attribute that
-subclasses :class:`.MapperProperty`, including mapped columns and relationships,
+subclasses :class:`.MapperProperty` , including mapped columns and relationships,
 as well as synonyms themselves.
 
 Beyond a simple mirror, :func:`.synonym` can also be made to reference
-a user-defined :term:`descriptor`.  We can supply our
+a user-defined :term:`descriptor` .  We can supply our
 ``status`` synonym with a ``@property``::
 
     class MyClass(Base):
@@ -338,7 +338,7 @@ using the :func:`.synonym_for` decorator::
 While the :func:`.synonym` is useful for simple mirroring, the use case
 of augmenting attribute behavior with descriptors is better handled in modern
 usage using the :ref:`hybrid attribute <mapper_hybrids>` feature, which
-is more oriented towards Python descriptors.   Technically, a :func:`.synonym`
+is more oriented towards Python descriptors.   Technically, a :func:`.synonym` 
 can do everything that a :class:`.hybrid_property` can do, as it also supports
 injection of custom SQL capabilities, but the hybrid is more straightforward
 to use in more complex situations.
@@ -360,10 +360,10 @@ which take place for column expressions are most directly redefined at the
 type level -  see the
 section :ref:`types_operators` for a description.
 
-ORM level functions like :func:`.column_property`, :func:`_orm.relationship`,
+ORM level functions like :func:`.column_property` , :func:`_orm.relationship` ,
 and :func:`.composite` also provide for operator redefinition at the ORM
-level, by passing a :class:`.PropComparator` subclass to the ``comparator_factory``
+level, by passing a :class:`.PropComparator` subclass to the ` `comparator_factory``
 argument of each function.  Customization of operators at this level is a
-rare use case.  See the documentation at :class:`.PropComparator`
+rare use case.  See the documentation at :class:`.PropComparator` 
 for an overview.
 

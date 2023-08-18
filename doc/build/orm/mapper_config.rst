@@ -7,14 +7,14 @@ ORM Mapped Class Configuration
 
 Detailed reference for ORM configuration, not including
 relationships, which are detailed at
-:ref:`relationship_config_toplevel`.
+:ref:`relationship_config_toplevel` .
 
 For a quick look at a typical ORM configuration, start with
-:ref:`orm_quickstart`.
+:ref:`orm_quickstart` .
 
 For an introduction to the concept of object relational mapping as implemented
 in SQLAlchemy, it's first introduced in the :ref:`unified_tutorial` at
-:ref:`tutorial_orm_table_metadata`.
+:ref:`tutorial_orm_table_metadata` .
 
 
 .. toctree::

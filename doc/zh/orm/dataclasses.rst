@@ -4,30 +4,30 @@
 与dataclasses和attrs集成
 ======================================
 
-从SQLAlchemy 2.0版本开始，可以通过向映射类添加单个mixin或装饰器来将:ref:`带注释的声明性表<orm_declarative_mapped_column>`映射转换为Python dataclass_ ，从而实现“原生数据类”集成。
+SQLAlchemy自2.0版本开始提供"原生dataclass"集成，使用单个混合类型或装饰器将   :ref:`带注释的声明表 <orm_declarative_mapped_column>`  映射转换为Python dataclass_就可将映射类转换为数据类。
 
-.. versionadded:: 2.0 集成ORM声明类的数据类创建
+.. versionadded:: 2.0 使用ORM Declarative类进行集成数据类的创建
 
-还有一些可用的模式，可以用于映射现有的数据类，以及映射由attrs_第三方集成库进行装饰的类。
+还有其他的模式可以使用，例如映射现有的dataclasses，或映射由attrs_第三方集成库创建的类。
 
 .. _orm_declarative_native_dataclasses:
 
-声明性数据类映射
-------------------------------
+声明数据类映射
+-------------------------------
 
-SQLAlchemy :ref:`带注释的声明性表<orm_declarative_mapped_column>`映射可以使用一个额外的mixin类或装饰器指令进行增强，增强后，映射过程完成后会将映射的类**就地**转换为Python dataclass_ ，然后才应用ORM-specific :term:`instrumentation`到class上。最显著的行为补充是生成一个具有对位置和关键字参数的细粒度控制的``__init__()``方法，具有或没有默认值，以及生成如``__repr__()``或``__eq__()``之类的方法。
+SQLAlchemy   :ref:`Annotated Declarative Table <orm_declarative_mapped_column>`  映射可以通过添加另一个混合类型类或装饰器指令来增强，这会在映射完成后增加一个步骤，将映射类**原地**转换为Python dataclass_, 然后应用特定于ORM的 :term:` instrumentation` 以完成映射过程。这当中最显著的行为变化就是生成一个具有细粒度控制的 `__init __（）` 方法, 可以在没有默认值的情况下接受有位置和关键字参数，同时生成像 `__repr __（）` 和 `__eq __（）` 这样的方法。
 
-从:pep:`484` typing的角度来看，该类被认为具有Dataclass-specific的行为，尤其是通过利用:pep:`681`，Dataclass变换，允许使用typing工具将该类视为明确使用``@dataclasses.dataclass``装饰器装饰的类。
+从  :pep:`484`  类型的角度讲，数据类特定的行为被识别为包含数据类转换的工具，特别是通过  :pep:` 681`  "Dataclass Transforms" 来利用，这可以使类型工具将该类视为已显式使用 `@dataclasses.dataclass` 装饰器装饰。
 
-.. note::  从**2023年4月4日**起，typing工具对:pep:`681`的支持受到限制，并且目前已知Pyright_以及Mypy_作为**版本1.2**已支持。请注意，Mypy 1.1.1引入了:pep:`681`支持，但未正确适应Python描述符，这将导致在使用SQLAlhcemy的ORM映射方案时出现错误。
+.. 注意:: 截至 **2023年4月4日**，typing工具对  :pep:`681`  的支持有限，目前已知 Pyright_ 和 Mypy_ 版本 1.2 支持。请注意，Mypy 1.1.1 引入  :pep:` 681`  支持，但没有正确适应 Python 描述符，这会在使用 SQLAlchemy 的ORM映射方案时导致错误。
 
    .. seealso::
+   
+      https://peps.python.org/pep-0681/#the-dataclass-transform-decorator - 关于类似SQLAlchemy的库如何启用  :pep:`681`  支持的背景
+   
+将数据转换类添加到任何声明式类中，可以将   :class:`_orm.MappedAsDataclass`  混合类型添加到   :class:` _orm.DeclarativeBase`  类层次结构中或通过使用   :meth:`_orm.registry.mapped_as_dataclass`  类装饰器的装饰器映射。
 
-      https://peps.python.org/pep-0681/#the-dataclass-transform-decorator - 有关像SQLAlchemy这样的库如何启用:pep:`681`支持的背景说明
-
-可以通过向任何Declarative类添加Dataclass conversion，具体方法为向:class:`_orm.MappedAsDataclass` mixin添加:class:`_orm.DeclarativeBase`类继承级别，或对于装饰器映射，使用``_orm.registry.mapped_as_dataclass``装饰器。
-
-:class:`_orm.MappedAsDataclass` mixin可以应用于Declarative ``Base``类或任何超类，如下例所示::
+可将   :class:`_orm.MappedAsDataclass`  混合类型应用于声明式 "Base" 类或任何超类，例如下面的示例 ::
 
     from sqlalchemy.orm import DeclarativeBase
     from sqlalchemy.orm import Mapped
@@ -36,7 +36,7 @@ SQLAlchemy :ref:`带注释的声明性表<orm_declarative_mapped_column>`映射�
 
 
     class Base(MappedAsDataclass, DeclarativeBase):
-        """子类将转换为dataclasses"""
+        """该子类将被转换为dataclasses"""
 
 
     class User(Base):
@@ -45,7 +45,7 @@ SQLAlchemy :ref:`带注释的声明性表<orm_declarative_mapped_column>`映射�
         id: Mapped[int] = mapped_column(init=False, primary_key=True)
         name: Mapped[str]
 
-或者可直接应用于从Declarative base扩展的类::
+或者可以直接应用于从声明式base派生的类：
 
     from sqlalchemy.orm import DeclarativeBase
     from sqlalchemy.orm import Mapped
@@ -58,14 +58,14 @@ SQLAlchemy :ref:`带注释的声明性表<orm_declarative_mapped_column>`映射�
 
 
     class User(MappedAsDataclass, Base):
-        """User class will be converted to a dataclass"""
+        """User类将被转换为数据类"""
 
         __tablename__ = "user_account"
 
         id: Mapped[int] = mapped_column(init=False, primary_key=True)
         name: Mapped[str]
 
-在使用装饰器形式时，只支持:meth:`_orm.registry.mapped_as_dataclass`装饰器::
+使用装饰器形式时，仅支持  :meth:`_orm.registry.mapped_as_dataclass`  装饰器::
 
     from sqlalchemy.orm import Mapped
     from sqlalchemy.orm import mapped_column
@@ -82,12 +82,12 @@ SQLAlchemy :ref:`带注释的声明性表<orm_declarative_mapped_column>`映射�
         id: Mapped[int] = mapped_column(init=False, primary_key=True)
         name: Mapped[str]
 
-类级特性配置
+类级特征配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-dataclasses特性的支持是部分的。 :一个:`被支持`的是``init``，``repr``，``eq``，``order``和``unsafe_hash``特性，``match_args``和``kw_only``支持Python 3.10+。 :一个:`无法支持`的是``frozen``和``slots``特性。
+支持数据类特性部分。目前**支持**的有“init”、“repr”、“eq”、“order”和“unsafe_hash”特性，Python 3.10+上支持“match_args”和“kw_only”。目前**不支持**的有“frozen”和“slots”特性。
 
-当使用:meth:`_orm.MappedAsDataclass`的mixin class形式进行Declarative类配置时，类配置参数作为类级别参数传递::
+在使用   :class:`_orm.MappedAsDataclass`  的混合类形式时，类配置参数作为类级参数传递::
 
     from sqlalchemy.orm import DeclarativeBase
     from sqlalchemy.orm import Mapped
@@ -100,14 +100,14 @@ dataclasses特性的支持是部分的。 :一个:`被支持`的是``init``，``
 
 
     class User(MappedAsDataclass, Base, repr=False, unsafe_hash=True):
-        """User class将转换为dataclass"""
+        """User类将被转换为DataClass"""
 
         __tablename__ = "user_account"
 
         id: Mapped[int] = mapped_column(init=False, primary_key=True)
         name: Mapped[str]
 
-在使用装饰器形式时，类配置参数直接传递给装饰器::
+使用  :meth:`_orm.registry.mapped_as_dataclass`  装饰器形式时，类配置参数直接传递给装饰器::
 
     from sqlalchemy.orm import registry
     from sqlalchemy.orm import Mapped
@@ -119,43 +119,34 @@ dataclasses特性的支持是部分的。 :一个:`被支持`的是``init``，``
 
     @reg.mapped_as_dataclass(unsafe_hash=True)
     class User:
-        """User class将转换为dataclass"""
+        """User类将被转换为DataClass"""
 
         __tablename__ = "user_account"
 
         id: Mapped[int] = mapped_column(init=False, primary_key=True)
         name: Mapped[str]
 
-关键字配置
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-支持dataclasses特性是部分的。 :一个:`被支持`的是``init``，``repr``，``eq``，``order``和``unsafe_hash``特性，``match_args``和``kw_only``支持Python 3.10+。 :一个:`无法支持`的是``frozen``和``slots``特性。
-
-当使用Declarative with Imperative Table形式的mixin class :class:`_orm.MappedAsDataclass`进行Declarative类配置时，类配置参数作为类级别参数传递::
-
-当使用装饰器形式时，类配置参数直接传递给装饰器::
+有关数据类类选项的背景，请参见数据类_文档中的 `@dataclasses.dataclass <https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_。
 
 属性配置
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属性使用:class:`_orm.Mapped`泛型注释容器进行描述。映射遵循与:ref:`orm_declarative_table`文档记录的相同的格式，并支持:func:`_orm.mapped_column`和:class:`_orm.Mapped`的所有功能。
+SQLAlchemy原生数据类与普通数据类的区别在于所有要映射的属性都是使用   :class:`_orm.Mapped`  通用注释容器描述的。映射遵循与   :ref:` orm_declarative_table`  中记录的相同形式，支持   :func:`_orm.mapped_column`  和   :class:` _orm.Mapped`  的所有功能。
 
-此外，ORM属性配置构造，包括:func:`_orm.mapped_column`，:func:`_orm.relationship`和:func:`_orm.composite`支持**每个属性字段选项**，包括``init``，``default``，``default_factory``和``repr``。这些参数的名称固定为:pep:`681`。功能相当于dataclasses：
+此外，ORM属性配置构造，包括   :func:`_orm.mapped_column` 、  :func:` _orm.relationship`  和   :func:`_orm.composite`  支持 **每个属性字段选项**，包括 ` `init``、``default``、``default_factory`` 和 ``repr``。这些参数的名称被固定为  :pep:`681`  中指定的名称。功能与数据类等效：
 
-* ``init``，如:paramref:`_orm.mapped_column.init`，
-  :paramref:`_orm.relationship.init`，如果为false，则表示该字段不应作为``__init__()``方法的一部分
-* ``default``，如:paramref:`_orm.mapped_column.default`，
-  :paramref:`_orm.relationship.default`
-  表示该字段的默认值，可以作为关键字参数在``__init__()``方法中提供。
-* ``default_factory``，如:paramref:`_orm.mapped_column.default_factory`，
-  :paramref:`_orm.relationship.default_factory`，表示可调函数
-  如果没有明确传递给``__init__()``方法，则将调用该函数来生成新的默认值。
-* ``repr``默认为True，表示该字段应包含在生成的``__repr__()``方法中
+* ``init``，与  :paramref:`_orm.mapped_column.init <sqlalchemy.orm.mapped_column>` ，  :paramref:` _orm.relationship.init <sqlalchemy.orm.relationship>`  相同，如果为 False，则表示该字段不应作为``__init __()`` 方法的一部分。
 
+* ``default``，如  :paramref:`_orm.mapped_column.default <sqlalchemy.orm.mapped_column>` ，  :paramref:` _orm.relationship.default <sqlalchemy.orm.relationship>` ，指示字段的默认值，该值在``__init__（）``方法中按关键字参数给出。
 
-与dataclasses的另一个关键区别是，属性的默认值必须使用ORM构造的``default``参数来配置，例如``mapped_column(default=None)``。使用类似于dataclass语法的语法，它接受简单的Python值作为默认值而不使用``@dataclases.field()``，不被支持。
+* ``default_factory``，如  :paramref:`_orm.mapped_column.default_factory <sqlalchemy.orm.mapped_column>` ，  :paramref:` _orm.relationship.default_factory <sqlalchemy.orm.relationship>` ，表示可调用函数，该函数会在未将参数传递明确传递给``__init__（）``方法的情况下生成新的默认值。
 
-使用:func:`_orm.mapped_column`的示例，如下映射将生成一个``__init__()``方法，仅接受``name``和``fullname``字段，其中``name``是必需的，可以作为位置传递，而``fullname``是可选的。 我们希望由数据库生成``id``字段不是构造函数的一部分::
+* ``repr``默认为True，表示该字段应作为生成的``__repr __()`` 方法的一部分。
+
+与数据类的另一个主要区别是，将属性的默认值 **必须**使用ORM构造中的``default``参数进行配置，例如``mapped_column（default = None）``。不支持类似数据类的语法，该语法接受简单的Python值作为默认值，而不使用 `@dataclases.field（）``。
+
+通过使用   :func:`_orm.mapped_column` ，下面的映射将生成一个` `__init__()`` 方法，该方法仅接受参数``name`` 和``fullname``，其中``name``是必需的，可以按位置传递，``fullname``是可选的。我们预计由数据库生成的 ``id`` 字段根本不在构造函数中:
+
 
     from sqlalchemy.orm import Mapped
     from sqlalchemy.orm import mapped_column
@@ -176,10 +167,11 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
     # 'fullname'是可选的关键字参数
     u1 = User("name")
 
+
 列默认值
 ~~~~~~~~~~~~~~~
 
-为了适应``default``参数的名称重叠与当前:sparamref:`_schema.Column.default`的重叠参数 :class:`_schema.Column` 构造，:func:`_orm.mapped_column`构造通过增加新的参数:sparamref:`_orm.mapped_column.insert_default`进行消歧，该参数将直接填充到 :class:`_schema.Column`的 :paramref:`_schema.Column.default`参数中，独立于在:sparamref:`_orm.mapped_column.default`上可以设置的内容，该内容始终用于dataclasses配置。 例如，要配置具有``func.utc_timestamp()``,的datetime列的:paramref:`_schema.Column.default`但构造函数中的该参数是可选的::
+为了适应 ``default`` 参数与现有  :paramref:`_schema.Column.default`  参数的重叠，   :func:` _orm.mapped_column`  构造将这两个名称区分开来，通过添加一个新参数  :paramref:`_orm.mapped_column.insert_default`  直接将其填充到   :class:` _schema.Column`  的  :paramref:`_schema.Column.default`  参数中，而不考虑在  :paramref:` _orm.mapped_column.default`  上设置了什么，后者始终用于数据类配置。例如，要将默认值设置为 ``func.utc_timestamp()`` SQL 函数的 datetime 列，但在构造函数中该参数是可选的::
 
     from datetime import datetime
 
@@ -200,24 +192,22 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
             insert_default=func.utc_timestamp(), default=None
         )
 
-使用上述映射时，当未传递``created_at``参数的新``User``对象的``INSERT``过程执行如下步骤：
+上述映射将根据默认值生成新的``User``对象的 ``INSERT`` 语句，而在 ``created_at`` 参数未显式传递的情况下，会执行如下操作：
 
 .. sourcecode:: pycon+sql
 
     >>> with Session(e) as session:
     ...     session.add(User())
     ...     session.commit()
-    {execsql}BEGIN (implicit)
-    INSERT INTO user_account (created_at) VALUES (utc_timestamp())
+    {execsql} BEGIN（隐式）
+    INSERT INTO user_account（created_at）VALUES（utc_timestamp（））
     [generated in 0.00010s] ()
     COMMIT
 
+与注释
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-与Annotated集成
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-在:ref:`orm_declarative_mapped_column_pep593`中引入的方法说明了如何使用:pep:`593`中的``Annotated``对象将整个:func:`_orm.mapped_column`构造打包以进行重复使用。该特征支持使用dataclasses特性。但是，其中的某些方面需要解决措施，因为typing工具可能无法正确解释对属性的:pep:`681`特殊配置。例如，鉴于以下方法，该方法在运行时将完全正常，但typing工具将认为``User()``构造函数是无效的，因为它们看不到present`` init = False``参数::
+在   :ref:`orm_declarative_mapped_column_pep593`  中介绍的方法说明如何使用  :pep:` 593`  中的“注释”对象来打包整个   :func:`_orm.mapped_column`  构造以供重用。此功能与数据类特性一起使用。 但是，该特性的一个方面需要处理以下情况：当使用类型工具时，额外的内部更改是，  :pep:` 681`  特定参数 `init`、`default`、`repr` 和 `default_factory` 必须在右侧中打包到显式的   :func:`_orm.mapped_column`  构造中，以便类型工具可以正确解释属性。例如，下面的方式将完美地在运行时工作，但是当未在其中看到` `init=False`` 参数时，类型工具将认为 ``User()`` 构造是无效的：
 
     from typing import Annotated
 
@@ -225,8 +215,8 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
     from sqlalchemy.orm import mapped_column
     from sqlalchemy.orm import registry
 
-    # typing工具会忽略init=False
-    intpk = Annotated[int, mapped_column(init=False, primary_key=True)]
+    # typing工具将忽略init = False
+    intpk = Annotated[int， mapped_column(init=False， primary_key=True)]
 
     reg = registry()
 
@@ -237,10 +227,10 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
         id: Mapped[intpk]
 
 
-    # typing错误：参数“id”缺失
+    # typing错误：缺少参数“id”
     u1 = User()
 
-然而，:func:`_orm.mapped_column`必须在右侧也必须存在，其中具有:paramref:`_orm.mapped_column.init`的pep-681特定参数被封装到显式的:func:`_orm.mapped_column`构造中，以使typing工具正确解释属性。例如，下面的方法将正常工作，但typing工具将不会将``User()``构造函数视为有效，因为它们看不到`` init = False``参数::
+相反，需要在右边也使用   :func:`_orm.mapped_column` ，并使用此函数显式设置  :paramref:` _orm.mapped_column.init`  的值；其他参数可以保留在 ``Annotated`` 构造内::
 
     from typing import Annotated
 
@@ -248,7 +238,7 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
     from sqlalchemy.orm import mapped_column
     from sqlalchemy.orm import registry
 
-    intpk = Annotated[int, mapped_column(primary_key=True)]
+    intpk = Annotated[int， mapped_column(primary_key=True)]
 
     reg = registry()
 
@@ -257,7 +247,7 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
     class User:
         __tablename__ = "user_account"
 
-        # init=False和其他pep-681参数必须内联
+        # init=False和其他pep-681参数必须是inline的
         id: Mapped[intpk] = mapped_column(init=False)
 
 
@@ -265,14 +255,14 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
 
 .. _orm_declarative_dc_mixins:
 
-使用mixin和抽象超类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+使用基类
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-在:class:`_orm.MappedAsDataclass`映射类中使用任何mixin或基类，这些类包括:class:`_orm.Mapped`属性，它们自己必须是:class:`_orm.MappedAsDataclass`层次结构的一部分，例如，在使用mixin的示例中::
+任何包含   :class:`_orm.Mapped`  属性的混合类型或基类在   :class:` _orm.MappedAsDataclass`  映射类中使用时，它们本身必须是   :class:`_orm.MappedAsDataclass`  层次结构的一部分，比如在下面使用混合类型的示例::
 
     class Mixin(MappedAsDataclass):
         create_user: Mapped[int] = mapped_column()
-        update_user: Mapped[Optional[int]] = mapped_column(default=None, init=False)
+        update_user: Optional[int] = mapped_column(default=None, init=False)
 
 
     class Base(DeclarativeBase, MappedAsDataclass):
@@ -288,19 +278,19 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
         username: Mapped[str] = mapped_column()
         email: Mapped[str] = mapped_column()
 
-:pep:`681`支持作为属于数据类的一部分的非数据类mixin的类型工具将不起作用。
+支持  :pep:`681`  的 Python 类型检查器否则不认为数据类产生的类属性与数据类相同。
 
-.. deprecated:: 2.0.8 在:class:`_orm.MappedAsDataclass`或:meth:`_orm.registry.mapped_as_dataclass`层次结构中使用mixin和抽象基类，它们本身不是数据类，并非都支持:pep:`681`作为属于数据类的一部分的字段。会出现这种情况的警告，后续将成为错误。
+.. deprecated:: 2.0.8 在   :class:`_orm.MappedAsDataclass`  或
+    :meth:`_orm.registry.mapped_as_dataclass`  层次结构内使用混合类型和抽象基类，如果它们本身不是数据类，则不支持这些字段作为属于数据类的  :pep:` 681`  .针对此情况发出警告，该警告后来将变成错误。
 
    .. seealso::
 
-       :ref:`error_dcmx` - 背景说明
-
+         :ref:`error_dcmx`  - 关于理由
 
 关系配置
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-如在配置记录的:ref:`relationship_patterns`中记录的，在:class:`_orm.Mapped`注释中与:func:`_orm.relationship`结合使用的方式相同。当将基于集合的:func:`_orm.relationship`作为可选关键字参数指定时，必须传递:paramref:`_orm.relationship.default_factory`参数，并且它必须引用要使用的集合类。One-to-one和scalar对象引用可以利用:paramref:`_orm.relationship.default`，如果默认值为``None``时可以将其用于构造函数::
+  :class:`_orm.Mapped`  注释结合   :func:` _orm.relationship`  与   :ref:`relationship_patterns`  中描述的使用方法相同。在将集合类作为可选关键字参数指定的情况下，必须传递  :paramref:` _orm.relationship.default_factory`  参数，并且它必须引用要使用的集合类。如果默认值将是 ``None``，则可以使用  :paramref:`_orm.relationship.default`  来定义对多和标量对象引用::
 
     from typing import List
 
@@ -329,16 +319,11 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
         parent_id: Mapped[int] = mapped_column(ForeignKey("parent.id"))
         parent: Mapped["Parent"] = relationship(default=None)
 
-上述映射将在新的``Parent()``对象构造时为``Parent.children``生成一个空列表，类似地，在新的``Child()``对象构造时为``Child.parent``生成``None``值而无需传递``parent``。
+上述映射将为 ``Parent.children`` 栏位生成一个空列表，当构造一个不传递``children`` 的新 ``Parent() ``对象时，而类似的，对于 ``Child()`` 对象，当构造一个未传递 ``parent`` 的新对象时，会生成 ``None`` 值的 ``Child.parent``。
 
-当:class:`_orm.relationship`单独声明时，它需要直接在:paramref:`_orm.Mapper.properties`字典中指定，该字典本身指定在``__mapper_args__``字典中，以便将其传递给:class:`_orm.Mapper`的构造函数。这个方法的替代方法在下面的示例中。
+注意,  :paramref:`_orm.relationship.default_factory`  可以从   :func:` _orm.relationship`  派生的给定集合类自动推导出来，但这会破坏与Data class的兼容性，因为  :paramref:`_orm.relationship.default_factory`  或  :paramref:` _orm.relationship.default`  的存在决定了将其呈现为 ``__init__()`` 方法时，该参数是必需还是可选。
 
-.. _orm_declarative_native_dataclasses_non_mapped_fields:
-
-使用非映射数据类字段
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-当使用Declarative数据类时，也可以使用非映射字段，这些字段将成为数据类构造过程的一部分，但不会映射。通过使用正常的Dataclass语法，可以定义不使用:class:`.Mapped`的字段。不使用:class:`.Mapped`的任何字段都将被映射过程忽略。在以下示例中，字段``ctrl_one``和``ctrl_two``将成为对象的实例级状态，但不会被ORM持久化：
+使用   :ref:`与 _的非映射数据类字段 <orm_declarative_native_dataclasses_non_mapped_fields>`  时，将使用未映射的字段作为实例级状态的一部分，但不会被ORM保存。任何不使用   :class:` .Mapped`  的字段将被映射过程忽略。在下面的示例中，字段“ctrl_one”和“ctrl_two”将是对象的实例级状态，但不会被ORM保存：
 
 
     from sqlalchemy.orm import Mapped
@@ -358,13 +343,11 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
         ctrl_one: Optional[str] = None
         ctrl_two: Optional[str] = None
 
-上述Data的实例可以创建如下::
+可以像这样创建Data的实例：
 
     d1 = Data(status="s1", ctrl_one="ctrl1", ctrl_two="ctrl2")
 
-
-一个更现实的例子可能是结合:initvar来使用``__post_init__()``特性来接收仅初始化的字段，这些字段可以用于组合持久化数据。在下面的示例中，``User``类使用``id``、``name``和``password_hash``作为映射特性，但使用初始化-only``password``和``repeat_password``字段来表示用户创建过程（注意：要运行此示例，请将函数``your_crypt_function_here()``替换为第三方加密函数，例如``bcrypt``或``argon2-cffi``）：
-
+更真实的例子可能是将Dataclasses的 ``InitVar`` 特性与 ``__post_init __（）`` 特性一起使用，以接收可用于构成持续数据的仅初始化字段。在下面的示例中，声明了使用 ``id``， ``name`` 和 ``password_hash`` 作为映射属性的 ``User`` 类，但是使用仅初始化 ``password``和 ``repeat_password``字段来表示用户创建过程（注意：要运行此示例，将 ``your_crypt_function_here（）`` 函数替换为类似于`bcrypt <https://pypi.org/project/bcrypt/>`_或 `argon2-cffi <https://pypi.org/project/argon2-cffi/>`_的第三方加密函数）:
 
     from dataclasses import InitVar
     from typing import Optional
@@ -394,22 +377,27 @@ SQLAlchemy的本机dataclasses与正常dataclasses不同之处在于映射的属
 
             self.password_hash = your_crypt_function_here(password)
 
-上述对象使用``password``和``repeat_password``参数创建，这些参数最先被消耗，以便在flush中从自动增量或其他默认值生成器中获取其值。允许在构造函数中明确指定它们，将为它们赋予``None``默认值。
+上述对象使用参数 ``password`` 和 ``repeat_password`` 创建，这些参数会被提前使用，以便可以从模拟器中返回它们的值并从中生成 ``password_hash`` 参数：
 
-从:class:`_orm.MappedAsDataclass`或直接应用了:meth:`_orm.registry.mapped_as_dataclass`的mixin中包括非数据类mixin的字段将被忽略，而无需显式地指定``__allow_unmapped__``类属性。在以前的2.0 beta版本中，即使只是为了使旧的ORM typed mappings继续正常工作，这个属性也需要被显式定义。
+    >>> u1 = User(name="some_user", password="xyz", repeat_password="xyz")
+    >>> u1.password_hash
+    '$6$9ppc... (example crypted string....)'
+
+.. versionchanged:: 2.0.0rc1 当使用  :meth:`_orm.registry.mapped_as_dataclass`  或
+    :class:`.MappedAsDataclass`  时，不使用   :class:` .Mapped`  注释的字段可以被包含在内，这将被视为结果数据类的一部分，但不会被映射，无需也没有始终需要注释合法性的额外 `__allow_unmapped__` 类属性。以前的2.0 beta版本将要求显式存在该属性，即使该属性的目的仅是允许旧版ORM类型映射继续运行。
 
 .. _dataclasses_pydantic:
 
-与Pydantic等备用数据类提供者的集成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+与Pydantic等替代数据类提供程序集成
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. warning::
 
-    Pydantic版本1.x的数据类层与SQLAlchemy的类instrumentation并不完全兼容，而且许多功能（例如相关的collections）可能无法正确工作。
+   Pydantic 1.x版本的数据类层不完全兼容于SQLAlchemy的类仪器化，许多特性，如相关集合可能不正确地工作。
 
-    对于Pydantic的兼容性，请考虑构建在SQLAlchemy ORM之上的Pydantic的`SQLModel <https://sqlmodel.tiangolo.com>`_ ORM，其中包含特定的实现细节，**明确解决**这些不兼容性。
+   为了与Pydantic兼容，请考虑使用基于SQLAlchemy ORM构建的使用Pydantic的 `SQLModel <https://sqlmodel.tiangolo.com>`_ ORM，其中包括特定实现细节，这些细节 **显式解决了** 这些不兼容性。
 
-SQLAlchemy的:class:`_orm.MappedAsDataclass` class和:meth:`_orm.registry.mapped_as_dataclass`方法直接调用Python标准库``dataclasses.dataclass``类装饰器，在对类进行声明性映射处理之后。可以使用``dataclass_callable``参数将此函数调用换成备用的数据类提供者，例如Pydantic，作为类关键字参数传递给:class:`_orm.MappedAsDataclass`以及:meth:`_orm.registry.mapped_as_dataclass`方法::
+SQLAlchemy的   :class:`_orm.MappedAsDataclass`  类 和  :meth:` _orm.registry.mapped_as_dataclass`  方法直接调用 Python标准库的 `dataclasses.dataclass <https://docs.python.org/3/library/dataclasses.html#dataclasses.dataclass>`_类装饰器，在将类声明过程应用于类之后。可以使用 ``dataclass_callable`` 参数直接为其他数据类提供程序换掉此函数调用，例如Pydantic，作为类关键字参数及作为  :meth:`_orm.registry.mapped_as_dataclass`  方法的参数::
 
     from sqlalchemy.orm import DeclarativeBase
     from sqlalchemy.orm import Mapped
@@ -432,37 +420,35 @@ SQLAlchemy的:class:`_orm.MappedAsDataclass` class和:meth:`_orm.registry.mapped
         id: Mapped[int] = mapped_column(primary_key=True)
         name: Mapped[str]
 
-上述``User``类将被应用为数据类，并使用Pydantic的``pydantic.dataclasses.dataclasses``可调用。该过程既适用于映射类，也适用于扩展从:class:`_orm.MappedAsDataclass`或直接应用:meth:`_orm.registry.mapped_as_dataclass`的mixin。
+上述 ``User`` 类将被处理成一个dataclass，使用Pydantic的 ``pydantic.dataclasses.dataclasses`` 调用。这个过程适用于映射类以及直接扩展   :class:`_orm.MappedAsDataclass`  或直接应用到  :meth:` _orm.registry.mapped_as_dataclass`  的混合类。
 
-.. versionadded：2.0.4 为:class:`_orm.MappedAsDataclass`和:meth:`_orm.registry.mapped_as_dataclass`方法添加了``dataclass_callable``类和方法参数，并调整了数据类内部以适应更严格的数据类函数，例如Pydantic的函数实现。
-
+.. versionadded:: 2.0.4 添加了   :class:`_orm.MappedAsDataclass`  和  :meth:` _orm.registry.mapped_as_dataclass`  的 ``dataclass_callable`` 类和方法参数，并调整了一些数据类的内部以适应更严格的数据类函数，例如 Pydantic 数据类函数。
 
 .. _orm_declarative_dataclasses:
 
-将ORM映射应用于现有的数据类（传统数据类使用）
+将ORM映射应用于现有数据类（旧数据类用法）
 ---------------------------------------------------------------------
 
 .. legacy::
 
-   这些方法的描述已被新的功能:ref:`orm_declarative_native_dataclasses`所取代。这个在1.4中首次添加了Dataclass的支持，这通.过在此部分中描述这个旧方法。
+   这些方法不再适用于2.0系列的新特性   :ref:`orm_declarative_native_dataclasses` 。这种新方法基于首次添加到版本1.4中的数据类支持，其在本节中介绍。
 
-要将映射应用于数据类，无法直接使用SQLAlchemy的“inline”声明性指令;将ORM指令分配给类时，使用以下三种技术之一：
+要将映射应用于数据类，不能直接使用 SQLAlchemy 的 "inline" 声明式指令;需要通过以下三种技术之一分配 ORM 指令：
 
-* 使用“Declarative with Imperative Table”，使用:class:`_schema.Table`对象定义要映射的表/列，并将其分配给类的``__table__``属性;关系在``__mapper_args__``字典内定义。使用:meth:`_orm.registry.mapped`装饰器映射类。以下是下方的示例:ref:`orm_declarative_dataclasses_imperative_table`。
+* 使用“自声明式表”；表格/列与映射被定义为分配给类的``__ table__`` 属性的   :class:`_schema.Table`  对象；关系是在 ` `__mapper_args__`` 字典内定义的.使用  :meth:`_orm.registry.mapped`  装饰器将类映射.下面的示例显示了：   :ref:` orm_declarative_dataclasses_imperative_table` .
 
-* 使用完整的“Declarative”，将Declarative-interpreted指令，例如:class:`_schema.Column`，:func:`_orm.relationship`添加到``.metadata``字典的``dataclasses.field()``构造中，其中它们由声明性过程消耗。重复使用:meth:`_orm.registry.mapped`装饰器，另请参见下面显示的示例:ref:`orm_declarative_dataclasses_declarative_table`。
+* 使用完全的“声明式”类型，如   :class:`_schema.Column` 、  :func:` _orm.relationship`  被添加到 ``dataclasses.field()`` 构造函数的 ``.metadata`` 字典中，在声明式过程中进行消耗。再次使用  :meth:`_orm.registry.mapped`  装饰器将映射类.请参考下面的示例解释：  :ref:` orm_declarative_dataclasses_declarative_table` .
 
-* 可以使用:meth:`_orm.registry.map_imperatively`方法将Imperative映射应用于现有的数据类，以完全相同的方式生成映射如:ref:`orm_imperative_mapping`中所述。这将在下面的示例:ref:`orm_imperative_dataclasses`中说明。
+* 非声明式映射可以使用  :meth:`_orm.registry.map_imperatively`  来应用到现有的数据类中，以完全相同的方式生成映射如   :ref:` orm_imperative_mapping`  中所述。这是   :ref:`orm_imperative_dataclasses`  中所示的。
 
-将ORM映射应用于数据类的一般过程与普通类的过程相同，但还包括SQLAlchemy将检测到在数据类中作为声明过程一部分的类级属性，并在运行时将其替换为通常的SQLAlchemy ORM映射属性。由dataclasses生成的``__init__``方法保持不变，其他所有由dataclasses生成的方法也保持不变，例如``__eq__()``和``__repr__()``等。
+SQLAlchemy将映射应用于数据类的一般过程与普通类相同，但还包括SQLAlchemy检测到作为数据类声明过程的一部分的类级属性，并在运行时用通常的SQLAlchemy ORM映射属性替换它们，如dataclasses生成的 ``__init __`` 方法和 ``__eq__()``, ``__repr__()`` 等方法将保持不变。
 
 .. _orm_declarative_dataclasses_imperative_table:
 
-使用Declarative With Imperative Table映射预存在的数据类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+使用“自声明式表”​​映射现有数据类
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-使用:ref:`orm_imperative_table_configuration`的示例将描述如何使用``@dataclass``。显式构造完整的:class:`_schema.Table`对象并将其分配给``__table__``属性。使用正常的dataclass语法定义实例字段。其他:class:`.MapperProperty`定义，例如:func:`.relationship`，都放置在:class:`__mapper_args__ <orm_declarative_mapper_options>`类级字典中，对应于:paramref:`_orm.Mapper.properties`参数::
-
+使用到   :ref:`orm_imperative_table_configuration`  的方式举例使用 ` `@dataclass``.显式地构造完整的  :class:`_schema.Table`  对象，并将其分配给 ` `__table__`` 属性。使用以下数据类语法定义实例字段。其他   :class:`.MapperProperty`  的定义，例如   :func:` .relationship` ，将被放置在 ``properties`` 键下的   :ref:`__mapper_args__ <orm_declarative_mapper_options>`  类级字典中，对应于  :paramref:` _orm.Mapper.properties`  参数的方式::
 
     from __future__ import annotations
 
@@ -513,17 +499,10 @@ SQLAlchemy的:class:`_orm.MappedAsDataclass` class和:meth:`_orm.registry.mapped
         user_id: int = field(init=False)
         email_address: Optional[str] = None
 
-上述示例中，``User.id``、``Address.id``和``Address.user_id``属性被定义为``field(init=False)``。这意味着这些参数不会添加到``__init__()``方法中，但是Session仍将能够在获取值后在flush期间将它们设置。将它们显式指定为构造函数参数，它们将被赋予``None``默认值。
+在上面的示例中，``User.id``、``Address.id`` 和 ``Address.user_id`` 属性定义为 ``field(init = False)``。这意味着这些参数不会被添加到 ``__init__()`` 方法中，但是   :class:`.Session`  在进行 flush（从自动增量或其他默认值生成器中获取其值）时仍然可以将其设置。要允许它们明确在构造函数中指定，请改为将它们设置为默认值 ` `None``。
 
-对于:func:`_orm.relationship`通过单独声明，需要直接在:paramref:`_orm.Mapper.properties`字典中指定，这个字典本身在``__mapper_args__``字典内置，以便将它传递给:class:`_orm.Mapper`的构造函数。此方法的另一种方法在下面的示例中。
+对于   :func:`_orm.relationship`  单独声明一个关系必须直接在  :paramref:` _orm.Mapper.properties`  字典中指定，该字典本身在 ``__mapper_args__`` 字典内指定，以便将其传递到   :class:`_orm.Mapper`  的构造函数。与此方法的替代方法相比，下面的方法更简洁，其中使用 ` `metadata`` 属性上的 SQLAlchemy 特定映射信息来指示   :func:`_orm.relationship`  关联是使用以下方式：
 
-
-.. _orm_declarative_dataclasses_declarative_table:
-
-使用Declarative-style字段映射预存在的数据类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. legacy:: 完全声明式方法需要将:class:`_schema.Column`对象声明为类属性。这将与使用dataclass级别的属性的冲突。结合使用时，可以利用``metadata``属性。在``dataclass.field``对象中，可以提供SQLAlchemy特定的映射信息。Declarative支持在类指定属性``__sa_dataclass_metadata_key__``时的这些参数的提取。这还提供了一种更简洁的方法来指示:func:`_orm.relationship`关联::
 
     from __future__ import annotations
 
@@ -547,16 +526,324 @@ SQLAlchemy的:class:`_orm.MappedAsDataclass` class和:meth:`_orm.registry.mapped
         fullname: str = field(default=None, metadata={"sa": Column(String(50))})
         nickname: str = field(default=None, metadata={"sa": Column(String(12))})
 
-addresses: List[Address] = field默认值为列表，元素类型为Address，其中metadata参数用来设置属性的元数据信息，这里设置了一个sa键，值为关系数据的配置信息，即关联Address表。
+addresses: List[Address] = field(
+            default_factory=list, metadata={"sa": relationship("Address")}
+        )
 
-由此可见metadata参数的类似于声明方式给与了dataclasses通过注释生成ORM对象的灵活性，使其能够通过注释继承和自定义ORM属性和关系的实现。
 
-对于Address类也有类似的注释实现，id、user_id和email_address分别对应自增主键、用户id和email地址信息。
+    @mapper_registry.mapped
+    @dataclass
+    class Address:
+        __tablename__ = "address"
+        __sa_dataclass_metadata_key__ = "sa"
+        id: int = field(init=False, metadata={"sa": Column(Integer, primary_key=True)})
+        user_id: int = field(init=False, metadata={"sa": Column(ForeignKey("user.id"))})
+        email_address: str = field(default=None, metadata={"sa": Column(String(50))})
 
-在本文档的另一个章节orm_declarative_dataclasses_mixin中，详细介绍了如何将声明性的混合类用于已有的dataclass中，其中介绍了基于声明式的orm混合类的要求，并给出了基于dataclass的实现方式。实现的主要步骤是使用Lambda函数在metadata中表示ORM construct（例如Column、relationship等）。
+.. _orm_declarative_dataclasses_mixin:
 
-最后本文档通过使用属性包装函数_declared_attr_修饰lambda函数来实现定义属性函数的目标，并给出了一个将dataclass映射为ORM类的例子。在此例子中，实体类User和Address类使用了两个已有的ORM类UserMixin和AddressMixin，并通过数据类混合方式继承他们的功能。值得一提的是，这里的ORM类是通过Python的数据类实现的，实现了类似SQLAlchemy的声明式混合，使得我们的ORM层的语法看起来比纯Python代码简洁并且易于阅读及维护。
+使用声明性 mixins 与预先存在的 dataclasses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-在orm_imperative_dataclasses章节中，介绍了如何利用一种叫做_map_imperatively_的技术将已有的dataclass映射为ORM类。同时还给出了数据类的另一个实现方式：使用attrs模块的示例代码，并介绍了如何进行Python类型注解。
+在   :ref:`orm_mixins_toplevel`  章节中，我们介绍了声明性 Mixin 类。
+声明性 mixins 的一种要求是某些难以复制的结构必须以可调用对象的方式给出，
+使用   :class:`_orm.declared_attr`  装饰器，例如   :ref:` orm_declarative_mixins_relationships`  中的示例：
 
-最后，本文档还详细的讲述了在Python的ORM领域中两种主流的类型检查工具mypy和pyright在可读性和错误提示方面的优越性以及对这些注释的支持程度。
+::
+
+    class RefTargetMixin:
+        @declared_attr
+        def target_id(cls):
+            return Column("target_id", ForeignKey("target.id"))
+
+        @declared_attr
+        def target(cls):
+            return relationship("Target")
+
+可以使用 lambda 表示 SQLAlchemy 构造函数，在 dataclasses 中的 ``field()`` 中支持使用
+此形式。使用   :func:`_orm.declared_attr`  包含 lambda 是可选的。
+如果我们要创建一个类似上面 ``User`` 类的类，其中 ORM 字段来自于一个自身就是 dataclass 的
+mixin 的情况，形式将是：
+
+::
+
+    @dataclass
+    class UserMixin:
+        __tablename__ = "user"
+
+        __sa_dataclass_metadata_key__ = "sa"
+
+        id: int = field(init=False, metadata={"sa": Column(Integer, primary_key=True)})
+
+        addresses: List[Address] = field(
+            default_factory=list, metadata={"sa": lambda: relationship("Address")}
+        )
+
+
+    @dataclass
+    class AddressMixin:
+        __tablename__ = "address"
+        __sa_dataclass_metadata_key__ = "sa"
+        id: int = field(init=False, metadata={"sa": Column(Integer, primary_key=True)})
+        user_id: int = field(
+            init=False, metadata={"sa": lambda: Column(ForeignKey("user.id"))}
+        )
+        email_address: str = field(default=None, metadata={"sa": Column(String(50))})
+
+
+    @mapper_registry.mapped
+    class User(UserMixin):
+        pass
+
+
+    @mapper_registry.mapped
+    class Address(AddressMixin):
+        pass
+
+.. versionadded:: 1.4.2  Added support for "declared attr" style mixin attributes,
+   namely   :func:`_orm.relationship`  constructs as well as   :class:` _schema.Column` 
+   objects with foreign key declarations, to be used within "Dataclasses
+   with Declarative Table" style mappings.
+
+
+
+.. _orm_imperative_dataclasses:
+
+使用命令式映射映射预先存在的 dataclasses
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+正如之前所述，在使用 ``@dataclass`` 装饰器将类设置为 dataclass 后，我们可以使用
+  :meth:`_orm.registry.mapped`   装饰器将 ORM 映射应用于该类。我们还可以使用
+  :meth:`_orm.registry.map_imperatively`   方法将该类作为命令式映射来使用，
+以便我们可以将所有   :class:`_schema.Table`  和   :class:` _orm.Mapper`  配置以命令式的方式传递给函数，
+而不是在类本身上定义它们作为类变量::
+
+    from __future__ import annotations
+
+    from dataclasses import dataclass
+    from dataclasses import field
+    from typing import List
+
+    from sqlalchemy import Column
+    from sqlalchemy import ForeignKey
+    from sqlalchemy import Integer
+    from sqlalchemy import MetaData
+    from sqlalchemy import String
+    from sqlalchemy import Table
+    from sqlalchemy.orm import registry
+    from sqlalchemy.orm import relationship
+
+    mapper_registry = registry()
+
+
+    @dataclass
+    class User:
+        id: int = field(init=False)
+        name: str = None
+        fullname: str = None
+        nickname: str = None
+        addresses: List[Address] = field(default_factory=list)
+
+
+    @dataclass
+    class Address:
+        id: int = field(init=False)
+        user_id: int = field(init=False)
+        email_address: str = None
+
+
+    metadata_obj = MetaData()
+
+    user = Table(
+        "user",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("name", String(50)),
+        Column("fullname", String(50)),
+        Column("nickname", String(12)),
+    )
+
+    address = Table(
+        "address",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("user_id", Integer, ForeignKey("user.id")),
+        Column("email_address", String(50)),
+    )
+
+    mapper_registry.map_imperatively(
+        User,
+        user,
+        properties={
+            "addresses": relationship(Address, backref="user", order_by=address.c.id),
+        },
+    )
+
+    mapper_registry.map_imperatively(Address, address)
+
+.. _orm_declarative_attrs_imperative_table:
+
+将 ORM 映射应用于现有的 attrs 类
+-------------------------------------------------
+
+attrs_ 库是一个流行的第三方库，提供类似于 dataclasses 的功能，还提供了许多在普通 dataclass 中
+无法找到的其他特性。
+
+使用 attrs_ 扩充的类使用 ``@define`` 装饰器。这个装饰器启动一个过程，扫描类寻找定义
+类行为的属性，然后使用这些属性来生成方法、文档和注释。
+
+SQLAlchemy ORM 支持使用声明性命令式数据类或命令式映射将 attrs_ 类映射。这两种样式的通用形式
+完全等同于用于 dataclasses 的   :ref:`orm_declarative_dataclasses_declarative_table`  和
+  :ref:`orm_declarative_dataclasses_imperative_table`  映射形式，其中 dataclass 或 attrs 中使用的内联属性指令未更改，
+并且在运行时应用了 SQLAlchemy 的面向表的工具。
+
+attrs_ 的默认 ``@define`` 装饰器将带注释的类替换为一个基于 __slots__ 的新类，这是不受支持的。
+使用旧样式注释 ``@attr.s`` 或使用 ``define(slots=False)``，此类将不被替换。此外，attrs 在装饰器运行后会删除其本身的类绑定属性，
+以便 SQLAlchemy 的映射过程接管这些属性。``@attr.s`` 装饰器和 ``@define(slots=False)`` 装饰器都与 SQLAlchemy 兼容。
+
+使用声明性“命令式表”
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+在“声明性表命令式”样式中，使用声明性类内联声明   :class:`_schema.Table`  对象。类首先应用 ` `@define`` 装饰器，
+然后应用  :meth:`_orm.registry.mapped`  装饰器::
+
+    from __future__ import annotations
+
+    from typing import List
+    from typing import Optional
+
+    from attrs import define
+    from sqlalchemy import Column
+    from sqlalchemy import ForeignKey
+    from sqlalchemy import Integer
+    from sqlalchemy import MetaData
+    from sqlalchemy import String
+    from sqlalchemy import Table
+    from sqlalchemy.orm import Mapped
+    from sqlalchemy.orm import registry
+    from sqlalchemy.orm import relationship
+
+    mapper_registry = registry()
+
+
+    @mapper_registry.mapped
+    @define(slots=False)
+    class User:
+        __table__ = Table(
+            "user",
+            mapper_registry.metadata,
+            Column("id", Integer, primary_key=True),
+            Column("name", String(50)),
+            Column("FullName", String(50), key="fullname"),
+            Column("nickname", String(12)),
+        )
+        id: Mapped[int]
+        name: Mapped[str]
+        fullname: Mapped[str]
+        nickname: Mapped[str]
+        addresses: Mapped[List[Address]]
+
+        __mapper_args__ = {  # type: ignore
+            "properties": {
+                "addresses": relationship("Address"),
+            }
+        }
+
+
+    @mapper_registry.mapped
+    @define(slots=False)
+    class Address:
+        __table__ = Table(
+            "address",
+            mapper_registry.metadata,
+            Column("id", Integer, primary_key=True),
+            Column("user_id", Integer, ForeignKey("user.id")),
+            Column("email_address", String(50)),
+        )
+        id: Mapped[int]
+        user_id: Mapped[int]
+        email_address: Mapped[Optional[str]]
+
+.. note:: 激活 attrs 的 ``slots=True`` 选项（在映射类上启用 ``__slots__`` ）
+   无法在没有完全实现替代属性工具（参见   :ref:`examples_instrumentation` ）的情况下与 SQLAlchemy 映射一起使用，
+   映射类通常依赖于对 ``__dict__`` 的直接访问以进行状态存储。出现此选项时行为是未定义的。
+
+
+
+使用命令式映射映射 attrs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+与 dataclasses 一样，我们也可以使用  :meth:`_orm.registry.map_imperatively`  将现有的 attrs 类定义为 ORM 映射：
+
+::
+
+    from __future__ import annotations
+
+    from typing import List
+
+    from attrs import define
+    from sqlalchemy import Column
+    from sqlalchemy import ForeignKey
+    from sqlalchemy import Integer
+    from sqlalchemy import MetaData
+    from sqlalchemy import String
+    from sqlalchemy import Table
+    from sqlalchemy.orm import registry
+    from sqlalchemy.orm import relationship
+
+    mapper_registry = registry()
+
+
+    @define(slots=False)
+    class User:
+        id: int
+        name: str
+        fullname: str
+        nickname: str
+        addresses: List[Address]
+
+
+    @define(slots=False)
+    class Address:
+        id: int
+        user_id: int
+        email_address: Optional[str]
+
+
+    metadata_obj = MetaData()
+
+    user = Table(
+        "user",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("name", String(50)),
+        Column("fullname", String(50)),
+        Column("nickname", String(12)),
+    )
+
+    address = Table(
+        "address",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("user_id", Integer, ForeignKey("user.id")),
+        Column("email_address", String(50)),
+    )
+
+    mapper_registry.map_imperatively(
+        User,
+        user,
+        properties={
+            "addresses": relationship(Address, backref="user", order_by=address.c.id),
+        },
+    )
+
+    mapper_registry.map_imperatively(Address, address)
+
+上述形式等价于之前使用“声明性命令式表”的示例。
+
+
+.. _dataclass: https://docs.python.org/zh-cn/3/library/dataclasses.html
+.. _dataclasses: https://docs.python.org/zh-cn/3/library/dataclasses.html
+.. _attrs: https://pypi.org/project/attrs/
+.. _mypy: https://mypy.readthedocs.io/en/stable/
+.. _pyright: https://github.com/microsoft/pyright

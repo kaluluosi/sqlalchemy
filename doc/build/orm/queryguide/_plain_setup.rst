@@ -5,7 +5,7 @@ Setup for ORM Queryguide: SELECT
 ======================================
 
 This page illustrates the mappings and fixture data used by the
-:doc:`select` document of the :ref:`queryguide_toplevel`.
+:doc:`select` document of the :ref:` queryguide_toplevel`.
 
 ..  sourcecode:: python
 

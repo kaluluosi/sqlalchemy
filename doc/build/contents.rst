@@ -4,7 +4,7 @@ Table of Contents
 =================
 
 Full table of contents.  For a high level overview of all
-documentation, see :ref:`index_toplevel`.
+documentation, see :ref:`index_toplevel` .
 
 .. toctree::
    :titlesonly:
@@ -22,5 +22,5 @@ documentation, see :ref:`index_toplevel`.
 Indices and tables
 ------------------
 
-* :ref:`glossary`
-* :ref:`genindex`
+* :ref:`glossary` 
+* :ref:`genindex` 

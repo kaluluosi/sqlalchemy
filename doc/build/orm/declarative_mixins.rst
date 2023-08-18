@@ -7,11 +7,11 @@ A common need when mapping classes using the :ref:`Declarative
 <orm_declarative_mapping>` style is to share common functionality, such as
 particular columns, table or mapper options, naming schemes, or other mapped
 properties, across many classes.  When using declarative mappings, this idiom
-is supported via the use of :term:`mixin classes`, as well as via augmenting the declarative base
+is supported via the use of :term:`mixin classes` , as well as via augmenting the declarative base
 class itself.
 
 .. tip::  In addition to mixin classes, common column options may also be
-   shared among many classes using :pep:`593` ``Annotated`` types; see
+   shared among many classes using :pep:`593` ` `Annotated`` types; see
    :ref:`orm_declarative_mapped_column_type_map_pep593` and
    :ref:`orm_declarative_mapped_column_pep593` for background on these
    SQLAlchemy 2.0 features.
@@ -67,7 +67,7 @@ The above example illustrates a class ``MyModel`` which includes two mixins
 class ``LogRecord`` which also includes ``CommonMixin``, demonstrating a
 variety of constructs that are supported on mixins and base classes, including:
 
-* columns declared using :func:`_orm.mapped_column`, :class:`_orm.Mapped`
+* columns declared using :func:`_orm.mapped_column` , :class:`_orm.Mapped` 
   or :class:`_schema.Column` are copied from mixins or base classes onto
   the target class to be mapped; above this is illustrated via the
   column attributes ``CommonMixin.id`` and ``HasLogRecord.log_record_id``.
@@ -92,7 +92,7 @@ variety of constructs that are supported on mixins and base classes, including:
   illustrated by generating a many-to-one :func:`_orm.relationship` to a mapped
   object called ``LogRecord``.
 
-The features above may all be demonstrated using a :func:`_sql.select`
+The features above may all be demonstrated using a :func:`_sql.select` 
 example:
 
 .. sourcecode:: pycon+sql
@@ -117,7 +117,7 @@ example:
 
    .. versionadded:: 2.0  As part of :pep:`484` typing support for the
       SQLAlchemy ORM, added the :attr:`_orm.declared_attr.directive` to
-      :class:`_orm.declared_attr` to distinguish between :class:`_orm.Mapped`
+      :class:`_orm.declared_attr` to distinguish between :class:` _orm.Mapped`
       attributes and Declarative configurational attributes
 
 There's no fixed convention for the order of mixins and base classes.
@@ -138,10 +138,10 @@ attribute is used on the newly defined class.
    based on the :class:`_orm.Mapped` annotation class, mixin classes also work
    perfectly well with non-annotated and legacy Declarative forms, such as when
    using :class:`_schema.Column` directly instead of
-   :func:`_orm.mapped_column`.
+   :func:`_orm.mapped_column` .
 
 .. versionchanged:: 2.0 For users coming from the 1.4 series of SQLAlchemy
-   who may have been using the :ref:`mypy plugin <mypy_toplevel>`, the
+   who may have been using the :ref:`mypy plugin <mypy_toplevel>` , the
    :func:`_orm.declarative_mixin` class decorator is no longer needed
    to mark declarative mixins, assuming the mypy plugin is no longer in use.
 
@@ -200,7 +200,7 @@ Where above, ``MyModel`` as well as ``LogRecord``, in deriving from
 a primary key column named ``id``, as well as the above table and mapper
 arguments defined by ``Base.__table_args__`` and ``Base.__mapper_args__``.
 
-When using legacy :func:`_orm.declarative_base` or :meth:`_orm.registry.generate_base`,
+When using legacy :func:`_orm.declarative_base` or :meth:` _orm.registry.generate_base`,
 the :paramref:`_orm.declarative_base.cls` parameter may be used as follows
 to generate an equivalent effect, as illustrated in the non-annotated
 example below::
@@ -259,7 +259,7 @@ is in use (as opposed to
 :ref:`imperative table <orm_imperative_table_configuration>` configuration),
 so that columns declared on the mixin can then be copied to be
 part of the :class:`_schema.Table` that the Declarative process generates.
-All three of the :func:`_orm.mapped_column`, :class:`_orm.Mapped`,
+All three of the :func:`_orm.mapped_column` , :class:`_orm.Mapped` ,
 and :class:`_schema.Column` constructs may be declared inline in a
 declarative mixin::
 
@@ -279,7 +279,7 @@ in their class bases will automatically include a column ``created_at``
 that applies a timestamp to all row insertions, as well as an ``updated_at``
 column, which does not include a default for the purposes of the example
 (if it did, we would use the :paramref:`_schema.Column.onupdate` parameter
-which is accepted by :func:`_orm.mapped_column`).  These column constructs
+which is accepted by :func:`_orm.mapped_column` ).  These column constructs
 are always **copied from the originating mixin or base class**, so that the
 same mixin/base class may be applied to any number of target classes
 which will each have their own column constructs.
@@ -309,9 +309,9 @@ on the mixin class by creating a **copy** of the construct, which is then
 applied to the target class.
 
 .. versionchanged:: 2.0 The declarative API can now accommodate
-   :class:`_schema.Column` objects as well as :func:`_orm.mapped_column`
+   :class:`_schema.Column` objects as well as :func:` _orm.mapped_column`
    constructs of any form when using mixins without the need to use
-   :func:`_orm.declared_attr`.  Previous limitations which prevented columns
+   :func:`_orm.declared_attr` .  Previous limitations which prevented columns
    with :class:`_schema.ForeignKey` elements from being used directly
    in mixins have been removed.
 
@@ -401,16 +401,16 @@ explicit primaryjoin which refers to pending mapped columns on both
 
 .. _orm_declarative_mixins_mapperproperty:
 
-Mixing in :func:`_orm.column_property` and other :class:`_orm.MapperProperty` classes
+Mixing in :func:`_orm.column_property` and other :class:` _orm.MapperProperty` classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Like :func:`_orm.relationship`, other
+Like :func:`_orm.relationship` , other
 :class:`_orm.MapperProperty` subclasses such as
 :func:`_orm.column_property` also need to have class-local copies generated
 when used by mixins, so are also declared within functions that are
-decorated by :class:`_orm.declared_attr`.   Within the function,
-other ordinary mapped columns that were declared with :func:`_orm.mapped_column`,
-:class:`_orm.Mapped`, or :class:`_schema.Column` will be made available from the ``cls`` argument
+decorated by :class:`_orm.declared_attr` .   Within the function,
+other ordinary mapped columns that were declared with :func:`_orm.mapped_column` ,
+:class:`_orm.Mapped` , or :class:`_schema.Column` will be made available from the ` `cls`` argument
 so that they may be used to compose new attributes, as in the example below which adds two
 columns together::
 
@@ -467,7 +467,7 @@ it produces the full expression:
               return column_property(cls.x + cls.y)
 
    .. versionadded:: 2.0 - :class:`_orm.declared_attr` can accommodate a
-      function decorated with ``@classmethod`` to help with :pep:`484`
+      function decorated with ``@classmethod`` to help with :pep:`484` 
       integration where needed.
 
 
@@ -477,7 +477,7 @@ Using Mixins and Base Classes with Mapped Inheritance Patterns
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When dealing with mapper inheritance patterns as documented at
-:ref:`inheritance_toplevel`, some additional capabilities are present
+:ref:`inheritance_toplevel` , some additional capabilities are present
 when using :class:`_orm.declared_attr` either with mixin classes, or when
 augmenting both mapped and un-mapped superclasses in a class hierarchy.
 
@@ -487,7 +487,7 @@ there is an important distinction
 made between functions that generate the special names used by Declarative such
 as ``__tablename__``, ``__mapper_args__`` vs. those that may generate ordinary
 mapped attributes such as :func:`_orm.mapped_column` and
-:func:`_orm.relationship`.  Functions that define **Declarative directives** are
+:func:`_orm.relationship` .  Functions that define **Declarative directives** are
 **invoked for each subclass in a hierarchy**, whereas functions that
 generate **mapped attributes** are **invoked only for the first mapped
 superclass in a hierarchy**.
@@ -502,7 +502,7 @@ table that is locally mapped.
 The difference in behavior between these two use cases is demonstrated
 in the following two sections.
 
-Using :func:`_orm.declared_attr` with inheriting :class:`.Table` and :class:`.Mapper` arguments
+Using :func:`_orm.declared_attr` with inheriting :class:` .Table` and :class:`.Mapper` arguments
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A common recipe with mixins is to create a ``def __tablename__(cls)``
@@ -560,9 +560,9 @@ In the above example, both the ``Person`` base class as well as the
 ``Engineer`` class, being subclasses of the ``Tablename`` mixin class which
 generates new table names, will have a generated ``__tablename__``
 attribute, which to
-Declarative indicates that each class should have its own :class:`.Table`
+Declarative indicates that each class should have its own :class:`.Table` 
 generated to which it will be mapped.   For the ``Engineer`` subclass, the style of inheritance
-applied is :ref:`joined table inheritance <joined_inheritance>`, as it
+applied is :ref:`joined table inheritance <joined_inheritance>` , as it
 will be mapped to a table ``engineer`` that joins to the base ``person``
 table.  Any other subclasses that inherit from ``Person`` will also have
 this style of inheritance applied by default (and within this particular example, would need to
@@ -573,12 +573,12 @@ By contrast, the ``Manager`` subclass of ``Person`` **overrides** the
 Declarative that this class should **not** have a :class:`.Table` generated,
 and will instead make use exclusively of the base :class:`.Table` to which
 ``Person`` is mapped.  For the ``Manager`` subclass, the style of inheritance
-applied is :ref:`single table inheritance <single_inheritance>`.
+applied is :ref:`single table inheritance <single_inheritance>` .
 
 The example above illustrates that Declarative directives like
 ``__tablename__`` are necessarily **applied to each subclass** individually,
 as each mapped class needs to state which :class:`.Table` it will be mapped
-towards, or if it will map itself to the inheriting superclass' :class:`.Table`.
+towards, or if it will map itself to the inheriting superclass' :class:`.Table` .
 
 If we instead wanted to **reverse** the default table scheme illustrated
 above, so that
@@ -586,8 +586,8 @@ single table inheritance were the default and joined table inheritance
 could be defined only when a ``__tablename__`` directive were supplied to
 override it, we can make use of
 Declarative helpers within the top-most ``__tablename__()`` method, in this
-case a helper called :func:`.has_inherited_table`.  This function will
-return ``True`` if a superclass is already mapped to a :class:`.Table`.
+case a helper called :func:`.has_inherited_table` .  This function will
+return ``True`` if a superclass is already mapped to a :class:`.Table` .
 We may use this helper within the base-most ``__tablename__()`` classmethod
 so that we may **conditionally** return ``None`` for the table name,
 if a table is already present, thus indicating single-table inheritance
@@ -642,7 +642,7 @@ Using :func:`_orm.declared_attr` to generate table-specific inheriting columns
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In contrast to how ``__tablename__`` and other special names are handled when
-used with :class:`_orm.declared_attr`, when we mix in columns and properties (e.g.
+used with :class:`_orm.declared_attr` , when we mix in columns and properties (e.g.
 relationships, column properties, etc.), the function is
 invoked for the **base class only** in the hierarchy, unless the
 :class:`_orm.declared_attr` directive is used in combination with the
@@ -706,11 +706,11 @@ function should be invoked **for each class in the hierarchy**, in *almost*
     function or value.  This is a current limitation in the mechanics of
     how ``@declared_attr`` is resolved, and a warning is emitted if
     this condition is detected.   This limitation only applies to
-    ORM mapped columns, relationships, and other :class:`.MapperProperty`
+    ORM mapped columns, relationships, and other :class:`.MapperProperty` 
     styles of attribute.  It does **not** apply to Declarative directives
     such as ``__tablename__``, ``__mapper_args__``, etc., which
     resolve in a different way internally than that of
-    :attr:`.declared_attr.cascading`.
+    :attr:`.declared_attr.cascading` .
 
 
 Combining Table/Mapper Arguments from Multiple Mixins

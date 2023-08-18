@@ -39,17 +39,17 @@
         :versions: 1.0.0b1, 0.9.7
         :tickets: 3124
 
-        Fixed bug in :class:`.Enum` and other :class:`.SchemaType`
+        Fixed bug in :class:`.Enum` and other :class:` .SchemaType`
         subclasses where direct association of the type with a
         :class:`_schema.MetaData` would lead to a hang when events
-        (like create events) were emitted on the :class:`_schema.MetaData`.
+        (like create events) were emitted on the :class:`_schema.MetaData` .
 
     .. change::
         :tags: bug, sql
         :versions: 1.0.0b1, 0.9.7
         :tickets: 3102
 
-        Fixed a bug within the custom operator plus :meth:`.TypeEngine.with_variant`
+        Fixed a bug within the custom operator plus :meth:`.TypeEngine.with_variant` 
         system, whereby using a :class:`.TypeDecorator` in conjunction with
         variant would fail with an MRO error when a comparison operator was used.
 
@@ -114,7 +114,7 @@
         eager loads across a polymorphic-subclass boundary in conjunction
         with polymorphic loading would fail to locate the subclass-link in the
         chain, erroring out with a missing property name on an
-        :class:`.AliasedClass`.
+        :class:`.AliasedClass` .
 
     .. change::
         :tags: bug, ext
@@ -156,10 +156,10 @@
         :tickets: 3045
         :versions: 0.9.5, 1.0.0b1
 
-        Fixed bug where :meth:`_schema.Table.update` and :meth:`_schema.Table.delete`
-        would produce an empty WHERE clause when an empty :func:`.and_()`
+        Fixed bug where :meth:`_schema.Table.update` and :meth:` _schema.Table.delete`
+        would produce an empty WHERE clause when an empty :func:`.and_()` 
         or :func:`.or_()` or other blank expression were applied.  This is
-        now consistent with that of :func:`_expression.select`.
+        now consistent with that of :func:`_expression.select` .
 
     .. change::
         :tags: bug, postgresql
@@ -205,7 +205,7 @@
         :tickets: 2995,
         :versions: 0.9.4
 
-        Fixed regression from 0.8.3 as a result of :ticket:`2818`
+        Fixed regression from 0.8.3 as a result of :ticket:`2818` 
         where :meth:`_query.Query.exists` wouldn't work on a query that only
         had a :meth:`_query.Query.select_from` entry but no other entities.
 
@@ -236,7 +236,7 @@
         :versions: 0.9.4
 
         Improved an error message which would occur if a query() were made
-        against a non-selectable, such as a :func:`_expression.literal_column`, and then
+        against a non-selectable, such as a :func:`_expression.literal_column` , and then
         an attempt was made to use :meth:`_query.Query.join` such that the "left"
         side would be determined as ``None`` and then fail.  This condition
         is now detected explicitly.
@@ -300,7 +300,7 @@
 
         Added new MySQL-specific :class:`.mysql.DATETIME` which includes
         fractional seconds support; also added fractional seconds support
-        to :class:`.mysql.TIMESTAMP`.  DBAPI support is limited, though
+        to :class:`.mysql.TIMESTAMP` .  DBAPI support is limited, though
         fractional seconds are known to be supported by MySQL Connector/Python.
         Patch courtesy Geert JM Vanderkelen.
 
@@ -311,7 +311,7 @@
 
         Added support for the ``PARTITION BY`` and ``PARTITIONS``
         MySQL table keywords, specified as ``mysql_partition_by='value'`` and
-        ``mysql_partitions='value'`` to :class:`_schema.Table`.  Pull request
+        ``mysql_partitions='value'`` to :class:`_schema.Table` .  Pull request
         courtesy Marcus McCurdy.
 
      .. change::
@@ -337,7 +337,7 @@
         :tags: bug, sqlite
 
         Restored a change that was missed in the backport of unique
-        constraint reflection to 0.8, where :class:`.UniqueConstraint`
+        constraint reflection to 0.8, where :class:`.UniqueConstraint` 
         with SQLite would fail if reserved keywords were included in the
         names of columns.  Pull request courtesy Roman Podolyaka.
 
@@ -530,7 +530,7 @@
         the error handling specific to the ``connect()`` routine would both
         inappropriately run the exception through the dialect's
         :meth:`.Dialect.is_disconnect` routine as well as wrap it in
-        a :class:`sqlalchemy.exc.DBAPIError`.  It is now propagated unchanged
+        a :class:`sqlalchemy.exc.DBAPIError` .  It is now propagated unchanged
         in the same way as occurs within the execute process.
 
      .. change::
@@ -593,7 +593,7 @@
 
         Fixed bug where SQL statement would be improperly ASCII-encoded
         when a pre-DBAPI :class:`.StatementError` were raised within
-        :meth:`_engine.Connection.execute`, causing encoding errors for
+        :meth:`_engine.Connection.execute` , causing encoding errors for
         non-ASCII statements.  The stringification now remains within
         Python unicode thus avoiding encoding errors.
 
@@ -660,7 +660,7 @@
         :tickets: 2842
         :versions: 0.9.0b1
 
-        The :class:`.Enum` and :class:`.Boolean` types now bypass
+        The :class:`.Enum` and :class:` .Boolean` types now bypass
         any custom (e.g. TypeDecorator) type in use when producing the
         CHECK constraint for the "non native" type.  This so that the custom type
         isn't involved in the expression within the CHECK, since this
@@ -680,7 +680,7 @@
         :tickets: 2721, 2839
         :versions: 0.9.0b1
 
-        The change in :ticket:`2721`, which is that the ``deferrable`` keyword
+        The change in :ticket:`2721` , which is that the ``deferrable`` keyword
         of :class:`_schema.ForeignKeyConstraint` is silently ignored on the MySQL
         backend, will be reverted as of 0.9; this keyword will now render again, raising
         errors on MySQL as it is not understood - the same behavior will also
@@ -690,18 +690,18 @@
         this keyword is not only silently ignored by MySQL but also breaks
         the ON UPDATE/ON DELETE options.
 
-        To use a :class:`_schema.ForeignKeyConstraint`
+        To use a :class:`_schema.ForeignKeyConstraint` 
         that does not render or renders differently on MySQL, use a custom
         compilation option.  An example of this usage has been added to the
-        documentation, see :ref:`mysql_foreign_keys`.
+        documentation, see :ref:`mysql_foreign_keys` .
 
     .. change::
         :tags: bug, sql
         :tickets: 2825
         :versions: 0.9.0b1
 
-        The ``.unique`` flag on :class:`.Index` could be produced as ``None``
-        if it was generated from a :class:`_schema.Column` that didn't specify ``unique``
+        The ``.unique`` flag on :class:`.Index` could be produced as ` `None``
+        if it was generated from a :class:`_schema.Column` that didn't specify ` `unique``
         (where it defaults to ``None``).  The flag will now always be ``True`` or
         ``False``.
 
@@ -710,7 +710,7 @@
         :tickets: 2836
         :versions: 0.9.0b1
 
-        Added new option to :func:`_orm.relationship` ``distinct_target_key``.
+        Added new option to :func:`_orm.relationship` ` `distinct_target_key``.
         This enables the subquery eager loader strategy to apply a DISTINCT
         to the innermost SELECT subquery, to assist in the case where
         duplicate rows are generated by the innermost query which corresponds
@@ -726,7 +726,7 @@
 
         .. seealso::
 
-            :ref:`change_2836`
+            :ref:`change_2836` 
 
     .. change::
         :tags: bug, mysql
@@ -771,7 +771,7 @@
         :versions: 0.9.0b1
 
         Fixed bug where using an annotation such as :func:`.remote` or
-        :func:`.foreign` on a :class:`_schema.Column` before association with a parent
+        :func:`.foreign` on a :class:` _schema.Column` before association with a parent
         :class:`_schema.Table` could produce issues related to the parent table not
         rendering within joins, due to the inherent copy operation performed
         by an annotation.
@@ -797,7 +797,7 @@
         :tickets: 2821
         :versions: 0.9.0b1
 
-        ``repr()`` for the :class:`.URL` of an :class:`_engine.Engine`
+        ``repr()`` for the :class:`.URL` of an :class:` _engine.Engine`
         will now conceal the password using asterisks.
         Courtesy Gunnlaugur Þór Briem.
 
@@ -822,7 +822,7 @@
         :tags: feature
         :versions: 0.9.0b1
 
-        Added a new flag ``system=True`` to :class:`_schema.Column`, which marks
+        Added a new flag ``system=True`` to :class:`_schema.Column` , which marks
         the column as a "system" column which is automatically made present
         by the database (such as PostgreSQL ``oid`` or ``xmin``).  The
         column will be omitted from the ``CREATE TABLE`` statement but will
@@ -884,7 +884,7 @@
         :tags: feature, orm, declarative
         :versions: 0.9.0b1
 
-        Added a convenience class decorator :func:`.as_declarative`, is
+        Added a convenience class decorator :func:`.as_declarative` , is
         a wrapper for :func:`.declarative_base` which allows an existing base
         class to be applied using a nifty class-decorated approach.
 
@@ -943,7 +943,7 @@
         :tickets: 2776
         :versions: 0.9.0b1
 
-        Dialect.initialize() is not called a second time if an :class:`_engine.Engine`
+        Dialect.initialize() is not called a second time if an :class:`_engine.Engine` 
         is recreated, due to a disconnect error.   This fixes a particular
         issue in the Oracle 8 dialect, but in general the dialect.initialize()
         phase should only be once per dialect.
@@ -953,14 +953,14 @@
         :tickets: 722
 
         Added new method to the :func:`_expression.insert` construct
-        :meth:`_expression.Insert.from_select`.  Given a list of columns and
+        :meth:`_expression.Insert.from_select` .  Given a list of columns and
         a selectable, renders ``INSERT INTO (table) (columns) SELECT ..``.
 
     .. change::
         :tags: feature, sql
         :versions: 0.9.0b1
 
-        The :func:`_expression.update`, :func:`_expression.insert`, and :func:`_expression.delete` constructs
+        The :func:`_expression.update` , :func:`_expression.insert` , and :func:`_expression.delete` constructs
         will now interpret ORM entities as target tables to be operated upon,
         e.g.::
 
@@ -1020,7 +1020,7 @@
 
         ORM descriptors such as hybrid properties can now be referenced
         by name in a string argument used with ``order_by``,
-        ``primaryjoin``, or similar in :func:`_orm.relationship`,
+        ``primaryjoin``, or similar in :func:`_orm.relationship` ,
         in addition to column-bound attributes.
 
     .. change::
@@ -1108,7 +1108,7 @@
           correlated outwards to a SELECT that encloses another,
           which then encloses this one, correlation now works
           across multiple levels when explicit correlation is
-          established via :meth:`_expression.Select.correlate`, provided
+          established via :meth:`_expression.Select.correlate` , provided
           that the target select is somewhere along the chain
           contained by a WHERE/ORDER BY/columns clause, not
           just nested FROM clauses. This makes
@@ -1146,8 +1146,8 @@
         :tags: feature, sql
         :tickets: 2744, 2734
 
-        Provided a new attribute for :class:`.TypeDecorator`
-        called :attr:`.TypeDecorator.coerce_to_is_types`,
+        Provided a new attribute for :class:`.TypeDecorator` 
+        called :attr:`.TypeDecorator.coerce_to_is_types` ,
         to make it easier to control how comparisons using
         ``==`` or ``!=`` to ``None`` and boolean types goes
         about producing an ``IS`` expression, or a plain
@@ -1194,7 +1194,7 @@
         :tags: bug, engine
         :versions: 0.9.0b1
 
-        Fixed bug where the ``reset_on_return`` argument to various :class:`_pool.Pool`
+        Fixed bug where the ``reset_on_return`` argument to various :class:`_pool.Pool` 
         implementations would not be propagated when the pool was regenerated.
         Courtesy Eevee.
 
@@ -1203,7 +1203,7 @@
         :tickets: 2754
         :versions: 0.9.0b1
 
-        Fixed bug where sending a composite attribute into :meth:`_query.Query.order_by`
+        Fixed bug where sending a composite attribute into :meth:`_query.Query.order_by` 
         would produce a parenthesized expression not accepted by some databases.
 
     .. change::
@@ -1251,7 +1251,7 @@
         :versions: 0.9.0b1
 
         The ``deferrable`` keyword argument on :class:`_schema.ForeignKey` and
-        :class:`_schema.ForeignKeyConstraint` will not render the ``DEFERRABLE`` keyword
+        :class:`_schema.ForeignKeyConstraint` will not render the ` `DEFERRABLE`` keyword
         on the MySQL dialect.  For a long time we left this in place because
         a non-deferrable foreign key would act very differently than a deferrable
         one, but some environments just disable FKs on MySQL, so we'll be less
@@ -1307,7 +1307,7 @@
 
       Added a new method :meth:`_query.Query.select_entity_from` which
       will in 0.9 replace part of the functionality of
-      :meth:`_query.Query.select_from`.  In 0.8, the two methods perform
+      :meth:`_query.Query.select_from` .  In 0.8, the two methods perform
       the same function, so that code can be migrated to use the
       :meth:`_query.Query.select_entity_from` method as appropriate.
       See the 0.9 migration guide for details.
@@ -1317,7 +1317,7 @@
       :tickets: 2737
 
       Fixed a regression caused by :ticket:`2682` whereby the
-      evaluation invoked by :meth:`_query.Query.update` and :meth:`_query.Query.delete`
+      evaluation invoked by :meth:`_query.Query.update` and :meth:` _query.Query.delete`
       would hit upon unsupported ``True`` and ``False`` symbols
       which now appear due to the usage of ``IS``.
 
@@ -1478,7 +1478,7 @@
       Fixed bug where many-to-many relationship with uselist=False
       would fail to delete the association row and raise an error
       if the scalar attribute were set to None.  This was a
-      regression introduced by the changes for :ticket:`2229`.
+      regression introduced by the changes for :ticket:`2229` .
 
     .. change::
       :tags: bug, orm
@@ -1617,7 +1617,7 @@
       :tags: bug, orm, declarative
       :tickets: 2656
 
-      Fixed indirect regression regarding :func:`.has_inherited_table`,
+      Fixed indirect regression regarding :func:`.has_inherited_table` ,
       where since it considers the current class' ``__table__``, was
       sensitive to when it was called.  This is 0.7's behavior also,
       but in 0.7 things tended to "work out" within events like
@@ -1646,7 +1646,7 @@
 
       Fixed bug whereby a DBAPI that can return "0"
       for cursor.lastrowid would not function correctly
-      in conjunction with :attr:`_engine.ResultProxy.inserted_primary_key`.
+      in conjunction with :attr:`_engine.ResultProxy.inserted_primary_key` .
 
     .. change::
       :tags: bug, mssql
@@ -1672,11 +1672,11 @@
       not present in 0.8.0b2.  They are present in the
       migration document as follows:
 
-      * :ref:`legacy_is_orphan_addition`
+      * :ref:`legacy_is_orphan_addition` 
 
-      * :ref:`metadata_create_drop_tables`
+      * :ref:`metadata_create_drop_tables` 
 
-      * :ref:`correlation_context_specific`
+      * :ref:`correlation_context_specific` 
 
     .. change::
         :tags: feature, orm
@@ -1693,7 +1693,7 @@
         :tickets: 2668
 
       The behavior of SELECT correlation has been improved such that
-      the :meth:`_expression.Select.correlate` and :meth:`_expression.Select.correlate_except`
+      the :meth:`_expression.Select.correlate` and :meth:` _expression.Select.correlate_except`
       methods, as well as their ORM analogues, will still retain
       "auto-correlation" behavior in that the FROM clause is modified
       only if the output would be legal SQL; that is, the FROM clause
@@ -1742,7 +1742,7 @@
     .. change::
         :tags: feature, orm
 
-      Can set/change the "cascade" attribute on a :func:`_orm.relationship`
+      Can set/change the "cascade" attribute on a :func:`_orm.relationship` 
       construct after it's been constructed already.  This is not
       a pattern for normal use but we like to change the setting
       for demonstration purposes in tutorials.
@@ -1751,7 +1751,7 @@
         :tags: bug, schema
         :tickets: 2664
 
-      :meth:`_schema.MetaData.create_all` and :meth:`_schema.MetaData.drop_all` will
+      :meth:`_schema.MetaData.create_all` and :meth:` _schema.MetaData.drop_all` will
       now accommodate an empty list as an instruction to not create/drop
       any items, rather than ignoring the collection.
 
@@ -1784,8 +1784,8 @@
         :tags: feature, orm
         :tickets: 2658
 
-      Added new helper function :func:`.was_deleted`, returns True
-      if the given object was the subject of a :meth:`.Session.delete`
+      Added new helper function :func:`.was_deleted` , returns True
+      if the given object was the subject of a :meth:`.Session.delete` 
       operation.
 
     .. change::
@@ -1846,17 +1846,17 @@
         :tickets: 2496
 
       The :meth:`.ColumnOperators.in_` operator will now coerce
-      values of ``None`` to :func:`.null`.
+      values of ``None`` to :func:`.null` .
 
     .. change::
         :tags: feature, sql
         :tickets: 2657
 
       Added a new argument to :class:`.Enum` and its base
-      :class:`.SchemaType` ``inherit_schema``.  When set to ``True``,
+      :class:`.SchemaType` ` `inherit_schema``.  When set to ``True``,
       the type will set its ``schema`` attribute of that of the
       :class:`_schema.Table` to which it is associated.  This also occurs
-      during a :meth:`_schema.Table.tometadata` operation; the :class:`.SchemaType`
+      during a :meth:`_schema.Table.tometadata` operation; the :class:` .SchemaType`
       is now copied in all cases when :meth:`_schema.Table.tometadata` happens,
       and if ``inherit_schema=True``, the type will take on the new
       schema name passed to the method.   The ``schema`` is important
@@ -1867,7 +1867,7 @@
         :tags: feature, postgresql
 
       Added :meth:`.postgresql.ARRAY.Comparator.any` and
-      :meth:`.postgresql.ARRAY.Comparator.all`
+      :meth:`.postgresql.ARRAY.Comparator.all` 
       methods, as well as standalone expression constructs.   Big thanks
       to Audrius Kažukauskas for the terrific work here.
 
@@ -1900,7 +1900,7 @@
         is added to :class:`_orm.Mapper` which re-establishes the
         legacy behavior.
 
-        See the change note and example case at :ref:`legacy_is_orphan_addition`
+        See the change note and example case at :ref:`legacy_is_orphan_addition` 
         for a detailed discussion of this change.
 
     .. change::
@@ -1923,7 +1923,7 @@
       will now honor the __mro__ of the given class, applying the
       logic of the sub-most classes' version of a particular collection
       method.   Previously, it wasn't predictable when subclassing
-      an existing instrumented class such as :class:`.MappedCollection`
+      an existing instrumented class such as :class:`.MappedCollection` 
       whether or not custom methods would resolve correctly.
 
     .. change::
@@ -1940,7 +1940,7 @@
         :tags: mssql, feature
 
       Added ``mssql_include`` and ``mssql_clustered`` options to
-      :class:`.Index`, renders the ``INCLUDE`` and ``CLUSTERED`` keywords,
+      :class:`.Index` , renders the ``INCLUDE`` and ``CLUSTERED`` keywords,
       respectively.  Courtesy Derek Harland.
 
     .. change::
@@ -1996,7 +1996,7 @@
         :tags: examples, bug
 
       Fixed a regression in the examples/dogpile_caching example
-      which was due to the change in :ticket:`2614`.
+      which was due to the change in :ticket:`2614` .
 
     .. change::
         :tags: orm, bug
@@ -2030,7 +2030,7 @@
       This fulfills the common request of being able to inspect
       all :class:`.QueryableAttribute` descriptors in addition to
       extension types such as :class:`.hybrid_property` and
-      :class:`.AssociationProxy`.  See :attr:`_orm.Mapper.all_orm_descriptors`.
+      :class:`.AssociationProxy` .  See :attr:`_orm.Mapper.all_orm_descriptors` .
 
     .. change::
         :tags: mysql, feature
@@ -2048,7 +2048,7 @@
         :tags: orm, bug
         :tickets: 2637
 
-      Fixes to the "dynamic" loader on :func:`_orm.relationship`, includes
+      Fixes to the "dynamic" loader on :func:`_orm.relationship` , includes
       that backrefs will work properly even when autoflush is disabled,
       history events are more accurate in scenarios where multiple add/remove
       of the same object occurs.
@@ -2078,7 +2078,7 @@
         JOIN users ON users.name < users_1.name
 
       Note that this behavior is in contrast
-      to the original, older use case for :meth:`_query.Query.select_from`, which is that
+      to the original, older use case for :meth:`_query.Query.select_from` , which is that
       of restating the mapped entity in terms of a different selectable::
 
         session.query(User.name).select_from(user_table.select().where(user_table.c.id > 5))
@@ -2093,8 +2093,8 @@
       It was the "aliasing" behavior of the latter use case that was
       getting in the way of the former use case.   The method now
       specifically considers a SQL expression like
-      :func:`_expression.select` or :func:`_expression.alias`
-      separately from a mapped entity like a :func:`.aliased`
+      :func:`_expression.select` or :func:` _expression.alias`
+      separately from a mapped entity like a :func:`.aliased` 
       construct.
 
     .. change::
@@ -2125,7 +2125,7 @@
         :tags: orm, feature
         :tickets: 2601
 
-      Added :meth:`.KeyedTuple._asdict` and :attr:`.KeyedTuple._fields`
+      Added :meth:`.KeyedTuple._asdict` and :attr:` .KeyedTuple._fields`
       to the :class:`.KeyedTuple` class to provide some degree of compatibility
       with the Python standard library ``collections.namedtuple()``.
 
@@ -2149,7 +2149,7 @@
 
       .. seealso::
 
-        :ref:`feature_2623`
+        :ref:`feature_2623` 
 
     .. change::
         :tags: oracle, bug
@@ -2198,7 +2198,7 @@
 
       Made an adjustment to the "boolean", (i.e. ``__nonzero__``)
       evaluation of binary expressions, i.e. ``x1 == x2``, such
-      that the "auto-grouping" applied by :class:`.BinaryExpression`
+      that the "auto-grouping" applied by :class:`.BinaryExpression` 
       in some cases won't get in the way of this comparison.
       Previously, an expression like::
 
@@ -2207,7 +2207,7 @@
 
       Would evaluate as ``False``, even though this is an identity
       comparison, because ``mycolumn > 2`` would be "grouped" before
-      being placed into the :class:`.BinaryExpression`, thus changing
+      being placed into the :class:`.BinaryExpression` , thus changing
       its identity.   :class:`.BinaryExpression` now keeps track
       of the "original" objects passed in.
       Additionally the ``__nonzero__`` method now only returns if
@@ -2243,7 +2243,7 @@
       Fixed bug whereby a multi-hop subqueryload within
       a particular with_polymorphic load would produce a KeyError.
       Takes advantage of the same internal pathing overhaul
-      as :ticket:`2614`.
+      as :ticket:`2614` .
 
     .. change::
         :tags: sql, bug
@@ -2278,8 +2278,8 @@
     .. change::
         :tags: engine, feature
 
-      The :meth:`_engine.Connection.connect` and :meth:`_engine.Connection.contextual_connect`
-      methods now return a "branched" version so that the :meth:`_engine.Connection.close`
+      The :meth:`_engine.Connection.connect` and :meth:` _engine.Connection.contextual_connect`
+      methods now return a "branched" version so that the :meth:`_engine.Connection.close` 
       method can be called on the returned connection without affecting the
       original.   Allows symmetry when using :class:`_engine.Engine` and
       :class:`_engine.Connection` objects as context managers::
@@ -2357,7 +2357,7 @@
         :tags: pool, feature
         :tickets: 2611
 
-        The :class:`_pool.Pool` now consults the :class:`.Dialect` for
+        The :class:`_pool.Pool` now consults the :class:` .Dialect` for
         functionality regarding how the connection should be
         "auto rolled back", as well as closed.   This grants more
         control of transaction scope to the dialect, so that we
@@ -2391,8 +2391,8 @@
     .. change::
         :tags: sql, feature
 
-      Added a new method :meth:`_engine.Engine.execution_options`
-      to :class:`_engine.Engine`.  This method works similarly to
+      Added a new method :meth:`_engine.Engine.execution_options` 
+      to :class:`_engine.Engine` .  This method works similarly to
       :meth:`_engine.Connection.execution_options` in that it creates
       a copy of the parent object which will refer to the new
       set of options.   The method can be used to build
@@ -2403,14 +2403,14 @@
 
       .. seealso::
 
-          :meth:`_engine.Engine.execution_options`
+          :meth:`_engine.Engine.execution_options` 
 
     .. change::
         :tags: sql, orm, bug
         :tickets: 2595
 
-      The auto-correlation feature of :func:`_expression.select`, and
-      by proxy that of :class:`_query.Query`, will not
+      The auto-correlation feature of :func:`_expression.select` , and
+      by proxy that of :class:`_query.Query` , will not
       take effect for a SELECT statement that is being
       rendered directly in the FROM list of the enclosing
       SELECT.  Correlation in SQL only applies to column
@@ -2421,7 +2421,7 @@
         :tags: sqlite
         :changeset: c3addcc9ffad
 
-      Added :class:`_types.NCHAR`, :class:`_types.NVARCHAR`
+      Added :class:`_types.NCHAR` , :class:`_types.NVARCHAR` 
       to the SQLite dialect's list of recognized type names
       for reflection.   SQLite returns the name given
       to a type as the name returned.
@@ -2438,7 +2438,7 @@
 
       .. seealso::
 
-          :ref:`examples_caching`
+          :ref:`examples_caching` 
 
     .. change::
         :tags: general
@@ -2508,7 +2508,7 @@
 
       .. seealso::
 
-          :ref:`feature_relationship_08`
+          :ref:`feature_relationship_08` 
 
     .. change::
         :tags: orm, bug
@@ -3729,12 +3729,12 @@
         :tags: sql, feature
         :tickets: 2580
 
-        Added :meth:`.ColumnOperators.notin_`,
-        :meth:`.ColumnOperators.notlike`,
-        :meth:`.ColumnOperators.notilike` to :class:`.ColumnOperators`.
+        Added :meth:`.ColumnOperators.notin_` ,
+        :meth:`.ColumnOperators.notlike` ,
+        :meth:`.ColumnOperators.notilike` to :class:` .ColumnOperators`.
 
     .. change::
         :tags: sql, removed
 
         The long-deprecated and non-functional ``assert_unicode`` flag on
-        :func:`_sa.create_engine` as well as :class:`.String` is removed.
+        :func:`_sa.create_engine` as well as :class:` .String` is removed.

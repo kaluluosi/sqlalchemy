@@ -26,7 +26,7 @@
        :tags: bug, oracle
        :tickets: 4506
 
-       在Oracle语言中增加了对: class:`_types.NCHAR`数据类型的反射支持，并将:class:`_types.NCHAR`添加到Oracle语言导出的类型列表中。
+       在Oracle语言中增加了对: class:`_types.NCHAR`数据类型的反射支持，并将 :class:`_types.NCHAR` 添加到Oracle语言导出的类型列表中。
 
     .. change::
        :tags: bug, examples
@@ -45,7 +45,7 @@
        :tags: bug, engine
        :tickets: 4406
 
-       比较两个:class:`.URL`对象时，使用``__eq__()``方法时没有考虑端口号，两个仅通过端口号不同的对象可能被视为相等。现在已经增加了端口比较方法``__eq__()``，对象的端口号不同了就不再相等。此外，在:class:`.URL`中没有实现``__ne__()``，在Python2中使用``！=``操作符会导致意外的结果，因为Python2中的比较运算符之间没有固定关系。
+       比较两个  :class:`.URL` ` __eq__()``方法时没有考虑端口号，两个仅通过端口号不同的对象可能被视为相等。现在已经增加了端口比较方法``__eq__()``，对象的端口号不同了就不再相等。此外，在  :class:`.URL` ` __ne__()``，在Python2中使用``！=``操作符会导致意外的结果，因为Python2中的比较运算符之间没有固定关系。
 
 .. changelog::
     :version: 1.2.18
@@ -61,19 +61,19 @@
        :tags: bug, orm
        :tickets: 4489
 
-       修复一个非常简单但关键的问题，在此问题中，当对象从挂起转为持久状态时，:meth:`。SessionEvents.pending_to_persistent`事件不仅被针对性地调用，而且也被当做更新对象时调用。从而导致在每次更新时都为所有对象调用事件。
+       修复一个非常简单但关键的问题，在此问题中，当对象从挂起转为持久状态时，  :meth:`。SessionEvents.pending_to_persistent`  事件不仅被针对性地调用，而且也被当做更新对象时调用。从而导致在每次更新时都为所有对象调用事件。
 
     .. change::
        :tags: bug, sql
        :tickets: 4485
 
-       修复由于: class:`_types.JSON`类型具有只读的: attr:`_types.JSON.should_evaluate_none`属性而导致失败的问题，该属性在使用:meth:`.TypeEngine.evaluates_none`方法时与模式一起使用时可能会导致失败。感谢Sanjana S的pull请求。
+       修复由于: class:`_types.JSON`类型具有只读的: attr:`_types.JSON.should_evaluate_none`属性而导致失败的问题，该属性在使用  :meth:`.TypeEngine.evaluates_none`  方法时与模式一起使用时可能会导致失败。感谢Sanjana S的pull请求。
 
     .. change::
        :tags: bug, mssql
        :tickets: 4499
 
-       修复了SQL Server中"IDENTITY_INSERT"逻辑的错误，该逻辑允许在IDENTITY列上显式地插入值的情况无法检测到，例如使用:class:`_expression.Insert`的“值” 时与包含SQL表达式的字典操作的情况下引发错误。
+       修复了SQL Server中"IDENTITY_INSERT"逻辑的错误，该逻辑允许在IDENTITY列上显式地插入值的情况无法检测到，例如使用 :class:`_expression.Insert` 的“值” 时与包含SQL表达式的字典操作的情况下引发错误。
 
     .. change::
        :tags: bug, sqlite
@@ -95,7 +95,7 @@
        :tags: feature, orm
        :tickets: 4461
 
-       添加了新的事件钩子:meth:`.QueryEvents.before_compile_update`和:meth:`.QueryEvents.before_compile_delete`，用于在:meth:`_query.Query.update`和:meth:`_query.Query.delete`方法的情况下补充:meth:`.QueryEvents.before_compile`。
+       添加了新的事件钩子  :meth:`.QueryEvents.before_compile_update`  和  :meth:` .QueryEvents.before_compile_delete`  ，用于在  :meth:`_query.Query.update`  和  :meth:` _query.Query.delete`  方法的情况下补充  :meth:`.QueryEvents.before_compile`  。
 
     .. change::
        :tags: bug, postgresql
@@ -134,19 +134,19 @@
     .. change::
        :tags: bug, postgresql
 
-       修复了多个:class:`_postgresql.ENUM`对象在:class:`_schema.MetaData`对象中引用时无法创建的问题，如果多个对象在不同的架构名称下具有相同的名称，则会发生此问题。PostgreSQL领域使用的内部备忘录将检测是否在一个DDL创建序列中数据库中已经创建某个:class:`_postgresql.ENUM`的表，在这里考虑模式名称。
+       修复了多个 :class:`_postgresql.ENUM` 对象在 :class:`_schema.MetaData` 对象中引用时无法创建的问题，如果多个对象在不同的架构名称下具有相同的名称，则会发生此问题。PostgreSQL领域使用的内部备忘录将检测是否在一个DDL创建序列中数据库中已经创建某个 :class:`_postgresql.ENUM` 的表，在这里考虑模式名称。
 
     .. change::
        :tags: bug, engine
        :tickets: 4429
 
-       修复了引入1.2版本的一个回归问题，在该问题中，:class:`.SQLAlchemyError`基础异常类的整理引入了一个不合适的纯字符串消息转换为Unicode，其中Python 2k不处理平台编码（通常为ASCII）之外的字符。:class:`.SQLAlchemyError`类现在根据Py2K将bytestring传递，以在Py2K下类似于异常对象一样处理字符，对于``__unicode__()``方法，使用utf-8带回斜杠回退符进行安全转换为unicode；对于Py3K，消息通常为unicode，但如果不是，则再次使用utf-8安全转换，并针对``__str__()``方法中的反斜杠回退符进行了处理。
+       修复了引入1.2版本的一个回归问题，在该问题中，  :class:`.SQLAlchemyError` .SQLAlchemyError` 类现在根据Py2K将bytestring传递，以在Py2K下类似于异常对象一样处理字符，对于``__unicode__()``方法，使用utf-8带回斜杠回退符进行安全转换为unicode；对于Py3K，消息通常为unicode，但如果不是，则再次使用utf-8安全转换，并针对``__str__()``方法中的反斜杠回退符进行了处理。
 
     .. change::
        :tags: bug, sql, oracle, mysql
        :tickets: 4436
 
-       修复了:class:`.DropTableComment`发出的DDL，这将用于即将推出的Alembic版本，在MySQL和Oracle数据库中与使用表达式作为服务器端默认值有关时存在问题。的问题``information_schema.columns``视图的DDL现在是可用的。
+       修复了  :class:`.DropTableComment` ` information_schema.columns``视图的DDL现在是可用的。
 
     .. change::
        :tags: bug, sqlite
@@ -168,25 +168,25 @@
        :tags: bug, orm, declarative
        :tickets: 4374
 
-       如果将:class:`_expression.column`对象应用于声明性类，那么将会发出一条警告，因为这很可能是:class:`_schema.Column`对象。
+       如果将 :class:`_expression.column` 对象应用于声明性类，那么将会发出一条警告，因为这很可能是 :class:`_schema.Column` 对象。
 
     .. change::
         :tags: bug, orm
         :tickets: 4366
 
-        在继续与很近相似特性的主题:ticket:`4349`，修复了:meth:`.RelationshipProperty.Comparator.any `和:meth:`。 RelationshipProperty.Comparator.has`中的一个错误，其中“辅助”可选标题需要显式成为查询中FROM子句的一部分，以适应其中secondary是一个 :class:`_expression.Join`对象的情况。
+        在继续与很近相似特性的主题  :ticket:`4349`  ，修复了  :meth:` .RelationshipProperty.Comparator.any `  和  :meth:`。 RelationshipProperty.Comparator.has`  中的一个错误，其中“辅助”可选标题需要显式成为查询中FROM子句的一部分，以适应其中secondary是一个  :class:` _expression.Join`对象的情况。
 
     .. change::
         :tags: bug, orm
         :tickets: 4363
 
-        修复了由:ticket:`4349`引起的回归问题，在这种情况下，动态加载器需要显式在查询的FROM子句中设置"secondary"表，以适应secondary是一个 join 对象，否则就不会从其列中的查询中添加join。修复方案将主实体添加为FROM列表的第一个元素，因为:meth:`_query.Query.join`希望从主实体跳转。需要注意的是，在1.2中，由:meth:`_query.Query.subquery`引入的selectable仍未适应于:ticket:`4304`的原因; 该selectable需要是由:func:`_expression.select`函数生成，以成为“姊妹”连接的右侧。
+        修复了由  :ticket:`4349`  引起的回归问题，在这种情况下，动态加载器需要显式在查询的FROM子句中设置"secondary"表，以适应secondary是一个 join 对象，否则就不会从其列中的查询中添加join。修复方案将主实体添加为FROM列表的第一个元素，因为  :meth:` _query.Query.join`  希望从主实体跳转。需要注意的是，在1.2中，由  :meth:`_query.Query.subquery`  引入的selectable仍未适应于  :ticket:` 4304`  的原因; 该selectable需要是由 :func:`_expression.select` 函数生成，以成为“姊妹”连接的右侧。
 
     .. change::
        :tags: bug, mysql
        :tickets: 4400
 
-       修复了使用:meth:`.RelationshipProperty.of_type`链接器选项链接的映射器选项链中与字符串通配符相结合的情况下可能找不到属性名称的问题。
+       修复了使用  :meth:`.RelationshipProperty.of_type`  链接器选项链接的映射器选项链中与字符串通配符相结合的情况下可能找不到属性名称的问题。
 
     .. change::
         :tag: feature, mysql
@@ -212,19 +212,19 @@
     .. change::
         :tag: bug, sqlite
 
-       修复了在反映表中引用之前显式删除:class:`.Sequence`，这会破坏使用:meth:`_schema.MetaData.drop_all`时，当序列也涉及到该表的服务器端默认值的情况，步骤可能会更改表的带有索引的列的一部分。这将在处理非服务器端列默认函数的路上处理序列要删除的步骤时被调用。
+       修复了在反映表中引用之前显式删除  :class:`.Sequence` ，这会破坏使用  :meth:` _schema.MetaData.drop_all`  时，当序列也涉及到该表的服务器端默认值的情况，步骤可能会更改表的带有索引的列的一部分。这将在处理非服务器端列默认函数的路上处理序列要删除的步骤时被调用。
 
     .. change::
         :tags: bug, orm
         :tickets: 4295
 
-        修复了:class:`.Bundle`，在其中放置两个相同名称的列将被去重，在用作SQL的一部分时，例如在语句的ORDER BY或GROUP BY中，这将导致错误。
+        修复了  :class:`.Bundle` ，在其中放置两个相同名称的列将被去重，在用作SQL的一部分时，例如在语句的ORDER BY或GROUP BY中，这将导致错误。
 
     .. change::
         :tags: bug, orm
         :tickets: 4298
 
-        由于:ticket:`4287`引入了1.2.9中的回归问题，在该问题中，将:class:`_orm.Load`选项与字符串通配符结合使用将导致TypeError。
+        由于  :ticket:`4287`  引入了1.2.9中的回归问题，在该问题中，将 :class:` _orm.Load`选项与字符串通配符结合使用将导致TypeError。
 
 .. changelog::
     :version: 1.2.9
@@ -245,7 +245,7 @@
         :tags: bug, orm
         :tickets: 4298
 
-        由于:ticket:`4287`引入了1.2.9中的回归问题，在该问题中，将:class:`_orm.Load`选项与字符串通配符结合使用将导致TypeError。.. change::
+        由于  :ticket:`4287`  引入了1.2.9中的回归问题，在该问题中，将 :class:` _orm.Load`选项与字符串通配符结合使用将导致TypeError。.. change::
         :tags: bug, sqlalchemy.dialects.postgresql
         :tickets: 4337
 
@@ -255,7 +255,7 @@
         :tags: bug, sqlalchemy.orm
         :tickets: 4236
 
-        Fixed a bug that was introduced in version 1.2.17, where calls to :func:`sqlalchemy.orm.session.Session.execute` with a plain SQL string not starting in 'SELECT' would raise a ``sqlalchemy.orm.exc.StatementError`` instead of executing the statement.
+        Fixed a bug that was introduced in version 1.2.17, where calls to   :func:`sqlalchemy.orm.session.Session.execute`  with a plain SQL string not starting in 'SELECT' would raise a ` `sqlalchemy.orm.exc.StatementError`` instead of executing the statement.
 
     .. change::
         :tags: bug, sqlalchemy.orm
@@ -267,7 +267,7 @@
         :tags: bug, sqlalchemy.orm
         :tickets: 4056
 
-        Fixed a bug in the new :meth:`sqlalchemy.orm.Query.select_entity_from` method where it would accept attributes that are not part of the entity being selected, which could cause unexpected query results or exceptions.
+        Fixed a bug in the new  :meth:`sqlalchemy.orm.Query.select_entity_from`  method where it would accept attributes that are not part of the entity being selected, which could cause unexpected query results or exceptions.
 
     .. change::
         :tags: bug, sqlalchemy.orm
@@ -280,7 +280,7 @@
         :tickets: 4289
         :versions: 1.3.0b1
 
-        Added a new event currently used only by the postgres dialect, :meth:`.DialectEvents.setiodefinedtypes`. This event passes a dictionary of ORM column attributes to DBAPI-specific type objects that will be passed to the psycopg2/psycopg2-binary ``cursor.setiodefinedtypes()`` method. This allows visibility into the setiodefinedtypes process as well as the ability to alter the behavior of what datatypes are passed to this method.
+        Added a new event currently used only by the postgres dialect,  :meth:`.DialectEvents.setiodefinedtypes` . This event passes a dictionary of ORM column attributes to DBAPI-specific type objects that will be passed to the psycopg2/psycopg2-binary ` `cursor.setiodefinedtypes()`` method. This allows visibility into the setiodefinedtypes process as well as the ability to alter the behavior of what datatypes are passed to this method.
 
     .. change::
         :tags: bug, sqlalchemy.orm
@@ -292,7 +292,7 @@
         :tags: bug, sqlalchemy.orm
         :tickets: 4313
 
-        Fixed a bug where the :class:`~sqlalchemy.orm.attributes.QueryableAttribute` returned a attribute object with the entity class rather than an instance of that class when used with the new :meth:`sqlalchemy.orm.session.Session.bulk_save_objects` method.
+        Fixed a bug where the   :class:`~sqlalchemy.orm.attributes.QueryableAttribute`  returned a attribute object with the entity class rather than an instance of that class when used with the new  :meth:` sqlalchemy.orm.session.Session.bulk_save_objects`  method.
 
     .. change::
         :tags: feature, sqlalchemy.orm
@@ -334,7 +334,7 @@
         :tags: enhancement, sqlalchemy.orm
         :tickets: 4266
 
-        Added support for custom "groupers" to the ``GROUP BY`` clause when using the ORM's :meth:`sqlalchemy.orm.Query.group_by` method, by using a new ``group_by_callable`` parameter. This parameter accepts a callable, that will be called for each column expression, in order to produce a key that is used to group the columns.
+        Added support for custom "groupers" to the ``GROUP BY`` clause when using the ORM's  :meth:`sqlalchemy.orm.Query.group_by`  method, by using a new ` `group_by_callable`` parameter. This parameter accepts a callable, that will be called for each column expression, in order to produce a key that is used to group the columns.
 
 
 .. changelog::
@@ -369,7 +369,7 @@
         :tags: bug, sqlalchemy.orm
         :tickets: 4140
 
-        Fixed a bug where the :meth:`sqlalchemy.orm.Query.join` method would fail to change the join's expression when called with the same target of a previous join on the query object.
+        Fixed a bug where the  :meth:`sqlalchemy.orm.Query.join`  method would fail to change the join's expression when called with the same target of a previous join on the query object.
 
     .. change::
         :tags: bug, sqlalchemy.orm
@@ -399,13 +399,13 @@
         :tags: enhancement, sqlalchemy.ext.declarative
         :tickets: 4134
 
-        Added a new argument, ``class_registry``, to :class:`sqlalchemy.ext.declarative.DeclarativeMeta`, which can be set to an external dictionary to store the mappings from class names to classes in.
+        Added a new argument, ``class_registry``, to   :class:`sqlalchemy.ext.declarative.DeclarativeMeta` , which can be set to an external dictionary to store the mappings from class names to classes in.
 
     .. change::
         :tags: enhancement, sqlalchemy.orm
         :tickets: 4133
 
-        Added a new argument, ``bind_arguments``, to :meth:`sqlalchemy.orm.session.Session.bind_mapper` and related methods, that allow the user to pass additional keyword arguments to the underlying :func:`sqlalchemy.create_engine` invocation that's used to create the ``Engine`` object for a given mapper.
+        Added a new argument, ``bind_arguments``, to  :meth:`sqlalchemy.orm.session.Session.bind_mapper`  and related methods, that allow the user to pass additional keyword arguments to the underlying   :func:` sqlalchemy.create_engine`  invocation that's used to create the ``Engine`` object for a given mapper.
 
     .. change::
         :tags: bug, sqlalchemy.orm
@@ -417,13 +417,13 @@
         :tags: enhancement, sqlalchemy.orm
         :tickets: 4130
 
-        Added support for the ``query_class`` keyword argument in :func:`sqlalchemy.orm.scoped_session`. When a ``query_class`` is provided, it is used to generate new :class:`sqlalchemy.orm.Query` objects for each call to ``scoped_session()``.
+        Added support for the ``query_class`` keyword argument in   :func:`sqlalchemy.orm.scoped_session` . When a ` `query_class`` is provided, it is used to generate new   :class:`sqlalchemy.orm.Query`  objects for each call to ` `scoped_session()``.
 
     .. change::
         :tags: enhancement, sqlalchemy.orm
         :tickets: 4092
 
-        Added new event hook :meth:`sqlalchemy.orm.interfaces.MapperEvents.after_delete`, which fires after a mapper has issued a DELETE statement.
+        Added new event hook  :meth:`sqlalchemy.orm.interfaces.MapperEvents.after_delete` , which fires after a mapper has issued a DELETE statement.
 
     .. change::
         :tags: enhancement, sqlalchemy.orm
@@ -435,13 +435,13 @@
         :tags: enhancement, sqlalchemy.orm
         :tickets: 3972
 
-        Added support for a new, distinct INSERT statement called "bulk insert", that allows for multiple insertions to be compiled and executed more efficiently than repeated use of INSERT VALUES. This is supported through the new :meth:`~sqlalchemy.orm.session.Session.bulk_save_objects` method.
+        Added support for a new, distinct INSERT statement called "bulk insert", that allows for multiple insertions to be compiled and executed more efficiently than repeated use of INSERT VALUES. This is supported through the new  :meth:`~sqlalchemy.orm.session.Session.bulk_save_objects`  method.
 
     .. change::
         :tags: enhancement, sqlalchemy.orm
         :tickets: 187
 
-        Added the ability to specify options that will be used for the lifetime of a :class:`~sqlalchemy.orm.session.Session`, such as enable_soft_deletes and future.
+        Added the ability to specify options that will be used for the lifetime of a   :class:`~sqlalchemy.orm.session.Session` , such as enable_soft_deletes and future.
 
     .. change::
         :tags: enhancement, sqlalchemy.orm
@@ -460,7 +460,7 @@
        :tags: enhancement, orm
        :tickets: 1295, 1699, 3880, 3882, 4011, 4012, 4019, 4020, 4021, 4022, 4049, 4050, 4052, 4054
 
-       Added a new feature to the ORM, the "bulk save" operation. This feature allows many heterogeneous objects to be saved to the database in a single step. The feature works by detecting identity information present in objects in the hierarchy (i.e. primary key attributes), then constructing as few SQL insert/update/delete statements as needed to reconcile the state of the objects against that of the rows in the database table. The result is less total SQL emitted, and the ability to issue all inserts or updates at once, resulting in improved performance. The bulk save feature is invoked using the new :meth:`~sqlalchemy.orm.session.Session.bulk_save_objects` method.
+       Added a new feature to the ORM, the "bulk save" operation. This feature allows many heterogeneous objects to be saved to the database in a single step. The feature works by detecting identity information present in objects in the hierarchy (i.e. primary key attributes), then constructing as few SQL insert/update/delete statements as needed to reconcile the state of the objects against that of the rows in the database table. The result is less total SQL emitted, and the ability to issue all inserts or updates at once, resulting in improved performance. The bulk save feature is invoked using the new  :meth:`~sqlalchemy.orm.session.Session.bulk_save_objects`  method.
 
     .. change::
         :tags: enhancement, orm
@@ -478,7 +478,7 @@
         :tags: feature, orm
         :tickets: 687
 
-        Added a new method, :meth:`sqlalchemy.orm.session.Session.refresh_from_db`, that refreshes the attributes of a mapped instance with the values loaded from the database.
+        Added a new method,  :meth:`sqlalchemy.orm.session.Session.refresh_from_db` , that refreshes the attributes of a mapped instance with the values loaded from the database.
 
     .. change::
         :tags: feature, orm
@@ -508,7 +508,7 @@
         :tags: enhancement, orm
         :tickets: 3922
 
-        Added :meth:`sqlalchemy.orm.Query.update()` method, which can be used to execute SQL UPDATE statements that impact multiple rows.
+        Added  :meth:`sqlalchemy.orm.Query.update()`  method, which can be used to execute SQL UPDATE statements that impact multiple rows.
 
     .. change::
         :tags: enhancement, orm
@@ -568,9 +568,9 @@ Release 1.2 Changelog
         :tags: bug, sql
         :tickets: 4147
 
-        修复了使用:meth:`_schema.Table.tometadata`方法时，无法正确适应不仅由简单列表达式组成的:class:`.Index`对象引起的错误，
-        例如：对使用SQL表达式或:attr:`.func`的:indexes，等等。现在，该例程现在完全复制表达式到一个新的:class:`.Index`对象，
-        同时将所有表绑定的:class:`_schema.Column`对象替换为目标表的对象。
+        修复了使用  :meth:`_schema.Table.tometadata`  方法时，无法正确适应不仅由简单列表达式组成的 :class:` .Index`对象引起的错误，
+        例如：对使用SQL表达式或  :attr:`.func`  的:indexes，等等。现在，该例程现在完全复制表达式到一个新的 :class:` .Index`对象，
+        同时将所有表绑定的 :class:`_schema.Column` 对象替换为目标表的对象。
 
 .. changelog::
     :version: 1.2.0
@@ -604,49 +604,49 @@ Release 1.2 Changelog
         :tags: bug, sql
         :tickets: 4142
 
-        将:meth:`_expression.ColumnElement`的“访问名称”从“column”更改为“column_element”。
-        如果此元素用作基于函数的默认SQL元素的基础，则在使用各种SQL遍历实用程序处理它时，不会将其视为类似于绑定表的的:class:`.ColumnClause` 的操作。
+        将  :meth:`_expression.ColumnElement`  的“访问名称”从“column”更改为“column_element”。
+        如果此元素用作基于函数的默认SQL元素的基础，则在使用各种SQL遍历实用程序处理它时，不会将其视为类似于绑定表的的  :class:`.ColumnClause`  的操作。
 
     .. change::
         :tags: bug, sql, ext
         :tickets: 4141
 
-        修复:class:`_types.ARRAY`数据类型中的错误，这基本上与:ticket:`3832`相同，除了不是回归，其中基于:class:`.MutableList.as_mutable`的值键列出错。
-        特定地，针对:class:`_types.ARRAY`的列事件现在可以正确触发，因此干扰依赖此特征的系统的类声明混合使用:meth:`.MutableList.as_mutable`。
+        修复  :class:`_types.ARRAY`  相同，除了不是回归，其中基于 :class:` .MutableList.as_mutable`的值键列出错。
+        特定地，针对  :class:`_types.ARRAY` .MutableList.as_mutable` 。
 
     .. change::
         :tags: feature, engine
         :tickets: 4089
 
-        :class:`.url.URL`对象的“密码”属性现在可以是任何响应Python str()内置函数的用户定义或用户子类化的字符串对象。
-        传递的对象将作为数据成员:attr:`.url.URL.password_original`维护，并在读取:attr:`.url.URL.password`属性以生成字符串值时进行查询。
+         :class:`.url.URL` 对象的“密码”属性现在可以是任何响应Python str()内置函数的用户定义或用户子类化的字符串对象。
+        传递的对象将作为数据成员  :attr:`.url.URL.password_original`  维护，并在读取  :attr:` .url.URL.password`  属性以生成字符串值时进行查询。
 
     .. change::
         :tags: bug, orm
         :tickets: 4130
 
-        修复了使用:meth:`.contains_eager`查询选项时，其中包含使用:meth:`.PropComparator.of_type`引用子类的路径时，
+        修复了使用  :meth:`.contains_eager`  查询选项时，其中包含使用  :meth:` .PropComparator.of_type`  引用子类的路径时，
         如果在加载一个包含该关系的多态对象集合时，只有一些映射器包括该关系的问题的回归问题，在这种情况下，
-        通常使用:meth:`.PropComparator.of_type`。
+        通常使用  :meth:`.PropComparator.of_type`  。
 
     .. change::
         :tags: feature, postgresql
 
-        添加了新的:class:`_postgresql.MONEY`数据类型。由Cleber J Santos所做的请求。
+        添加了新的 :class:`_postgresql.MONEY` 数据类型。由Cleber J Santos所做的请求。
 
     .. change::
         :tags: bug, sql
         :tickets: 4063
 
-        精细了:meth:`.Operators.op`的行为，以便在所有情况下，如果将:paramref:`.Operators.op.is_comparison`设置为True，
-        则生成表达式的返回类型将为:class:`.Boolean`，如果标志设置为False，则返回表达式的返回类型与左侧表达式的类型相同，
-        这是其他运算符的典型默认行为。还添加了一个新参数:paramref:`.Operators.op.return_type`以及一个辅助方法:meth:`.Operators.bool_op`。
+        精细了  :meth:`.Operators.op`  的行为，以便在所有情况下，如果将  :paramref:` .Operators.op.is_comparison`  设置为True，
+        则生成表达式的返回类型将为  :class:`.Boolean` ，如果标志设置为False，则返回表达式的返回类型与左侧表达式的类型相同，
+        这是其他运算符的典型默认行为。还添加了一个新参数  :paramref:`.Operators.op.return_type`  以及一个辅助方法  :meth:` .Operators.bool_op`  。
 
     .. change::
         :tags: bug, mysql
         :tickets: 4072
 
-        由于:class:`_expression.Insert`已经有了一个名为:meth:`_expression.Insert.values`的方法，将新的MySQL INSERT..ON DUPLICATE KEY UPDATE结构的
+        由于  :class:`_expression.Insert`  的方法，将新的MySQL INSERT..ON DUPLICATE KEY UPDATE结构的
         '.values'属性名称更改为'.inserted'。'.inserted'属性最终渲染MySQL“VALUES（）”函数。
 
     .. change::
@@ -663,7 +663,7 @@ Release 1.2 Changelog
         :tags: feature, postgresql
         :tickets: 4109
 
-        向psycopg2方言添加了新标志“use_batch_mode”。此标志为True时，当:class:`_engine.Engine`调用“cursor.executemany()”时，
+        向psycopg2方言添加了新标志“use_batch_mode”。此标志为True时，当 :class:`_engine.Engine` 调用“cursor.executemany()”时，
         可激活psycopg2的“psycopg2.extras.execute_batch”扩展，从而为批量运行INSERT语句提供了关键的性能增益。 
         默认情况下，该标志为False因为它目前被认为是实验性的。
 
@@ -674,7 +674,7 @@ Release 1.2 Changelog
         SQL Server支持由其BIT类型提供的“本机布尔值”，
         因为此类型仅接受0或1并且DBAPI将其值返回为True / False。
         因此，SQL Server方言现在启用“native boolean”支持，
-        即不会为:class:`.Boolean`数据类型生成CHECK约束。
+        即不会为 :class:`.Boolean` 数据类型生成CHECK约束。
         与其他“本机布尔值”不同的唯一差异是不存在“真”/“假”常量，
         因此在这里仍然以“1”和“0”呈现。
 
@@ -723,7 +723,7 @@ Release 1.2 Changelog
         :tags: feature, mssql
         :tickets: 4058
 
-        将“AUTOCOMMIT”隔离级别加入PyODBC和pymssql方言，以通过:meth:`_engine.Connection.execution_options`或engine URI设置该隔离级别。
+        将“AUTOCOMMIT”隔离级别加入PyODBC和pymssql方言，以通过  :meth:`_engine.Connection.execution_options`  或engine URI设置该隔离级别。
         此隔离级别在基础连接对象上设置了适当的DBAPI标志。
 
     .. change::
@@ -753,8 +753,8 @@ Release 1.2 Changelog
         :tags: bug, orm
         :tickets: 4049
 
-        在1.2中为:meth:`.undefer_group`选项添加一个延迟加载的关系时，使用懒洋洋的装载关系选项会导致属性错误，
-        这是由于在1.2中的SQL缓存键生成处理程序中存在错误造成的，这是:ticket:`3954`的一部分。
+        在1.2中为  :meth:`.undefer_group`  选项添加一个延迟加载的关系时，使用懒洋洋的装载关系选项会导致属性错误，
+        这是由于在1.2中的SQL缓存键生成处理程序中存在错误造成的，这是  :ticket:`3954`  的一部分。
 
     .. change::
         :tags: bug, oracle
@@ -768,20 +768,20 @@ Release 1.2 Changelog
         :tickets: 4073
 
         修改了ORM更新/删除求值器中的更改，在评估器中引入了未映射的列表达式时，如果该列名可以与目标类的映射列匹配，
-        那么警告将发出，而不是引发UnevaluatableError派生自:ticket:`3366`.
+        那么警告将发出，而不是引发UnevaluatableError派生自  :ticket:`3366`  .
 
     .. change::
         :tags: bug, sql
         :tickets: 4087
 
-        修复了新SQL注释功能中，在使用:meth:`_schema.Table.tometadata`时，表和列注释不会被复制的问题。
+        修复了新SQL注释功能中，在使用  :meth:`_schema.Table.tometadata`  时，表和列注释不会被复制的问题。
 
     .. change::
         :tags: bug, sql
         :tickets: 4063
 
-        精细:meth:`.Operators.op`的行为，以使如果结果表达式的参数:paramref:`.Operators.op.is_comparison`大于True，则该结果表达式返回类型将为:class:`.Boolean`。
-        如果标志设置为False，则结果表达式的返回类型将与左侧表达式的类型相同，这是其他运算符的典型默认行为。还添加了一个新的,:paramref:`.Operators.op.return_type`参数和:meth:`.Operators.bool_op`的辅助方法。
+        精细  :meth:`.Operators.op`  的行为，以使如果结果表达式的参数  :paramref:` .Operators.op.is_comparison`  大于True，则该结果表达式返回类型将为  :class:`.Boolean` 。
+        如果标志设置为False，则结果表达式的返回类型将与左侧表达式的类型相同，这是其他运算符的典型默认行为。还添加了一个新的,  :paramref:`.Operators.op.return_type`  参数和  :meth:` .Operators.bool_op`  的辅助方法。
 
     .. change::
         :tags: bug, mssql, orm
@@ -800,7 +800,7 @@ Release 1.2 Changelog
         :tags: bug, orm
         :tickets: 4084
 
-        修复了在:meth:`.make_transient_to_detached`函数中过度失效的所有属性的错误问题，包括“延迟”属性，
+        修复了在  :meth:`.make_transient_to_detached`  函数中过度失效的所有属性的错误问题，包括“延迟”属性，
         该问题会导致没有预期的加载属性进行下一次刷新，导致属性的意外负载。
 
     .. change::
@@ -814,8 +814,8 @@ Release 1.2 Changelog
         :tags: feature, engine
         :tickets: 4077
 
-        向:class:`_engine.ResultProxy`添加了``__next __（）``和``next（）``方法，
-        以便使用内置函数``next（）``直接在对象上运行。:class:`_engine.ResultProxy`早已有一个``__iter __（）``方法，
+        向  :class:`_engine.ResultProxy` ` __next __（）``和``next（）``方法，
+        以便使用内置函数``next（）``直接在对象上运行。  :class:`_engine.ResultProxy` ` __iter __（）``方法，
         允许它响应``iter()``内置函数。 ``__iter __（）``的实现未更改，因为性能测试表明使用使用``__next __（）``方法，
         并且当使用StopIteration时，无论是在Python 2.7还是3.6中都会慢大约20％。
 
@@ -823,17 +823,17 @@ Release 1.2 Changelog
         :tags: feature, mssql
         :tickets: 4088
 
-        内部精简了:class:`.Enum`、:class:`.Interval`和:class:`.Boolean`类型的实现，
-        它们现在扩展了一个名为:class:`.Emulated`的公共mixin，
+        内部精简了  :class:`.Enum` 、  :class:` .Interval` .Boolean`类型的实现，
+        它们现在扩展了一个名为 :class:`.Emulated` 的公共mixin，
         该mixin指标提供了Python端DB本机类型的模拟，当支持支持后端时切换到DB本机类型。
-        现在直接使用PostgreSQL :class:`_postgresql.INTERVAL`类型，为此加入了正确的类型强制规则，适用于也生效于 :class:`_types.Interval`，
+        现在直接使用PostgreSQL   :class:`_postgresql.INTERVAL` ，
         （例如将日期添加到间隔会生成datetime）。
 
     .. change::
         :tags: enhancement, engine
         :tickets: 4185
 
-        Added new exception classes :exc:`.UnboundExecutionError`, :exc:`.DecoratedPreparedStatementWarning`, and :exc:`.DecoratedCursorWarning` 
+        Added new exception classes  :exc:`.UnboundExecutionError` ,  :exc:` .DecoratedPreparedStatementWarning` , and  :exc:`.DecoratedCursorWarning`  
         to more easily classify exceptions raised by user-defined statement handlers. Also fixed bug where exception 
         handler state was cleared out due to the use of a temporay collating sequence in PG 9.6+ which caused such exceptions to fatal 
         in some cases.
@@ -870,11 +870,11 @@ Release 1.2 Changelog
     SQLAlchemy 1.2 is the second "modern era" release of SQLAlchemy, 
     where the focus is on Python 3.5 and above, while retaining 
     compatibility with Python 2.7 / 3.3+ as described in the 1.x version
-    series :ref:`1_1_changes`!  SQLAlchemy 1.2 includes a wealth of new 
+    series   :ref:`1_1_changes` !  SQLAlchemy 1.2 includes a wealth of new 
     features and improvements as well as numerous bugfixes over the 1.1 series, 
     detailed in this section.  
     
-    Also refer to :ref:`changes_1_2` for a series of
+    Also refer to   :ref:`changes_1_2`  for a series of
     version-to-version notes as well as notes on how to port from earlier
     versions to SQLAlchemy 1.2.
 
@@ -884,15 +884,15 @@ Release 1.2 Changelog
         :tags: bug, sql
         :tickets: 4018
 
-        更新 :class:`.Numeric`, :class:`.Integer`以及日期相关类型之间的类型转换规则，
+        更新   :class:`.Numeric` ,  :class:` .Integer`以及日期相关类型之间的类型转换规则，
         现在会包含额外的逻辑来尝试保持传入类型的设置在“resolved”类型上。
-        目前，这个目标是 ``asdecimal`` flag，所以在 :class:`.Numeric` 
-        或 :class:`.Float` 和 :class:`.Integer` 之间的数学操作将同时保留“asdecimal”标志，
-        以及该类型是否应该是 :class:`.Float` 子类。
+        目前，这个目标是 ``asdecimal`` flag，所以在   :class:`.Numeric`  
+        或   :class:`.Float`  和   :class:` .Integer`  之间的数学操作将同时保留“asdecimal”标志，
+        以及该类型是否应该是   :class:`.Float`  子类。
 
         .. seealso::
 
-            :ref:`change_floats_12`
+              :ref:`change_floats_12` 
 
     .. _change_4020:
 
@@ -900,14 +900,14 @@ Release 1.2 Changelog
         :tags: bug, sql, mysql
         :tickets: 4020
 
-        :class:`.Float` 类型的结果处理器现在在特定dialect指定了也支持“原生十进制”模式。 
+          :class:`.Float`  类型的结果处理器现在在特定dialect指定了也支持“原生十进制”模式。 
         大多数后端会为浮点数据类型提供 Python 中的 ``float`` 对象，但在某些情况下，
         MySQL 后端缺少类型信息以提供此类卡片，并返回 ``Decimal``，
         除非进行浮点转换。
 
         .. seealso::
 
-            :ref:`change_floats_12`
+              :ref:`change_floats_12` 
 
     .. _change_4017:
 
@@ -916,12 +916,12 @@ Release 1.2 Changelog
         :tickets: 4017
 
         在 SQL 语句中传递 Python “float” 值的处理方式更加严格。 
-        “float” 值将与以前相同，与 Decimal-coercing :class:`.Numeric` 类型关联，从而消除了在 SQLite 中
+        “float” 值将与以前相同，与 Decimal-coercing   :class:`.Numeric`  类型关联，从而消除了在 SQLite 中
         发出的令人困惑的警告以及对 Decimal 的不必要强制转换。
 
         .. seealso::
 
-            :ref:`change_floats_12`
+              :ref:`change_floats_12` 
 
     .. _change_3058:
 
@@ -929,12 +929,12 @@ Release 1.2 Changelog
         :tags: feature, orm
         :tickets: 3058
 
-        添加了一个新的功能 :func:`_orm.with_expression` ，
+        添加了一个新的功能   :func:`_orm.with_expression`  ，
         允许在查询结果的特定实体中添加临时 SQL 表达式。 这是SQL表达式作为结果元组中的单独元素传递的替代方法。
 
         .. seealso::
 
-            :ref:`change_3058`
+              :ref:`change_3058` 
 
     .. _change_3496:
 
@@ -942,12 +942,12 @@ Release 1.2 Changelog
         :tags: bug, orm
         :tickets: 3496
 
-        作为 :paramref:`_orm.relationship.post_update` 功能的结果发出的 UPDATE 现在会将行的版本 ID 及其先前的版本号进行捆绑，
+        作为  :paramref:`_orm.relationship.post_update`  功能的结果发出的 UPDATE 现在会将行的版本 ID 及其先前的版本号进行捆绑，
         以断言现有版本号是否匹配。
 
         .. seealso::
 
-            :ref:`change_3496`
+              :ref:`change_3496` 
 
     .. _change_3769:
 
@@ -955,12 +955,12 @@ Release 1.2 Changelog
         :tags: bug, ext
         :tickets: 3769
 
-        现在 :meth:`.AssociationProxy.any`, :meth:`.AssociationProxy.has`
-        和 :meth:`.AssociationProxy.contains` 比较方法支持链接到自身也是 :class:`.AssociationProxy` 的属性。
+        现在  :meth:`.AssociationProxy.any` ,  :meth:` .AssociationProxy.has` 
+        和  :meth:`.AssociationProxy.contains`  比较方法支持链接到自身也是   :class:` .AssociationProxy`  的属性。
 
         .. seealso::
 
-            :ref:`change_3769`
+              :ref:`change_3769` 
 
     .. _change_3853:
 
@@ -968,13 +968,13 @@ Release 1.2 Changelog
         :tags: bug, ext
         :tickets: 3853
 
-        为 :class:`.mutable.MutableSet` 和 :class:`.mutable.MutableList` 实现了“就地”变异运算符
+        为   :class:`.mutable.MutableSet`  和   :class:` .mutable.MutableList`  实现了“就地”变异运算符
         ``__ior__``, ``__iand__``, ``__ixor__`` 和 ``__isub__`` 和 ``__iadd__``，
         因此当使用这些变异方法来更改集合时会触发更改事件。
 
         .. seealso::
 
-            :ref:`change_3853`
+              :ref:`change_3853` 
 
     .. _change_3847:
 
@@ -982,8 +982,8 @@ Release 1.2 Changelog
         :tags: bug, declarative
         :tickets: 3847
 
-        如果 :attr:`.declared_attr.cascading` 修改符用于在要映射的类上声明的声明性属性，则会发出警告，
-        而不是声明性mixin类或 ``__abstract__`` 类。 :attr:`.declared_attr.cascading` 修改符当前仅适用于 mixin/abstract 类。
+        如果  :attr:`.declared_attr.cascading`  修改符用于在要映射的类上声明的声明性属性，则会发出警告，
+        而不是声明性mixin类或 ``__abstract__`` 类。  :attr:`.declared_attr.cascading`  修改符当前仅适用于 mixin/abstract 类。
 
     .. _change_4003:
 
@@ -992,14 +992,14 @@ Release 1.2 Changelog
         :tickets: 4003
 
         现在 Oracle dialet 会检查到唯一和检查约束，当使用
-        :meth:`_reflection.Inspector.get_unique_constraints`，
-        :meth:`_reflection.Inspector.get_check_constraints` 时。由于 Oracle 
-        没有单独的唯一性约束，它是与唯一 :class:`.Index` 有关的，因此反射为： :class:`_schema.Table`
+         :meth:`_reflection.Inspector.get_unique_constraints` ，
+         :meth:`_reflection.Inspector.get_check_constraints`  时。由于 Oracle 
+        没有单独的唯一性约束，它是与唯一   :class:`.Index`  有关的，因此反射为：   :class:` _schema.Table` 
         仍将不会与此关联。 
 
         .. seealso::
 
-            :ref:`change_4003`
+              :ref:`change_4003` 
 
     .. _change_3948:
 
@@ -1013,7 +1013,7 @@ Release 1.2 Changelog
 
         .. seealso::
 
-            :ref:`change_3948`
+              :ref:`change_3948` 
 
     .. _change_3472:
 
@@ -1021,23 +1021,23 @@ Release 1.2 Changelog
         :tags: bug, orm
         :tickets: 3471, 3472
 
-        修复了 :paramref:`_orm.relationship.post_update`特性与“onupdate”值具有列的几种用例的组合时发出的多种警告的问题。
+        修复了 :paramref:`_orm.relationship.post_update` 特性与“onupdate”值具有列的几种用例的组合时发出的多种警告的问题。
         当 UPDATE 发射时，相应对象属性现在会过期或刷新，以便新生成的“onupdate”值可以填充到对象中；以前的过时值将保留。另外，
         如果 Python 中的目标属性已为对象的 INSERT 设置，即使使用服务器生成的 onupdates，值也会在 UPDATE 期间重新传送，
         以便“onupdate”不会覆盖它。 
 
         .. seealso::
 
-            :ref:`change_3471`
+              :ref:`change_3471` 
 
     .. _change_ussa:
 
     .. change:: baked_opts
         :tags: feature, ext
     
-        在 :class:`.Session` 中添加了一个新的标志 :paramref:`.Session.enable_baked_queries` 以在会话范围内禁用烘焙查询，
-        从而减少内存使用。还添加了新的 :class:`.Bakery` 包装器，
-        使得 :paramref:`.BakedQuery.bakery` 返回的面点店可以检查。
+        在   :class:`.Session`  中添加了一个新的标志  :paramref:` .Session.enable_baked_queries`  以在会话范围内禁用烘焙查询，
+        从而减少内存使用。还添加了新的   :class:`.Bakery`  包装器，
+        使得  :paramref:`.BakedQuery.bakery`  返回的面点店可以检查。
 
     .. _change_3988:
 
@@ -1054,9 +1054,9 @@ Release 1.2 Changelog
         :tags: bug, orm
         :tickets: 3991
 
-        在 :meth:`.Session.refresh` 方法中添加了新的参数 :paramref:`.with_for_update`。当
-        在 :meth:`_query.Query.with_lockmode` 方法被弃用时，
-        :meth:`.Session.refresh` 方法从未更新以反映新选项。
+        在  :meth:`.Session.refresh`  方法中添加了新的参数  :paramref:` .with_for_update` 。当
+        在  :meth:`_query.Query.with_lockmode`  方法被弃用时，
+         :meth:`.Session.refresh`  方法从未更新以反映新选项。
 
     .. _change_3740:
 
@@ -1066,11 +1066,11 @@ Release 1.2 Changelog
 
         用于 SQL 语句中的百分号的“双倍”系统已得到改进。
         现在基于所使用的 DBAPI 的状态样式进行“双倍”百分比的处理。 
-        这有利于更多的数据库性无关地使用 :obj:`_expression.literal_column` 构造。
+        这有利于更多的数据库性无关地使用  :obj:`_expression.literal_column`  构造。
          
         .. seealso::
 
-            :ref:`change_3740`
+              :ref:`change_3740` 
 
     .. _change_3953:
 
@@ -1078,13 +1078,13 @@ Release 1.2 Changelog
         :tags: feature, sql
         :tickets: 3953
 
-        添加了一种新类型的 :func:`.bindparam` 称为扩展 bind 参数。 用于“IN”表达式，
+        添加了一种新类型的   :func:`.bindparam`  称为扩展 bind 参数。 用于“IN”表达式，
         字符串语句会在语句执行时将多个参数集渲染为单个参数，而不是在语句编译时将它们渲染为单个预期时,
         使单一绑定的参数名称可链接到多个元素的IN表达式。
 
         .. seealso::
 
-            :ref:`change_3953`
+              :ref:`change_3953` 
 
     .. _change_3911_3912:
 
@@ -1092,32 +1092,32 @@ Release 1.2 Changelog
         :tags: bug, ext
         :tickets: 3911, 3912
 
-        现在 :class:`sqlalchemy.ext.hybrid.hybrid_property` 支持在子类中多次调用 mutators
+        现在   :class:`sqlalchemy.ext.hybrid.hybrid_property`  支持在子类中多次调用 mutators
         像 ``@setter``、``@expression`` 等。此外，它现在提供了一个``@getter`` mutator，以便可以将一个特定的混合用于子类或其他类。 
         现在这与标准 Python 中的 ``@property`` 的行为相匹配。
 
         .. seealso::
 
-            :ref:`change_3911_3912`添加了一个新选项"autoescape"到"startswith"和"endswith"比较器类，它提供了一个转义字符并自动将通配符字符"%"和"_"应用于所有出现的位置。感谢 Diana Clarke 的拉请求。
+             :ref:`change_3911_3912` 添加了一个新选项"autoescape"到"startswith"和"endswith"比较器类，它提供了一个转义字符并自动将通配符字符"%"和"_"应用于所有出现的位置。感谢 Diana Clarke 的拉请求。
 
 .. 注意:: 该功能已于1.2.0更改，从初始实现1.2.0b2转变为将 autoescape 作为布尔值传递，而不是指定用作转义字符的特定字符。
 
 .. 另请参见::
 
-    :ref:`change_2694`
+      :ref:`change_2694` 
 
 .. change:: 3934
     :tags: bug，orm
     :tickets: 3934
 
-    当 :meth:`.SessionEvents.after_rollback` 事件发生时，现在会保留 :class:`.Session` 的状态，即对象在过期之前的属性状态。这与 :meth:`.SessionEvents.after_commit` 事件的行为相一致。
+    当  :meth:`.SessionEvents.after_rollback`  事件发生时，现在会保留   :class:` .Session`  的状态，即对象在过期之前的属性状态。这与  :meth:`.SessionEvents.after_commit`  事件的行为相一致。
 
     .. 另请参见::
 
-        :ref:`change_3934`
+          :ref:`change_3934` 
 
 .. change:: 3607
     :tags: bug，orm
     :tickets: 3607
 
-    修复了一个 bug，即当 :meth:`_query.Query.with_parent` 应用于 :func:`.aliased` 结构而不是常规映射类时无法工作的问题。此外，为独立的 :func:`.util.with_parent` 函数以及 :meth:`_query.Query.with_parent` 添加了一个新参数 :paramref:`.util.with_parent.from_entity`。
+    修复了一个 bug，即当  :meth:`_query.Query.with_parent`  应用于   :func:` .aliased`  结构而不是常规映射类时无法工作的问题。此外，为独立的   :func:`.util.with_parent`  函数以及  :meth:` _query.Query.with_parent`  添加了一个新参数  :paramref:`.util.with_parent.from_entity` 。

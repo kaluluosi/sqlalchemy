@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`orm_data_manipulation`
-.. |next| replace:: :doc:`further_reading`
+.. |prev| replace:: :doc:`orm_data_manipulation` 
+.. |next| replace:: :doc:`further_reading` 
 
 .. include:: tutorial_nav_include.rst
 
@@ -14,12 +14,12 @@ Working with ORM Related Objects
 
 In this section, we will cover one more essential ORM concept, which is
 how the ORM interacts with mapped classes that refer to other objects. In the
-section :ref:`tutorial_declaring_mapped_classes`, the mapped class examples
-made use of a construct called :func:`_orm.relationship`.  This construct
+section :ref:`tutorial_declaring_mapped_classes` , the mapped class examples
+made use of a construct called :func:`_orm.relationship` .  This construct
 defines a linkage between two different mapped classes, or from a mapped class
 to itself, the latter of which is called a **self-referential** relationship.
 
-To describe the basic idea of :func:`_orm.relationship`, first we'll review
+To describe the basic idea of :func:`_orm.relationship` , first we'll review
 the mapping in short form, omitting the :func:`_orm.mapped_column` mappings
 and other directives:
 
@@ -51,19 +51,19 @@ Above, the ``User`` class now has an attribute ``User.addresses`` and the
 :class:`_orm.Mapped` construct to indicate typing behavior, will be used to
 inspect the table relationships between the :class:`_schema.Table` objects that
 are mapped to the ``User`` and ``Address`` classes. As the
-:class:`_schema.Table` object representing the ``address`` table has a
-:class:`_schema.ForeignKeyConstraint` which refers to the ``user_account``
+:class:`_schema.Table` object representing the ` `address`` table has a
+:class:`_schema.ForeignKeyConstraint` which refers to the ` `user_account``
 table, the :func:`_orm.relationship` can determine unambiguously that there is
-a :term:`one to many` relationship from the ``User`` class to the ``Address``
+a :term:`one to many` relationship from the ` `User`` class to the ``Address``
 class, along the ``User.addresses`` relationship; one particular row in the
 ``user_account`` table may be referred towards by many rows in the ``address``
 table.
 
-All one-to-many relationships naturally correspond to a :term:`many to one`
+All one-to-many relationships naturally correspond to a :term:`many to one` 
 relationship in the other direction, in this case the one noted by
 ``Address.user``. The :paramref:`_orm.relationship.back_populates` parameter,
 seen above configured on both :func:`_orm.relationship` objects referring to
-the other name, establishes that each of these two :func:`_orm.relationship`
+the other name, establishes that each of these two :func:`_orm.relationship` 
 constructs should be considered to be complimentary to each other; we will see
 how this plays out in the next section.
 
@@ -87,7 +87,7 @@ it was observed that column-based attributes to which we don't explicitly
 assign a value also display as ``None`` automatically, rather than raising
 an ``AttributeError`` as would be Python's usual behavior.
 
-As the ``u1`` object is still :term:`transient` and the ``list`` that we got
+As the ``u1`` object is still :term:`transient` and the ` `list`` that we got
 from ``u1.addresses`` has not been mutated (i.e. appended or extended), it's
 not actually associated with the object yet, but as we make changes to it,
 it will become part of the state of the ``User`` object.
@@ -149,8 +149,8 @@ these objects are said to be in the :term:`transient` state until they
 are associated with a :class:`_orm.Session` object.
 
 We make use of the :class:`_orm.Session` that's still ongoing, and note that
-when we apply the :meth:`_orm.Session.add` method to the lead ``User`` object,
-the related ``Address`` object also gets added to that same :class:`_orm.Session`::
+when we apply the :meth:`_orm.Session.add` method to the lead ` `User`` object,
+the related ``Address`` object also gets added to that same :class:`_orm.Session` ::
 
   >>> session.add(u1)
   >>> u1 in session
@@ -160,16 +160,16 @@ the related ``Address`` object also gets added to that same :class:`_orm.Session
   >>> a2 in session
   True
 
-The above behavior, where the :class:`_orm.Session` received a ``User`` object,
+The above behavior, where the :class:`_orm.Session` received a ` `User`` object,
 and followed along the ``User.addresses`` relationship to locate a related
 ``Address`` object, is known as the **save-update cascade** and is discussed
-in detail in the ORM reference documentation at :ref:`unitofwork_cascades`.
+in detail in the ORM reference documentation at :ref:`unitofwork_cascades` .
 
 The three objects are now in the :term:`pending` state; this means they are
 ready to be the subject of an INSERT operation but this has not yet proceeded;
 all three objects have no primary key assigned yet, and in addition, the ``a1``
 and ``a2`` objects have an attribute called ``user_id`` which refers to the
-:class:`_schema.Column` that has a :class:`_schema.ForeignKeyConstraint`
+:class:`_schema.Column` that has a :class:` _schema.ForeignKeyConstraint`
 referring to the ``user_account.id`` column; these are also ``None`` as the
 objects are not yet associated with a real database row::
 
@@ -179,7 +179,7 @@ objects are not yet associated with a real database row::
     None
 
 It's at this stage that we can see the very great utility that the unit of
-work process provides; recall in the section :ref:`tutorial_core_insert_values_clause`,
+work process provides; recall in the section :ref:`tutorial_core_insert_values_clause` ,
 rows were inserted into the ``user_account`` and
 ``address`` tables using some elaborate syntaxes in order to automatically
 associate the ``address.user_id`` columns with those of the ``user_account``
@@ -188,7 +188,7 @@ rows first, before those of ``address``, since rows in ``address`` are
 **dependent** on their parent row in ``user_account`` for a value in their
 ``user_id`` column.
 
-When using the :class:`_orm.Session`, all this tedium is handled for us and
+When using the :class:`_orm.Session` , all this tedium is handled for us and
 even the most die-hard SQL purist can benefit from automation of INSERT,
 UPDATE and DELETE statements.   When we :meth:`_orm.Session.commit` the
 transaction all steps invoke in the correct order, and furthermore the
@@ -251,7 +251,7 @@ we again see a :term:`lazy load` emitted in order to retrieve the objects:
 
 Collections and related attributes in the SQLAlchemy ORM are persistent in
 memory; once the collection or attribute is populated, SQL is no longer emitted
-until that collection or attribute is :term:`expired`.    We may access
+until that collection or attribute is :term:`expired` .    We may access
 ``u1.addresses`` again as well as add or remove items and this will not
 incur any new SQL calls::
 
@@ -261,7 +261,7 @@ incur any new SQL calls::
 While the loading emitted by lazy loading can quickly become expensive if
 we don't take explicit steps to optimize it, the network of lazy loading
 at least is fairly well optimized to not perform redundant work; as the
-``u1.addresses`` collection was refreshed, per the :term:`identity map`
+``u1.addresses`` collection was refreshed, per the :term:`identity map` 
 these are in fact the same
 ``Address`` instances as the ``a1`` and ``a2`` objects we've been dealing with
 already, so we're done loading all attributes in this particular object
@@ -274,14 +274,14 @@ graph::
 
 The issue of how relationships load, or not, is an entire subject onto
 itself.  Some additional introduction to these concepts is later in this
-section at :ref:`tutorial_orm_loader_strategies`.
+section at :ref:`tutorial_orm_loader_strategies` .
 
 .. _tutorial_select_relationships:
 
 Using Relationships in Queries
 ------------------------------
 
-The previous section introduced the behavior of the :func:`_orm.relationship`
+The previous section introduced the behavior of the :func:`_orm.relationship` 
 construct when working with **instances of a mapped class**, above, the
 ``u1``, ``a1`` and ``a2`` instances of the ``User`` and ``Address`` classes.
 In this section, we introduce the behavior of :func:`_orm.relationship` as it
@@ -295,7 +295,7 @@ Using Relationships to Join
 
 The sections :ref:`tutorial_select_join` and
 :ref:`tutorial_select_join_onclause` introduced the usage of the
-:meth:`_sql.Select.join` and :meth:`_sql.Select.join_from` methods to compose
+:meth:`_sql.Select.join` and :meth:` _sql.Select.join_from` methods to compose
 SQL JOIN clauses.   In order to describe how to join between tables, these
 methods either **infer** the ON clause based on the presence of a single
 unambiguous :class:`_schema.ForeignKeyConstraint` object within the table
@@ -303,11 +303,11 @@ metadata structure that links the two tables, or otherwise we may provide an
 explicit SQL Expression construct that indicates a specific ON clause.
 
 When using ORM entities, an additional mechanism is available to help us set up
-the ON clause of a join, which is to make use of the :func:`_orm.relationship`
+the ON clause of a join, which is to make use of the :func:`_orm.relationship` 
 objects that we set up in our user mapping, as was demonstrated at
-:ref:`tutorial_declaring_mapped_classes`. The class-bound attribute
+:ref:`tutorial_declaring_mapped_classes` . The class-bound attribute
 corresponding to the :func:`_orm.relationship` may be passed as the **single
-argument** to :meth:`_sql.Select.join`, where it serves to indicate both the
+argument** to :meth:`_sql.Select.join` , where it serves to indicate both the
 right side of the join as well as the ON clause at once::
 
     >>> print(select(Address.email_address).select_from(User).join(User.addresses))
@@ -315,24 +315,24 @@ right side of the join as well as the ON clause at once::
     FROM user_account JOIN address ON user_account.id = address.user_id
 
 The presence of an ORM :func:`_orm.relationship` on a mapping is not used
-by :meth:`_sql.Select.join` or :meth:`_sql.Select.join_from`
+by :meth:`_sql.Select.join` or :meth:` _sql.Select.join_from`
 to infer the ON clause if we don't
 specify it.  This means, if we join from ``User`` to ``Address`` without an
-ON clause, it works because of the :class:`_schema.ForeignKeyConstraint`
+ON clause, it works because of the :class:`_schema.ForeignKeyConstraint` 
 between the two mapped :class:`_schema.Table` objects, not because of the
-:func:`_orm.relationship` objects on the ``User`` and ``Address`` classes::
+:func:`_orm.relationship` objects on the ` `User`` and ``Address`` classes::
 
     >>> print(select(Address.email_address).join_from(User, Address))
     {printsql}SELECT address.email_address
     FROM user_account JOIN address ON user_account.id = address.user_id
 
-See the section :ref:`orm_queryguide_joins` in the :ref:`queryguide_toplevel`
-for many more examples of how to use :meth:`.Select.join` and :meth:`.Select.join_from`
+See the section :ref:`orm_queryguide_joins` in the :ref:` queryguide_toplevel`
+for many more examples of how to use :meth:`.Select.join` and :meth:` .Select.join_from`
 with :func:`_orm.relationship` constructs.
 
 .. seealso::
 
-    :ref:`orm_queryguide_joins` in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_joins` in the :ref:` queryguide_toplevel`
 
 .. _tutorial_relationship_operators:
 
@@ -342,11 +342,11 @@ Relationship WHERE Operators
 There are some additional varieties of SQL generation helpers that come with
 :func:`_orm.relationship` which are typically useful when building up the
 WHERE clause of a statement.  See the section
-:ref:`orm_queryguide_relationship_operators` in the :ref:`queryguide_toplevel`.
+:ref:`orm_queryguide_relationship_operators` in the :ref:` queryguide_toplevel`.
 
 .. seealso::
 
-    :ref:`orm_queryguide_relationship_operators` in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_relationship_operators` in the :ref:` queryguide_toplevel`
 
 
 
@@ -365,7 +365,7 @@ Lazy loading is one of the most famous ORM patterns, and is also the one that
 is most controversial.   When several dozen ORM objects in memory each refer to
 a handful of unloaded attributes, routine manipulation of these objects can
 spin off many additional queries that can add up (otherwise known as the
-:term:`N plus one problem`), and to make matters worse they are emitted
+:term:`N plus one problem` ), and to make matters worse they are emitted
 implicitly.    These implicit queries may not be noticed, may cause errors
 when they are attempted after there's no longer a database transaction
 available, or when using alternative concurrency patterns such as :ref:`asyncio
@@ -381,7 +381,7 @@ the application, turn on SQL echoing, and watch the SQL that is emitted**. If
 there seem to be lots of redundant SELECT statements that look very much like
 they could be rolled into one much more efficiently, if there are loads
 occurring inappropriately for objects that have been :term:`detached` from
-their :class:`_orm.Session`, that's when to look into using **loader
+their :class:`_orm.Session` , that's when to look into using **loader
 strategies**.
 
 Loader strategies are represented as objects that may be associated with a
@@ -419,10 +419,10 @@ loader strategies.
 
 .. seealso::
 
-    Two sections in :ref:`loading_toplevel`:
+    Two sections in :ref:`loading_toplevel` :
 
     * :ref:`relationship_lazy_option` - details on configuring the strategy
-      on :func:`_orm.relationship`
+      on :func:`_orm.relationship` 
 
     * :ref:`relationship_loader_options` - details on using query-time
       loader strategies
@@ -438,7 +438,7 @@ collection for a full series of objects are loaded up front using a single
 query.   It does this using a SELECT form that in most cases can be emitted
 against the related table alone, without the introduction of JOINs or
 subqueries, and only queries for those parent objects for which the
-collection isn't already loaded.   Below we illustrate :func:`_orm.selectinload`
+collection isn't already loaded.   Below we illustrate :func:`_orm.selectinload` 
 by loading all of the ``User`` objects and all of their related ``Address``
 objects; while we invoke :meth:`_orm.Session.execute` only once, given a
 :func:`_sql.select` construct, when the database is accessed, there are
@@ -470,7 +470,7 @@ related ``Address`` objects:
 
 .. seealso::
 
-    :ref:`selectin_eager_loading` - in :ref:`loading_toplevel`
+    :ref:`selectin_eager_loading` - in :ref:` loading_toplevel`
 
 Joined Load
 ^^^^^^^^^^^
@@ -483,7 +483,7 @@ which can then load in related objects.
 The :func:`_orm.joinedload` strategy is best suited towards loading
 related many-to-one objects, as this only requires that additional columns
 are added to a primary entity row that would be fetched in any case.
-For greater efficiency, it also accepts an option :paramref:`_orm.joinedload.innerjoin`
+For greater efficiency, it also accepts an option :paramref:`_orm.joinedload.innerjoin` 
 so that an inner join instead of an outer join may be used for a case such
 as below where we know that all ``Address`` objects have an associated
 ``User``:
@@ -522,7 +522,7 @@ It's important to note that the WHERE and ORDER BY criteria of the enclosing
 joinedload()**.   Above, it can be seen in the SQL that an **anonymous alias**
 is applied to the ``user_account`` table such that is not directly addressable
 in the query.   This concept is discussed in more detail in the section
-:ref:`zen_of_eager_loading`.
+:ref:`zen_of_eager_loading` .
 
 
 .. tip::
@@ -538,7 +538,7 @@ in the query.   This concept is discussed in more detail in the section
 
 .. seealso::
 
-  :ref:`joined_eager_loading` - in :ref:`loading_toplevel`
+  :ref:`joined_eager_loading` - in :ref:` loading_toplevel`
 
 .. _tutorial_orm_loader_strategies_contains_eager:
 
@@ -552,7 +552,7 @@ also leverage that JOIN in order to eagerly load the contents of the
 essentially that we are using "joined eager loading" but rendering the JOIN
 ourselves.   This common use case is achieved by using the
 :func:`_orm.contains_eager` option. This option is very similar to
-:func:`_orm.joinedload`, except that it assumes we have set up the JOIN
+:func:`_orm.joinedload` , except that it assumes we have set up the JOIN
 ourselves, and it instead only indicates that additional columns in the COLUMNS
 clause should be loaded into related attributes on each returned object, for
 example:
@@ -598,26 +598,26 @@ SQL query that unnecessarily joins twice::
 
 .. seealso::
 
-    Two sections in :ref:`loading_toplevel`:
+    Two sections in :ref:`loading_toplevel` :
 
     * :ref:`zen_of_eager_loading` - describes the above problem in detail
 
-    * :ref:`contains_eager` - using :func:`.contains_eager`
+    * :ref:`contains_eager` - using :func:` .contains_eager`
 
 
 Raiseload
 ^^^^^^^^^
 
-One additional loader strategy worth mentioning is :func:`_orm.raiseload`.
+One additional loader strategy worth mentioning is :func:`_orm.raiseload` .
 This option is used to completely block an application from having the
 :term:`N plus one` problem at all by causing what would normally be a lazy
 load to raise an error instead.   It has two variants that are controlled via
 the :paramref:`_orm.raiseload.sql_only` option to block either lazy loads
 that require SQL, versus all "load" operations including those which
-only need to consult the current :class:`_orm.Session`.
+only need to consult the current :class:`_orm.Session` .
 
 One way to use :func:`_orm.raiseload` is to configure it on
-:func:`_orm.relationship` itself, by setting :paramref:`_orm.relationship.lazy`
+:func:`_orm.relationship` itself, by setting :paramref:` _orm.relationship.lazy`
 to the value ``"raise_on_sql"``, so that for a particular mapping, a certain
 relationship will never try to emit SQL:
 
@@ -677,10 +677,10 @@ instead::
 The ``lazy="raise_on_sql"`` option tries to be smart about many-to-one
 relationships as well; above, if the ``Address.user`` attribute of an
 ``Address`` object were not loaded, but that ``User`` object were locally
-present in the same :class:`_orm.Session`, the "raiseload" strategy would not
+present in the same :class:`_orm.Session` , the "raiseload" strategy would not
 raise an error.
 
 .. seealso::
 
-    :ref:`prevent_lazy_with_raiseload` - in :ref:`loading_toplevel`
+    :ref:`prevent_lazy_with_raiseload` - in :ref:` loading_toplevel`
 

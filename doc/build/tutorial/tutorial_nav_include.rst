@@ -4,7 +4,7 @@
 
 .. topic:: |tutorial_title|
 
-      This page is part of the :doc:`index`.
+      This page is part of the :doc:`index` .
 
       Previous: |prev|   |   Next: |next|
 

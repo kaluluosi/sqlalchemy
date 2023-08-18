@@ -45,7 +45,7 @@ with a cache key representing the structure of the query; this cache key
 is then linked to the resulting string SQL statement so that subsequent use
 of another :class:`.BakedQuery` with the same structure will bypass all the
 overhead of building the :class:`_query.Query` object, building the core
-:func:`_expression.select` object within, as well as the compilation of the :func:`_expression.select`
+:func:`_expression.select` object within, as well as the compilation of the :func:` _expression.select`
 into a string, cutting out well the majority of function call overhead normally
 associated with constructing and emitting an ORM :class:`_query.Query` object.
 
@@ -67,7 +67,7 @@ very unusual cases, such as a relationship that uses a custom
 :class:`_query.Query` implementation that's not compatible with caching.
 
 
-:ticket:`3954`
+:ticket:`3954` 
 
 .. _change_3944:
 
@@ -150,7 +150,7 @@ The above SELECT statement includes these advantages:
   operate on chunks of a SELECT result at a time, provided that the
   database driver allows for multiple, simultaneous cursors (SQLite, PostgreSQL;
   **not** MySQL drivers or SQL Server ODBC drivers).   Neither joined eager
-  loading nor subquery eager loading are compatible with :meth:`_query.Query.yield_per`.
+  loading nor subquery eager loading are compatible with :meth:`_query.Query.yield_per` .
 
 The disadvantages of selectin eager loading are potentially large SQL
 queries, with large lists of IN parameters.  The list of IN parameters themselves
@@ -164,9 +164,9 @@ SQLite is not.
 
 .. seealso::
 
-    :ref:`selectin_eager_loading`
+    :ref:`selectin_eager_loading` 
 
-:ticket:`3944`
+:ticket:`3944` 
 
 .. _change_3948:
 
@@ -216,9 +216,9 @@ are loaded with additional SELECT statements:
 
 .. seealso::
 
-    :ref:`polymorphic_selectin`
+    :ref:`polymorphic_selectin` 
 
-:ticket:`3948`
+:ticket:`3948` 
 
 .. _change_3058:
 
@@ -226,8 +226,8 @@ ORM attributes that can receive ad-hoc SQL expressions
 ------------------------------------------------------
 
 A new ORM attribute type :func:`_orm.query_expression` is added which
-is similar to :func:`_orm.deferred`, except its SQL expression
-is determined at query time using a new option :func:`_orm.with_expression`;
+is similar to :func:`_orm.deferred` , except its SQL expression
+is determined at query time using a new option :func:`_orm.with_expression` ;
 if not specified, the attribute defaults to ``None``::
 
     from sqlalchemy.orm import query_expression
@@ -250,9 +250,9 @@ if not specified, the attribute defaults to ``None``::
 
 .. seealso::
 
-    :ref:`mapper_querytime_expression`
+    :ref:`mapper_querytime_expression` 
 
-:ticket:`3058`
+:ticket:`3058` 
 
 .. _change_orm_959:
 
@@ -260,9 +260,9 @@ ORM Support of multiple-table deletes
 -------------------------------------
 
 The ORM :meth:`_query.Query.delete` method supports multiple-table criteria
-for DELETE, as introduced in :ref:`change_959`.   The feature works
+for DELETE, as introduced in :ref:`change_959` .   The feature works
 in the same manner as multiple-table criteria for UPDATE, first
-introduced in 0.8 and described at :ref:`change_orm_2365`.
+introduced in 0.8 and described at :ref:`change_orm_2365` .
 
 Below, we emit a DELETE against ``SomeEntity``, adding
 a FROM clause (or equivalent, depending on backend)
@@ -274,18 +274,18 @@ against ``SomeOtherEntity``::
 
 .. seealso::
 
-    :ref:`change_959`
+    :ref:`change_959` 
 
-:ticket:`959`
+:ticket:`959` 
 
 .. _change_3229:
 
 Support for bulk updates of hybrids, composites
 -----------------------------------------------
 
-Both hybrid attributes (e.g. :mod:`sqlalchemy.ext.hybrid`) as well as composite
-attributes (:ref:`mapper_composite`) now support being used in the
-SET clause of an UPDATE statement when using :meth:`_query.Query.update`.
+Both hybrid attributes (e.g. :mod:`sqlalchemy.ext.hybrid` ) as well as composite
+attributes (:ref:`mapper_composite` ) now support being used in the
+SET clause of an UPDATE statement when using :meth:`_query.Query.update` .
 
 For hybrids, simple expressions can be used directly, or the new decorator
 :meth:`.hybrid_property.update_expression` can be used to break a value
@@ -321,7 +321,7 @@ will be broken out into their individual columns for bulk UPDATE::
 
 .. seealso::
 
-    :ref:`hybrid_bulk_update`
+    :ref:`hybrid_bulk_update` 
 
 .. _change_3911_3912:
 
@@ -374,10 +374,10 @@ mutator methods like ``@expression``, leaving the previous hybrid's definition
 intact.  Previously, methods like ``@setter`` would modify the existing
 hybrid in-place, interfering with the definition on the superclass.
 
-.. note:: Be sure to read the documentation at :ref:`hybrid_reuse_subclass`
+.. note:: Be sure to read the documentation at :ref:`hybrid_reuse_subclass` 
    for important notes regarding how to override
-   :meth:`.hybrid_property.expression`
-   and :meth:`.hybrid_property.comparator`, as a special qualifier
+   :meth:`.hybrid_property.expression` 
+   and :meth:`.hybrid_property.comparator` , as a special qualifier
    :attr:`.hybrid_property.overrides` may be necessary to avoid name
    conflicts with :class:`.QueryableAttribute` in some cases.
 
@@ -409,16 +409,16 @@ hybrid in-place, interfering with the definition on the superclass.
             def name(self, value):
                 self.first_name = value
 
-:ticket:`3911`
+:ticket:`3911` 
 
-:ticket:`3912`
+:ticket:`3912` 
 
 .. _change_3896_event:
 
 New bulk_replace event
 ----------------------
 
-To suit the validation use case described in :ref:`change_3896_validates`,
+To suit the validation use case described in :ref:`change_3896_validates` ,
 a new :meth:`.AttributeEvents.bulk_replace` method is added, which is
 called in conjunction with the :meth:`.AttributeEvents.append` and
 :meth:`.AttributeEvents.remove` events.  "bulk_replace" is called before
@@ -448,7 +448,7 @@ if this "append" event is the second part of a bulk replace::
         else:
             return value
 
-:ticket:`3896`
+:ticket:`3896` 
 
 .. _change_3303:
 
@@ -456,8 +456,8 @@ New "modified" event handler for sqlalchemy.ext.mutable
 -------------------------------------------------------
 
 A new event handler :meth:`.AttributeEvents.modified` is added, which is
-triggered corresponding to calls to the :func:`.attributes.flag_modified`
-method, which is normally called from the :mod:`sqlalchemy.ext.mutable`
+triggered corresponding to calls to the :func:`.attributes.flag_modified` 
+method, which is normally called from the :mod:`sqlalchemy.ext.mutable` 
 extension::
 
     from sqlalchemy.ext.declarative import declarative_base
@@ -480,7 +480,7 @@ extension::
 Above, the event handler will be triggered when an in-place change to the
 ``.data`` dictionary occurs.
 
-:ticket:`3303`
+:ticket:`3303` 
 
 .. _change_3991:
 
@@ -488,8 +488,8 @@ Added "for update" arguments to Session.refresh
 ------------------------------------------------
 
 Added new argument :paramref:`.Session.refresh.with_for_update` to the
-:meth:`.Session.refresh` method.  When the :meth:`_query.Query.with_lockmode`
-method were deprecated in favor of :meth:`_query.Query.with_for_update`,
+:meth:`.Session.refresh` method.  When the :meth:` _query.Query.with_lockmode`
+method were deprecated in favor of :meth:`_query.Query.with_for_update` ,
 the :meth:`.Session.refresh` method was never updated to reflect
 the new option::
 
@@ -497,14 +497,14 @@ the new option::
 
 The :paramref:`.Session.refresh.with_for_update` argument accepts a dictionary
 of options that will be passed as the same arguments which are sent to
-:meth:`_query.Query.with_for_update`::
+:meth:`_query.Query.with_for_update` ::
 
     session.refresh(some_objects, with_for_update={"read": True})
 
-The new parameter supersedes the :paramref:`.Session.refresh.lockmode`
+The new parameter supersedes the :paramref:`.Session.refresh.lockmode` 
 parameter.
 
-:ticket:`3991`
+:ticket:`3991` 
 
 .. _change_3853:
 
@@ -512,8 +512,8 @@ In-place mutation operators work for MutableSet, MutableList
 ------------------------------------------------------------
 
 Implemented the in-place mutation operators ``__ior__``, ``__iand__``,
-``__ixor__`` and ``__isub__`` for :class:`.mutable.MutableSet` and ``__iadd__``
-for :class:`.mutable.MutableList`.   While these
+``__ixor__`` and ``__isub__`` for :class:`.mutable.MutableSet` and ` `__iadd__``
+for :class:`.mutable.MutableList` .   While these
 methods would successfully update the collection previously, they would
 not correctly fire off change events.   The operators mutate the collection
 as before but additionally emit the correct change event so that the change
@@ -522,17 +522,17 @@ becomes part of the next flush process::
     model = session.query(MyModel).first()
     model.json_set &= {1, 3}
 
-:ticket:`3853`
+:ticket:`3853` 
 
 .. _change_3769:
 
 AssociationProxy any(), has(), contains() work with chained association proxies
 -------------------------------------------------------------------------------
 
-The :meth:`.AssociationProxy.any`, :meth:`.AssociationProxy.has`
+The :meth:`.AssociationProxy.any` , :meth:`.AssociationProxy.has` 
 and :meth:`.AssociationProxy.contains` comparison methods now support
 linkage to an attribute that is
-itself also an :class:`.AssociationProxy`, recursively.  Below, ``A.b_values``
+itself also an :class:`.AssociationProxy` , recursively.  Below, ``A.b_values``
 is an association proxy that links to ``AtoB.bvalue``, which is
 itself an association proxy onto ``B``::
 
@@ -586,7 +586,7 @@ query across the two proxies ``A.b_values``, ``AtoB.b_value``:
     FROM b
     WHERE b.id = atob.b_id AND b.value = :value_1)))
 
-Similarly, we can query on ``A.c_values`` using :meth:`.AssociationProxy.any`
+Similarly, we can query on ``A.c_values`` using :meth:`.AssociationProxy.any` 
 to query across the two proxies ``A.c_values``, ``AtoB.c_value``:
 
 .. sourcecode:: pycon+sql
@@ -602,7 +602,7 @@ to query across the two proxies ``A.c_values``, ``AtoB.c_value``:
     FROM c
     WHERE b.id = c.b_id AND c.value = :value_1)))))
 
-:ticket:`3769`
+:ticket:`3769` 
 
 .. _change_4137:
 
@@ -650,7 +650,7 @@ same identity map::
     assert inspect(newyork_report).identity_token == "north_america"
     assert inspect(tokyo_report).identity_token == "asia"
 
-:ticket:`4137`
+:ticket:`4137` 
 
 New Features and Improvements - Core
 ====================================
@@ -691,7 +691,7 @@ illustrates a recipe that will allow for the "liberal" behavior of the pre-1.1
                 value = bool(int(value))
             return value
 
-:ticket:`4102`
+:ticket:`4102` 
 
 .. _change_3919:
 
@@ -703,7 +703,7 @@ the :meth:`_events.ConnectionEvents.engine_connect` engine event to emit a simpl
 statement on a checked-out connection to test it for liveness.   The
 functionality of this recipe has now been added into the connection pool
 itself, when used in conjunction with an appropriate dialect.   Using
-the new parameter :paramref:`_sa.create_engine.pool_pre_ping`, each connection
+the new parameter :paramref:`_sa.create_engine.pool_pre_ping` , each connection
 checked out will be tested for freshness before being returned::
 
     engine = create_engine("mysql+pymysql://", pool_pre_ping=True)
@@ -722,10 +722,10 @@ to anticipate these errors.
 
 .. seealso::
 
-    :ref:`pool_disconnects_pessimistic`
+    :ref:`pool_disconnects_pessimistic` 
 
 
-:ticket:`3919`
+:ticket:`3919` 
 
 .. _change_3907:
 
@@ -740,7 +740,7 @@ NULL when compared to an empty set, producing a boolean value false or true
 (for NOT IN) rather than NULL.  The warning that would emit under
 this condition is also removed.  The old behavior is available using the
 :paramref:`_sa.create_engine.empty_in_strategy` parameter to
-:func:`_sa.create_engine`.
+:func:`_sa.create_engine` .
 
 In SQL, the IN and NOT IN operators do not support comparison to a
 collection of values that is explicitly empty; meaning, this syntax is
@@ -802,7 +802,7 @@ SQLAlchemy's SQL architecture is more sophisticated than it was when this
 design decision was first made, so we can now allow either behavior to
 be invoked at SQL string compilation time.  Previously, the conversion to a
 comparison expression were done at construction time, that is, the moment
-the :meth:`.ColumnOperators.in_` or :meth:`.ColumnOperators.notin_` operators were invoked.
+the :meth:`.ColumnOperators.in_` or :meth:` .ColumnOperators.notin_` operators were invoked.
 With the compilation-time behavior, the dialect itself can be instructed
 to invoke either approach, that is, the "static" ``1 != 1`` comparison or the
 "dynamic" ``expr != expr`` comparison.   The default has been **changed**
@@ -814,14 +814,14 @@ for the negation ``where(~null_expr.in_([]))``, since this now evaluates to true
 and not NULL.
 
 The behavior can now be controlled using the flag
-:paramref:`_sa.create_engine.empty_in_strategy`, which defaults to the
+:paramref:`_sa.create_engine.empty_in_strategy` , which defaults to the
 ``"static"`` setting, but may also be set to ``"dynamic"`` or
 ``"dynamic_warn"``, where the ``"dynamic_warn"`` setting is equivalent to the
 previous behavior of emitting ``expr != expr`` as well as a performance
 warning.   However, it is anticipated that most users will appreciate the
 "static" default.
 
-:ticket:`3907`
+:ticket:`3907` 
 
 .. _change_3953:
 
@@ -844,7 +844,7 @@ to reduce call overhead::
 The feature should be regarded as **experimental** within the 1.2 series.
 
 
-:ticket:`3953`
+:ticket:`3953` 
 
 .. _change_3999:
 
@@ -862,7 +862,7 @@ Will now generate ``(q IS NULL) != (y IS NULL)`` rather than
 ``q IS NULL != y IS NULL``.
 
 
-:ticket:`3999`
+:ticket:`3999` 
 
 .. _change_1546:
 
@@ -882,13 +882,13 @@ and columns.   These are specified via the :paramref:`_schema.Table.comment` and
 
 Above, DDL will be rendered appropriately upon table create to associate
 the above comments with the table/ column within the schema.  When
-the above table is autoloaded or inspected with :meth:`_reflection.Inspector.get_columns`,
+the above table is autoloaded or inspected with :meth:`_reflection.Inspector.get_columns` ,
 the comments are included.   The table comment is also available independently
 using the :meth:`_reflection.Inspector.get_table_comment` method.
 
 Current backend support includes MySQL, PostgreSQL, and Oracle.
 
-:ticket:`1546`
+:ticket:`1546` 
 
 .. _change_959:
 
@@ -922,17 +922,17 @@ would render as:
 
 .. seealso::
 
-    :ref:`tutorial_multi_table_deletes`
+    :ref:`tutorial_multi_table_deletes` 
 
-:ticket:`959`
+:ticket:`959` 
 
 .. _change_2694:
 
 New "autoescape" option for startswith(), endswith()
 ----------------------------------------------------
 
-The "autoescape" parameter is added to :meth:`.ColumnOperators.startswith`,
-:meth:`.ColumnOperators.endswith`, :meth:`.ColumnOperators.contains`.
+The "autoescape" parameter is added to :meth:`.ColumnOperators.startswith` ,
+:meth:`.ColumnOperators.endswith` , :meth:`.ColumnOperators.contains` .
 This parameter when set to ``True`` will automatically escape all occurrences
 of ``%``, ``_`` with an escape character, which defaults to a forwards slash ``/``;
 occurrences of the escape character itself are also escaped.  The forwards slash
@@ -965,7 +965,7 @@ Will render the same way, with the value of the parameter "x_1" as
 ``'total//score'``.
 
 
-:ticket:`2694`
+:ticket:`2694` 
 
 .. _change_floats_12:
 
@@ -974,14 +974,14 @@ Stronger typing added to "float" datatypes
 
 A series of changes allow for use of the :class:`.Float` datatype to more
 strongly link itself to Python floating point values, instead of the more
-generic :class:`.Numeric`.  The changes are mostly related to ensuring
+generic :class:`.Numeric` .  The changes are mostly related to ensuring
 that Python floating point values are not erroneously coerced to
 ``Decimal()``, and are coerced to ``float`` if needed, on the result side,
 if the application is working with plain floats.
 
 * A plain Python "float" value passed to a SQL expression will now be
-  pulled into a literal parameter with the type :class:`.Float`; previously,
-  the type was :class:`.Numeric`, with the default "asdecimal=True" flag, which
+  pulled into a literal parameter with the type :class:`.Float` ; previously,
+  the type was :class:`.Numeric` , with the default "asdecimal=True" flag, which
   meant the result type would coerce to ``Decimal()``.  In particular,
   this would emit a confusing warning on SQLite::
 
@@ -991,10 +991,10 @@ if the application is working with plain floats.
         # Float, not Numeric(asdecimal=True)
     )
 
-* Math operations between :class:`.Numeric`, :class:`.Float`, and
-  :class:`.Integer` will now preserve the :class:`.Numeric` or :class:`.Float`
+* Math operations between :class:`.Numeric` , :class:`.Float` , and
+  :class:`.Integer` will now preserve the :class:` .Numeric` or :class:`.Float` 
   type in the resulting expression's type, including the ``asdecimal`` flag
-  as well as if the type should be :class:`.Float`::
+  as well as if the type should be :class:`.Float` ::
 
     # asdecimal flag is maintained
     expr = column("a", Integer) * column("b", Numeric(asdecimal=False))
@@ -1004,17 +1004,17 @@ if the application is working with plain floats.
     expr = column("a", Integer) * column("b", Float())
     assert isinstance(expr.type, Float)
 
-* The :class:`.Float` datatype will apply the ``float()`` processor to
+* The :class:`.Float` datatype will apply the ` `float()`` processor to
   result values unconditionally if the DBAPI is known to support native
   ``Decimal()`` mode.  Some backends do not always guarantee that a floating
   point number comes back as plain float and not precision numeric such
   as MySQL.
 
-:ticket:`4017`
+:ticket:`4017` 
 
-:ticket:`4018`
+:ticket:`4018` 
 
-:ticket:`4020`
+:ticket:`4020` 
 
 .. change_3249:
 
@@ -1041,7 +1041,7 @@ are named in the documentation now:
     {printsql}SELECT sum(t.value) AS sum_1
     FROM t GROUP BY GROUPING SETS((t.x, t.y), (t.z, t.q))
 
-:ticket:`3429`
+:ticket:`3429` 
 
 .. _change_4075:
 
@@ -1049,8 +1049,8 @@ Parameter helper for multi-valued INSERT with contextual default generator
 --------------------------------------------------------------------------
 
 A default generation function, e.g. that described at
-:ref:`context_default_functions`, can look at the current parameters relevant
-to the statement via the :attr:`.DefaultExecutionContext.current_parameters`
+:ref:`context_default_functions` , can look at the current parameters relevant
+to the statement via the :attr:`.DefaultExecutionContext.current_parameters` 
 attribute.  However, in the case of a :class:`_expression.Insert` construct that specifies
 multiple VALUES clauses via the :meth:`_expression.Insert.values` method, the user-defined
 function is called multiple times, once for each parameter set, however there
@@ -1058,7 +1058,7 @@ was no way to know which subset of keys in
 :attr:`.DefaultExecutionContext.current_parameters` apply to that column.  A
 new function :meth:`.DefaultExecutionContext.get_current_parameters` is added,
 which includes a keyword argument
-:paramref:`.DefaultExecutionContext.get_current_parameters.isolate_multiinsert_groups`
+:paramref:`.DefaultExecutionContext.get_current_parameters.isolate_multiinsert_groups` 
 defaulting to ``True``, which performs the extra work of delivering a sub-dictionary of
 :attr:`.DefaultExecutionContext.current_parameters` which has the names
 localized to the current VALUES clause being processed::
@@ -1079,7 +1079,7 @@ localized to the current VALUES clause being processed::
 
     conn.execute(stmt)
 
-:ticket:`4075`
+:ticket:`4075` 
 
 Key Behavioral Changes - ORM
 ============================
@@ -1124,7 +1124,7 @@ Note that the :class:`.Session` will still disallow SQL from being emitted
 within this event; meaning that unloaded attributes will still not be
 able to load within the scope of the event.
 
-:ticket:`3934`
+:ticket:`3934` 
 
 .. _change_3891:
 
@@ -1145,7 +1145,7 @@ Would generate SQL as:
 
     SELECT employee.id FROM employee WHERE employee.type IN ('manager')
 
-However, if ``Manager`` were only specified by :meth:`_query.Query.select_from`
+However, if ``Manager`` were only specified by :meth:`_query.Query.select_from` 
 and not in the columns list, the discriminator would not be added::
 
     sess.query(func.count(1)).select_from(Manager)
@@ -1165,7 +1165,7 @@ With the fix, :meth:`_query.Query.select_from` now works correctly and we get:
 Applications that may have been working around this by supplying the
 WHERE clause manually may need to be adjusted.
 
-:ticket:`3891`
+:ticket:`3891` 
 
 .. _change_3913:
 
@@ -1192,7 +1192,7 @@ Above, prior to the change, the ``previous_collection`` would have had the
 "a1" member removed, corresponding to the member that's no longer in the
 new collection.
 
-:ticket:`3913`
+:ticket:`3913` 
 
 .. _change_3896_validates:
 
@@ -1273,9 +1273,9 @@ idempotent behavior to suit such a case.
 
 .. seealso::
 
-    :ref:`change_3896_event`
+    :ref:`change_3896_event` 
 
-:ticket:`3896`
+:ticket:`3896` 
 
 .. _change_3753:
 
@@ -1300,14 +1300,14 @@ This because the flush process will most likely fail in any case if the
 attribute remains un-present by the time flush occurs.    To mark an object
 as "modified" without referring to any attribute specifically, so that it
 is considered within the flush process for the purpose of custom event handlers
-such as :meth:`.SessionEvents.before_flush`, use the new
+such as :meth:`.SessionEvents.before_flush` , use the new
 :func:`.attributes.flag_dirty` function::
 
     from sqlalchemy.orm import attributes
 
     attributes.flag_dirty(a1)
 
-:ticket:`3753`
+:ticket:`3753` 
 
 .. _change_3796:
 
@@ -1324,12 +1324,12 @@ A very old and undocumented keyword argument ``scope`` has been removed::
 
 The purpose of this keyword was an attempt to allow for variable
 "scopes", where ``None`` indicated "no scope" and would therefore return
-a new :class:`.Session`.   The keyword has never been documented and will
+a new :class:`.Session` .   The keyword has never been documented and will
 now raise ``TypeError`` if encountered.   It is not anticipated that this
 keyword is in use, however if users report issues related to this during
 beta testing, it can be restored with a deprecation.
 
-:ticket:`3796`
+:ticket:`3796` 
 
 .. _change_3471:
 
@@ -1337,7 +1337,7 @@ Refinements to post_update in conjunction with onupdate
 -------------------------------------------------------
 
 A relationship that uses the :paramref:`_orm.relationship.post_update` feature
-will now interact better with a column that has an :paramref:`_schema.Column.onupdate`
+will now interact better with a column that has an :paramref:`_schema.Column.onupdate` 
 value set.   If an object is inserted with an explicit value for the column,
 it is re-stated during the UPDATE so that the "onupdate" rule does not
 overwrite it::
@@ -1388,21 +1388,21 @@ to be present would not fire off for a post-update.   The
 :meth:`.InstanceEvents.refresh_flush` event is also emitted when a refresh
 within flush occurs in this case.
 
-:ticket:`3471`
+:ticket:`3471` 
 
-:ticket:`3472`
+:ticket:`3472` 
 
 .. _change_3496:
 
 post_update integrates with ORM versioning
 ------------------------------------------
 
-The post_update feature, documented at :ref:`post_update`, involves that an
+The post_update feature, documented at :ref:`post_update` , involves that an
 UPDATE statement is emitted in response to changes to a particular
 relationship-bound foreign key, in addition to the INSERT/UPDATE/DELETE that
 would normally be emitted for the target row.  This UPDATE statement
 now participates in the versioning feature, documented at
-:ref:`mapper_version_counter`.
+:ref:`mapper_version_counter` .
 
 Given a mapping::
 
@@ -1440,16 +1440,16 @@ is subject to an INSERT within the current flush, the version counter
 versioning scheme is in place.
 
 The reason post_update emits an UPDATE even for an UPDATE is now discussed at
-:ref:`faq_post_update_update`.
+:ref:`faq_post_update_update` .
 
 .. seealso::
 
-    :ref:`post_update`
+    :ref:`post_update` 
 
-    :ref:`faq_post_update_update`
+    :ref:`faq_post_update_update` 
 
 
-:ticket:`3496`
+:ticket:`3496` 
 
 Key Behavioral Changes - Core
 =============================
@@ -1487,8 +1487,8 @@ same as the left-hand expression::
 As most user-defined operators tend to be "comparison" operators, often
 one of the many special operators defined by PostgreSQL, the
 :paramref:`.Operators.op.is_comparison` flag has been repaired to follow
-its documented behavior of allowing the return type to be :class:`.Boolean`
-in all cases, including for :class:`_types.ARRAY` and :class:`_types.JSON`::
+its documented behavior of allowing the return type to be :class:`.Boolean` 
+in all cases, including for :class:`_types.ARRAY` and :class:` _types.JSON`::
 
     >>> column("x", types.String(50)).op("-%>", is_comparison=True)(None).type
     Boolean()
@@ -1516,7 +1516,7 @@ The :obj:`_expression.literal_column` construct now escapes percent sign charact
 conditionally, based on whether or not the DBAPI in use makes use of a
 percent-sign-sensitive paramstyle or not (e.g. 'format' or 'pyformat').
 
-Previously, it was not possible to produce a :obj:`_expression.literal_column`
+Previously, it was not possible to produce a :obj:`_expression.literal_column` 
 construct that stated a single percent sign:
 
 .. sourcecode:: pycon+sql
@@ -1540,11 +1540,11 @@ as is appropriate:
     {printsql}some%%symbol{stop}
 
 As part of this change, the doubling that has been present when using
-operators like :meth:`.ColumnOperators.contains`,
-:meth:`.ColumnOperators.startswith` and :meth:`.ColumnOperators.endswith`
+operators like :meth:`.ColumnOperators.contains` ,
+:meth:`.ColumnOperators.startswith` and :meth:` .ColumnOperators.endswith`
 is also refined to only occur when appropriate.
 
-:ticket:`3740`
+:ticket:`3740` 
 
 
 .. _change_3785:
@@ -1552,7 +1552,7 @@ is also refined to only occur when appropriate.
 The column-level COLLATE keyword now quotes the collation name
 --------------------------------------------------------------
 
-A bug in the :func:`_expression.collate` and :meth:`.ColumnOperators.collate`
+A bug in the :func:`_expression.collate` and :meth:` .ColumnOperators.collate`
 functions, used to supply ad-hoc column collations at the statement level,
 is fixed, where a case sensitive name would not be quoted::
 
@@ -1574,7 +1574,7 @@ does not impact the use of collations at the type level (e.g. specified
 on the datatype like :class:`.String` at the table level), where quoting
 is already applied.
 
-:ticket:`3785`
+:ticket:`3785` 
 
 Dialect Improvements and Changes - PostgreSQL
 =============================================
@@ -1592,7 +1592,7 @@ DML statements in batch.   SQLAlchemy 1.2 now includes support for these
 helpers to be used transparently whenever the :class:`_engine.Engine` makes use
 of ``cursor.executemany()`` to invoke a statement against multiple parameter
 sets.   The feature is off by default and can be enabled using the
-``use_batch_mode`` argument on :func:`_sa.create_engine`::
+``use_batch_mode`` argument on :func:`_sa.create_engine` ::
 
     engine = create_engine(
         "postgresql+psycopg2://scott:tiger@host/dbname", use_batch_mode=True
@@ -1603,9 +1603,9 @@ on by default in a future release.
 
 .. seealso::
 
-    :ref:`psycopg2_batch_mode`
+    :ref:`psycopg2_batch_mode` 
 
-:ticket:`4109`
+:ticket:`4109` 
 
 .. _change_3959:
 
@@ -1631,7 +1631,7 @@ itself will also be present::
       'default': None, 'autoincrement': False,
       'type': INTERVAL(fields=u'day to second')}]
 
-:ticket:`3959`
+:ticket:`3959` 
 
 Dialect Improvements and Changes - MySQL
 ========================================
@@ -1643,7 +1643,7 @@ Support for INSERT..ON DUPLICATE KEY UPDATE
 
 The ``ON DUPLICATE KEY UPDATE`` clause of ``INSERT`` supported by MySQL
 is now supported using a MySQL-specific version of the
-:class:`_expression.Insert` object, via :func:`sqlalchemy.dialects.mysql.dml.insert`.
+:class:`_expression.Insert` object, via :func:` sqlalchemy.dialects.mysql.dml.insert`.
 This :class:`_expression.Insert` subclass adds a new method
 :meth:`~.mysql.dml.Insert.on_duplicate_key_update` that implements MySQL's syntax::
 
@@ -1667,9 +1667,9 @@ The above will render:
 
 .. seealso::
 
-    :ref:`mysql_insert_on_duplicate_key_update`
+    :ref:`mysql_insert_on_duplicate_key_update` 
 
-:ticket:`4009`
+:ticket:`4009` 
 
 
 Dialect Improvements and Changes - Oracle
@@ -1748,19 +1748,19 @@ Oracle Unique, Check constraints now reflected
 
 UNIQUE and CHECK constraints now reflect via
 :meth:`_reflection.Inspector.get_unique_constraints` and
-:meth:`_reflection.Inspector.get_check_constraints`.  A :class:`_schema.Table` object  that's
+:meth:`_reflection.Inspector.get_check_constraints` .  A :class:`_schema.Table` object  that's
 reflected will now include :class:`.CheckConstraint` objects as well.
 See the notes at :ref:`oracle_constraint_reflection` for information
 on behavioral quirks here, including that most :class:`_schema.Table` objects
 will still not include any :class:`.UniqueConstraint` objects as these
-usually represent via :class:`.Index`.
+usually represent via :class:`.Index` .
 
 .. seealso::
 
-    :ref:`oracle_constraint_reflection`
+    :ref:`oracle_constraint_reflection` 
 
 
-:ticket:`4003`
+:ticket:`4003` 
 
 .. _change_3276:
 
@@ -1799,7 +1799,7 @@ Previously, the foreign keys result would look like::
 
 Where the above could create problems particularly with Alembic autogenerate.
 
-:ticket:`3276`
+:ticket:`3276` 
 
 
 Dialect Improvements and Changes - SQL Server
@@ -1839,9 +1839,9 @@ as the "owner".
 
 .. seealso::
 
-    :ref:`multipart_schema_names`
+    :ref:`multipart_schema_names` 
 
-:ticket:`2626`
+:ticket:`2626` 
 
 AUTOCOMMIT isolation level support
 ----------------------------------

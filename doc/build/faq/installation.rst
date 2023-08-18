@@ -21,11 +21,11 @@ to the ``pip install`` command:
 
     pip install sqlalchemy[asyncio]
 
-For more background, see :ref:`asyncio_install`.
+For more background, see :ref:`asyncio_install` .
 
 
 .. seealso::
 
-    :ref:`asyncio_install`
+    :ref:`asyncio_install` 
 
 

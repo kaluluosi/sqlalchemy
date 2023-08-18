@@ -1,21 +1,23 @@
+:orphan:
+
 .. _declarative_table_args:
 
-===================
-表配置
-===================
+=========================
+表格配置
+=========================
 
-此部分已移至：:ref:`orm_declarative_table_configuration`。
+本部分已删除; 请参见   :ref:`orm_declarative_table_configuration` 。
 
 
 .. _declarative_hybrid_table:
 
-使用混合方法和 __table__
-==============================
+使用 __table__ 的混合方法
+=================================
 
-此部分已移至：:ref:`orm_imperative_table_configuration`。
+本部分已移动; 请参见   :ref:`orm_imperative_table_configuration` 。
 
 
-使用反射机制和声明性
-========================
+使用反射与声明性
+=================
 
-此部分已移至: :ref:`orm_declarative_reflected`。
+本部分已移到   :ref:`orm_declarative_reflected` 。

@@ -34,7 +34,7 @@ Class Mapping API
             The :attr:`.declared_attr.cascading` modifier has several
             limitations:
 
-            * The flag **only** applies to the use of :class:`.declared_attr`
+            * The flag **only** applies to the use of :class:`.declared_attr` 
               on declarative mixin classes and ``__abstract__`` classes; it
               currently has no effect when used on a mapped class directly.
 
@@ -76,9 +76,9 @@ Class Mapping API
 
         .. seealso::
 
-            :ref:`declarative_inheritance`
+            :ref:`declarative_inheritance` 
 
-            :ref:`mixin_inheritance_columns`
+            :ref:`mixin_inheritance_columns` 
 
     .. attribute:: directive
 
@@ -87,8 +87,8 @@ Class Mapping API
 
         The purpose of :attr:`.declared_attr.directive` is strictly to
         support :pep:`484` typing tools, by allowing the decorated function
-        to have a return type that is **not** using the :class:`_orm.Mapped`
-        generic class, as would normally be the case when :class:`.declared_attr`
+        to have a return type that is **not** using the :class:`_orm.Mapped` 
+        generic class, as would normally be the case when :class:`.declared_attr` 
         is used for columns and mapped properties.  At
         runtime, the :attr:`.declared_attr.directive` returns the
         :class:`.declared_attr` class unmodified.
@@ -104,9 +104,9 @@ Class Mapping API
 
         .. seealso::
 
-            :ref:`orm_mixins_toplevel`
+            :ref:`orm_mixins_toplevel` 
 
-            :class:`_orm.declared_attr`
+            :class:`_orm.declared_attr` 
 
 
 .. autoclass:: DeclarativeBase

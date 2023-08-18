@@ -7,16 +7,16 @@
 定义约束和索引
 ================================
 
-本节将讨论SQL :term:`constraints`和索引。在SQLAlchemy中，关键类包括 :class:`_schema.ForeignKeyConstraint`和 :class:`.Index`。
+本节将介绍SQL  :term:`constraints`  和索引。在SQLAlchemy中，关键类包括  :class:` _schema.ForeignKeyConstraint` .Index`。
 
 .. _metadata_foreignkeys:
 
 定义外键
 ---------------------
 
-在SQL中，*外键*是一个表级结构，它限制该表中一个或多个列只允许存在于不同组列中的值，通常但不总是位于不同表上。我们称受到限制的列为*foreign key*列，而限制它们的列为*引用*列。引用列几乎总是为其所有者表定义了主键，尽管也有例外情况。外键是将具有彼此关系的行配对在一起的“联接”，在几乎所有操作中，SQLAlchemy都为这个概念赋予了非常深远的重要性。
+在SQL中，*foreign key* 是一个表级构造，它约束该表中的一个或多个列，只允许存在于不同列集中的值（通常但不总是位于不同的表中）。我们称被约束的列为*foreign key*列，被约束至的列称为*referenced*列。被约束列通常定义为其拥有表（但有例外情况）的主键，外键是连接有关联的成对行的“联合”，SQLAlchemy赋予这个概念在其操作的几乎每个领域中非常重要的地位。
 
-在SQLAlchemy和DDL中，外键约束可以定义为表子句中的附加属性，或者对于单列外键，它们可以在单个列的定义中选择性地指定。单列外键更常见，在列级别上由构造 :class:`~sqlalchemy.schema.Column`对象的 :class:`~sqlalchemy.schema.ForeignKey`对象作为参数来指定::
+在SQLAlchemy中，以及在DDL中，外键约束可以被定义为表子句中的附加属性，对于单列外键，它们可以在单列的定义中指定。单列外键更常见，在列级别上，是通过构造  :class:`~sqlalchemy.schema.ForeignKey` ~sqlalchemy.schema.Column` 对象的参数来指定的::
 
     user_preference = Table(
         "user_preference",
@@ -27,15 +27,15 @@
         Column("pref_value", String(100)),
     )
 
-在上面的示例中，我们为 ``user_preference`` 定义了一个新表，其中每行都必须包含在 ``user``表的 ``user_id`` 列中也存在的值。
+以上，我们定义了一个名为``user_preference``的新表。该表的每一行都必须包含一个与``user``表的``user_id``的列值相对应的值。
 
-:class:`~sqlalchemy.schema.ForeignKey`的参数通常是 *<tablename>.<columnname>*的形式的字符串，或者对于位于远程架构或“所有者”中的表，格式为 <schemaname>.<tablename>.<columnname>*。它也可以是一个实际的 :class:`~sqlalchemy.schema.Column`对象，稍后我们将看到，它可以通过其``c``集合从现有的:class:`~sqlalchemy.schema.Table`对象访问::
+  :class:`~sqlalchemy.schema.ForeignKey` ~sqlalchemy.schema.Column` 对象，我们将在稍后看到，它可以通过其``c``集合从现有的 :class:`~sqlalchemy.schema.Table` 对象中访问::
 
     ForeignKey(user.c.user_id)
 
-使用字符串的优点在于，当第一次需要时，仅当``user``和``user_preference``之间的Python链接得到解析，以便于多个模块轻松地分布表对象，并且可以按任何顺序定义。
+使用字符串的优点是当第一次需要时才会解决``user``和``user_preference``之间在Python中的链接，因此表对象可以轻松地分布在多个模块中，并且可以以任何顺序定义。
 
-还可以在表级别上定义外键，使用 :class:`~sqlalchemy.schema.ForeignKeyConstraint` 对象。此对象可以描述单列或多列外键。多列外键称为*组合*外键，并且几乎总是引用具有组合主键的表。下面我们定义一个具有组合主键的表“invoice”::
+使用  :class:`~sqlalchemy.schema.ForeignKeyConstraint` ` invoice``::
 
     invoice = Table(
         "invoice",
@@ -45,7 +45,7 @@
         Column("description", String(60), nullable=False),
     )
 
-然后再定义一个具有组合外键，引用``invoice``的表“invoice_item”::
+然后，定义一个具有复合外键的表``invoice_item``，该复合外键引用``invoice``::
 
     invoice_item = Table(
         "invoice_item",
@@ -59,14 +59,16 @@
         ),
     )
 
-重要的是要注意，*ForeignKeyConstraint*是定义组合外键的唯一方法。虽然我们还可以在``invoice_item.invoice_id``和``invoice_item.ref_num``两个列上放置单独的:class:`~sqlalchemy.schema.ForeignKey`对象，但SQLAlchemy不会意识到这两个值应该配对在一起——它将是单个组合外键，引用两个列，而不是两个独立的外键约束。
+需要注意的是  :class:`~sqlalchemy.schema.ForeignKeyConstraint` ` invoice_item.invoice_id``和``invoice_item.ref_num``列上存储单独的 :class:`~sqlalchemy.schema.ForeignKey` 对象，但SQLAlchemy将不知道这两个值应该配对在一起，而不是两个单独的外键，而是一个包含两个列引用的复合外键。
 
 .. _use_alter:
 
 通过ALTER创建/删除外键约束
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE语句中创建，例如::
+在DDL中使用外键的行为通常意味着将约束“内联”在CREATE TABLE语句中，例如：
+
+.. sourcecode:: sql
 
     CREATE TABLE addresses (
         id INTEGER NOT NULL,
@@ -76,11 +78,11 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES users (id)
     )
 
-“CONSTRAINT .. FOREIGN KEY”指令用于在“内联”方式内创建约束在CREATE TABLE定义中。 :meth:`_schema.MetaData.create_all`和 :meth:`_schema.MetaData.drop_all`方法将默认情况下在所有涉及:class:`_schema.Table`对象的拓扑排序中执行此操作，因此表将按照其外键依赖性的顺序创建和删除（此排序也可以通过 :attr:`_schema.MetaData.sorted_tables`访问器获得）。
+使用“CONSTRAINT..FOREIGN KEY”指令在创建表定义中“内联”创建约束。 :meth：`_schema.MetaData.create_all`和  :meth:`_schema.MetaData.drop_all`  方法默认使用它，使用所有涉及:class :` _schema.Table`对象的拓扑排序，使得表按其外键依赖性的顺序进行创建和删除（此排序也可通过  :attr:`_schema.MetaData.sorted_tables`  访问器获得）。
 
-当两个或多个外键约束涉及"依赖循环"的情况时，这种方法无法工作，其中一组表彼此相互依赖，假设后端执行外键的一致性（在SQLite，MySQL/MyISAM之外）。因此，这些方法将在除不支持大多数更改形式的SQLite之外的所有后端上，将这些约束断开为单独的ALTER语句。例如，对于类似这样的模式，我们将其称为：：
+这种方法在两个或多个外键约束涉及“依赖关系周期”的情况下不起作用，其中一组表相互依赖，假设后端强制执行外键（SQLite、MySQL/MyISAM除外）。因此，这两种方法将在所有未支持大部分ALTER的后端上将循环中的约束分离成单独的ALTER语句。给定类似于下面的模式：
 
-    node = Table(
+     node = Table(
         "node",
         metadata_obj,
         Column("node_id", Integer, primary_key=True),
@@ -97,7 +99,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         ),
     )
 
-当我们在诸如 PostgreSQL 后端上调用 :meth:`_schema.MetaData.create_all` 时，这两个表之间的循环会被解决，约束将分别创建：：
+在PostgreSQL后端中调用  :meth:`_schema.MetaData.create_all`  时，这两个表之间的循环将被解决，并且约束将分别被创建：
 
 .. sourcecode:: pycon+sql
 
@@ -121,7 +123,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         REFERENCES element (element_id)
     {stop}
 
-在删除所有表时需要发出DROP命令，同样的逻辑适用，但是请注意，在SQL中，发出DROP CONSTRAINT需要指定约束的名称。在上面的例子中，我们尚未为“node”表指定此约束的名称。因此，系统将仅尝试发出命名约束的DROP：
+在发出DROP的情况下，相同的逻辑也适用，不过请注意，在SQL中，发出DROP CONSTRAINT需要约束有一个名称。在上面的“node”表的情况下，我们没有为这个约束命名；因此，系统将仅尝试发出DROP名称约束时才存在的约束：
 
 .. sourcecode:: pycon+sql
 
@@ -133,7 +135,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     {stop}
 
 
-在循环无法解决的情况下，例如如果我们在这里没有给任何约束命名，我们将收到以下错误消息：
+如果循环无法解析，例如我们在这里没有应用名称到任何一个约束时，我们会收到以下错误：
 
 .. sourcecode:: text
 
@@ -143,18 +145,194 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     objects involved in the cycle have names so that they can be dropped
     using DROP CONSTRAINT.
 
-此错误仅适用于DROP，因为我们可以在CREATE CASE中发出`ADD CONSTRAINT`，而不需要名称; 数据库通常会自动分配一个名称。
+这个错误仅适用于DROP案例，因为我们可以在CREATE案例中发出“ADD CONSTRAINT”而不需要名称；数据库通常会自动赋一个名称。
 
-当在可查迁移工具中使用：func:`alembic < https://alembic.sqlalchemy.org/>`时，可通过模式迁移来处理现有表和约束; 但是，Alembic和SQLAlchemy当前未为没有指定名称的约束对象创建名称，这意味着要能够改变现有约束，我们必须反向工程用于自动分配名称到关系数据库的命名系统，或者必须注意确保所有约束都已命名。
+当使用DROP操作时，  :paramref:`_schema.ForeignKeyConstraint.use_alter`  和  :paramref:` _schema.ForeignKey.use_alter`  关键字参数可以用于手动解决依赖关系循环。我们可以将此标志仅添加到“element”表中，如下所示：
 
-与分配所有 :class:`.Constraint` 和 :class:`.Index` 对象的明确名称相比，可以使用事件构建自动命名方案。这种方法的优点是，约束将获得一致的命名方案，无需在整个代码中显式名称参数，而且约定在使用 :paramref:`_schema.MetaData.naming_convention` 时可以用于通过 :paramref:`_schema.Column.unique` 和 :paramref:`_schema.Column.index` 参数生成的所有约束和索引。从SQLAlchemy 0.9.2开始，此事件驱动的方法已经包含在内，并可以使用参数 :paramref:`_schema.MetaData.naming_convention` 进行配置。
+    element = Table(
+        "element",
+        metadata_obj,
+        Column("element_id", Integer, primary_key=True),
+        Column("parent_node_id", Integer),
+        ForeignKeyConstraint(
+            ["parent_node_id"],
+            ["node.node_id"],
+            use_alter=True,
+            name="fk_element_parent_node_id",
+        ),
+    )
 
-为元数据集合配置命名约定
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在我们的CREATE DDL中，我们只会看到此约束的ALTER语句，而不是其他约束：
 
-:paramref:`_schema.MetaData.naming_convention` 指的是一个接受 :class:`.Index` 类或单个 :class:`.Constraint` 类作为键，并接受Python字符串模板作为值的字典。它还接受多个字符串代码作为备用键， ``fk`` ， ``pk`` ， ``ix`` ， ``ck`` ， ``uq`` 用于外键、主键、索引、检查和唯一键约束，分别。在字典中使用的字符串模板用于在与此 :class:`_schema.MetaData` 对象关联的约束或索引未具有现有名称时使用。除了一个例外情况外，此名称可以由现有名称进一步修饰。
+.. sourcecode:: pycon+sql
 
-一个适用于基本情况的示例命名约定如下：
+    >>> with engine.connect() as conn:
+    ...     metadata_obj.create_all(conn, checkfirst=False)
+    {execsql}CREATE TABLE element (
+        element_id SERIAL NOT NULL,
+        parent_node_id INTEGER,
+        PRIMARY KEY (element_id)
+    )
+
+    CREATE TABLE node (
+        node_id SERIAL NOT NULL,
+        primary_element INTEGER,
+        PRIMARY KEY (node_id),
+        FOREIGN KEY(primary_element) REFERENCES element (element_id)
+    )
+
+    ALTER TABLE element ADD CONSTRAINT fk_element_parent_node_id
+    FOREIGN KEY(parent_node_id) REFERENCES node (node_id)
+    {stop}
+
+  :paramref:`_schema.ForeignKeyConstraint.use_alter`  和  :paramref:` _schema.ForeignKey.use_alter`  与drop操作一起使用时，将要求约束有一个名称，否则会生成以下错误：
+
+.. sourcecode:: text
+
+    sqlalchemy.exc.CompileError: Can't emit DROP CONSTRAINT for constraint
+    ForeignKeyConstraint(...); it has no name
+
+.. seealso::
+
+      :ref:`约束命名约定` 
+
+      :func:`.sort_tables_and_constraints` 
+
+.. _on_update_on_delete:
+
+ON UPDATE和ON DELETE
+~~~~~~~~~~~~~~~~~~~~~~~
+
+大多数数据库支持外键值的*级联*，这意味着当父行被更新时，新值将放置在子行中，或者当父行被删除时，所有对应的子行都将设置为null或删除。在数据定义语言中，可以在外键约束中使用短语，例如“ON UPDATE CASCADE”，“ON DELETE CASCADE”和“ON DELETE SET NULL”，与外键约束相对应。在  :class:`~sqlalchemy.schema.ForeignKey` ~sqlalchemy.schema.ForeignKeyConstraint` 对象中可以通过``onupdate``和``ondelete``关键字参数生成此子句。该值是任何字符串，该字符串将在适当的“ON UPDATE”或“ON DELETE”短语后输出::
+
+    child = Table(
+        "child",
+        metadata_obj,
+        Column(
+            "id",
+            Integer,
+            ForeignKey("parent.id", onupdate="CASCADE", ondelete="CASCADE"),
+            primary_key=True,
+        ),
+    )
+
+    composite = Table(
+        "composite",
+        metadata_obj,
+        Column("id", Integer, primary_key=True),
+        Column("rev_id", Integer),
+        Column("note_id", Integer),
+        ForeignKeyConstraint(
+            ["rev_id", "note_id"],
+            ["revisions.id", "revisions.note_id"],
+            onupdate="CASCADE",
+            ondelete="SET NULL",
+        ),
+    )
+
+请注意，这些子句需要在使用MySQL时使用``InnoDB``表。它们也可能在其他数据库上不受支持。
+
+.. seealso::
+
+    关于ORM  :func:`_orm.relationship` 结构与“ON DELETE CASCADE”的集成的背景，请参见以下部分：
+
+      :ref:`passive_deletes` 
+
+      :ref:`passive_deletes_many_to_many` 
+
+.. _schema_unique_constraint:
+
+唯一约束
+-----------------
+
+可以使用  :class:`~sqlalchemy.schema.Column` ~sqlalchemy.schema.UniqueConstraint` 表级结构显式命名唯一约束和/或具有多列的约束。
+
+.. sourcecode:: python+sql
+
+    from sqlalchemy import UniqueConstraint
+
+    metadata_obj = MetaData()
+    mytable = Table(
+        "mytable",
+        metadata_obj,
+        # Per-column anonymous unique constraint.
+        Column("col1", Integer, unique=True),
+        Column("col2", Integer),
+        Column("col3", Integer),
+        # Explicit/composite unique constraint.  'name' is optional.
+        UniqueConstraint("col2", "col3", name="uix_1"),
+    )
+
+检查约束
+----------------
+
+检查约束可以命名或未命名，并且可以在列或表级别上创建，使用 :class:`~sqlalchemy.schema.CheckConstraint` 结构。检查约束的文本直接通过到数据库，因此有限制的“数据库无关”行为。列级别的检查约束通常只能引用其所放置的列，而表级别约束可以引用表中的任何列。
+
+请注意，某些数据库不支持主动支持约束，例如旧版的MySQL（8.0.16之前）。
+
+.. sourcecode:: python+sql
+
+    from sqlalchemy import CheckConstraint
+
+    metadata_obj = MetaData()
+    mytable = Table(
+        "mytable",
+        metadata_obj,
+        # per-column CHECK constraint
+        Column("col1", Integer, CheckConstraint("col1>5")),
+        Column("col2", Integer),
+        Column("col3", Integer),
+        # table level CHECK constraint.  'name' is optional.
+        CheckConstraint("col2 > col3 + 5", name="check1"),
+    )
+
+    mytable.create(engine)
+    {execsql}CREATE TABLE mytable (
+        col1 INTEGER  CHECK (col1>5),
+        col2 INTEGER,
+        col3 INTEGER,
+        CONSTRAINT check1  CHECK (col2 > col3 + 5)
+    ){stop}
+
+主键约束
+----------------------
+
+任何  :class:`_schema.Table`  标志。  :class:` .PrimaryKeyConstraint`对象提供了对此约束的显式访问，其中包括直接进行配置的选项::
+
+    from sqlalchemy import PrimaryKeyConstraint
+
+    my_table = Table(
+        "mytable",
+        metadata_obj,
+        Column("id", Integer),
+        Column("version_id", Integer),
+        Column("data", String(50)),
+        PrimaryKeyConstraint("id", "version_id", name="mytable_pk"),
+    )
+
+.. seealso::
+
+      :class:`.PrimaryKeyConstraint`  - 详细API文档。
+
+使用Declarative ORM扩展时设置约束
+---------------------------------------------------------------
+
+ :class:`_schema.Table` 是SQLAlchemy Core构造，它允许定义表元数据，其中包括可以由SQLAlchemy ORM用作映射类的目标。  :ref:`Declarative <declarative_toplevel>` 扩展程序允许自动创建 :class:`_schema.Table` 对象，根据主要是 :class:`_schema.Column` 对象的映射内容。
+
+要将表级别约束对象例如  :class:`_schema.ForeignKeyConstraint` ` __table_args__``属性，如 :ref:`declarative_table_args` 中所述。
+
+.. _constraint_naming_conventions:
+
+配置约束命名约定
+-----------------------------------------
+
+关系数据库通常对所有约束和索引分配显式名称。在使用``CREATE TABLE``创建表的常见情况下，例如CHECK，UNIQUE和主键约束内联在表定义中生成，如果没有另外指定名称，则数据库通常会有一个系统以自动分配名称的方式。在使用诸如``ALTER TABLE``之类的命令对现有数据库表进行更改时，此命令通常需要为新约束指定显式名称，以及能够指定要删除或修改的现有约束的名称。
+
+可以使用事件来构建自动命名方案。这种方法的优点是在代码中无需显式名称参数即可收到约束的一致命名方案，而且该约定还适用于使用：paramref：`_schema.Column.unique`和：paramref：`_schema.Column.index`参数创建的约束和索引。从SQLAlchemy 0.9.2开始，该基于事件的方法已包括在内，可以使用参数：paramref：`_schema.MetaData.naming_convention`进行配置。
+
+配置  :paramref:`_schema.MetaData.naming_convention` .Index` 类或单个约束类作为键，并接受Python字符串模板作为值。它还接受一系列字符串代码作为备用密钥，例如“fk”，“pk”，“ix”，“ck”，“uq”，用于外键，主键，索引，检查和唯一约束，例如。在这个字典中使用的字符串模板，是在该 :class:`_schema.MetaData` 对象关联到的约束或索引没有现有名称时使用的。
+
+适用于所有约束的示例命名约定如下：
 
     convention = {
         "ix": "ix_%(column_0_label)s",
@@ -166,7 +344,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
 
     metadata_obj = MetaData(naming_convention=convention)
 
-上面的约定将为目标 :class:`_schema.MetaData` 集合中的所有约束都建立名称。例如，我们可以观察到创建未命名的 :class:`.UniqueConstraint`时生成的名称：
+上面的约定将为目标  :class:`_schema.MetaData` .UniqueConstraint` 时产生的名称：
 
     >>> user_table = Table(
     ...     "user",
@@ -178,7 +356,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     >>> list(user_table.constraints)[1].name
     'uq_user_name'
 
-当我们只使用 :paramref:`_schema.Column.unique` 标志时，同样的特性也会出现：
+即使我们只使用了：paramref:`_schema.Column.unique`标志，此功能也会生效：
 
     >>> user_table = Table(
     ...     "user",
@@ -189,30 +367,30 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     >>> list(user_table.constraints)[1].name
     'uq_user_name'
 
-命名约定方法的一个关键优点是，这些名称在Python构建时间而不是在DDL发出时间建立。在使用Alembic的“--自动生成”功能时，这对于生成新的迁移脚本意味着命名约定将变得明确：
+使用命名约定的一个重要优点是，在Python构造时建立了名称，而不是在DDL发出时建立名称。使用Alembic的“—autogenerate”功能时，该名称约定在新的移动脚本生成时将是明确的::
 
     def upgrade():
         op.create_unique_constraint("uq_user_name", "user", ["name"])
 
-上面的 ``"uq_user_name"`` 字符串从我们在元数据中找到的 :class:`.UniqueConstraint` 对象中复制，这是``--autogenerate``生成新的迁移脚本时的效果。
+上面的“uq_user_name”字符串是从“—autogenerate”在我们的元数据中找到的 :class:`.UniqueConstraint` 对象复制的。
 
-可用的令牌包括 ``%(table_name)s`` ， ``%(referred_table_name)s`` ， ``%(column_0_name)s`` ， ``%(column_0_label)s`` ， ``%(column_0_key)s`` ， ``%(referred_column_0_name)s``和 ``%(constraint_name)s`` 以及每个的多列版本，包括 ``%(column_0N_name)s`` ， ``%(column_0_N_name)s`` ， ``%(referred_column_0_N_name)s`` ，其中所有列名以符号分隔或没有符号分隔的方式呈现。 :paramref:`_schema.MetaData.naming_convention` 文档对每个约定的详细信息有更多细节。
+可用的标记包括``%(table_name)s``，``%(referred_table_name)s``，``%(column_0_name)s``，``%(column_0_label)s``，``%(column_0_key)s``，``%(referred_column_0_name)s``和``%(constraint_name)s``，以及每个标记的多列版本，包括 ``%(column_0N_name)s``，``%(column_0_N_name)s``，``%(referred_column_0_N_name)s``，它们将所有列名分隔或不分隔线呈现。  :paramref:`_schema.MetaData.naming_convention`  文档详细介绍了每个约定的其他细节。
 
 .. _constraint_default_naming_convention:
 
 默认命名约定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:paramref:`_schema.MetaData.naming_convention` 的默认值处理了长期以来SQLAlchemy的行为，即为使用 :paramref:`_schema.Column.index` 参数创建的 :class:`.Index` 对象分配名称：
+  :paramref:`_schema.MetaData.naming_convention`  的默认值处理了长期存在的SQLAlchemy行为，即为使用  :param:` _schema.Column.index`  参数创建的 :class:`.Index` 对象分配名称::
 
     >>> from sqlalchemy.sql.schema import DEFAULT_NAMING_CONVENTION
     >>> DEFAULT_NAMING_CONVENTION
     immutabledict({'ix': 'ix_%(column_0_label)s'})
 
-截断长名称
+长名称的截断
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-当一个生成的名称，特别是使用多列令牌的名称，太长而无法符合目标数据库的标识符长度限制时（例如，PostgreSQL有一个限制为63个字符），名称将会被明确定义的后缀截断为源名称的md5哈希基础上的4个字符。例如，以下是将带有使用的列名创建时生成很长名称的约定：
+当生成的名称，特别是使用多列标记的那些名称，超出目标数据库的标识符长度限制时（例如，PostgreSQL有一个63个字符的限制），这个名称将根据长名称的md5散列进行确定性截断，该名称的4个字符后缀。例如，下面的命名约定将根据使用的列名称生成非常长的名称::
 
     metadata_obj = MetaData(
         naming_convention={"uq": "uq_%(table_name)s_%(column_0_N_name)s"}
@@ -227,7 +405,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         UniqueConstraint("a", "b", "c"),
     )
 
-在PostgreSQL方言上，长度超过63个字符的名称将被截断如下：
+在PostgreSQL dialect上，超过63个字符的名称将被截断，如下面的示例：
 
 .. sourcecode:: sql
 
@@ -239,12 +417,12 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         UNIQUE (information_channel_code, billing_convention_name, product_identifier)
     )
 
-上面的后缀 ``a79e`` 基于长名称的md5哈希值，并且每次生成相同的值，以便为给定模式生成一致的名称。
+上面的后缀“a79e”是基于长名称的md5哈希而确定的，并且将为给定模式生成相同的值。
 
-创建自定义的命名约定令牌
+为命名约定创建自定义标记
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-可以添加新令牌，通过在命名_convention字典中指定额外的令牌和可调用对象。例如，如果我们想使用GUID方案命名外键约束，我们可以按以下方式执行：
+可以通过在:named-param:`naming_convention`字典中指定其他令牌和可调用来添加新令牌。例如，如果我们想使用GUID方案命名外键约束，我们可以这样做：
 
     import uuid
 
@@ -267,7 +445,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     }
 
-以上，当我们创建一个新的 :class:`_schema.ForeignKeyConstraint`时，我们将为名称获得一个名称如下：
+上面的，当我们创建一个新的 :class:`_schema.ForeignKeyConstraint` 时，我们将获得以下名称：
 
     >>> metadata_obj = MetaData(naming_convention=convention)
 
@@ -290,21 +468,24 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     >>> fk.name
     fk_0cd51ab5-8d70-56e8-a83c-86661737766d
 
-参见：
+.. seealso::
 
-    :paramref:`_schema.MetaData.naming_convention` - 有关其他用法详细信息以及可用命名组件的参考手册。
+     :paramref:`_schema.MetaData.naming_convention`  - 用于附加使用详细信息的其他用法说明
+    以及所有可用的命名组件。
 
-    `约束命名的重要性 <https://alembic.sqlalchemy.org/en/latest/naming.html>`_ - Alembic文档中。
+    `The Importance of Naming Constraints <https://alembic.sqlalchemy.org/en/latest/naming.html>`_ - 位于Alembic文档中
 
 
-.. versionadded:: 1.3.0 添加了多列命名令牌，例如 ``%(column_0_N_name)s``。生成的名称超出目标数据库的字符限制将被确定性地截断。
+.. versionadded:: 1.3.0添加了多列命名标记，例如“%(column_0_N_name)”。
+   超出目标数据库的字符限制的生成名称将被确定性截断。
 
 .. _naming_check_constraints:
 
-命名CHECK约束
+命名检查约束
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-:class:`.CheckConstraint`对象针对任意SQL表达式进行配置，它可以存在任意数量的列，并且通常使用原始SQL字符串进行配置。因此，与 :class:`.CheckConstraint` 一起使用的常见约定是我们预期对象已经具有名称，然后我们使用其他约定元素增强该名称。一个典型的约定是 ``"ck_%(table_name)s_%(constraint_name)s"``：
+  :class:`.CheckConstraint` .CheckConstraint` 的常见约定是我们期望该对象已经有一个名称，然后我们使用其他约定元素将其增强。典型的约定是“ck_%（table_name）s_%（constraint_name）s”::
+
 
     metadata_obj = MetaData(
         naming_convention={"ck": "ck_%(table_name)s_%(constraint_name)s"}
@@ -317,7 +498,7 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         CheckConstraint("value > 5", name="value_gt_5"),
     )
 
-上面的表将生成名称``ck_foo_value_gt_5``：
+上面的表会产生名称“ck_foo_value_gt_5”：
 
 .. sourcecode:: sql
 
@@ -326,111 +507,60 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         CONSTRAINT ck_foo_value_gt_5 CHECK (value > 5)
     )
 
-:class:`.CheckConstraint`还支持 ``%(columns_0_name)s`` 令牌；我们可以通过确保在约束的表达式中使用 :class:`_schema.Column` 或 :func:`_expression.column` 元素来利用它，无论是将约束声明与表分开还是将其定义在表中：：约束（Constraints）和索引（Indexes）
----------------------------------------
+  :class:`.CheckConstraint` ` ％（columns_0_name）s``令牌；我们可以使用这个令牌，通过在约束的表达式中确保我们使用：class:`_schema.Column`或 :func:`_expression.column` 元素，对其执行操作，将约束与表分离：
 
-配置约束名称
-~~~~~~~~~~~~~~~
+配置 Check 约束和 Naming
+--------------------------
 
-可以使用 ``naming_convention`` 参数为约束设置一个命名规则。只要在命名规则中使用了可用的参数，即可使用这个功能。
+在定义表结构时，可以通过   :class:`.CheckConstraint`  类和约束名，来添加 ` `CHECK`` 条件约束。可以用两种方式来指定 CHECK 约束的名字，一种是手动指定，以字符串形式传入。另一种是使用 SQLAlchemy 的命名惯例。
 
-.. note::
+一种方法是使用   :class:`.CheckConstraint`  类::
 
-   如果所使用的约束类型的名称参数已经明确指定，将不会应用使用的命名规则。
+    metadata_obj = MetaData()
+    foo = Table("foo", metadata_obj, Column("value", Integer))
+    CheckConstraint(foo.c.value > 5, name="foo_value_check")
 
-例如，以下代码：
+另一种方法是使用   :class:`.CheckConstraint`  类和 SQLAlchemy 的命名惯例，以下代码将产生名为 ` `ck_foo_value`` 的 CHECK 约束：
 
 .. sourcecode:: python
 
-    metadata_obj = MetaData(
-        naming_convention={
-            "ck": "ck_%(table_name)s_%(column_0_name)s",
-            "uq": "uq_%(table_name)s_%(column_0_name)s",
-            "ix": "ix_%(table_name)s_%(column_0_name)s",
-            "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-            "pk": "pk_%(table_name)s"
-        }
+    metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
+    foo = Table("foo", metadata_obj, Column("value", Integer))
+    CheckConstraint(foo.c.value > 5)
+
+或者使用内联的   :func:`_expression.column`  函数::
+
+    from sqlalchemy import column
+
+    metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
+
+    foo = Table(
+        "foo", metadata_obj, Column("value", Integer), CheckConstraint(column("value") > 5)
     )
 
-创建约束
-~~~~~~~
-
-- 命名约束
-
-我们可以使用约束名称创建约束。例如以下代码：
-
-.. sourcecode:: python+sql
-
-    CheckConstraint("value > 5", name="myconstraint")
-
-生成的结果为：
+两种方法都会产生名为 ``ck_foo_value`` 的约束：
 
 .. sourcecode:: sql
 
-    CONSTRAINT myconstraint CHECK (value > 5)
+    CREATE TABLE foo (
+        value INTEGER,
+        CONSTRAINT ck_foo_value CHECK (value > 5)
+    )
 
-- 匿名约束
+程序会扫描所给表达式中存在的列对象，来确定“第 0 列”的名称。如果表达式中存在多个列，则使用确定性搜索扫描，但表达式的结构将决定哪个列将被标示为“第 0 列”。
 
-以下两种方式都可以使用匿名约束：
+.. _naming_schematypes:
 
-  1. 直接将表达式作为约束。
+配置布尔值、枚举值和其他模式类型的命名
+----------------------------------------
 
-  例如以下代码：
-
-  .. sourcecode:: python+sql
-
-      metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
-
-      foo = Table("foo", metadata_obj, Column("value", Integer))
-
-      CheckConstraint(foo.c.value > 5)
-
-  生成的结果为：
-
-  .. sourcecode:: sql
-
-      CREATE TABLE foo (
-          value INTEGER,
-          CONSTRAINT ck_foo_value CHECK (value > 5)
-      )
-
-  2. 在表中定义约束并使用 :func:`_expression.column` 来表示这个约束中的值。
-
-  例如以下代码：
-
-  .. sourcecode:: python+sql
-
-      from sqlalchemy import column
-
-      metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
-
-      foo = Table(
-          "foo",
-           metadata_obj,
-           Column("value", Integer),
-           CheckConstraint(column("value") > 5)
-      )
-
-  生成的结果同样为：
-
-  .. sourcecode:: sql
-
-      CREATE TABLE foo (
-          value INTEGER,
-          CONSTRAINT ck_foo_value CHECK (value > 5)
-      )
-
-- Schema（模式）类型约束
-
-:class:`.SchemaType` 指的是可以生成与该类型一起附带的 CHECK 约束的类型对象，例如 :class:`.Boolean` 和 :class:`.Enum`。此时约束的名称可以通过发送参数“name”来直接设置。例如：
-
-.. sourcecode:: python+sql
+  :class:`.SchemaType`  类是指代一些类型信息的类，如  :class:` .Boolean` 。这些类生成了一个与类型相应的 ``CHECK`` 条件约束。这里约束的名字可以通过直接发送 "name" 参数来设定，例如使用  :paramref:`.Boolean.name`  中的代码：
 
     Table("foo", metadata_obj, Column("flag", Boolean(name="ck_foo_flag")))
 
-也可以将命名约束特性与这些类型结合使用，通常使用一个包含 ``%(constraint_name)s`` 的惯例，然后将一个名称应用于该类型。例如：
+缺省情况下，为这些类型设定的名字是依靠所设定的 "naming_convention" 来完成的。
 
-.. sourcecode:: python+sql
+这些类型也可以和命名惯例一起使用，为其应用约定本身（通常是包含 ``%(constraint_name)s`` 的命名约定），然后再给类型应用一个名字：
 
     metadata_obj = MetaData(
         naming_convention={"ck": "ck_%(table_name)s_%(constraint_name)s"}
@@ -438,18 +568,33 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
 
     Table("foo", metadata_obj, Column("flag", Boolean(name="flag_bool")))
 
-以上代码将会产生约束名为“ck_foo_flag_bool”的结果：
+上面的表会产生名为 ``ck_foo_flag_bool`` 的约束：
 
-.. sourcecode::
+.. sourcecode:: sql
 
     CREATE TABLE foo (
         flag BOOL,
         CONSTRAINT ck_foo_flag_bool CHECK (flag IN (0, 1))
     )
 
-- 约束 API
+  :class:`.SchemaType`  类使用特殊的内部符号，以便约定仅在 DDL 编译时确定。在 PostgreSQL 上，有一个原生的 BOOLEAN 类型，因此   :class:` .Boolean`  的 ``CHECK`` 约束是不必要的；即使在定义检查约束的命名约定的情况下，我们也可以安全地设置一个未命名的   :class:`.Boolean`  类型。只有在运行在诸如 SQLite 或 MySQL 等没有原生 BOOLEAN 类型的数据库中时，才会参考这个约定来确定 CHECK 约束。
 
-可以使用以下类直接生成约束：
+在调用   :class:`.SchemaType`  中定义约束时，也可以使用 ` `column_0_name`` 标记:
+
+    metadata_obj = MetaData(naming_convention={"ck": "ck_%(table_name)s_%(column_0_name)s"})
+    foo = Table("foo", metadata_obj, Column("flag", Boolean()))
+
+上述表结构会产生如下 DDL：
+
+.. sourcecode:: sql
+
+    CREATE TABLE foo (
+        flag BOOL,
+        CONSTRAINT ck_foo_flag CHECK (flag IN (0, 1))
+    )
+
+约束 API
+--------
 
 .. autoclass:: Constraint
     :members:
@@ -487,18 +632,17 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     :members:
     :inherited-members:
 
-创建 Indexes
-~~~~~~~~~~~~
 
-对于单个列使用默认名称为 ``ix_<column label>`` 的匿名索引可以使用类似如下代码：
+.. autofunction:: sqlalchemy.schema.conv
 
-.. sourcecode:: python
+.. _schema_indexes:
 
-    Column("some_column", String(50), index=True)
+索引
+----
 
-或者您可以使用 :class:`~sqlalchemy.schema.Index` 类来为索引分配更具描述性的名称。
+可以使用 ``index`` 关键词来为单个列创建匿名索引（使用自动生成的名称 ``ix_<column label>``）。``unique`` 的使用方式则将唯一性应用到该索引本身，而不是添加单独的 ``UNIQUE`` 约束。对于具有特定名称或涵盖多个列的索引，请使用   :class:`~sqlalchemy.schema.Index`  结构，该结构需要名称。
 
-下面我们使用 :class:`~sqlalchemy.schema.Index` 为表设置多个索引：
+以下是一个   :class:`~sqlalchemy.schema.Table`  示例，包含了多个关联的   :class:` ~sqlalchemy.schema.Index`  对象。"CREATE INDEX" 的 DDL 语句会在表创建语句后立即发出：
 
 .. sourcecode:: python+sql
 
@@ -506,7 +650,9 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
     mytable = Table(
         "mytable",
         metadata_obj,
+        # an indexed column, with index "ix_mytable_col1"
         Column("col1", Integer, index=True),
+        # a uniquely indexed column with index "ix_mytable_col2"
         Column("col2", Integer, index=True, unique=True),
         Column("col3", Integer),
         Column("col4", Integer),
@@ -514,53 +660,68 @@ DDL中涉及的外键带有的行为，是约束通常在"内联"在CREATE TABLE
         Column("col6", Integer),
     )
 
+    # place an index on col3, col4
     Index("idx_col34", mytable.c.col3, mytable.c.col4)
+
+    # place a unique index on col5, col6
     Index("myindex", mytable.c.col5, mytable.c.col6, unique=True)
 
-最后通过 mytable.create 命令生成 DDL 语句：
-
-.. sourcecode:: python+sql
-
     mytable.create(engine)
-
-生成的结果为：
-
-.. sourcecode:: sql
-
-    CREATE TABLE mytable (
-      col1 INTEGER,
-      col2 INTEGER,
-      col3 INTEGER,
-      col4 INTEGER,
-      col5 INTEGER,
-      col6 INTEGER
+    {execsql}CREATE TABLE mytable (
+        col1 INTEGER,
+        col2 INTEGER,
+        col3 INTEGER,
+        col4 INTEGER,
+        col5 INTEGER,
+        col6 INTEGER
     )
     CREATE INDEX ix_mytable_col1 ON mytable (col1)
     CREATE UNIQUE INDEX ix_mytable_col2 ON mytable (col2)
     CREATE UNIQUE INDEX myindex ON mytable (col5, col6)
-    CREATE INDEX idx_col34 ON mytable (col3, col4)
+    CREATE INDEX idx_col34 ON mytable (col3, col4){stop}
 
-- 索引 API：
+请注意，在上面的示例中，使用   :class:`.Index`  结构在与其对应的表之外创建，直接使用   :class:` _schema.Column`  对象。  :class:`.Index`  也支持在   :class:` _schema.Table`  中"内联"定义，并使用字符串作为列的标识符：
 
-    .. autoclass:: Index
-        :members:
-        :inherited-members:
+    metadata_obj = MetaData()
+    mytable = Table(
+        "mytable",
+        metadata_obj,
+        Column("col1", Integer),
+        Column("col2", Integer),
+        Column("col3", Integer),
+        Column("col4", Integer),
+        # place an index on col1, col2
+        Index("idx_col12", "col1", "col2"),
+        # place a unique index on col3, col4
+        Index("idx_col34", "col3", "col4", unique=True),
+    )
 
-功能性索引
-~~~~~~~~~~
+  :class:`~sqlalchemy.schema.Index`  对象也支持自己的 ` `create()`` 方法：
 
-:class:`.Index` 支持 SQL 和函数表达式，支持目标后端支持的函数表达式。例如，可以使用 :meth:`_expression.ColumnElement.desc` 修改符号来使用下降值对列进行索引：
+.. sourcecode:: python+sql
 
-.. sourcecode:: python
+    i = Index("someindex", mytable.c.col5)
+    i.create(engine)
+    {execsql}CREATE INDEX someindex ON mytable (col5){stop}
+
+函数式索引
+----------
+
+  :class:`.Index`  支持所有 SQL 和函数表达式，具体取决于目标后端。可以使用  :meth:` _expression.ColumnElement.desc`  以降序修改所要使用的列，对该列创建索引：
 
     from sqlalchemy import Index
 
     Index("someindex", mytable.c.somecol.desc())
 
-或在支持功能性索引的后端（如 PostgreSQL）中，可以使用 ``lower()`` 函数创建不区分大小写的索引：
-
-.. sourcecode:: python
+或在后端支持函数索引，例如 PostgreSQL，可以使用 ``lower()`` 函数来创建“不区分大小写”的索引：
 
     from sqlalchemy import func, Index
 
     Index("someindex", func.lower(mytable.c.somecol))
+
+索引 API
+--------
+
+.. autoclass:: Index
+    :members:
+    :inherited-members:

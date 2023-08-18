@@ -19,14 +19,14 @@ Using the legacy 'backref' relationship parameter
     For general information about bidirectional relationships, see the
     following sections:
 
-    :ref:`tutorial_orm_related_objects` - in the :ref:`unified_tutorial`,
+    :ref:`tutorial_orm_related_objects` - in the :ref:` unified_tutorial`,
     presents an overview of bi-directional relationship configuration
-    and behaviors using :paramref:`_orm.relationship.back_populates`
+    and behaviors using :paramref:`_orm.relationship.back_populates` 
 
-    :ref:`back_populates_cascade` - notes on bi-directional :func:`_orm.relationship`
+    :ref:`back_populates_cascade` - notes on bi-directional :func:` _orm.relationship`
     behavior regarding :class:`_orm.Session` cascade behaviors.
 
-    :paramref:`_orm.relationship.back_populates`
+    :paramref:`_orm.relationship.back_populates` 
 
 
 The :paramref:`_orm.relationship.backref` keyword argument on the
@@ -63,7 +63,7 @@ Starting with the following example::
 
 The above configuration establishes a collection of ``Address`` objects on ``User`` called
 ``User.addresses``.   It also establishes a ``.user`` attribute on ``Address`` which will
-refer to the parent ``User`` object.   Using :paramref:`_orm.relationship.back_populates`
+refer to the parent ``User`` object.   Using :paramref:`_orm.relationship.back_populates` 
 it's equivalent to the following::
 
     from sqlalchemy import Column, ForeignKey, Integer, String
@@ -93,19 +93,19 @@ it's equivalent to the following::
 The behavior of the ``User.addresses`` and ``Address.user`` relationships
 is that they now behave in a **bi-directional** way, indicating that
 changes on one side of the relationship impact the other.   An example
-and discussion of this behavior is in the :ref:`unified_tutorial`
-at :ref:`tutorial_orm_related_objects`.
+and discussion of this behavior is in the :ref:`unified_tutorial` 
+at :ref:`tutorial_orm_related_objects` .
 
 
 Backref Default Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Since :paramref:`_orm.relationship.backref` generates a whole new
-:func:`_orm.relationship`, the generation process by default
+:func:`_orm.relationship` , the generation process by default
 will attempt to include corresponding arguments in the new
 :func:`_orm.relationship` that correspond to the original arguments.
 As an example, below is a :func:`_orm.relationship` that includes a
-:ref:`custom join condition <relationship_configure_joins>`
+:ref:`custom join condition <relationship_configure_joins>` 
 which also includes the :paramref:`_orm.relationship.backref` keyword::
 
     from sqlalchemy import Column, ForeignKey, Integer, String
@@ -136,7 +136,7 @@ which also includes the :paramref:`_orm.relationship.backref` keyword::
         email = mapped_column(String)
         user_id = mapped_column(Integer, ForeignKey("user.id"))
 
-When the "backref" is generated, the :paramref:`_orm.relationship.primaryjoin`
+When the "backref" is generated, the :paramref:`_orm.relationship.primaryjoin` 
 condition is copied to the new :func:`_orm.relationship` as well::
 
     >>> print(User.addresses.property.primaryjoin)
@@ -150,7 +150,7 @@ Other arguments that are transferrable include the
 :paramref:`_orm.relationship.secondary` parameter that refers to a
 many-to-many association table, as well as the "join" arguments
 :paramref:`_orm.relationship.primaryjoin` and
-:paramref:`_orm.relationship.secondaryjoin`; "backref" is smart enough to know
+:paramref:`_orm.relationship.secondaryjoin` ; "backref" is smart enough to know
 that these two arguments should also be "reversed" when generating
 the opposite side.
 
@@ -159,10 +159,10 @@ Specifying Backref Arguments
 
 Lots of other arguments for a "backref" are not implicit, and
 include arguments like
-:paramref:`_orm.relationship.lazy`,
-:paramref:`_orm.relationship.remote_side`,
+:paramref:`_orm.relationship.lazy` ,
+:paramref:`_orm.relationship.remote_side` ,
 :paramref:`_orm.relationship.cascade` and
-:paramref:`_orm.relationship.cascade_backrefs`.   For this case we use
+:paramref:`_orm.relationship.cascade_backrefs` .   For this case we use
 the :func:`.backref` function in place of a string; this will store
 a specific set of arguments that will be transferred to the new
 :func:`_orm.relationship` when generated::

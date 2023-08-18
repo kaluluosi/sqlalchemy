@@ -116,9 +116,9 @@ operations.
 
 .. seealso::
 
-  :ref:`event_toplevel`
+  :ref:`event_toplevel` 
 
-:ticket:`1902`
+:ticket:`1902` 
 
 Hybrid Attributes, implements/supersedes synonym(), comparable_property()
 -------------------------------------------------------------------------
@@ -143,9 +143,9 @@ otherwise.
 
 .. seealso::
 
-  :ref:`hybrids_toplevel`
+  :ref:`hybrids_toplevel` 
 
-:ticket:`1903`
+:ticket:`1903` 
 
 Speed Enhancements
 ------------------
@@ -230,11 +230,11 @@ to existing composite usage.
 
 .. seealso::
 
-  :ref:`mapper_composite`
+  :ref:`mapper_composite` 
 
-  :ref:`mutable_toplevel`
+  :ref:`mutable_toplevel` 
 
-:ticket:`2008` :ticket:`2024`
+:ticket:`2008` :ticket:` 2024`
 
 More succinct form of query.join(target, onclause)
 --------------------------------------------------
@@ -276,24 +276,24 @@ unchanged:
 <https://www.sqlalchemy.org/docs/07/orm/tutorial.html
 #querying-with-joins>`_
 
-:ticket:`1923`
+:ticket:`1923` 
 
 .. _07_migration_mutation_extension:
 
 Mutation event extension, supersedes "mutable=True"
 ---------------------------------------------------
 
-A new extension, :ref:`mutable_toplevel`, provides a
+A new extension, :ref:`mutable_toplevel` , provides a
 mechanism by which user-defined datatypes can provide change
 events back to the owning parent or parents.   The extension
 includes an approach for scalar database values, such as
-those managed by :class:`.PickleType`, ``postgresql.ARRAY``, or
+those managed by :class:`.PickleType` , ``postgresql.ARRAY``, or
 other custom ``MutableType`` classes, as well as an approach
-for ORM "composites", those configured using :func:`~.sqlalchemy.orm.composite`.
+for ORM "composites", those configured using :func:`~.sqlalchemy.orm.composite` .
 
 .. seealso::
 
-    :ref:`mutable_toplevel`
+    :ref:`mutable_toplevel` 
 
 NULLS FIRST / NULLS LAST operators
 ----------------------------------
@@ -304,11 +304,11 @@ These are implemented as an extension to the ``asc()`` and
 
 .. seealso::
 
-    :func:`.nullsfirst`
+    :func:`.nullsfirst` 
 
-    :func:`.nullslast`
+    :func:`.nullslast` 
 
-:ticket:`723`
+:ticket:`723` 
 
 select.distinct(), query.distinct() accepts \*args for PostgreSQL DISTINCT ON
 -----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ on_api.html#sqlalchemy.sql.expression.Select.distinct>`_
 `Query.distinct() <https://www.sqlalchemy.org/docs/07/orm/que
 ry.html#sqlalchemy.orm.query.Query.distinct>`_
 
-:ticket:`1069`
+:ticket:`1069` 
 
 ``Index()`` can be placed inline inside of ``Table``, ``__table_args__``
 ------------------------------------------------------------------------
@@ -414,7 +414,7 @@ SQL:
 ocs/07/core/expression_api.html#sqlalchemy.sql.expression.ov
 er>`_
 
-:ticket:`1844`
+:ticket:`1844` 
 
 execution_options() on Connection accepts "isolation_level" argument
 --------------------------------------------------------------------
@@ -433,7 +433,7 @@ the PostgreSQL and SQLite backends.
 /connections.html#sqlalchemy.engine.base.Connection.executio
 n_options>`_
 
-:ticket:`2001`
+:ticket:`2001` 
 
 ``TypeDecorator`` works with integer primary key columns
 --------------------------------------------------------
@@ -447,7 +447,7 @@ that lastrowid mechanisms continue to function.   The
 processor applied to newly generated primary keys, including
 those received by the DBAPI ``cursor.lastrowid`` accessor.
 
-:ticket:`2005` :ticket:`2006`
+:ticket:`2005` :ticket:` 2006`
 
 ``TypeDecorator`` is present in the "sqlalchemy" import space
 -------------------------------------------------------------
@@ -523,7 +523,7 @@ that is, the original query is preserved entirely inside of
 a subquery, with no more guessing as to how count should be
 applied.
 
-:ticket:`2093`
+:ticket:`2093` 
 
 To emit a non-subquery form of count()
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -558,7 +558,7 @@ except for Sybase).  This allows better query optimizer
 performance as the textual string for multiple statements
 with differing LIMIT/OFFSET are now identical.
 
-:ticket:`805`
+:ticket:`805` 
 
 Logging enhancements
 --------------------
@@ -572,7 +572,7 @@ of ``echo`` being local to individual engines without the
 need for additional identifying strings local to those
 engines.
 
-:ticket:`1926`
+:ticket:`1926` 
 
 Simplified polymorphic_on assignment
 ------------------------------------
@@ -592,7 +592,7 @@ in behavior from any other column-mapped attribute; 3. the
 internals of the mapper during flush are simplified and no
 longer need to make special checks for this column.
 
-:ticket:`1895`
+:ticket:`1895` 
 
 contains_eager() chains across multiple paths (i.e. "all()")
 ------------------------------------------------------------
@@ -611,7 +611,7 @@ you can say:
 
     session.query(A).options(contains_eager(A.b, B.c))
 
-:ticket:`2032`
+:ticket:`2032` 
 
 Flushing of orphans that have no parent is allowed
 --------------------------------------------------
@@ -634,7 +634,7 @@ foreign key is nullable, then the row can be inserted.   The
 particular parent, and is then disassociated with that
 parent, leading to a DELETE statement emitted for it.
 
-:ticket:`1912`
+:ticket:`1912` 
 
 Warnings generated when collection members, scalar referents not part of the flush
 ----------------------------------------------------------------------------------
@@ -657,7 +657,7 @@ The new behavior is that a warning is emitted, for the
 purposes of alerting to a situation that more often than not
 is the source of unexpected behavior.
 
-:ticket:`1973`
+:ticket:`1973` 
 
 Setup no longer installs a Nose plugin
 --------------------------------------
@@ -682,7 +682,7 @@ was an even worse idea, producing an extra package in Python
 environments.   The ``sqla_nose.py`` script in 0.7 is now
 the only way to run the tests with nose.
 
-:ticket:`1949`
+:ticket:`1949` 
 
 Non-``Table``-derived constructs can be mapped
 ----------------------------------------------
@@ -703,7 +703,7 @@ function, can be mapped.
     selectable = select(["x", "y", "z"]).select_from(func.some_db_function()).alias()
     mapper(Subset, selectable, primary_key=[selectable.c.x])
 
-:ticket:`1876`
+:ticket:`1876` 
 
 aliased() accepts ``FromClause`` elements
 -----------------------------------------
@@ -714,7 +714,7 @@ is passed to the ``orm.aliased()`` construct, it passes
 through to the ``.alias()`` method of that from construct
 rather than constructing an ORM level ``AliasedClass``.
 
-:ticket:`2018`
+:ticket:`2018` 
 
 Session.connection(), Session.execute() accept 'bind'
 -----------------------------------------------------
@@ -731,7 +731,7 @@ ession.html#sqlalchemy.orm.session.Session.connection>`_
 `Session.execute <https://www.sqlalchemy.org/docs/07/orm/sess
 ion.html#sqlalchemy.orm.session.Session.execute>`_
 
-:ticket:`1996`
+:ticket:`1996` 
 
 Standalone bind parameters in columns clause auto-labeled.
 ----------------------------------------------------------
@@ -748,14 +748,14 @@ This so that a script that changes the current directory
 will continue to target the same location as subsequent
 SQLite connections are established.
 
-:ticket:`2036`
+:ticket:`2036` 
 
 MS-SQL - ``String``/``Unicode``/``VARCHAR``/``NVARCHAR``/``VARBINARY`` emit "max" for no length
 -----------------------------------------------------------------------------------------------
 
 On the MS-SQL backend, the String/Unicode types, and their
 counterparts VARCHAR/ NVARCHAR, as well as VARBINARY
-(:ticket:`1833`) emit "max" as the length when no length is
+(:ticket:`1833` ) emit "max" as the length when no length is
 specified. This makes it more compatible with PostgreSQL's
 VARCHAR type which is similarly unbounded when no length
 specified.   SQL Server defaults the length on these types
@@ -809,7 +809,7 @@ and require in-place mutation detection, should migrate to
 the new mutation tracking system, as ``mutable=True`` is
 likely to be deprecated in the future.
 
-:ticket:`1980`
+:ticket:`1980` 
 
 Mutability detection of ``composite()`` requires the Mutation Tracking Extension
 --------------------------------------------------------------------------------
@@ -863,7 +863,7 @@ https://www.sqlalchemy.org/docs/dialects/sqlite.html#using-
 temporary-tables-with-sqlite if temporary tables beyond the
 scope of one pool connection are desired.
 
-:ticket:`1921`
+:ticket:`1921` 
 
 ``Session.merge()`` checks version ids for versioned mappers
 ------------------------------------------------------------
@@ -884,7 +884,7 @@ This check was confirmed by examining what Hibernate does -
 both the ``merge()`` and the versioning features were
 originally adapted from Hibernate.
 
-:ticket:`2027`
+:ticket:`2027` 
 
 Tuple label names in Query Improved
 -----------------------------------
@@ -910,7 +910,7 @@ be ``spam``.  Previously it would be something like
 things, which is inconsistent with the name ``spam`` in the
 case of a non-unioned query.
 
-:ticket:`1942`
+:ticket:`1942` 
 
 Mapped column attributes reference the most specific column first
 -----------------------------------------------------------------
@@ -1030,13 +1030,13 @@ corruption, the row comes in with all the columns
 corresponding to "child" set to NULL - this is now the value
 that gets populated, not the one in the parent table.
 
-:ticket:`1892`
+:ticket:`1892` 
 
 Mapping to joins with two or more same-named columns requires explicit declaration
 ----------------------------------------------------------------------------------
 
 This is somewhat related to the previous change in
-:ticket:`1892`.   When mapping to a join, same-named columns
+:ticket:`1892` .   When mapping to a join, same-named columns
 must be explicitly linked to mapped attributes, i.e. as
 described in `Mapping a Class Against Multiple Tables <http:
 //www.sqlalchemy.org/docs/07/orm/mapper_config.html#mapping-
@@ -1062,7 +1062,7 @@ explicit:
     foobar = foo.join(bar, foo.c.id == bar.c.foo_id)
     mapper(FooBar, foobar, properties={"id": [foo.c.id, bar.c.id]})
 
-:ticket:`1896`
+:ticket:`1896` 
 
 Mapper requires that polymorphic_on column be present in the mapped selectable
 ------------------------------------------------------------------------------
@@ -1088,7 +1088,7 @@ be ignored.  It is however potentially backwards
 incompatible in the rare case that an application has been
 unknowingly relying upon this behavior.
 
-:ticket:`1875`
+:ticket:`1875` 
 
 ``DDL()`` constructs now escape percent signs
 ---------------------------------------------
@@ -1100,7 +1100,7 @@ mysql-python), which was inconsistent versus ``text()``
 constructs which did this automatically.  The same escaping
 now occurs for ``DDL()`` as for ``text()``.
 
-:ticket:`1897`
+:ticket:`1897` 
 
 ``Table.c`` / ``MetaData.tables`` refined a bit, don't allow direct mutation
 ----------------------------------------------------------------------------
@@ -1131,7 +1131,7 @@ unit tests, narrowing the paths to mutation of these
 collections will ensure no application is attempting to rely
 upon usages that are currently not supported.
 
-:ticket:`1893` :ticket:`1917`
+:ticket:`1893` :ticket:` 1917`
 
 server_default consistently returns None for all inserted_primary_key values
 ----------------------------------------------------------------------------
@@ -1151,7 +1151,7 @@ col with a server_default sets the "autoincrement" flag to
 False, except in the case of a PG SERIAL col where we
 detected a sequence default.
 
-:ticket:`2020` :ticket:`2021`
+:ticket:`2020` :ticket:` 2021`
 
 The ``sqlalchemy.exceptions`` alias in sys.modules is removed
 -------------------------------------------------------------
@@ -1213,7 +1213,7 @@ needed for an application to call ``configure_mappers()`` as
 this process occurs on an as-needed basis, as soon as the
 mappings are needed via attribute or query access.
 
-:ticket:`1966`
+:ticket:`1966` 
 
 Core listener/proxy superseded by event listeners
 -------------------------------------------------
@@ -1268,7 +1268,7 @@ Backwards Incompatible API Changes
 Callables passed to ``bindparam()`` don't get evaluated - affects the Beaker example
 ------------------------------------------------------------------------------------
 
-:ticket:`1950`
+:ticket:`1950` 
 
 Note this affects the Beaker caching example, where the
 workings of the ``_params_from_query()`` function needed a
@@ -1286,7 +1286,7 @@ associating Python types in a one-to-one fashion has some
 grey areas that should are best decided by individual
 applications, so we've underscored this attribute.
 
-:ticket:`1870`
+:ticket:`1870` 
 
 Renamed the ``alias`` keyword arg of standalone ``alias()`` function to ``name``
 --------------------------------------------------------------------------------
@@ -1328,7 +1328,7 @@ Pooling methods now underscored or removed:
 ``SingletonThreadPool.dispose_local()`` -> removed, use
 ``conn.invalidate()``
 
-:ticket:`1982`
+:ticket:`1982` 
 
 Previously Deprecated, Now Removed
 ==================================

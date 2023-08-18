@@ -1,221 +1,323 @@
+:orphan:
+
 .. _errors:
 
-==============
+=============
 错误消息
-==============
+=============
 
-这个部分列出了常见的SQLAlchemy抛出或发出的错误消息和警告的描述和背景。
+本节列出 SQLAlchemy 引发的常见错误消息和警告的描述和背景。
 
-SQLAlchemy通常会在SQLAlchemy特定的异常类上下文中引发错误。有关这些类的详细信息，请参见 :ref:`core_exceptions_toplevel` 和 :ref:`orm_exceptions_toplevel`。
+SQLAlchemy 通常在 SQLAlchemy 特定的异常中引发错误。
+有关这些类的详细信息，请参见   :ref:`core_exceptions_toplevel`  和   :ref:` orm_exceptions_toplevel` 。
 
-SQLAlchemy错误可以大致分为两类，即 **编程时间错误** 和 **运行时错误**。编程时间错误是由于使用错误的参数调用函数或方法或来自无法解析的其他配置导向方法，如映射器配置而引发的。编程时间错误通常是即时的和确定性的。另一方面，运行时错误表示程序在响应发生在任意情况下的某些条件时发生的失败，例如数据库连接被用尽或发生某些与数据相关的问题。运行时错误更可能在正在运行的应用程序的日志中看到，因为程序在遇到这些状态时会响应加载和遇到的数据。
+SQLAlchemy 错误大致可分为两类：**编程时错误**和**运行时错误**。
+编程时错误是由于使用不正确的参数调用函数或方法或来自无法解决的其他配置导向的方法而引发的。
+编程时错误通常是即时的和确定性的。相反，运行时错误表示程序在相应地以任意方式运行时发生的错误，
+例如数据库连接被耗尽或发生某些数据相关问题。运行时错误更可能在运行应用程序时的日志中看到，
+因为程序在遇到这些状态时，会响应加载和遇到的数据。
 
-由于运行时错误不容易重现，并且经常发生在程序运行时，以响应某些任意条件，例如数据库连接被耗尽或出现某些数据相关问题，因此它们更难于调试，并且还会影响已经投入生产的程序。
+由于运行时错误不容易重现，并且通常是作为响应某些任意条件发生的，因此对于调试来说比较困难，
+并且也会影响已经投入生产的程序。
 
-在本节中，目标是尝试提供有关一些常见的运行时错误以及编程时间错误的背景。
+在本节中，目标是尝试提供有关一些常见的运行时错误及编程时错误的背景信息。
+
+
 
 连接和事务
 ----------------------------
 
 .. _error_3o7r:
 
-达到size <x>的QueuePool限制，连接已超时，超时时间 <z>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+队列池大小限制 <x> 溢出 <y>，连接超时，超时 <z>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-这可能是经验最丰富的常见的运行时错误，因为它直接涉及应用程序的工作负载，对几乎所有SQLAlchemy应用程序都适用的配置限制，这是一种直接应用的负载。
+这可能是最常见的运行时错误，
+因为它直接涉及应用程序的工作负荷超过了配置的限制，这通常适用于几乎所有 SQLAlchemy 应用程序。
 
-以下几点总结了此错误的含义，从大多数SQLAlchemy用户应已熟悉的最基本的点开始。
+以下是总结此错误的要点，从大多数 SQLAlchemy 用户应该已经熟悉的最基本的要点开始。
 
-* **SQLAlchemy引擎对象默认使用连接池** - 这意味着当一个 :class:`_engine.Engine` 对象的SQL数据库连接资源被使用，并且释放了这个资源之后，数据库连接本身仍然连到数据库，并且返回到内部队列中，可以重新使用它。即使代码似乎正在与数据库结束对话，在许多情况下，应用程序仍将保留一定数量的数据库连接，这些连接会持续，直到应用程序结束或显示丢弃池。
+* **SQLAlchemy 引擎对象默认使用连接池** - 这意味着当使用   :class:`_engine.Engine`  对象的 SQL 数据库连接资源时，
+  然后  :term:`releases`  该资源，该数据库连接本身仍连接到数据库，并返回到内部队列，可以再次使用。尽管代码似乎正在
+  结束与数据库的对话，在许多情况下，应用程序将仍保留一定数量的数据库连接，这些连接在应用程序结束或池显式释放之前一直存在。
 
-* 由于连接池，当一个应用程序使用SQL数据库连接时，大多数情况下从 :meth:`_engine.Engine.connect` 中返回，或在使用ORM :class:`.Session` 时进行查询，这些操作并不一定在获取连接对象时立即建立新的数据库连接；相反，它会查询连接池以获取连接，它通常会从池中检索一个现有连接以重新使用。如果没有可用的连接，则连接池将创建一个新的数据库连接，但仅当池未超过配置容量时。
+* 由于池，当应用程序使用 SQL 数据库连接时，通常最常使用的是  :meth:`_engine.Engine.connect` 
+  或使用 ORM 的查询   :class:`.Session` ，此操作未必在获取连接对象时立即与数据库建立新连接;
+  它将查询连接池以获取一个连接，该池通常从中检索要重新使用的现有连接。如果没有可用的连接，池将创建一个
+  新的数据库连接，但仅在池未超过配置的容量时。
 
-* 在大多数情况下使用的默认池称为 :class:`.QueuePool`。当要求此池提供连接但没有可用连接时，如果正在播放的**总连接数小于配置的值**，它将创建一个新连接。该值等于**池的大小加上max overflow大小**。这意味着如果您已经配置了引擎作为：
+* 在大多数情况下使用的默认池名为   :class:`.QueuePool` 。当您要求此池提供连接而没有可用连接时，
+  它将创建一个新的连接，**如果播放的总连接数少于配置的值**，这个值等于**池大小加上最大溢出**。这意味着，
+  如果您已将引擎配置为:: 
 
-   engine = create_engine("mysql+mysqldb://u:p@host/db", pool_size = 10, max_overflow = 20)
+   engine = create_engine("mysql+mysqldb://u:p@host/db", pool_size=10, max_overflow=20)
 
-   上述 :class:`_engine.Engine` 将允许在任何时间最多30个连接，不包括从引擎分离或失效的连接。如果到达新连接的请求并且已经有30个连接被其他应用程序的其他部分使用，则连接池将阻塞一段固定的时间，然后超时并引发此错误消息。
+  上面，   :class:`_engine.Engine`  将允许任意时间内最多有 **30 个连接**，这不包括已从引擎中分离或失效的连接。如果到达新连接的请求，
+  并且已有 30 个连接正在应用程序的其他部分中使用，则连接池将在固定的时间内阻塞，然后超时并引发此错误消息。
 
-   为了允许同时使用更多的连接，可以使用 :paramref:`_sa.create_engine.pool_size` 和 :paramref:`_sa.create_engine.max_overflow` 传递给  :func:`_sa.create_engine` 函数的参数来调整池。等待连接可用的超时时间是使用 :paramref:`_sa.create_engine.pool_timeout` 参数配置的。
+  为了允许同时使用更多的连接，池可以使用  :paramref:`_sa.create_engine.pool_size` 
+  和  :paramref:`_sa.create_engine.max_overflow`  参数调整，作为   :func:` _sa.create_engine` 
+  函数传递。等待连接可用的超时是通过配置  :paramref:`_sa.create_engine.pool_timeout`  参数来配置的。
 
-* 可以通过将 :paramref:`_sa.create_engine.max_overflow` 设置为值“-1”来配置池具有无限制的溢出。使用此设置时，池仍将维护固定数量的连接池，但如果没有可用连接，则不会无条件地阻止请求新连接。
+* 通过将  :paramref:`_sa.create_engine.max_overflow`  设置为-1，可以配置池具有无限溢出。在此设置下，
+  池仍会维护一组固定的连接池，但如果没有可用连接，则不会阻塞对新连接的请求。但是，在此方式下运行时，
+  如果应用程序存在耗尽所有可用连通性资源的问题，则最终会在数据库本身的可用连接数限制下出现错误。
+  更严重的是，当应用程序耗尽数据库的连接时，它通常会导致使用了大量资源失败，并且可能会干扰其它应用程序和依赖于连接到数据库的数据库状态机制。
 
-  但是，以这种方式运行时，如果应用程序存在使用所有可用连接可用性资源的问题，则最终会达到数据库本身的可用连接限制，从而再次返回错误。更为严重的是，当应用程序耗尽数据库的连接时，通常会使用大量的资源，并且可能会干扰依赖于能够连接到数据库的其他应用程序和数据库状态机制。
+  考虑到以上情况，连接池可以被看作是连接使用的**安全阀门**，提供了对流氓应用程序防止整个数据库
+  变为对所有其他应用程序不可用的重要保护层。在收到此错误消息时，最好修复使用太多连接和/或适当配置限制，
+  而不是允许无限溢出，这实际上并没有解决根本问题。
 
-  鉴于上述原因，连接池可以看作是连接使用的 **安全阀**，为防止恶意应用程序导致整个数据库对所有其他应用程序不可用，从而提供了关键的保护层。当收到此错误消息时，最好使用使用过多连接的问题进行修复和/或适当地配置限制，而不是允许无限制的溢出，因为这并不实际解决潜在的问题。
+是什么导致应用程序使用完所有可用的连接？
 
-是什么导致应用程序使用完所有可用连接？
+* **应用程序面临的并发请求数过多** - 这是最直接的原因。如果您有一个运行在允许 30
+  个并发线程的线程池中的应用程序，并且每个线程使用一个连接，如果您的池未配置为允许同时
+  有至少30个连接签出，则在您的应用程序接收足够的并发请求后，您将获得此错误。
+  解决方法是提高池的限制或降低并行线程的数量。
 
-* **应用程序正在处理太多并发请求以基于池的配置做工作** - 这是最直接的原因。如果您有一个运行于允许30个并发线程的线程池中的应用程序，并且每个线程使用一个连接，在不允许同时检出至少30个连接的情况下，一旦您的应用程序接收到足够的并发请求，您将获得此错误。解决方案是提高池的限制或降低并发线程的数量。
+* **应用程序未将连接还回池** - 这是第二个最常见的原因，即应用程序使用连接池，
+   但程序未终止使用此连接资源，而是将其保持打开状态。连接池以及 ORM 的   :class:`.Session`  均具有逻辑，
+  当回收 session 和/或 connection 对象时，会释放底层连接资源，但不能依赖此行为及时释放资源。
 
-* **应用程序没有将连接返回到池中** - 这是下一个最常见的原因，即应用程序正在使用连接池，但该程序正在未能 :term:`释放` 这些连接，而是将它们保持打开状态。无论ORM会话和/或连接对象何时被垃圾回收，它会导致底层连接资源被释放，但是在及时释放资源方面，无法依赖这种行为。
+  发生这种情况的常见原因是应用程序使用 ORM 会话并且在完成涉及该会话的工作后未调用  :meth:`.Session.close` 。
+  解决方法是，确保使用 ORM 会话（如果使用 ORM）或使用 Core 接口绑定的   :class:`_engine.Connection`  对象在完成工作后被显式关闭，
+  即通过适当的 ``.close()`` 方法或使用其中一个可用的上下文管理器（例如 “with:” 语句）正确释放资源。
 
-  这种情况可能会发生的一个常见原因是，应用程序使用ORM会话并在完成涉及该会话的工作之后没有调用 :meth:`.Session.close`。应该确保ORM会话（如果使用ORM）还是绑定到引擎的 :class:`_engine.Connection` 对象（如果使用Core），在完成工作的结束时被明确关闭，通过适当的 ``.close()`` 方法或使用可用上下文管理器（例如“with:”语句）之一来释放资源。
+* **应用程序尝试运行长时间的事务** - 数据库事务是一种非常昂贵的资源，
+  不应该**保持空闲等待某个事件发生**。如果应用程序正在等待用户按按钮，或来自长时间运行的作业队列中传递
+  的结果，或保持打开的持久连接到浏览器，则不要为整个时间**都保持数据库事务打开**。当应用程序需要使用数据库并与事件交互时，
+  在此时开启一个短寿命的事务，然后关闭它。
 
-* **应用程序正试图运行长时间运行的事务** - 数据库事务是非常昂贵的资源，并且应该**永远不要闲置等待某些事件发生**。如果应用程序正在等待用户按按钮或等待长时间运行作业队列的结果，或者正在持久保持连接到浏览器，则**不要将数据库事务保持打开状态**。由于应用程序需要与数据库交互并与事件交互，因此在该点打开短暂的事务然后关闭它。
+* **应用程序死锁** - 这也是此错误的常见原因，更难以理解，如果应用程序不能完成其对连接的使用，
+  无论是由于应用程序侧还是由于数据库侧死锁，应用程序可能会使用完所有可用连接，从而导致其他请求接收此错误。
+  死锁原因包括：
 
-* **应用程序死锁** -这也是产生此错误的常见原因，而且更难以理解，如果应用程序无法完成对连接的使用，无论是由于应用程序端还是由于数据库端的死锁，应用程序可以使用所有可用连接，这然后导致额外的请求接收到此错误。死锁的原因包括：
+  * 使用诸如 gevent 或 eventlet 等隐式异步系统而未正确 monkeypatch 所有套接字库和驱动程序，
+  或者隐式异步系统在未在全面覆盖所有 monkeypatched 驱动程序方法方面存在 bug，
+  或者非常不常见的情况是，如果异步系统用于 CPU 绑定工作负载，那么使用数据库资源的 greenlets 只需等太长时间才能对其进行处理。
+  对于绝大多数关系型数据库操作，隐式和显式异步编程框架通常不是必要或适当的；如果应用程序必须在某些功能区域使用异步系统，
+  最好是让面向数据库业务方法在传递消息到应用程序的异步部分中运行传统线程。
 
-  * 使用隐式异步系统（如gevent或eventlet）而没有正确的 monkeypatching 所有场景库和驱动程序，或者有错误，在不完全覆盖所有monkeypatched驱动程序方法方面，或者在使用异步系统进行对CPU绑定工作负载的情况下，使用数据库资源的greenlets简单地等待太长时间而无法对其进行处理。对于绝大多数关系型数据库操作，隐式或显式异步编程框架通常是不必要的或不适用的。如果应用程序必须在某些功能区域中使用异步系统，则最好运行数据库导向的业务方法在传统线程中运行，该线程向应用程序的异步部分传递消息。
+  * 数据库侧死锁，例如相互死锁的行
 
-  * 数据库死锁，例如行彼此死锁
+  * 线程错误，例如互锁的互斥锁，或在同一线程中调用已被锁定的互斥锁
 
-  * 线程错误，例如互斥体在互斥死锁中，或在同一线程中调用已锁定的互斥体
-
-请记住，使用连接池的替代方法是完全关闭池。有关此问题的背景，请参见 :ref:`pool_switching` 部分。但是，请注意，当此错误消息发生时，它始终是由应用程序本身中的更大问题造成的；池只有在早期阶段揭示了该问题。
-
-.. seealso::
-
- :ref:`pooling_toplevel`
-
- :ref:`connections_toplevel`
+请记住，除了使用池之外还有一种替代方法，即完全关闭池。
+请参见   :ref:`pool_switching`  部分，了解有关此背景信息。但是，请注意，当出现此错误消息时，
+它始终由应用程序本身中更大的问题引起；池只有帮助更早地暴露了该问题。
 
 
-.. _error_8s2b:
 
-在继续之前, 请将无效事务完全回滚。请回滚()
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-此错误情况指的是 :class:`_engine.Connection` 已失效，由于检测到数据库断开连接或由于显式调用了 :meth:`_engine.Connection.invalidate`，但仍然存在一个事务，该事务由 :meth:`_engine.Connection.begin` 方法明确或由于连接在发出任何SQL语句时自动开始，而处于“未完成”状态。连接无效专为不再使用的一次性使用而设计，并用于避免该语言之前的历史中可能存在的问题，它通常伴随有较多消耗的项目。
 
-.. _error_dbapi:
-
-DBAPI错误
+DBAPI 错误
 ------------
 
-Python数据库API或DBAPI是数据库驱动程序的规范，可在 `Pep 249 <https://www.python.org/dev/peps/pep-0249/>`_ 上找到。此API指定了一组异常类，其能够适应数据库的所有故障模式。
+Python 数据库 API（DBAPI）是定位于数据库驱动程序
+的规范，它位于 `Pep-249 <https://www.python.org/dev/peps/pep-0249/>`_ 中。
+该 API 指定了适应数据库的完整故障模式所需要的一组异常类。
 
-SQLAlchemy不会直接生成这些异常。相反，它们被从数据库驱动程序拦截并由SQLAlchemy提供的异常 :class:`.DBAPIError` 进行包装，但是异常消息是 **由驱动程序生成的，而不是SQLAlchemy** 。
+SQLAlchemy 并不直接生成这些异常。相反，它们被从数据库驱动程序中拦截并由由 SQLAlchemy 提供的异常   :class:`.DBAPIError` 包装，
+但是该异常中的消息是**由驱动程序生成，而不是 SQLAlchemy 生成的**。
 
 .. _error_rvf5:
 
 InterfaceError
 ~~~~~~~~~~~~~~
 
-与数据库本身相关，而非数据库接口的错误引发的异常。
+与数据库本身而不是与数据库接口相关的错误引发的异常。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
 
-“InterfaceError”有时由驱动程序在上下文中引发，而数据库连接被放弃，或无法连接到数据库。有关如何处理此问题的提示，请参见 :ref:`pool_disconnects`。
+“InterfaceError”有时由驱动程序在上下文中引发，
+因为检测到了数据库连接是否断开，或者无法连接到数据库。有关如何处理此问题的提示，请参见   :ref:`pool_disconnects`  部分。
+
+
+
+
 
 .. _error_4xp6:
 
 DatabaseError
 ~~~~~~~~~~~~~
 
-与数据库本身相关而不是与传递的接口或数据相关的错误引发的异常。
+与数据库本身而不是与所传输数据或接口相关的错误引发的异常。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
+
+
+
+
 
 .. _error_9h9h:
 
 DataError
 ~~~~~~~~~
 
-与处理的数据存在问题（例如除以零，数字值超出范围等）相关的错误引发的异常。
+由于处理数据时出现问题（例如被零整除、数字值超出范围等）而引发的异常。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
+
+
+
+
 
 .. _error_e3q8:
 
 OperationalError
 ~~~~~~~~~~~~~~~~
 
-与数据库操作相关，而不一定受程序员控制的错误引发的异常，例如。出现意外断开连接，未找到数据源名称，无法处理事务，处理过程中发生内存分配错误等。。
+与数据库的操作而不是程序员控制下的错误相关引发的异常，例如，出现意外断开连接，
+数据源名称未找到，无法处理事务，执行期间发生内存分配错误等。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
 
-“OperationalError”是由许多驱动程序（但不是唯一的）在上下文中使用了丢失的数据库连接或无法连接到数据库时使用的错误类别。有关如何处理此问题的提示，请参见 :ref:`pool_disconnects`。
+“OperationalError”是驱动程序在上下文中使用的最常见（但并非唯一）错误类，
+因为数据库连接被丢弃，或无法连接到数据库。有关如何处理此问题的提示，请参见   :ref:`pool_disconnects`  部分。
+
+
+
+
+
 
 .. _error_gkpj:
 
 IntegrityError
 ~~~~~~~~~~~~~~
 
-与数据库的关系完整性受到影响，例如外键检查失败时引发的异常。
+在影响数据库的关系完整性时引发的异常，例如，外键检查失败。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
+
+
+
+
 
 .. _error_2j85:
 
 InternalError
 ~~~~~~~~~~~~~
 
-数据库遇到内部错误时引发的异常，例如，光标不再有效，事务不同步等。
+在数据库遇到内部错误时引发的异常，例如，光标不再有效，事务不同步等。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
 
-“InternalError”有时由驱动程序在上下文中引发，而数据库连接被放弃，或无法连接到数据库。有关如何处理此问题的提示，请参见 :ref:`pool_disconnects`。
+“InternalError”有时由驱动程序在上下文中引发，
+因为检测到了数据库连接是否断开，或者无法连接到数据库。有关如何处理此问题的提示，请参见   :ref:`pool_disconnects`  部分。
+
+
+
+
 
 .. _error_f405:
 
 ProgrammingError
 ~~~~~~~~~~~~~~~~
 
-与编程错误相关的异常，例如，未找到表或表已存在，SQL语句中的语法错误，指定的参数数量不正确等。
+与编程错误相关的异常，例如，找不到或已存在表，SQL 语句中的语法错误，指定了错误数量的参数等。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
 
-“ProgrammingError”有时由驱动程序在上下文中引发，而数据库连接被放弃，或无法连接到数据库。有关如何处理此问题的提示，请参见 :ref:`pool_disconnects`。
+“ProgrammingError”有时由驱动程序在上下文中引发，
+因为检测到了数据库连接是否断开，或者无法连接到数据库。有关如何处理此问题的提示，请参见   :ref:`pool_disconnects`  部分。
+
+
+
+
 
 .. _error_tw8g:
 
 NotSupportedError
 ~~~~~~~~~~~~~~~~~
 
-在使用不支持的方法或数据库API的情况下引发异常，例如，在不支持事务或关闭事务的连接上请求.rollback()。
+在使用不支持的方法或数据库 API 的情况下引发的异常，例如，在不支持事务的连接上请求 .rollback()。
 
-此错误是一个 :ref:`DBAPI Error <error_dbapi>`，起源于数据库驱动程序（DBAPI），而非SQLAlchemy本身。
+这是个   :ref:`DBAPI 错误 <error_dbapi>`  ，并起源于
+数据库驱动程序（DBAPI），而不是 SQLAlchemy 本身。
 
-SQL表达式语言
+
+
+
+SQL 表达式语言
 -----------------------
 .. _error_cprf:
 .. _caching_caveats:
 
-Object will not produce a cache key, Performance Implications
+对象不会生成缓存键，性能影响
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-从版本1.4开始，SQLAlchemy包括一个 :ref:`SQL compilation caching facility <sql_caching>` ，可以使Core和ORM SQL结构在缓存其字符化形式时，包括用于从语句中检索结果的其他结构信息，允许在下一次使用完全相等结构的构造时跳过相对昂贵的字符串编译过程。该系统依赖于对所有SQL构造实现的功能，包括对象 :class:`_schema.Column`、:func:`_sql.select` 和 :class:`_types.TypeEngine`，以产生一个 **缓存密钥** 以完全表示其状态，因为它影响SQL编译过程。
+SQLAlchemy 版本 1.4 包括一个   :ref:`SQL 编译缓存设施 <sql_caching>` ，其会使 Core 和 ORM SQL 构造缓存其字符串形式，
+以及用于从语句获取结果的其他结构信息，允许相对昂贵的字符串编译过程在下次使用另一构造时跳过。该系统依赖于所有 SQL 构造
+（例如   :class:`_schema.Column` ，  :func:` _sql.select`  和   :class:`_types.TypeEngine`  对象）实现用于生成完全表示它们的状态的**缓存键**，
+到了这个程度影响 SQL 编译过程。
 
-如果这些警告涉及到诸如 :class:`_schema.Column` 之类的广泛使用对象，并且显示影响到发出的大多数SQL结构（使用 :ref:`sql_caching_logging` 中描述的估计技术），以至于在应用程序中通常不启用缓存，这会对性能产生负面影响，并且在某些情况下，实际上会与先前的SQLAlchemy版本相比产生 **性能降级**。 :ref:`faq_new_caching` 在附加详细信息中涵盖了此内容。
+如果警告涉及广泛使用的对象，例如   :class:`_schema.Column`  对象，并且显示它们影响了大多数 SQL 构造（使用   :ref:` sql_caching_logging` 
+中描述的估计技术），以便缓存通常对于应用程序是未启用的，这将对性能产生负面影响，并且在某些情况下，甚至可能有效地产生了**性能下降**，
+与之前的 SQLAlchemy 版本相比。   :ref:`faq_new_caching`  在   :ref:` faq_toplevel`  部分中介绍了此问题的详细信息。
 
-缓存会自行禁用
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+如果对于某个特殊的后端，具体作用域的建议，例如在 PostgreSQL 中的 `"insert on conflict" <postgresql_insert_on_conflict>`_ 构造。
+建议使用合理的方法生成缓存键，因此针对特定后端的构造可以缓存它们的 SQL 表示形式。
 
-缓存依赖于能够生成准确代表语句的完整结构的缓存密钥，这些密钥必须在 **一致** 的方式上符合该语句的结构。如果某个特定的SQL构造（或类型）没有必要的指令，允许它生成适当的缓存密钥，则无法安全地启用缓存。
+缓存会在存在任何疑问的情况下禁用
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* 缓存密钥必须表示 **完整的结构**：如果使用两个独立实例的构造可能导致不同的SQL被呈现，则在使用缓存密钥时缓存第一个实例时，使用未能捕获第一个实例和第二个实例之间不同的差异之间的区别的缓存密钥将导致不正确的缓存SQL 字符串和对第二个实例呈现的缓存的使用。
+缓存依赖于能够生成完整表示语句中 **完整的结构** 以使其安全，但保持 **一致** 的“缓存键”。如果某个特定的 SQL 构造（
+或类型）没有适当的指令，该构造将无法生成正确的缓存键，因此不能安全地启用缓存：
 
-* 缓存密钥必须是 **一致的**：例如，如果构造表示每个时间都会更改的状态，例如文字值，则对于该构造重复使用唯一的SQL，这样每个实例都会产生唯一的SQL， 对于相同的SQL结构，只有在实际上进行再次编译所需的数目可能很快填充语句缓存。
+* 缓存键必须表示 **完整的结构** ：如果使用两个单独的实例的使用可能会导致字符串不同的两个实例，
+  则使用第一个元素将字符串化时缓存该 SQL 时将使用与第二元素的区别捕获的不同的参数，并且在“第二场”使用该元素时，
+  会产生错误的 SQL。
 
-出于上述两个原因，SQLAlchemy的缓存系统在决定是否缓存与特定后端特定的构造相关的SQL时非常“谨慎”。
+* 缓存键必须是 **一致的** ：如果构造表示每次都会发生更改的状态，例如文字值，则无法安全地启用缓存，
+  因为重复使用该构造将会快速填满独特的 SQL 字符串缓存，而这些 SQL 字符串通常不会再次使用，无用地消耗缓存区，从而破坏缓存的目的。
 
-缓存引用属性
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+基于这两个原因，SQLAlchemy 的缓存系统对于决定将 SQL 缓存到对象中变得**极度保守**。
 
-警告是根据以下标准发出的。有关每个标准的进一步详细信息，请参见章节 :ref:`faq_new_caching`。
 
-* 本身的 :class:`.Dialect`（即我们传递给 :func:`_sa.create_engine` 的URL的第一部分指定的模块）必须表明它已审查并经过测试以正确支持缓存，这由 :attr:`.Dialect.supports_statement_cache` 属性设置为True表示。当使用第三方方言时，请咨询该方言的维护者，以便他们可以遵循 :ref:`steps to ensure caching may be enabled<engine_thirdparty_caching>` 中的步骤，并发布新版本。
 
-* 继承自 :class:`.TypeDecorator` 或 :class:`.UserDefinedType` 的第三方或用户定义类型必须包括其定义中的 :attr:`.ExternalType.cache_ok` 属性，包括所有衍生子类，遵循 :attr:`.ExternalType.cache_ok` 的文档字符串所描述的准则。与之前一样，如果这些数据类型是从第三方库导入的，请咨询该库的维护者，以便他们可以提供其库的必要更改并发布新版本。
+用于缓存的断言属性
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* 继承自 :class:`_expression.ClauseElement`、 :class:`_schema.Column`、 :class:`_dml.Insert` 等类的第三方或用户定义的SQL构造，包括简单子类以及设计用于与 :ref:`sqlalchemy.ext.compiler_toplevel` 一起使用的构造，应通常包括 :attr:`.HasCacheKey.inherit_cache` 属性， set to True 或 False，根据构造的设计，在 :ref:`compilerext_caching` 中描述的准则，应包括具有缓存密钥的原始实例的缓存密钥。
+警告基于以下标准发出。有关更多详细信息，请参见   :ref:`faq_new_caching` 。
+
+*   :class:`.Dialect` （即我们传递给   :func:` _sa.create_engine`  的 URL 的第一部分指定的模块，例如 `postgresql+psycopg2://`）必须表明它已经得到验证并测试，以支持安全缓存。这由  :attr:`.Dialect.supports_statement_cache`  属性设置为 ` `True`` 时指示。当使用第三方方言时，请与方言的维护人员咨询，以便他们可以遵循   :ref:`步骤，确保可以启用缓存 <engine_thirdparty_caching>`  在其方言中，并发布新版本。
+
+* 这些类型是从   :class:`.TypeDecorator`  或   :class:` .UserDefinedType`  继承的第三方或用户定义类型必须在其定义中包括  :attr:`.ExternalType.cache_ok` 
+  属性，其中包括对所有派生子类都简要描述的该属性定义。如前所述，如果这些数据类型从第三方库导入，则请与该库的维护者商议，以便他们可以提供所需更改以及
+  发布新版本。
+
+* 第三方或用户定义的 SQL 构造，这些构造为某个特定的后端构造专用，例如   :ref:`pragma_foreign_keys` ，均需要使用某些 SQL 编译器类。
+  不适用于默认的   :class:`_sql.compiler.StrSQLCompiler` ，也包括复杂的子类，以及为   :ref:` sqlalchemy.ext.compiler_toplevel`  进行设计的对象，应按照需要包括
+   :attr:`.HasCacheKey.inherit_cache`  属性，并根据构造设计将其设置为 ` `True`` 或 ``False``，按照   :ref:`compilerext_caching`  中的指南描述。
 
 .. seealso::
 
-    :ref:`sql_caching_logging` - 背景观察缓存行为和效率
+      :ref:`sql_caching_logging`  - 可观察缓存行为和效率的背景
 
-    :ref:`faq_new_caching` - 在 :ref:`faq_toplevel` 部分中
+      :ref:`faq_new_caching`  - 在   :ref:` faq_toplevel`  部分中
 
 
-.. _error_l7de:
 
-Compiler StrSQLCompiler can't render element of type <element type>
+
+
+.. _error_cd3x:
+
+Compiler StrSQLCompiler 无法呈现类型为 <x> 的元素
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-在将 SQL 表达式构造串行化出现元素不在默认的编译中时，通常会出现此错误；在这种情况下，将出现对 :class:`.StrSQLCompiler` 类的错误.在不太常见的情况下，当错误类型的SQL表达式与特定类型的数据库后端一起使用时，也会出现该错误；在这些情况下，将命名其他SQL编译器类，例如 ``SQLCompiler`` 或 ``sqlalchemy.dialects.postgresql.PGCompiler``。以下是更特定于“字符化”用例但描述了一般背景的指导方针。
+通常在尝试对包含非默认编译的元素的 SQL 表达式构造进行字符串转换时发生此错误；
+在这种情况下，将命名   :class:`.StrSQLCompiler`  类。
+在较少见的情况下，它也可能会发生在某个特定类型的数据库后端上使用错误类型的 SQL 表达式时；在这些情况下，将命名其他类型的 SQL 编译器类，
+例如``SQLCompiler`` 或 ``sqlalchemy.dialects.postgresql.PGCompiler``。以下是针对字符串化用例更具体的指导方针，但也描述了一般背景。
 
-通常，Core SQL构造或ORM :class:`_query.Query`对象可以直接串行化，如使用 ``print（）`` 时：
+通常，可以直接对 Core SQL 构造或 ORM   :class:`_query.Query`  对象进行字符串化，例如使用 ` `print（）``：
 
 .. sourcecode:: pycon+sql
 
@@ -223,10 +325,11 @@ Compiler StrSQLCompiler can't render element of type <element type>
   >>> print(column("x") == 5)
   {printsql}x = :x_1
 
-从上面的SQL表达式字符串是字符串化，使用的是一个 :class:`.StrSQLCompiler` 编译器类，它是一个特殊的语句编译器，当一个构造没有任何特定于方言的信息就被字符串化时被调用。
+在上面的 SQL 表达式被字符串化时，将使用   :class:`.StrSQLCompiler`  编译器类，这是一个特殊的语句
+编译器，当在没有任何特定于方言的信息的情况下对构造进行字符串化时，将使用该编译器类。
 
-但是，有许多构造是特定于某个特定类型的数据库方言的，例如 PostgreSQL
-“Insert on conflict” construct: ：
+然而，有许多构造是特定于某个特定种类的数据库方言的，而   :class:`.StrSQLCompiler`  并不知道如何将它们转换成字符串，
+例如 PostgreSQL 中的 "insert on conflict" 构造：
 
   >>> from sqlalchemy.dialects.postgresql import insert
   >>> from sqlalchemy import table, column
@@ -243,7 +346,8 @@ Compiler StrSQLCompiler can't render element of type <element type>
   can't render element of type
   <class 'sqlalchemy.dialects.postgresql.dml.OnConflictDoNothing'>
 
-为了将特定于某个特定的后端的构造串行化，必须使用 :meth:`_expression.ClauseElement.compile` 方法，传递 :class:`_engine.Engine` 或 :class:`.Dialect` 对象以调用正确的编译器。在以下示例中，我们使用了PostgreSQL方言：
+为了字符串化特定于特定后端的构造，必须使用  :meth:`_expression.ClauseElement.compile`  方法，传递   :class:` _engine.Engine`  或   :class:`.Dialect`  对象，
+这将调用正确的编译器。 下面我们使用一个 PostgreSQL 方言：
 
 .. sourcecode:: pycon+sql
 
@@ -251,22 +355,23 @@ Compiler StrSQLCompiler can't render element of type <element type>
   >>> print(insert_stmt.compile(dialect=postgresql.dialect()))
   {printsql}INSERT INTO my_table (x) VALUES (%(x)s) ON CONFLICT (y) DO NOTHING
 
-对于ORM :class:`_query.Query`对象，语句可以使用引用 :attr:`~.orm.query.Query.statement` 的方式获得：
+对于 ORM   :class:`_query.Query`  对象，可以使用  :attr:` ~.orm.query.Query.statement`  访问语句::
 
     statement = query.statement
     print(statement.compile(dialect=postgresql.dialect()))
 
-有关有关直接字符串化/编译SQL元素的额外详细信息，请参见FAQ链接。
+有关 SQL 元素直接字符串化/编译的额外详细信息，请参见其 FAQ 链接。
 
 .. seealso::
 
-  :ref:`faq_sql_expression_string`
+    :ref:`faq_sql_expression_string` 
 
 
-TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间的实例
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError：“<operator>”不支持实例之间的'ColumnProperty'和 <something>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-通常情况下，当尝试在SQL表达式上下文中使用 :func:`.column_property` 或 :func:`.deferred` 对象时，通常在声明性中出现此错误，例如：
+在上下文中使用一个   :func:`.column_property`  或   :func:` .deferred`  对象尝试使用 SQL 表达式时，
+通常在声明中发生，如下所示：
 
     class Bar(Base):
         __tablename__ = "bar"
@@ -276,9 +381,14 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
 
         __table_args__ = (CheckConstraint(cprop > 5),)
 
-上面的“cprop”属性在映射之前在行内使用，但是该“cprop”属性不是 :class:`_schema.Column`，它是一个 :class:`.ColumnProperty`，即一个中间对象，因此没有 :class:`_schema.Column` 对象或 :class:`.InstrumentedAttribute` 对象的全部功能映射到完成时将映射到“Bar”类。虽然 :class:`.ColumnProperty` 确实有 ``__clause_element __()`` 方法，允许它在一些以列为导向的上下文中工作，但是在上面所示的开放式比较上下文中是无法工作的，因为它没有 Python 的 ``__eq __（）`` 方法，允许它将与数字“5”的比较解释为SQL表达式而不是正常的Python比较。
+上面的“ cprop”属性用于未映射之前，但该“ cprop”属性不是   :class:`_schema.Column` ,
+它是   :class:`.ColumnProperty` ，这是一个中间对象，因此不具有
+ :class:`_schema.Column` 对象或   :class:` .InstrumentedAttribute`  对象的全部功能，一旦完成声明过程，后者将映射到“ Bar”类。
 
-解决方案是直接使用属性 :attr:`.ColumnProperty.expression` 访问 :class:`_schema.Column`  ：
+虽然   :class:`.ColumnProperty`  有一个 ` `__clause_element__()`` 方法，它允许它在某些面向列的上下文中工作，
+但在上面的示例中，它不能在开放式比较上下文中工作，例如将比较与数字“ 5”作为 SQL 表达式而不是常规 Python 比较。
+
+解决方案是直接访问   :class:`_schema.Column` ，使用  :attr:` .ColumnProperty.expression` ：
 
     class Bar(Base):
         __tablename__ = "bar"
@@ -290,41 +400,44 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
 
 .. _error_cd3x:
 
-在继续之前，必须为绑定参数 <x> 在参数组 <y> 中提供值
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-在执行语句时，如果对 :func:`.bindparam` 利用隐式或显式并没有提供值，则会出现此错误::
 
-    stmt = select(table.c.column).where(table.c.id == bindparam("my_param"))
+.. _error_8s2b:
 
-    result = conn.execute(stmt)
+无法在撤消无效事务之前重新连接。请在继续之前完全回滚（）
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-以上示例中，为“my_param”提供了参数值。因此，正确的方法是：
+此错误条件是指   :class:`_engine.Connection`  被撤销的情况，
+无论是因为检测到数据库断开连接，还是因为调用  :meth:`_engine.Connection.invalidate` ，但仍存在一个事务，
+该事务由  :meth:`_engine.Connection.begin`  方法显式发起，或由连接自动开始在 2.x 系列中发生，当发出任何 SQL 语句时自动开始
+到不合法的状态。当连接无效时，任何   :class:`_engine.Transaction`  正在进行的状态现在都是无效的，
+必须显式回滚才能从   :class:`_engine.Connection`  中删除它。
 
-    result = conn.execute(stmt, my_param=12)
+.. _error_9mi2:
 
-当消息采用“在参数组<paramgrp>中的绑定参数<parammsg>需要值”的形式时，消息指的是执行“executemany”格式时。在这种情况下，语句通常是 INSERT、UPDATE 或 DELETE，并且传递了参数列表。在这种格式下，语句可以根据第一个参数集来动态生成，以包括参数列表中的所有参数位置，其中将使用第一组参数来确定这些应该是什么。
+A ForeignKey’’’ expected named arguments.  If 'name', ‘’’name, ‘constraint', or ‘’’constraintname’ in kwargs, use the corresponding, explicit argument.  If providing the constraint name inline, use name=<name>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-例如，下面的语句是基于第一个参数集计算的，要求参数“a”、“b”和“c”-这些名称确定了最终的字符串格式，该字符串格式将用于列表中的每个参数集。由于第二个实体未包含“b”，因此会生成此错误：
+在创建外键约束时，发生此错误，这是因为 SQLAlchemy 中的关键字参数更改了。
+以如下这种格式传递外键约束：
 
-    m = MetaData()
-    t = Table("t", m, Column("a", Integer), Column("b", Integer), Column("c", Integer))
+    column = Column(Integer, ForeignKey(OtherTable.id))
 
-    e.execute(
-        t.insert(),
-        [
-            {"a": 1, "b": 2, "c": 3},
-            {"a": 2, "c": 4},
-            {"a": 3, "b": 4, "c": 5},
-        ],
-    ).. code-block::
+你需要以以下 format 传外键约束：
+
+    column = Column(Integer, ForeignKey(column=OtherTable.id))、
+
+
+.. code-block::
 
  sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError)
- 参数分组1中的bind参数 'b' 需要值
+ 绑定参数组 1 中需要值 'b'。
  [SQL: u'INSERT INTO t (a, b, c) VALUES (?, ?, ?)']
  [parameters: [{'a': 1, 'c': 3, 'b': 2}, {'a': 2, 'c': 4}, {'a': 3, 'c': 5, 'b': 4}]]
 
-由于"b"参数是必需的，因此将其传递为 ``None`` 可以让 INSERT 继续执行::
+由于“b”是必需的，因此将其传递为“None”，以使INSERT可以继续：
+
+::
 
     e.execute(
         t.insert(),
@@ -337,32 +450,32 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
 
 .. seealso::
 
-  :ref:`tutorial_sending_parameters`
+    :ref:`tutorial_sending_parameters` 
 
 .. _error_89ve:
 
-预期 FROM 子句，得到 Select。要创建 FROM 子句，请使用 .subquery() 方法
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+期望的是FROM子句，实际却是Select。创建FROM子句时，请使用.subquery()方法。
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-这是SQLAlchemy 1.4中引入的一项更改，其中由诸如 :func:`_expression.select` 生成的 SELECT 语句，以及包括联合和文本 SELECT 表达式等内容在内的其他内容 不再被认为是 :class:`_expression.FromClause` 对象，并且不能直接放置在另一个 SELECT 语句的 FROM 子句中，必须首先将其包装在 :class:`.Subquery` 中。这是核心中的一个关键概念变化，详细的解释可以在 :ref:`change_4617` 中找到。
+这涉及到SQLAlchemy 1.4新增的一个更改，其中由函数生成的SELECT语句（例如：func:_expression.select）以及包括联合和文本SELECT表达式等内容在内的SELECT语句不再被视为 _expression.FromClause 对象，并且不能直接放置在另一个SELECT语句的FROM子句中，除非它们首先被包装在一个.Subquery对象中。 这是核心中的一个重要概念变化，完整的理由在：ref:`change_4617`中进行了讨论。
 
-如下面的示例：
+示例如下：
 
     m = MetaData()
     t = Table("t", m, Column("a", Integer), Column("b", Integer), Column("c", Integer))
     stmt = select(t)
 
-在上面的代码中， stmt 表示一个 SELECT 语句。当我们想要直接使用 stmt 在另一个 SELECT 语句的 FROM 子句中时，例如在以下代码中：
+在以上代码中，stmt 代表一个 SELECT 语句。当我们想要将 stmt 直接用作另一个 SELECT 语句中的FROM子句时，例如我们试图从中查询时，就会出现该错误：
 
     new_stmt_1 = select(stmt)
 
-或者，如果我们想要在 FROM 子句中使用它，例如在 JOIN 中：
+或者如果我们想将其用于 FROM 子句中，例如在 JOIN 中：
 
     new_stmt_2 = select(some_table).select_from(some_table.join(stmt))
 
-则会产生上面的错误。在之前的 SQLAlchemy 版本中，在另一个 SELECT 内部使用 SELECT 将生成无名称子查询，用括号括起来。在大多数情况下，这种形式的 SQL 不是很有用，因为诸如 MySQL 和 PostgreSQL 之类的数据库要求 FROM 子句中的子查询具有命名别名，这意味着使用 :meth:`_expression.SelectBase.alias` 方法或如 1.4 版本中所使用的 :meth:`_expression.SelectBase.subquery` 方法来生成这一别名。在其他数据库上，使子查询具有名称以消除子查询内对列名称的未来引用带来了明显的优势。
+在SQLAlchemy的早期版本中，使用SELECT语句嵌套另一个SELECT语句将会产生一个带有括号的未命名子查询。在许多情况下，MySQL 和 PostgreSQL 等数据库要求 FROM 子句中的子查询具有命名别名，这意味着需要使用 _expression.SelectBase.alias 方法或对于 1.4 版本以降使用 _expression.SelectBase.subquery 方法来进行。在其他数据库中，仍然更清楚地使用别名来解决子查询内列名称的所有歧义。
 
-除了上面的实际原因之外，这种变化还有许多其他针对 SQLAlchemy 的原因。因此，以上两条语句的正确形式需要使用 :meth:`_expression.SelectBase.subquery` ：
+在实践中，此更改受到多个内部因素的启示，因此正确编写下述两条语句需要使用  :meth:`_expression.SelectBase.subquery`  ：
 
     subq = stmt.subquery()
 
@@ -372,49 +485,57 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
 
 .. seealso::
 
-  :ref:`change_4617`
+    :ref:`change_4617` 
 
 .. _error_xaj1:
 
-自动为原始 clauseelement 生成别名
+自动为裸clauseelement生成别名
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 1.4.26
+.. versionadded:：1.4.26
 
-此警告绑定到使用 :meth:`_orm.Query.join` 方法的旧风格或 :term:`2.0 风格`的 :meth:`_sql.Select.join` 方法以及使用连接表继承的映射时解析。问题在于，在两个连接到共享基表的连接继承模型之间进行连接时，如果没有应用到其中一个操作对象的别名，将无法形成适当的 SQL JOIN；SQLAlchemy 在这种情况下对右侧加别名。例如，考虑以下连接继承映射：
+此警告是针对  :meth:`_orm.Query.join`  方法的常见原因，也适用于
+  :meth:`_sql.Select.join`   这种"2.0形式"的方法，其中加入可以是
+基于   :func:`_orm.relationship`  创建的，但目标是映射
+到该类或   :func:`_orm.aliased`  构造的   :class:` _schema.Table` 或其他
+核心选择。
 
-    class Employee(Base):
-        __tablename__ = "employee"
-        id = Column(Integer, primary_key=True)
-        manager_id = Column(ForeignKey("manager.id"))
-        name = Column(String(50))
-        type = Column(String(50))
+例如：
 
-        reports_to = relationship("Manager", foreign_keys=manager_id)
+    a1 = Address.__table__
 
-        __mapper_args__ = {
-            "polymorphic_identity": "employee",
-            "polymorphic_on": type,
-        }
+    q = (
+        s.query(User)
+        .join(a1, User.addresses)
+        .filter(Address.email_address == "ed@foo.com")
+        .all()
+    )
 
+上面的模式还允许选择可选的可选项，例如核心   :class:`_sql.Join`  或   :class:` _sql.Alias`  对象，
+但在这种情况下没有自动适应此元素的适配器，这意味着访问核心元素时需要直接引用。
 
-    class Manager(Employee):
-        __tablename__ = "manager"
-        id = Column(Integer, ForeignKey("employee.id"), primary_key=True)
+    a1 = Address.__table__.alias()
 
-        __mapper_args__ = {
-            "polymorphic_identity": "manager",
-            "inherit_condition": id == Employee.id,
-        }
+    q = (
+        s.query(User)
+        .join(a1, User.addresses)
+        .filter(a1.c.email_address == "ed@foo.com")
+        .all()
+    )
 
-上面的映射包括 ``Employee`` 和 ``Manager`` 之间的关系。由于这两个类都使用 "employee" 数据库表，因此从 SQL 的角度来看这是一个 :ref:`自引用关系 <self_referential>` 。如果我们想要使用连接从 ``Employee`` 和 ``Manager`` 模型中查询，并在 SQL 中表示上述操作，不得不如下面的 ORM 这样写：
+规定一个链接目标的正确方法是使用映射类本身或   :class:`_orm.aliased`  对象，对于后一种情况，则使用  :meth:` _orm.PropComparator.of_type`  修改器设置一个别名：
 
-    s = Session()
-    stmt = select(Employee, Manager).join(Employee.reports_to)
+    # normal join to relationship entity
+    q = s.query(User).join(User.addresses).filter(Address.email_address == "ed@foo.com")
 
-上面的 SQL 语句选择了 "employee" 表作为查询的起点，表示查询对象为 ``Employee`` ，接着连接到了一个右嵌套连接，其详细描述为 ``employee AS employee_1 JOIN manager AS manager_1``，这个表明 rawclause 的右侧是一个未命名的别名 access 语法为employee_1。这就是上述SQLAlchemy 的警告消息提示automotatically generated alias。
+    # name Address target explicitly, not necessary but legal
+    q = (
+        s.query(User)
+        .join(Address, User.addresses)
+        .filter(Address.email_address == "ed@foo.com")
+    )
 
-当 SQLAlchemy 加载 ORM 行时，每个 ORM 行包含一个 ``Employee`` 和一个 ``Manager``，ORM 必须调整从 ``employee_1`` 和 ``manager_1`` 表别名游标中的行，使它们适配到未用别名的 ``Manager`` 类中。这个过程是内部复杂的，并且不提供所有 API 特性，尤其是在尝试使用比这里所示的更深层的查询时，如 :func:`_orm.contains_eager` 呈现的预加载特性。由于这种设计不可靠且涉及难以预测并且难以遵循的隐式决策，因此会发出警告，此模式可视为遗留特性。编写此查询的更好方法是使用与任何其他自引用关系相同的模式，即使用 :func:`_orm.aliased` 构造，对于连接继承和其他以连接为导向的映射，则通常最好添加使用 :paramref:`_orm.aliased.flat` 参数，以允许通过在连接内的各个表上应用别名来为两个或更多表的关联指定别名，而不是将连接嵌入到新的子查询中：
+Join to an alias::
 
     from sqlalchemy.orm import aliased
 
@@ -432,12 +553,15 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
 
 .. _error_xaj2:
 
-由于重叠的表而自动生成别名
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+由于重叠的表，自动为别名生成别名
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 1.4.26
+.. versionadded:：1.4.26
 
-该警告通常在使用 :meth:`_sql.Select.join` 方法或遗留的 :meth:`_orm.Query.join` 方法查询映射时生成，其中涉及加入表的继承。当在两个连接继承模型之间进行joining时，因为存在共同的基表，所以不能形成 SQL JOIN 来连接这两个实体，而不使用实现别名操作；在这种情况下，SQLAlchemy 将别名加右边的对齐。例如，给定如下连接继承映射：
+使用  :meth:`_sql.Select.join`  方法或遗留的  :meth:` _orm.Query.join`  方法进行查询时，
+生成此警告通常是关于使用多态继承的表，导致。问题在于，当两个继承模型中的其中之一更改时，两个表的修改可能同时发生。
+
+例如，考虑下面的多态继承映射：
 
     class Employee(Base):
         __tablename__ = "employee"
@@ -453,7 +577,6 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
             "polymorphic_on": type,
         }
 
-
     class Manager(Employee):
         __tablename__ = "manager"
         id = Column(Integer, ForeignKey("employee.id"), primary_key=True)
@@ -463,8 +586,10 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
             "inherit_condition": id == Employee.id,
         }
 
-上述映射包括 ``Employee`` 和 ``Manager`` 之间的关系。由于两个类都使用 "employee" 数据库表，因此从 SQL 的角度来看这是一个 :ref:`自引用关系 <self_referential>` 。如果我们想要使用连接从 ``Employee`` 和 ``Manager`` 模型中查询，并在 SQL 中表示上述操作，我们得到的 SQL 将类似于以下 SQL：
+上述映射包括 Employee 和 Manager 类之间的关系。由于这两个类都使用 “employee” 数据库表，从 SQL 的角度来看，这是一个自联关系。如果我们想要使用 JOIN 从 Employee 和 Manager 模型查询数据，那么在 SQL 层面上，“employee”表需要两次出现在查询中，这意味着它必须被赋予别名。当我们使用 SQLAlchemy ORM 创建这样的 join 时，我们得到的 SQL 如下：
 
+    >>> stmt = select(Employee, Manager).join(Employee.reports_to)
+    >>> print(stmt)
     SELECT employee.id, employee.manager_id, employee.name,
     employee.type, manager_1.id AS id_1, employee_1.id AS id_2,
     employee_1.manager_id AS manager_id_1, employee_1.name AS name_1,
@@ -473,34 +598,180 @@ TypeError: <操作符>不支持在“ColumnProperty”实例和<something>之间
     (employee AS employee_1 JOIN manager AS manager_1 ON manager_1.id = employee_1.id)
     ON manager_1.id = employee.manager_id
 
-上述 SQL 语句从 "employee" 表开始查询，表示查询对象为 ``Employee`` ，接着连接到一个右嵌套连接，其详细描述为 ``employee AS employee_1 JOIN manager AS manager_1``，这个表明 leftclause 的左侧是呈现为无名称子查询的左嵌套 join 语句。这就是上述SQLAlchemy 的警告消息提示automatically generated alias。
+上面的 SQL 使用"employee"表作为“Employee”实体中查询的 FROM，然后连接到右嵌套 JOIN“employee AS employee_1 JOIN manager AS manager_1”，其中“employee”表再次被声明，但作为匿名别名“employee_1”。这是警告信息所指的“自动生成别名”。
 
-当 SQLAlchemy 加载 ORM 行时，每个 ORM 行包含一个 ``Employee`` 和一个 ``Manager``，ORM 必须调整 ``employee_1`` 和 ``manager_1`` 表别名游标中的行，使它们适配到没有别名的 ``Manager`` 类中。这个过程是内部复杂的，并且不提供所有 API 特性，特别是在尝试使用比此处所示更深度的查询时，仍会发生错误。由于这种设计不可靠且包含不易预测和不易跟踪的隐式决策，因此发出警告，并认为此模式可能是遗留特性。编写此查询的更好方法是使用与任何其他自引用关系相同的模式，即使用 :func:`_orm.aliased` 构造，对于连接继承和其他以连接为导向的映射，则通常最好添加使用 :paramref:`_orm.aliased.flat` 参数，以允许通过在连接内的各个表上应用别名来为两个或更多表的关联指定别名，而不是将连接嵌入到新的子查询中：
+当SQLAlchemy从每个ORM行中适配一个Employee和Manager对象时，ORM必须将基于employee_1和manager_1的行调整为未别名的Manager类的行。此处理在内部较为复杂，不符合所有API功能，特别是尝试使用包含_eager等负载时，这些API功能在比这里更深层次的查询中。由于此模式不可靠且涉及难以预见和遵循的隐式决策制定，因此会发出警告，该模式可被视为遗留功能。因此，应显式使用   :func:`_orm.aliased`  构造。在继承并使用其他基于 join 的映射的情况下，通常最好增加使用  :paramref:` _orm.aliased.flat`  参数的设置，该参数允许将两个或更多表的 JOIN 通过将表单独用作别名而而不是内嵌 JOIN 来进行别名：
 
     from sqlalchemy.orm import aliased
+    manager_alias = aliased(Manager, flat=True)
+    stmt = select(Employee, manager_alias).join(Employee.reports_to.of_type(manager_alias))
+    print(stmt)
 
-    a1 = aliased(Address)
+要使用 EAGER LOAD 填充“reports_to”属性，必须引用别名：
 
-    # of_type() form; recommended
-    q = (
-        s.query(User)
-        .join(User.addresses.of_type(a1))
-        .filter(a1.email_address == "ed@foo.com")
+    stmt = (
+        select(Employee)
+        .join(Employee.reports_to.of_type(manager_alias))
+        .options(contains_eager(Employee.reports_to.of_type(manager_alias)))
     )
 
-    # target, onclause form
-    q = s.query(User).join(a1, User.addresses).filter(a1.email_address == "ed@foo.com")
+在非错误场景中，Session.rollback方法无条件到期会话中的所有内容，并且也应避免在没有错误的情况下进行使用。
+
+.. seealso::
+
+      :ref:`unitofwork_cascades` 
+
+      :ref:`cascade_delete_orphan` 
+
+      :ref:`error_bbf1` 
+
+
+
+.. _error_bhk3:
+
+一个事务已经回滚了，原因是在 flush 过程中遇到了上一个异常
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+:class:`Session` 内的 flush 过程在遇到错误时将回滚数据库事务以维护内部一致性。但是，一旦发生这种情况，该会话的事务现在处于“非活动”状态，并且必须由调用应用程序显式回滚以及它会提交某些修改。
+
+这是ORM使用中经常遇到的错误，通常适用于在ORM的   :class:`.Session`  操作中尚未正确地安排其“框架”的应用程序。更多细节在   :ref:` faq_session_rollback`  中进行了描述。
+
+.. _error_bbf0:
+
+在关系<relationship>中“delete-orphan”级联通常仅在一对多关系的“一”侧上配置，而不是多对一或多对多关系的“多”侧。
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+当在多对一或多对多关系上设置“delete-orphan”级联时，将会出现此错误。例如：
+
+    class A(Base):
+        __tablename__ = "a"
+
+        id = Column(Integer, primary_key=True)
+
+        bs = relationship("B", back_populates="a")
+
+
+    class B(Base):
+        __tablename__ = "b"
+        id = Column(Integer, primary_key=True)
+        a_id = Column(ForeignKey("a.id"))
+
+        # 当使用 mapper 配置步骤时，此将发出错误消息
+        a = relationship("A", back_populates="bs", cascade="all, delete-orphan")
+
+
+    configure_mappers()
+
+以上，“B.a”上的“delete-orphan”设置表明，当每个引用特定“A”的每个“B”对象被删除时，该“A”应该被删除。也就是说，它表明正在表达“孤儿”将被删除的意图，这些孤儿是指一个“A”对象，在删除与之关联的所有“B”对象后，它将会成为一个孤儿。
+
+“delete-orphan”级联模型不支持此功能。该“孤儿”考虑仅基于单个对象的删除，这将随后将所有引用其的零个或多个对象可视为“孤儿”，从而导致这些对象也被删除。换句话说，它仅设计为跟踪项的创建，这些项基于删除一个而仅有一个“父”对象完全成为孤儿的情况，这是在一对多关系中自然情况，其中在“many”侧上删除对象会导致“one”侧上相关项的后续删除。
+
+此种 mapping 的正确应用方式是在一对多方面上放置级联设置，例如：
+
+    class A(Base):
+        __tablename__ = "a"
+
+        id = Column(Integer, primary_key=True)
+
+        bs = relationship("B", back_populates="a", cascade="all, delete-orphan")
+
+
+    class B(Base):
+        __tablename__ = "b"
+        id = Column(Integer, primary_key=True)
+        a_id = Column(ForeignKey("a.id"))
+
+        a = relationship("A", back_populates="bs")
+
+其中的意图是表明当删除“A”时，它所引用的所有“B”对象也将被删除。
+
+然后，错误消息会继续建议使用  :paramref:`_orm.relationship.single_parent`  标志。此标志可用于强制对可以允许多个对象引用特定对象的关系的明确处理，因为在每个表之间存在外键关系而实现的关系，并且实际上仅有一个对象实际上都引用给定目标对象。在使用了此标志的遗留模式或其他较少理想的数据库模式中，较少的实际对象实际上会在特定目标对象阵列中引用，而在其他方面，该目标对象看起来可以具有许多“孩子”对象。这种不寻常的情况可以如下所示：
+
+    class A(Base):
+        __tablename__ = "a"
+
+        id = Column(Integer, primary_key=True)
+
+        bs = relationship("B", back_populates="a")
+
+
+    class B(Base):
+        __tablename__ = "b"
+        id = Column(Integer, primary_key=True)
+        a_id = Column(ForeignKey("a.id"))
+
+        a = relationship(
+            "A",
+            back_populates="bs",
+            single_parent=True,
+            cascade="all, delete-orphan",
+        )
+
+上面的配置将安装验证器，该验证器强制将仅一个 B 与特定 A 相关联，范围在 B.a 关系内。
+
+注意，该验证器的范围有限，并且不会防止从其他方向创建多个“父”。
+因此，对于不是一对多关系的关系，更合适的方法是在一个或
+多个关系中使用：paramref:`_orm.relationship.back_populates`。
+也就是说，如果在这些关系中出现冲突，则应通过更改建模来解决。
+
+总体而言，“delete-orphan”级联通常仅适用于一对多关系的“one”侧，以便在“many”侧上删除对象，而不是反过来。
+
+.. versionchanged::1.3.18
+    当在多对一或多对多关系上使用“delete-orphans”级联设置时，“delete-orphan”错误消息的文本已更新为更加具有描述性。
+
+
+.. seealso::
+
+      :ref:`unitofwork_cascades` 
+
+      :ref:`cascade_delete_orphan` 
+
+      :ref:`error_bbf0` 
+
+.. _error_bbf1:
+
+实例< instance > 已经通过其<attribute>属性与实例<instance>相关联，只允许一个父项。
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+当使用  :paramref:`_orm.relationship.single_parent`  标志时，如果多个对象同时作为对象的“parent”，则会发出此错误。
+
+例如，考虑以下映射：
+
+    class A(Base):
+        __tablename__ = "a"
+
+        id = Column(Integer, primary_key=True)
+
+
+    class B(Base):
+        __tablename__ = "b"
+        id = Column(Integer, primary_key=True)
+        a_id = Column(ForeignKey("a.id"))
+
+        a = relationship(
+            "A",
+            single_parent=True,
+            cascade="all, delete-orphan",
+        )
+
+其中表明不应多于一个“B”对象引用特定的“A”对象。
+
+以下是安排多个对象作为对象的“parent”时会出现意外错误时，通常导致的错误类型是对   :ref:`error_bbf0`  消息的误解。请参阅该消息了解详细信息。
+
+.. seealso::
+
+      :ref:`error_bbf0` 
 
 .. _error_qzyx:
 
-关系X将把列Q复制到列P，这与关系相冲突：'Y'
+关系 X 将 Q 列复制到 P 列，这与关系(s)：“Y”冲突。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-此警告是指当两个或多个关系将数据写入刷新操作的相同的列时，但 ORM 没有任何手段来协调这些关系时。根据具体情况，解决方法可能是需要两个关系之间相互引用 :paramref:`_orm.relationship.back_populates`，或者一个或多个，该警告是不可避免的 SQLAlchemy捕获到可能导致数据丢失或不正确的连接关系。
+此警告涉及到当两个或多个关系都将写入到相同的列上时，在ORM没有手段协调这些关系。
+具体情况而定，解决方案可能是两个关系需要使用参数  :paramref:`_orm.relationship.back_populates`  相互连接，
+或者其中一个或多个  :term:`single-table`  继承映射没有正确进行配置，可以使用继承条件（inherit condition）级联来解决此问题。等等...应该使用  :paramref:` _orm.relationship.viewonly`  来配置关系，以防止冲突写入，或者有时意图完全并且应该配置  :paramref:`_orm.relationship.overlaps`  来消除每个警告的影响。
 
-relationships 应该配置为:paramref:`_orm.relationship.viewonly` ，以避免冲突写入，或者有时配置完全是有意的，并且应该将:paramref:`_orm.relationship.overlaps` 配置为静音每个警告。
-
-对于缺少 :paramref:`_orm.relationship.back_populates` 的典型示例，给出以下映射::
+对于通常缺少  :paramref:`_orm.relationship.back_populates`  的示例，请考虑下面的映射类::
 
     class Parent(Base):
         __tablename__ = "parent"
@@ -514,14 +785,14 @@ relationships 应该配置为:paramref:`_orm.relationship.viewonly` ，以避免
         parent_id = Column(ForeignKey("parent.id"))
         parent = relationship("Parent")
 
-上述映射将会生成警告：
+上面的映射会产生警告：
 
 .. sourcecode:: text
 
   SAWarning: relationship 'Child.parent' will copy column parent.id to column child.parent_id,
   which conflicts with relationship(s): 'Parent.children' (copies parent.id to child.parent_id).
 
-关系 ``Child.parent`` 和 ``Parent.children`` 看起来处于冲突状态。解决方案是应用 :paramref:`_orm.relationship.back_populates`  ::
+关系 ``Child.parent`` 和 ``Parent.children`` 显然是相互冲突的。解决方案是应用  :paramref:`_orm.relationship.back_populates`  ：
 
     class Parent(Base):
         __tablename__ = "parent"
@@ -535,7 +806,7 @@ relationships 应该配置为:paramref:`_orm.relationship.viewonly` ，以避免
         parent_id = Column(ForeignKey("parent.id"))
         parent = relationship("Parent", back_populates="children")
 
-对于更加自定义化的关系，如果"overlap" 情况是有意的且无法解决，则:paramref:`_orm.relationship.overlaps` 参数可以指定不应发出警告的关系的名称。这通常发生在与包括自定义 :paramref:`_orm.relationship.primaryjoin` 条件的某个基础表的两个或多个关系相关的情况下，以限制每种情况下的相关项::
+对于需要更自定义的关系，其中“overlap”情况可能是有意的，并且不能被解决，则可以通过  :paramref:`_orm.relationship.overlaps`  参数指定名称，其中警告不应发生作用。这通常发生在针对相同基础表的两个或多个关系的情况下，这些表包括限制每种情况下的相关项的自定义  :paramref:` _orm.relationship.primaryjoin`  条件的情况::
 
     class Parent(Base):
         __tablename__ = "parent"
@@ -560,61 +831,73 @@ relationships 应该配置为:paramref:`_orm.relationship.viewonly` ，以避免
 
         flag = Column(Integer)
 
-上述 ORM 将知道 ``Parent.c1`` 、 ``Parent.c2`` 和 ``Child.parent`` 之间的重叠是有意的。
+在上述代码中，ORM 将知道 ``Parent.c1``、``Parent.c2`` 和 ``Child.parent`` 之间的重叠是有意的。
 
 .. _error_lkrp:
 
-无法将对象转换为 "persistent" 状态，因为此标识图不再有效。
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+由于   :class:`_orm.Session`  已关闭或以其他方式调用了  :meth:` _orm.Session.expunge_all`  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 1.4.26
 
-此消息添加是为了处理在 :class:`_orm.Session` 已关闭或已调用其 :meth:`_orm.Session.expunge_all` 方法的之后，仍然迭代 :class:`_result.Result` 对象而导致的错误。当 :class:`_orm.Session` 一次性清除所有对象时，由该 :class:`_orm.Session` 使用的内部 :term:`identity map` 将被替换为新的，并且丢弃原始的 identity map。一个未使用且未缓冲的 :class:`_result.Result` 对象在内部将保留对该现在已弃用的 identity map 的引用。因此，当消耗 :class:`_result.Result` 时，将产生错误。
+此消息是为了适应在关闭或以其他方式调用其  :meth:`_orm.Session.expunge_all`  方法的   :class:` _orm.Session`  之后仍会迭代会生成 ORM 对象的   :class:`_result.Result`  对象的情况而添加的。当   :class:` _orm.Session`  一次性删除所有对象时，该  :term:`identity map`  内部使用的  :term:` identity map`  将被更换为新的，原始的部分会被丢弃。未使用的和未缓冲的   :class:`_result.Result`  对象将在内部保留对该现已丢弃的标识映射的引用。因此，当消耗   :class:` _result.Result`  对象时，将产生对象，这些对象不能与该   :class:`_orm.Session`  相关联。这是设计的排列，因为通常不建议在创建它的事务上下文之外迭代未缓冲的   :class:` _result.Result`  对象::
 
-:ref:`2.0 AsyncIO 扩展 <asyncio_toplevel>` 的情况通常不会出现此类情况，因为当 :class:`.AsyncSession` 返回一个传统的 :class:`_result.Result` 时，当执行语句时，结果已预先缓冲。这是为了在无需额外的`` await`` 调用的情况下启用次要的急切装入程序。
-
-要在使用普通的 :class:`_orm.Session` 的情况下以与 ``asyncio`` 扩展类似的方式预缓冲结果，可以使用 ``prebuffer_rows`` 执行选项，如下所示::
-
-    # context manager creates new Session
+    # 上下文管理器创建新的 Session
     with Session(engine) as session_obj:
-        # result internally pre-fetches all objects
+        result = sess.execute(select(User).where(User.id == 7))
+
+    # 上下文管理器已关闭，因此 session_obj 在此处关闭，identity
+    # 映射被替换
+
+    # 迭代结果对象无法将对象与
+    # Session 相关联，因此会引发此错误。
+    user = result.first()
+
+在上述情况下，通常不会发生使用 ``asyncio`` ORM 扩展，因为当   :class:`.AsyncSession`  返回类似于同步样式的   :class:` _result.Result`  时，结果已在执行该语句时预先缓冲。这是为了允许在不需要额外的 ``await`` 调用的情况下调用二次贪婪加载器。
+
+要在使用常规的   :class:`_orm.Session`  中使用上面所述的结果预取方式模拟情况，可以使用 ` `prebuffer_rows`` 执行选项，如下所示::
+
+    # 上下文管理器创建新的 Session
+    with Session(engine) as session_obj:
+        # 外部结果预取所有对象
         result = sess.execute(
             select(User).where(User.id == 7), execution_options={"prebuffer_rows": True}
         )
 
-    # context manager is closed, so session_obj above is closed, identity
-    # map is replaced
+    # 上下文管理器已关闭，因此 session_obj 在此处关闭，identity
+    # 映射被替换
 
-    # pre-buffered objects are returned
+    # 返回预缓冲对象
     user = result.first()
 
-    # however they are detached from the session, which has been closed
+    # 但它们被分离，与已关闭的会话有关
     assert inspect(user).detached
     assert inspect(user).session is None
 
-此处，所选的 ORM 对象完全是在 ``session_obj`` 块内生成的，与 ``session_obj`` 关联并在 :class:`_result.Result` 对象中缓冲。在块外，``session_obj`` 已关闭并清除了这些 ORM 对象。迭代 :class:`_result.Result` 对象将产生那些 ORM 对象，但是由于其中的 :class:`_orm.Session` 已将其清除，因此它们将在 :term:`分离`(detached) 状态下返回。
+在上述代码中，所选的 ORM 对象完全在 ``session_obj`` 块内生成，与 ``session_obj`` 相关联，并在   :class:`_result.Result`  对象中缓冲以进行迭代。在块外部，` `session_obj`` 被关闭并且摆脱了这些 ORM 对象。迭代   :class:`_result.Result`  对象将提供这些 ORM 对象，但是由于它们的起始   :class:` _orm.Session`  已将它们删除，因此它们将以  :term:`分离`  状态传递。
 
-.. note:: 上述对 "预缓冲" vs. "未缓冲" :class:`_result.Result` 对象的提及是指 ORM 将从 :term:`DBAPI` 中的完整的原始值转换为 ORM 对象的过程。它并不意味着底层的 ``游标`` 对象本身，该对象表示来自 DBAPI 的预处理结果，是缓冲或未缓冲的，因为这本质上是缓冲的较低层。关于缓冲 ``游标`` 结果本身的背景，请参阅 :ref:`engine_stream_results` 节。
+.. 注意:: 以上有关“预缓冲”vs.“未缓冲”的   :class:`_result.Result`  对象的引用是指 ORM 如何从  :term:` DBAPI`  中转换传入的原始数据库行为 ORM 对象。它并不意味着底层“游标”对象本身是否已缓冲，因为这实际上是缓冲的较低层。有关 ``游标`` 结果自身的缓冲的背景信息，请参见   :ref:`engine_stream_results`  部分。
 
 .. _error_zlpr:
 
-无法解释 Annotated Declarative Table 形式的注释类型
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+引用声明性表格表单的类型注释不能解释
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 2.0 引入了一种新的 :ref:`Annotated Declarative Table <orm_declarative_mapped_column>` 声明系统，该系统在运行时从类定义中的 :pep:`484` 注释中派生 ORM 映射的属性信息。 此形式的要求是所有 ORM 注释必须使用名为 :class:`_orm.Mapped` 的通用容器来进行正确注释。 使用显式 :pep:`484` 类型注释的旧版 SQLAlchemy 映射（例如，那些使用 :ref:`legacy Mypy 扩展 <mypy_toplevel>` 提供类型支持的映射）可能会包括不包括该泛型的 :func:`_orm.relationship` 指令等指令。
+SQLAlchemy 2.0 引入了一种新的   :ref:`Annotated Declarative Table <orm_declarative_mapped_column>`  声明性系统，该系统通过在类定义中派生使用  :pep:` 484`  注释来注释 ORM 映射属性信息。此形式的要求是所有 ORM 注释必须使用名为   :class:`_orm.Mapped`  的通用容器才能被正确注释。使用显式  :pep:` 484`  类型注释的旧版 SQLAlchemy 映射，例如使用   :ref:`legacy Mypy 扩展 <mypy_toplevel>`  为类型支持的那些映射，可能包括不包括使用不包括此通用程序的   :func:` _orm.relationship`  的指令。
 
-要解决此问题，类可以标记为 ``__allow_unmapped__`` 布尔属性，直到它们可以完全迁移到 2.0 语法。请参见 :ref:`migration_20_step_six` 中的迁移说明的示例。
+要解决此问题，可以在类被完全迁移到 2.0 语法之前，将这些类标记为具有 ``__allow_unmapped__`` 布尔属性。有关示例，请参见   :ref:`migration_20_step_six`  中的迁移说明.
 
-.. seealso::
 
-    :ref:`migration_20_step_six` - 在 :ref:`migration_20_toplevel` 文档中
+.. 参见::
+
+      :ref:`migration_20_step_six`  - 在   :ref:` migration_20_toplevel`  文档中
 
 .. _error_dcmx:
 
-将 <cls> 转换为数据类时出错，其中一个或多个属性来自于不是数据类的超类 <cls>。
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+将 <cls> 转换为数据类时发生 Python 数据类错误
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-此警告在使用 SQLAlchemy ORM Mapped Dataclasses 功能 (:ref:`orm_declarative_native_dataclasses`) 与任何混合类或抽象基本类一起使用时触发，这些混合类或抽象基本类本身没有声明为数据类。例如以下示例::
+此警告是在   :ref:`orm_declarative_native_dataclasses`  中描述的 SQLAlchemy ORM Mapped Dataclasses 功能中添加的，结合非本身声明为数据类的 mixin 类或抽象基类使用时。例如，下面是一个包含非数据类 mixin 类的映射声明及其生成的警告信息：
 
     from __future__ import annotations
 
@@ -647,7 +930,7 @@ SQLAlchemy 2.0 引入了一种新的 :ref:`Annotated Declarative Table <orm_decl
         username: Mapped[str] = mapped_column()
         email: Mapped[str] = mapped_column()
 
-上述示例中，由于 ``Mixin`` 本身没有扩展 :class:`_orm.MappedAsDataclass`，因此将生成以下警告：
+如上所述，由于 ``Mixin`` 本身没有从   :class:`_orm.MappedAsDataclass`  派生，因此会生成以下警告：
 
 .. sourcecode:: none
 
@@ -660,13 +943,13 @@ SQLAlchemy 2.0 引入了一种新的 :ref:`Annotated Declarative Table <orm_decl
     superclasses which include attributes are also a subclass of
     MappedAsDataclass.
 
-解决方法是将 :class:`_orm.MappedAsDataclass` 添加到 ``Mixin`` 签名中:
+解决方法是同样在 ``Mixin`` 签名中添加   :class:`_orm.MappedAsDataclass` ，如下所示::
 
     class Mixin(MappedAsDataclass):
         create_user: Mapped[int] = mapped_column()
         update_user: Mapped[Optional[int]] = mapped_column(default=None, init=False)
 
-Python 的 :pep:`681` 规范不支持在数据类的超类中声明的属性，这些属性本身不是数据类; 根据 Python 数据类的行为，这些字段被忽略，如以下示例:
+Python 的  :pep:`681`  规范不包括在不是数据类的数据类超类上声明的属性。根据 Python 数据类的行为，类似地，这些字段将被忽略，例如，如以下示例所示::
 
     from dataclasses import dataclass
     from dataclasses import field
@@ -687,17 +970,16 @@ Python 的 :pep:`681` 规范不支持在数据类的超类中声明的属性，�
         password: str
         email: str
 
-以上， ``User`` 类将不包括 ``create_user`` 在其构造函数中，也不会尝试将 ``update_user`` 解释为数据类属性。这是因为 ``Mixin`` 不是一个数据类。
+上述 ``User`` 类将不在其构造函数中包含 ``create_user``，也不会尝试将 ``update_user`` 解释为数据类属性。这是因为 ``Mixin`` 不是数据类。
 
-SQLAlchemy 2.0 中的 ORM 数据类功能在正确处理上述情况方面未能正确处理; 相反，非数据类混合和超类上的属性被视为数据类配置的一部分。但是，像 Pyright 和 Mypy 这样的类型检查器将不考虑这些字段作为数据类构造函数的一部分，因为根据 :pep:`681`，应该忽略这些字段。由于它们的存在具有歧义，因此 SQLAlchemy 2.1 将需要使数据类层次结构中包括 SQLAlchemy 映射属性的混合类自身也成为数据类。
+SQLAlchemy 2.0 系列中的数据类特性不正确解决此行为；反过来，数据类混合和具有 SQLAlchemy 映射属性的超类被视为最终的数据类配置的一部分。但是，Pyright 和 Mypy 等类型检查器不会将这些字段视为数据类构造函数的一部分，因为它们根据  :pep:`681`  要求应该被忽略。因此，由于其存在是模棱两可的，从 SQLAlchemy 2.1 开始，使用数据类继承 SQLAlchemy 映射属性时，必须将 mixin 类本身成为数据类。
 
 .. _error_bupq:
 
-对于每个主键，按行 ORM 群集更新需要记录包含主键值
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+使用按主键的 ORM 按行批量更新需要记录包含主键值的记录
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-如果在给定记录中未提供主键值，则此错误在使用 :ref:`orm_queryguide_bulk_update` 功能是会发生的，例如::
-
+在使用类似以下用法的   :ref:`orm_queryguide_bulk_update`  功能时，如果记录中不提供主键值，则会发生此错误：
 
     >>> session.execute(
     ...     update(User).where(User.name == bindparam("u_name")),
@@ -707,7 +989,7 @@ SQLAlchemy 2.0 中的 ORM 数据类功能在正确处理上述情况方面未能
     ...     ],
     ... )
 
-上述代码中，由于具有参数字典列表和使用 :class:`_orm.Session` 执行启用了 ORM 批量更新主键，因此必须在每个参数字典中包括主键值，即::
+在上面的示例中，由于带有参数字典的列表结合   :class:`_orm.Session`  使用 ORM 执行了启用了 ORM 按主键的按行批量更新，因此参数字典必须包括主键值，例如::
 
     >>> session.execute(
     ...     update(User),
@@ -718,7 +1000,7 @@ SQLAlchemy 2.0 中的 ORM 数据类功能在正确处理上述情况方面未能
     ...     ],
     ... )
 
-通过调用 ``session.connection()`` 获得当前 :class:`_engine.Connection` , 然后用它来执行语句::
+要在没有提供每行主键值的情况下调用 UPDATE 语句，可以使用  :meth:`_orm.Session.connection`  方法，以获取当前   :class:` _engine.Connection` ，然后使用该方法执行::
 
     >>> session.connection().execute(
     ...     update(User).where(User.name == bindparam("u_name")),
@@ -729,44 +1011,48 @@ SQLAlchemy 2.0 中的 ORM 数据类功能在正确处理上述情况方面未能
     ... )
 
 
-.. seealso::
+.. 参见::
 
-        :ref:`orm_queryguide_bulk_update`
+          :ref:`orm_queryguide_bulk_update` 
 
-        :ref:`orm_queryguide_bulk_update_disabling`
+          :ref:`orm_queryguide_bulk_update_disabling` 
 
 
-异步 IO 异常
-------------
+
+AsyncIO 异常
+------------------
 
 .. _error_xd1r:
 
 AwaitRequired
 ~~~~~~~~~~~~~
 
-要使用异步模式连接数据库，需要使用异步驱动程序。当尝试使用与 :term:`DBAPI` 不兼容的要使用异步版本的 SQLAlchemy 时，通常会引发此错误。
+SQLAlchemy 异步模式需要使用异步驱动程序连接到 db。
+通常在试图使用非兼容  :term:`DBAPI`  时使用异步 SQLAlchemy 版本会引发此错误。
 
-.. seealso::
+.. 参见::
 
-    :ref:`asyncio_toplevel`
+      :ref:`asyncio_toplevel` 
 
 .. _error_xd2s:
 
 MissingGreenlet
 ~~~~~~~~~~~~~~~
 
-当在意料之外的位置启动 IO 尝试时，使用不直接提供 ``await`` 关键字的调用模式，就会触发此错误。当使用 ORM 时，这通常是由于使用 :term:`lazy loading` 引起的，因为其在 asyncio 下无法直接支持，而是需要进行其他步骤和/或更改加载程序的模式。
+在未预期的位置启动异步  :term:`DBAPI`  时，会发生此错误，通常是在某个 I/O 中尝试时，使用不直接提供使用 ` `await`` 关键字的调用模式。在使用 ORM 时，这几乎始终是由于使用了  :term:`lazy loading`  所引起的，而在 asyncio 中，则需要额外的步骤和/或备选装入器模式才能使用成功。
 
-.. seealso::
+.. 参见::
 
-    :ref:`asyncio_orm_avoid_lazyloads` - 涵盖了大多数 ORM 场景，以及如何减轻这种问题，包括用于延迟加载场景的特定模式。
+      :ref:`asyncio_orm_avoid_lazyloads`  - 包括大多数 ORM 场景下可能发生该问题以及如何减轻影响的细节，包括与惰性加载场景一起使用的特定模式。
 
 .. _error_xd3s:
 
 No Inspection Available
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-在 :class:`_asyxncio.AsyncConnection` 或 :class:`_asyncio.AsyncEngine` 对象上直接使用 :func:`_sa.inspect` 函数时，暂未提供可等待的 :class:`_reflection.Inspector` 对象。因此，应在使用 :func:`_sa.inspect` 时以方式引用 :class:`_asyncio.AsyncConnection.sync_connection` 属性，以便最初引用 :class:`_engine.Inspector` 对象；然后使用 :meth:`_asyncio.AsyncConnection.run_sync` 方法以及执行所需操作的自定义函数以使用 :class:`_engine.Inspector`，类似于以 "同步" 调用方式的用法::
+在   :class:`_asyncio.AsyncConnection`  或   :class:` _asyncio.AsyncEngine`  对象上直接使用   :func:`_sa.inspect`  函数目前不受支持，因为还没有名称为   :class:` _reflection.Inspector`  的可等待对象。因此，可以通过以下方式获得引用：
+
+使用   :func:`_sa.inspect`  函数，以便它引用   :class:` _asyncio.AsyncConnection.sync_connection`  属性的底层对象；然后使用   :class:`_asyncio.AsyncConnection.run_sync`  方法，以及执行所需操作的自定义函数来使用   :class:` _engine.Inspector` ：
 
     async def async_main():
         async with engine.connect() as conn:
@@ -774,165 +1060,75 @@ No Inspection Available
                 lambda sync_conn: inspect(sync_conn).get_table_names()
             )
 
-.. seealso::
+.. 参见::
 
-    :ref:`asyncio_inspector` - 有关在 asyncio 扩展中使用 :func:`_sa.inspect` 的其他示例。
+      :ref:`asyncio_inspector`  - 有关在 asyncio 扩展中使用   :func:` _sa.inspect`  的其他示例。
+
 
 核心异常类
-----------
+----------------------
 
-有关核心异常类，请参见 :ref:`core_exceptions_toplevel`。
+有关核心异常类，请参见   :ref:`core_exceptions_toplevel` 。
+
 
 ORM 异常类
-----------
+---------------------
 
-有关 ORM 异常类，请参见 :ref:`orm_exceptions_toplevel`。
+有关 ORM 异常类，请参见   :ref:`orm_exceptions_toplevel` 。
 
 
-历史遗留问题
-------------
+历史遗留异常
+-----------------
 
-此部分中的异常不由当前 SQLAlchemy 版本生成，但是在此处提供以配合异常消息超链接。
+本节中的异常不适用于当前 SQLAlchemy 版本，但在此提供以适应异常消息的超链接。
 
 .. _error_b8d9:
 
-在 SQLAlchemy 2.0 中，<某些函数> 将不再 <做某事>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+在 SQLAlchemy 2.0 中，<某些函数> 将不再<某些行为>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-SQLAlchemy 2.0 对于 Core 和 ORM 组件的许多重要 SQLAlchemy 使用模式进行了重大调整。 2.0 发布的目标是对 SQLAlchemy 自从起初开始以来的一些最基本的假设进行微调，并提供一个新的经过简化的使用模型，其目的是显着更加简约，Consistent between the Core and ORM components, as 兼容性更强。
+SQLAlchemy 2.0 对 Core 和 ORM 组件的众多关键用法模式进行了重大变化。2.0 发布的目标是在 SQLAlchemy 自从早期开始的一些最基本的假设中进行轻微的调整，并提供一个新的简化使用模型，这个模型希望显著更加极简主义，并且在 Core 和 ORM 组件之间更加一致，也更加具有可操作性。
 
-在退化至 :ref:`migration_20_ttl` 中介绍的 DSL 合规性等问题上，SQLAlchemy 2.0 项目包括一个完整的将来的兼容性系统，该系统集成到 SQLAlchemy 1.4 系列中，以便应用程序可以具有明确的，明确的，并逐渐的向 2.0 兼容迁移应用程序的过程。  :class:`.exc.RemovedIn20Warning` 废弃警告是这个系统的基础，可提供有关需要修改的现有代码库中的行为的指导。可以在 :ref:`deprecation_20_mode` 上查看有关如何启用此警告的概述。
+在   :ref:`migration_20_toplevel`  中引入的 SQLAlchemy 2.0 项目包括综合未来兼容性的系统，该系统集成到 SQLAlchemy 1.4 系列中，这样应用程序就有了一个明确、明显的增量升级路径，以使其成为完全 2.0 兼容。  :class:` .exc.RemovedIn20Warning`  弃用警告是该系统的基础，提供有关现有代码库中需要修改的行为的指导。在   :ref:`deprecation_20_mode`  中可以找到如何启用此警告的概述。
 
-.. seealso::
+.. 参见::
 
-    :ref:`migration_20_ttl` - 从 1.x 系列开始的升级过程概述，以及实现全面 2.0 兼容性的当前目标和进度。
+      :ref:`migration_20_toplevel`   - 有关从 1.x 系列升级的概述，以及当前的目标和进展情况。
 
-    :ref:`deprecation_20_mode` - 有关如何在 SQLAlchemy 1.4 中使用 "2.0 废除模式" 的特定指南。
+
+      :ref:`deprecation_20_mode`  - 有关如何在 SQLAlchemy 1.4 中使用“2.0 废弃模式”的具体指南。
 
 
 .. _error_s9r1:
 
-对象正在通过 backref 级联合并到 Session 中
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-此消息是指 SQLAlchemy 的 "backref cascade" 行为，在版本 2.0 中已删除。 这指的是将一个对象添加到 :class:`_orm.Session` 中，作为与它已经存在于该会话中的其他对象关联的结果。由于此行为已被证明比有用更具有混淆性，因此添加了 :paramref:`_orm.relationship.cascade_backrefs` 和 :paramref:`_orm.backref.cascade_backrefs` 参数，可将其设置为 ``False`` 以禁用该行为，在 SQLAlchemy 2.0 中，“backref cascade”行为已完全删除。
-
-对于以前的 SQLAlchemy 版本，要在具有 :paramref:`_orm.relationship.backref` 字符串参数的 backref 上将 :paramref:`_orm.relationship.cascade_backrefs` 设置为 ``False``，必须首先使用 :func:`_orm.backref` 函数声明 backref，以便可以通过 :paramref:`_orm.backref.cascade_backrefs` 参数进行传递。
-
-或者，可以使用 :class:`_orm.Session` 上的 "future" 模式完全关闭“backref cascade”行为，即通过 :paramref:`_orm.Session.future` 参数传递 ``True``。
-
-.. seealso::
-
-    :ref:`change_5150` - SQLAlchemy 2.0 中的变更背景。
-
-
-.. _error_c9ae:
-
-在 "legacy" 模式下创建的 select() 构造; 关键字参数等。
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-截至SQLAlchemy 1.4，已更新 :func:`_expression.select` 构造，使其支持标准 SQLAlchemy 2.0 中的新调用样式。在 1.4 系列内向后兼容，该构造接受旧式“遗留”样式作为参数，以及新样式。
-
-"新" 样式的特点是列和表达式仅以位置传递到 :func:`_expression.select` 构造，任何其他修改对象的修饰符都必须使用后续的方法链接传递::
-
-    # 这是正式的样子
-    stmt = select(table1.c.myid).where(table1.c.myid == table2.c.otherid)
-
-相比之下，在 SQLAlchemy 的旧式形式中，在添加类似 :meth:`.Select.where` 等方法之前，语句将是::
-
-    # 这是由原始的 SQLAlchemy 版本文档记录的方式
-    stmt = select([table1.c.myid], whereclause=table1.c.myid == table2.c.otherid)
-
-甚至可能是将 "whereclause" 作为位置参数传递::
-
-    # 这也是由原始的 SQLAlchemy 版本文档记录的方式
-    stmt = select([table1.c.myid], table1.c.myid == table2.c.otherid)
-
-多年来，已删除大多数叙述文档中包括任何其他参数（例如 "whereclause"）的指导，导致传递作为列表的列参数，但没有其他参数::
-
-    # 这是从 1.0 或左右版本以来的文档中记录的方式
-    stmt = select([table1.c.myid]).where(table1.c.myid == table2.c.otherid)
-
-在 :ref:`migration_20_5284` 文档中描述了此更改的信息，涉及到 DSL 合规性问题。
-
-.. seealso::
-
-    :ref:`migration_20_5284`
-
-    :ref:`migration_20_ttl`
-
-.. _error_c9bf:
-
-找到使用的是 legacy 绑定元数据绑定，但由于在此会话中设置了 future=True，因此将忽略该绑定。
+此连接处于非活动事务中。请在继续之前执行回滚（）。
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-“已绑定元数据” 的概念仅存在于 SQLAlchemy 1.x 版本中，从 SQLAlchemy 2.0 开始已删除。
+此错误的条件是在 SQLAlchemy 1.4 之后添加的，并且不适用于 SQLAlchemy 2.0。该错误是指在使用  :meth:`_engine.Connection.begin`  等方法将   :class:` _engine.Connection`  放入事务中，然后在该范围内的事务中创建了另一个“标记”事务；然后使用  :meth:`.Transaction.rollback`  或  :meth:` .Transaction.close`  回滚或关闭了内部事务，但外部事务仍处于“非活动”状态，并且必须回滚。
 
-该错误指的是 :class:`_schema.MetaData` 对象中的 :paramref:`_schema.MetaData.bind` 参数，该对象允许类似 ORM :class:`_orm.Session` 将特定映射类与 :class:`_orm.Engine` 关联。 在 SQLAlchemy 2.0 中，:class:`_orm.Session` 必须直接链接到每个 :class:`_orm.Engine`。 也就是说，必须将 :class:`_orm.Session` 或 :class:`_orm.sessionmaker` 实例化为关联 :class:`_engine.Engine`，而不是使用 :class:`_schema.MetaData`::
+该模式类似于：
 
-    engine = create_engine("sqlite://")
-    Session = sessionmaker()
-    metadata_obj = MetaData(bind=engine)
-    Base = declarative_base(metadata=metadata_obj)
+    engine = create_engine(...)
 
+    connection = engine.connect()
+    transaction1 = connection.begin()
 
-    class MyClass(Base):
-        ...
+    # 这是一个“子”或“标记”事务，一个基于“真实”事务 transaction1 的逻辑嵌套结构
+    transaction2 = connection.begin()
+    transaction2.rollback()
 
+    # transaction1 仍然存在，并且需要显式回滚，
+    # 因此这将引发错误。
+    connection.execute(text("select 1"))
 
-    session = Session()
-    session.add(MyClass())
-    session.commit()
+在上面的代码中，``transaction2`` 是一个“标记”事务，它表示外部事务的逻辑嵌套；虽然内部事务可以通过 rollback() 方法回滚整个事务，但是其 commit() 方法没有除了关闭“标记”事务自身的作用。调用 ``transaction2.rollback()`` 的效果是 **停用** transaction1，这意味着它在数据库级别上被回滚，但是仍然存在，以便适应事务的一致嵌套结构。
 
-必须直接将 :class:`_engine.Engine` 与 :class:`_orm.sessionmaker` 或 :class:`_orm.Session` 关联。 :class:`_schema.MetaData` 对象不应再与任何引擎关联::
+正确的解决方法是确保也回滚外部事务::
 
-    engine = create_engine("sqlite://")
-    Session = sessionmaker(engine)
-    Base = declarative_base()
+    transaction1.rollback()
 
+在 Core 中不常用。在 ORM 中，也可以出现类似的问题，这是由 ORM 的“逻辑”事务结构引起的；这种情况下，请遵循以下建议进行操作。
 
-    class MyClass(Base):
-        ...
+这个错误在FAQ条目   :ref:`faq_session_rollback`  中有所描述。
 
-
-    session = Session()
-    session.add(MyClass())
-    session.commit()
-
-在 SQLAlchemy 1.4 中，可以在使用 :class:`_orm.sessionmaker` 或 :class:`_orm.Session` 时将 :paramref:`_orm.Session.future` 标志设置为 ``True``，以启用此 :term:`2.0 样式` 行为。
-
-
-.. _error_2afi:
-
-此编译对象未绑定到任何引擎或连接
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-此错误是指 "已绑定元数据" 的概念，此概念仅存在于 < SQLAlchemy 1.4 版本中。当从未关联到 :class:`_engine.Engine` 的 Core 表达式对象中直接从 :meth:`.Executable.execute` 方法调用时，将触发该错误::
-
-    metadata_obj = MetaData()
-    table = Table("t", metadata_obj, Column("q", Integer))
-
-    stmt = select(table)
-    result = stmt.execute()  # <--- raises
-
-逻辑逻辑期望的是 :class:`_schema.MetaData` 对象已被 **绑定** 到 :class:`_engine.Engine` 上，例如::
-
-    engine = create_engine("mysql+pymysql://user:pass@host/db")
-    metadata_obj = MetaData(bind=engine)
-
-上述，任何源自 :class:`_schema.Table` 的语句，该 :class:`_schema.Table` 又派生自该 :class:`_schema.MetaData`，将隐含使用给定 :class:`_engine.Engine` 以调用语句。
-
-请注意，“已绑定元数据”的概念在 SQLAlchemy 2.0 中已经 **不存在**。正确的方法是通过 :meth:`_engine.Connection.execute` 方法的 :class:`_engine.Connection` 来调用语句::
-
-    with engine.connect() as conn:
-        result = conn.execute(stmt)
-
-在 ORM 中，通过 :class:`.Session` 也可以使用类似的设施::
-
-    result = session.execute(stmt)
-
-.. seealso::
-
-    :ref:`tutorial_statement_execution`在 :ref:`faq_session_rollback` 的常见问题解答中描述了这个问题。
-
-“子事务”模式在SQLAlchemy 2.0中被移除，因此这种特定的编程模式将不再可用，从而防止了此错误消息的出现。
+在SQLAlchemy 2.0版本中，"subtransaction" 模式已被移除，因此这种编程模式不再可用，从而避免了这个错误信息的出现。

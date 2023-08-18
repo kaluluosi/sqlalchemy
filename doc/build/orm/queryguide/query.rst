@@ -1,11 +1,11 @@
 .. highlight:: pycon+sql
-.. |prev| replace:: :doc:`api`
+.. |prev| replace:: :doc:`api` 
 
 .. |tutorial_title| replace:: ORM Querying Guide
 
 .. topic:: |tutorial_title|
 
-      This page is part of the :doc:`index`.
+      This page is part of the :doc:`index` .
 
       Previous: |prev|
 
@@ -33,21 +33,21 @@ Legacy Query API
     majority of database access code within an application, and as such the
     majority of the :class:`_query.Query` API is
     **not being removed from SQLAlchemy**.  The :class:`_query.Query` object
-    behind the scenes now translates itself into a 2.0 style :func:`_sql.select`
+    behind the scenes now translates itself into a 2.0 style :func:`_sql.select` 
     object when the :class:`_query.Query` object is executed, so it now is
     just a very thin adapter API.
 
-    For a guide to migrating an application based on :class:`_query.Query`
-    to 2.0 style, see :ref:`migration_20_query_usage`.
+    For a guide to migrating an application based on :class:`_query.Query` 
+    to 2.0 style, see :ref:`migration_20_query_usage` .
 
     For an introduction to writing SQL for ORM objects in the 2.0 style,
-    start with the :ref:`unified_tutorial`.  Additional reference for 2.0 style
-    querying is at :ref:`queryguide_toplevel`.
+    start with the :ref:`unified_tutorial` .  Additional reference for 2.0 style
+    querying is at :ref:`queryguide_toplevel` .
 
 The Query Object
 ================
 
-:class:`_query.Query` is produced in terms of a given :class:`~.Session`, using the :meth:`~.Session.query` method::
+:class:`_query.Query` is produced in terms of a given :class:` ~.Session`, using the :meth:`~.Session.query` method::
 
     q = session.query(SomeMappedClass)
 
@@ -60,4 +60,4 @@ Following is the full interface for the :class:`_query.Query` object.
 ORM-Specific Query Constructs
 =============================
 
-This section has moved to :ref:`queryguide_additional`.
+This section has moved to :ref:`queryguide_additional` .

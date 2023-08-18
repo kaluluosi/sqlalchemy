@@ -20,7 +20,7 @@ load subtrees into the application space.
     This section details the single-table version of a self-referential
     relationship. For a self-referential relationship that uses a second table
     as an association table, see the section
-    :ref:`self_referential_many_to_many`.
+    :ref:`self_referential_many_to_many` .
 
 In this example, we'll work with a single mapped
 class called ``Node``, representing a tree structure::
@@ -59,8 +59,8 @@ same way as a "normal" one-to-many relationship, with the
 exception that the "direction", i.e. whether the relationship
 is one-to-many or many-to-one, is assumed by default to
 be one-to-many.   To establish the relationship as many-to-one,
-an extra directive is added known as :paramref:`_orm.relationship.remote_side`, which
-is a :class:`_schema.Column` or collection of :class:`_schema.Column` objects
+an extra directive is added known as :paramref:`_orm.relationship.remote_side` , which
+is a :class:`_schema.Column` or collection of :class:` _schema.Column` objects
 that indicate those which should be considered to be "remote"::
 
     class Node(Base):
@@ -70,14 +70,14 @@ that indicate those which should be considered to be "remote"::
         data = mapped_column(String(50))
         parent = relationship("Node", remote_side=[id])
 
-Where above, the ``id`` column is applied as the :paramref:`_orm.relationship.remote_side`
-of the ``parent`` :func:`_orm.relationship`, thus establishing
+Where above, the ``id`` column is applied as the :paramref:`_orm.relationship.remote_side` 
+of the ``parent`` :func:`_orm.relationship` , thus establishing
 ``parent_id`` as the "local" side, and the relationship
 then behaves as a many-to-one.
 
 As always, both directions can be combined into a bidirectional
 relationship using two :func:`_orm.relationship` constructs linked by
-:paramref:`_orm.relationship.back_populates`::
+:paramref:`_orm.relationship.back_populates` ::
 
     class Node(Base):
         __tablename__ = "node"
@@ -122,7 +122,7 @@ to a specific folder within that account::
         child_folders = relationship("Folder", back_populates="parent_folder")
 
 Above, we pass ``account_id`` into the :paramref:`_orm.relationship.remote_side` list.
-:func:`_orm.relationship` recognizes that the ``account_id`` column here
+:func:`_orm.relationship` recognizes that the ` `account_id`` column here
 is on both sides, and aligns the "remote" column along with the
 ``folder_id`` column, which it recognizes as uniquely present on
 the "remote" side.
@@ -182,7 +182,7 @@ when joining to related items, so are compatible with self-referential
 joining. However, to use eager loading with a self-referential relationship,
 SQLAlchemy needs to be told how many levels deep it should join and/or query;
 otherwise the eager load will not take place at all. This depth setting is
-configured via :paramref:`~.relationships.join_depth`:
+configured via :paramref:`~.relationships.join_depth` :
 
 .. sourcecode:: python+sql
 

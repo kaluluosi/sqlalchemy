@@ -1,7 +1,8 @@
-ORM查询指南：列加载的设置
+========================================
+ORM查询指南的设置：列加载
 ========================================
 
-本页面展示了由 :ref:`queryguide_toplevel` 的 :doc:`columns` 文档使用的映射和装置数据。
+本页面说明了在   :ref:`queryguide_toplevel`  的  :doc:` columns`  文档中使用的映射和 fixture 数据。
 
 ..  sourcecode:: python
 
@@ -97,4 +98,3 @@ ORM查询指南：列加载的设置
     BEGIN ... COMMIT
     >>> session.close()
     >>> conn.begin()
-    BEGIN ...

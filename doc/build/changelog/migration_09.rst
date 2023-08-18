@@ -19,7 +19,7 @@ and also documents changes which affect users migrating
 their applications from the 0.8 series of SQLAlchemy to 0.9.
 
 Please carefully review
-:ref:`behavioral_changes_orm_09` and :ref:`behavioral_changes_core_09` for
+:ref:`behavioral_changes_orm_09` and :ref:` behavioral_changes_core_09` for
 potentially backwards-incompatible changes.
 
 Platform Support
@@ -36,7 +36,7 @@ Python 3.   All SQLAlchemy modules and unit tests are now interpreted
 equally well with any Python interpreter from 2.6 forward, including
 the 3.1 and 3.2 interpreters.
 
-:ticket:`2671`
+:ticket:`2671` 
 
 C Extensions Supported on Python 3
 -----------------------------------
@@ -44,7 +44,7 @@ C Extensions Supported on Python 3
 The C extensions have been ported to support Python 3 and now build
 in both Python 2 and Python 3 environments.
 
-:ticket:`2161`
+:ticket:`2161` 
 
 .. _behavioral_changes_orm_09:
 
@@ -58,7 +58,7 @@ Composite attributes are now returned as their object form when queried on a per
 
 Using a :class:`_query.Query` in conjunction with a composite attribute now returns the object
 type maintained by that composite, rather than being broken out into individual
-columns.   Using the mapping setup at :ref:`mapper_composite`::
+columns.   Using the mapping setup at :ref:`mapper_composite` ::
 
     >>> session.query(Vertex.start, Vertex.end).filter(Vertex.start == Point(3, 4)).all()
     [(Point(x=3, y=4), Point(x=5, y=6))]
@@ -75,9 +75,9 @@ accessor::
 
 .. seealso::
 
-    :ref:`change_2824`
+    :ref:`change_2824` 
 
-:ticket:`2824`
+:ticket:`2824` 
 
 
 .. _migration_2736:
@@ -120,7 +120,7 @@ JOIN, the documentation would lead us to believe we could use
         .filter(User.name == "ed")
     )
 
-However, in version 0.8 and earlier, the above use of :meth:`_query.Query.select_from`
+However, in version 0.8 and earlier, the above use of :meth:`_query.Query.select_from` 
 would apply the ``select_stmt`` to **replace** the ``User`` entity, as it
 selects from the ``user`` table which is compatible with ``User``:
 
@@ -137,8 +137,8 @@ The above statement is a mess, the ON clause refers ``anon_1.id = anon_1.id``,
 our WHERE clause has been replaced with ``anon_1`` as well.
 
 This behavior is quite intentional, but has a different use case from that
-which has become popular for :meth:`_query.Query.select_from`.  The above behavior
-is now available by a new method known as :meth:`_query.Query.select_entity_from`.
+which has become popular for :meth:`_query.Query.select_from` .  The above behavior
+is now available by a new method known as :meth:`_query.Query.select_entity_from` .
 This is a lesser used behavior that in modern SQLAlchemy is roughly equivalent
 to selecting from a customized :func:`.aliased` construct::
 
@@ -164,7 +164,7 @@ The :meth:`_query.Query.select_entity_from` method will be available in SQLAlche
 to this method first, ensure all tests continue to function, then upgrade
 to 0.9 without issue.
 
-:ticket:`2736`
+:ticket:`2736` 
 
 
 .. _migration_2833:
@@ -226,7 +226,7 @@ The change is illustrated as follows::
     assert a not in sess.dirty
     assert not inspect(a).attrs.bs.history.has_changes()
 
-:ticket:`2833`
+:ticket:`2833` 
 
 .. _migration_2751:
 
@@ -328,7 +328,7 @@ output:
 This is equivalent to ``A.b.has()``, but allows one to query
 against ``b_value`` directly.
 
-:ticket:`2751`
+:ticket:`2751` 
 
 .. _migration_2810:
 
@@ -374,7 +374,7 @@ proxied value.  E.g.::
     # now returns None just like the proxied value.
     assert a1.bname is None
 
-:ticket:`2810`
+:ticket:`2810` 
 
 
 .. _change_2787:
@@ -385,7 +385,7 @@ attributes.get_history() will query from the DB by default if value not present
 A bugfix regarding :func:`.attributes.get_history` allows a column-based attribute
 to query out to the database for an unloaded value, assuming the ``passive``
 flag is left at its default of ``PASSIVE_OFF``.  Previously, this flag would
-not be honored.  Additionally, a new method :meth:`.AttributeState.load_history`
+not be honored.  Additionally, a new method :meth:`.AttributeState.load_history` 
 is added to complement the :attr:`.AttributeState.history` attribute, which
 will emit loader callables for an unloaded attribute.
 
@@ -435,7 +435,7 @@ This is a small change demonstrated as follows::
         (),
     )
 
-:ticket:`2787`
+:ticket:`2787` 
 
 .. _behavioral_changes_core_09:
 
@@ -473,7 +473,7 @@ was mostly never seen:
       i = Integer(display_width=5)
 
 As of the 0.9 series the "catch all" constructor is removed from
-:class:`.TypeEngine`, and these meaningless arguments are no longer accepted.
+:class:`.TypeEngine` , and these meaningless arguments are no longer accepted.
 
 The correct way to make use of dialect-specific arguments such as
 ``storage_format`` and ``display_width`` is to use the appropriate
@@ -549,7 +549,7 @@ within an ``and_()`` conjunction.
 
 .. seealso::
 
-    :ref:`migration_2804`
+    :ref:`migration_2804` 
 
 .. _migration_2873:
 
@@ -580,7 +580,7 @@ spaces are passed through as is:
     dbtype://username%40:@hostspec/database
 
 
-:ticket:`2873`
+:ticket:`2873` 
 
 .. _migration_2879:
 
@@ -641,7 +641,7 @@ generated:
     >>> print(column("x").collate("en_EN").desc())
     {printsql}x COLLATE en_EN DESC{stop}
 
-:ticket:`2879`
+:ticket:`2879` 
 
 
 
@@ -664,7 +664,7 @@ signs within the enumerated values:
 Existing workarounds which already escape single quote signs will need to be
 modified, else they will now double-escape.
 
-:ticket:`2878`
+:ticket:`2878` 
 
 New Features
 ============
@@ -674,8 +674,8 @@ New Features
 Event Removal API
 -----------------
 
-Events established using :func:`.event.listen` or :func:`.event.listens_for`
-can now be removed using the new :func:`.event.remove` function.   The ``target``,
+Events established using :func:`.event.listen` or :func:` .event.listens_for`
+can now be removed using the new :func:`.event.remove` function.   The ` `target``,
 ``identifier`` and ``fn`` arguments sent to :func:`.event.remove` need to match
 exactly those which were sent for listening, and the event will be removed
 from all locations in which it had been established::
@@ -693,7 +693,7 @@ means ``my_before_insert()`` is established as a listener for ``MyClass``
 as well as all subclasses of ``MyClass``.
 The system tracks everywhere that the ``my_before_insert()``
 listener function had been placed as a result of this call and removes it as
-a result of calling :func:`.event.remove`.
+a result of calling :func:`.event.remove` .
 
 The removal system uses a registry to associate arguments passed to
 :func:`.event.listen` with collections of event listeners, which are in many
@@ -701,17 +701,17 @@ cases wrapped versions of the original user-supplied function.   This registry
 makes heavy use of weak references in order to allow all the contained contents,
 such as listener targets, to be garbage collected when they go out of scope.
 
-:ticket:`2268`
+:ticket:`2268` 
 
 .. _feature_1418:
 
 New Query Options API; ``load_only()`` option
 ---------------------------------------------
 
-The system of loader options such as :func:`_orm.joinedload`,
-:func:`_orm.subqueryload`, :func:`_orm.lazyload`, :func:`_orm.defer`, etc.
-all build upon a new system known as :class:`_orm.Load`.  :class:`_orm.Load` provides
-a "method chained" (a.k.a. :term:`generative`) approach to loader options, so that
+The system of loader options such as :func:`_orm.joinedload` ,
+:func:`_orm.subqueryload` , :func:`_orm.lazyload` , :func:`_orm.defer` , etc.
+all build upon a new system known as :class:`_orm.Load` .  :class:`_orm.Load` provides
+a "method chained" (a.k.a. :term:`generative` ) approach to loader options, so that
 instead of joining together long paths using dots or multiple attribute names,
 an explicit loader style is given for each path.
 
@@ -732,7 +732,7 @@ option has to be used::
 
 Loader options are now chainable, so the same ``joinedload(x)`` method is applied
 equally to each link, without the need to keep straight between
-:func:`_orm.joinedload` and :func:`_orm.joinedload_all`::
+:func:`_orm.joinedload` and :func:` _orm.joinedload_all`::
 
     query(User).options(joinedload("orders").joinedload("items").joinedload("keywords"))
 
@@ -748,7 +748,7 @@ links in the path be spelled out as class bound attributes, since the
 
 **New Way**
 
-Only those elements in the path that actually need :meth:`.PropComparator.of_type`
+Only those elements in the path that actually need :meth:`.PropComparator.of_type` 
 need to be set as a class-bound attribute, string-based names can be resumed
 afterwards::
 
@@ -820,7 +820,7 @@ loading only the given columns and deferring the rest::
 Class-specific Wildcards
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Using :class:`_orm.Load`, a wildcard may be used to set the loading for all
+Using :class:`_orm.Load` , a wildcard may be used to set the loading for all
 relationships (or perhaps columns) on a given entity, without affecting any
 others::
 
@@ -836,7 +836,7 @@ others::
     # undefer all Address columns
     query(User).options(defaultload(User.addresses).undefer("*"))
 
-:ticket:`1418`
+:ticket:`1418` 
 
 
 .. _feature_2877:
@@ -861,8 +861,8 @@ The :func:`_expression.text` construct gains new methods:
           .bindparam(timestamp=datetime(2012, 11, 10, 15, 12, 35))
       )
 
-* :meth:`_expression.TextClause.columns` supersedes the ``typemap`` option
-  of :func:`_expression.text`, returning a new construct :class:`.TextAsFrom`::
+* :meth:`_expression.TextClause.columns` supersedes the ` `typemap`` option
+  of :func:`_expression.text` , returning a new construct :class:`.TextAsFrom` ::
 
       # turn a text() into an alias(), with a .c. collection:
       stmt = text("SELECT id, name FROM user").columns(id=Integer, name=String)
@@ -881,7 +881,7 @@ The :func:`_expression.text` construct gains new methods:
           addresses.join(stmt), addresses.c.user_id == stmt.c.id
       )
 
-:ticket:`2877`
+:ticket:`2877` 
 
 .. _feature_722:
 
@@ -891,7 +891,7 @@ INSERT from SELECT
 After literally years of pointless procrastination this relatively minor
 syntactical feature has been added, and is also backported to 0.8.3,
 so technically isn't "new" in 0.9.   A :func:`_expression.select` construct or other
-compatible construct can be passed to the new method :meth:`_expression.Insert.from_select`
+compatible construct can be passed to the new method :meth:`_expression.Insert.from_select` 
 where it will be used to render an ``INSERT .. SELECT`` construct:
 
 .. sourcecode:: pycon+sql
@@ -919,7 +919,7 @@ rendering:
     SELECT users.id AS users_id, users.name AS users_name
     FROM users WHERE users.name = :name_1
 
-:ticket:`722`
+:ticket:`722` 
 
 .. _feature_github_42:
 
@@ -930,7 +930,7 @@ An attempt is made to simplify the specification of the ``FOR UPDATE``
 clause on ``SELECT`` statements made within Core and ORM, and support is added
 for the ``FOR UPDATE OF`` SQL supported by PostgreSQL and Oracle.
 
-Using the core :meth:`_expression.GenerativeSelect.with_for_update`, options like ``FOR SHARE`` and
+Using the core :meth:`_expression.GenerativeSelect.with_for_update` , options like ``FOR SHARE`` and
 ``NOWAIT`` can be specified individually, rather than linking to arbitrary
 string codes::
 
@@ -942,9 +942,9 @@ On Posgtresql the above statement might render like:
 
     SELECT table.a, table.b FROM table FOR SHARE OF table NOWAIT
 
-The :class:`_query.Query` object gains a similar method :meth:`_query.Query.with_for_update`
+The :class:`_query.Query` object gains a similar method :meth:` _query.Query.with_for_update`
 which behaves in the same way.  This method supersedes the existing
-:meth:`_query.Query.with_lockmode` method, which translated ``FOR UPDATE`` clauses
+:meth:`_query.Query.with_lockmode` method, which translated ` `FOR UPDATE`` clauses
 using a different system.   At the moment, the "lockmode" string argument is still
 accepted by the :meth:`.Session.refresh` method.
 
@@ -959,11 +959,11 @@ floating point type which is to be converted into a Python ``Decimal()``
 necessarily involves an intermediary step which converts the floating point
 value to a string.  The scale used for this string conversion was previously
 hardcoded to 10, and is now configurable.  The setting is available on
-both the :class:`.Numeric` as well as the :class:`.Float`
+both the :class:`.Numeric` as well as the :class:` .Float`
 type, as well as all SQL- and dialect-specific descendant types, using the
 parameter ``decimal_return_scale``.    If the type supports a ``.scale`` parameter,
 as is the case with :class:`.Numeric` and some float types such as
-:class:`.mysql.DOUBLE`, the value of ``.scale`` is used as the default
+:class:`.mysql.DOUBLE` , the value of ``.scale`` is used as the default
 for ``.decimal_return_scale`` if it is not otherwise specified.   If both
 ``.scale`` and ``.decimal_return_scale`` are absent, then the default of
 10 takes place.  E.g.::
@@ -990,7 +990,7 @@ for ``.decimal_return_scale`` if it is not otherwise specified.   If both
     # much precision for DOUBLE
     assert result == decimal.Decimal("45.768392065789")
 
-:ticket:`2867`
+:ticket:`2867` 
 
 
 .. _change_2824:
@@ -1008,17 +1008,17 @@ the more heavyweight mechanics of mapped classes.
 
 .. seealso::
 
-    :ref:`migration_2824`
+    :ref:`migration_2824` 
 
-    :ref:`bundles`
+    :ref:`bundles` 
 
-:ticket:`2824`
+:ticket:`2824` 
 
 
 Server Side Version Counting
 -----------------------------
 
-The versioning feature of the ORM (now also documented at :ref:`mapper_version_counter`)
+The versioning feature of the ORM (now also documented at :ref:`mapper_version_counter` )
 can now make use of server-side version counting schemes, such as those produced
 by triggers or database system columns, as well as conditional programmatic schemes outside
 of the version_id_counter function itself.  By providing the value ``False``
@@ -1036,16 +1036,16 @@ the ORM's versioning feature.
 
 .. seealso::
 
-    :ref:`server_side_version_counter`
+    :ref:`server_side_version_counter` 
 
-:ticket:`2793`
+:ticket:`2793` 
 
 .. _feature_1535:
 
 ``include_backrefs=False`` option for ``@validates``
 ----------------------------------------------------
 
-The :func:`.validates` function now accepts an option ``include_backrefs=True``,
+The :func:`.validates` function now accepts an option ` `include_backrefs=True``,
 which will bypass firing the validator for the case where the event initiated
 from a backref::
 
@@ -1083,7 +1083,7 @@ from a backref::
     a1 = A()
     a1.bs.append(B())  # prints only "A.bs validator"
 
-:ticket:`1535`
+:ticket:`1535` 
 
 
 PostgreSQL JSON Type
@@ -1094,16 +1094,16 @@ complement the :class:`_postgresql.HSTORE` type.
 
 .. seealso::
 
-    :class:`_postgresql.JSON`
+    :class:`_postgresql.JSON` 
 
-:ticket:`2581`
+:ticket:`2581` 
 
 .. _feature_automap:
 
 Automap Extension
 -----------------
 
-A new extension is added in **0.9.1** known as :mod:`sqlalchemy.ext.automap`.  This is an
+A new extension is added in **0.9.1** known as :mod:`sqlalchemy.ext.automap` .  This is an
 **experimental** extension which expands upon the functionality of Declarative
 as well as the :class:`.DeferredReflection` class.  Essentially, the extension
 provides a base class :class:`.AutomapBase` which automatically generates
@@ -1158,7 +1158,7 @@ mappings.
 
 .. seealso::
 
-    :ref:`automap_toplevel`
+    :ref:`automap_toplevel` 
 
 Behavioral Improvements
 =======================
@@ -1282,7 +1282,7 @@ All of these joins, when rendered with a :class:`_expression.Select` statement t
 specifies ``use_labels=True``, which is true for all the queries the ORM emits,
 are candidates for "join rewriting", which is the process of rewriting all those right-nested
 joins into nested SELECT statements, while maintaining the identical labeling used by
-the :class:`_expression.Select`.  So SQLite, the one database that won't support this very
+the :class:`_expression.Select` .  So SQLite, the one database that won't support this very
 common SQL syntax even in 2013, shoulders the extra complexity itself,
 with the above queries rewritten as:
 
@@ -1325,7 +1325,7 @@ with the above queries rewritten as:
     will automatically disable themselves when SQLite version **3.7.16**
     or greater is detected, as SQLite has repaired support for right-nested joins.
 
-The :meth:`_expression.Join.alias`, :func:`.aliased` and :func:`.with_polymorphic` functions now
+The :meth:`_expression.Join.alias` , :func:`.aliased` and :func:` .with_polymorphic` functions now
 support a new argument, ``flat=True``, which is used to construct aliases of joined-table
 entities without embedding into a SELECT.   This flag is not on by default, to help with
 backwards compatibility - but now a "polymorphic" selectable can be joined as a target
@@ -1350,7 +1350,7 @@ Generates (everywhere except SQLite):
     WHERE engineers.primary_language = %(primary_language_1)s
         OR managers.manager_name = %(manager_name_1)s
 
-:ticket:`2369` :ticket:`2587`
+:ticket:`2369` :ticket:` 2587`
 
 .. _feature_2976:
 
@@ -1383,7 +1383,7 @@ the new "right-nested joins are OK" logic would kick in, and we'd get:
     FROM users LEFT OUTER JOIN (orders JOIN items ON <onclause>) ON <onclause>
 
 Since we missed the boat on that, to avoid further regressions we've added the above
-functionality by specifying the string ``"nested"`` to :paramref:`_orm.joinedload.innerjoin`::
+functionality by specifying the string ``"nested"`` to :paramref:`_orm.joinedload.innerjoin` ::
 
     query(User).options(
         joinedload("orders", innerjoin=False).joinedload("items", innerjoin="nested")
@@ -1391,7 +1391,7 @@ functionality by specifying the string ``"nested"`` to :paramref:`_orm.joinedloa
 
 This feature is new in 0.9.4.
 
-:ticket:`2976`
+:ticket:`2976` 
 
 
 
@@ -1457,7 +1457,7 @@ The feature also does not eliminate every possible dupe-row scenario; if
 a many-to-one is present elsewhere in the chain of joins, dupe rows may still
 be present.
 
-:ticket:`2836`
+:ticket:`2836` 
 
 .. _migration_2789:
 
@@ -1466,7 +1466,7 @@ Backref handlers can now propagate more than one level deep
 
 The mechanism by which attribute events pass along their "initiator", that is
 the object associated with the start of the event, has been changed; instead
-of a :class:`.AttributeImpl` being passed, a new object :class:`.attributes.Event`
+of a :class:`.AttributeImpl` being passed, a new object :class:` .attributes.Event`
 is passed instead; this object refers to the :class:`.AttributeImpl` as well as
 to an "operation token", representing if the operation is an append, remove,
 or replace operation.
@@ -1513,14 +1513,14 @@ previous collection::
 Above, prior to this change, the ``c1`` object would still have been present
 in ``p1.children``, even though it is also present in ``p2.children`` at the
 same time; the backref handlers would have stopped at replacing ``c1.parent`` with
-``p2`` instead of ``p1``.   In 0.9, using the more detailed :class:`.Event`
+``p2`` instead of ``p1``.   In 0.9, using the more detailed :class:`.Event` 
 object as well as letting the backref handlers make more detailed decisions about
 these objects, the propagation can continue onto removing ``c1`` from ``p1.children``
 while maintaining a check against the propagation from going into an endless
 recursive loop.
 
-End-user code which a. makes use of the :meth:`.AttributeEvents.set`,
-:meth:`.AttributeEvents.append`, or :meth:`.AttributeEvents.remove` events,
+End-user code which a. makes use of the :meth:`.AttributeEvents.set` ,
+:meth:`.AttributeEvents.append` , or :meth:`.AttributeEvents.remove` events,
 and b. initiates further attribute modification operations as a result of these
 events may need to be modified to prevent recursive loops, as the attribute system
 no longer stops a chain of events from propagating endlessly in the absence of the backref
@@ -1530,33 +1530,33 @@ value of ``initiator`` to change from its original value within a string of
 backref-initiated events, as the backref handlers may now swap in a
 new ``initiator`` value for some operations.
 
-:ticket:`2789`
+:ticket:`2789` 
 
 .. _change_2838:
 
 The typing system now handles the task of rendering "literal bind" values
 -------------------------------------------------------------------------
 
-A new method is added to :class:`.TypeEngine` :meth:`.TypeEngine.literal_processor`
-as well as :meth:`.TypeDecorator.process_literal_param` for :class:`.TypeDecorator`
+A new method is added to :class:`.TypeEngine` :meth:` .TypeEngine.literal_processor`
+as well as :meth:`.TypeDecorator.process_literal_param` for :class:` .TypeDecorator`
 which take on the task of rendering so-called "inline literal parameters" - parameters
 that normally render as "bound" values, but are instead being rendered inline
 into the SQL statement due to the compiler configuration.  This feature is used
-when generating DDL for constructs such as :class:`.CheckConstraint`, as well
+when generating DDL for constructs such as :class:`.CheckConstraint` , as well
 as by Alembic when using constructs such as ``op.inline_literal()``.   Previously,
 a simple "isinstance" check checked for a few basic types, and the "bind processor"
 was used unconditionally, leading to such issues as strings being encoded into utf-8
 prematurely.
 
 Custom types written with :class:`.TypeDecorator` should continue to work in
-"inline literal" scenarios, as the :meth:`.TypeDecorator.process_literal_param`
+"inline literal" scenarios, as the :meth:`.TypeDecorator.process_literal_param` 
 falls back to :meth:`.TypeDecorator.process_bind_param` by default, as these methods
 usually handle a data manipulation, not as much how the data is presented to the
 database.  :meth:`.TypeDecorator.process_literal_param` can be specified to
 specifically produce a string representing how a value should be rendered
 into an inline DDL statement.
 
-:ticket:`2838`
+:ticket:`2838` 
 
 
 .. _change_2812:
@@ -1565,9 +1565,9 @@ Schema identifiers now carry along their own quoting information
 ---------------------------------------------------------------------
 
 This change simplifies the Core's usage of so-called "quote" flags, such
-as the ``quote`` flag passed to :class:`_schema.Table` and :class:`_schema.Column`.  The flag
+as the ``quote`` flag passed to :class:`_schema.Table` and :class:` _schema.Column`.  The flag
 is now internalized within the string name itself, which is now represented
-as an instance of  :class:`.quoted_name`, a string subclass.   The
+as an instance of  :class:`.quoted_name` , a string subclass.   The
 :class:`.IdentifierPreparer` now relies solely on the quoting preferences
 reported by the :class:`.quoted_name` object rather than checking for any
 explicit ``quote`` flags in most cases.   The issue resolved here includes
@@ -1584,15 +1584,15 @@ The :class:`.quoted_name` object is used internally as needed; however if
 other keywords require fixed quoting preferences, the class is available
 publicly.
 
-:ticket:`2812`
+:ticket:`2812` 
 
 .. _migration_2804:
 
 Improved rendering of Boolean constants, NULL constants, conjunctions
 ----------------------------------------------------------------------
 
-New capabilities have been added to the :func:`.true` and :func:`.false`
-constants, in particular in conjunction with :func:`.and_` and :func:`.or_`
+New capabilities have been added to the :func:`.true` and :func:` .false`
+constants, in particular in conjunction with :func:`.and_` and :func:` .or_`
 functions as well as the behavior of the WHERE/HAVING clauses in conjunction
 with these types, boolean types overall, and the :func:`.null` constant.
 
@@ -1613,9 +1613,9 @@ on backends that don't feature ``true``/``false`` constant behavior:
     >>> print(select([t1]).where(t1.c.x).compile(dialect=mysql.dialect()))
     {printsql}SELECT t.x, t.y  FROM t WHERE t.x = 1
 
-The :func:`.and_` and :func:`.or_` constructs will now exhibit quasi
+The :func:`.and_` and :func:` .or_` constructs will now exhibit quasi
 "short circuit" behavior, that is truncating a rendered expression, when a
-:func:`.true` or :func:`.false` constant is present:
+:func:`.true` or :func:` .false` constant is present:
 
 .. sourcecode:: pycon+sql
 
@@ -1633,7 +1633,7 @@ The :func:`.and_` and :func:`.or_` constructs will now exhibit quasi
     >>> print(select([t1]).where(expr))
     {printsql}SELECT t.x, t.y FROM t WHERE t.y > :y_1
 
-The boolean constants :func:`.true` and :func:`.false` themselves render as
+The boolean constants :func:`.true` and :func:` .false` themselves render as
 ``0 = 1`` and ``1 = 1`` for a backend with no boolean constants:
 
 .. sourcecode:: pycon+sql
@@ -1655,7 +1655,7 @@ now consistent:
     >>> print(select([t1.c.x]).where(and_(None, None)))
     {printsql}SELECT t.x FROM t WHERE NULL AND NULL{stop}
 
-:ticket:`2804`
+:ticket:`2804` 
 
 .. _migration_1068:
 
@@ -1701,7 +1701,7 @@ compatibility issues with older database versions (MySQL 4?  Oracle 8?
 etc.).   Based on user reports we can add rules that will disable the
 feature based on database version detection.
 
-:ticket:`1068`
+:ticket:`1068` 
 
 .. _migration_2848:
 
@@ -1725,7 +1725,7 @@ an ``__lt__()`` method has been added::
 
     eq_(sorted(rows), [(1, "foo"), (2, "bar"), (3, "def")])
 
-:ticket:`2848`
+:ticket:`2848` 
 
 .. _migration_2850:
 
@@ -1736,11 +1736,11 @@ The logic which "upgrades" a :func:`.bindparam` construct to take on the
 type of the enclosing expression has been improved in two ways.  First, the
 :func:`.bindparam` object is **copied** before the new type is assigned, so that
 the given :func:`.bindparam` is not mutated in place.  Secondly, this same
-operation occurs when an :class:`_expression.Insert` or :class:`_expression.Update` construct is compiled,
-regarding the "values" that were set in the statement via the :meth:`.ValuesBase.values`
+operation occurs when an :class:`_expression.Insert` or :class:` _expression.Update` construct is compiled,
+regarding the "values" that were set in the statement via the :meth:`.ValuesBase.values` 
 method.
 
-If given an untyped :func:`.bindparam`::
+If given an untyped :func:`.bindparam` ::
 
     bp = bindparam("some_col")
 
@@ -1753,7 +1753,7 @@ is of type ``String``, then ``expr.right``, that is the right side of the
 binary expression, will take on the ``String`` type.   Previously, ``bp`` itself
 would have been changed in place to have ``String`` as its type.
 
-Similarly, this operation occurs in an :class:`_expression.Insert` or :class:`_expression.Update`::
+Similarly, this operation occurs in an :class:`_expression.Insert` or :class:` _expression.Update`::
 
     stmt = mytable.update().values(col=bp)
 
@@ -1772,11 +1772,11 @@ The potentially backwards-compatible changes involve two unlikely
 scenarios.  Since the bound parameter is
 **cloned**, users should not be relying upon making in-place changes to a
 :func:`.bindparam` construct once created.   Additionally, code which uses
-:func:`.bindparam` within an :class:`_expression.Insert` or :class:`_expression.Update` statement
+:func:`.bindparam` within an :class:` _expression.Insert` or :class:`_expression.Update` statement
 which is relying on the fact that the :func:`.bindparam` is not typed according
 to the column being assigned towards will no longer function in that way.
 
-:ticket:`2850`
+:ticket:`2850` 
 
 
 .. _migration_1765:
@@ -1786,27 +1786,27 @@ Columns can reliably get their type from a column referred to via ForeignKey
 
 There's a long standing behavior which says that a :class:`_schema.Column` can be
 declared without a type, as long as that :class:`_schema.Column` is referred to
-by a :class:`_schema.ForeignKeyConstraint`, and the type from the referenced column
+by a :class:`_schema.ForeignKeyConstraint` , and the type from the referenced column
 will be copied into this one.   The problem has been that this feature never
 worked very well and wasn't maintained.   The core issue was that the
-:class:`_schema.ForeignKey` object doesn't know what target :class:`_schema.Column` it
+:class:`_schema.ForeignKey` object doesn't know what target :class:` _schema.Column` it
 refers to until it is asked, typically the first time the foreign key is used
-to construct a :class:`_expression.Join`.   So until that time, the parent :class:`_schema.Column`
+to construct a :class:`_expression.Join` .   So until that time, the parent :class:`_schema.Column` 
 would not have a type, or more specifically, it would have a default type
-of :class:`.NullType`.
+of :class:`.NullType` .
 
 While it's taken a long time, the work to reorganize the initialization of
 :class:`_schema.ForeignKey` objects has been completed such that this feature can
-finally work acceptably.  At the core of the change is that the :attr:`_schema.ForeignKey.column`
-attribute no longer lazily initializes the location of the target :class:`_schema.Column`;
+finally work acceptably.  At the core of the change is that the :attr:`_schema.ForeignKey.column` 
+attribute no longer lazily initializes the location of the target :class:`_schema.Column` ;
 the issue with this system was that the owning :class:`_schema.Column` would be stuck
-with :class:`.NullType` as its type until the :class:`_schema.ForeignKey` happened to
+with :class:`.NullType` as its type until the :class:` _schema.ForeignKey` happened to
 be used.
 
 In the new version, the :class:`_schema.ForeignKey` coordinates with the eventual
 :class:`_schema.Column` it will refer to using internal attachment events, so that the
 moment the referencing :class:`_schema.Column` is associated with the
-:class:`_schema.MetaData`, all :class:`_schema.ForeignKey` objects that
+:class:`_schema.MetaData` , all :class:`_schema.ForeignKey` objects that
 refer to it will be sent a message that they need to initialize their parent
 column.   This system is more complicated but works more solidly; as a bonus,
 there are now tests in place for a wide variety of :class:`_schema.Column` /
@@ -1816,7 +1816,7 @@ improved to be very specific to no less than seven different error conditions.
 Scenarios which now work correctly include:
 
 1. The type on a :class:`_schema.Column` is immediately present as soon as the
-   target :class:`_schema.Column` becomes associated with the same :class:`_schema.MetaData`;
+   target :class:`_schema.Column` becomes associated with the same :class:` _schema.MetaData`;
    this works no matter which side is configured first::
 
     >>> from sqlalchemy import Table, MetaData, Column, Integer, ForeignKey
@@ -1855,7 +1855,7 @@ Scenarios which now work correctly include:
     Integer()
 
 3. It even works for "multiple hops" - that is, a :class:`_schema.ForeignKey` that refers to a
-   :class:`_schema.Column` that refers to another :class:`_schema.Column`::
+   :class:`_schema.Column` that refers to another :class:` _schema.Column`::
 
     >>> from sqlalchemy import Table, MetaData, Column, Integer, ForeignKey
     >>> metadata = MetaData()
@@ -1871,7 +1871,7 @@ Scenarios which now work correctly include:
     >>> t3.c.t2t1id.type
     Integer()
 
-:ticket:`1765`
+:ticket:`1765` 
 
 
 Dialect Changes
@@ -1884,7 +1884,7 @@ The ``fdb`` dialect is now used if an engine is created without a dialect
 specifier, i.e. ``firebird://``.  ``fdb`` is a ``kinterbasdb`` compatible
 DBAPI which per the Firebird project is now their official Python driver.
 
-:ticket:`2504`
+:ticket:`2504` 
 
 Firebird ``fdb`` and ``kinterbasdb`` set ``retaining=False`` by default
 -----------------------------------------------------------------------
@@ -1907,14 +1907,14 @@ as desired.
 
 .. seealso::
 
-    :mod:`sqlalchemy.dialects.firebird.fdb`
+    :mod:`sqlalchemy.dialects.firebird.fdb` 
 
-    :mod:`sqlalchemy.dialects.firebird.kinterbasdb`
+    :mod:`sqlalchemy.dialects.firebird.kinterbasdb` 
 
     https://pythonhosted.org/fdb/usage-guide.html#retaining-transactions - information
     on the "retaining" flag.
 
-:ticket:`2763`
+:ticket:`2763` 
 
 
 

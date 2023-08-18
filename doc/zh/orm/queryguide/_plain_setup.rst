@@ -1,8 +1,10 @@
+:rst引用标记前后需加空格隔开:
+
 ======================================
-ORM查询指南：SELECT的设置
+ORM 查询指南的设置：SELECT
 ======================================
 
-本页展示了由 :ref:`queryguide_toplevel` 中的 :doc:`select` 文档使用的映射和fixture数据。
+本页说明了   :ref:`queryguide_toplevel`  中的  :doc:` select`  文档使用的映射和样例数据。
 
 ..  sourcecode:: python
 
@@ -18,6 +20,7 @@ ORM查询指南：SELECT的设置
     >>> from sqlalchemy.orm import mapped_column
     >>> from sqlalchemy.orm import relationship
     >>> from sqlalchemy.orm import Session
+    >>>
     >>>
     >>> class Base(DeclarativeBase):
     ...     pass
@@ -65,7 +68,7 @@ ORM查询指南：SELECT的设置
     >>> session.add_all(
     ...     [
     ...         User(
-    ...             name="spongebob",
+    ...             name="海绵宝宝",
     ...             fullname="Spongebob Squarepants",
     ...             addresses=[Address(email_address="spongebob@sqlalchemy.org")],
     ...         ),
@@ -78,16 +81,16 @@ ORM查询指南：SELECT的设置
     ...             ],
     ...         ),
     ...         User(
-    ...             name="patrick",
+    ...             name="派大星",
     ...             fullname="Patrick Star",
     ...             addresses=[Address(email_address="pat999@aol.com")],
     ...         ),
     ...         User(
-    ...             name="squidward",
+    ...             name="章鱼哥",
     ...             fullname="Squidward Tentacles",
     ...             addresses=[Address(email_address="stentcl@sqlalchemy.org")],
     ...         ),
-    ...         User(name="ehkrabs", fullname="Eugene H. Krabs"),
+    ...         User(name="Mr.Crabs", fullname="Eugene H. Krabs"),
     ...     ]
     ... )
     >>> session.commit()

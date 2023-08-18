@@ -7,7 +7,7 @@ SQLAlchemy provides abstractions for most common database data types,
 as well as several techniques for customization of datatypes.
 
 Database types are represented using Python classes, all of which ultimately
-extend from the base type class known as :class:`_types.TypeEngine`. There are
+extend from the base type class known as :class:`_types.TypeEngine` . There are
 two general categories of datatypes, each of which express themselves within
 the typing hierarchy in different ways. The category used by an individual
 datatype class can be identified based on the use of two different naming
@@ -15,7 +15,7 @@ conventions, which are "CamelCase" and "UPPERCASE".
 
 .. seealso::
 
-    :ref:`tutorial_core_metadata` - in the :ref:`unified_tutorial`.  Illustrates
+    :ref:`tutorial_core_metadata` - in the :ref:` unified_tutorial`.  Illustrates
     the most rudimental use of :class:`_types.TypeEngine` type objects to
     define :class:`_schema.Table` metadata and introduces the concept
     of type objects in tutorial form.
@@ -23,15 +23,15 @@ conventions, which are "CamelCase" and "UPPERCASE".
 The "CamelCase" datatypes
 -------------------------
 
-The rudimental types have "CamelCase" names such as :class:`_types.String`,
-:class:`_types.Numeric`, :class:`_types.Integer`, and :class:`_types.DateTime`.
+The rudimental types have "CamelCase" names such as :class:`_types.String` ,
+:class:`_types.Numeric` , :class:`_types.Integer` , and :class:`_types.DateTime` .
 All of the immediate subclasses of :class:`_types.TypeEngine` are
 "CamelCase" types. The "CamelCase" types are to the greatest degree possible
 **database agnostic**, meaning they can all be used on any database backend
 where they will behave in such a way as appropriate to that backend in order to
 produce the desired behavior.
 
-An example of a straightforward "CamelCase" datatype is :class:`_types.String`.
+An example of a straightforward "CamelCase" datatype is :class:`_types.String` .
 On most backends, using this datatype in a
 :ref:`table specification <metadata_describing>` will correspond to the
 ``VARCHAR`` database type being used on the target backend, delivering string
@@ -57,11 +57,11 @@ argument of 60 in the ``"email_address"`` column above, the type may be
 instantiated.
 
 Another "CamelCase" datatype that expresses more backend-specific behavior
-is the :class:`_types.Boolean` datatype. Unlike :class:`_types.String`,
+is the :class:`_types.Boolean` datatype. Unlike :class:` _types.String`,
 which represents a string datatype that all databases have,
 not every backend has a real "boolean" datatype; some make use of integers
 or BIT values 0 and 1, some have boolean literal constants ``true`` and
-``false`` while others dont.   For this datatype, :class:`_types.Boolean`
+``false`` while others dont.   For this datatype, :class:`_types.Boolean` 
 may render ``BOOLEAN`` on a backend such as PostgreSQL, ``BIT`` on the
 MySQL backend and ``SMALLINT`` on Oracle.  As data is sent and received
 from the database using this type, based on the dialect in use it may be
@@ -72,7 +72,7 @@ The typical SQLAlchemy application will likely wish to use primarily
 basic behavior and be automatically portable to all backends.
 
 Reference for the general set of "CamelCase" datatypes is below at
-:ref:`types_generic`.
+:ref:`types_generic` .
 
 The "UPPERCASE" datatypes
 -------------------------
@@ -86,11 +86,11 @@ of "UPPERCASE" types in a SQLAlchemy application indicates that specific
 datatypes are required, which then implies that the application would normally,
 without additional steps taken,
 be limited to those backends which use the type exactly as given.   Examples
-of UPPERCASE types include :class:`_types.VARCHAR`, :class:`_types.NUMERIC`,
-:class:`_types.INTEGER`, and :class:`_types.TIMESTAMP`, which inherit directly
+of UPPERCASE types include :class:`_types.VARCHAR` , :class:`_types.NUMERIC` ,
+:class:`_types.INTEGER` , and :class:`_types.TIMESTAMP` , which inherit directly
 from the previously mentioned "CamelCase" types
-:class:`_types.String`,
-:class:`_types.Numeric`, :class:`_types.Integer`, and :class:`_types.DateTime`,
+:class:`_types.String` ,
+:class:`_types.Numeric` , :class:`_types.Integer` , and :class:`_types.DateTime` ,
 respectively.
 
 The "UPPERCASE" datatypes that are part of ``sqlalchemy.types`` are common
@@ -98,7 +98,7 @@ SQL types that typically expect to be available on at least two backends
 if not more.
 
 Reference for the general set of "UPPERCASE" datatypes is below at
-:ref:`types_sqlstandard`.
+:ref:`types_sqlstandard` .
 
 
 
@@ -112,8 +112,8 @@ are either fully specific to those databases, or add additional arguments
 that are specific to those databases.   For these datatypes, specific
 SQLAlchemy dialects provide **backend-specific** "UPPERCASE" datatypes, for a
 SQL type that has no analogue on other backends.  Examples of backend-specific
-uppercase datatypes include PostgreSQL's :class:`_postgresql.JSONB`, SQL Server's
-:class:`_mssql.IMAGE` and MySQL's :class:`_mysql.TINYTEXT`.
+uppercase datatypes include PostgreSQL's :class:`_postgresql.JSONB` , SQL Server's
+:class:`_mssql.IMAGE` and MySQL's :class:` _mysql.TINYTEXT`.
 
 Specific backends may also include "UPPERCASE" datatypes that extend the
 arguments available from that same "UPPERCASE" datatype as found in the
@@ -121,10 +121,10 @@ arguments available from that same "UPPERCASE" datatype as found in the
 datatype, one might want to specify MySQL-specific arguments such as ``charset``
 or ``national``, which are available from the MySQL version
 of :class:`_mysql.VARCHAR` as the MySQL-only parameters
-:paramref:`_mysql.VARCHAR.charset` and :paramref:`_mysql.VARCHAR.national`.
+:paramref:`_mysql.VARCHAR.charset` and :paramref:` _mysql.VARCHAR.national`.
 
 API documentation for backend-specific types are in the dialect-specific
-documentation, listed at :ref:`dialect_toplevel`.
+documentation, listed at :ref:`dialect_toplevel` .
 
 
 .. _types_with_variant:

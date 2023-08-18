@@ -18,12 +18,12 @@ overhead for everything that occurs **before the SQL is emitted**.
 The caching of the "baked" system does **not** in any way reduce SQL calls or
 cache the **return results** from the database.  A technique that demonstrates
 the caching of the SQL calls and result sets themselves is available in
-:ref:`examples_caching`.
+:ref:`examples_caching` .
 
 .. deprecated:: 1.4  SQLAlchemy 1.4 and 2.0 feature an all-new direct query
    caching system that removes the need for the :class:`.BakedQuery` system.
    Caching is now transparently active for all Core and ORM queries with no
-   action taken by the user, using the system described at :ref:`sql_caching`.
+   action taken by the user, using the system described at :ref:`sql_caching` .
 
 
 .. deepalchemy::
@@ -73,9 +73,9 @@ query build-up looks like the following::
 
 Following are some observations about the above code:
 
-1. The ``baked_query`` object is an instance of :class:`.BakedQuery`.  This
-   object is essentially the "builder" for a real orm :class:`~.query.Query`
-   object, but it is not itself the *actual* :class:`~.query.Query`
+1. The ``baked_query`` object is an instance of :class:`.BakedQuery` .  This
+   object is essentially the "builder" for a real orm :class:`~.query.Query` 
+   object, but it is not itself the *actual* :class:`~.query.Query` 
    object.
 
 2. The actual :class:`~.query.Query` object is not built at all, until the
@@ -83,8 +83,8 @@ Following are some observations about the above code:
 
 3. The steps that are added to the ``baked_query`` object are all expressed
    as Python functions,  typically lambdas.  The first lambda given
-   to the :func:`.bakery` function receives a :class:`.Session` as its
-   argument.  The remaining lambdas each receive a :class:`~.query.Query`
+   to the :func:`.bakery` function receives a :class:` .Session` as its
+   argument.  The remaining lambdas each receive a :class:`~.query.Query` 
    as their argument.
 
 4. In the above code, even though our application may call upon
@@ -106,7 +106,7 @@ Following are some observations about the above code:
    variables which may change across calls are referenced **within** the
    lambdas; instead, assuming these are values to be bound into the
    SQL string, we use :func:`.bindparam` to construct named parameters,
-   where we apply their actual values later using :meth:`_baked.Result.params`.
+   where we apply their actual values later using :meth:`_baked.Result.params` .
 
 
 Performance
@@ -166,7 +166,7 @@ as being impacted by this particular form of overhead.
 .. topic:: Measure twice, cut once
 
     For background on how to profile a SQLAlchemy application, please see
-    the section :ref:`faq_performance`.  It is essential that performance
+    the section :ref:`faq_performance` .  It is essential that performance
     measurement techniques are used when attempting to improve the performance
     of an application.
 
@@ -193,11 +193,11 @@ just building up the query, and removing its :class:`.Session` by calling
         return query.params(id=id_argument).all()
 
 The above approach gets us a very minimal performance benefit.
-By re-using a :class:`~.query.Query`, we save on the Python work within
+By re-using a :class:`~.query.Query` , we save on the Python work within
 the ``session.query(Model)`` constructor as well as calling upon
 ``filter(Model.id == bindparam('id'))``, which will skip for us the building
-up of the Core expression as well as sending it to :meth:`_query.Query.filter`.
-However, the approach still regenerates the full :class:`_expression.Select`
+up of the Core expression as well as sending it to :meth:`_query.Query.filter` .
+However, the approach still regenerates the full :class:`_expression.Select` 
 object every time when :meth:`_query.Query.all` is called and additionally this
 brand new :class:`_expression.Select` is sent off to the string compilation step every
 time, which for a simple case like the above is probably about 70% of the
@@ -318,7 +318,7 @@ automatically and without the chance of mistakes.
 This code sample is a few lines shorter than the naive example, removes
 the need to deal with cache keys, and has the vast performance benefits
 of the full so-called "baked" feature.  But
-still a little verbose!  Hence we take methods like :meth:`.BakedQuery.add_criteria`
+still a little verbose!  Hence we take methods like :meth:`.BakedQuery.add_criteria` 
 and :meth:`.BakedQuery.with_criteria` and shorten them into operators, and
 encourage (though certainly not require!) using simple lambdas, only as a
 means to reduce verbosity::
@@ -374,18 +374,18 @@ statement compilation time::
 
 .. seealso::
 
-  :paramref:`.bindparam.expanding`
+  :paramref:`.bindparam.expanding` 
 
-  :meth:`.ColumnOperators.in_`
+  :meth:`.ColumnOperators.in_` 
 
 Using Subqueries
 ^^^^^^^^^^^^^^^^
 
-When using :class:`_query.Query` objects, it is often needed that one :class:`_query.Query`
+When using :class:`_query.Query` objects, it is often needed that one :class:` _query.Query`
 object is used to generate a subquery within another.   In the case where the
 :class:`_query.Query` is currently in baked form, an interim method may be used to
-retrieve the :class:`_query.Query` object, using the :meth:`.BakedQuery.to_query`
-method.  This method is passed the :class:`.Session` or :class:`_query.Query` that is
+retrieve the :class:`_query.Query` object, using the :meth:` .BakedQuery.to_query`
+method.  This method is passed the :class:`.Session` or :class:` _query.Query` that is
 the argument to the lambda callable used to generate a particular step
 of the baked query::
 
@@ -410,14 +410,14 @@ of the baked query::
 Using the before_compile event
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As of SQLAlchemy 1.3.11, the use of the :meth:`.QueryEvents.before_compile`
+As of SQLAlchemy 1.3.11, the use of the :meth:`.QueryEvents.before_compile` 
 event against a particular :class:`_query.Query` will disallow the baked query
-system from caching the query, if the event hook returns a new :class:`_query.Query`
+system from caching the query, if the event hook returns a new :class:`_query.Query` 
 object that is different from the one passed in.  This is so that the
 :meth:`.QueryEvents.before_compile` hook may be invoked against a particular
 :class:`_query.Query` every time it is used, to accommodate for hooks that
 alter the query differently each time.    To allow a
-:meth:`.QueryEvents.before_compile` to alter a :meth:`_query.Query` object, but
+:meth:`.QueryEvents.before_compile` to alter a :meth:` _query.Query` object, but
 still to allow the result to be cached, the event can be registered
 passing the ``bake_ok=True`` flag::
 
@@ -444,12 +444,12 @@ Disabling Baked Queries Session-wide
 
 The flag :paramref:`.Session.enable_baked_queries` may be set to False,
 causing all baked queries to not use the cache when used against that
-:class:`.Session`::
+:class:`.Session` ::
 
     session = Session(engine, enable_baked_queries=False)
 
 Like all session flags, it is also accepted by factory objects like
-:class:`.sessionmaker` and methods like :meth:`.sessionmaker.configure`.
+:class:`.sessionmaker` and methods like :meth:` .sessionmaker.configure`.
 
 The immediate rationale for this flag is so that an application
 which is seeing issues potentially due to cache key conflicts from user-defined

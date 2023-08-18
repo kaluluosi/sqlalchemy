@@ -1,3 +1,3 @@
-.. admonition:: 我们已经迁移！
+.. admonition:: 我们已经搬家啦！
 
-    这个页面是SQLAlchemy 1.x教程的旧家。从2.0开始，SQLAlchemy以一种改进的方式呈现，并提供了一个全新的教程，以最新的使用模式将Core和ORM集成在一起。请参见:ref:`unified_tutorial`.
+    这个页面是 SQLAlchemy 1.x 教程的旧地址。从 2.0 版本开始，SQLAlchemy 推出了全新的教程，旨在以前所未有的方式集成 Core 和 ORM，介绍最新的使用方法。请参见   :ref:`unified_tutorial` 。

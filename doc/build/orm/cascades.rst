@@ -11,15 +11,15 @@ referred to by that relationship (e.g. "child" objects), and is
 affected by the :paramref:`_orm.relationship.cascade` option.
 
 The default behavior of cascade is limited to cascades of the
-so-called :ref:`cascade_save_update` and :ref:`cascade_merge` settings.
+so-called :ref:`cascade_save_update` and :ref:` cascade_merge` settings.
 The typical "alternative" setting for cascade is to add
-the :ref:`cascade_delete` and :ref:`cascade_delete_orphan` options;
+the :ref:`cascade_delete` and :ref:` cascade_delete_orphan` options;
 these settings are appropriate for related objects which only exist as
 long as they are attached to their parent, and are otherwise deleted.
 
 Cascade behavior is configured using the
 :paramref:`_orm.relationship.cascade` option on
-:func:`~sqlalchemy.orm.relationship`::
+:func:`~sqlalchemy.orm.relationship` ::
 
     class Order(Base):
         __tablename__ = "order"
@@ -29,7 +29,7 @@ Cascade behavior is configured using the
 
 To set cascades on a backref, the same flag can be used with the
 :func:`~.sqlalchemy.orm.backref` function, which ultimately feeds
-its arguments back into :func:`~sqlalchemy.orm.relationship`::
+its arguments back into :func:`~sqlalchemy.orm.relationship` ::
 
     class Item(Base):
         __tablename__ = "item"
@@ -49,7 +49,7 @@ its arguments back into :func:`~sqlalchemy.orm.relationship`::
     stating "The sections we have just covered can be a bit confusing.
     However, in practice, it all works out nicely."
 
-The default value of :paramref:`_orm.relationship.cascade` is ``save-update, merge``.
+The default value of :paramref:`_orm.relationship.cascade` is ` `save-update, merge``.
 The typical alternative setting for this parameter is either
 ``all`` or more commonly ``all, delete-orphan``.  The ``all`` symbol
 is a synonym for ``save-update, merge, refresh-expire, expunge, delete``,
@@ -58,7 +58,7 @@ object should follow along with its parent in all cases, and be deleted once
 it is no longer associated with that parent.
 
 .. warning:: The ``all`` cascade option implies the
-   :ref:`cascade_refresh_expire`
+   :ref:`cascade_refresh_expire` 
    cascade setting which may not be desirable when using the
    :ref:`asyncio_toplevel` extension, as it will expire related objects
    more aggressively than is typically appropriate in an explicit IO context.
@@ -73,16 +73,16 @@ save-update
 -----------
 
 ``save-update`` cascade indicates that when an object is placed into a
-:class:`.Session` via :meth:`.Session.add`, all the objects associated
+:class:`.Session` via :meth:` .Session.add`, all the objects associated
 with it via this :func:`_orm.relationship` should also be added to that
-same :class:`.Session`.  Suppose we have an object ``user1`` with two
+same :class:`.Session` .  Suppose we have an object ``user1`` with two
 related objects ``address1``, ``address2``::
 
     >>> user1 = User()
     >>> address1, address2 = Address(), Address()
     >>> user1.addresses = [address1, address2]
 
-If we add ``user1`` to a :class:`.Session`, it will also add
+If we add ``user1`` to a :class:`.Session` , it will also add
 ``address1``, ``address2`` implicitly::
 
     >>> sess = Session()
@@ -91,9 +91,9 @@ If we add ``user1`` to a :class:`.Session`, it will also add
     True
 
 ``save-update`` cascade also affects attribute operations for objects
-that are already present in a :class:`.Session`.  If we add a third
+that are already present in a :class:`.Session` .  If we add a third
 object, ``address3`` to the ``user1.addresses`` collection, it
-becomes part of the state of that :class:`.Session`::
+becomes part of the state of that :class:`.Session` ::
 
     >>> address3 = Address()
     >>> user1.addresses.append(address3)
@@ -102,9 +102,9 @@ becomes part of the state of that :class:`.Session`::
 
 A ``save-update`` cascade can exhibit surprising behavior when removing an item from
 a collection or de-associating an object from a scalar attribute. In some cases, the
-orphaned objects may still be pulled into the ex-parent's :class:`.Session`; this is
+orphaned objects may still be pulled into the ex-parent's :class:`.Session` ; this is
 so that the flush process may handle that related object appropriately.
-This case usually only arises if an object is removed from one :class:`.Session`
+This case usually only arises if an object is removed from one :class:`.Session` 
 and added to another::
 
     >>> user1 = sess1.scalars(select(User).filter_by(id=1)).first()
@@ -131,18 +131,18 @@ Behavior of save-update cascade with bi-directional relationships
 
 The ``save-update`` cascade takes place **uni-directionally** in the context of
 a bi-directional relationship, i.e. when using
-the :paramref:`_orm.relationship.back_populates` or :paramref:`_orm.relationship.backref`
+the :paramref:`_orm.relationship.back_populates` or :paramref:` _orm.relationship.backref`
 parameters to create two separate
 :func:`_orm.relationship` objects which refer to each other.
 
-An object that's not associated with a :class:`_orm.Session`, when assigned to
+An object that's not associated with a :class:`_orm.Session` , when assigned to
 an attribute or collection on a parent object that is associated with a
-:class:`_orm.Session`, will be automatically added to that same
-:class:`_orm.Session`. However, the same operation in reverse will not have
-this effect; an object that's not associated with a :class:`_orm.Session`, upon
+:class:`_orm.Session` , will be automatically added to that same
+:class:`_orm.Session` . However, the same operation in reverse will not have
+this effect; an object that's not associated with a :class:`_orm.Session` , upon
 which a child object that is associated with a :class:`_orm.Session` is
 assigned, will not result in an automatic addition of that parent object to the
-:class:`_orm.Session`.  The overall subject of this behavior is known
+:class:`_orm.Session` .  The overall subject of this behavior is known
 as "cascade backrefs", and represents a change in behavior that was standardized
 as of SQLAlchemy 2.0.
 
@@ -162,10 +162,10 @@ bi-directionally to a series of ``Item`` objects via relationships
         properties={"order": relationship(Order, back_populates="items")},
     )
 
-If an ``Order`` is already associated with a :class:`_orm.Session`, and
+If an ``Order`` is already associated with a :class:`_orm.Session` , and
 an ``Item`` object is then created and appended to the ``Order.items``
 collection of that ``Order``, the ``Item`` will be automatically cascaded
-into that same :class:`_orm.Session`::
+into that same :class:`_orm.Session` ::
 
     >>> o1 = Order()
     >>> session.add(o1)
@@ -182,7 +182,7 @@ into that same :class:`_orm.Session`::
 Above, the bidirectional nature of ``Order.items`` and ``Item.order`` means
 that appending to ``Order.items`` also assigns to ``Item.order``. At the same
 time, the ``save-update`` cascade allowed for the ``Item`` object to be added
-to the same :class:`_orm.Session` which the parent ``Order`` was already
+to the same :class:`_orm.Session` which the parent ` `Order`` was already
 associated.
 
 However, if the operation above is performed in the **reverse** direction,
@@ -205,7 +205,7 @@ previous example::
     False
 
 In the above case, after the ``Item`` object is created and all the desired
-state is set upon it, it should then be added to the :class:`_orm.Session`
+state is set upon it, it should then be added to the :class:`_orm.Session` 
 explicitly::
 
     >>> session.add(i1)
@@ -217,7 +217,7 @@ deprecated and the ``cascade_backrefs`` option was removed in SQLAlchemy 2.0.
 The rationale is that users generally do not find it intuitive that assigning
 to an attribute on an object, illustrated above as the assignment of
 ``i1.order = o1``, would alter the persistence state of that object ``i1`` such
-that it's now pending within a :class:`_orm.Session`, and there would
+that it's now pending within a :class:`_orm.Session` , and there would
 frequently be subsequent issues where autoflush would prematurely flush the
 object and cause errors, in those cases where the given object was still being
 constructed and wasn't in a ready state to be flushed. The option to select between
@@ -303,11 +303,11 @@ directives described at :ref:`passive_deletes` should be used.
 
 .. seealso::
 
-    :ref:`passive_deletes`
+    :ref:`passive_deletes` 
 
-    :ref:`cascade_delete_many_to_many`
+    :ref:`cascade_delete_many_to_many` 
 
-    :ref:`cascade_delete_orphan`
+    :ref:`cascade_delete_orphan` 
 
 .. _cascade_delete_many_to_many:
 
@@ -355,7 +355,7 @@ association::
         )
 
 Above, when a ``Parent`` object is marked for deletion
-using :meth:`_orm.Session.delete`, the flush process will as usual delete
+using :meth:`_orm.Session.delete` , the flush process will as usual delete
 the associated rows from the ``association`` table, however per cascade
 rules it will also delete all related ``Child`` rows.
 
@@ -371,9 +371,9 @@ rules it will also delete all related ``Child`` rows.
 
 .. seealso::
 
-  :ref:`relationships_many_to_many_deletion`
+  :ref:`relationships_many_to_many_deletion` 
 
-  :ref:`passive_deletes_many_to_many`
+  :ref:`passive_deletes_many_to_many` 
 
 .. _passive_deletes:
 
@@ -383,12 +383,12 @@ Using foreign key ON DELETE cascade with ORM relationships
 The behavior of SQLAlchemy's "delete" cascade overlaps with the
 ``ON DELETE`` feature of a database ``FOREIGN KEY`` constraint.
 SQLAlchemy allows configuration of these schema-level :term:`DDL` behaviors
-using the :class:`_schema.ForeignKey` and :class:`_schema.ForeignKeyConstraint`
-constructs; usage of these objects in conjunction with :class:`_schema.Table`
-metadata is described at :ref:`on_update_on_delete`.
+using the :class:`_schema.ForeignKey` and :class:` _schema.ForeignKeyConstraint`
+constructs; usage of these objects in conjunction with :class:`_schema.Table` 
+metadata is described at :ref:`on_update_on_delete` .
 
 In order to use ``ON DELETE`` foreign key cascades in conjunction with
-:func:`_orm.relationship`, it's important to note first and foremost that the
+:func:`_orm.relationship` , it's important to note first and foremost that the
 :paramref:`_orm.relationship.cascade` setting must still be configured to
 match the desired "delete" or "set null" behavior (using ``delete`` cascade
 or leaving it omitted), so that whether the ORM or the database
@@ -437,8 +437,8 @@ is as follows:
    emitted for each record.
 
 3. If the ``my_parent.children`` collection is **unloaded**, then no ``DELETE``
-   statements are emitted.   If the :paramref:`_orm.relationship.passive_deletes`
-   flag were **not** set on this :func:`_orm.relationship`, then a ``SELECT``
+   statements are emitted.   If the :paramref:`_orm.relationship.passive_deletes` 
+   flag were **not** set on this :func:`_orm.relationship` , then a ``SELECT``
    statement for unloaded ``Child`` objects would have been emitted.
 
 4. A ``DELETE`` statement is then emitted for the ``my_parent`` row itself.
@@ -449,7 +449,7 @@ is as follows:
 6. The ``Parent`` instance referred to by ``my_parent``, as well as all
    instances of ``Child`` that were related to this object and were
    **loaded** (i.e. step 2 above took place), are de-associated from the
-   :class:`._orm.Session`.
+   :class:`._orm.Session` .
 
 .. note::
 
@@ -512,10 +512,10 @@ is as follows:
 
     * SQLAlchemy doesn't **need** to be this sophisticated, as we instead
       provide smooth integration with the database's own ``ON DELETE``
-      functionality, by using the :paramref:`_orm.relationship.passive_deletes`
+      functionality, by using the :paramref:`_orm.relationship.passive_deletes` 
       option in conjunction with properly configured foreign key constraints.
       Under this behavior, SQLAlchemy only emits DELETE for those rows that are
-      already locally present in the :class:`.Session`; for any collections
+      already locally present in the :class:`.Session` ; for any collections
       that are unloaded, it leaves them to the database to handle, rather than
       emitting a SELECT for them.  The section :ref:`passive_deletes` provides
       an example of this use.
@@ -536,7 +536,7 @@ is as follows:
 Using foreign key ON DELETE with many-to-many relationships
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As described at :ref:`cascade_delete_many_to_many`, "delete" cascade works
+As described at :ref:`cascade_delete_many_to_many` , "delete" cascade works
 for many-to-many relationships as well.  To make use of ``ON DELETE CASCADE``
 foreign keys in conjunction with many to many, ``FOREIGN KEY`` directives
 are configured on the association table.   These directives can handle
@@ -594,7 +594,7 @@ Using the above configuration, the deletion of a ``Parent`` object proceeds
 as follows:
 
 1. A ``Parent`` object is marked for deletion using
-   :meth:`_orm.Session.delete`.
+   :meth:`_orm.Session.delete` .
 
 2. When the flush occurs, if the ``Parent.children`` collection is not loaded,
    the ORM will first emit a SELECT statement in order to load the ``Child``
@@ -646,7 +646,7 @@ desired.
 merge
 -----
 
-``merge`` cascade indicates that the :meth:`.Session.merge`
+``merge`` cascade indicates that the :meth:`.Session.merge` 
 operation should be propagated from a parent that's the subject
 of the :meth:`.Session.merge` call down to referred objects.
 This cascade is also on by default.
@@ -658,7 +658,7 @@ refresh-expire
 
 ``refresh-expire`` is an uncommon option, indicating that the
 :meth:`.Session.expire` operation should be propagated from a parent
-down to referred objects.   When using :meth:`.Session.refresh`,
+down to referred objects.   When using :meth:`.Session.refresh` ,
 the referred objects are expired only, but not actually refreshed.
 
 .. _cascade_expunge:
@@ -667,7 +667,7 @@ expunge
 -------
 
 ``expunge`` cascade indicates that when the parent object is removed
-from the :class:`.Session` using :meth:`.Session.expunge`, the
+from the :class:`.Session` using :meth:` .Session.expunge`, the
 operation should be propagated down to referred objects.
 
 
@@ -682,12 +682,12 @@ relationship during the flush process.  This means, if your class has a
 to a single object such as many-to-one, the contents of this attribute will
 not be modified when the flush process occurs.  Instead, it is expected
 that the :class:`.Session` would eventually be expired, either through the expire-on-commit behavior of
-:meth:`.Session.commit` or through explicit use of :meth:`.Session.expire`.
+:meth:`.Session.commit` or through explicit use of :meth:` .Session.expire`.
 At that point, any referenced object or collection associated with that
 :class:`.Session` will be cleared and will re-load itself upon next access.
 
 A common confusion that arises regarding this behavior involves the use of the
-:meth:`~.Session.delete` method.   When :meth:`.Session.delete` is invoked upon
+:meth:`~.Session.delete` method.   When :meth:` .Session.delete` is invoked upon
 an object and the :class:`.Session` is flushed, the row is deleted from the
 database.  Rows that refer to the target row via  foreign key, assuming they
 are tracked using a :func:`_orm.relationship` between the two mapped object types,
@@ -743,7 +743,7 @@ illustrated in the example below::
 
 Where above, upon removing the ``Address`` object from the ``User.addresses``
 collection, the ``delete-orphan`` cascade has the effect of marking the ``Address``
-object for deletion in the same way as passing it to :meth:`~.Session.delete`.
+object for deletion in the same way as passing it to :meth:`~.Session.delete` .
 
 The ``delete-orphan`` cascade can also be applied to a many-to-one
 or one-to-one relationship, so that when an object is de-associated from its

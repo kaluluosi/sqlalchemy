@@ -1,1 +1,1 @@
-该文档已移动至:doc:`queryguide/index`。
+该文件已经被移动到  :doc:`queryguide/index`  。

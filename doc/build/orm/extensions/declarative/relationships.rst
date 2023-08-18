@@ -6,14 +6,14 @@
 Configuring Relationships
 =========================
 
-This section is covered by :ref:`orm_declarative_properties`.
+This section is covered by :ref:`orm_declarative_properties` .
 
 .. _declarative_relationship_eval:
 
 Evaluation of relationship arguments
 =====================================
 
-This section is moved to :ref:`orm_declarative_relationship_eval`.
+This section is moved to :ref:`orm_declarative_relationship_eval` .
 
 
 .. _declarative_many_to_many:
@@ -21,5 +21,5 @@ This section is moved to :ref:`orm_declarative_relationship_eval`.
 Configuring Many-to-Many Relationships
 ======================================
 
-This section is moved to :ref:`orm_declarative_relationship_secondary_eval`.
+This section is moved to :ref:`orm_declarative_relationship_secondary_eval` .
 

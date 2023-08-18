@@ -6,7 +6,7 @@ ORM Quick Start
 
 For new users who want to quickly see what basic ORM use looks like, here's an
 abbreviated form of the mappings and examples used in the
-:ref:`unified_tutorial`. The code here is fully runnable from a clean command
+:ref:`unified_tutorial` . The code here is fully runnable from a clean command
 line.
 
 As the descriptions in this section are intentionally **very short**, please
@@ -14,8 +14,8 @@ proceed to the full :ref:`unified_tutorial` for a much more in-depth
 description of each of the concepts being illustrated here.
 
 .. versionchanged:: 2.0  The ORM Quickstart is updated for the latest
-    :pep:`484`-aware features using new constructs including
-    :func:`_orm.mapped_column`.   See the section
+    :pep:`484` -aware features using new constructs including
+    :func:`_orm.mapped_column` .   See the section
     :ref:`whatsnew_20_orm_declarative_typing` for migration information.
 
 Declare Models
@@ -23,7 +23,7 @@ Declare Models
 
 Here, we define module-level constructs that will form the structures
 which we will be querying from the database.  This structure, known as a
-:ref:`Declarative Mapping <orm_declarative_mapping>`, defines at once both a
+:ref:`Declarative Mapping <orm_declarative_mapping>` , defines at once both a
 Python object model, as well as :term:`database metadata` that describes
 real SQL tables that exist, or will exist, in a particular database::
 
@@ -66,7 +66,7 @@ real SQL tables that exist, or will exist, in a particular database::
     ...         return f"Address(id={self.id!r}, email_address={self.email_address!r})"
 
 The mapping starts with a base class, which above is called ``Base``, and is
-created by making a simple subclass against the :class:`_orm.DeclarativeBase`
+created by making a simple subclass against the :class:`_orm.DeclarativeBase` 
 class.
 
 Individual mapped classes are then created by making subclasses of ``Base``.
@@ -75,17 +75,17 @@ the name of which is indicated by using the ``__tablename__`` class-level
 attribute.
 
 Next, columns that are part of the table are declared, by adding attributes
-that include a special typing annotation called :class:`_orm.Mapped`. The name
+that include a special typing annotation called :class:`_orm.Mapped` . The name
 of each attribute corresponds to the column that is to be part of the database
 table. The datatype of each column is taken first from the Python datatype
-that's associated with each :class:`_orm.Mapped` annotation; ``int`` for
+that's associated with each :class:`_orm.Mapped` annotation; ` `int`` for
 ``INTEGER``, ``str`` for ``VARCHAR``, etc. Nullability derives from whether or
 not the ``Optional[]`` type modifier is used. More specific typing information
 may be indicated using SQLAlchemy type objects in the right side
-:func:`_orm.mapped_column` directive, such as the :class:`.String` datatype
+:func:`_orm.mapped_column` directive, such as the :class:` .String` datatype
 used above in the ``User.name`` column. The association between Python types
 and SQL types can be customized using the
-:ref:`type annotation map <orm_declarative_mapped_column_type_map>`.
+:ref:`type annotation map <orm_declarative_mapped_column_type_map>` .
 
 The :func:`_orm.mapped_column` directive is used for all column-based
 attributes that require more specific customization. Besides typing
@@ -97,17 +97,17 @@ that are accepted by the SQLAlchemy :class:`_schema.Column` class, which is
 used by SQLAlchemy Core to represent database columns.
 
 All ORM mapped classes require at least one column be declared as part of the
-primary key, typically by using the :paramref:`_schema.Column.primary_key`
+primary key, typically by using the :paramref:`_schema.Column.primary_key` 
 parameter on those :func:`_orm.mapped_column` objects that should be part
 of the key.  In the above example, the ``User.id`` and ``Address.id``
 columns are marked as primary key.
 
 Taken together, the combination of a string table name as well as a list
-of column declarations is referred towards in SQLAlchemy as :term:`table metadata`.
+of column declarations is referred towards in SQLAlchemy as :term:`table metadata` .
 Setting up table metadata using both Core and ORM approaches is introduced
-in the :ref:`unified_tutorial` at :ref:`tutorial_working_with_metadata`.
+in the :ref:`unified_tutorial` at :ref:` tutorial_working_with_metadata`.
 The above mapping is an example of what's referred towards as
-:ref:`Annotated Declarative Table <orm_declarative_mapped_column>`
+:ref:`Annotated Declarative Table <orm_declarative_mapped_column>` 
 configuration.
 
 Other variants of :class:`_orm.Mapped` are available, most commonly
@@ -116,12 +116,12 @@ to the column-based attributes, :func:`_orm.relationship` denotes a linkage
 between two ORM classes.  In the above example, ``User.addresses`` links
 ``User`` to ``Address``, and ``Address.user`` links ``Address`` to ``User``.
 The :func:`_orm.relationship` construct is introduced in the
-:ref:`unified_tutorial` at :ref:`tutorial_orm_related_objects`.
+:ref:`unified_tutorial` at :ref:` tutorial_orm_related_objects`.
 
 Finally, the above example classes include a ``__repr__()`` method, which is
 not required but is useful for debugging. Mapped classes can be created with
 methods such as ``__repr__()`` generated automatically, using dataclasses. More
-on dataclass mapping at :ref:`orm_declarative_native_dataclasses`.
+on dataclass mapping at :ref:`orm_declarative_native_dataclasses` .
 
 
 Create an Engine
@@ -142,14 +142,14 @@ for convenience::
     The ``echo=True`` parameter indicates that SQL emitted by connections will
     be logged to standard out.
 
-A full intro to the :class:`_engine.Engine` starts at :ref:`tutorial_engine`.
+A full intro to the :class:`_engine.Engine` starts at :ref:` tutorial_engine`.
 
 Emit CREATE TABLE DDL
 ----------------------
 
 
 Using our table metadata and our engine, we can generate our schema at once
-in our target SQLite database, using a method called :meth:`_schema.MetaData.create_all`:
+in our target SQLite database, using a method called :meth:`_schema.MetaData.create_all` :
 
 .. sourcecode:: pycon+sql
 
@@ -178,7 +178,7 @@ in our target SQLite database, using a method called :meth:`_schema.MetaData.cre
 
 A lot just happened from that bit of Python code we wrote.  For a complete
 overview of what's going on on with Table metadata, proceed in the
-Tutorial at :ref:`tutorial_working_with_metadata`.
+Tutorial at :ref:`tutorial_working_with_metadata` .
 
 Create Objects and Persist
 ---------------------------
@@ -187,13 +187,13 @@ We are now ready to insert data in the database.  We accomplish this by
 creating instances of ``User`` and ``Address`` classes, which have
 an ``__init__()`` method already as established automatically by the
 declarative mapping process.  We then pass them
-to the database using an object called a :ref:`Session <tutorial_executing_orm_session>`,
+to the database using an object called a :ref:`Session <tutorial_executing_orm_session>` ,
 which makes use of the :class:`_engine.Engine` to interact with the
 database.  The :meth:`_orm.Session.add_all` method is used here to add
 multiple objects at once, and the :meth:`_orm.Session.commit` method
 will be used to :ref:`flush <session_flushing>` any pending changes to the
 database and then :ref:`commit <session_committing>` the current database
-transaction, which is always in progress whenever the :class:`_orm.Session`
+transaction, which is always in progress whenever the :class:`_orm.Session` 
 is used:
 
 .. sourcecode:: pycon+sql
@@ -241,22 +241,22 @@ is used:
     manager style as above, that is, using the Python ``with:`` statement.
     The :class:`_orm.Session` object represents active database resources
     so it's good to make sure it's closed out when a series of operations
-    are completed.  In the next section, we'll keep a :class:`_orm.Session`
+    are completed.  In the next section, we'll keep a :class:`_orm.Session` 
     opened just for illustration purposes.
 
 Basics on creating a :class:`_orm.Session` are at
-:ref:`tutorial_executing_orm_session` and more at :ref:`session_basics`.
+:ref:`tutorial_executing_orm_session` and more at :ref:` session_basics`.
 
 Then, some varieties of basic persistence operations are introduced
-at :ref:`tutorial_inserting_orm`.
+at :ref:`tutorial_inserting_orm` .
 
 Simple SELECT
 --------------
 
 With some rows in the database, here's the simplest form of emitting a SELECT
 statement to load some objects. To create SELECT statements, we use the
-:func:`_sql.select` function to create a new :class:`_sql.Select` object, which
-we then invoke using a :class:`_orm.Session`. The method that is often useful
+:func:`_sql.select` function to create a new :class:` _sql.Select` object, which
+we then invoke using a :class:`_orm.Session` . The method that is often useful
 when querying for ORM objects is the :meth:`_orm.Session.scalars` method, which
 will return a :class:`_result.ScalarResult` object that will iterate through
 the ORM objects we've selected:
@@ -281,18 +281,18 @@ the ORM objects we've selected:
 
 
 The above query also made use of the :meth:`_sql.Select.where` method
-to add WHERE criteria, and also used the :meth:`_sql.ColumnOperators.in_`
+to add WHERE criteria, and also used the :meth:`_sql.ColumnOperators.in_` 
 method that's part of all SQLAlchemy column-like constructs to use the
 SQL IN operator.
 
 More detail on how to select objects and individual columns is at
-:ref:`tutorial_selecting_orm_entities`.
+:ref:`tutorial_selecting_orm_entities` .
 
 SELECT with JOIN
 -----------------
 
 It's very common to query amongst multiple tables at once, and in SQL
-the JOIN keyword is the primary way this happens.   The :class:`_sql.Select`
+the JOIN keyword is the primary way this happens.   The :class:`_sql.Select` 
 construct creates joins using the :meth:`_sql.Select.join` method:
 
 .. sourcecode:: pycon+sql
@@ -318,7 +318,7 @@ objects to create "equality" comparisons, which uses the overridden Python
 method :meth:`_sql.ColumnOperators.__eq__` to produce a SQL criteria object.
 
 Some more background on the concepts above are at
-:ref:`tutorial_select_where_clause` and :ref:`tutorial_select_join`.
+:ref:`tutorial_select_where_clause` and :ref:` tutorial_select_join`.
 
 Make Changes
 ------------
@@ -357,11 +357,11 @@ address associated with "sandy", and also add a new email address to
     {stop}
 
 Notice when we accessed ``patrick.addresses``, a SELECT was emitted.  This is
-called a :term:`lazy load`.   Background on different ways to access related
-items using more or less SQL is introduced at :ref:`tutorial_orm_loader_strategies`.
+called a :term:`lazy load` .   Background on different ways to access related
+items using more or less SQL is introduced at :ref:`tutorial_orm_loader_strategies` .
 
 A detailed walkthrough on ORM data manipulation starts at
-:ref:`tutorial_orm_data_manipulation`.
+:ref:`tutorial_orm_data_manipulation` .
 
 Some Deletes
 ------------
@@ -373,8 +373,8 @@ of which are important based on the specific use case.
 First we will remove one of the ``Address`` objects from the "sandy" user.
 When the :class:`_orm.Session` next flushes, this will result in the
 row being deleted.   This behavior is something that we configured in our
-mapping called the :ref:`delete cascade <cascade_delete>`.  We can get a handle to the ``sandy``
-object by primary key using :meth:`_orm.Session.get`, then work with the object:
+mapping called the :ref:`delete cascade <cascade_delete>` .  We can get a handle to the ``sandy``
+object by primary key using :meth:`_orm.Session.get` , then work with the object:
 
 .. sourcecode:: pycon+sql
 
@@ -428,8 +428,8 @@ options that we configured, in this case, onto the related ``Address`` objects:
 The :meth:`_orm.Session.delete` method in this particular case emitted two
 SELECT statements, even though it didn't emit a DELETE, which might seem surprising.
 This is because when the method went to inspect the object, it turns out the
-``patrick`` object was :term:`expired`, which happened when we last called upon
-:meth:`_orm.Session.commit`, and the SQL emitted was to re-load the rows
+``patrick`` object was :term:`expired` , which happened when we last called upon
+:meth:`_orm.Session.commit` , and the SQL emitted was to re-load the rows
 from the new transaction.   This expiration is optional, and in normal
 use we will often be turning it off for situations where it doesn't apply well.
 
@@ -445,9 +445,9 @@ To illustrate the rows being deleted, here's the commit:
     COMMIT
     {stop}
 
-The Tutorial discusses ORM deletion at :ref:`tutorial_orm_deleting`.
-Background on object expiration is at :ref:`session_expiring`; cascades
-are discussed in depth at :ref:`unitofwork_cascades`.
+The Tutorial discusses ORM deletion at :ref:`tutorial_orm_deleting` .
+Background on object expiration is at :ref:`session_expiring` ; cascades
+are discussed in depth at :ref:`unitofwork_cascades` .
 
 Learn the above concepts in depth
 ---------------------------------

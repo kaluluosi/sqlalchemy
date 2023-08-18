@@ -29,6 +29,6 @@ because there are more than one element.
 
     Please use reStructuredText and Sphinx markup when possible.  For example
     method :meth:`.Index.create` and parameter
-    :paramref:`.Index.create.checkfirst`, and :class:`.Table` which will
+    :paramref:`.Index.create.checkfirst` , and :class:`.Table` which will
     subject to the relevant markup.  Also please note the indentions required
     for the text.

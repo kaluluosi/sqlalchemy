@@ -1,4 +1,4 @@
 :orphan:
 
-This document has moved to :doc:`queryguide/index`
+This document has moved to :doc:`queryguide/index` 
 

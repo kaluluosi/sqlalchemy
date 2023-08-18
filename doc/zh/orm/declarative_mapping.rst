@@ -1,10 +1,11 @@
 .. _declarative_config_toplevel:
 
-===========================
-使用Declarative映射类
-===========================
+================================
+通过声明性方式映射类
+================================
 
-Declarative映射样式是SQLAlchemy中主要的映射样式。有关顶层介绍，请参见 :ref:`orm_declarative_mapping`。
+声明性映射风格是SQLAlchemy最主要的映射风格。请参见章节   :ref:`orm_declarative_mapping`  进行顶层介绍。
+
 
 .. toctree::
     :maxdepth: 3

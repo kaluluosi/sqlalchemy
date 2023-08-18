@@ -1,6 +1,6 @@
 .. highlight:: pycon+sql
-.. |prev| replace:: :doc:`inheritance`
-.. |next| replace:: :doc:`columns`
+.. |prev| replace:: :doc:`inheritance` 
+.. |next| replace:: :doc:`columns` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -14,15 +14,15 @@ ORM-Enabled INSERT, UPDATE, and DELETE statements
 .. admonition:: About this Document
 
     This section makes use of ORM mappings first illustrated in the
-    :ref:`unified_tutorial`, shown in the section
-    :ref:`tutorial_declaring_mapped_classes`, as well as inheritance
-    mappings shown in the section :ref:`inheritance_toplevel`.
+    :ref:`unified_tutorial` , shown in the section
+    :ref:`tutorial_declaring_mapped_classes` , as well as inheritance
+    mappings shown in the section :ref:`inheritance_toplevel` .
 
-    :doc:`View the ORM setup for this page <_dml_setup>`.
+    :doc:`View the ORM setup for this page <_dml_setup>` .
 
 The :meth:`_orm.Session.execute` method, in addition to handling ORM-enabled
 :class:`_sql.Select` objects, can also accommodate ORM-enabled
-:class:`_sql.Insert`, :class:`_sql.Update` and :class:`_sql.Delete` objects,
+:class:`_sql.Insert` , :class:`_sql.Update` and :class:` _sql.Delete` objects,
 in various ways which are each used to INSERT, UPDATE, or DELETE
 many database rows at once.  There is also dialect-specific support
 for ORM-enabled "upserts", which are INSERT statements that automatically
@@ -34,12 +34,12 @@ document:
 =====================================================   ==========================================   ========================================================================     ========================================================= ============================================================================
 ORM Use Case                                            DML Construct Used                           Data is passed using ...                                                     Supports RETURNING?                                       Supports Multi-Table Mappings?
 =====================================================   ==========================================   ========================================================================     ========================================================= ============================================================================
-:ref:`orm_queryguide_bulk_insert`                       :func:`_dml.insert`                          List of dictionaries to :paramref:`_orm.Session.execute.params`              :ref:`yes <orm_queryguide_bulk_insert_returning>`         :ref:`yes <orm_queryguide_insert_joined_table_inheritance>`
-:ref:`orm_queryguide_bulk_insert_w_sql`                 :func:`_dml.insert`                          :paramref:`_orm.Session.execute.params` with :meth:`_dml.Insert.values`      :ref:`yes <orm_queryguide_bulk_insert_w_sql>`             :ref:`yes <orm_queryguide_insert_joined_table_inheritance>`
-:ref:`orm_queryguide_insert_values`                     :func:`_dml.insert`                          List of dictionaries to :meth:`_dml.Insert.values`                           :ref:`yes <orm_queryguide_insert_values>`                 no
-:ref:`orm_queryguide_upsert`                            :func:`_dml.insert`                          List of dictionaries to :meth:`_dml.Insert.values`                           :ref:`yes <orm_queryguide_upsert_returning>`              no
-:ref:`orm_queryguide_bulk_update`                       :func:`_dml.update`                          List of dictionaries to :paramref:`_orm.Session.execute.params`              no                                                        :ref:`yes <orm_queryguide_bulk_update_joined_inh>`
-:ref:`orm_queryguide_update_delete_where`               :func:`_dml.update`, :func:`_dml.delete`     keywords to :meth:`_dml.Update.values`                                       :ref:`yes <orm_queryguide_update_delete_where_returning>` :ref:`partial, with manual steps <orm_queryguide_update_delete_joined_inh>`
+:ref:`orm_queryguide_bulk_insert`                       :func:` _dml.insert`                          List of dictionaries to :paramref:`_orm.Session.execute.params`              :ref:` yes <orm_queryguide_bulk_insert_returning>`         :ref:`yes <orm_queryguide_insert_joined_table_inheritance>` 
+:ref:`orm_queryguide_bulk_insert_w_sql`                 :func:` _dml.insert`                          :paramref:`_orm.Session.execute.params` with :meth:` _dml.Insert.values`      :ref:`yes <orm_queryguide_bulk_insert_w_sql>`             :ref:` yes <orm_queryguide_insert_joined_table_inheritance>`
+:ref:`orm_queryguide_insert_values`                     :func:` _dml.insert`                          List of dictionaries to :meth:`_dml.Insert.values`                           :ref:` yes <orm_queryguide_insert_values>`                 no
+:ref:`orm_queryguide_upsert`                            :func:` _dml.insert`                          List of dictionaries to :meth:`_dml.Insert.values`                           :ref:` yes <orm_queryguide_upsert_returning>`              no
+:ref:`orm_queryguide_bulk_update`                       :func:` _dml.update`                          List of dictionaries to :paramref:`_orm.Session.execute.params`              no                                                        :ref:` yes <orm_queryguide_bulk_update_joined_inh>`
+:ref:`orm_queryguide_update_delete_where`               :func:` _dml.update`, :func:`_dml.delete`     keywords to :meth:` _dml.Update.values`                                       :ref:`yes <orm_queryguide_update_delete_where_returning>` :ref:` partial, with manual steps <orm_queryguide_update_delete_joined_inh>`
 =====================================================   ==========================================   ========================================================================     ========================================================= ============================================================================
 
 
@@ -73,7 +73,7 @@ as much as possible for many rows::
     {stop}<...>
 
 The parameter dictionaries contain key/value pairs which may correspond to ORM
-mapped attributes that line up with mapped :class:`._schema.Column`
+mapped attributes that line up with mapped :class:`._schema.Column` 
 or :func:`_orm.mapped_column` declarations, as well as with
 :ref:`composite <mapper_composite>` declarations.   The keys should match
 the **ORM mapped attribute name** and **not** the actual database column name,
@@ -88,7 +88,7 @@ if these two names happen to be different.
    keys are now accepted.   Core-style functionality is available by passing
    the execution option ``{"dml_strategy": "raw"}`` to the
    :paramref:`_orm.Session.execution_options` parameter of
-   :meth:`_orm.Session.execute`.
+   :meth:`_orm.Session.execute` .
 
 .. _orm_queryguide_bulk_insert_returning:
 
@@ -106,13 +106,13 @@ The bulk ORM insert feature supports INSERT..RETURNING for selected
 backends, which can return a :class:`.Result` object that may yield individual
 columns back as well as fully constructed ORM objects corresponding
 to the newly generated records.    INSERT..RETURNING requires the use of a backend that
-supports SQL RETURNING syntax as well as support for :term:`executemany`
+supports SQL RETURNING syntax as well as support for :term:`executemany` 
 with RETURNING; this feature is available with all
 :ref:`SQLAlchemy-included <included_dialects>` backends
 with the exception of MySQL (MariaDB is included).
 
 As an example, we can run the same statement as before, adding use of the
-:meth:`.UpdateBase.returning` method, passing the full ``User`` entity
+:meth:`.UpdateBase.returning` method, passing the full ` `User`` entity
 as what we'd like to return.  :meth:`_orm.Session.scalars` is used to allow
 iteration of ``User`` objects::
 
@@ -145,14 +145,14 @@ SQLite backend, where individual parameter dictionaries are inlined into a
 single INSERT statement so that RETURNING may be used.
 
 .. versionchanged:: 2.0  The ORM :class:`.Session` now interprets RETURNING
-   clauses from :class:`_dml.Insert`, :class:`_dml.Update`, and
+   clauses from :class:`_dml.Insert` , :class:`_dml.Update` , and
    even :class:`_dml.Delete` constructs in an ORM context, meaning a mixture
    of column expressions and ORM mapped entities may be passed to the
    :meth:`_dml.Insert.returning` method which will then be delivered
    in the way that ORM results are delivered from constructs such as
-   :class:`_sql.Select`, including that mapped entities will be delivered
+   :class:`_sql.Select` , including that mapped entities will be delivered
    in the result as ORM mapped objects.  Limited support for ORM loader
-   options such as :func:`_orm.load_only` and :func:`_orm.selectinload`
+   options such as :func:`_orm.load_only` and :func:` _orm.selectinload`
    is also present.
 
 .. _orm_queryguide_bulk_insert_returning_ordered:
@@ -165,7 +165,7 @@ database backends provide no formal guarantee of the order in which the
 records from RETURNING are returned, including that there is no guarantee that
 their order will correspond to that of the input records.  For applications
 that need to ensure RETURNING records can be correlated with input data,
-the additional parameter :paramref:`_dml.Insert.returning.sort_by_parameter_order`
+the additional parameter :paramref:`_dml.Insert.returning.sort_by_parameter_order` 
 may be specified, which depending on backend may use special INSERT forms
 that maintain a token which is used to reorder the returned rows appropriately,
 or in some cases, such as in the example below using the SQLite backend,
@@ -192,7 +192,7 @@ the operation will INSERT one row at a time::
     {'name': 'plankton', 'fullname': 'Plankton', 'id': 7},
     {'name': 'gary', 'fullname': 'Gary', 'id': 8}]
 
-.. versionadded:: 2.0.10 Added :paramref:`_dml.Insert.returning.sort_by_parameter_order`
+.. versionadded:: 2.0.10 Added :paramref:`_dml.Insert.returning.sort_by_parameter_order` 
    which is implemented within the :term:`insertmanyvalues` architecture.
 
 .. seealso::
@@ -272,7 +272,7 @@ Bulk INSERT for Joined Table Inheritance
 ORM bulk insert builds upon the internal system that is used by the
 traditional :term:`unit of work` system in order to emit INSERT statements.  This means
 that for an ORM entity that is mapped to multiple tables, typically one which
-is mapped using :ref:`joined table inheritance <joined_inheritance>`, the
+is mapped using :ref:`joined table inheritance <joined_inheritance>` , the
 bulk INSERT operation will emit an INSERT statement for each table represented
 by the mapping, correctly transferring server-generated primary key values
 to the table rows that depend upon them.  The RETURNING feature is also supported
@@ -295,13 +295,13 @@ the returned rows include values for all columns inserted::
     [... (insertmanyvalues) 1/1 (ordered)] (1, 'Sandy Cheeks', 2, 'Eugene H. Krabs')
 
 .. tip:: Bulk INSERT of joined inheritance mappings requires that the ORM
-   make use of the :paramref:`_dml.Insert.returning.sort_by_parameter_order`
+   make use of the :paramref:`_dml.Insert.returning.sort_by_parameter_order` 
    parameter internally, so that it can correlate primary key values from
    RETURNING rows from the base table into the parameter sets being used
    to INSERT into the "sub" table, which is why the SQLite backend
    illustrated above transparently degrades to using non-batched statements.
    Background on this feature is at
-   :ref:`engine_insertmanyvalues_returning_order`.
+   :ref:`engine_insertmanyvalues_returning_order` .
 
 
 .. _orm_queryguide_bulk_insert_w_sql:
@@ -314,7 +314,7 @@ parameters which may include SQL expressions to be applied to every target row.
 To achieve this, combine the use of the :meth:`_dml.Insert.values` method,
 passing a dictionary of parameters that will be applied to all rows,
 with the usual bulk calling form by including a list of parameter dictionaries
-that contain individual row values when invoking :meth:`_orm.Session.execute`.
+that contain individual row values when invoking :meth:`_orm.Session.execute` .
 
 As an example, given an ORM mapping that includes a "timestamp" column:
 
@@ -332,7 +332,7 @@ As an example, given an ORM mapping that includes a "timestamp" column:
 
 If we wanted to INSERT a series of ``LogRecord`` elements, each with a unique
 ``message`` field, however we would like to apply the SQL function ``now()``
-to all rows, we can pass ``timestamp`` within :meth:`_dml.Insert.values`
+to all rows, we can pass ``timestamp`` within :meth:`_dml.Insert.values` 
 and then pass the additional records using "bulk" mode::
 
     >>> from sqlalchemy import func
@@ -398,7 +398,7 @@ used, and instead the INSERT statement is rendered exactly as given and invoked
 exactly once. This mode of operation may be useful both for the case of passing
 SQL expressions on a per-row basis, and is also used when using "upsert"
 statements with the ORM, documented later in this chapter at
-:ref:`orm_queryguide_upsert`.
+:ref:`orm_queryguide_upsert` .
 
 A contrived example of an INSERT that embeds per-row SQL expressions,
 and also demonstrates :meth:`_dml.Insert.returning` in this form, is below::
@@ -443,11 +443,11 @@ and also demonstrates :meth:`_dml.Insert.returning` in this form, is below::
 Because bulk ORM insert mode is not used above, the following features
 are not present:
 
-* :ref:`Joined table inheritance <orm_queryguide_insert_joined_table_inheritance>`
+* :ref:`Joined table inheritance <orm_queryguide_insert_joined_table_inheritance>` 
   or other multi-table mappings are not supported, since that would require multiple
   INSERT statements.
 
-* :ref:`Heterogenous parameter sets <orm_queryguide_insert_heterogeneous_params>`
+* :ref:`Heterogenous parameter sets <orm_queryguide_insert_heterogeneous_params>` 
   are not supported - each element in the VALUES set must have the same
   columns.
 
@@ -463,7 +463,7 @@ or there is a need to embed per-row SQL expressions in each parameter set.
 
 .. seealso::
 
-    :ref:`orm_queryguide_upsert`
+    :ref:`orm_queryguide_upsert` 
 
 
 .. _orm_queryguide_legacy_bulk_insert:
@@ -474,7 +474,7 @@ Legacy Session Bulk INSERT Methods
 The :class:`_orm.Session` includes legacy methods for performing
 "bulk" INSERT and UPDATE statements.  These methods share implementations
 with the SQLAlchemy 2.0 versions of these features, described
-at :ref:`orm_queryguide_bulk_insert` and :ref:`orm_queryguide_bulk_update`,
+at :ref:`orm_queryguide_bulk_insert` and :ref:` orm_queryguide_bulk_update`,
 however lack many features, namely RETURNING support as well as support
 for session-synchronization.
 
@@ -491,7 +491,7 @@ The above is expressed using the new API as::
 
 .. seealso::
 
-    :ref:`orm_queryguide_legacy_bulk_update`
+    :ref:`orm_queryguide_legacy_bulk_update` 
 
 
 .. _orm_queryguide_upsert:
@@ -499,7 +499,7 @@ The above is expressed using the new API as::
 ORM "upsert" Statements
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Selected backends with SQLAlchemy may include dialect-specific :class:`_dml.Insert`
+Selected backends with SQLAlchemy may include dialect-specific :class:`_dml.Insert` 
 constructs which additionally have the ability to perform "upserts", or INSERTs
 where an existing row in the parameter set is turned into an approximation of
 an UPDATE statement instead. By "existing row" , this may mean rows
@@ -510,9 +510,9 @@ on the capabilities of the backend in use.
 The dialects included with SQLAlchemy that include dialect-specific "upsert"
 API features are:
 
-* SQLite - using :class:`_sqlite.Insert` documented at :ref:`sqlite_on_conflict_insert`
-* PostgreSQL - using :class:`_postgresql.Insert` documented at :ref:`postgresql_insert_on_conflict`
-* MySQL/MariaDB - using :class:`_mysql.Insert` documented at :ref:`mysql_insert_on_duplicate_key_update`
+* SQLite - using :class:`_sqlite.Insert` documented at :ref:` sqlite_on_conflict_insert`
+* PostgreSQL - using :class:`_postgresql.Insert` documented at :ref:` postgresql_insert_on_conflict`
+* MySQL/MariaDB - using :class:`_mysql.Insert` documented at :ref:` mysql_insert_on_duplicate_key_update`
 
 Users should review the above sections for background on proper construction
 of these objects; in particular, the "upsert" method typically needs to
@@ -525,7 +525,7 @@ also feature similar constructs.
 While SQLAlchemy does not yet have a backend-agnostic upsert construct, the above
 :class:`_dml.Insert` variants are nonetheless ORM compatible in that they may be used
 in the same way as the :class:`_dml.Insert` construct itself as documented at
-:ref:`orm_queryguide_insert_values`, that is, by embedding the desired rows
+:ref:`orm_queryguide_insert_values` , that is, by embedding the desired rows
 to INSERT within the :meth:`_dml.Insert.values` method.   In the example
 below, the SQLite :func:`_sqlite.insert` function is used to generate
 an :class:`_sqlite.Insert` construct that includes "ON CONFLICT DO UPDATE"
@@ -578,9 +578,9 @@ Using RETURNING with upsert statements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 From the SQLAlchemy ORM's point of view, upsert statements look like regular
-:class:`_dml.Insert` constructs, which includes that :meth:`_dml.Insert.returning`
+:class:`_dml.Insert` constructs, which includes that :meth:` _dml.Insert.returning`
 works with upsert statements in the same way as was demonstrated at
-:ref:`orm_queryguide_insert_values`, so that any column expression or
+:ref:`orm_queryguide_insert_values` , so that any column expression or
 relevant ORM entity class may be passed.  Continuing from the
 example in the previous section::
 
@@ -606,16 +606,16 @@ upserted by the statement. The example also adds use of the
 :ref:`orm_queryguide_populate_existing` execution option. This option indicates
 that ``User`` objects which are already present
 in the :class:`_orm.Session` for rows that already exist should be
-**refreshed** with the data from the new row. For a pure :class:`_dml.Insert`
+**refreshed** with the data from the new row. For a pure :class:`_dml.Insert` 
 statement, this option is not significant, because every row produced is a
 brand new primary key identity. However when the :class:`_dml.Insert` also
 includes "upsert" options, it may also be yielding results from rows that
 already exist and therefore may already have a primary key identity represented
-in the :class:`_orm.Session` object's :term:`identity map`.
+in the :class:`_orm.Session` object's :term:` identity map`.
 
 .. seealso::
 
-    :ref:`orm_queryguide_populate_existing`
+    :ref:`orm_queryguide_populate_existing` 
 
 
 .. _orm_queryguide_bulk_update:
@@ -644,13 +644,13 @@ ORM Bulk UPDATE by Primary Key
     BEGIN ...
 
 The :class:`_dml.Update` construct may be used with
-:meth:`_orm.Session.execute` in a similar way as the :class:`_dml.Insert`
-statement is used as described at :ref:`orm_queryguide_bulk_insert`, passing a
+:meth:`_orm.Session.execute` in a similar way as the :class:` _dml.Insert`
+statement is used as described at :ref:`orm_queryguide_bulk_insert` , passing a
 list of many parameter dictionaries, each dictionary representing an individual
 row that corresponds to a single primary key value. This use should not be
 confused with a more common way to use :class:`_dml.Update` statements with the
 ORM, using an explicit WHERE clause, which is documented at
-:ref:`orm_queryguide_update_delete_where`.
+:ref:`orm_queryguide_update_delete_where` .
 
 For the "bulk" version of UPDATE, a :func:`_dml.update` construct is made in
 terms of an ORM class and passed to the :meth:`_orm.Session.execute` method;
@@ -662,7 +662,7 @@ used in the unusual case that additional filtering criteria would be added.
 Passing the :class:`_dml.Update` construct along with a list of parameter
 dictionaries which each include a full primary key value will invoke **bulk
 UPDATE by primary key mode** for the statement, generating the appropriate
-WHERE criteria to match each row by primary key, and using :term:`executemany`
+WHERE criteria to match each row by primary key, and using :term:`executemany` 
 to run each parameter set against the UPDATE statement::
 
     >>> from sqlalchemy import update
@@ -686,21 +686,21 @@ as well, where the parameters will be grouped into sub-batches of UPDATE
 runs.
 
 .. versionchanged:: 2.0.11  Additional WHERE criteria can be combined with
-   :ref:`orm_queryguide_bulk_update` by using the :meth:`_dml.Update.where`
+   :ref:`orm_queryguide_bulk_update` by using the :meth:` _dml.Update.where`
    method to add additional criteria.  However this criteria is always in
    addition to the WHERE criteria that's already made present which includes
    primary key values.
 
 The RETURNING feature is not available when using the "bulk UPDATE by primary
 key" feature; the list of multiple parameter dictionaries necessarily makes use
-of DBAPI :term:`executemany`, which in its usual form does not typically
+of DBAPI :term:`executemany` , which in its usual form does not typically
 support result rows.
 
 
 .. versionchanged:: 2.0  Passing an :class:`_dml.Update` construct to the
    :meth:`_orm.Session.execute` method along with a list of parameter
    dictionaries now invokes a "bulk update", which makes use of the same
-   functionality as the legacy :meth:`_orm.Session.bulk_update_mappings`
+   functionality as the legacy :meth:`_orm.Session.bulk_update_mappings` 
    method.  This is a behavior change compared to the 1.x series where the
    :class:`_dml.Update` would only be supported with explicit WHERE criteria
    and inline VALUES.
@@ -716,7 +716,7 @@ automatically used when:
 
 1. the UPDATE statement given is against an ORM entity
 2. the :class:`_orm.Session` is used to execute the statement, and not a
-   Core :class:`_engine.Connection`
+   Core :class:`_engine.Connection` 
 3. The parameters passed are a **list of dictionaries**.
 
 In order to invoke an UPDATE statement without using "ORM Bulk Update by Primary Key",
@@ -739,7 +739,7 @@ the :meth:`_orm.Session.connection` method to acquire the current
 
 .. seealso::
 
-    :ref:`error_bupq`
+    :ref:`error_bupq` 
 
 .. _orm_queryguide_bulk_update_joined_inh:
 
@@ -763,7 +763,7 @@ Bulk UPDATE by Primary Key for Joined Table Inheritance
 
 ORM bulk update has similar behavior to ORM bulk insert when using mappings
 with joined table inheritance; as described at
-:ref:`orm_queryguide_insert_joined_table_inheritance`, the bulk UPDATE
+:ref:`orm_queryguide_insert_joined_table_inheritance` , the bulk UPDATE
 operation will emit an UPDATE statement for each table represented in the
 mapping, for which the given parameters include values to be updated
 (non-affected tables are skipped).
@@ -796,8 +796,8 @@ Example::
 Legacy Session Bulk UPDATE Methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As discussed at :ref:`orm_queryguide_legacy_bulk_insert`, the
-:meth:`_orm.Session.bulk_update_mappings` method of :class:`_orm.Session` is
+As discussed at :ref:`orm_queryguide_legacy_bulk_insert` , the
+:meth:`_orm.Session.bulk_update_mappings` method of :class:` _orm.Session` is
 the legacy form of bulk update, which the ORM makes use of internally when
 interpreting a :func:`_sql.update` statement with primary key parameters given;
 however, when using the legacy version, features such as support for
@@ -827,7 +827,7 @@ Is expressed using the new API as::
 
 .. seealso::
 
-    :ref:`orm_queryguide_legacy_bulk_insert`
+    :ref:`orm_queryguide_legacy_bulk_insert` 
 
 
 
@@ -843,15 +843,15 @@ ORM UPDATE and DELETE with Custom WHERE Criteria
     >>> session.connection()
     BEGIN (implicit)...
 
-The :class:`_dml.Update` and :class:`_dml.Delete` constructs, when constructed
+The :class:`_dml.Update` and :class:` _dml.Delete` constructs, when constructed
 with custom WHERE criteria (that is, using the :meth:`_dml.Update.where` and
 :meth:`_dml.Delete.where` methods), may be invoked in an ORM context
-by passing them to :meth:`_orm.Session.execute`, without using
-the :paramref:`_orm.Session.execute.params` parameter. For :class:`_dml.Update`,
-the values to be updated should be passed using :meth:`_dml.Update.values`.
+by passing them to :meth:`_orm.Session.execute` , without using
+the :paramref:`_orm.Session.execute.params` parameter. For :class:` _dml.Update`,
+the values to be updated should be passed using :meth:`_dml.Update.values` .
 
 This mode of use differs
-from the feature described previously at :ref:`orm_queryguide_bulk_update`
+from the feature described previously at :ref:`orm_queryguide_bulk_update` 
 in that the ORM uses the given WHERE clause as is, rather than fixing the
 WHERE clause to be by primary key.   This means that the single UPDATE or
 DELETE statement can affect many rows at once.
@@ -894,11 +894,11 @@ For a DELETE, an example of deleting rows based on criteria::
 Selecting a Synchronization Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When making use of :func:`_dml.update` or :func:`_dml.delete` in conjunction
-with ORM-enabled execution using :meth:`_orm.Session.execute`, additional
+When making use of :func:`_dml.update` or :func:` _dml.delete` in conjunction
+with ORM-enabled execution using :meth:`_orm.Session.execute` , additional
 ORM-specific functionality is present which will **synchronize** the state
 being changed by the statement with that of the objects that are currently
-present within the :term:`identity map` of the :class:`_orm.Session`.
+present within the :term:`identity map` of the :class:` _orm.Session`.
 By "synchronize" we mean that UPDATEd attributes will be refreshed with the
 new value, or at the very least :term:`expired` so that they will re-populate
 with their new value on next access, and DELETEd objects will be
@@ -944,9 +944,9 @@ The following values for ``synchronize_session`` are supported:
   database supports it, so that in-memory objects which are affected by the
   operation can be refreshed with new values (updates) or expunged from the
   :class:`_orm.Session` (deletes). This synchronization strategy may be used
-  even if the given :func:`_dml.update` or :func:`_dml.delete`
+  even if the given :func:`_dml.update` or :func:` _dml.delete`
   construct explicitly specifies entities or columns using
-  :meth:`_dml.UpdateBase.returning`.
+  :meth:`_dml.UpdateBase.returning` .
 
   .. versionchanged:: 2.0 Explicit :meth:`_dml.UpdateBase.returning` may be
      combined with the ``'fetch'`` synchronization strategy when using
@@ -956,7 +956,7 @@ The following values for ``synchronize_session`` are supported:
 
 * ``'evaluate'`` - This indicates to evaluate the WHERE
   criteria given in the UPDATE or DELETE statement in Python, to locate
-  matching objects within the :class:`_orm.Session`. This approach does not add
+  matching objects within the :class:`_orm.Session` . This approach does not add
   any SQL round trips to the operation, and in the absence of RETURNING
   support, may be more efficient. For UPDATE or DELETE statements with complex
   criteria, the ``'evaluate'`` strategy may not be able to evaluate the
@@ -966,7 +966,7 @@ The following values for ``synchronize_session`` are supported:
   .. tip::
 
     If a SQL expression makes use of custom operators using the
-    :meth:`_sql.Operators.op` or :class:`_sql.custom_op` feature, the
+    :meth:`_sql.Operators.op` or :class:` _sql.custom_op` feature, the
     :paramref:`_sql.Operators.op.python_impl` parameter may be used to indicate
     a Python function that will be used by the ``"evaluate"`` synchronization
     strategy.
@@ -1036,9 +1036,9 @@ UPDATE/DELETE with Custom WHERE Criteria for Joined Table Inheritance
     BEGIN (implicit)...
 
 The UPDATE/DELETE with WHERE criteria feature, unlike the
-:ref:`orm_queryguide_bulk_update`, only emits a single UPDATE or DELETE
-statement per call to :meth:`_orm.Session.execute`. This means that when
-running an :func:`_dml.update` or :func:`_dml.delete` statement against a
+:ref:`orm_queryguide_bulk_update` , only emits a single UPDATE or DELETE
+statement per call to :meth:`_orm.Session.execute` . This means that when
+running an :func:`_dml.update` or :func:` _dml.delete` statement against a
 multi-table mapping, such as a subclass in a joined-table inheritance mapping,
 the statement must conform to the backend's current capabilities, which may
 include that the backend does not support an UPDATE or DELETE statement that
@@ -1122,17 +1122,17 @@ Legacy Query Methods
 ~~~~~~~~~~~~~~~~~~~~
 
 The ORM enabled UPDATE/DELETE with WHERE feature was originally part of the
-now-legacy :class:`.Query` object, in the :meth:`_orm.Query.update`
+now-legacy :class:`.Query` object, in the :meth:` _orm.Query.update`
 and :meth:`_orm.Query.delete` methods.  These methods remain available
 and provide a subset of the same functionality as that described at
-:ref:`orm_queryguide_update_delete_where`.  The primary difference is that
+:ref:`orm_queryguide_update_delete_where` .  The primary difference is that
 the legacy methods don't provide for explicit RETURNING support.
 
 .. seealso::
 
-    :meth:`_orm.Query.update`
+    :meth:`_orm.Query.update` 
 
-    :meth:`_orm.Query.delete`
+    :meth:`_orm.Query.delete` 
 
 ..  Setup code, not for display
 

@@ -10,10 +10,10 @@ Mapping a Class against Multiple Tables
 =======================================
 
 Mappers can be constructed against arbitrary relational units (called
-*selectables*) in addition to plain tables. For example, the :func:`_expression.join`
+*selectables*) in addition to plain tables. For example, the :func:`_expression.join` 
 function creates a selectable unit comprised of
 multiple tables, complete with its own composite primary key, which can be
-mapped in the same way as a :class:`_schema.Table`::
+mapped in the same way as a :class:`_schema.Table` ::
 
     from sqlalchemy import Table, Column, Integer, String, MetaData, join, ForeignKey
     from sqlalchemy.orm import DeclarativeBase
@@ -81,7 +81,7 @@ make use of only the first column in the list of columns mapped, as the
 two columns are synonymous.  However, for the special use case such as
 a GROUP BY expression where both columns must be referenced at the same
 time while making use of the proper context, that is, accommodating for
-aliases and similar, the accessor :attr:`.ColumnProperty.Comparator.expressions`
+aliases and similar, the accessor :attr:`.ColumnProperty.Comparator.expressions` 
 may be used::
 
     stmt = select(AddressUser).group_by(*AddressUser.id.expressions)
@@ -117,7 +117,7 @@ may be used::
                 connection.execute(q_table.insert(), {"id": target.id})
 
     where above, a row is INSERTed into the ``q_table`` table by creating an
-    INSERT construct with :meth:`_schema.Table.insert`, then executing it  using the
+    INSERT construct with :meth:`_schema.Table.insert` , then executing it  using the
     given :class:`_engine.Connection` which is the same one being used to emit other
     SQL for the flush process.   The user-supplied logic would have to detect
     that the LEFT OUTER JOIN from "p" to "q" does not have an entry for the "q"
@@ -175,7 +175,7 @@ key.
     almost never needed; it necessarily tends to produce complex queries
     which are often less efficient than that which would be produced
     by direct query construction.   The practice is to some degree
-    based on the very early history of SQLAlchemy where the :class:`_orm.Mapper`
+    based on the very early history of SQLAlchemy where the :class:`_orm.Mapper` 
     construct was meant to represent the primary querying interface;
     in modern usage, the :class:`_query.Query` object can be used to construct
     virtually any SELECT statement, including complex composites, and should
@@ -189,7 +189,7 @@ In modern SQLAlchemy, a particular class is mapped by only one so-called
 functionality: querying, persistence, and instrumentation of the mapped class.
 The rationale of the primary mapper relates to the fact that the
 :class:`_orm.Mapper` modifies the class itself, not only persisting it towards a
-particular :class:`_schema.Table`, but also :term:`instrumenting` attributes upon the
+particular :class:`_schema.Table` , but also :term:`instrumenting` attributes upon the
 class which are structured specifically according to the table metadata.   It's
 not possible for more than one mapper to be associated with a class in equal
 measure, since only one mapper can actually instrument the class.
@@ -199,7 +199,7 @@ SQLAlchemy however as of version 1.3 this feature is deprecated.   The
 one case where such a non-primary mapper is useful is when constructing
 a relationship to a class against an alternative selectable.   This
 use case is now suited using the :class:`.aliased` construct and is described
-at :ref:`relationship_aliased_class`.
+at :ref:`relationship_aliased_class` .
 
 As far as the use case of a class that can actually be fully persisted
 to different tables under different scenarios, very early versions of

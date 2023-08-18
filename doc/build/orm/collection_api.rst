@@ -26,7 +26,7 @@ values accessible through an attribute on the parent instance.   The two
 common collection types for these are ``list`` and ``set``, which in
 :ref:`Declarative <orm_declarative_styles_toplevel>` mappings that use
 :class:`_orm.Mapped` is established by using the collection type within
-the :class:`_orm.Mapped` container, as demonstrated in the ``Parent.children`` collection
+the :class:`_orm.Mapped` container, as demonstrated in the ` `Parent.children`` collection
 below where ``list`` is used::
 
     from sqlalchemy import ForeignKey
@@ -126,14 +126,14 @@ Python code, as well as in a few special cases, the collection class for a
         child_id = mapped_column(Integer, primary_key=True)
         parent_id = mapped_column(ForeignKey("parent.id"))
 
-In the absence of :paramref:`_orm.relationship.collection_class`
-or :class:`_orm.Mapped`, the default collection type is ``list``.
+In the absence of :paramref:`_orm.relationship.collection_class` 
+or :class:`_orm.Mapped` , the default collection type is ``list``.
 
 Beyond ``list`` and ``set`` builtins, there is also support for two varities of
-dictionary, described below at :ref:`orm_dictionary_collection`. There is also
+dictionary, described below at :ref:`orm_dictionary_collection` . There is also
 support for any arbitrary mutable sequence type can be set up as the target
 collection, with some additional configuration steps; this is described in the
-section :ref:`orm_custom_collection`.
+section :ref:`orm_custom_collection` .
 
 
 .. _orm_dictionary_collection:
@@ -148,11 +148,11 @@ strategy must be available to populate the dictionary correctly.  The
 to achieve a simple dictionary collection.  It produces a dictionary class that will apply a particular attribute
 of the mapped class as a key.   Below we map an ``Item`` class containing
 a dictionary of ``Note`` items keyed to the ``Note.keyword`` attribute.
-When using :func:`.attribute_keyed_dict`, the :class:`_orm.Mapped`
-annotation may be typed using the :class:`_orm.KeyFuncDict`
+When using :func:`.attribute_keyed_dict` , the :class:`_orm.Mapped` 
+annotation may be typed using the :class:`_orm.KeyFuncDict` 
 or just plain ``dict`` as illustrated in the following example.   However,
 the :paramref:`_orm.relationship.collection_class` parameter
-is required in this case so that the :func:`.attribute_keyed_dict`
+is required in this case so that the :func:`.attribute_keyed_dict` 
 may be appropriately parametrized::
 
     from typing import Dict
@@ -258,8 +258,8 @@ is added to the ``Item.notes`` dictionary and the key is generated for us automa
     >>> item.notes
     {('a', 'atext'): <__main__.Note object at 0x2eaaf0>}
 
-Other built-in dictionary types include :func:`.column_keyed_dict`,
-which is almost like :func:`.attribute_keyed_dict` except given the :class:`_schema.Column`
+Other built-in dictionary types include :func:`.column_keyed_dict` ,
+which is almost like :func:`.attribute_keyed_dict` except given the :class:` _schema.Column`
 object directly::
 
     from sqlalchemy.orm import column_keyed_dict
@@ -293,7 +293,7 @@ with a ``@property`` as mentioned earlier::
         )
 
 Dictionary mappings are often combined with the "Association Proxy" extension to produce
-streamlined dictionary views.  See :ref:`proxying_dictionaries` and :ref:`composite_association_proxy`
+streamlined dictionary views.  See :ref:`proxying_dictionaries` and :ref:` composite_association_proxy`
 for examples.
 
 .. _key_collections_mutations:
@@ -301,7 +301,7 @@ for examples.
 Dealing with Key Mutations and back-populating for Dictionary collections
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When using :func:`.attribute_keyed_dict`, the "key" for the dictionary
+When using :func:`.attribute_keyed_dict` , the "key" for the dictionary
 is taken from an attribute on the target object.   **Changes to this key
 are not tracked**.  This means that the key must be assigned towards when
 it is first used, and if the key changes, the collection will not be mutated.
@@ -397,7 +397,7 @@ about how the collection operates.
 
    For the first use case, the :func:`_orm.validates` decorator is by far
    the simplest way to intercept incoming values in all cases for the purposes
-   of validation and simple marshaling.  See :ref:`simple_validators`
+   of validation and simple marshaling.  See :ref:`simple_validators` 
    for an example of this.
 
    For the second use case, the :ref:`associationproxy_toplevel` extension is a
@@ -419,9 +419,9 @@ means that normal operations on the collection are tracked and result in
 changes being written to the database at flush time. Additionally, collection
 operations can fire *events* which indicate some secondary operation must take
 place. Examples of a secondary operation include saving the child item in the
-parent's :class:`~sqlalchemy.orm.session.Session` (i.e. the ``save-update``
+parent's :class:`~sqlalchemy.orm.session.Session` (i.e. the ` `save-update``
 cascade), as well as synchronizing the state of a bi-directional relationship
-(i.e. a :func:`.backref`).
+(i.e. a :func:`.backref` ).
 
 The collections package understands the basic interface of lists, sets and
 dicts and will automatically apply instrumentation to those built-in types and
@@ -564,10 +564,10 @@ collection support to other classes. It uses a keying function to delegate to
             super().__init__(keyfunc=lambda node: node.name)
             dict.__init__(self, *args, **kw)
 
-When subclassing :class:`.KeyFuncDict`, user-defined versions
+When subclassing :class:`.KeyFuncDict` , user-defined versions
 of ``__setitem__()`` or ``__delitem__()`` should be decorated
-with :meth:`.collection.internally_instrumented`, **if** they call down
-to those same methods on :class:`.KeyFuncDict`.  This because the methods
+with :meth:`.collection.internally_instrumented` , **if** they call down
+to those same methods on :class:`.KeyFuncDict` .  This because the methods
 on :class:`.KeyFuncDict` are already instrumented - calling them
 from within an already instrumented call can cause events to be fired off
 repeatedly, or inappropriately, leading to internal state corruption in

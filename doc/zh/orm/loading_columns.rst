@@ -1,1 +1,1 @@
-该文档已移动到:doc:`queryguide/columns`。
+此文档已经移动到  :doc:`queryguide/columns` 。

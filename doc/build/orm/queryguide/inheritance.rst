@@ -1,6 +1,6 @@
 .. highlight:: pycon+sql
-.. |prev| replace:: :doc:`select`
-.. |next| replace:: :doc:`dml`
+.. |prev| replace:: :doc:`select` 
+.. |next| replace:: :doc:`dml` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -20,11 +20,11 @@ Writing SELECT statements for Inheritance Mappings
 
     This section makes use of ORM mappings configured using
     the :ref:`ORM Inheritance <inheritance_toplevel>` feature,
-    described at :ref:`inheritance_toplevel`.  The emphasis will be on
+    described at :ref:`inheritance_toplevel` .  The emphasis will be on
     :ref:`joined_inheritance` as this is the most intricate ORM querying
     case.
 
-    :doc:`View the ORM setup for this page <_inheritance_setup>`.
+    :doc:`View the ORM setup for this page <_inheritance_setup>` .
 
 SELECTing from the base class vs. specific sub-classes
 --------------------------------------------------------
@@ -85,7 +85,7 @@ data represented from those tables, in this example the ``.manager_name``
 attribute of the ``Manager`` class as well as the ``.engineer_info`` attribute
 of the ``Engineer`` class.  These attributes start out in the
 :term:`expired` state, and will automatically populate themselves when first
-accessed using :term:`lazy loading`::
+accessed using :term:`lazy loading` ::
 
     >>> mr_krabs = objects[0]
     >>> print(mr_krabs.manager_name)
@@ -100,7 +100,7 @@ loaded, in the case that the consuming application will need to be accessing
 subclass-specific attributes, as this would be an example of the
 :term:`N plus one` problem that emits additional SQL per row.  This additional SQL can
 impact performance and also be incompatible with approaches such as
-using :ref:`asyncio <asyncio_toplevel>`.  Additionally, in our query for
+using :ref:`asyncio <asyncio_toplevel>` .  Additionally, in our query for
 ``Employee`` objects, since the query is against the base table only, we did
 not have a way to add SQL criteria involving subclass-specific attributes in
 terms of ``Manager`` or ``Engineer``. The next two sections detail two
@@ -136,7 +136,7 @@ their specific attributes should be loaded for incoming rows::
     >>> loader_opt = selectin_polymorphic(Employee, [Manager, Engineer])
 
 The :func:`_orm.selectin_polymorphic` construct is then used as a loader
-option, passing it to the :meth:`.Select.options` method of :class:`.Select`.
+option, passing it to the :meth:`.Select.options` method of :class:` .Select`.
 The example illustrates the use of :func:`_orm.selectin_polymorphic` to eagerly
 load columns local to both the ``Manager`` and ``Engineer`` subclasses::
 
@@ -191,11 +191,11 @@ Combining additional loader options with selectin_polymorphic() subclass loads
 
 The SELECT statements emitted by :func:`_orm.selectin_polymorphic` are themselves
 ORM statements, so we may also add other loader options (such as those
-documented at :ref:`orm_queryguide_relationship_loaders`) that refer to specific
+documented at :ref:`orm_queryguide_relationship_loaders` ) that refer to specific
 subclasses.  For example, if we considered that the ``Manager`` mapper had
 a :ref:`one to many <relationship_patterns_o2m>` relationship to an entity
 called ``Paperwork``, we could combine the use of
-:func:`_orm.selectin_polymorphic` and :func:`_orm.selectinload` to eagerly load
+:func:`_orm.selectin_polymorphic` and :func:` _orm.selectinload` to eagerly load
 this collection on all ``Manager`` objects, where the sub-attributes of
 ``Manager`` objects were also themselves eagerly loaded::
 
@@ -240,12 +240,12 @@ In addition to being able to add loader options to the right side of a
 :func:`_orm.selectin_polymorphic` load, we may also indicate
 :func:`_orm.selectin_polymorphic` on the target of an existing load.
 As our :doc:`setup <_inheritance_setup>` mapping includes a parent
-``Company`` entity with a ``Company.employees`` :func:`_orm.relationship`
+``Company`` entity with a ``Company.employees`` :func:`_orm.relationship` 
 referring to ``Employee`` entities, we may illustrate a SELECT against
 the ``Company`` entity that eagerly loads all ``Employee`` objects as well as
-all attributes on their subtypes as follows, by applying :meth:`.Load.selectin_polymorphic`
+all attributes on their subtypes as follows, by applying :meth:`.Load.selectin_polymorphic` 
 as a chained loader option; in this form, the first argument is implicit from
-the previous loader option (in this case :func:`_orm.selectinload`), so
+the previous loader option (in this case :func:`_orm.selectinload` ), so
 we only indicate the additional target subclasses we wish to load::
 
     >>> stmt = select(Company).options(
@@ -288,7 +288,7 @@ Configuring selectin_polymorphic() on mappers
 
 The behavior of :func:`_orm.selectin_polymorphic` may be configured on specific
 mappers so that it takes place by default, by using the
-:paramref:`_orm.Mapper.polymorphic_load` parameter, using the value ``"selectin"``
+:paramref:`_orm.Mapper.polymorphic_load` parameter, using the value ` `"selectin"``
 on a per-subclass basis.  The example below illustrates the use of this
 parameter within ``Engineer`` and ``Manager`` subclasses:
 
@@ -351,7 +351,7 @@ ability to add filtering criteria based on individual sub-tables.
 
 :func:`_orm.with_polymorphic` is essentially a special form of the
 :func:`_orm.aliased` construct. It accepts as its arguments a similar form to
-that of :func:`_orm.selectin_polymorphic`, which is the base entity that is
+that of :func:`_orm.selectin_polymorphic` , which is the base entity that is
 being queried, followed by a sequence of subclasses of that entity for which
 their specific attributes should be loaded for incoming rows::
 
@@ -359,9 +359,9 @@ their specific attributes should be loaded for incoming rows::
     >>> employee_poly = with_polymorphic(Employee, [Engineer, Manager])
 
 In order to indicate that all subclasses should be part of the entity,
-:func:`_orm.with_polymorphic` will also accept the string ``"*"``, which may be
+:func:`_orm.with_polymorphic` will also accept the string ` `"*"``, which may be
 passed in place of the sequence of classes to indicate all classes (note this
-is not yet supported by :func:`_orm.selectin_polymorphic`)::
+is not yet supported by :func:`_orm.selectin_polymorphic` )::
 
     >>> employee_poly = with_polymorphic(Employee, "*")
 
@@ -380,13 +380,13 @@ section, to load all columns for ``Manager`` and ``Engineer`` at once::
     {stop}>>> print(objects)
     [Manager('Mr. Krabs'), Engineer('SpongeBob'), Engineer('Squidward')]
 
-As is the case with :func:`_orm.selectin_polymorphic`, attributes on subclasses
+As is the case with :func:`_orm.selectin_polymorphic` , attributes on subclasses
 are already loaded::
 
     >>> print(objects[0].manager_name)
     Eugene H. Krabs
 
-As the default selectable produced by :func:`_orm.with_polymorphic`
+As the default selectable produced by :func:`_orm.with_polymorphic` 
 uses LEFT OUTER JOIN, from a database point of view the query is not as well
 optimized as the approach that :func:`_orm.selectin_polymorphic` takes,
 with simple SELECT statements using only JOINs emitted on a per-table basis.
@@ -402,7 +402,7 @@ on the included subclass mappers, by including namespaces that allow
 references to subclasses.   The ``employee_poly`` construct created in the
 previous section includes attributes named ``.Engineer`` and ``.Manager``
 which provide the namespace for ``Engineer`` and ``Manager`` in terms of
-the polymorphic SELECT.   In the example below, we can use the :func:`_sql.or_`
+the polymorphic SELECT.   In the example below, we can use the :func:`_sql.or_` 
 construct to create criteria against both classes at once::
 
     >>> from sqlalchemy import or_
@@ -436,7 +436,7 @@ Using aliasing with with_polymorphic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The :func:`_orm.with_polymorphic` construct, as a special case of
-:func:`_orm.aliased`, also provides the basic feature that :func:`_orm.aliased`
+:func:`_orm.aliased` , also provides the basic feature that :func:`_orm.aliased` 
 does, which is that of "aliasing" of the polymorphic selectable itself.
 Specifically this means two or more :func:`_orm.with_polymorphic` entities,
 referring to the same class hierarchy, can be used at once in a single
@@ -444,7 +444,7 @@ statement.
 
 To use this feature with a joined inheritance mapping, we typically want to
 pass two parameters, :paramref:`_orm.with_polymorphic.aliased` as well as
-:paramref:`_orm.with_polymorphic.flat`.  The :paramref:`_orm.with_polymorphic.aliased`
+:paramref:`_orm.with_polymorphic.flat` .  The :paramref:`_orm.with_polymorphic.aliased` 
 parameter indicates that the polymorphic selectable should be referred towards
 by an alias name that is unique to this construct.   The
 :paramref:`_orm.with_polymorphic.flat` parameter is specific to the default
@@ -497,7 +497,7 @@ column along with some additional limiting criteria against the
     Manager('Mr. Krabs') Engineer('SpongeBob')
     Manager('Mr. Krabs') Engineer('Squidward')
 
-In the above example, the behavior of :paramref:`_orm.with_polymorphic.flat`
+In the above example, the behavior of :paramref:`_orm.with_polymorphic.flat` 
 is that the polymorphic selectables remain as a LEFT OUTER JOIN of their
 individual tables, which themselves are given anonymous alias names.  There
 is also a right-nested JOIN produced.
@@ -553,7 +553,7 @@ using alternative polymorphic selectables in general.
 Configuring with_polymorphic() on mappers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As is the case with :func:`_orm.selectin_polymorphic`, the
+As is the case with :func:`_orm.selectin_polymorphic` , the
 :func:`_orm.with_polymorphic` construct also supports a mapper-configured
 version which may be configured in two different ways, either on the base class
 using the :paramref:`.mapper.with_polymorphic` parameter, or in a more modern
@@ -564,8 +564,8 @@ per-subclass basis, passing the value ``"inline"``.
 
    For joined inheritance mappings, prefer explicit use of
    :func:`_orm.with_polymorphic` within queries, or for implicit eager subclass
-   loading use :paramref:`_orm.Mapper.polymorphic_load` with ``"selectin"``,
-   instead of using the mapper-level :paramref:`.mapper.with_polymorphic`
+   loading use :paramref:`_orm.Mapper.polymorphic_load` with ` `"selectin"``,
+   instead of using the mapper-level :paramref:`.mapper.with_polymorphic` 
    parameter described in this section. This parameter invokes complex
    heuristics intended to rewrite the FROM clauses within SELECT statements
    that can interfere with construction of more complex statements,
@@ -573,7 +573,7 @@ per-subclass basis, passing the value ``"inline"``.
    entity.
 
 For example, we may state our ``Employee`` mapping using
-:paramref:`_orm.Mapper.polymorphic_load` as ``"inline"`` as below:
+:paramref:`_orm.Mapper.polymorphic_load` as ` `"inline"`` as below:
 
 .. sourcecode:: python
 
@@ -641,7 +641,7 @@ entity::
 However, if we needed to refer to the ``Employee`` entity or its sub
 entities in separate, aliased contexts, we would again make direct use of
 :func:`_orm.with_polymorphic` to define these aliased entities as illustrated
-in :ref:`with_polymorphic_aliasing`.
+in :ref:`with_polymorphic_aliasing` .
 
 For more centralized control over the polymorphic selectable, the more legacy
 form of mapper-level polymorphic control may be used which is the
@@ -690,7 +690,7 @@ by options such as :paramref:`_orm.Mapper.with_polymorphic` may be cumbersome
 from a SQL and database optimizer point of view; for general loading of
 subclass attributes in joined inheritance mappings, the
 :func:`_orm.selectin_polymorphic` approach, or its mapper level equivalent of
-setting :paramref:`_orm.Mapper.polymorphic_load` to ``"selectin"`` should
+setting :paramref:`_orm.Mapper.polymorphic_load` to ` `"selectin"`` should
 likely be preferred, making use of :func:`_orm.with_polymorphic` on a per-query
 basis only as needed.
 
@@ -699,15 +699,15 @@ basis only as needed.
 Joining to specific sub-types or with_polymorphic() entities
 ------------------------------------------------------------
 
-As a :func:`_orm.with_polymorphic` entity is a special case of :func:`_orm.aliased`,
+As a :func:`_orm.with_polymorphic` entity is a special case of :func:` _orm.aliased`,
 in order to treat a polymorphic entity as the target of a join, specifically
 when using a :func:`_orm.relationship` construct as the ON clause,
 we use the same technique for regular aliases as detailed at
-:ref:`orm_queryguide_joining_relationships_aliased`, most succinctly
-using :meth:`_orm.PropComparator.of_type`.   In the example below we illustrate
+:ref:`orm_queryguide_joining_relationships_aliased` , most succinctly
+using :meth:`_orm.PropComparator.of_type` .   In the example below we illustrate
 a join from the parent ``Company`` entity along the one-to-many relationship
 ``Company.employees``, which is configured in the
-:doc:`setup <_inheritance_setup>` to link to ``Employee`` objects,
+:doc:`setup <_inheritance_setup>` to link to ` `Employee`` objects,
 using a :func:`_orm.with_polymorphic` entity as the target::
 
     >>> employee_plus_engineer = with_polymorphic(Employee, [Engineer])
@@ -733,7 +733,7 @@ using a :func:`_orm.with_polymorphic` entity as the target::
 
 More directly, :meth:`_orm.PropComparator.of_type` is also used with inheritance
 mappings of any kind to limit a join along a :func:`_orm.relationship` to a
-particular sub-type of the :func:`_orm.relationship`'s target.  The above
+particular sub-type of the :func:`_orm.relationship` 's target.  The above
 query could be written strictly in terms of ``Engineer`` targets as follows::
 
     >>> stmt = (
@@ -768,8 +768,8 @@ Eager Loading of Polymorphic Subtypes
 
 The use of :meth:`_orm.PropComparator.of_type` illustrated with the
 :meth:`.Select.join` method in the previous section may also be applied
-equivalently to :ref:`relationship loader options <orm_queryguide_relationship_loaders>`,
-such as :func:`_orm.selectinload` and :func:`_orm.joinedload`.
+equivalently to :ref:`relationship loader options <orm_queryguide_relationship_loaders>` ,
+such as :func:`_orm.selectinload` and :func:` _orm.joinedload`.
 
 As a basic example, if we wished to load ``Company`` objects, and additionally
 eagerly load all elements of ``Company.employees`` using the
@@ -797,7 +797,7 @@ eagerly load all elements of ``Company.employees`` using the
 
 The above query may be compared directly to the
 :func:`_orm.selectin_polymorphic` version illustrated in the previous
-section :ref:`polymorphic_selectin_as_loader_option_target`.
+section :ref:`polymorphic_selectin_as_loader_option_target` .
 
 .. seealso::
 
@@ -821,10 +821,10 @@ SELECT Statements for Single Inheritance Mappings
 .. admonition:: Single Table Inheritance Setup
 
     This section discusses single table inheritance,
-    described at :ref:`single_inheritance`, which uses a single table to
+    described at :ref:`single_inheritance` , which uses a single table to
     represent multiple classes in a hierarchy.
 
-    :doc:`View the ORM setup for this section <_single_inheritance>`.
+    :doc:`View the ORM setup for this section <_single_inheritance>` .
 
 In contrast to joined inheritance mappings, the construction of SELECT
 statements for single inheritance mappings tends to be simpler since for
@@ -903,7 +903,7 @@ when it's accessed::
 
 To alter this behavior, the same general concepts used to eagerly load these
 additional attributes used in joined inheritance loading apply to single
-inheritance as well, including use of the :func:`_orm.selectin_polymorphic`
+inheritance as well, including use of the :func:`_orm.selectin_polymorphic` 
 option as well as the :func:`_orm.with_polymorphic` option, the latter of which
 simply includes the additional columns and from a SQL perspective is more
 efficient for single-inheritance mappers::
@@ -929,7 +929,7 @@ usually minimal, it's therefore recommended that single inheritance mappings
 include the :paramref:`_orm.Mapper.polymorphic_load` parameter with a
 setting of ``"inline"`` for those subclasses where loading of their specific
 subclass attributes is expected to be common.   An example illustrating the
-:doc:`setup <_single_inheritance>`, modified to include this option,
+:doc:`setup <_single_inheritance>` , modified to include this option,
 is below::
 
     >>> class Base(DeclarativeBase):

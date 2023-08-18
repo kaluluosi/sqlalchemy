@@ -6,8 +6,8 @@ Working with Engines and Connections
 
 .. module:: sqlalchemy.engine
 
-This section details direct usage of the :class:`_engine.Engine`,
-:class:`_engine.Connection`, and related objects. Its important to note that when
+This section details direct usage of the :class:`_engine.Engine` ,
+:class:`_engine.Connection` , and related objects. Its important to note that when
 using the SQLAlchemy ORM, these objects are not generally accessed; instead,
 the :class:`.Session` object is used as the interface to the database.
 However, for applications that are built around direct usage of textual SQL
@@ -18,16 +18,16 @@ higher level management services, the :class:`_engine.Engine` and
 Basic Usage
 -----------
 
-Recall from :doc:`/core/engines` that an :class:`_engine.Engine` is created via
+Recall from :doc:`/core/engines` that an :class:` _engine.Engine` is created via
 the :func:`_sa.create_engine` call::
 
     engine = create_engine("mysql+mysqldb://scott:tiger@localhost/test")
 
 The typical usage of :func:`_sa.create_engine` is once per particular database
 URL, held globally for the lifetime of a single application process. A single
-:class:`_engine.Engine` manages many individual :term:`DBAPI` connections on behalf of
+:class:`_engine.Engine` manages many individual :term:` DBAPI` connections on behalf of
 the process and is intended to be called upon in a concurrent fashion. The
-:class:`_engine.Engine` is **not** synonymous to the DBAPI ``connect()`` function, which
+:class:`_engine.Engine` is **not** synonymous to the DBAPI ` `connect()`` function, which
 represents just one connection resource - the :class:`_engine.Engine` is most
 efficient when created just once at the module level of an application, not
 per-object or per-function call.
@@ -40,7 +40,7 @@ per-object or per-function call.
     details.
 
 The most basic function of the :class:`_engine.Engine` is to provide access to a
-:class:`_engine.Connection`, which can then invoke SQL statements.   To emit
+:class:`_engine.Connection` , which can then invoke SQL statements.   To emit
 a textual statement to the database looks like::
 
     from sqlalchemy import text
@@ -50,14 +50,14 @@ a textual statement to the database looks like::
         for row in result:
             print("username:", row.username)
 
-Above, the :meth:`_engine.Engine.connect` method returns a :class:`_engine.Connection`
+Above, the :meth:`_engine.Engine.connect` method returns a :class:` _engine.Connection`
 object, and by using it in a Python context manager (e.g. the ``with:``
 statement) the :meth:`_engine.Connection.close` method is automatically invoked at the
-end of the block.  The :class:`_engine.Connection`, is a **proxy** object for an
+end of the block.  The :class:`_engine.Connection` , is a **proxy** object for an
 actual DBAPI connection. The DBAPI connection is retrieved from the connection
 pool at the point at which :class:`_engine.Connection` is created.
 
-The object returned is known as :class:`_engine.CursorResult`, which
+The object returned is known as :class:`_engine.CursorResult` , which
 references a DBAPI cursor and provides methods for fetching rows
 similar to that of the DBAPI cursor.   The DBAPI cursor will be closed
 by the :class:`_engine.CursorResult` when all of its result rows (if any) are
@@ -65,19 +65,19 @@ exhausted.  A :class:`_engine.CursorResult` that returns no rows, such as that o
 an UPDATE statement (without any returned rows),
 releases cursor resources immediately upon construction.
 
-When the :class:`_engine.Connection` is closed at the end of the ``with:`` block, the
+When the :class:`_engine.Connection` is closed at the end of the ` `with:`` block, the
 referenced DBAPI connection is :term:`released` to the connection pool.   From
 the perspective of the database itself, the connection pool will not actually
 "close" the connection assuming the pool has room to store this connection  for
 the next use.  When the connection is returned to the pool for re-use, the
 pooling mechanism issues a ``rollback()`` call on the DBAPI connection so that
 any transactional state or locks are removed (this is known as
-:ref:`pool_reset_on_return`), and the connection is ready for its next use.
+:ref:`pool_reset_on_return` ), and the connection is ready for its next use.
 
 Our example above illustrated the execution of a textual SQL string, which
 should be invoked by using the :func:`_expression.text` construct to indicate that
 we'd like to use textual SQL.  The :meth:`_engine.Connection.execute` method can of
-course accommodate more than that; see :ref:`tutorial_working_with_data`
+course accommodate more than that; see :ref:`tutorial_working_with_data` 
 in the :ref:`unified_tutorial` for a tutorial.
 
 
@@ -87,9 +87,9 @@ Using Transactions
 .. note::
 
   This section describes how to use transactions when working directly
-  with :class:`_engine.Engine` and :class:`_engine.Connection` objects. When using the
+  with :class:`_engine.Engine` and :class:` _engine.Connection` objects. When using the
   SQLAlchemy ORM, the public API for transaction control is via the
-  :class:`.Session` object, which makes usage of the :class:`.Transaction`
+  :class:`.Session` object, which makes usage of the :class:` .Transaction`
   object internally. See :ref:`unitofwork_transaction` for further
   information.
 
@@ -101,7 +101,7 @@ within the context of a transaction block.   The first time the
 :meth:`_engine.Connection.execute` method is called to execute a SQL
 statement, this transaction is begun automatically, using a behavior known
 as **autobegin**.  The transaction remains in place for the scope of the
-:class:`_engine.Connection` object until the :meth:`_engine.Connection.commit`
+:class:`_engine.Connection` object until the :meth:` _engine.Connection.commit`
 or :meth:`_engine.Connection.rollback` methods are called.  Subsequent
 to the transaction ending, the :class:`_engine.Connection` waits for the
 :meth:`_engine.Connection.execute` method to be called again, at which point
@@ -121,7 +121,7 @@ illustrated in the example below::
 .. topic::  the Python DBAPI is where autobegin actually happens
 
     The design of "commit as you go" is intended to be complementary to the
-    design of the :term:`DBAPI`, which is the underlying database interface
+    design of the :term:`DBAPI` , which is the underlying database interface
     that SQLAlchemy interacts with. In the DBAPI, the ``connection`` object does
     not assume changes to the database will be automatically committed, instead
     requiring in the default case that the ``connection.commit()`` method is
@@ -133,9 +133,9 @@ illustrated in the example below::
     SQLAlchemy's API is basically re-stating this behavior in terms of higher
     level Python objects.
 
-In "commit as you go" style, we can call upon :meth:`_engine.Connection.commit`
+In "commit as you go" style, we can call upon :meth:`_engine.Connection.commit` 
 and :meth:`_engine.Connection.rollback` methods freely within an ongoing
-sequence of other statements emitted using :meth:`_engine.Connection.execute`;
+sequence of other statements emitted using :meth:`_engine.Connection.execute` ;
 each time the transaction is ended, and a new statement is
 emitted, a new transaction begins implicitly::
 
@@ -167,7 +167,7 @@ block so that the end of the transaction is instead implicit. To use
 "begin once", the :meth:`_engine.Connection.begin` method is used, which returns a
 :class:`.Transaction` object which represents the DBAPI transaction.
 This object also supports explicit management via its own
-:meth:`_engine.Transaction.commit` and :meth:`_engine.Transaction.rollback`
+:meth:`_engine.Transaction.commit` and :meth:` _engine.Transaction.rollback`
 methods, but as a preferred practice also supports the context manager interface,
 where it will commit itself when
 the block ends normally and emit a rollback if an exception is raised, before
@@ -189,9 +189,9 @@ Connect and Begin Once from the Engine
 A convenient shorthand form for the above "begin once" block is to use
 the :meth:`_engine.Engine.begin` method at the level of the originating
 :class:`_engine.Engine` object, rather than performing the two separate
-steps of :meth:`_engine.Engine.connect` and :meth:`_engine.Connection.begin`;
+steps of :meth:`_engine.Engine.connect` and :meth:` _engine.Connection.begin`;
 the :meth:`_engine.Engine.begin` method returns a special context manager
-that internally maintains both the context manager for the :class:`_engine.Connection`
+that internally maintains both the context manager for the :class:`_engine.Connection` 
 as well as the context manager for the :class:`_engine.Transaction` normally
 returned by the :meth:`_engine.Connection.begin` method::
 
@@ -207,7 +207,7 @@ returned by the :meth:`_engine.Connection.begin` method::
 .. tip::
 
     Within the :meth:`_engine.Engine.begin` block, we can call upon the
-    :meth:`_engine.Connection.commit` or :meth:`_engine.Connection.rollback`
+    :meth:`_engine.Connection.commit` or :meth:` _engine.Connection.rollback`
     methods, which will end the transaction normally demarcated by the block
     ahead of time.  However, if we do so, no further SQL operations may be
     emitted on the :class:`_engine.Connection` until the block ends::
@@ -233,7 +233,7 @@ a single :meth:`_engine.Engine.connect` block, provided that the call to
 :meth:`_engine.Connection.begin` does not conflict with the "autobegin"
 behavior.  To accomplish this, :meth:`_engine.Connection.begin` should only
 be called either before any SQL statements have been emitted, or directly
-after a previous call to :meth:`_engine.Connection.commit` or :meth:`_engine.Connection.rollback`::
+after a previous call to :meth:`_engine.Connection.commit` or :meth:` _engine.Connection.rollback`::
 
     with engine.connect() as connection:
         with connection.begin():
@@ -282,7 +282,7 @@ that loses not only "read committed" but also loses atomicity.
 .. tip::
 
   It is important to note, as will be discussed further in the section below at
-  :ref:`dbapi_autocommit_understanding`, that "autocommit" isolation level like
+  :ref:`dbapi_autocommit_understanding` , that "autocommit" isolation level like
   any other isolation level does **not** affect the "transactional" behavior of
   the :class:`_engine.Connection` object, which continues to call upon DBAPI
   ``.commit()`` and ``.rollback()`` methods (they just have no effect under
@@ -297,7 +297,7 @@ Setting Isolation Level or DBAPI Autocommit for a Connection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For an individual :class:`_engine.Connection` object that's acquired from
-:meth:`.Engine.connect`, the isolation level can be set for the duration of
+:meth:`.Engine.connect` , the isolation level can be set for the duration of
 that :class:`_engine.Connection` object using the
 :meth:`_engine.Connection.execution_options` method. The parameter is known as
 :paramref:`_engine.Connection.execution_options.isolation_level` and the values
@@ -326,17 +326,17 @@ begin a transaction::
 .. tip::  The return value of
    the :meth:`_engine.Connection.execution_options` method is the same
    :class:`_engine.Connection` object upon which the method was called,
-   meaning, it modifies the state of the :class:`_engine.Connection`
+   meaning, it modifies the state of the :class:`_engine.Connection` 
    object in place.  This is a new behavior as of SQLAlchemy 2.0.
-   This behavior does not apply to the :meth:`_engine.Engine.execution_options`
+   This behavior does not apply to the :meth:`_engine.Engine.execution_options` 
    method; that method still returns a copy of the :class:`.Engine` and
-   as described below may be used to construct multiple :class:`.Engine`
+   as described below may be used to construct multiple :class:`.Engine` 
    objects with different execution options, which nonetheless share the same
    dialect and connection pool.
 
-.. note:: The :paramref:`_engine.Connection.execution_options.isolation_level`
+.. note:: The :paramref:`_engine.Connection.execution_options.isolation_level` 
    parameter necessarily does not apply to statement level options, such as
-   that of :meth:`_sql.Executable.execution_options`, and will be rejected if
+   that of :meth:`_sql.Executable.execution_options` , and will be rejected if
    set at this level. This because the option must be set on a DBAPI connection
    on a per-transaction basis.
 
@@ -345,8 +345,8 @@ Setting Isolation Level or DBAPI Autocommit for an Engine
 
 The :paramref:`_engine.Connection.execution_options.isolation_level` option may
 also be set engine wide, as is often preferable.  This may be
-achieved by passing the :paramref:`_sa.create_engine.isolation_level`
-parameter to :func:`.sa.create_engine`::
+achieved by passing the :paramref:`_sa.create_engine.isolation_level` 
+parameter to :func:`.sa.create_engine` ::
 
     from sqlalchemy import create_engine
 
@@ -366,7 +366,7 @@ Maintaining Multiple Isolation Levels for a Single Engine
 The isolation level may also be set per engine, with a potentially greater
 level of flexibility, using either the
 :paramref:`_sa.create_engine.execution_options` parameter to
-:func:`_sa.create_engine` or the :meth:`_engine.Engine.execution_options`
+:func:`_sa.create_engine` or the :meth:` _engine.Engine.execution_options`
 method, the latter of which will create a copy of the :class:`.Engine` that
 shares the dialect and connection pool of the original engine, but has its own
 per-connection isolation level setting::
@@ -382,15 +382,15 @@ With the above setting, the DBAPI connection will be set to use a
 ``"REPEATABLE READ"`` isolation level setting for each new transaction
 begun; but the connection as pooled will be reset to the original isolation
 level that was present when the connection first occurred.   At the level
-of :func:`_sa.create_engine`, the end effect is not any different
+of :func:`_sa.create_engine` , the end effect is not any different
 from using the :paramref:`_sa.create_engine.isolation_level` parameter.
 
 However, an application that frequently chooses to run operations within
 different isolation levels may wish to create multiple "sub-engines" of a lead
-:class:`_engine.Engine`, each of which will be configured to a different
+:class:`_engine.Engine` , each of which will be configured to a different
 isolation level. One such use case is an application that has operations that
 break into "transactional" and "read-only" operations, a separate
-:class:`_engine.Engine` that makes use of ``"AUTOCOMMIT"`` may be separated off
+:class:`_engine.Engine` that makes use of ` `"AUTOCOMMIT"`` may be separated off
 from the main engine::
 
     from sqlalchemy import create_engine
@@ -400,7 +400,7 @@ from the main engine::
     autocommit_engine = eng.execution_options(isolation_level="AUTOCOMMIT")
 
 Above, the :meth:`_engine.Engine.execution_options` method creates a shallow
-copy of the original :class:`_engine.Engine`.  Both ``eng`` and
+copy of the original :class:`_engine.Engine` .  Both ``eng`` and
 ``autocommit_engine`` share the same dialect and connection pool.  However, the
 "AUTOCOMMIT" mode will be set upon connections when they are acquired from the
 ``autocommit_engine``.
@@ -411,15 +411,15 @@ reverted when a connection is returned to the connection pool.
 
 .. seealso::
 
-      :ref:`SQLite Transaction Isolation <sqlite_isolation_level>`
+      :ref:`SQLite Transaction Isolation <sqlite_isolation_level>` 
 
-      :ref:`PostgreSQL Transaction Isolation <postgresql_isolation_level>`
+      :ref:`PostgreSQL Transaction Isolation <postgresql_isolation_level>` 
 
-      :ref:`MySQL Transaction Isolation <mysql_isolation_level>`
+      :ref:`MySQL Transaction Isolation <mysql_isolation_level>` 
 
-      :ref:`SQL Server Transaction Isolation <mssql_isolation_level>`
+      :ref:`SQL Server Transaction Isolation <mssql_isolation_level>` 
 
-      :ref:`Oracle Transaction Isolation <oracle_isolation_level>`
+      :ref:`Oracle Transaction Isolation <oracle_isolation_level>` 
 
       :ref:`session_transaction_isolation` - for the ORM
 
@@ -432,7 +432,7 @@ Understanding the DBAPI-Level Autocommit Isolation Level
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the parent section, we introduced the concept of the
-:paramref:`_engine.Connection.execution_options.isolation_level`
+:paramref:`_engine.Connection.execution_options.isolation_level` 
 parameter and how it can be used to set database isolation levels, including
 DBAPI-level "autocommit" which is treated by SQLAlchemy as another transaction
 isolation level.   In this section we will attempt to clarify the implications
@@ -447,9 +447,9 @@ If we wanted to check out a :class:`_engine.Connection` object and use it
         connection.execute("<statement>")
 
 Above illustrates normal usage of "DBAPI autocommit" mode.   There is no
-need to make use of methods such as :meth:`_engine.Connection.begin`
-or :meth:`_engine.Connection.commit`, as all statements are committed
-to the database immediately.  When the block ends, the :class:`_engine.Connection`
+need to make use of methods such as :meth:`_engine.Connection.begin` 
+or :meth:`_engine.Connection.commit` , as all statements are committed
+to the database immediately.  When the block ends, the :class:`_engine.Connection` 
 object will revert the "autocommit" isolation level, and the DBAPI connection
 is released to the connection pool where the DBAPI ``connection.rollback()``
 method will normally be invoked, but as the above statements were already
@@ -486,7 +486,7 @@ it probably will have no effect due to autocommit mode:
     INFO sqlalchemy.engine.Engine COMMIT using DBAPI connection.commit(), DBAPI should ignore due to autocommit mode
 
 At the same time, even though we are using "DBAPI autocommit", SQLAlchemy's
-transactional semantics, that is, the in-Python behavior of :meth:`_engine.Connection.begin`
+transactional semantics, that is, the in-Python behavior of :meth:`_engine.Connection.begin` 
 as well as the behavior of "autobegin", **remain in place, even though these
 don't impact the DBAPI connection itself**.  To illustrate, the code
 below will raise an error, as :meth:`_engine.Connection.begin` is being
@@ -506,7 +506,7 @@ The above example also demonstrates the same theme that the "autocommit"
 isolation level is a configurational detail of the underlying database
 transaction, and is independent of the begin/commit behavior of the SQLAlchemy
 Connection object. The "autocommit" mode will not interact with
-:meth:`_engine.Connection.begin` in any way and the :class:`_engine.Connection`
+:meth:`_engine.Connection.begin` in any way and the :class:` _engine.Connection`
 does not consult this status when performing its own state changes with regards
 to the transaction (with the exception of suggesting within engine logging that
 these blocks are not actually committing). The rationale for this design is to
@@ -521,7 +521,7 @@ Changing Between Isolation Levels
 
     prefer to use individual :class:`_engine.Connection` objects
     each with just one isolation level, rather than switching isolation on a single
-    :class:`_engine.Connection`.  The code will be easier to read and less
+    :class:`_engine.Connection` .  The code will be easier to read and less
     error prone.
 
 Isolation level settings, including autocommit mode, are reset automatically
@@ -533,10 +533,10 @@ To illustrate how to use "autocommit" in an ad-hoc mode within the scope of a
 single :class:`_engine.Connection` checkout, the
 :paramref:`_engine.Connection.execution_options.isolation_level` parameter
 must be re-applied with the previous isolation level.
-The previous section illustrated an attempt to call :meth:`_engine.Connection.begin`
+The previous section illustrated an attempt to call :meth:`_engine.Connection.begin` 
 in order to start a transaction while autocommit was taking place; we can
 rewrite that example to actually do so by first reverting the isolation level
-before we call upon :meth:`_engine.Connection.begin`::
+before we call upon :meth:`_engine.Connection.begin` ::
 
     # if we wanted to flip autocommit on and off on a single connection/
     # which... we usually don't.
@@ -609,7 +609,7 @@ leave result rows outside of process memory before they are consumed.
   to mean "unbuffered results" and "client side cursors" means "result rows
   are buffered into memory before the first row is returned".   To work with
   a richer "server side cursor" featureset specific to a certain DBAPI driver,
-  see the section :ref:`dbapi_connections_cursor`.
+  see the section :ref:`dbapi_connections_cursor` .
 
 From this basic architecture it follows that a "server side cursor" is more
 memory efficient when fetching very large result sets, while at the same time
@@ -634,9 +634,9 @@ of an application fetching a very large number of rows in chunks, where
 the processing of these rows can be complete before more rows are fetched.
 
 For database drivers that provide client and server side cursor options,
-the :paramref:`_engine.Connection.execution_options.stream_results`
+the :paramref:`_engine.Connection.execution_options.stream_results` 
 and :paramref:`_engine.Connection.execution_options.yield_per` execution
-options provide access to "server side cursors" on a per-:class:`_engine.Connection`
+options provide access to "server side cursors" on a per-:class:`_engine.Connection` 
 or per-statement basis.    Similar options exist when using an ORM
 :class:`_orm.Session` as well.
 
@@ -657,13 +657,13 @@ they are consumed. This parameter may be to a positive integer value using the
 
 .. versionadded:: 1.4.40 :paramref:`_engine.Connection.execution_options.yield_per` as a
    Core-only option is new as of SQLAlchemy 1.4.40; for prior 1.4 versions,
-   use :paramref:`_engine.Connection.execution_options.stream_results`
-   directly in combination with :meth:`_engine.Result.yield_per`.
+   use :paramref:`_engine.Connection.execution_options.stream_results` 
+   directly in combination with :meth:`_engine.Result.yield_per` .
 
 Using this option is equivalent to manually setting the
 :paramref:`_engine.Connection.execution_options.stream_results` option,
 described in the next section, and then invoking the
-:meth:`_engine.Result.yield_per` method on the :class:`_engine.Result`
+:meth:`_engine.Result.yield_per` method on the :class:` _engine.Result`
 object with the given integer value.   In both cases, the effect this
 combination has includes:
 
@@ -675,7 +675,7 @@ combination has includes:
   :paramref:`_engine.Connection.execution_options.yield_per` option or the
   :meth:`_engine.Result.yield_per` method; the last batch is then sized against
   the remaining rows fewer than this size
-* The default partition size used by the :meth:`_engine.Result.partitions`
+* The default partition size used by the :meth:`_engine.Result.partitions` 
   method, if used, will be made equal to this integer size as well.
 
 These three behaviors are illustrated in the example below::
@@ -708,12 +708,12 @@ fetch all remaining rows at once and defeat the purpose of using ``yield_per``.
 The :paramref:`_engine.Connection.execution_options.yield_per` option
 is portable to the ORM as well, used by a :class:`_orm.Session` to fetch
 ORM objects, where it also limits the amount of ORM objects generated at once.
-See the section :ref:`orm_queryguide_yield_per` - in the :ref:`queryguide_toplevel`
+See the section :ref:`orm_queryguide_yield_per` - in the :ref:` queryguide_toplevel`
 for further background on using
 :paramref:`_engine.Connection.execution_options.yield_per` with the ORM.
 
 .. versionadded:: 1.4.40 Added
-   :paramref:`_engine.Connection.execution_options.yield_per`
+   :paramref:`_engine.Connection.execution_options.yield_per` 
    as a Core level execution option to conveniently set streaming results,
    buffer size, and partition size all at once in a manner that is transferrable
    to that of the ORM's similar use case.
@@ -743,8 +743,8 @@ of 1000 rows.   The maximum size of this buffer can be affected using the
             for row in result:
                 print(f"{row}")
 
-While the :paramref:`_engine.Connection.execution_options.stream_results`
-option may be combined with use of the :meth:`_engine.Result.partitions`
+While the :paramref:`_engine.Connection.execution_options.stream_results` 
+option may be combined with use of the :meth:`_engine.Result.partitions` 
 method, a specific partition size should be passed to
 :meth:`_engine.Result.partitions` so that the entire result is not fetched.
 It is usually more straightforward to use the
@@ -753,11 +753,11 @@ up to use the :meth:`_engine.Result.partitions` method.
 
 .. seealso::
 
-    :ref:`orm_queryguide_yield_per` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_yield_per` - in the :ref:` queryguide_toplevel`
 
-    :meth:`_engine.Result.partitions`
+    :meth:`_engine.Result.partitions` 
 
-    :meth:`_engine.Result.yield_per`
+    :meth:`_engine.Result.yield_per` 
 
 
 .. _schema_translating:
@@ -767,7 +767,7 @@ Translation of Schema Names
 
 To support multi-tenancy applications that distribute common sets of tables
 into multiple schemas, the
-:paramref:`.Connection.execution_options.schema_translate_map`
+:paramref:`.Connection.execution_options.schema_translate_map` 
 execution option may be used to repurpose a set of :class:`_schema.Table` objects
 to render under different schema names without any changes.
 
@@ -781,9 +781,9 @@ Given a table::
     )
 
 The "schema" of this :class:`_schema.Table` as defined by the
-:paramref:`_schema.Table.schema` attribute is ``None``.  The
+:paramref:`_schema.Table.schema` attribute is ` `None``.  The
 :paramref:`.Connection.execution_options.schema_translate_map` can specify
-that all :class:`_schema.Table` objects with a schema of ``None`` would instead
+that all :class:`_schema.Table` objects with a schema of ` `None`` would instead
 render the schema as ``user_schema_one``::
 
     connection = engine.connect().execution_options(
@@ -812,12 +812,12 @@ map can specify any number of target->destination schemas::
 
 The :paramref:`.Connection.execution_options.schema_translate_map` parameter
 affects all DDL and SQL constructs generated from the SQL expression language,
-as derived from the :class:`_schema.Table` or :class:`.Sequence` objects.
-It does **not** impact literal string SQL used via the :func:`_expression.text`
-construct nor via plain strings passed to :meth:`_engine.Connection.execute`.
+as derived from the :class:`_schema.Table` or :class:` .Sequence` objects.
+It does **not** impact literal string SQL used via the :func:`_expression.text` 
+construct nor via plain strings passed to :meth:`_engine.Connection.execute` .
 
 The feature takes effect **only** in those cases where the name of the
-schema is derived directly from that of a :class:`_schema.Table` or :class:`.Sequence`;
+schema is derived directly from that of a :class:`_schema.Table` or :class:` .Sequence`;
 it does not impact methods where a string schema name is passed directly.
 By this pattern, it takes effect within the "can create" / "can drop" checks
 performed by methods such as :meth:`_schema.MetaData.create_all` or
@@ -828,9 +828,9 @@ as the schema name is passed to these methods explicitly.
 
 .. tip::
 
-  To use the schema translation feature with the ORM :class:`_orm.Session`,
-  set this option at the level of the :class:`_engine.Engine`, then pass that engine
-  to the :class:`_orm.Session`.  The :class:`_orm.Session` uses a new
+  To use the schema translation feature with the ORM :class:`_orm.Session` ,
+  set this option at the level of the :class:`_engine.Engine` , then pass that engine
+  to the :class:`_orm.Session` .  The :class:`_orm.Session` uses a new
   :class:`_engine.Connection` for each transaction::
 
       schema_engine = engine.execution_options(schema_translate_map={...})
@@ -848,9 +848,9 @@ as the schema name is passed to these methods explicitly.
     the ORM :class:`_orm.Session` does not take current schema translate
     values into account for individual objects.
 
-    To use a single :class:`_orm.Session` with multiple ``schema_translate_map``
+    To use a single :class:`_orm.Session` with multiple ` `schema_translate_map``
     configurations, the :ref:`horizontal_sharding_toplevel` extension may
-    be used.  See the example at :ref:`examples_sharding`.
+    be used.  See the example at :ref:`examples_sharding` .
 
 .. _sql_caching:
 
@@ -861,7 +861,7 @@ SQL Compilation Caching
 .. versionadded:: 1.4  SQLAlchemy now has a transparent query caching system
    that substantially lowers the Python computational overhead involved in
    converting SQL statement constructs into SQL strings across both
-   Core and ORM.   See the introduction at :ref:`change_4639`.
+   Core and ORM.   See the introduction at :ref:`change_4639` .
 
 SQLAlchemy includes a comprehensive caching system for the SQL compiler as well
 as its ORM variants.   This caching system is transparent within the
@@ -1020,7 +1020,7 @@ checking for the existence of the "a" and "b" tables:
 
 For the above two SQLite PRAGMA statements, the badge reads ``[raw sql]``,
 which indicates the driver is sending a Python string directly to the
-database using :meth:`.Connection.exec_driver_sql`.  Caching does not apply
+database using :meth:`.Connection.exec_driver_sql` .  Caching does not apply
 to such statements because they already exist in string form, and there
 is nothing known about what kinds of result rows will be returned since
 SQLAlchemy does not parse SQL strings ahead of time.
@@ -1177,9 +1177,9 @@ Disabling or using an alternate dictionary to cache some (or all) statements
 
 The internal cache used is known as ``LRUCache``, but this is mostly just
 a dictionary.  Any dictionary may be used as a cache for any series of
-statements by using the :paramref:`.Connection.execution_options.compiled_cache`
+statements by using the :paramref:`.Connection.execution_options.compiled_cache` 
 option as an execution option.  Execution options may be set on a statement,
-on an :class:`_engine.Engine` or :class:`_engine.Connection`, as well as
+on an :class:`_engine.Engine` or :class:` _engine.Connection`, as well as
 when using the ORM :meth:`_orm.Session.execute` method for SQLAlchemy-2.0
 style invocations.   For example, to run a series of SQL statements and have
 them cached in a particular dictionary::
@@ -1190,7 +1190,7 @@ them cached in a particular dictionary::
 
 The SQLAlchemy ORM uses the above technique to hold onto per-mapper caches
 within the unit of work "flush" process that are separate from the default
-cache configured on the :class:`_engine.Engine`, as well as for some
+cache configured on the :class:`_engine.Engine` , as well as for some
 relationship loader queries.
 
 The cache can also be disabled with this argument by sending a value of
@@ -1211,7 +1211,7 @@ a particular cache key that is keyed to that SQL string.  This means
 that any literal values in a statement, such as the LIMIT/OFFSET values for
 a SELECT, can not be hardcoded in the dialect's compilation scheme, as
 the compiled string will not be re-usable.   SQLAlchemy supports rendered
-bound parameters using the :meth:`_sql.BindParameter.render_literal_execute`
+bound parameters using the :meth:`_sql.BindParameter.render_literal_execute` 
 method which can be applied to the existing ``Select._limit_clause`` and
 ``Select._offset_clause`` attributes by a custom compiler, which
 are illustrated later in this section.
@@ -1219,7 +1219,7 @@ are illustrated later in this section.
 As there are many third party dialects, many of which may be generating literal
 values from SQL statements without the benefit of the newer "literal execute"
 feature, SQLAlchemy as of version 1.4.5 has added an attribute to dialects
-known as :attr:`_engine.Dialect.supports_statement_cache`. This attribute is
+known as :attr:`_engine.Dialect.supports_statement_cache` . This attribute is
 checked at runtime for its presence directly on a particular dialect's class,
 even if it's already present on a superclass, so that even a third party
 dialect that subclasses an existing cacheable SQLAlchemy dialect such as
@@ -1255,7 +1255,7 @@ The typical case for dialect modification follows.
 Example: Rendering LIMIT / OFFSET with post compile parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-As an example, suppose a dialect overrides the :meth:`.SQLCompiler.limit_clause`
+As an example, suppose a dialect overrides the :meth:`.SQLCompiler.limit_clause` 
 method, which produces the "LIMIT / OFFSET" clause for a SQL statement,
 like this::
 
@@ -1282,7 +1282,7 @@ The correction for the above code is to move the literal integer into
 SQLAlchemy's :ref:`post-compile <change_4808>` facility, which will render the
 literal integer outside of the initial compilation stage, but instead at
 execution time before the statement is sent to the DBAPI.  This is accessed
-within the compilation stage using the :meth:`_sql.BindParameter.render_literal_execute`
+within the compilation stage using the :meth:`_sql.BindParameter.render_literal_execute` 
 method, in conjunction with using the :attr:`.Select._limit_clause` and
 :attr:`.Select._offset_clause` attributes, which represent the LIMIT/OFFSET
 as a complete SQL expression, as follows::
@@ -1331,7 +1331,7 @@ statement execution time, after the SQL string has been retrieved from the
 cache.
 
 After changes like the above have been made as appropriate, the
-:attr:`.Dialect.supports_statement_cache` flag should be set to ``True``.
+:attr:`.Dialect.supports_statement_cache` flag should be set to ` `True``.
 It is strongly recommended that third party dialects make use of the
 `dialect third party test suite <https://github.com/sqlalchemy/sqlalchemy/blob/main/README.dialects.rst>`_
 which will assert that operations like
@@ -1339,7 +1339,7 @@ SELECTs with LIMIT/OFFSET are correctly rendered and cached.
 
 .. seealso::
 
-    :ref:`faq_new_caching` - in the :ref:`faq_toplevel` section
+    :ref:`faq_new_caching` - in the :ref:` faq_toplevel` section
 
 
 .. _engine_lambda_caching:
@@ -1363,14 +1363,14 @@ of the SQL expression construct itself, which also has some degree of
 Python overhead.
 
 The lambda SQL expression feature is available as a performance enhancing
-feature, and is also optionally used in the :func:`_orm.with_loader_criteria`
+feature, and is also optionally used in the :func:`_orm.with_loader_criteria` 
 ORM option in order to provide a generic SQL fragment.
 
 Synopsis
 ^^^^^^^^
 
 Lambda statements are constructed using the :func:`_sql.lambda_stmt` function,
-which returns an instance of :class:`_sql.StatementLambdaElement`, which is
+which returns an instance of :class:`_sql.StatementLambdaElement` , which is
 itself an executable statement construct.    Additional modifiers and criteria
 are added to the object using the Python addition operator ``+``, or
 alternatively the :meth:`_sql.StatementLambdaElement.add_criteria` method which
@@ -1423,8 +1423,8 @@ it should be cached on each run, trying to detect any potential problems.
 Basic guidelines include:
 
 * **Any kind of statement is supported** - while it's expected that
-  :func:`_sql.select` constructs are the prime use case for :func:`_sql.lambda_stmt`,
-  DML statements such as :func:`_sql.insert` and :func:`_sql.update` are
+  :func:`_sql.select` constructs are the prime use case for :func:` _sql.lambda_stmt`,
+  DML statements such as :func:`_sql.insert` and :func:` _sql.update` are
   equally usable::
 
     def upd(id_, newname):
@@ -1439,9 +1439,9 @@ Basic guidelines include:
 
   ..
 
-* **ORM use cases directly supported as well** - the :func:`_sql.lambda_stmt`
+* **ORM use cases directly supported as well** - the :func:`_sql.lambda_stmt` 
   can accommodate ORM functionality completely and used directly with
-  :meth:`_orm.Session.execute`::
+  :meth:`_orm.Session.execute` ::
 
     def select_user(session, name):
         stmt = lambda_stmt(lambda: select(User))
@@ -1475,7 +1475,7 @@ Basic guidelines include:
         [cached since 0.002059s ago] (12, 8){stop}
         12
 
-  Above, :class:`_sql.StatementLambdaElement` extracted the values of ``x``
+  Above, :class:`_sql.StatementLambdaElement` extracted the values of ` `x``
   and ``y`` from the **closure** of the lambda that is generated each time
   ``my_stmt()`` is invoked; these were substituted into the cached SQL
   construct as the values of the parameters.
@@ -1557,7 +1557,7 @@ Basic guidelines include:
   ..
 
 * **Avoid referring to non-SQL constructs inside of lambdas as they are not
-  cacheable by default** - this issue refers to how the :class:`_sql.LambdaElement`
+  cacheable by default** - this issue refers to how the :class:`_sql.LambdaElement` 
   creates a cache key from other closure variables within the statement.  In order
   to provide the best guarantee of an accurate cache key, all objects located
   in the closure of the lambda are considered to be significant, and none
@@ -1761,7 +1761,7 @@ be used when the statement is invoked::
 
 
 For a series of examples of "lambda" caching with performance comparisons,
-see the "short_selects" test suite within the :ref:`examples_performance`
+see the "short_selects" test suite within the :ref:`examples_performance` 
 performance example.
 
 .. _engine_insertmanyvalues:
@@ -1786,7 +1786,7 @@ server-generated primary key values which allow the new row to be referenced in
 subsequent operations. In particular, this scenario has long been a significant
 performance issue in the ORM, which relies on being able to retrieve
 server-generated primary key values in order to correctly populate the
-:term:`identity map`.
+:term:`identity map` .
 
 With recent support for RETURNING added to SQLite and MariaDB, SQLAlchemy no
 longer needs to rely upon the single-row-only
@@ -1812,14 +1812,14 @@ The feature is enabled for all backend included in SQLAlchemy that support
 RETURNING, with the exception of Oracle for which both the cx_Oracle and
 OracleDB drivers offer their own equivalent feature. The feature normally takes
 place when making use of the :meth:`_dml.Insert.returning` method of an
-:class:`_dml.Insert` construct in conjunction with :term:`executemany`
+:class:`_dml.Insert` construct in conjunction with :term:` executemany`
 execution, which occurs when passing a list of dictionaries to the
 :paramref:`_engine.Connection.execute.parameters` parameter of the
-:meth:`_engine.Connection.execute` or :meth:`_orm.Session.execute` methods (as
+:meth:`_engine.Connection.execute` or :meth:` _orm.Session.execute` methods (as
 well as equivalent methods under :ref:`asyncio <asyncio_toplevel>` and
-shorthand methods like :meth:`_orm.Session.scalars`). It also takes place
+shorthand methods like :meth:`_orm.Session.scalars` ). It also takes place
 within the ORM :term:`unit of work` process when using methods such as
-:meth:`_orm.Session.add` and :meth:`_orm.Session.add_all` to add rows.
+:meth:`_orm.Session.add` and :meth:` _orm.Session.add_all` to add rows.
 
 For SQLAlchemy's included dialects, support or equivalent support is currently
 as follows:
@@ -1844,8 +1844,8 @@ Disabling the feature
 
 To disable the "insertmanyvalues" feature for a given backend for an
 :class:`.Engine` overall, pass the
-:paramref:`_sa.create_engine.use_insertmanyvalues` parameter as ``False`` to
-:func:`_sa.create_engine`::
+:paramref:`_sa.create_engine.use_insertmanyvalues` parameter as ` `False`` to
+:func:`_sa.create_engine` ::
 
     engine = create_engine(
         "mariadb+mariadbconnector://scott:tiger@host/db", use_insertmanyvalues=False
@@ -1853,7 +1853,7 @@ To disable the "insertmanyvalues" feature for a given backend for an
 
 The feature can also be disabled from being used implicitly for a particular
 :class:`_schema.Table` object by passing the
-:paramref:`_schema.Table.implicit_returning` parameter as ``False``::
+:paramref:`_schema.Table.implicit_returning` parameter as ` `False``::
 
       t = Table(
           "t",
@@ -1914,7 +1914,7 @@ The "batch" mode query illustrated in the previous section does not guarantee
 the order of records returned would correspond with that of the input data.
 When used by the SQLAlchemy ORM :term:`unit of work` process, as well as for
 applications which correlate returned server-generated values with input data,
-the :meth:`_dml.Insert.returning` and :meth:`_dml.UpdateBase.return_defaults`
+the :meth:`_dml.Insert.returning` and :meth:` _dml.UpdateBase.return_defaults`
 methods include an option
 :paramref:`_dml.Insert.returning.sort_by_parameter_order` which indicates that
 "insertmanyvalues" mode should guarantee this correspondence. This is **not
@@ -1972,7 +1972,7 @@ RETURNING order when client-side-generated primary key values are used.
 
 The subject of how "insertmanyvalues" "batch" mode determines a column or
 columns to use as a point of correspondence between input parameters and
-RETURNING rows is known as an :term:`insert sentinel`, which is a specific
+RETURNING rows is known as an :term:`insert sentinel` , which is a specific
 column or columns that are used to track such values. The "insert sentinel" is
 normally selected automatically, however can also be user-configuration for
 extremely special cases; the section
@@ -2036,10 +2036,10 @@ invoke **multiple INSERT statements** using the DBAPI ``cursor.execute()`` metho
 within the scope of  **single** call to the Core-level
 :meth:`_engine.Connection.execute` method,
 with each statement containing up to a fixed limit of parameter sets.
-This limit is configurable as described below at :ref:`engine_insertmanyvalues_page_size`.
+This limit is configurable as described below at :ref:`engine_insertmanyvalues_page_size` .
 The separate calls to ``cursor.execute()`` are logged individually and
 also individually passed along to event listeners such as
-:meth:`.ConnectionEvents.before_cursor_execute` (see :ref:`engine_insertmanyvalues_events`
+:meth:`.ConnectionEvents.before_cursor_execute` (see :ref:` engine_insertmanyvalues_events`
 below).
 
 
@@ -2063,7 +2063,7 @@ default such as the Python ``uuid.uuid4()`` function.  There is also a construct
 simple integer columns with a a client side integer counter oriented towards
 the "insertmanyvalues" use case.
 
-Sentinel columns may be indicated by adding :paramref:`_schema.Column.insert_sentinel`
+Sentinel columns may be indicated by adding :paramref:`_schema.Column.insert_sentinel` 
 to qualifying columns.   The most basic "qualifying" column is a not-nullable,
 unique column with a client side default, such as a UUID column as follows::
 
@@ -2126,8 +2126,8 @@ integer column which makes use of a special default integer counter that's only
 used during "insertmanyvalues" operations; as an additional behavior, the
 column will omit itself from SQL statements and result sets and behave in a
 mostly transparent manner.  It does need to be physically present within
-the actual database table, however.  This style of :class:`_schema.Column`
-may be constructed using the function :func:`_schema.insert_sentinel`::
+the actual database table, however.  This style of :class:`_schema.Column` 
+may be constructed using the function :func:`_schema.insert_sentinel` ::
 
     from sqlalchemy import Column
     from sqlalchemy import Integer
@@ -2146,8 +2146,8 @@ may be constructed using the function :func:`_schema.insert_sentinel`::
 
 When using ORM Declarative, a Declarative-friendly version of
 :func:`_schema.insert_sentinel` is available called
-:func:`_orm.orm_insert_sentinel`, which has the ability to be used on the Base
-class or a mixin; if packaged using :func:`_orm.declared_attr`, the column will
+:func:`_orm.orm_insert_sentinel` , which has the ability to be used on the Base
+class or a mixin; if packaged using :func:`_orm.declared_attr` , the column will
 apply itself to all table-bound subclasses including within joined inheritance
 hierarchies::
 
@@ -2225,7 +2225,7 @@ as well as for DBAPI quirkiness). Older versions of SQLite (prior to 3.32.0)
 will set this value to 999. MariaDB has no established limit however 32700
 remains as a limiting factor for SQL message size.
 
-The value of the "batch size" can be affected :class:`_engine.Engine`
+The value of the "batch size" can be affected :class:`_engine.Engine` 
 wide via the :paramref:`_sa.create_engine.insertmanyvalues_page_size` parameter.
 Such as, to affect INSERT statements to include up to 100 parameter sets
 in each statement::
@@ -2233,7 +2233,7 @@ in each statement::
     e = create_engine("sqlite://", insertmanyvalues_page_size=100)
 
 The batch size may also be affected on a per statement basis using the
-:paramref:`_engine.Connection.execution_options.insertmanyvalues_page_size`
+:paramref:`_engine.Connection.execution_options.insertmanyvalues_page_size` 
 execution option, such as per execution::
 
     with e.begin() as conn:
@@ -2259,7 +2259,7 @@ Logging and Events
 ~~~~~~~~~~~~~~~~~~
 
 The "insertmanyvalues" feature integrates fully with SQLAlchemy's :ref:`statement
-logging <dbengine_logging>` as well as cursor events such as :meth:`.ConnectionEvents.before_cursor_execute`.
+logging <dbengine_logging>` as well as cursor events such as :meth:`.ConnectionEvents.before_cursor_execute` .
 When the list of parameters is broken into separate batches, **each INSERT
 statement is logged and passed to event handlers individually**.   This is a major change
 compared to how the psycopg2-only feature worked in previous 1.x series of
@@ -2300,14 +2300,14 @@ will indicate this along with the insertmanyvalues message:
 
 .. seealso::
 
-    :ref:`dbengine_logging`
+    :ref:`dbengine_logging` 
 
 Upsert Support
 ~~~~~~~~~~~~~~
 
 The PostgreSQL, SQLite, and MariaDB dialects offer backend-specific
-"upsert" constructs :func:`_postgresql.insert`, :func:`_sqlite.insert`
-and :func:`_mysql.insert`, which are each :class:`_dml.Insert` constructs that
+"upsert" constructs :func:`_postgresql.insert` , :func:`_sqlite.insert` 
+and :func:`_mysql.insert` , which are each :class:`_dml.Insert` constructs that
 have an additional method such as ``on_conflict_do_update()` or
 ``on_duplicate_key()``.   These constructs also support "insertmanyvalues"
 behaviors when they are used with RETURNING, allowing efficient upserts
@@ -2321,13 +2321,13 @@ Engine Disposal
 
 The :class:`_engine.Engine` refers to a connection pool, which means under normal
 circumstances, there are open database connections present while the
-:class:`_engine.Engine` object is still resident in memory.   When an :class:`_engine.Engine`
+:class:`_engine.Engine` object is still resident in memory.   When an :class:` _engine.Engine`
 is garbage collected, its connection pool is no longer referred to by
-that :class:`_engine.Engine`, and assuming none of its connections are still checked
+that :class:`_engine.Engine` , and assuming none of its connections are still checked
 out, the pool and its connections will also be garbage collected, which has the
 effect of closing out the actual database connections as well.   But otherwise,
 the :class:`_engine.Engine` will hold onto open database connections assuming
-it uses the normally default pool implementation of :class:`.QueuePool`.
+it uses the normally default pool implementation of :class:`.QueuePool` .
 
 The :class:`_engine.Engine` is intended to normally be a permanent
 fixture established up-front and maintained throughout the lifespan of an
@@ -2343,7 +2343,7 @@ generally not a good idea to rely on Python garbage collection for this
 to occur for these cases; instead, the :class:`_engine.Engine` can be explicitly disposed using
 the :meth:`_engine.Engine.dispose` method.   This disposes of the engine's
 underlying connection pool and replaces it with a new one that's empty.
-Provided that the :class:`_engine.Engine`
+Provided that the :class:`_engine.Engine` 
 is discarded at this point and no longer used, all **checked-in** connections
 which it refers to will also be fully closed.
 
@@ -2370,7 +2370,7 @@ Connections that are **checked out** are **not** discarded when the
 engine is disposed or garbage collected, as these connections are still
 strongly referenced elsewhere by the application.
 However, after :meth:`_engine.Engine.dispose` is called, those
-connections are no longer associated with that :class:`_engine.Engine`; when they
+connections are no longer associated with that :class:`_engine.Engine` ; when they
 are closed, they will be returned to their now-orphaned connection pool
 which will ultimately be garbage collected, once all connections which refer
 to it are also no longer referenced anywhere.
@@ -2382,14 +2382,14 @@ An alternative for applications that are negatively impacted by the
 :class:`_engine.Engine` object's use of connection pooling is to disable pooling
 entirely.  This typically incurs only a modest performance impact upon the
 use of new connections, and means that when a connection is checked in,
-it is entirely closed out and is not held in memory.  See :ref:`pool_switching`
+it is entirely closed out and is not held in memory.  See :ref:`pool_switching` 
 for guidelines on how to disable pooling.
 
 .. seealso::
 
-    :ref:`pooling_toplevel`
+    :ref:`pooling_toplevel` 
 
-    :ref:`pooling_multiprocessing`
+    :ref:`pooling_multiprocessing` 
 
 .. _dbapi_connections:
 
@@ -2409,8 +2409,8 @@ Invoking SQL strings directly to the driver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For the use case where one wants to invoke textual SQL directly passed to the
-underlying driver (known as the :term:`DBAPI`) without any intervention
-from the :func:`_expression.text` construct, the :meth:`_engine.Connection.exec_driver_sql`
+underlying driver (known as the :term:`DBAPI` ) without any intervention
+from the :func:`_expression.text` construct, the :meth:` _engine.Connection.exec_driver_sql`
 method may be used::
 
     with engine.connect() as conn:
@@ -2440,15 +2440,15 @@ originating connection pool, however this is an implementation detail
 that in most cases can be ignored.    As this DBAPI connection is still
 contained within the scope of an owning :class:`_engine.Connection` object, it is
 best to make use of the :class:`_engine.Connection` object for most features such
-as transaction control as well as calling the :meth:`_engine.Connection.close`
+as transaction control as well as calling the :meth:`_engine.Connection.close` 
 method; if these operations are performed on the DBAPI connection directly,
 the owning :class:`_engine.Connection` will not be aware of these changes in state.
 
 To overcome the limitations imposed by the DBAPI connection that is
-maintained by an owning :class:`_engine.Connection`, a DBAPI connection is also
+maintained by an owning :class:`_engine.Connection` , a DBAPI connection is also
 available without the need to procure a
-:class:`_engine.Connection` first, using the :meth:`_engine.Engine.raw_connection` method
-of :class:`_engine.Engine`::
+:class:`_engine.Connection` first, using the :meth:` _engine.Engine.raw_connection` method
+of :class:`_engine.Engine` ::
 
     dbapi_conn = engine.raw_connection()
 
@@ -2548,7 +2548,7 @@ to create a new dialect "foodialect://", the steps are as follows:
 
 1. Create a package called ``foodialect``.
 2. The package should have a module containing the dialect class,
-   which is typically a subclass of :class:`sqlalchemy.engine.default.DefaultDialect`.
+   which is typically a subclass of :class:`sqlalchemy.engine.default.DefaultDialect` .
    In this example let's say it's called ``FooDialect`` and its module is accessed
    via ``foodialect.dialect``.
 3. The entry point can be established in ``setup.cfg`` as follows:

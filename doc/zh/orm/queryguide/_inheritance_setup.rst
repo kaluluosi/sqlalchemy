@@ -1,8 +1,7 @@
-============================================
-ORM查询指南设置：连接继承
-============================================
+ORM查询指南: Joined Inheritance的设置
+===============================
 
-本页面说明了 :ref:`joined_inheritance` 示例中使用的映射和夹具数据，这些示例包含在 :ref:`queryguide_toplevel` 的 :doc:`inheritance` 文档中。
+本页列举了在  :doc:`inheritance`  文档中 :ref:` queryguide_toplevel`的 :ref:`joined_inheritance` 示例中所使用的映射和夹具数据。
 
 ..  sourcecode:: python
 
@@ -14,7 +13,7 @@ ORM查询指南设置：连接继承
     >>> from sqlalchemy.orm import mapped_column
     >>> from sqlalchemy.orm import relationship
     >>> from sqlalchemy.orm import Session
-    >>>     
+    >>>
     >>> class Base(DeclarativeBase):
     ...     pass
     >>> class Company(Base):
@@ -70,6 +69,7 @@ ORM查询指南设置：连接继承
     BEGIN ...
 
     >>> conn = engine.connect()
+    >>> from sqlalchemy.orm import Session
     >>> session = Session(conn)
     >>> session.add(
     ...     Company(

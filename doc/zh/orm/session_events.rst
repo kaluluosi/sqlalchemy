@@ -1,25 +1,24 @@
 .. _session_events_toplevel:
 
-使用事件跟踪查询、对象和会话更改
-===================================
+使用事件追踪查询、对象和会话更改
+===========================================
 
-SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在Core和ORM中都有使用。在ORM中，有许多事件监听器钩子，这些钩子记录在API级别，如 :ref:`orm_event_toplevel`所述。这些事件集多年来不断增长，包括许多非常有用的新事件以及一些不再像过去那样相关的旧事件。本节将尝试介绍主要的事件钩子以及它们可能被使用的情况。
+SQLAlchemy在Core和ORM中都使用了广泛的   :ref:`事件监听<event_toplevel>` 。这些事件的集合已经发展了多年，包括许多非常有用的新事件以及一些不再像曾经那样相关的旧事件。本节将尝试介绍主要的事件钩子及其使用场景。
 
 .. _session_execute_events:
 
 执行事件
 ---------------
 
-.. versionadded:: 1.4  :class:`_orm.Session`现在拥有一个单一的全面挂钩，旨在拦截ORM代表进行的所有SELECT语句以及批量UPDATE和DELETE语句。此挂钩取代了先前的:meth:`_orm.QueryEvents.before_compile`事件和:meth:`_orm.QueryEvents.before_compile_update`以及:meth:`_orm.QueryEvents.before_compile_delete`。
+.. versionadded:: 1.4    :class:`_orm.Session`  事件，还包括  :meth:` _orm.QueryEvents.before_compile_update`  和  :meth:`_orm.QueryEvents.before_compile_delete`  。
 
-:class:`_orm.Session` 通过在 :meth:`_orm.Session.execute` 方法中调用所有查询，这包括由 :class:`_orm.Query` 发出的所有 SELECT 语句以及由列和关系加载器代表发出的所有 SELECT 语句 ，能拦截和修改查询。该系统使用 :meth:`_orm.SessionEvents.do_orm_execute` 事件挂钩以及 :class:`_orm.ORMExecuteState` 对象来表示事件状态。
+  :class:`_orm.Session`  方法调用的所有查询，包括  :class:` _orm.Query`  事件钩子以及 :class:`_orm.ORMExecuteState` 对象来表示事件状态。
 
-基本查询截获
+
+基本查询拦截
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-首先要注意的是，:meth:`_orm.SessionEvents.do_orm_execute` 首先对查询截取非常有用，包括由 :class:`_orm.Query` 以 :term:`1.x 样式` emit 以及当启用了 ORM 的 :term:`2.0 样式` 的 :func:`_sql.select`、 :func:`_sql.update` 或 :func:`_sql.delete` 构造函数被传递到 :meth:`_orm.Session.execute` 时。 :class:`_orm.ORMExecuteState` 构造提供访问器，以允许修改语句、参数和选项。
-
-下面的示例说明了一些简单的修改 SELECT 语句。
+  :meth:`_orm.SessionEvents.do_orm_execute`  首先对查询的任何拦截非常有用，包括使用  :term:` 1.x风格`  的  :class:`_orm.Query`  的  :func:` _sql.select` ，  :func:`_sql.update`  。 :class:` _orm.ORMExecuteState`结构提供访问器，允许修改语句、参数和选项:: 
 
     Session = sessionmaker(engine)
 
@@ -31,21 +30,20 @@ SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在
 
             orm_execute_state.update_execution_options(populate_existing=True)
 
-            # 检查SELECT是针对某个实体的，如果是，则添加 ORDER BY
-
+            # 检查SELECT是否针对特定实体，并在是的情况下加入ORDER BY
             col_descriptions = orm_execute_state.statement.column_descriptions
 
             if col_descriptions[0]["entity"] is MyEntity:
                 orm_execute_state.statement = statement.order_by(MyEntity.name)
 
-上述示例说明了一些简单的修改 SELECT 语句。:meth:`_orm.SessionEvents.do_orm_execute` 事件钩子旨在替换前面使用的 :meth:`_orm.QueryEvents.before_compile` 事件的使用，后者未对各种加载程序的各种类型合一致地触发；另外， :meth:`_orm.QueryEvents.before_compile` 仅适用于使用 :class:`_orm.Query` 的 :term:`1.x 样式`，而不适用于使用 :meth:`_orm.Session.execute` 的 :term:`2.0 样式`。
+上面的示例说明了如何修改SELECT语句。在这个级别上，  :meth:`_orm.SessionEvents.do_orm_execute`  事件钩子旨在替换之前使用的  :meth:` _orm.QueryEvents.before_compile`  事件的使用，对于各种装载器，它没有被一致地触发。此外，  :meth:`_orm.QueryEvents.before_compile`  仅适用于  :class:` _orm.Query`  ，而不适用于  :meth:`_orm.Session.execute`  的  :term:` 2.0风格`  。
 
 .. _do_orm_execute_global_criteria:
 
 添加全局WHERE/ON条件
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-其中一个最常请求的查询扩展功能是添加 WHERE 条件到所有查询实体中的所有出现。这可以通过使用 :func:`_orm.with_loader_criteria` 查询选项来实现。该选项可以单独使用，也适用于 :meth:`_orm.SessionEvents.do_orm_execute` 事件::
+最常请求的查询扩展特性之一是能够向所有查询的实体添加WHERE条件。这可以通过使用  :func:`_orm.with_loader_criteria`  事件中使用，这是最理想的选择：
 
     from sqlalchemy.orm import with_loader_criteria
 
@@ -63,9 +61,9 @@ SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在
                 with_loader_criteria(MyEntity.public == True)
             )
 
-上面的示例将选项添加到所有SELECT语句中，以将所有针对 ``MyEntity`` 的查询限制为使用 ``public == True`` 过滤。这些条件将应用于该查询范围内该类的 **所有** 加载。默认情况下， :func:`_orm.with_loader_criteria` 选项将自动传播到关系加载程序，这将适用于后续关系加载，包括 lazy loads, selectinloads等。
+上面的示例向所有SELECT语句添加了一个选项，该选项将限制对``MyEntity``的所有查询，以过滤``public == True``。该条件将应用于立即查询范围内该类的所有加载项。默认情况下， :func:`_orm.with_loader_criteria` 选项会自动传播到关系加载程序，这将应用于后续关系加载，包括lazyloads、selectinloads等。
 
-如果一系列类都具有某些常见列结构，如果使用 :ref:`declarative mixins <declarative_mixins>` 组成这些类，则可以使用 mixin 类本身与 :func:`_orm.with_loader_criteria` 选项结合使用，通过使用 Python lambda。Python lambda 将针对匹配条件的特定实体在查询编译时调用。例如，对基于名为 ``HasTimestamp`` 的 mixin 的一系列类进行操作：
+对于一系列具有公共列结构的类，如果使用了一个  :ref:`声明性混合类<declarative_mixins>` ` HasTimestamp``的混合类：
 
     import datetime
 
@@ -83,62 +81,86 @@ SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在
         __tablename__ = "some_entity"
         id = mapped_column(Integer, primary_key=True)
 
-上述类 SomeEntity 和 SomeOtherEntity 都将有一个默认为当前日期和时间的 timestamp 列。一个事件可以用于拦截所有从 HasTimestamp 扩展的对象，并过滤它们的 timestamp 列，使其不早于一个月前的日期：
+上述类``SomeEntity``和``SomeOtherEntity``将分别具有一个列``timestamp``，其默认值为当前日期和时间。事件可以用于拦截所有扩展自``HasTimestamp``并将其``timestamp``列过滤为一个月之内日期的对象： 
 
     @event.listens_for(Session, "do_orm_execute")
     def _do_orm_execute(orm_execute_state):
-        if (
-            orm_execute_state.is_select
-            and not orm_execute_state.is_column_load
-            and not orm_execute_state.is_relationship_load
-        ):
-            one_month_ago = datetime.datetime.today() - datetime.timedelta(months=1)
+        if (如果满足下列条件之一：
 
-            orm_execute_state.statement = orm_execute_state.statement.options(
-                with_loader_criteria(
-                    HasTimestamp,
-                    lambda cls: cls.timestamp >= one_month_ago,
-                    include_aliases=True,
-                )
-            )
+.. code-block:: python
 
-.. warning:: 在 :func:`_orm.with_loader_criteria` 调用中使用lambda会一次性执行 **每个唯一类** 。不应在这个lambda中调用自定义函数。请参见 :ref:`engine_lambda_caching` 查看 "lambda SQL" 特性的概述，这只适用于高级用途。
+    orm_execute_state.is_select
+    and not orm_execute_state.is_column_load
+    and not orm_execute_state.is_relationship_load
+：
+
+一个月前的日期是：
+
+.. code-block:: python
+
+    one_month_ago = datetime.datetime.today() - datetime.timedelta(months=1)
+
+可以使用   :func:`_orm.with_loader_criteria`  选项限制查询结果中数据的范围，使其仅包括在给定时间范围内的行。例如，要获取所有   :class:` HasTimestamp`  类都具有 `timestamp` 属性的查询，并且该属性小于或等于一个月前的行（以及任何其他在别名列中存在 `HasTimestamp` 的模型），可以使用以下代码：
+
+.. code-block:: python
+
+    orm_execute_state.statement = orm_execute_state.statement.options(
+        with_loader_criteria(
+            HasTimestamp,
+            lambda cls: cls.timestamp >= one_month_ago,
+            include_aliases=True,
+        )
+    )
+
+.. warning:: 在   :func:`~sqlalchemy.orm.with_loader_criteria`  中使用 lambda 函数的时候其仅 **针对每个唯一的类** 调用一次。自定义函数不应该在此 lambda 函数中调用。 了解“lambda SQL”特性以供高级使用，请参阅   :ref:` engine_lambda_caching` 。
 
 .. seealso::
 
-    :ref:`examples_session_orm_events` - 包括上述 :func:`_orm.with_loader_criteria` 示例的工作示例。
+      :ref:`examples_session_orm_events`  - 包括使用接受   :func:` ~sqlalchemy.orm.with_loader_criteria`  的完整示例。
 
 .. _do_orm_execute_re_executing:
 
 重新执行语句
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
-.:class:`_orm.ORMExecuteState` 可以控制给定语句的执行，包括只要使用预先构造的结果集检索即可将查询语句替换为接收到的结果集，以及可以反复使用相同语句，可根据需要更改其状态，例如，在多个数据库连接上调用，然后在内存中合并结果。这两种高级模式都作为SQLAlchemy的示例套件中的示例提供，如下所述。
+.. deepalchemy:: 语句重新执行功能涉及到一个稍微复杂的递归顺序，旨在解决将执行SQL语句重新定向到各种非SQL上下文的相当棘手的问题。下面链接的“犬舍缓存”和“水平分片”是使用此功能时的指南。
 
-当在 :meth:`_orm.SessionEvents.do_orm_execute` 事件钩子中的内部调用 :meth:`_orm.Session.execute` 来使用新的嵌套调用执行语句时，会涉及到略微复杂的递归序列，旨在在SQL语句在各个非SQL上下文之间进行重定向时解决相当复杂的问题。下面链接互联网中的"dogpile caching" 和 "horizontal sharding" 是使用该特性时的指南。
+  :class:`_orm.ORMExecuteState`  能够控制给定语句的执行；这包括能够完全不调用语句，允许从缓存中返回已检索到的预构建结果集，以及在不同状态下重复调用同一语句的能力，例如针对多个数据库连接调用该语句，然后将结果在内存中合并。这两种高级模式在下面的 SQLAlchemy 示例套件中都有展示。
 
-:meth:`_orm.ORMExecuteState.invoke_statement` 方法可用于在新的嵌套调用 :meth:`_orm.Session.execute` 函数时，使用新的嵌套的 :meth:`_orm.Session.execute` 触发当前正在处理的执行的后续处理，而反过来检索返回的:class:`_engine.Result`。在这嵌套调用中，所触发的:meth:`_orm.SessionEvents.do_orm_execute` 事件处理程序也会被跳过。
+在  :meth:`_orm.SessionEvents.do_orm_execute`  事件挂钩内，可以使用  :meth:` _orm.ORMExecuteState.invoke_statement`  方法，使用  :meth:`_orm.Session.execute`  的新嵌套调用来调用语句，这将预占正在进行的当前执行的后续处理，并返回内部执行返回的   :class:` _engine.Result` 。因此，在此嵌套调用中，至此为止激发的事件处理程序均会被跳过。
 
-:meth:`_orm.ORMExecuteState.invoke_statement` 方法返回一个 :class:`_engine.Result` 对象; 该对象具有将其冻结为可缓存格式和“解冻”为新的:class:`_engine.Result` 对象以及将其数据与其他 :class:`_engine.Result` 对象合并的功能。
+  :meth:`_orm.ORMExecuteState.invoke_statement`   方法返回一个   :class:` _engine.Result`  对象；此对象然后具有将其“冻结”为可缓存格式并“解冻”为新的   :class:`_engine.Result`  对象，以及将其数据与其他   :class:` _engine.Result`  对象合并的能力。
 
-例如：在 :meth:`_orm.SessionEvents.do_orm_execute` 中，使用缓存实现缓存::
+例如，使用  :meth:`_orm.SessionEvents.do_orm_execute`  实现缓存：
+
+从 sqlalchemy.orm 中导入 loading::
 
     from sqlalchemy.orm import loading
 
+缓存是一个字典：
+
     cache = {}
 
+添加缓存创建的回调函数
+
+.. code-block:: python
 
     @event.listens_for(Session, "do_orm_execute")
     def _do_orm_execute(orm_execute_state):
+        # 检查是否使用了特定的自定义选项
         if "my_cache_key" in orm_execute_state.execution_options:
+            # 检索该选项的值进行匹配
             cache_key = orm_execute_state.execution_options["my_cache_key"]
 
+            # 如果缓存中存在与之匹配的值，则使用匹配的值
             if cache_key in cache:
-                frozen_result = cache[cache_key]
+               frozen_result = cache[cache_key]
+            # 如果没有，则使用 invoke_statement() 获取结果集的 FrozenResult 冻结格式，并将其传递给缓存
             else:
                 frozen_result = orm_execute_state.invoke_statement().freeze()
                 cache[cache_key] = frozen_result
 
+            # 调用 `merge_frozen_result()` 方法将 frozen_result 与 session 中的语句合并并返回结果
             return loading.merge_frozen_result(
                 orm_execute_state.session,
                 orm_execute_state.statement,
@@ -146,7 +168,9 @@ SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在
                 load=False,
             )
 
-通过上面的钩子，可以实现以下示例中使用缓存的方法::
+使用缓存：
+
+不同的查询通过传递不同的关键字参数 ``my_cache_key`` 设定不同的缓存键值。下面的例子中，查询名为 `sandy` 的 ``User`` 将使用 ``key_sandy`` 作为它的 `my_cache_key`，并且在会话中执行。如果缓存中存在与 `key_sandy` 匹配的值，它将被加载。否则会进行查询，结果将写入缓存。
 
     stmt = (
         select(User).where(User.name == "sandy").execution_options(my_cache_key="key_sandy")
@@ -154,86 +178,104 @@ SQLAlchemy拥有一个广泛的 :ref:`事件监听系统 <event_toplevel>`，在
 
     result = session.execute(stmt)
 
-在上述代码中，使用了自定义的执行选项，以确立一个“缓存键”，该缓存键将由 :meth:`_orm.SessionEvents.do_orm_execute` 钩子拦截。如果这个缓存键匹配到缓存中的 :class:`_engine.FrozenResult` 对象，则使用该对象。这个示例使用 :meth:`_engine.Result.freeze` 方法来“冻结”一个 :class:`_engine.Result` 对象，该对象在上述情况下将包含ORM的结果，以便它可以存储在缓存中并被多次使用。为了从“冻结”结果返回一个实时结果，可以使用 :func:`_orm.loading.merge_frozen_result` 函数将结果对象中的“冻结”数据合并到当前会话中。
+以上，自定义执行选项作为参数传递给  :meth:`_sql.Select.execution_options`  以建立“缓存键”，该缓存键然后会被  :meth:` _orm.SessionEvents.do_orm_execute`  回调拦截。此缓存键将匹配可能存在于缓存中的   :class:`_engine.FrozenResult`  对象，并在存在时重新使用，将 ORM 结果组合在一起。
 
-上面的示例在 :ref:`examples_caching` 中作为完整示例实现。
+在   :ref:`examples_caching`  的完整示例中实现了上述示例。
 
-:meth:`_orm.ORMExecuteState.invoke_statement` 方法还可以被多次调用，每次传递不同的信息到
-:paramref:`_orm.ORMExecuteState.invoke_statement.bind_arguments` 参数，以便:meth:`.Session` 每次使用不同的 :class:`_engine.Engine` 对象。这将每次都返回一个不同的 :class:`_engine.Result` 对象；这些结果可以使用 :meth:`_engine.Result.merge` 方法合并。这是 :ref:`horizontal_sharding_toplevel` 所采用的技术；请参见源代码以熟悉。
+  :meth:`_orm.ORMExecuteState.invoke_statement`   方法也可以多次调用，同时通过  :paramref:` _orm.ORMExecuteState.invoke_statement.bind_arguments`  参数传递不同的信息，使   :class:`_orm.Session`  每次使用不同的   :class:` _engine.Engine`  对象。这将每次返回一个不同的   :class:`_engine.Result`  对象；这些结果可以使用  :meth:` _engine.Result.merge`  方法合并。这是由   :ref:`horizontal_sharding_toplevel`  扩展采用的技术；请查阅源代码以熟悉。
 
 .. seealso::
 
-    :ref:`examples_caching`
+      :ref:`examples_caching` 
 
-    :ref:`examples_sharding`
-
+      :ref:`examples_sharding` 
 
 
 
 .. _session_persistence_events:
 
-持久性事件
-------------------
+持久化事件
+----------
 
-可能是最广泛使用的系列的事件是"持久性"事件，它对应于 :ref:`flush process<session_flushing>`。 flush 是在其中对待定更改的所有决策都被做出，并以 INSERT、UPDATE 和 DELETE 语句的形式发布到数据库的地方。
+“持久化”事件可能是最广泛使用的一系列事件，对应   :ref:`flush 过程<session_flushing>` 。冲洗是在该过程中做出有关待处理对象的决策，并以 INSERT，UPDATE 和 DELETE 语句的形式发出的地方。
 
-before_flush()
-^^^^^^^^^^^^^^^
+``before_flush()``
+^^^^^^^^^^^^^^^^^^  :meth:`.SessionEvents.before_flush`  
+-----------------------------------
 
-当应用程序希望确保在刷新进行时进行一些其他的持久性更改以及在对象被持久化之前验证其状态并在这之后组合附加对象和引用时， :meth:`.SessionEvents.before_flush` 挂钩是默认和最广泛使用的事件。在这个事件中，可以安全地操作 :class:`.Session`的状态，也就是说，可以自由地添加对象，删除对象，并自由地更改对象的单个属性，在事件钩子完成时，这些更改将被纳入刷新进程中。
+  :meth:`.SessionEvents.before_flush`  是应用程序在执行flush时需要确保进行额外数据持久化更改的最常用事件。使用  :meth:` .SessionEvents.before_flush`  
+操作对象以验证它们的状态，并在持久化之前构建额外的对象和引用。在此事件中，**可以安全地操作Session的状态**。也就是说，
+可以将新对象连接到Session，可以删除对象，并且可以自由更改对象上的单个属性。这些更改在事件完成后会被纳入到flush过程中。
 
-典型的 :meth:`.SessionEvents.before_flush` 钩子将被要求扫描 :attr:`.Session.new`、 :attr:`.Session.dirty` 和 :attr:`.Session.deleted` 集合，以查找将发生的对象。
+典型的  :meth:`.SessionEvents.before_flush`  挂钩将扫描集合:attr:` .Session.new`，  :attr:`.Session.dirty`  和  :attr:` .Session.deleted`  
+以查找要发生的更改的对象。
 
-示例，请参见 :ref:`examples_versioned_history` 和 :ref:`examples_versioned_rows`。
+有关  :meth:`.SessionEvents.before_flush`  的示例，请参见：ref:` examples_versioned_history` 和 :ref:` examples_versioned_rows` 等示例。
 
-after_flush()
-^^^^^^^^^^^^^^
+``after_flush()``
+-----------------------
 
-:meth:`.SessionEvents.after_flush` 挂钩在 SQL 发出刷新 process 之后被调用，但在被持久对象的状态被修改之前。也就是说，您仍然可以检查 :attr:`.Session.new`、 :attr:`.Session.dirty` 和 :attr:`.Session.deleted` 集合，以查看刚刚刷新的情况，还可以使用 :class:`.AttributeState` 提供的诸如跟踪历史记录这样的特性，以查看刚刚持久化的更改。在 :meth:`.SessionEvents.after_flush` 事件中，可以根据所观察到的情况向数据库发出其他 SQL。
+  :meth:`.SessionEvents.after_flush`  是在SQL发出flush流程之后被调用，但在刷新的对象状态发生更改之前被调用。也就是说，
+仍然可以检查  :attr:`.Session.new`  ，  :attr:` .Session.dirty`  和  :attr:`.Session.deleted`   collections，
+以查看刚刚刷新的内容，还可以使用历史记录跟踪功能（例如由 :class:`.AttributeState` 提供的功能），
+以查看刚刚持久化的更改。在  :meth:`.SessionEvents.after_flush`  事件中，可以根据所观察到的更改向数据库发出其他SQL。
 
-after_flush_postexec()
-^^^^^^^^^^^^^^^^^^^^^^^^
+``after_flush_postexec()``
+-------------------------
 
-:meth:`.SessionEvents.after_flush_postexec` 和 :meth:`.SessionEvents.after_flush` 相比，会尽快在修改对象的状态以承认刚查询操作时被调用。 :attr:`.Session.new`、 :attr:`.Session.dirty` 和 :attr:`.Session.deleted` 集合通常在此处完全为空。在这个钩子中，有能力在对象上进行新的变更，这意味着所述 :class:`.Session` 再次进入"dirty"状态. 如果在 :meth:`.Session.commit` 上下文中检测到新变化，则 Session 的机制会导致它再次进行刷新。在此挂钩中检测到新变化时，:meth:`.SessionEvents.after_flush_postexec` 钩子将被跨过。
+  :meth:`.SessionEvents.after_flush_postexec`  在  :meth:` .SessionEvents.after_flush`  之后不久被调用，但在已经修改对象状态以反映刚执行的flush操作之后被调用。
+  :attr:`.Session.new`  ，  :attr:` .Session.dirty`  和  :attr:`.Session.deleted`  集合在此处通常为空。
+使用  :meth:`.SessionEvents.after_flush_postexec`  检查标识映射以获取已完成对象并可能发出其他SQL。在此挂钩中，有能力在对象上进行新的更改，
+这意味着**Session**将再次进入“dirty”状态;如果在  :meth:`.Session.commit`  上下文中检测到新变化，则此处会引发flush**again**，
+否则，未处理的更改将作为下一个正常flush的一部分打包。当钩子在  :meth:`.Session.commit`  上检测到新变化时，
+在此方面，一个计数器保证在循环100次后停止，以防止  :meth:`.SessionEvents.after_flush_postexec`  钩子在每次调用时不断添加要刷新的新状态。
 
-.. _session_persistence_mapper:
+.. _ session_persistence_mapper:
 
-Mapper级别的 Flush 事件
-^^^^^^^^^^^^^^^^^^^^^^^^^
+Mapper级别的Flush事件
+------------------------------
 
-除了 flush 层钩子之外，还有一系列钩子，它们更细粒度，即基于 INSERT、UPDATE或 DELETE 的每个对象进行单独处理，并根据 flush process 进行了细分。这些是 mapper 持久性钩子，它们也很受欢迎，但是这些事件需要谨慎处理，因为它们在已经进行的 flush 过程的上下文内进行；许多操作在此处是不安全的。
+除了flush-level挂钩之外，还有一组更细粒度的挂钩，因为它们以每个对象为基础进行调用，并根据flush过程内的插入、更新或删除对它们进行拆分。这些是映射器持久性挂钩，
+它们也非常受欢迎，但是需要更加谨慎地处理这些事件，因为它们在已经进行的flush过程环境中进行; 许多操作无法安全进行。
 
-这些事件包括：
+事件为：
 
-* :meth:`.MapperEvents.before_insert`
-* :meth:`.MapperEvents.after_insert`
-* :meth:`.MapperEvents.before_update`
-* :meth:`.MapperEvents.after_update`
-* :meth:`.MapperEvents.before_delete`
-* :meth:`.MapperEvents.after_delete`
+*  :meth:`.MapperEvents.before_insert` 
+*  :meth:`.MapperEvents.after_insert` 
+*  :meth:`.MapperEvents.before_update` 
+*  :meth:`.MapperEvents.after_update` 
+*  :meth:`.MapperEvents.before_delete` 
+*  :meth:`.MapperEvents.after_delete` 
 
 .. note::
-  重要的一点是，这些事件 **仅** 适用于 :ref:`session flush操作<session_flushing>`，而不应用于在 :ref:`orm_expression_update_delete` 中所述的 ORM-level INSERT/UPDATE/DELETE 功能。要拦截 ORM-level DML，请使用 :meth:`_orm.SessionEvents.do_orm_execute` 事件。
 
-每个事件都传递了 :class:`_orm.Mapper`、映射的对象本身以及使用的 :class:`_engine.Connection` 来发出 INSERT、UPDATE 或 DELETE 语句。这类事件很有吸引力，因为如果一个应用程序想要将一些活动与定期使用 INSERT 持久化的特定类型的对象相关联，那么该挂钩具有很高的特异性；与 :meth:`.SessionEvents.before_flush` 不同，不需要搜索 :attr:`.Session.new` 集合以查找目标。但是，刷新计划，它代表有决定要发出的每个单独的 INSERT、UPDATE、DELETE 语句的列表已经被决定，不会在这个阶段进行任何更改。因此，只有在该对象行的属性**本地**上操作是可使用的。任何对对象或其他对象的其他更改都会影响 :class:`.Session` 的状态，这将导致它无法正常工作。
+   重要的是要注意，这些事件仅适用于  :ref:`session flush operation <session_flushing>` ，而不适用于ORM级别的INSERT/UPDATE/DELETE功能，
+   描述在  :ref:`orm_expression_update_delete` 。要拦截ORM级别的DML，请使用  :meth:` _orm.SessionEvents.do_orm_execute`  事件。
 
-在这些 mapper 级别的持久化事件中不支持的操作包括：
+每个事件都传递了  :class:`_orm.Mapper` ，映射的对象本身以及正在使用其发出INSERT，UPDATE或DELETE语句的  :class:` _engine.Connection` 。这些事件的吸引力很明显，
+如果应用程序想要将某些活动与插入特定类型的对象同时进行，那么此钩子非常具体;与  :meth:`.SessionEvents.before_flush`  事件不同，
+无需通过  :attr:`.Session.new`  集合搜索目标。但是，这些事件被调用时已经决定了代表要发出的每个INSERT，UPDATE，DELETE语句的flush计划，
+并且在此阶段无法进行任何更改。因此，可能对给定对象的仅限于对象行的本地属性进行更改。对于任何其他更改对象或其他对象都不会进行更改。影响 :class:`.Session` 状态的操作，将无法正常运行。
 
-* :meth:`.Session.add`
-* :meth:`.Session.delete`
-* 映射集合的 append、add、remove、delete、discard 等。
-* 映射关系属性设置/del 事件，即 ``someobject.related =someotherobject``
+以下映射器级别持久性事件不支持以下操作：
 
-传递 :class:`_engine.Connection` 的原因是，建议在这里直接在 :class:`_engine.Connection` 上进行 **简单 SQL 操作**，例如增量计数器或在 log 表内插入额外行。
+*  :meth:`.Session.add` 
+*  :meth:`.Session.delete` 
+* 映射的集合附加、添加、移除、删除、丢弃等操作。
+* 映射的关系属性设置/删除事件，即：``someobject.related = someotherobject``。
 
-此外，如果您的应用程序代码动态添加属性到对象上，则这些属性中的设置和删除也不适用于 mapper级别的钩子。要在每个属性上捕获动态更改，应使用类似于 :ref:`simple_validators` 中所描述的验证程序或使用 :attr:`.SessionEvents.before_flush` 事件。对于这两种方法，我们建议在实例的 ``__init__()`` 方法中建立其他状态，例如创建其他要与新对象关联的对象。这些活动也可以使用 :attr:`.InstanceState.mutate` 访问器来进行。
+之所以需要传递  :class:`_engine.Connection` ，是因为鼓励**简单的SQL操作直接在此执行**，直接在 :class:` _engine.Connection`上执行，比如在日志表中插入额外的行或者递增计数器。
+
+还有许多每个对象单独执行的操作，它们根本不需要在刷新事件中处理。最常见的替代方法是在对象的 ``__init__()`` 方法中与一个对象一起建立附加状态，例如创建预关联与新对象关联的其他对象。使用如   :ref:`simple_validators`  中所述的验证器是另一种方法；这些函数可以拦截属性变化，并响应属性变化在目标对象上建立附加状态更改。使用这两种方法时，对象在到达刷新步骤之前就处于正确状态。
 
 .. _session_lifecycle_events:
 
 对象生命周期事件
------------------------
+-------------------
 
-事件的另一个用途是跟踪对象的生命周期。这是指在 :ref:`session_object_states` 中首次介绍的状态。所有上述状态都可以完全通过事件进行跟踪。每个事件都表示不同的状态转换，也就是说，起始状态和目标状态都是被跟踪的。除了最初的暂态事件之外，所有事件都以:class:`.Session`对象或类的形式呈现，这意味着它们可以与特定的 :class:`.Session` 对象或与 :class:`.sessionmaker` 关联。:class:`.Session` 对象：
+另一种使用事件的用例是跟踪对象的生命周期。它指的是在   :ref:`session_object_states`  中首次引入的状态。
+
+所有上述状态均可以完全使用事件跟踪。每个事件都表示明确的状态转换，意味着起始状态和目标状态均作为跟踪的一部分。除了初始瞬态事件外，所有事件都是与  :class:`.Session` .Session` 对象关联：
 
     from sqlalchemy import event
     from sqlalchemy.orm import Session
@@ -243,9 +285,9 @@ Mapper级别的 Flush 事件
 
     @event.listens_for(session, "transient_to_pending")
     def object_is_pending(session, obj):
-        print("new pending: %s" % obj)
+        print("新的待处理对象: %s" % obj)
 
-或者与:class:`.Session`类本身一起使用以及与特定的 :class:`.sessionmaker`。这可能是最有用的形式::
+或者与  :class:`.Session` .sessionmaker` 一起关联，后者可能是最有用的形式：
 
     from sqlalchemy import event
     from sqlalchemy.orm import sessionmaker
@@ -255,21 +297,21 @@ Mapper级别的 Flush 事件
 
     @event.listens_for(maker, "transient_to_pending")
     def object_is_pending(session, obj):
-        print("new pending: %s" % obj)
+        print("新的待处理对象: %s" % obj)
 
-当然，依次为一个方程堆叠这些侦听器，例如检测到所有已进入持久状态的对象：
+当然，监听器可以堆叠在一个函数之上，这可能是经常发生的情况。例如，要跟踪所有进入持久状态的对象：
 
         @event.listens_for(maker, "pending_to_persistent")
         @event.listens_for(maker, "deleted_to_persistent")
         @event.listens_for(maker, "detached_to_persistent")
         @event.listens_for(maker, "loaded_as_persistent")
         def detect_all_persistent(session, instance):
-            print("object is now persistent: %s" % instance)
+            print("对象现在是持久的: %s" % instance)
 
-暂态
+瞬态
 ^^^^^^^^^
 
-当映射对象的所有值首次创建时，它们都以 :term:`transient` 的状态开始，即该对象仅自身存在，不与任何 :class:`.Session` 关联。在这种状态下，没有特定的“转换”事件，因为没有 :class:`.Session`，但是如果一个人想拦截任何瞬态对象的创建，那么 :meth:`.InstanceEvents.init` 方法可能是最好的事件。此事件适用于特定的类或超类。例如，在所有新对象上进行拦截的事件::
+所有映射的对象在构建时首先以  :term:`瞬态`  形式开始。在此状态下，对象是独立的，没有与任何  :class:` .Session` .Session`，但是如果需要拦截创建任何瞬态对象，最好使用  :meth:`.InstanceEvents.init`   方法，例如，要拦截特定声明基础的所有新对象：
 
     from sqlalchemy.orm import DeclarativeBase
     from sqlalchemy import event
@@ -281,110 +323,153 @@ Mapper级别的 Flush 事件
 
     @event.listens_for(Base, "init", propagate=True)
     def intercept_init(instance, args, kwargs):
-        print("new transient: %s" % instance)
+        print("新的瞬态对象: %s" % instance)
 
-暂态转持久态
+瞬态到待处理
 ^^^^^^^^^^^^^^^^^^^^
 
-当该对象被通过 :meth:`.Session.add` 或等效方法与 :class:`.Session` 相关联时，该暂态对象将变为 :term:`pending` 对象。如果一个对象作为显式添加的结构引用的级联的结果，那么一个对象也可能变为 :term:`persistent` 对象（嵌套级联结构在持久化事件处理中被自动处理）。跟踪从暂态到 pending 的转换，使用 :meth:`.SessionEvents.transient_to_pending` 事件::
+当通过  :meth:`.Session.add`   或  :meth:` .Session.add_all`  方法首次将瞬态对象与  :class:`.Session`  。某个对象也可以通过显式添加的引用对象的   :ref:` "级联" <unitofwork_cascades>`  作为  :class:`.Session`  的一部分。可以使用  :meth:` .SessionEvents.transient_to_pending`  事件来检测瞬态到待处理的转换：
 
     @event.listens_for(sessionmaker, "transient_to_pending")
     def intercept_transient_to_pending(session, object_):
-        print("transient to pending: %s" % object_)
+        print("瞬态到待处理: %s" % object_)
 
-pending 转 persistent
+待处理到持久
 ^^^^^^^^^^^^^^^^^^^^^
 
-当刷新执行并对实例进行 INSERT 操作时， :term:`pending` 对象将变为 :term:`persistent` 对象。这个对象现在有一个身份标识符。使用 :meth:`.SessionEvents.pending_to_persistent` 事件来跟踪 pending 到 persistent 的过程。
+当刷新进行并且实例的INSERT语句执行时，  :term:`待处理`  对象变为  :term:` 持久` 。该对象现在具有标识键。使用  :meth:`.SessionEvents.pending_to_persistent`  事件来跟踪待处理到持久的转换：
 
     @event.listens_for(sessionmaker, "pending_to_persistent")
     def intercept_pending_to_persistent(session, object_):
-        print("pending to persistent: %s" % object_)
+        print("待处理到持久: %s" % object_)
 
-pending 转 transient
+待处理到瞬态
 ^^^^^^^^^^^^^^^^^^^^
 
-当 :meth:`.Session.rollback` 方法在待定对象被 Flush 之前被调用或在 Flush 之前对象被删除使用 :meth:`.Session.expunge` 方法时， :term:`pending` 对象可以回归到 :term:`transient` 状态。使用 :meth:`.SessionEvents.pending_to_transient` 事件来跟踪 pending 到 transient 的过程。
+如果在等待处理对象的任何INSERT语句执行之前调用了  :meth:`.Session.rollback`   方法，则  :term:` 待处理`  对象可以回退到  :term:`瞬态`  。持续生成实例
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    @event.listens_for(sessionmaker, "pending_to_transient")
-    def intercept_pending_to_transient(session, object_):
-        print("transient to pending: %s" % object_)
+如果一个对象被删除，则它的状态将从持久状态转换为删除状态。对象的状态可以通过调用``Session.delete``方法来改变，但该对象直到``Session``刷新之后才会被标记为“被删除”。
 
-作为持久态加载
-^^^^^^^^^^^^^^^^^^^^
+从删除状态向持久状态转变是通过执行：meth：``Session.flush``或在刷新之前调用：meth：``Session.expunge``方法从而将该对象从会话中删除。使用：meth：``SessionEvents.deleted_to_persistent``事件将已删除到持久转换跟踪::
 
-对象可以直接以 :term:`persistent` 状态出现在 :class:`.Session` 中，当它们从数据库中加载时就是如此。跟踪这个状态转换等同于跟踪对象荷载时，也就是使用 :meth:`.InstanceEvents.load` 实例级别事件。但是， :meth:`.SessionEvents.loaded_as_persistent` 事件作为一个 session 中心钩子，为拦截对象通过这个特定途径进入持久状态提供了该hook。
-
-    @event.listens_for(sessionmaker, "loaded_as_persistent")
-    def intercept_loaded_as_persistent(session, object_):
-        print("object loaded into persistent state: %s" % object_)
-
-persistent 转 transient
-^^^^^^^^^^^^^^^^^^^^^^^
-
-当该事务被回滚时， :term:`persistent` 的对象可恢复到 :term:`transient`的状态。在事务回滚时，因为其所属的 :class:`.Session` 的状态已被修改，该对象回滚并从identity map中删除。跟踪从 persistent 到 transient 的过程，使用 :meth:`.SessionEvents.persistent_to_transient` 事件钩子::
-
-    @event.listens_for(sessionmaker, "persistent_to_transient")
-    def intercept_persistent_to_transient(session, object_):
-        print("persistent to transient: %s" % object_)
-
-persistent 转 deleted
-^^^^^^^^^^^^^^^^^^^^^
-
-在 Flush 过程中从数据库中删除标记为删除的对象时，该 :term:`persistent` 对象进入 :term:`deleted` 状态。请注意，这与调用 :meth:`.Session.delete` 方法删除目标对象时是**不同**的。 :meth:`.Session.delete` 此方法仅 **标记** 对象要被删除；只有当 Flush 过程的一部分有实际的 DELETE 语句时，才会实际发出 DELETE 语句。在 Flush 后，目标对象处于“deleted”状态。
-
-在 "删除" 状态下，对象仅与 :class:`.Session` 稍微关联。它不在identity map中，也不在引用 :attr:`.Session.deleted` 集合中，该集合与它是待定要被删除的状态有关。
-
-从“deleted”状态，对象可以在事务被提交时进入分离状态，或者在事务被回滚时恢复到持久状态。
-
-使用 :meth:`.SessionEvents.persistent_to_deleted` 跟踪从 persistent 到 deleted 的转换::
-
-    @event.listens_for(sessionmaker, "persistent_to_deleted")
-    def intercept_persistent_to_deleted(session, object_):
-        print("object was DELETEd, is now in deleted state: %s" % object_)
-
-deleted 转 detached
-^^^^^^^^^^^^^^^^^^^
-
-当会话的事务提交时， :term:`deleted` 对象变为 :term:`detached`。在调用 :meth:`.Session.commit` 方法后，数据库事务最终，并且 :class:`.Session` 完全丢弃了 deleted 对象并删除了所有关联。使用 :meth:`.SessionEvents.deleted_to_detached` 跟踪 deleted 到 detached 的转换::
-
-    @event.listens_for(sessionmaker, "deleted_to_detached")
-    def intercept_deleted_to_detached(session, object_):
-        print("deleted to detached: %s" % object_)
+    @event.listens_for(sessionmaker, "deleted_to_persistent")
+    def intercept_deleted_to_persistent(session, object_):
+        print("object was re-inserted from DELETEd, now back in persistent state: %s" % object_)
 
 .. note::
 
-    当对象处于被删除状态时， :attr:`.InstanceState.deleted` 属性可用，该属性可使用 ``inspect(object).deleted`` 访问器返回 True。然而，当对象处于删除时， :attr:`.InstanceState.deleted` 再次返回 False。为了检测对象是否被删除，无论它是分离的还是不是，应使用 :attr:`.InstanceState.was_deleted` 访问器。
+   如果对象是使用新的主键从磁盘重新加载的，则可以使一个对象从删除状态移回持久状态，因为需要在新的主键插入和SELECT之间执行匹配。这通常不是由用户代码做的，但可以通过调用插件系统中存在的``InstanceEvents.load``事件来追踪。
 
+脱离中间状态
+---------------
 
-persistent 转 detached
-^^^^^^^^^^^^^^^^^^^^^^^
+在很多情况下，保持对象状态的完整性要求追踪对象状态的中间转换。例如，跟踪从删除状态返回到持久状态的情况非常重要，因为这会在过程中自动更新数据库。
 
-当使用 :meth:`.Session.expunge`、 :meth:`.Session.expunge_all`或 :meth:`.Session.close` 方法将对象与 :class:`.Session` 清除关联时， :term:`persistent` 对象变为 :term:`detached`。事实上，如果应用程序的引用被垃圾回收丢弃，导致所归属的 :class:`.Session` 隐式解除引用，则对象可能变为**隐式分离 **；在这种情况下，**不会发出任何事件**。
+在每种情况下，迁移都可能是任意的；然而，在特定的情况下，跟踪可能是有意义的。例如，在审计或历史记录方案中，记录对象状态的变化可以是有益的。
 
-使用 :meth:`.SessionEvents.persistent_to_detached` 跟踪对象从 persistent 到 detached 的过程::
+除了直接追踪到回调函数和事件之外，还可以通过增加一个对象上的属性来跟踪。如果然后需要调整迁移，这样做时常有用的。
 
-    @event.listens_for(sessionmaker, "persistent_to_detached")
-    def intercept_persistent_to_detached(session, object_):
-        print("object became detached: %s" % object_)
+.. _`special tracker attribute`:
 
-detached 转 persistent
-^^^^^^^^^^^^^^^^^^^^^^
+特殊追踪器属性 (Special Tracker Attribute)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+追踪器属性的示例是将特定状态标记为``deleted``或``modified``，或跟踪对象已经被修改了几次（使用``_modification_token``或类似）。
 
-当使用 :meth:`.Session.add` 或等效方法重新与会话关联分离的对象时，该分离对象将变为 :term:`persistent`。使用 :meth:`.SessionEvents.detached_to_persistent` 事件来跟踪从 detached 到 persistent 的对象转换：
+一个常见的做法是使用一个名为``_sa_instance_state``的类状态属性。``_sa_instance_state``是一个带有许多锅炉板属性的内部状态对象，每当转换到下一个状态时，它都会被更新。
 
-    @event.listens_for(sessionmaker, "detached_to_persistent")
-    def intercept_detached_to_persistent(session, object_):
-        print("object became persistent again: %s" % object_)
+例如，下面的示例为对象添加了一个名为``was_deleted``的属性，它当对象是删除状态时为``True``，否则为``False``。使用mapper级``set_committed_value``方法设置属性的默认状态，并使用``synthesized``事件覆盖属性。这在 ad-hoc 跨两次刷新跟踪该对象创建/删除的方案中很有用 :
 
-deleted 转 persistent
-^^^^^^^^^^^^^^^^^^^^^
+.. sourcecode:: python
 
-如果事务被回滚，则可以将 :term:`deleted` 对象恢复为 :term:`persistent` 状态。这就是当该事务回滚时 :meth:`.Session.rollback` 调用。有助于使用 :meth:`.SessionEvents.persistent_to_deleted` 事件来跟踪从 persistent 到 deleted 的对象转换：
+    from sqlalchemy.orm import mapper, Session
+    from sqlalchemy.orm.attributes import (
+        get_state_history,
+        set_committed_value
+    )
+    from sqlalchemy.orm.events import (
+        SessionEvents,
+        mapper_configured,
+        event
+    )
 
-    @event.listens_for(sessionmaker, "persistent_to_deleted")
-    def intercept_persistent_to_deleted(session, object_):
-        print("object was DELETEd, is now in deleted state: %s" % object_)使用:meth:`.Session.rollback`方法回滚会话。使用:meth:`.SessionEvents.deleted_to_persistent`事件跟踪回到持久状态的已删除对象：
+    class CustomInstanceState(object):
+        def __init__(self, was_deleted=False):
+            self.was_deleted = was_deleted
+
+        @property
+        def deleted(self):
+            return self.was_deleted
+
+        def _check_modification(self, uow):
+            if uow.attributes.get(('modified', id(self)), False):
+                self._modification_token = uow.transaction.nested
+
+    @mapper_configured.dispatch_for_events("instrument_class")
+    def on_orm_instrument_class(mapper_, cls_):
+        state_cls = mapper_._equivalent_columns['state']
+        state_cls_attr = state_cls.property.key
+        mapper_.add_property(
+            'state_instance',
+            state_cls_attr,
+            synonym=state_cls_attr,
+            comparator_factory=CustomInstanceState,
+            instrumentation_cls=state_cls.instrumentation_cls
+        )
+        create_state = mapper_.dispatch._create_state
+        create_deferred_state = mapper_.dispatch._create_deferred_state
+
+        state_mapper_ = mapper_.dispatch['init_state_mapper']
+        def _init_state(self):
+            self.state_instance = self.state_instance.__class__()
+
+        create_state.append(_init_state)
+        create_deferred_state.append(_init_state)
+        state_mapper_.add_listener(
+            'before_insert', '_check_modification',
+            retval=True, propagate=True
+        )
+        state_mapper_.add_listener(
+            'before_update', '_check_modification',
+            retval=True, propagate=True
+        )
+
+    @event.listens_for(Session, "synthesized")
+    def link_custom_state(session, state, dict_, instance):
+        state.instance = instance.state_instance
+        state.load_path.append('state_instance')
+
+    @event.listens_for(SessionEvents.modified_detached, propagate=True)
+    def instance_was_modified(uow, instance):
+        uow.attributes[('modified', id(instance))] = True
+        if hasattr(instance.state_instance, '_modification_token'):
+            instance.state_instance._modification_token = \
+                uow.transaction.nested
+
+    @event.listens_for(SessionEvents.loaded_as_persistent, propagate=True)
+    def instance_loaded(instance, *args):
+        mapper_ = object_mapper(instance.__class__)
+        state_cls = mapper_._equivalent_columns['state']
+        session = object_session(instance)
+        state_data = get_state_history(
+            session, instance, session.identity_map
+        )
+        set_committed_value(
+            mapper_.class_manager,
+            instance,
+            state_cls.prop,
+            CustomInstanceState(
+                was_deleted=(
+                    state_data.deleted and
+                    not state_data.detached and
+                    not state_data.pending
+                ),
+            )
+        )
+
+如果“synthesized”事件被发射（简单地调用“instance.state_instance”将发射此事件），则从 mapper.configured 事件使用的CustomInstanceState类中创建的CustomInstanceState的实例将被分配给实例的“state_instance”属性。
+
+此属性和标准实例状态是一样的或更好的，因为它允许使用特定于实例的方式覆盖标准行为。如果初始迁移被建模为使用标准的ORM事件，而默认行为不符合某些要求，则使用此模式可以很容易地调整当前的代码路径（暂时使用内部API）被  :term:`deleted`  的对象可以在使用  :meth:` .Session.rollback`  方法进行回滚的事务中恢复到  :term:`persistent`  状态。使用  :meth:` .SessionEvents.deleted_to_persistent`  事件跟踪返回到持久状态的已删除对象::
 
     @event.listens_for(sessionmaker, "deleted_to_persistent")
     def intercept_deleted_to_persistent(session, object_):
@@ -393,16 +478,29 @@ deleted 转 persistent
 .. _session_transaction_events:
 
 事务事件
-------------------
+--------
+事务事件允许应用程序在   :class:`.Session`  级别上的事务边界发生时以及在
+  :class:`.Session`  更改   :class:` _engine.Connection`  对象的事务状态时得到通知。
 
-事务事件允许通知应用程序当事务边界在 :class:`.Session` 级别发生时，以及当 :class:`.Session` 在 :class:`_engine.Connection` 对象上更改事务状态时。
+*  :meth:`.SessionEvents.after_transaction_create` ,
+   :meth:`.SessionEvents.after_transaction_end`  - 这些事件以不特定于单个数据库连接的方式跟踪
+    :class:`.Session`  的逻辑事务范围。这些事件旨在帮助集成事务跟踪系统（例如
+  ``zope.sqlalchemy``）。当应用程序需要将某些外部范围与   :class:`.Session`  的事务范围对齐时，请使用这些
+  事件。这些挂钩反映了   :class:`.Session`  的“嵌套”事务行为，因为它们
+  跟踪逻辑“子事务”以及“嵌套”（例如 SAVEPOINT）事务。
 
-
-* :meth:`.SessionEvents.after_transaction_create`，:meth:`.SessionEvents.after_transaction_end` - 这些事件跟踪 :class:`.Session` 的逻辑事务作用域，不特定于个别数据库连接。这些事件旨在帮助集成事务跟踪系统，例如"zope.sqlalchemy"。在应用程序需要将某些外部作用域与 :class:`.Session` 的事务作用域对齐时，请使用这些事件。这些钩子反映 :class:`.Session` 的"嵌套"事务行为，因为它们跟踪逻辑的"子事务"以及"嵌套"(例如，SAVEPOINT)事务。
-
-* :meth:`.SessionEvents.before_commit`，:meth:`.SessionEvents.after_commit`，:meth:`.SessionEvents.after_begin`，:meth:`.SessionEvents.after_rollback`，:meth:`.SessionEvents.after_soft_rollback` - 这些事件允许从数据库连接的角度跟踪事务事件。特别是，:meth:`.SessionEvents.after_begin`是一个每个连接的事件。维护多个连接的 :class:`.Session` 将为每个连接分别发出此事件，因为那些连接在当前事务中被使用。然后回滚和提交事件再引用数据库API连接直接接受回滚或提交指令的时间。
+*  :meth:`.SessionEvents.before_commit` ,  :meth:` .SessionEvents.after_commit` ,
+   :meth:`.SessionEvents.after_begin` ,
+   :meth:`.SessionEvents.after_rollback` ,  :meth:` .SessionEvents.after_soft_rollback`  -
+  这些事件允许从数据库连接的角度跟踪事务事件。特别是  :meth:`.SessionEvents.after_begin` 
+  是一个每个连接的事件；维护多个连接的   :class:`.Session`  将在当前事务中用到的每个连接中
+  分别发出此事件。之后的回滚和提交事件是指 DBAPI 连接本身接收到回滚或提交指令的时间。
 
 属性更改事件
------------------------
+------------
+属性更改事件允许在对象上特定属性被修改时进行拦截。这些事件包括  :meth:`.AttributeEvents.set` 、
+  :meth:`.AttributeEvents.append`   和  :meth:` .AttributeEvents.remove` 。这些事件非常有用，
+特别是对于每个对象的验证操作；然而，使用一个“验证器”钩子通常更方便，
+该钩子在幕后使用这些钩子；有关此背景的详细信息，请参见   :ref:`simple_validators` 。属性事件也在背引用的机制中。
+使用属性事件的示例在   :ref:`examples_instrumentation`  中。
 
-属性更改事件允许拦截对象上特定属性被修改的情况。这些事件包括：:meth:`.AttributeEvents.set`，:meth:`.AttributeEvents.append`和 :meth:`.AttributeEvents.remove`。这些事件非常有用，特别是对于每个对象的验证操作；然而，使用"验证器"钩子通常更加方便，这个钩子在幕后使用这些钩子；有关此背景的详细信息，请参阅:ref:`simple_validators`。属性事件也负责反向引用的机制。:ref:`examples_instrumentation`中有一个使用属性事件的示例。

@@ -8,7 +8,7 @@ Microsoft SQL Server
 SQL Server SQL Constructs
 -------------------------
 
-与所有SQLAlchemy方言一样，所有已知在SQL服务器中有效的大写类型都可以从顶级方言中导入，无论它们起源于 :mod:`sqlalchemy.types` 还是本地方言::
+与所有SQLAlchemy方言一样，所有已知适用于SQL Server的大写类型都可以从顶级方言中导入，无论它们起源于 :mod：`sqlalchemy.types`或本地方言::
 
     from sqlalchemy.dialects.mssql import (
         BIGINT,
@@ -44,18 +44,14 @@ SQL Server SQL Constructs
         VARCHAR,
     )
 
-SQL Server数据类型
--------------------
+特定于SQL Server,或具有特定于SQL Server的构造参数的类型如下：
 
-特定于SQL Server或具有SQL Server特定的构造参数的类型如下：
-
-.. 注释：当使用 :noindex: 时，表示在方言模块中未重新定义的类型，仅从 sqltypes 导入。这避免了sphinx构建中的警告。
+.. 注意：使用 :noindex: 表示在首选模板中未重新定义类型，只是从sqltypes导入。这避免了sphinx构建中的警告
 
 .. currentmodule:: sqlalchemy.dialects.mssql
 
 .. autoclass:: BIT
    :members: __init__
-
 
 .. autoclass:: CHAR
    :members: __init__

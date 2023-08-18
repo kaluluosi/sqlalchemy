@@ -2,8 +2,8 @@ Insert, Updates, Deletes
 ========================
 
 INSERT, UPDATE and DELETE statements build on a hierarchy starting
-with :class:`.UpdateBase`.   The :class:`_expression.Insert` and :class:`_expression.Update`
-constructs build on the intermediary :class:`.ValuesBase`.
+with :class:`.UpdateBase` .   The :class:`_expression.Insert` and :class:` _expression.Update`
+constructs build on the intermediary :class:`.ValuesBase` .
 
 .. currentmodule:: sqlalchemy.sql.expression
 
@@ -25,7 +25,7 @@ DML Class Documentation Constructors
 --------------------------------------
 
 Class documentation for the constructors listed at
-:ref:`dml_foundational_consructors`.
+:ref:`dml_foundational_consructors` .
 
 .. autoclass:: Delete
    :members:

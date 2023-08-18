@@ -4,7 +4,7 @@
 Declarative Mapping Styles
 ==========================
 
-As introduced at :ref:`orm_declarative_mapping`, the **Declarative Mapping** is
+As introduced at :ref:`orm_declarative_mapping` , the **Declarative Mapping** is
 the typical way that mappings are constructed in modern SQLAlchemy.   This
 section will provide an overview of forms that may be used for Declarative
 mapper configuration.
@@ -100,7 +100,7 @@ mapping.
 
     :ref:`orm_declarative_table_config_toplevel` - describes how to specify
     the components of the mapped :class:`_schema.Table` to be generated,
-    including notes and options on the use of the :func:`_orm.mapped_column`
+    including notes and options on the use of the :func:`_orm.mapped_column` 
     construct and how it interacts with the :class:`_orm.Mapped` annotation
     type
 
@@ -123,7 +123,7 @@ that can be applied to any Python class with no hierarchy in place.  The
 Python class otherwise is configured in declarative style normally.
 
 The example below sets up the identical mapping as seen in the
-previous section, using the :meth:`_orm.registry.mapped`
+previous section, using the :meth:`_orm.registry.mapped` 
 decorator rather than using the :class:`_orm.DeclarativeBase` superclass::
 
     from datetime import datetime
@@ -167,7 +167,7 @@ decorator rather than using the :class:`_orm.DeclarativeBase` superclass::
 
 When using the above style, the mapping of a particular class will **only**
 proceed if the decorator is applied to that class directly. For inheritance
-mappings (described in detail at :ref:`inheritance_toplevel`), the decorator
+mappings (described in detail at :ref:`inheritance_toplevel` ), the decorator
 should be applied to each subclass that is to be mapped::
 
     from sqlalchemy.orm import registry
@@ -199,7 +199,7 @@ should be applied to each subclass that is to be mapped::
         }
 
 Both the :ref:`declarative table <orm_declarative_table>` and
-:ref:`imperative table <orm_imperative_table_configuration>`
+:ref:`imperative table <orm_imperative_table_configuration>` 
 table configuration styles may be used with either the Declarative Base
 or decorator styles of Declarative mapping.
 

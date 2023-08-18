@@ -29,13 +29,13 @@ ORM中的新特性和改进
 “baked”贪婪加载现在是默认的懒加载方式
 ----------------------------------------------
 
-允许构造所谓的:BakedQuery对象的sqlalchemy.ext.baked扩展在1.0系列中首次引入，该对象生成与表示查询结构的缓存键一起的 :class:`_query.Query` 对象。然后将此缓存键链接到生成的字符串SQL语句，以便于后面使用相同结构的:class:`.BakedQuery`将绕过构建:class:`_query.Query`对象的所有开销，其中包括构建核心:func:`_expression.select`对象以及将:func:`_expression.select`编译成字符串，很大程度上消除了通常与构造和发出ORM :class:`_query.Query`对象相关的函数调用开销。
+允许构造所谓的:BakedQuery对象的sqlalchemy.ext.baked扩展在1.0系列中首次引入，该对象生成与表示查询结构的缓存键一起的   :class:`_query.Query`  对象。然后将此缓存键链接到生成的字符串SQL语句，以便于后面使用相同结构的 :class:` .BakedQuery`将绕过构建 :class:`_query.Query` 对象的所有开销，其中包括构建核心 :func:`_expression.select` 对象以及将 :func:`_expression.select` 编译成字符串，很大程度上消除了通常与构造和发出ORM  :class:`_query.Query` 对象相关的函数调用开销。
 
-在ORM生成“lazy”查询的情况下，如默认的“选择”关系加载程序策略的:func:`_orm.relationship`构造，现在默认使用:class:`.BakedQuery`。这将允许应用程序在使用惰性加载查询加载集合和相关对象的范围内大量减少函数调用。以前，这一功能通过使用全局API方法或使用“baked_select”策略在1.0和1.1中可用，现在是此行为的唯一实现。该功能也已得到改进，使得缓存仍然可以针对在惰性加载之后对具有其他加载器选项在作用的对象进行缓存。
+在ORM生成“lazy”查询的情况下，如默认的“选择”关系加载程序策略的  :func:`_orm.relationship` .BakedQuery` 。这将允许应用程序在使用惰性加载查询加载集合和相关对象的范围内大量减少函数调用。以前，这一功能通过使用全局API方法或使用“baked_select”策略在1.0和1.1中可用，现在是此行为的唯一实现。该功能也已得到改进，使得缓存仍然可以针对在惰性加载之后对具有其他加载器选项在作用的对象进行缓存。
  
-可以使用:paramref:`_orm.relationship.bake_queries`标志在每个关联基础上禁用缓存行为，该标志对于非常异常的情况如关联使用与缓存不兼容的自定义 :class:`_query.Query` 实现等，这是可用的。
+可以使用  :paramref:`_orm.relationship.bake_queries`  标志在每个关联基础上禁用缓存行为，该标志对于非常异常的情况如关联使用与缓存不兼容的自定义   :class:` _query.Query`  实现等，这是可用的。
 
-:ticket:`3954`
+  :ticket:`3954`  
 
 .. _change_3944:
 
@@ -103,18 +103,18 @@ ORM中的新特性和改进
 
 * 它不使用子查询，只使用INNER JOIN，因此对于像MySQL这样不喜欢子查询的数据库来说，它的性能要好得多。
 
-* 它的结构与原始查询无关; 与新的 :ref:`扩展IN参数系统<change_3953>`结合使用，我们在大多数情况下可以使用"baked"查询来缓存字符串SQL，从而显著减少每个查询开销。
+* 它的结构与原始查询无关; 与新的  :ref:`扩展IN参数系统<change_3953>` 结合使用，我们在大多数情况下可以使用"baked"查询来缓存字符串SQL，从而显著减少每个查询开销。
 
-* 因为查询仅针对给定的一组主键标识符进行提取，所以"选择"贪婪加载与 :meth:`_query.Query.yield_per` 兼容，以操作SELECT结果的一次; 只要数据库驱动程序允许多个同时工作的游标（SQLite，PostgreSQL; **不是** MySQL驱动程序或SQL Server ODBC驱动程序）。Join Eager Loading和Subquery Eager Loading都不兼容:meth:`_query.Query.yield_per`。
+* 因为查询仅针对给定的一组主键标识符进行提取，所以"选择"贪婪加载与  :meth:`_query.Query.yield_per`  兼容，以操作SELECT结果的一次; 只要数据库驱动程序允许多个同时工作的游标（SQLite，PostgreSQL; **不是** MySQL驱动程序或SQL Server ODBC驱动程序）。Join Eager Loading和Subquery Eager Loading都不兼容  :meth:` _query.Query.yield_per`  。
 
 "选择"贪婪加载的缺点是可能会产生大量的SQL查询，具有大量的IN参数列表。 IN参数本身的列表被分组成500个一组，因此超过500个导出对象的结果集将有更多的“SELECT IN”查询跟随。另外，对复合主键的支持取决于数据库使用元组是否兼容IN，例如``(table.column_one, table_column_two) IN ((?, ?), (?, ?) (?, ?))`` 。目前，已知PostgreSQL和MySQL与此语法兼容，而SQLite则不兼容。
 
 
 .. seealso::
 
-    :ref:`selectin_eager_loading`
+      :ref:`selectin_eager_loading` 
 
-:ticket:`3944`
+  :ticket:`3944`  
 
 .. _change_3948:
 
@@ -159,16 +159,16 @@ ORM中的新特性和改进
 
 .. seealso::
 
-    :ref:`polymorphic_selectin`
+      :ref:`polymorphic_selectin` 
 
-:ticket:`3948`
+  :ticket:`3948`  
 
 .. _change_3058:
 
 ORM属性可以接收即席SQL表达式
 ---------------------------------
 
-添加了一个新的ORM属性类型:func:`_orm.query_expression`，它类似于:func:`_orm.延迟`，但其SQL表达式是使用一个新的选项:func:`_orm.with_expression`在查询时确定的；如果未指定，则默认情况下属性为``None``::
+添加了一个新的ORM属性类型  :func:`_orm.query_expression` ，它类似于  :func:` _orm.延迟` ，但其SQL表达式是使用一个新的选项  :func:`_orm.with_expression` ` None``::
 
     from sqlalchemy.orm import query_expression
     from sqlalchemy.orm import with_expression
@@ -190,16 +190,16 @@ ORM属性可以接收即席SQL表达式
 
 .. seealso::
 
-    :ref:`mapper_querytime_expression`
+      :ref:`mapper_querytime_expression` 
 
-:ticket:`3058`
+  :ticket:`3058`  
 
 .. _change_orm_959:
 
 ORM支持多表删除
 ----------------------------
 
-ORM :meth:`_query.Query.delete` 方法支持多个表的DELETE的标准，就像在 :ref:`change_959` 中介绍的那样。该功能的工作方式与UPDATE的多表标准相同，该过程最早出现在0.8版本中，并在 :ref:`change_orm_2365` 中描述。
+ORM  :meth:`_query.Query.delete`  方法支持多个表的DELETE的标准，就像在   :ref:` change_959`  中介绍的那样。该功能的工作方式与UPDATE的多表标准相同，该过程最早出现在0.8版本中，并在   :ref:`change_orm_2365`  中描述。
 
 以下是DELETE的示例，使用了FROM子句（具体取决于后端）与``SomeOtherEntity``使用``SomeEntity``的ID作为参考::
 
@@ -209,16 +209,16 @@ ORM :meth:`_query.Query.delete` 方法支持多个表的DELETE的标准，就像
 
 .. seealso::
 
-    :ref:`change_959`
+      :ref:`change_959` 
 
-:ticket:`959`
+  :ticket:`959`  
 
 .. _change_3229:
 
 混合类型，复合类型（hybrids, composites）支持批量更新
 -------------------------------------------------
 
-在:meth:`_query.Query.update`中使用时，混合属性（例如 :mod:`sqlalchemy.ext.hybrid`）以及复合属性（:ref:`mapper_composite`）现在支持在UPDATE语句的SET子句中使用。对于混合类型，可以直接使用简单的表达式，或使用新的修饰符:meth:`.hybrid_property.update_expression`将值分解为多个列/表达式:
+在  :meth:`_query.Query.update`  中使用时，混合属性（例如  :mod:` sqlalchemy.ext.hybrid` ）以及复合属性（  :ref:`mapper_composite` ）现在支持在UPDATE语句的SET子句中使用。对于混合类型，可以直接使用简单的表达式，或使用新的修饰符  :meth:` .hybrid_property.update_expression`  将值分解为多个列/表达式:
 
     class Person(Base):
         # ...
@@ -243,7 +243,7 @@ ORM :meth:`_query.Query.delete` 方法支持多个表的DELETE的标准，就像
 
     session.query(Person).filter(Person.id == 5).update({Person.name: "Dr. No"})
 
-在混合类型之前，如果属性被设置为软删除或者 Null，修饰符:meth:`.hybrid_property.update_expression` 以及对应的ORM事件已经定义好了，例如，用户软删除情况下的查询。
+在混合类型之前，如果属性被设置为软删除或者 Null，修饰符  :meth:`.hybrid_property.update_expression`   以及对应的ORM事件已经定义好了，例如，用户软删除情况下的查询。
 
 类似的功能在复合属性上也是可用的，复合值将被分解成其单个列以进行批量UPDATE：
 
@@ -251,14 +251,14 @@ ORM :meth:`_query.Query.delete` 方法支持多个表的DELETE的标准，就像
 
 .. seealso::
 
-    :ref:`hybrid_bulk_update`
+      :ref:`hybrid_bulk_update` 
 
 .. _change_3911_3912:
 
 hybrid属性支持在子类之间的重用，@getter可重定义
 -----------------------------------------------------
 
-:class:`sqlalchemy.ext.hybrid.hybrid_property`类现在支持多次针对不同子类调用诸如``@setter``、``@expression``等的定义，并提供了一个``@getter``变异器，以便可以在多个子类或其他 类中重新使用特定的hybrid。现在，这类似于标准Python中的``@property``的行为:
+  :class:`sqlalchemy.ext.hybrid.hybrid_property` ` @setter``、``@expression``等的定义，并提供了一个``@getter``变异器，以便可以在多个子类或其他 类中重新使用特定的hybrid。现在，这类似于标准Python中的``@property``的行为:
 
     class FirstNameOnly(Base):
         # ...
@@ -293,20 +293,20 @@ hybrid属性支持在子类之间的重用，@getter可重定义
 
 上面的``FirstNameOnly.name``hybrid在子类中受到引用，以便专门将其重新用于新的子类。这是通过在每次调用``@getter``、``@setter``以及所有其他变异器方法（如``@expression``）时将混合对象复制到新对象中实现的，每个新对象留下先前混合的定义。以前，像``@setter``这样的方法会在现有混合里原地修改混合，从而干扰了超类上的定义。
 
-.. 注意::请务必阅读:ref:`hybrid_reuse_subclass`中的文档，以了解如何覆盖 :meth:`.hybrid_property.expression`和:meth:`.hybrid_property.comparator`，在某些情况下可能需要一个特殊的限定符 :attr:`.hybrid_property.overrides`，以避免与:class:`.QueryableAttribute`产生名称冲突。
+.. 注意::请务必阅读  :ref:`hybrid_reuse_subclass` .hybrid_property.expression` 和  :meth:`.hybrid_property.comparator`  ，在某些情况下可能需要一个特殊的限定符  :attr:` .hybrid_property.overrides` ，以避免与 :class:`.QueryableAttribute` 产生名称冲突。
 
-.. 注意:: ``@hybrid_property``中的此更改意味着，当向``@hybrid_property``添加setter和其他状态时，**方法必须保留原始混合的名称**，否则具有附加状态的新混合将以不匹配的名称存在于类中。这是标准Python的``@property``构造所采取的相同行为。
+.. 注意::``@hybrid_property``中的此更改意味着，当向``@hybrid_property``添加setter和其他状态时，**方法必须保留原始混合的名称**，否则具有附加状态的新混合将以不匹配的名称存在于类中。这是标准Python的``@property``构造所采取的相同行为。
 
-:ticket:`3911`
+  :ticket:`3911`  
 
-:ticket:`3912`
+  :ticket:`3912`  
 
 .. _change_3896_event:
 
 新的bulk_replace事件
 ----------------------
 
-为适应 :ref:`change_3896_validates` 中描述的验证用例，添加了:meth:`.AttributeEvents.bulk_replace`方法，该方法与:meth:`.AttributeEvents.append`和:meth:`.AttributeEvents.remove`事件一起使用。在“追加”和“删除”之前调用了“bulk_replace”，以便修改集合以匹配现有集合。之后，按照之前的行为，单个项目附加到新的目标集合中，对新的集合执行“附加”事件。本示例同时显示了“bulk_replace”和“append”，如果使用集合分配，则“append”将接收已由“bulk_replace”处理的对象作为输入。：attr:`~.attributes.OP_BULK_REPLACE`符号可用于确定此“追加”事件是否为批量替换过程的第二部分
+为适应   :ref:`change_3896_validates`  中描述的验证用例，添加了  :meth:` .AttributeEvents.bulk_replace`  方法，该方法与  :meth:`.AttributeEvents.append`  和  :meth:` .AttributeEvents.remove`  事件一起使用。在“追加”和“删除”之前调用了“bulk_replace”，以便修改集合以匹配现有集合。之后，按照之前的行为，单个项目附加到新的目标集合中，对新的集合执行“附加”事件。本示例同时显示了“bulk_replace”和“append”，如果使用集合分配，则“append”将接收已由“bulk_replace”处理的对象作为输入。：attr:`~.attributes.OP_BULK_REPLACE`符号可用于确定此“追加”事件是否为批量替换过程的第二部分
 
     from sqlalchemy.orm.attributes import OP_BULK_REPLACE
 
@@ -324,14 +324,14 @@ hybrid属性支持在子类之间的重用，@getter可重定义
         else:
             return value
 
-:ticket:`3896`
+  :ticket:`3896`  
 
 .. _change_3303:
 
 新增：SQLAlchemy.ext.Mutable的修改事件处理程序
 ----------------------------------------------
 
-新增事件处理程序:meth:`.AttributeEvents.modified`，该处理程序与:mod:`sqlalchemy.ext.mutable`扩展从中调用:func:`.attributes.flag_modified`方法时触发，可以在``下面的in-place更改被用于``。例如，在``.data``字典发生就地更改时，会触发此事件处理程序。
+新增事件处理程序  :meth:`.AttributeEvents.modified`  ，该处理程序与  :mod:` sqlalchemy.ext.mutable`  扩展从中调用  :func:`.attributes.flag_modified` ` 下面的in-place更改被用于``。例如，在``.data``字典发生就地更改时，会触发此事件处理程序。
 
     from sqlalchemy.ext.declarative import declarative_base
     from sqlalchemy.ext.mutable import MutableDict
@@ -352,14 +352,14 @@ hybrid属性支持在子类之间的重用，@getter可重定义
 
 上面的事件处理程序将在``.data``字典进行就地更改时被触发。
 
-:ticket:`3303`
+  :ticket:`3303`  
 
 .. _change_3769:
 
 AssociationProxy any(), has(), contains()支持链接到联合代理
 ---------------------------------------------------------------
 
-:meth:`.AssociationProxy.any`、:meth:`.AssociationProxy.has`和:meth:`.AssociationProxy.contains`比较方法现在支持链接到本身也是 :class:`.AssociationProxy`的属性，递归地。下面的``A.b_values``代理是链接到``AtoB.bvalue``，它本身也是一个链接到``B``的:ref:`mapper_association_proxy`的代理：
+  :meth:`.AssociationProxy.any`  、  :meth:` .AssociationProxy.has`  和  :meth:`.AssociationProxy.contains`  比较方法现在支持链接到本身也是   :class:` .AssociationProxy` `A.b_values``代理是链接到``AtoB.bvalue``，它本身也是一个链接到``B``的 :ref:`mapper_association_proxy` 的代理：
 
     class A(Base):
         __tablename__ = "a"
@@ -397,7 +397,7 @@ AssociationProxy any(), has(), contains()支持链接到联合代理
         b_value = association_proxy("b", "value")
         c_value = association_proxy("b", "c")
 
-我们可以使用:meth:`.AssociationProxy.contains`在``A.b_values``上进行查询，查询时跨越两个代理``A.b_values``和``AtoB.b_value``：
+我们可以使用  :meth:`.AssociationProxy.contains`  在` `A.b_values``上进行查询，查询时跨越两个代理``A.b_values``和``AtoB.b_value``：
 
 .. sourcecode:: pycon+sql
 
@@ -410,7 +410,7 @@ AssociationProxy any(), has(), contains()支持链接到联合代理
     FROM b
     WHERE b.id = atob.b_id AND b.value = :value_1)))
 
-我们可以使用:meth:`.AssociationProxy.any`在``A.c_values``上进行查询，查询时跨越两个代理``A.c_values``和``AtoB.c_value``：
+我们可以使用  :meth:`.AssociationProxy.any`  在` `A.c_values``上进行查询，查询时跨越两个代理``A.c_values``和``AtoB.c_value``：
 
 
 .. sourcecode:: pycon+sql
@@ -426,7 +426,7 @@ AssociationProxy any(), has(), contains()支持链接到联合代理
     FROM c
     WHERE b.id = c.b_id AND c.value = :value_1)))))
 
-:ticket:`3769`
+  :ticket:`3769`  
 
 
 .. _change_4137:
@@ -434,7 +434,7 @@ AssociationProxy any(), has(), contains()支持链接到联合代理
 身份键增强支持分片
 -------------------------
 
-ORM使用的身份键结构现在包含一个额外的成员，以便来自不同上下文的两个相同的Principal Key可以共存于同一身份映射。在 :ref:`examples_sharding`中对示例进行了更新，以说明此行为。该示例显示了一个分片类``WeatherLocation``，该类引用一个依赖于``WeatherReport``对象的``WeatherReport``对象，其中``WeatherReport ``类被映射到一个存储简单整数主键的表。
+ORM使用的身份键结构现在包含一个额外的成员，以便来自不同上下文的两个相同的Principal Key可以共存于同一身份映射。在   :ref:`examples_sharding` ` WeatherLocation``，该类引用一个依赖于``WeatherReport``对象的``WeatherReport``对象，其中``WeatherReport ``类被映射到一个存储简单整数主键的表。
 
 两个来自不同数据库的``WeatherReport``对象可能具有相同的主键值。现在，该示例说明了一个新的``identity_token``字段，以跟踪此差异，以便两个对象可以共存于同一身份映射中。
 
@@ -454,7 +454,7 @@ ORM文档使用简单的整数主键列扩展了这个示例，因此在两个�
 
 为了说明问题，假设有两个Test和City行，它们的主键在一个数据库中号称为ID 1和2，而在另一个数据库中号称为ID 2和1。
 
-凭据构建(Originating shard tracking)已在详细成对的文档中进行了逐步的说明—— :ref:`examples_sharding`。
+凭据构建(Originating shard tracking)已在详细成对的文档中进行了逐步的说明——   :ref:`examples_sharding` 。
 
     newyork_report = newyork.reports[0]
     tokyo_report = tokyo.reports[0]
@@ -467,7 +467,7 @@ ORM文档使用简单的整数主键列扩展了这个示例，因此在两个�
     assert inspect(newyork_report).identity_token == "north_america"
     assert inspect(tokyo_report).identity_token == "asia"
 
-:ticket:`4137`
+  :ticket:`4137`  
 
 
 核心中的新特性和改进
@@ -478,11 +478,11 @@ ORM文档使用简单的整数主键列扩展了这个示例，因此在两个�
 布尔数据类型现在强制采用严格的真/假/空值
 ------------------------------------------------------
 
-1.1中描述的更改：ref:`change_3730`的一个意外副作用，它修改了:class:`.Boolean`在出现非整数值（例如字符串）时的行为。特别是，先前是字符串“0”的值会生成值为“false”的值，现在将产生“true”的值。更糟糕的是，新行为只针对某些后端，而不是其他后端，这意味着向:class:`.Boolean`发送字符串“0”值的代码将在后端之间不一致地破坏。
+1.1中描述的更改：ref:`change_3730`的一个意外副作用，它修改了  :class:`.Boolean` .Boolean` 发送字符串“0”值的代码将在后端之间不一致地破坏。
 
 解决这个问题的最终解决方案是**不支持布尔值和字符串值**，因此在1.2中，如果传递了非整数/True/False/None值，则会引发'TypeError' 。同时，仅接受整数值0和1。
 
-为了适应希望具有更自由解释布尔值的应用程序，应该使用:type:`.TypeDecorator`。以下演示了一个配方，它允许先前的1.1 :class:`.Boolean`数据类型的“自由”行为：
+为了适应希望具有更自由解释布尔值的应用程序，应该使用  :type:`.TypeDecorator`  。以下演示了一个配方，它允许先前的1.1  :class:` .Boolean`数据类型的“自由”行为：
 
     from sqlalchemy import Boolean
     from sqlalchemy import TypeDecorator
@@ -496,14 +496,14 @@ ORM文档使用简单的整数主键列扩展了这个示例，因此在两个�
                 value = bool(int(value))
             return value
 
-:ticket:`4102`
+  :ticket:`4102`  
 
 .. _change_3919:
 
 连接池现在增加悲观断线检测（Pessimistic Disconnection Detection）
 ----------------------------------------------------------------
 
-长期以来，在连接池文档中一直提供了在检查出一个检出的连接用于测试其存活状态的功能的概要。该文档中介绍了使用:meth:`_events.ConnectionEvents.engine_connect`引擎事件在检出的连接上发出简单语句的配方。在适当的方言的情况下，该配方的功能现在已经添加到连接池本身中，在与任何其他操作池一起使用时检查每个连接的新参数:paramref:`_sa.create_engine.pool_pre_ping`。每个检出的连接在返回之前将被测试以进行新鲜测试。
+长期以来，在连接池文档中一直提供了在检查出一个检出的连接用于测试其存活状态的功能的概要。该文档中介绍了使用  :meth:`_events.ConnectionEvents.engine_connect`  引擎事件在检出的连接上发出简单语句的配方。在适当的方言的情况下，该配方的功能现在已经添加到连接池本身中，在与任何其他操作池一起使用时检查每个连接的新参数  :paramref:` _sa.create_engine.pool_pre_ping`  。每个检出的连接在返回之前将被测试以进行新鲜测试。
 
     engine = create_engine("mysql+pymysql://", pool_pre_ping=True)
 
@@ -511,9 +511,9 @@ ORM文档使用简单的整数主键列扩展了这个示例，因此在两个�
 
 .. seealso::
 
-    :ref:`pool_disconnects_pessimistic`
+      :ref:`pool_disconnects_pessimistic` 
 
-:ticket:`3919`
+  :ticket:`3919`  
 
 .. _change_3907:
 
@@ -524,7 +524,7 @@ IN / NOT IN运算符的空集合行为现在可配置；默认表达式简化表
 当将其与空集比较时求值为 NULL 的列，生成一个 boolean 值 false 或者 true
 (对于 NOT IN)，而不是 NULL。
 这种情况下会发出警告。
-可以使用 :paramref:`_sa.create_engine.empty_in_strategy` 参数切换回旧的行为。
+可以使用  :paramref:`_sa.create_engine.empty_in_strategy`  参数切换回旧的行为。
 在 SQL 中，IN 和 NOT IN 运算符不支持与显式空集合的值相比较；
 即，这种语法是非法的：
 
@@ -577,7 +577,7 @@ IN / NOT IN运算符的空集合行为现在可配置；默认表达式简化表
 
 SQLAlchemy 的 SQL 架构比初期要复杂得多，
 因此现在可以允许在 SQL 字符串编译时调用任一行为。
-以前，在构建 :meth:`.ColumnOperators.in_` 或 :meth:`.ColumnOperators.notin_` 操作符进行构造时，
+以前，在构建  :meth:`.ColumnOperators.in_`  或  :meth:` .ColumnOperators.notin_`  操作符进行构造时，
 将转换为比较表达式。转换到比较表达式
 现在由方言本身指示去调用，即静态 ``1 != 1`` 比较或动态 ``expr != expr`` 比较。
 默认已 **更改** 为静态比较，
@@ -586,19 +586,19 @@ SQLAlchemy 的 SQL 架构比初期要复杂得多，
 特别是一个查询，该查询正在查询否定 `where(~null_expr.in_([]))`，
 因为现在这将计算为 true 而不是 NULL。
 
-现在可以使用标志 :paramref:`_sa.create_engine.empty_in_strategy` 来控制行为，
+现在可以使用标志  :paramref:`_sa.create_engine.empty_in_strategy`  来控制行为，
 其默认设置为 ``"static"``，但也可以设置为 ``"dynamic"`` 或 ``"dynamic_warn"``。
 其中``"dynamic_warn"`` 设置等效于以前的行为，即同时发出``expr != expr``和性能警告。
 但是，预计大多数用户都会赞赏“static”默认设置。
 
-:ticket:`3907`
+  :ticket:`3907`  
 
 .. _change_3953:
 
 通过缓存语句引入的后期扩展 IN 参数集允许 IN 表达式
 ---------------------------------------------------------
 
-添加了名为“expanding”的新类型 :func:`.bindparam`。
+添加了名为“expanding”的新类型   :func:`.bindparam` 。
 这用于 IN 表达式，其中将元素列表渲染为语句执行时的单个参数，
 而不是在语句编译时。这允许将单个绑定参数名称链接到具有多个元素的 IN 表达式，
 也允许使用查询缓存在 IN 表达式中使用相关特性的“select”和“polymorphic in”loading。
@@ -612,7 +612,7 @@ SQLAlchemy 的 SQL 架构比初期要复杂得多，
 
 应在 1.2 系列中视为 **实验功能**。
 
-:ticket:`3953`
+  :ticket:`3953`  
 
 .. _change_3999:
 
@@ -626,7 +626,7 @@ SQLAlchemy 的 SQL 架构比初期要复杂得多，
 而不是 ``q IS NULL！= y IS NULL``。
 
 
-:ticket:`3999`
+  :ticket:`3999`  
 
 .. _change_1546:
 
@@ -634,7 +634,7 @@ SQLAlchemy 的 SQL 架构比初期要复杂得多，
 -------------------------------------------------
 
 Core 支持与表和列相关联的字符串注释。
-这些是通过 :paramref:`_schema.Table.comment` 和 :paramref:`_schema.Column.comment` 参数指定的：
+这些是通过  :paramref:`_schema.Table.comment`  和  :paramref:` _schema.Column.comment`  参数指定的：
 
 Table(
     "my_table",
@@ -645,19 +645,19 @@ Table(
 
 上面，将在创建表时适当地渲染 DDL，
 以将上述注释与架构中的表/列相关联。
-在使用 :meth:`_reflection.Inspector.get_columns` 自动加载的上述表或反射时，注释也将包含在内。
-表注释也可以使用 :meth:`_reflection.Inspector.get_table_comment` 方法单独使用。
+在使用  :meth:`_reflection.Inspector.get_columns`  自动加载的上述表或反射时，注释也将包含在内。
+表注释也可以使用  :meth:`_reflection.Inspector.get_table_comment`  方法单独使用。
 
 当前支持的后端包括 MySQL、PostgreSQL 和 Oracle。
 
-:ticket:`1546`
+  :ticket:`1546`  
 
 .. _change_959:
 
 DELETE 支持跨多个表的标准
 ----------------------------
 
-:class:`_expression.Delete` 现在支持对支持它的引擎的多个表条件（目前这些是 PostgreSQL、MySQL 和 Microsoft SQL Server）进行实现，
+  :class:`_expression.Delete`  现在支持对支持它的引擎的多个表条件（目前这些是 PostgreSQL、MySQL 和 Microsoft SQL Server）进行实现，
 这个特性在 0.7 和 0.8 系列中首次引入，和 UPDATE 中类似。
 
 给定以下语句：
@@ -679,16 +679,16 @@ PostgreSQL 后端对上述语句生成的 SQL 如下：
 
 .. seealso::
 
-    :ref:`tutorial_multi_table_deletes`
+      :ref:`tutorial_multi_table_deletes` 
 
-:ticket:`959`
+  :ticket:`959`  
 
 .. _change_2694:
 
 为 startswith()、endswith() 添加了一个新的“autoescape”选项
 -------------------------------------------------------
 
-对于 autoescape 设置为 True 的 :meth:`.ColumnOperators.startswith`、:meth:`.ColumnOperators.endswith` 以及 :meth:`.ColumnOperators.contains`，
+对于 autoescape 设置为 True 的  :meth:`.ColumnOperators.startswith` 、  :meth:` .ColumnOperators.endswith`   以及  :meth:`.ColumnOperators.contains` ，
 此参数会自动转义所有出现的 ``%``、``_``，使用正斜杠 ``/`` 作为转义字符，默认情况下
 转义字符本身也被转义。使用正斜杠是为了避免像 PostgreSQL 的 ``standard_confirming_strings`` 设置那样的设置发生冲突；
 自从 PostgreSQL 9.1 后，其默认值发生了更改，而 MySQL 的 ``NO_BACKSLASH_ESCAPES`` 设置也是如此。
@@ -709,20 +709,20 @@ x LIKE :x_1 || '%' ESCAPE '/'
 
 其中 "x_1" 参数的值为 ``'total/%score'``。
 
-:ticket:`2694`
+  :ticket:`2694`  
 
 .. _change_floats_12:
 
 增强“浮点”数据类型的强类型化
 --------------------------
 
-一系列更改允许使用 :class:`.Float` 数据类型更强地将其连接到 Python 浮点值，而不是更通用的 
-:class:`.Numeric` 类型。
+一系列更改允许使用   :class:`.Float`  数据类型更强地将其连接到 Python 浮点值，而不是更通用的 
+  :class:`.Numeric`  类型。
 这些更改与确保 Python 浮点值不会错误地强制转换为 ``Decimal()``，
 如果应用程序使用普通浮点值，则结果类型将强制转换为 ``float``。
 
-* 传递给 SQL 表达式的纯 Python“float”值现在会拉入具有类型 :class:`.Float` 的文字参数；
-  先前的类型是 :class:`.Numeric`，带有默认标志“asdecimal=True”，这意味着结果类型将强制转换为 ``Decimal()``。
+* 传递给 SQL 表达式的纯 Python“float”值现在会拉入具有类型   :class:`.Float`  的文字参数；
+  先前的类型是   :class:`.Numeric` ，带有默认标志“asdecimal=True”，这意味着结果类型将强制转换为 ` `Decimal()``。
   特别是，这将发出 SQLite 上的令人困惑的警告：
 
         float_value = connection.scalar(
@@ -730,8 +730,8 @@ x LIKE :x_1 || '%' ESCAPE '/'
             # Float, not Numeric(asdecimal=True)
         )
 
-* :class:`.Numeric`、:class:`.Float` 和 :class:`.Integer` 之间的数学运算将在其表达式类型中保留 :class:`.Numeric` 或 :class:`.Float` 类型，
-  包括 ``asdecimal`` 标志以及类型是否应为 :class:`.Float`。
+*   :class:`.Numeric` 、  :class:` .Float`  和   :class:`.Integer`  之间的数学运算将在其表达式类型中保留   :class:` .Numeric`  或   :class:`.Float`  类型，
+  包括 ``asdecimal`` 标志以及类型是否应为   :class:`.Float` 。
   
   .. code-block:: python
 
@@ -743,21 +743,21 @@ x LIKE :x_1 || '%' ESCAPE '/'
         expr = column("a", Integer) * column("b", Float())
         assert isinstance(expr.type, Float)
 
-* 如果 DBAPI 已知支持本地 ``Decimal()`` 模式，则 :class:`.Float` 数据类型将无条件地将 ``float()`` 处理器应用于结果值。
+* 如果 DBAPI 已知支持本地 ``Decimal()`` 模式，则   :class:`.Float`  数据类型将无条件地将 ` `float()`` 处理器应用于结果值。
   有些后端不始终保证浮点数返回为简单浮点数，而不是精度数字，例如 MySQL。
 
-:ticket:`4017`
+  :ticket:`4017`  
 
-:ticket:`4018`
+  :ticket:`4018`  
 
-:ticket:`4020`
+  :ticket:`4020`  
 
 .. change_3249:
 
 增加了 GROUPING SETS、CUBE 和 ROLLUP 的支持
 -------------------------------------------
 
-通过 :attr:`.func` 命名空间可用所有三个 GROUPING SETS、CUBE 和 ROLLUP；
+通过  :attr:`.func`  命名空间可用所有三个 GROUPING SETS、CUBE 和 ROLLUP；
 在 CUBE 和 ROLLUP 的情况下，这些函数在以前的版本中已经工作，但在 GROUPING SETS 的情况下，
 编译器添加了一个占位符，以允许空间存在。所有三个函数均在文档中命名：
 
@@ -780,19 +780,19 @@ x LIKE :x_1 || '%' ESCAPE '/'
     SELECT sum(t.value) AS sum_1
     FROM t GROUP BY GROUPING SETS((t.x, t.y), (t.z, t.q))
 
-:ticket:`3429`
+  :ticket:`3429`  
 
 .. _change_4075:
 
 在上下文默认生成器中，多值 INSERT 的参数助手允许 SET
 ------------------------------------------------------------
 
-一个默认生成函数，例如 :ref:`context_default_functions` 中描述的那样，可以查看上下文参数相关的当前参数
-通过 :attr:`.DefaultExecutionContext.current_parameters` 属性来指定。然而，在 :class:`_expression.Insert`
+一个默认生成函数，例如   :ref:`context_default_functions`  中描述的那样，可以查看上下文参数相关的当前参数
+通过  :attr:`.DefaultExecutionContext.current_parameters`  属性来指定。然而，在   :class:` _expression.Insert` 
 构造指定多个 VALUES 子句时，执行用户定义的函数会多次调用，每次对应于一个参数集，在比较之前执行对现有集合的操作，
-但却无法知道 :attr:`.DefaultExecutionContext.current_parameters` 中哪些键值适用于该列。
-添加了一个新功能 :meth:`.DefaultExecutionContext.get_current_parameters`，
-它包括关键字参数：:paramref:`.DefaultExecutionContext.get_current_parameters.isolate_multiinsert_groups`
+但却无法知道  :attr:`.DefaultExecutionContext.current_parameters`  中哪些键值适用于该列。
+添加了一个新功能  :meth:`.DefaultExecutionContext.get_current_parameters` ，
+它包括关键字参数：  :paramref:`.DefaultExecutionContext.get_current_parameters.isolate_multiinsert_groups`  
 默认为 ``True``，在执行操作之前执行了一些额外的操作以确保所支持的命名空间适用于当前 VALUES 子句的范围。
 
 例如：
@@ -812,7 +812,7 @@ x LIKE :x_1 || '%' ESCAPE '/'
 
     conn.execute(stmt)
 
-:ticket:`4075`
+  :ticket:`4075`  
 
 ORM 的重要行为变化
 ==================
@@ -822,8 +822,8 @@ ORM 的重要行为变化
 after_rollback() Session 事件现在在对象过期之前发出
 -----------------------------------------------------
 
-:meth:`.SessionEvents.after_rollback` 事件现在具有在对象过期（例如“快照删除”）之前获取属性状态的功能。
-这使得该事件与 :meth:`.SessionEvents.after_commit` 事件的行为一致，
+  :meth:`.SessionEvents.after_rollback`   事件现在具有在对象过期（例如“快照删除”）之前获取属性状态的功能。
+这使得该事件与  :meth:`.SessionEvents.after_commit`  事件的行为一致，
 后者在删除“快照”之前发出。
 
 例如：
@@ -851,17 +851,17 @@ after_rollback() Session 事件现在在对象过期之前发出
     else:
         sess.commit()
 
-请注意，:class:`.Session` 仍然不允许在此事件中发送 SQL；
+请注意，  :class:`.Session`  仍然不允许在此事件中发送 SQL；
 这意味着未加载的属性仍然无法在事件范围内加载。
 
-:ticket:`3934`
+  :ticket:`3934`  
 
 .. _change_3891:
 
 使用 ``select_from()`` 的单表继承问题已得到解决
 ------------------------------------------------------
 
-:meth:`_query.Query.select_from` 现在会在生成 SQL 时尊重单表继承列鉴别器；
+  :meth:`_query.Query.select_from`   现在会在生成 SQL 时尊重单表继承列鉴别器；
 以前，只有查询列列表中的表达式会被考虑在内。
 假设 ``Manager`` 是 ``Employee`` 的子类，则以下查询：
 
@@ -873,7 +873,7 @@ after_rollback() Session 事件现在在对象过期之前发出
 
     SELECT employee.id FROM employee WHERE employee.type IN ('manager')
 
-但是，如果仅在 :meth:`_query.Query.select_from` 中指定了``Manager`` 而没有在列列表中指定，
+但是，如果仅在  :meth:`_query.Query.select_from`  中指定了` `Manager`` 而没有在列列表中指定，
 则不会添加鉴别器：
 
     sess.query(func.count(1)).select_from(Manager)
@@ -884,7 +884,7 @@ after_rollback() Session 事件现在在对象过期之前发出
 
     SELECT count(1) FROM employee
 
-:ticket:`3891`
+  :ticket:`3891`  
 
 .. _change_3913:
 
@@ -907,7 +907,7 @@ previous_collection
 
 a1 不再在 previous_collection 中。
 
-:ticket:`3913`
+  :ticket:`3913`  
 
 .. _change_3896_validates:
 
@@ -930,7 +930,7 @@ a1.bs.append({"data": "b1"})
 a1 = A()
 a1.bs = [{"data": "b1"}]
 
-修复后，:meth:`_orm.relationship.post_update`的列现在与具有 :paramref:`_schema.Column.onupdate` 值集的列交互更加正确。
+修复后，  :meth:`_orm.relationship.post_update`  的列现在与具有  :paramref:` _schema.Column.onupdate`  值集的列交互更加正确。
 如果插入对象具有列的显式值，则将在 UPDATE 期间重新命令该列，
 因此不会覆盖“onupdate”规则：
 
@@ -966,16 +966,16 @@ a1.bs = [b2, b3]
 
 .. seealso::
 
-    :ref:`change_3896_event`
+      :ref:`change_3896_event` 
 
-:ticket:`3896`
+  :ticket:`3896`  
 
 .. _change_3753:
 
 使用 flag_dirty() 将对象标记为“脏”状态，而不更改任何属性
 ---------------------------------------------------------------
 
-如果使用 :func:`.attributes.flag_modified` 函数将非加载属性标记为已修改，则会引发异常：
+如果使用   :func:`.attributes.flag_modified`  函数将非加载属性标记为已修改，则会引发异常：
 
 a1 = A(data="adf")
 s.add(a1)
@@ -992,13 +992,13 @@ attributes.flag_modified(a1, "data")
 因为如果在 flush 时属性仍然未存在，刷新过程通常也会失败。
 要将对象标记为“修改”，而无需引用任何特定属性，
 以便在以自定义事件处理程序为例的情况下参与刷写过程，
-请使用新的 :func:`.attributes.flag_dirty` 函数：
+请使用新的   :func:`.attributes.flag_dirty`  函数：
 
     from sqlalchemy.orm import attributes
 
     attributes.flag_dirty(a1)
 
-:ticket:`3753`
+  :ticket:`3753`  
 
 .. _change_3796:
 
@@ -1014,21 +1014,21 @@ scoped_session 中的“scope”关键字已被删除
     session = Session(scope=None)
 
 此关键字参数的目的是尝试允许变量“作用域”（``None`` 表示“无作用域”，
-从而返回新的 :class:`.Session`）。这个关键字从未被记录过，
+从而返回新的   :class:`.Session` ）。这个关键字从未被记录过，
 现在如果遇到会引发 ``TypeError‍``。 尽管我们并不预期用户使用此关键字，
 但如果用户在 Beta 测试期间报告与此相关的问题，则可以对其进行弃用。
 
-:ticket:`3796`
+  :ticket:`3796`  
 
 .. _change_3471:
 
 和 onupdate 一起使用 post_update 的精细调整
 ------------------------------------------------------
 
-使用 :paramref:`_orm.relationship.post_update` 功能的关系现在会更好地与具有 :paramref:`_schema.Column.onupdate`
+使用  :paramref:`_orm.relationship.post_update`  功能的关系现在会更好地与具有  :paramref:` _schema.Column.onupdate` 
 值集的列交互。如果插入对象具有一个明确的列的值，则在 UPDATE 期间它将重新表述该列，以便“onupdate”规则不会覆盖它。
 
-:ticket:`3471`        __tablename__ = "a"
+  :ticket:`3471`          __tablename__ = "a"
         id = Column(Integer, primary_key=True)
         favorite_b_id = Column(ForeignKey("b.id", name="favorite_b_fk"))
         bs = relationship("B", primaryjoin="A.id == B.a_id")
@@ -1064,18 +1064,18 @@ scoped_session 中的“scope”关键字已被删除
     UPDATE a SET favorite_b_id=?, updated=? WHERE a.id = ?
     (1, 5, 1)
 
-此外，如果"updated"的值没有设置，则可以在``a1.updated``上正确获取新生成的值；以前在刷新或更新属性以允许生成值时的逻辑不会为后更新而发出。在此情况下，在更新中刷新时还会发出:meth:`.InstanceEvents.refresh_flush`事件。
+此外，如果"updated"的值没有设置，则可以在``a1.updated``上正确获取新生成的值；以前在刷新或更新属性以允许生成值时的逻辑不会为后更新而发出。在此情况下，在更新中刷新时还会发出  :meth:`.InstanceEvents.refresh_flush`  事件。
 
-:ticket:`3471`
+  :ticket:`3471`  
 
-:ticket:`3472`
+  :ticket:`3472`  
 
 .. _change_3496:
 
 post_update与ORM版本控制相结合
 -----------------------------------
 
-在ORM版本控制中，"post_update"功能 ，即在针对特定relationship-bound外键的更改时发出UPDATE语句，以及通常针对目标行发出的INSERT / UPDATE / DELETE被支持。现在，这个UPDATE语句参与标记的版本号，即支持 :ref:`mapper_version_counter`。
+在ORM版本控制中，"post_update"功能 ，即在针对特定relationship-bound外键的更改时发出UPDATE语句，以及通常针对目标行发出的INSERT / UPDATE / DELETE被支持。现在，这个UPDATE语句参与标记的版本号，即支持   :ref:`mapper_version_counter` 。
 
 给定一个映射 ::
 
@@ -1102,16 +1102,16 @@ post_update与ORM版本控制相结合
  session.commit()＃node现在是2.0版本
 请注意，这意味着在响应其他属性更改发出UPDATE的对象和以下UPDATE中二次发出UPDATE作为post_update关系更改，将会为一个flush 会收到**两个版本计数器更新**。如果在当前flush中插入对象，则版本计数器不会再次增加，除非使用服务器端的版本控制方案。
 
-现在在此处讨论post_update为UPDATE发出一个的原因:ref:`faq_post_update_update`。
+现在在此处讨论post_update为UPDATE发出一个的原因  :ref:`faq_post_update_update` 。
 
 .. seealso::
 
-    :ref:`post_update`
+      :ref:`post_update` 
 
-    :ref:`faq_post_update_update`
+      :ref:`faq_post_update_update` 
 
 
-:ticket:`3496`
+  :ticket:`3496`  
 
 重大行为变更 - 核心
 =========================
@@ -1121,7 +1121,7 @@ post_update与ORM版本控制相结合
 自定义运算符的键入行为已统一
 -----------------------------------
 
-用户可以使用:meth:`运营商。op``函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
+用户可以使用  :meth:`运营商。op`  ` 函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
 
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     NullType（）
@@ -1136,7 +1136,7 @@ post_update与ORM版本控制相结合
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     DateTime（）
 
-由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括:class:`.Boolean`在内的所有情况都允许返回类型为?
+由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括 :class:`.Boolean` 在内的所有情况都允许返回类型为?
 
     column（“x”，types.String（50））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
@@ -1147,7 +1147,7 @@ post_update与ORM版本控制相结合
     column（“x”，types.JSON（））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
 
-为了协助布尔比较运算符，添加了一个新的简写方法:meth:`运营商。bool_op。`此方法应优选即时制作布尔值运算符： 
+为了协助布尔比较运算符，添加了一个新的简写方法  :meth:`运营商。bool_op。`  此方法应优选即时制作布尔值运算符： 
 
 .. sourcecode :: pycon + sql
 
@@ -1161,7 +1161,7 @@ post_update与ORM版本控制相结合
 --------------------------------------------------
 
 
-现在，:obj:`_expression.literal_column`构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
+现在，  :obj:`_expression.literal_column`  构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
 
 以前，不可能生成声明单个百分号的 :obj:_expression.literal_column构造::
 
@@ -1178,9 +1178,9 @@ post_update与ORM版本控制相结合
     >>> print（literal_column（“ some％symbol”）.compile（dialect = mysql.dialect（）））
     {printsql}一些％符号{stop}
 
-另外，针对:meth:`.Operators.contains`，:meth:`.ColumnOperators.startswith`和:meth:`.ColumnOperators.endswith`等运算符的使用的双倍将仅在适当时发生。 
+另外，针对  :meth:`.Operators.contains`  ，  :meth:` .ColumnOperators.startswith`  和  :meth:`.ColumnOperators.endswith`  等运算符的使用的双倍将仅在适当时发生。 
 
-:ticket:`3740`
+  :ticket:`3740`  
 
 
 .. _change_3785:
@@ -1188,7 +1188,7 @@ post_update与ORM版本控制相结合
 列级别的COLLATE关键字现在引用了排序名称
 --------------------------------------------------------------–
 
-已经修复了在 :func:`_expression.collate` and :meth:`.ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
+已经修复了在   :func:`_expression.collate`  and :meth:` .ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
 
     sel = select([table1.c.my_name]).where(table1.c.my_name.collate('...'))
 
@@ -1200,9 +1200,9 @@ post_update与ORM版本控制相结合
     FROM table1
     WHERE table1.my_name COLLATE "..."
 
-之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的:class:`.String`）上使用排序的情况，因为引用是已经应用了引用。
+之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的  :class:`.String` ）上使用排序的情况，因为引用是已经应用了引用。
 
-:ticket:`3785`
+  :ticket:`3785`  
 
 Sqlalchemy中的边界值改变
 ===========================
@@ -1212,7 +1212,7 @@ Sqlalchemy中的边界值改变
 自定义运算符的键入行为已统一
 -----------------------------------
 
-用户可以使用:meth:`运营商。op``函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
+用户可以使用  :meth:`运营商。op`  ` 函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
 
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     NullType（）
@@ -1227,7 +1227,7 @@ Sqlalchemy中的边界值改变
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     DateTime（）
 
-由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括:class:`.Boolean`在内的所有情况都允许返回类型为?
+由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括 :class:`.Boolean` 在内的所有情况都允许返回类型为?
 
     column（“x”，types.String（50））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
@@ -1238,7 +1238,7 @@ Sqlalchemy中的边界值改变
     column（“x”，types.JSON（））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
 
-为了协助布尔比较运算符，添加了一个新的简写方法:meth:`运营商。bool_op。`此方法应优选即时制作布尔值运算符： 
+为了协助布尔比较运算符，添加了一个新的简写方法  :meth:`运营商。bool_op。`  此方法应优选即时制作布尔值运算符： 
 
 .. sourcecode :: pycon + sql
 
@@ -1252,7 +1252,7 @@ Sqlalchemy中的边界值改变
 --------------------------------------------------
 
 
-现在，:obj:`_expression.literal_column`构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
+现在，  :obj:`_expression.literal_column`  构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
 
 以前，不可能生成声明单个百分号的 :obj:_expression.literal_column构造::
 
@@ -1269,9 +1269,9 @@ Sqlalchemy中的边界值改变
     >>> print（literal_column（“ some％symbol”）.compile（dialect = mysql.dialect（）））
     {printsql}一些％符号{stop}
 
-另外，针对:meth:`.Operators.contains`，:meth:`.ColumnOperators.startswith`和:meth:`.ColumnOperators.endswith`等运算符的使用的双倍将仅在适当时发生。 
+另外，针对  :meth:`.Operators.contains`  ，  :meth:` .ColumnOperators.startswith`  和  :meth:`.ColumnOperators.endswith`  等运算符的使用的双倍将仅在适当时发生。 
 
-:ticket:`3740`
+  :ticket:`3740`  
 
 
 .. _change_3785:
@@ -1279,7 +1279,7 @@ Sqlalchemy中的边界值改变
 列级别的COLLATE关键字现在引用了排序名称
 --------------------------------------------------------------–
 
-已经修复了在 :func:`_expression.collate` and :meth:`.ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
+已经修复了在   :func:`_expression.collate`  and :meth:` .ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
 
     sel = select([table1.c.my_name]).where(table1.c.my_name.collate('...'))
 
@@ -1291,9 +1291,9 @@ Sqlalchemy中的边界值改变
     FROM table1
     WHERE table1.my_name COLLATE "..."
 
-之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的:class:`.String`）上使用排序的情况，因为引用是已经应用了引用。
+之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的  :class:`.String` ）上使用排序的情况，因为引用是已经应用了引用。
 
-:ticket:`3785`
+  :ticket:`3785`  
 
 Sqlalchemy中的边界值改变
 ===========================
@@ -1303,7 +1303,7 @@ Sqlalchemy中的边界值改变
 自定义运算符的键入行为已统一
 -----------------------------------
 
-用户可以使用:meth:`运营商。op``函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
+用户可以使用  :meth:`运营商。op`  ` 函数即时制作运算符。以前对于针对此类运算符的表达式的打印行为不一致，也不可控。现在表达式对此操作的键入行为与左手表达式相同:: 
 	
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     NullType（）
@@ -1318,7 +1318,7 @@ Sqlalchemy中的边界值改变
     column（“x”，types.DateTime）.op（“ - ％gt;”）（无）.type
     DateTime（）
 
-由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括:class:`.Boolean`在内的所有情况都允许返回类型为?
+由于大多数用户定义的运算符往往是“比较”运算符，通常是由PostgreSQL定义的许多特殊运算符之一，因此现在：“运营商。op.is_comparison”标志已被维修，遵循其文档化的行为，即包括 :class:`.Boolean` 在内的所有情况都允许返回类型为?
 
     column（“x”，types.String（50））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
@@ -1329,7 +1329,7 @@ Sqlalchemy中的边界值改变
     column（“x”，types.JSON（））。op（ “ - ％gt;”，is_comparison = True）（无）.type
     布尔（）
 
-为了协助布尔比较运算符，添加了一个新的简写方法:meth:`运营商。bool_op。`此方法应优选即时制作布尔值运算符： 
+为了协助布尔比较运算符，添加了一个新的简写方法  :meth:`运营商。bool_op。`  此方法应优选即时制作布尔值运算符： 
 
 .. sourcecode :: pycon+sql
 
@@ -1343,7 +1343,7 @@ Sqlalchemy中的边界值改变
 --------------------------------------------------
 
 
-现在，:obj:`_expression.literal_column`构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
+现在，  :obj:`_expression.literal_column`  构造在特定情况下条件地转义百分号字符，具体取决于DBAPI是否使用敏感的百分符paramstyle或不使用该字符（例如'format'或'pyformat'）。 
 
 以前，不可能生成声明单个百分号的 :obj:_expression.literal_column构造::
 
@@ -1360,16 +1360,16 @@ Sqlalchemy中的边界值改变
     >>> print（literal_column（“ some％symbol”）.compile（dialect = mysql.dialect（）））
     {printsql} some%%symbol{stop}
 
-另外，针对:meth:`.Operators.contains`，:meth:`.ColumnOperators.startswith`和:meth:`.ColumnOperators.endswith`等运算符的使用的双倍将仅在适当时发生。 
+另外，针对  :meth:`.Operators.contains`  ，  :meth:` .ColumnOperators.startswith`  和  :meth:`.ColumnOperators.endswith`  等运算符的使用的双倍将仅在适当时发生。 
 
-:ticket:`3740`
+  :ticket:`3740`  
 
 .. _change_3785:
 
 列级别的COLLATE关键字现在引用了排序名称
 -------------------------------------------------------------- 
 
-已经修复了在 :func:`_expression.collate` and :meth:`.ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
+已经修复了在   :func:`_expression.collate`  and :meth:` .ColumnOperators.collate`所使用的，用于在语句级别提供ad-hoc列排序的约束条件的一个错误，在其中一个大小写敏感的名称没有引用时：:
 
     sel = select([table1.c.my_name]).where(table1.c.my_name.collate('...'))
 
@@ -1381,9 +1381,9 @@ Sqlalchemy中的边界值改变
     FROM table1
     WHERE table1.my_name COLLATE "..."
 
-之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的:class:`.String`）上使用排序的情况，因为引用是已经应用了引用。
+之前大小写敏感名称中的“fr_FR”未被引用。当前，手动引用标识符不会被检测到，因此必须调整手动引用标识符的应用程序。请注意，此更改不影响在类型级别（例如指定在表级别上的  :class:`.String` ）上使用排序的情况，因为引用是已经应用了引用。
 
-:ticket:`3785`
+  :ticket:`3785`  
 
 改进和改变的方言 - PostgreSQL
 =============================================
@@ -1393,22 +1393,22 @@ Sqlalchemy中的边界值改变
 支持批量模式/快速执行助手
 --------------------------------
 
-已经确定Psycopg2的``cursor.executemany（）``方法表现差，特别是对于INSERT语句而言。为了缓解这种情况，psycopg2添加了`快速执行助手 <https://initd.org/psycopg/docs/extras.html#fast-execution-helpers>`_，它通过在批处理中发送多个DML语句来减少服务器往返次数。 SQLAlchemy 1.2现在包括对这些助手的支持，以便可在:class:`_engine.Engine`使用``cursor.executemany（）``对多个参数集合发出语句时透明使用。该功能默认关闭，可以通过:func:`_sa.create_engine`中的``use_batch_mode``参数启用：：
+已经确定Psycopg2的``cursor.executemany（）``方法表现差，特别是对于INSERT语句而言。为了缓解这种情况，psycopg2添加了`快速执行助手 <https://initd.org/psycopg/docs/extras.html#fast-execution-helpers>`_，它通过在批处理中发送多个DML语句来减少服务器往返次数。 SQLAlchemy 1.2现在包括对这些助手的支持，以便可在  :class:`_engine.Engine` ` cursor.executemany（）``对多个参数集合发出语句时透明使用。该功能默认关闭，可以通过  :func:`_sa.create_engine` ` use_batch_mode``参数启用：：
 
     engine = create_engine(
         "postgresql+psycopg2://scott:tiger@host/dbname", use_batch_mode=True
     )
 
-该功能目前被认为是实验性的，但在将来的版本中可能会默认启用。请参见 :ref:`psycopg2_batch_mode`。
+该功能目前被认为是实验性的，但在将来的版本中可能会默认启用。请参见   :ref:`psycopg2_batch_mode` 。
 
-:ticket:`4109`
+  :ticket:`4109`  
 
 .. _change_3959:
 
 支持在INTERVAL中进行字段规范，包括完整的反射
 --------------------------------------------------------
 
-在PostgreSQL的INTERVAL数据类型中，“fields”指示符允许指定要存储的间隔的哪些字段，包括诸如“YEAR”，“MONTH”，“YEAR TO MONTH”等值。 :class:`_postgresql.INTERVAL`数据类型现在允许指定这些值：：
+在PostgreSQL的INTERVAL数据类型中，“fields”指示符允许指定要存储的间隔的哪些字段，包括诸如“YEAR”，“MONTH”，“YEAR TO MONTH”等值。  :class:`_postgresql.INTERVAL` 数据类型现在允许指定这些值：：
 
     from sqlalchemy.dialects.postgresql import INTERVAL
 
@@ -1422,7 +1422,7 @@ Sqlalchemy中的边界值改变
          'default'：None，'autoincrement'：False，
          'type'：INTERVAL(fields = u'day to second')}]
 
-:ticket:`3959`
+  :ticket:`3959`  
 
 改进和改变的方言 - MySQL
 ========================================
@@ -1432,7 +1432,7 @@ Sqlalchemy中的边界值改变
 支持INSERT..ON DUPLICATE KEY UPDATE
 -------------------------------------------
 
-MySQL支持的“ON DUPLICATE KEY UPDATE”子句现在可以使用:class:`_expression.Insert`对象的MySQL特定版本支持，通过:func:`sqlalchemy.dialects.mysql.dml.insert`。这个:class:`_expression.Insert`子类增加了一个新的方法:meth:`~.mysql.dml.Insert.on_duplicate_key_update`，实现了MySQL的语法：：
+MySQL支持的“ON DUPLICATE KEY UPDATE”子句现在可以使用  :class:`_expression.Insert` 。这个  :class:` _expression.Insert` ~.mysql.dml.Insert.on_duplicate_key_update` ，实现了MySQL的语法：：
 
     from sqlalchemy.dialects.mysql import insert
 
@@ -1454,9 +1454,9 @@ MySQL支持的“ON DUPLICATE KEY UPDATE”子句现在可以使用:class:`_expr
 
 请参见::
 
-    :ref:`mysql_insert_on_duplicate_key_update`
+      :ref:`mysql_insert_on_duplicate_key_update` 
 
-:ticket:`4009`
+  :ticket:`4009`  
 
 改进和改变的方言 - Oracle
 =========================================
@@ -1472,7 +1472,7 @@ CX_Oracle方言，键入系统的重大重构
 
     数据类型的处理方式已被重构。对于除LOB类型以外的任何数据类型，不再使用“cursor.setinputsizes（）”方法，根据cx_Oracle开发人员的建议。因此，参数“auto_setinputsizes”和“exclude_setinputsizes”已弃用，并且不再具有任何效果。
 
-    “coerce_to_decimal”标志，仅当值的精度和比例强制转换为“Decimal”时应设置为False，仅影响未键入的（例如没有:class:`.TypeEngine`对象的纯字符串）语句。包括:class：`.Numeric`类型或子类型的Core表达式现在将遵循该类型的十进制强制规则。
+    “coerce_to_decimal”标志，仅当值的精度和比例强制转换为“Decimal”时应设置为False，仅影响未键入的（例如没有  :class:`.TypeEngine` .Numeric` 类型或子类型的Core表达式现在将遵循该类型的十进制强制规则。
 
     方言中的“双阶段”事务支持已被删除，对于cx_Oracle 6.x系列，这个特性已经被删除，并且几乎没有工作的这个东西，也不太可能在生产中使用。因此，“allow_twophase”dialect标志已弃用，也没有任何作用。
 

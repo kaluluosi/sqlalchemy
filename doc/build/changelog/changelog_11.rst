@@ -94,7 +94,7 @@
         :tags: bug, sql
         :versions: 1.2.0b4
 
-        Added :func:`.nullsfirst` and :func:`.nullslast` as top level imports
+        Added :func:`.nullsfirst` and :func:` .nullslast` as top level imports
         in the ``sqlalchemy.`` and ``sqlalchemy.sql.`` namespace.  Pull request
         courtesy Lele Gaifax.
 
@@ -105,7 +105,7 @@
 
         Fixed regression caused by fix for issue :ticket:`4116` affecting versions
         1.2.2 as well as 1.1.15, which had the effect of mis-calculation of the
-        "owning class" of an :class:`.AssociationProxy` as the ``NoneType`` class
+        "owning class" of an :class:`.AssociationProxy` as the ` `NoneType`` class
         in some declarative mixin/inheritance situations as well as if the
         association proxy were accessed off of an un-mapped class.  The "figure out
         the owner" logic has been replaced by an in-depth routine that searches
@@ -208,7 +208,7 @@
         :versions: 1.2.0
 
         Fixed bug where a descriptor that is elsewhere a mapped column
-        or relationship within a hierarchy based on :class:`.AbstractConcreteBase`
+        or relationship within a hierarchy based on :class:`.AbstractConcreteBase` 
         would be referred towards during a refresh operation, causing an error
         as the attribute is not mapped as a mapper property.
         A similar issue can arise for other attributes like the "type" column
@@ -250,8 +250,8 @@
         :versions: 1.2.0b3
 
         Fixed bug in :obj:`_functions.array_agg` function where passing an argument
-        that is already of type :class:`_types.ARRAY`, such as a PostgreSQL
-        :obj:`_postgresql.array` construct, would produce a ``ValueError``, due
+        that is already of type :class:`_types.ARRAY` , such as a PostgreSQL
+        :obj:`_postgresql.array` construct, would produce a ` `ValueError``, due
         to the function attempting to nest the arrays.
 
     .. change::
@@ -269,9 +269,9 @@
         :tickets: 4074
         :versions: 1.2.0b3
 
-        Fixed bug in PostgreSQL :meth:`.postgresql.dml.Insert.on_conflict_do_update`
+        Fixed bug in PostgreSQL :meth:`.postgresql.dml.Insert.on_conflict_do_update` 
         which would prevent the insert statement from being used as a CTE,
-        e.g. via :meth:`_expression.Insert.cte`, within another statement.
+        e.g. via :meth:`_expression.Insert.cte` , within another statement.
 
     .. change::
         :tags: bug, orm
@@ -298,7 +298,7 @@
         :versions: 1.2.0b3
 
         MariaDB 10.2 now supports CHECK constraints (warning: use version 10.2.9
-        or greater due to upstream issues noted in :ticket:`4097`).  Reflection
+        or greater due to upstream issues noted in :ticket:`4097` ).  Reflection
         now takes these CHECK constraints into account when they are present in
         the ``SHOW CREATE TABLE`` output.
 
@@ -307,10 +307,10 @@
         :tickets: 4093
         :versions: 1.2.0b3
 
-        Fixed bug where the recently added :meth:`.ColumnOperators.any_`
+        Fixed bug where the recently added :meth:`.ColumnOperators.any_` 
         and :meth:`.ColumnOperators.all_` methods didn't work when called
         as methods, as opposed to using the standalone functions
-        :func:`_expression.any_` and :func:`_expression.all_`.  Also
+        :func:`_expression.any_` and :func:` _expression.all_`.  Also
         added documentation examples for these relatively unintuitive
         SQL operators.
 
@@ -324,7 +324,7 @@
         :versions: 1.2.0b3
 
         Fixed bug in :meth:`.Session.merge` following along similar lines as that
-        of :ticket:`4030`, where an internal check for a target object in
+        of :ticket:`4030` , where an internal check for a target object in
         the identity map could lead to an error if it were to be garbage collected
         immediately before the merge routine actually retrieves the object.
 
@@ -338,7 +338,7 @@
         loading.  Additionally, as the bug led to excess work being performed,
         Python function call counts are also improved by 20% within the initial
         calculation of result set columns, complementing the joined eager load
-        improvements of :ticket:`3915`.
+        improvements of :ticket:`3915` .
 
     .. change::
         :tags: bug, orm
@@ -377,8 +377,8 @@
         :tickets: 4067
         :versions: 1.2.0b3
 
-        An :class:`.InvalidRequestError` is raised when a :func:`.synonym`
-        is used against an attribute that is not against a :class:`.MapperProperty`,
+        An :class:`.InvalidRequestError` is raised when a :func:` .synonym`
+        is used against an attribute that is not against a :class:`.MapperProperty` ,
         such as an association proxy.  Previously, a recursion overflow would
         occur trying to locate non-existent attributes.
 
@@ -395,7 +395,7 @@
         :versions: 1.2.0b1
 
         Added new keywords :paramref:`.Sequence.cache` and
-        :paramref:`.Sequence.order` to :class:`.Sequence`, to allow rendering
+        :paramref:`.Sequence.order` to :class:` .Sequence`, to allow rendering
         of the CACHE parameter understood by Oracle and PostgreSQL, and the
         ORDER parameter understood by Oracle.  Pull request
         courtesy David Moore.
@@ -409,7 +409,7 @@
         Fixed regression from 1.1.11 where adding additional non-entity
         columns to a query that includes an entity with subqueryload
         relationships would fail, due to an inspection added in 1.1.11 as a
-        result of :ticket:`4011`.
+        result of :ticket:`4011` .
 
 
     .. change:: 4031
@@ -419,7 +419,7 @@
 
         Fixed bug involving JSON NULL evaluation logic added in 1.1 as part
         of :ticket:`3514` where the logic would not accommodate ORM
-        mapped attributes named differently from the :class:`_schema.Column`
+        mapped attributes named differently from the :class:`_schema.Column` 
         that was mapped.
 
     .. change:: 4030
@@ -428,7 +428,7 @@
         :tickets: 4030
 
         Added ``KeyError`` checks to all methods within
-        :class:`.WeakInstanceDict` where a check for ``key in dict`` is
+        :class:`.WeakInstanceDict` where a check for ` `key in dict`` is
         followed by indexed access to that key, to guard against a race against
         garbage collection that under load can remove the key from the dict
         after the code assumes its present, leading to very infrequent
@@ -443,7 +443,7 @@
         :tickets: 4012
         :versions: 1.2.0b1
 
-        Fixed AttributeError which would occur in :class:`.WithinGroup`
+        Fixed AttributeError which would occur in :class:`.WithinGroup` 
         construct during an iteration of the structure.
 
     .. change:: 4011
@@ -452,7 +452,7 @@
         :versions: 1.2.0b1
 
         Fixed issue with subquery eagerloading which continues on from
-        the series of issues fixed in :ticket:`2699`, :ticket:`3106`,
+        the series of issues fixed in :ticket:`2699` , :ticket:`3106` ,
         :ticket:`3893` involving that the "subquery" contains the correct
         FROM clause when beginning from a joined inheritance subclass
         and then subquery eager loading onto a relationship from
@@ -612,7 +612,7 @@
         Fixed regression released in 1.1.8 due to :ticket:`3950` where the
         deeper search for information about column types in the case of a
         "schema type" or a :class:`.TypeDecorator` would produce an attribute
-        error if the mapping also contained a :obj:`.column_property`.
+        error if the mapping also contained a :obj:`.column_property` .
 
     .. change:: 3952
         :tags: bug, sql
@@ -650,9 +650,9 @@
 
         Fixed bug in :mod:`sqlalchemy.ext.mutable` where the
         :meth:`.Mutable.as_mutable` method would not track a type that had
-        been copied using :meth:`.TypeEngine.copy`.  This became more of
-        a regression in 1.1 compared to 1.0 because the :class:`.TypeDecorator`
-        class is now a subclass of :class:`.SchemaEventTarget`, which among
+        been copied using :meth:`.TypeEngine.copy` .  This became more of
+        a regression in 1.1 compared to 1.0 because the :class:`.TypeDecorator` 
+        class is now a subclass of :class:`.SchemaEventTarget` , which among
         other things indicates to the parent :class:`_schema.Column` that the type
         should be copied when the :class:`_schema.Column` is.  These copies are
         common when using declarative with mixins or abstract classes.
@@ -662,7 +662,7 @@
         :versions: 1.2.0b1
 
         Added support for bound parameters, e.g. those normally set up
-        via :meth:`_query.Query.params`, to the :meth:`.baked.Result.count`
+        via :meth:`_query.Query.params` , to the :meth:`.baked.Result.count` 
         method.  Previously, support for parameters were omitted. Pull request
         courtesy Pat Deegan.
 
@@ -688,7 +688,7 @@
         from the selectable represented by the :func:`.aliased` construct.
         This allows special options for :func:`.aliased` such as
         :paramref:`.aliased.adapt_on_names` to be used in conjunction with
-        :meth:`_query.Query.select_entity_from`.
+        :meth:`_query.Query.select_entity_from` .
 
     .. change::
         :tags: bug, engine
@@ -708,7 +708,7 @@
         :versions: 1.2.0b1
 
         Fixed a race condition which could occur under threaded environments
-        as a result of the caching added via :ticket:`3915`.   An internal
+        as a result of the caching added via :ticket:`3915` .   An internal
         collection of ``Column`` objects could be regenerated on an alias
         object inappropriately, confusing a joined eager loader when it
         attempts to render SQL and collect results and resulting in an
@@ -719,9 +719,9 @@
         :tags: bug, sql, postgresql
         :tickets: 2892
 
-        Added support for the :class:`.Variant` and the :class:`.SchemaType`
+        Added support for the :class:`.Variant` and the :class:` .SchemaType`
         objects to be compatible with each other.  That is, a variant
-        can be created against a type like :class:`.Enum`, and the instructions
+        can be created against a type like :class:`.Enum` , and the instructions
         to create constraints and/or database-specific type objects will
         propagate correctly as per the variant's dialect mapping.
 
@@ -736,7 +736,7 @@
         as well as if the savepoint clause constructs were used directly
         with an unbounded umber of savepoint names.   The memory leak does
         **not** impact the vast majority of cases as normally the
-        :class:`_engine.Connection`, which renders savepoint names with a simple
+        :class:`_engine.Connection` , which renders savepoint names with a simple
         counter starting at "1", is used on a per-transaction or
         per-fixed-number-of-transactions basis before being discarded.
 
@@ -748,7 +748,7 @@
         name would be invoked in terms of an alias name when rendered along
         with a column expression; occurred only when the source translate
         name was "None".   The "schema translate" feature now only takes
-        effect for :class:`.SchemaItem` and :class:`.SchemaType` subclasses,
+        effect for :class:`.SchemaItem` and :class:` .SchemaType` subclasses,
         that is, objects that correspond to a DDL-creatable structure in
         a database.
 
@@ -771,7 +771,7 @@
         earlier versions as a result of increased abstraction. The use of ad-
         hoc :class:`.AliasedClass` objects per query, which produces lots of
         column lookup overhead each time, has been replaced with a cached
-        approach that makes use of a small pool of :class:`.AliasedClass`
+        approach that makes use of a small pool of :class:`.AliasedClass` 
         objects that are reused between invocations of joined eager loading.
         Some mechanics involving eager join path construction have also been
         optimized.   Callcounts for an end-to-end query construction + single
@@ -820,7 +820,7 @@
 
         Fixed bug whereby the :meth:`.DDLEvents.column_reflect` event would not
         allow a non-textual expression to be passed as the value of the
-        "default" for the new column, such as a :class:`.FetchedValue`
+        "default" for the new column, such as a :class:`.FetchedValue` 
         object to indicate a generic triggered default or a
         :func:`_expression.text` construct.  Clarified the documentation
         in this regard as well.
@@ -839,7 +839,7 @@
 
         Fixed bug in PostgreSQL :class:`.ExcludeConstraint` where the
         "whereclause" and "using" parameters would not be copied during an
-        operation like :meth:`_schema.Table.tometadata`.
+        operation like :meth:`_schema.Table.tometadata` .
 
     .. change:: 3898
         :tags: bug, mssql
@@ -854,7 +854,7 @@
         :tags: feature, ext
         :tickets: 3896
 
-        Added :meth:`.baked.Result.scalar` and :meth:`.baked.Result.count`
+        Added :meth:`.baked.Result.scalar` and :meth:` .baked.Result.count`
         to the "baked" query system.
 
     .. change:: 3895
@@ -870,7 +870,7 @@
         :tags: bug, orm
         :tickets: 3893
 
-        Fixed bug first introduced in 0.9.7 as a result of :ticket:`3106`
+        Fixed bug first introduced in 0.9.7 as a result of :ticket:`3106` 
         which would cause an incorrect query in some forms of multi-level
         subqueryload against aliased entities, with an unnecessary extra
         FROM entity in the innermost subquery.
@@ -882,7 +882,7 @@
     .. change:: mysql_index_prefix
         :tags: feature, mysql
 
-        Added a new parameter ``mysql_prefix`` supported by the :class:`.Index`
+        Added a new parameter ``mysql_prefix`` supported by the :class:`.Index` 
         construct, allows specification of MySQL-specific prefixes such as
         "FULLTEXT". Pull request courtesy Joseph Schorr.
 
@@ -894,7 +894,7 @@
         "existing" row, e.g. already loaded from a different path in the
         same query, would not invoke subquery loaders for unloaded attributes
         that specified this loading.  This issue is in the same area
-        as that of :ticket:`3431`, :ticket:`3811` which involved
+        as that of :ticket:`3431` , :ticket:`3811` which involved
         similar issues with joined loading.
 
     .. change:: 3888
@@ -992,7 +992,7 @@
         :tickets: 3874
 
         Fixed bug where the single-table inheritance query criteria would not
-        be inserted into the query in the case that the :class:`.Bundle`
+        be inserted into the query in the case that the :class:`.Bundle` 
         construct were used as the selection criteria.
 
     .. change:: repr_for_url_reflect
@@ -1001,7 +1001,7 @@
         The engine URL embedded in the exception for "could not reflect"
         in :meth:`_schema.MetaData.reflect` now conceals the password; also
         the ``__repr__`` for :class:`.TLEngine` now acts like that of
-        :class:`_engine.Engine`, concealing the URL password.  Pull request courtesy
+        :class:`_engine.Engine` , concealing the URL password.  Pull request courtesy
         Valery Yundin.
 
     .. change:: 3867
@@ -1016,7 +1016,7 @@
     .. change:: pg_timestamp_zero_prec
         :tags: bug, postgresql
 
-        The :class:`_postgresql.TIME` and :class:`_postgresql.TIMESTAMP`
+        The :class:`_postgresql.TIME` and :class:` _postgresql.TIMESTAMP`
         datatypes now support a setting of zero for "precision"; previously
         a zero would be ignored.  Pull request courtesy Ionuț Ciocîrlan.
 
@@ -1037,10 +1037,10 @@
         :tickets: 3859
 
         Fixed issue in :class:`.Variant` where the "right hand coercion" logic,
-        inherited from :class:`.TypeDecorator`, would
+        inherited from :class:`.TypeDecorator` , would
         coerce the right-hand side into the :class:`.Variant` itself, rather than
         what the default type for the :class:`.Variant` would do.   In the
-        case of :class:`.Variant`, we want the type to act mostly like the base
+        case of :class:`.Variant` , we want the type to act mostly like the base
         type so the default logic of :class:`.TypeDecorator` is now overridden
         to fall back to the underlying wrapped type's logic.   Is mostly relevant
         for JSON at the moment.
@@ -1049,13 +1049,13 @@
         :tags: bug, orm
         :tickets: 3856
 
-        Fixed bug related to :ticket:`3177`, where a UNION or other set operation
+        Fixed bug related to :ticket:`3177` , where a UNION or other set operation
         emitted by a :class:`_query.Query` would apply "single-inheritance" criteria
         to the outside of the union (also referencing the wrong selectable),
         even though this criteria is now expected to
         be already present on the inside subqueries.  The single-inheritance
         criteria is now omitted once union() or another set operation is
-        called against :class:`_query.Query` in the same way as :meth:`_query.Query.from_self`.
+        called against :class:`_query.Query` in the same way as :meth:` _query.Query.from_self`.
 
     .. change:: 3548
         :tags: bug, firebird
@@ -1075,7 +1075,7 @@
         :tickets: 3842
 
         Fixed bug where newly added warning for primary key on insert w/o
-        autoincrement setting (see :ticket:`3216`) would fail to emit
+        autoincrement setting (see :ticket:`3216` ) would fail to emit
         correctly when invoked upon a lower-case :func:`.table` construct.
 
     .. change::  3852
@@ -1091,7 +1091,7 @@
         :tags: bug, engine
 
         Removed long-broken "default_schema_name()" method from
-        :class:`_engine.Connection`.  This method was left over from a very old
+        :class:`_engine.Connection` .  This method was left over from a very old
         version and was non-working (e.g. would raise).  Pull request
         courtesy Benjamin Dopplinger.
 
@@ -1187,7 +1187,7 @@
         :tickets: 3836
 
         Fixed regression where some :class:`_query.Query` methods like
-        :meth:`_query.Query.update` and others would fail if the :class:`_query.Query`
+        :meth:`_query.Query.update` and others would fail if the :class:` _query.Query`
         were against a series of mapped columns, rather than the mapped
         entity as a whole.
 
@@ -1199,14 +1199,14 @@
         in :class:`.Enum` whereby using the enum object in a string
         concatenation would maintain the :class:`.Enum` type as the type
         of the expression overall, producing missing lookups.  A string
-        concatenation against an :class:`.Enum`-typed column now uses
+        concatenation against an :class:`.Enum` -typed column now uses
         :class:`.String` as the datatype of the expression itself.
 
     .. change::
         :tags: bug, sql
         :tickets: 3832
 
-        Fixed regression which occurred as a side effect of :ticket:`2919`,
+        Fixed regression which occurred as a side effect of :ticket:`2919` ,
         which in the less typical case of a user-defined
         :class:`.TypeDecorator` that was also itself an instance of
         :class:`.SchemaType` (rather than the implementation being such)
@@ -1234,7 +1234,7 @@
 
         Fixed bug involving the rule to disable a joined collection eager
         loader on the other side of a many-to-one lazy loader, first added
-        in :ticket:`1495`, where the rule would fail if the parent object
+        in :ticket:`1495` , where the rule would fail if the parent object
         had some other lazyloader-bound query options associated with it.
 
     .. change::
@@ -1242,7 +1242,7 @@
         :tickets: 3822
 
         Fixed self-referential entity, deferred column loading issue in a
-        similar style as that of :ticket:`3431`, :ticket:`3811` where an entity
+        similar style as that of :ticket:`3431` , :ticket:`3811` where an entity
         is present in multiple positions within the row due to self-referential
         eager loading; when the deferred loader only applies to one of the
         paths, the "present" column loader will now override the deferred non-
@@ -1254,7 +1254,7 @@
 
         Fixed regression in :class:`.Enum` type where event handlers were not
         transferred in the case of the type object being copied, due to a
-        conflicting copy() method added as part of :ticket:`3250`.  This copy
+        conflicting copy() method added as part of :ticket:`3250` .  This copy
         occurs normally in situations when the column is copied, such as
         in tometadata() or when using declarative mixins with columns.  The
         event handler not being present would impact the constraint being
@@ -1280,7 +1280,7 @@
         :tickets: 3820
 
         The "SELECT SERVERPROPERTY"
-        query added in :ticket:`3810` and :ticket:`3814` is failing on unknown
+        query added in :ticket:`3810` and :ticket:` 3814` is failing on unknown
         combinations of Pyodbc and SQL Server.  While failure of this function
         was anticipated, the exception catch was not broad enough so it now
         catches all forms of pyodbc.Error.
@@ -1296,7 +1296,7 @@
 
         .. seealso::
 
-            :ref:`change_3216`
+            :ref:`change_3216` 
 
 .. changelog::
     :version: 1.1.0
@@ -1328,8 +1328,8 @@
         :tickets: 3812
 
         Enhanced the new "raise" lazy loader strategy to also include a
-        "raise_on_sql" variant, available both via :paramref:`.orm.relationship.lazy`
-        as well as :func:`_orm.raiseload`.   This variant only raises if the
+        "raise_on_sql" variant, available both via :paramref:`.orm.relationship.lazy` 
+        as well as :func:`_orm.raiseload` .   This variant only raises if the
         lazy load would actually emit SQL, vs. raising if the lazy loader
         mechanism is invoked at all.
 
@@ -1371,7 +1371,7 @@
 
         .. seealso::
 
-            :ref:`change_3809`
+            :ref:`change_3809` 
 
     .. change::
         :tags: bug, postgresql
@@ -1397,8 +1397,8 @@
         :tickets: 3803
 
         The ``BaseException`` exception class is now intercepted by the
-        exception-handling routines of :class:`_engine.Connection`, and includes
-        handling by the :meth:`_events.ConnectionEvents.handle_error`
+        exception-handling routines of :class:`_engine.Connection` , and includes
+        handling by the :meth:`_events.ConnectionEvents.handle_error` 
         event.  The :class:`_engine.Connection` is now **invalidated** by default in
         the case of a system level exception that is not a subclass of
         ``Exception``, including ``KeyboardInterrupt`` and the greenlet
@@ -1409,7 +1409,7 @@
 
         .. seealso::
 
-            :ref:`change_3803`
+            :ref:`change_3803` 
 
     .. change::
         :tags: bug, sql
@@ -1487,7 +1487,7 @@
 
         .. seealso::
 
-            :ref:`change_3776`
+            :ref:`change_3776` 
 
     .. change::
         :tags: bug, orm
@@ -1513,7 +1513,7 @@
         a JSON index value would not be invoked.  The native String and Integer
         datatypes are now called upon from within the JSONIndexType
         and JSONPathType.  This is applied to the generic, PostgreSQL, and
-        MySQL JSON types and also has a dependency on :ticket:`3766`.
+        MySQL JSON types and also has a dependency on :ticket:`3766` .
 
     .. change::
         :tags: change, orm
@@ -1563,7 +1563,7 @@
 
         .. seealso::
 
-            :ref:`change_3749`
+            :ref:`change_3749` 
 
 
     .. change::
@@ -1607,10 +1607,10 @@
         extension, whereby the existing compilation schemes for an established
         construct would be removed if that construct itself didn't already
         have its own dedicated ``__visit_name__``.  This was a
-        rare occurrence in 1.0, however in 1.1 :class:`_postgresql.ARRAY`
+        rare occurrence in 1.0, however in 1.1 :class:`_postgresql.ARRAY` 
         subclasses :class:`_types.ARRAY` and has this behavior.
         As a result, setting up a compilation handler for another dialect
-        such as SQLite would render the main :class:`_postgresql.ARRAY`
+        such as SQLite would render the main :class:`_postgresql.ARRAY` 
         object no longer compilable.
 
     .. change::
@@ -1627,7 +1627,7 @@
 
         .. seealso::
 
-            :ref:`change_3730`
+            :ref:`change_3730` 
 
     .. change::
         :tags: bug, sql
@@ -1660,12 +1660,12 @@
         :tags: feature, sql
         :tickets: 3718
 
-        Added TABLESAMPLE support via the new :meth:`_expression.FromClause.tablesample`
+        Added TABLESAMPLE support via the new :meth:`_expression.FromClause.tablesample` 
         method and standalone function.  Pull request courtesy Ilja Everilä.
 
         .. seealso::
 
-            :ref:`change_3718`
+            :ref:`change_3718` 
 
     .. change::
         :tags: feature, orm, ext
@@ -1677,7 +1677,7 @@
 
         .. seealso::
 
-            :ref:`feature_indexable`
+            :ref:`feature_indexable` 
 
     .. change::
         :tags: bug, sql
@@ -1697,7 +1697,7 @@
 
         .. seealso::
 
-            :ref:`change_3529`
+            :ref:`change_3529` 
 
     .. change::
         :tags: feature, postgresql
@@ -1725,7 +1725,7 @@
 
         .. seealso::
 
-            :ref:`change_3708`
+            :ref:`change_3708` 
 
     .. change::
         :tags: feature, sql
@@ -1737,12 +1737,12 @@
 
         .. seealso::
 
-            :ref:`change_3049`
+            :ref:`change_3049` 
 
     .. change::
         :tags: feature, orm
 
-        Added new flag :paramref:`.Session.bulk_insert_mappings.render_nulls`
+        Added new flag :paramref:`.Session.bulk_insert_mappings.render_nulls` 
         which allows an ORM bulk INSERT to occur with NULL values rendered;
         this bypasses server side defaults, however allows all statements
         to be formed with the same set of columns, allowing them to be
@@ -1752,7 +1752,7 @@
         :tags: feature, postgresql
         :tickets: 3588
 
-        Added new parameter :paramref:`.PGInspector.get_view_names.include`,
+        Added new parameter :paramref:`.PGInspector.get_view_names.include` ,
         allowing specification for what kinds of views should be returned.
         Currently "plain" and "materialized" views are included.  Pull
         request courtesy Sebastian Bank.
@@ -1760,8 +1760,8 @@
     .. change::
         :tags: feature, mssql
 
-        The ``mssql_clustered`` flag available on :class:`.UniqueConstraint`,
-        :class:`.PrimaryKeyConstraint`, :class:`.Index` now defaults to
+        The ``mssql_clustered`` flag available on :class:`.UniqueConstraint` ,
+        :class:`.PrimaryKeyConstraint` , :class:`.Index` now defaults to
         ``None``, and can be set to False which will render the NONCLUSTERED
         keyword in particular for a primary key, allowing a different index to
         be used as "clustered". Pull request courtesy Saulius Žemaitaitis.
@@ -1770,22 +1770,22 @@
         :tags: feature, orm
         :tickets: 1311
 
-        Added new event :meth:`.AttributeEvents.init_scalar`, as well
+        Added new event :meth:`.AttributeEvents.init_scalar` , as well
         as a new example suite illustrating its use.  This event can be used
         to provide a Core-generated default value to a Python-side attribute
         before the object is persisted.
 
         .. seealso::
 
-            :ref:`change_1311`
+            :ref:`change_1311` 
 
     .. change::
         :tags: feature, postgresql
         :tickets: 3720
 
-        Added ``postgresql_tablespace`` as an argument to :class:`.Index`
+        Added ``postgresql_tablespace`` as an argument to :class:`.Index` 
         to allow specification of TABLESPACE for an index in PostgreSQL.
-        Complements the same-named parameter on :class:`_schema.Table`.  Pull
+        Complements the same-named parameter on :class:`_schema.Table` .  Pull
         request courtesy Benjamin Bertrand.
 
     .. change::
@@ -1816,7 +1816,7 @@
         Implemented reflection of CHECK constraints for SQLite and PostgreSQL.
         This is available via the new inspector method
         :meth:`_reflection.Inspector.get_check_constraints` as well as when reflecting
-        :class:`_schema.Table` objects in the form of :class:`.CheckConstraint`
+        :class:`_schema.Table` objects in the form of :class:` .CheckConstraint`
         objects present in the constraints collection.  Pull request courtesy
         Alex Grönholm.
 
@@ -1824,7 +1824,7 @@
         :tags: feature, postgresql
 
         Added new parameter
-        :paramref:`.GenerativeSelect.with_for_update.key_share`, which
+        :paramref:`.GenerativeSelect.with_for_update.key_share` , which
         will render the ``FOR NO KEY UPDATE`` version of ``FOR UPDATE``
         and ``FOR KEY SHARE`` instead of ``FOR SHARE``
         on the PostgreSQL backend.  Pull request courtesy Sergey Skopin.
@@ -1833,7 +1833,7 @@
         :tags: feature, postgresql, oracle
 
         Added new parameter
-        :paramref:`.GenerativeSelect.with_for_update.skip_locked`, which
+        :paramref:`.GenerativeSelect.with_for_update.skip_locked` , which
         will render the ``SKIP LOCKED`` phrase for a ``FOR UPDATE`` or
         ``FOR SHARE`` lock on the PostgreSQL and Oracle backends.  Pull
         request courtesy Jack Zhou.
@@ -1851,7 +1851,7 @@
 
         .. seealso::
 
-            :ref:`change_3394`
+            :ref:`change_3394` 
 
     .. change::
         :tags: feature, postgresql
@@ -1871,7 +1871,7 @@
 
         .. seealso::
 
-            :ref:`change_3653`
+            :ref:`change_3653` 
 
     .. change::
         :tags: feature, sql
@@ -1882,7 +1882,7 @@
 
         .. seealso::
 
-            :ref:`change_is_distinct_from`
+            :ref:`change_is_distinct_from` 
 
     .. change::
         :tags: bug, orm
@@ -1896,7 +1896,7 @@
         :tags: feature, sql
 
         Added a hook in :meth:`.DDLCompiler.visit_create_table` called
-        :meth:`.DDLCompiler.create_table_suffix`, allowing custom dialects
+        :meth:`.DDLCompiler.create_table_suffix` , allowing custom dialects
         to add keywords after the "CREATE TABLE" clause.  Pull request
         courtesy Mark Sandan.
 
@@ -1904,12 +1904,12 @@
         :tags: feature, sql
 
         Negative integer indexes are now accommodated by rows
-        returned from a :class:`_engine.ResultProxy`.  Pull request courtesy
+        returned from a :class:`_engine.ResultProxy` .  Pull request courtesy
         Emanuele Gaifas.
 
         .. seealso::
 
-            :ref:`change_gh_231`
+            :ref:`change_gh_231` 
 
     .. change::
         :tags: feature, sqlite
@@ -1920,7 +1920,7 @@
 
         .. seealso::
 
-            :ref:`change_3629`
+            :ref:`change_3629` 
 
     .. change::
         :tags: feature, sql
@@ -1932,7 +1932,7 @@
 
         .. seealso::
 
-            :ref:`change_2857`
+            :ref:`change_2857` 
 
     .. change::
         :tags: feature, sql
@@ -1943,21 +1943,21 @@
 
         .. seealso::
 
-            :ref:`change_1957`
+            :ref:`change_1957` 
 
     .. change::
         :tags: feature, engine
 
-        Added connection pool events :meth:`ConnectionEvents.close`,
-        :meth:`_events.ConnectionEvents.detach`,
-        :meth:`_events.ConnectionEvents.close_detached`.
+        Added connection pool events :meth:`ConnectionEvents.close` ,
+        :meth:`_events.ConnectionEvents.detach` ,
+        :meth:`_events.ConnectionEvents.close_detached` .
 
     .. change::
         :tags: bug, orm, mysql
         :tickets: 3680
 
         Further continuing on the common MySQL exception case of
-        a savepoint being cancelled first covered in :ticket:`2696`,
+        a savepoint being cancelled first covered in :ticket:`2696` ,
         the failure mode in which the :class:`.Session` is placed when a
         SAVEPOINT vanishes before rollback has been improved to allow the
         :class:`.Session` to still function outside of that savepoint.
@@ -1965,7 +1965,7 @@
 
         .. seealso::
 
-            :ref:`change_3680`
+            :ref:`change_3680` 
 
     .. change::
         :tags: feature, mssql
@@ -1973,12 +1973,12 @@
 
         Added basic isolation level support to the SQL Server dialects
         via :paramref:`_sa.create_engine.isolation_level` and
-        :paramref:`.Connection.execution_options.isolation_level`
+        :paramref:`.Connection.execution_options.isolation_level` 
         parameters.
 
         .. seealso::
 
-            :ref:`change_3534`
+            :ref:`change_3534` 
 
     .. change::
         :tags: feature, mysql
@@ -1990,7 +1990,7 @@
 
         .. seealso::
 
-            :ref:`change_3332`
+            :ref:`change_3332` 
 
     .. change::
         :tags: bug, orm
@@ -2005,7 +2005,7 @@
 
         .. seealso::
 
-            :ref:`change_3677`
+            :ref:`change_3677` 
 
     .. change::
         :tags: bug, orm
@@ -2018,7 +2018,7 @@
 
         .. seealso::
 
-            :ref:`change_3662`
+            :ref:`change_3662` 
 
     .. change::
         :tags: bug, orm
@@ -2033,7 +2033,7 @@
 
         .. seealso::
 
-            :ref:`change_3431`
+            :ref:`change_3431` 
 
     .. change::
         :tags: feature, engine
@@ -2049,13 +2049,13 @@
 
         .. seealso::
 
-            :ref:`change_2837`
+            :ref:`change_2837` 
 
     .. change::
         :tags: feature, ext
         :tickets: 3297
 
-        Added :class:`.MutableSet` and :class:`.MutableList` helper classes
+        Added :class:`.MutableSet` and :class:` .MutableList` helper classes
         to the :ref:`mutable_toplevel` extension.  Pull request courtesy
         Jeong YunWon.
 
@@ -2070,14 +2070,14 @@
 
         .. seealso::
 
-            :ref:`change_2551`
+            :ref:`change_2551` 
 
     .. change::
         :tags: bug, orm
         :tickets: 3641
 
         A refinement to the logic which adds columns to the resulting SQL when
-        :meth:`_query.Query.distinct` is combined with :meth:`_query.Query.order_by` such
+        :meth:`_query.Query.distinct` is combined with :meth:` _query.Query.order_by` such
         that columns which are already present will not be added
         a second time, even if they are labeled with a different name.
         Regardless of this change, the extra columns added to the SQL have
@@ -2089,7 +2089,7 @@
 
         .. seealso::
 
-            :ref:`change_3641`
+            :ref:`change_3641` 
 
     .. change::
         :tags: feature, sql
@@ -2100,14 +2100,14 @@
         enumeration libraries, to the :class:`_types.Enum` datatype.
         The :class:`_types.Enum` datatype now also performs in-Python validation
         of incoming values, and adds an option to forego creating the
-        CHECK constraint :paramref:`.Enum.create_constraint`.
+        CHECK constraint :paramref:`.Enum.create_constraint` .
         Pull request courtesy Alex Grönholm.
 
         .. seealso::
 
-            :ref:`change_3292`
+            :ref:`change_3292` 
 
-            :ref:`change_3095`
+            :ref:`change_3095` 
 
     .. change::
         :tags: change, postgresql
@@ -2128,7 +2128,7 @@
 
         .. seealso::
 
-            :ref:`change_3634`
+            :ref:`change_3634` 
 
     .. change::
         :tags: bug, sqlite
@@ -2140,7 +2140,7 @@
 
         .. seealso::
 
-            :ref:`change_3633`
+            :ref:`change_3633` 
 
     .. change::
         :tags: feature, orm
@@ -2154,7 +2154,7 @@
 
         .. seealso::
 
-            :ref:`change_2349`
+            :ref:`change_2349` 
 
 
     .. change::
@@ -2178,7 +2178,7 @@
 
         .. seealso::
 
-            :ref:`change_3631`
+            :ref:`change_3631` 
 
     .. change::
         :tags: bug, orm
@@ -2192,14 +2192,14 @@
 
         .. seealso::
 
-            :ref:`change_3630`
+            :ref:`change_3630` 
 
     .. change::
         :tags: feature, orm
         :tickets: 3081
 
         The ``str()`` call for :class:`_query.Query` will now take into account
-        the :class:`_engine.Engine` to which the :class:`.Session` is bound, when
+        the :class:`_engine.Engine` to which the :class:` .Session` is bound, when
         generating the string form of the SQL, so that the actual SQL
         that would be emitted to the database is shown, if possible.  Previously,
         only the engine associated with the :class:`_schema.MetaData` to which the
@@ -2211,13 +2211,13 @@
 
         .. seealso::
 
-            :ref:`change_3081`
+            :ref:`change_3081` 
 
     .. change::
         :tags: feature, sql
         :tickets: 3501
 
-        A deep improvement to the recently added :meth:`_expression.TextClause.columns`
+        A deep improvement to the recently added :meth:`_expression.TextClause.columns` 
         method, and its interaction with result-row processing, now allows
         the columns passed to the method to be positionally matched with the
         result columns in the statement, rather than matching on name alone.
@@ -2248,7 +2248,7 @@
 
         .. seealso::
 
-            :ref:`change_2685`
+            :ref:`change_2685` 
 
     .. change::
         :tags: feature, engine
@@ -2260,7 +2260,7 @@
         consume the engine's URL and keyword arguments, and then at engine
         create time will be given the engine itself to allow additional
         modifications or event registration.  Plugins are written as a
-        subclass of :class:`.CreateEnginePlugin`; see that class for
+        subclass of :class:`.CreateEnginePlugin` ; see that class for
         details.
 
     .. change::
@@ -2274,13 +2274,13 @@
 
         .. seealso::
 
-            :ref:`change_3547`
+            :ref:`change_3547` 
 
     .. change::
         :tags: feature, sql
         :tickets: 3619
 
-        Added a new type to core :class:`_types.JSON`.  This is the
+        Added a new type to core :class:`_types.JSON` .  This is the
         base of the PostgreSQL :class:`_postgresql.JSON` type as well as that
         of the new :class:`.mysql.JSON` type, so that a PG/MySQL-agnostic
         JSON column may be used.  The type features basic index and path
@@ -2288,17 +2288,17 @@
 
         .. seealso::
 
-            :ref:`change_3619`
+            :ref:`change_3619` 
 
     .. change::
         :tags: bug, sql
         :tickets: 3616
 
         Fixed an assertion that would raise somewhat inappropriately
-        if a :class:`.Index` were associated with a :class:`_schema.Column` that
-        is associated with a lower-case-t :class:`_expression.TableClause`; the
+        if a :class:`.Index` were associated with a :class:` _schema.Column` that
+        is associated with a lower-case-t :class:`_expression.TableClause` ; the
         association should be ignored for the purposes of associating
-        the index with a :class:`_schema.Table`.
+        the index with a :class:`_schema.Table` .
 
     .. change::
         :tags: bug, orm
@@ -2312,14 +2312,14 @@
 
         .. seealso::
 
-            :ref:`change_3601`
+            :ref:`change_3601` 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 3587
 
         Added support for reflecting the source of materialized views
-        to the PostgreSQL version of the :meth:`_reflection.Inspector.get_view_definition`
+        to the PostgreSQL version of the :meth:`_reflection.Inspector.get_view_definition` 
         method.
 
     .. change::
@@ -2332,7 +2332,7 @@
 
         .. seealso::
 
-            :ref:`change_3582`
+            :ref:`change_3582` 
 
     .. change::
         :tags: enhancement, schema
@@ -2359,9 +2359,9 @@
 
         .. seealso::
 
-            :ref:`change_3216`
+            :ref:`change_3216` 
 
-            :ref:`change_mysql_3216`
+            :ref:`change_mysql_3216` 
 
     .. change::
         :tags: change, mysql
@@ -2376,9 +2376,9 @@
 
         .. seealso::
 
-            :ref:`change_mysql_3216`
+            :ref:`change_mysql_3216` 
 
-            :ref:`change_3216`
+            :ref:`change_3216` 
 
     .. change::
         :tags: change, sqlite
@@ -2391,7 +2391,7 @@
 
         .. seealso::
 
-            :ref:`change_sqlite_schemas`
+            :ref:`change_sqlite_schemas` 
 
     .. change::
         :tags: change, mssql
@@ -2404,13 +2404,13 @@
 
         .. seealso::
 
-            :ref:`change_3434`
+            :ref:`change_3434` 
 
     .. change::
         :tags: bug, orm
         :tickets: 3250
 
-        Added a new type-level modifier :meth:`.TypeEngine.evaluates_none`
+        Added a new type-level modifier :meth:`.TypeEngine.evaluates_none` 
         which indicates to the ORM that a positive set of None should be
         persisted as the value NULL, instead of omitting the column from
         the INSERT statement.  This feature is used both as part of the
@@ -2419,20 +2419,20 @@
 
         .. seealso::
 
-            :ref:`change_3250`
+            :ref:`change_3250` 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 2729
 
         The use of a :class:`_postgresql.ARRAY` object that refers
-        to a :class:`_types.Enum` or :class:`_postgresql.ENUM` subtype
+        to a :class:`_types.Enum` or :class:` _postgresql.ENUM` subtype
         will now emit the expected "CREATE TYPE" and "DROP TYPE" DDL when
         the type is used within a "CREATE TABLE" or "DROP TABLE".
 
         .. seealso::
 
-            :ref:`change_2729`
+            :ref:`change_2729` 
 
     .. change::
         :tags: bug, sql
@@ -2449,7 +2449,7 @@
 
         .. seealso::
 
-            :ref:`change_3531`
+            :ref:`change_3531` 
 
     .. change::
         :tags: bug, orm
@@ -2473,14 +2473,14 @@
 
         .. seealso::
 
-            :ref:`change_2677`
+            :ref:`change_2677` 
 
     .. change::
         :tags: feature, orm
         :tickets: 2677
 
-        Added a new session lifecycle state :term:`deleted`.  This new state
-        represents an object that has been deleted from the :term:`persistent`
+        Added a new session lifecycle state :term:`deleted` .  This new state
+        represents an object that has been deleted from the :term:`persistent` 
         state and will move to the :term:`detached` state once the transaction
         is committed.  This resolves the long-standing issue that objects
         which were deleted existed in a gray area between persistent and
@@ -2491,7 +2491,7 @@
 
         .. seealso::
 
-            :ref:`change_2677`
+            :ref:`change_2677` 
 
     .. change::
         :tags: change, orm
@@ -2503,14 +2503,14 @@
 
         .. seealso::
 
-            :ref:`change_2677`
+            :ref:`change_2677` 
 
     .. change::
         :tags: bug, sql
         :tickets: 2919
 
         The :class:`.TypeDecorator` type extender will now work in conjunction
-        with a :class:`.SchemaType` implementation, typically :class:`.Enum`
+        with a :class:`.SchemaType` implementation, typically :class:` .Enum`
         or :class:`.Boolean` with regards to ensuring that the per-table
         events are propagated from the implementation type to the outer type.
         These events are used
@@ -2520,7 +2520,7 @@
 
         .. seealso::
 
-            :ref:`change_2919`
+            :ref:`change_2919` 
 
     .. change::
         :tags: feature, sql
@@ -2528,23 +2528,23 @@
 
         Added support for "set-aggregate" functions of the form
         ``<function> WITHIN GROUP (ORDER BY <criteria>)``, using the
-        method :meth:`.FunctionElement.within_group`.  A series of common
+        method :meth:`.FunctionElement.within_group` .  A series of common
         set-aggregate functions with return types derived from the set have
-        been added. This includes functions like :class:`.percentile_cont`,
+        been added. This includes functions like :class:`.percentile_cont` ,
         :class:`.dense_rank` and others.
 
         .. seealso::
 
-            :ref:`change_3132`
+            :ref:`change_3132` 
 
     .. change::
         :tags: feature, sql, postgresql
         :tickets: 3132
 
-        Added support for the SQL-standard function :class:`_functions.array_agg`,
+        Added support for the SQL-standard function :class:`_functions.array_agg` ,
         which automatically returns an :class:`_postgresql.ARRAY` of the correct type
         and supports index / slice operations, as well as
-        :func:`_postgresql.array_agg`, which returns a :class:`_postgresql.ARRAY`
+        :func:`_postgresql.array_agg` , which returns a :class:`_postgresql.ARRAY` 
         with additional comparison features.   As arrays are only
         supported on PostgreSQL at the moment, only actually works on
         PostgreSQL.  Also added a new construct
@@ -2553,13 +2553,13 @@
 
         .. seealso::
 
-            :ref:`change_3132`
+            :ref:`change_3132` 
 
     .. change::
         :tags: feature, sql
         :tickets: 3516
 
-        Added a new type to core :class:`_types.ARRAY`.  This is the
+        Added a new type to core :class:`_types.ARRAY` .  This is the
         base of the PostgreSQL :class:`_postgresql.ARRAY` type, and is now part of Core
         to begin supporting various SQL-standard array-supporting features
         including some functions and eventual support for native arrays
@@ -2571,7 +2571,7 @@
 
         .. seealso::
 
-            :ref:`change_3516`
+            :ref:`change_3516` 
 
     .. change::
         :tags: feature, orm
@@ -2583,22 +2583,22 @@
 
         .. seealso::
 
-            :ref:`change_3321`
+            :ref:`change_3321` 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 3499
 
-        The "hashable" flag on special datatypes such as :class:`_postgresql.ARRAY`,
-        :class:`_postgresql.JSON` and :class:`_postgresql.HSTORE` is now
+        The "hashable" flag on special datatypes such as :class:`_postgresql.ARRAY` ,
+        :class:`_postgresql.JSON` and :class:` _postgresql.HSTORE` is now
         set to False, which allows these types to be fetchable in ORM
         queries that include entities within the row.
 
         .. seealso::
 
-            :ref:`change_3499`
+            :ref:`change_3499` 
 
-            :ref:`change_3499_postgresql`
+            :ref:`change_3499_postgresql` 
 
     .. change::
         :tags: bug, postgresql
@@ -2612,28 +2612,28 @@
 
         .. seealso::
 
-            :ref:`change_3503`
+            :ref:`change_3503` 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 3503
 
-        The return type for the :class:`_postgresql.JSON` and :class:`_postgresql.JSONB`
+        The return type for the :class:`_postgresql.JSON` and :class:` _postgresql.JSONB`
         when using indexed access has been fixed to work like PostgreSQL itself,
-        and returns an expression that itself is of type :class:`_postgresql.JSON`
-        or :class:`_postgresql.JSONB`.  Previously, the accessor would return
+        and returns an expression that itself is of type :class:`_postgresql.JSON` 
+        or :class:`_postgresql.JSONB` .  Previously, the accessor would return
         :class:`.NullType` which disallowed subsequent JSON-like operators to be
         used.
 
         .. seealso::
 
-            :ref:`change_3503`
+            :ref:`change_3503` 
 
     .. change::
         :tags: bug, postgresql
         :tickets: 3503
 
-        The :class:`_postgresql.JSON`, :class:`_postgresql.JSONB` and
+        The :class:`_postgresql.JSON` , :class:`_postgresql.JSONB` and
         :class:`_postgresql.HSTORE` datatypes now allow full control over the
         return type from an indexed textual access operation, either ``column[someindex].astext``
         for a JSON type or ``column[someindex]`` for an HSTORE type,
@@ -2642,7 +2642,7 @@
 
         .. seealso::
 
-            :ref:`change_3503`
+            :ref:`change_3503` 
 
 
     .. change::
@@ -2658,7 +2658,7 @@
 
         .. seealso::
 
-            :ref:`change_3503_cast`
+            :ref:`change_3503_cast` 
 
 
     .. change::
@@ -2671,26 +2671,26 @@
         value of ``False``, the ORM will now correctly insert the JSON
         "'null'" string into the column whenever the value on the ORM
         object is set to the value ``None`` or when the value ``None``
-        is used with :meth:`.Session.bulk_insert_mappings`,
+        is used with :meth:`.Session.bulk_insert_mappings` ,
         **including** if the column has a default or server default on it.
 
         .. seealso::
 
-            :ref:`change_3514`
+            :ref:`change_3514` 
 
-            :ref:`change_3250`
+            :ref:`change_3250` 
 
     .. change::
         :tags: feature, postgresql
         :tickets: 3514
 
-        Added a new constant :attr:`.postgresql.JSON.NULL`, indicating
+        Added a new constant :attr:`.postgresql.JSON.NULL` , indicating
         that the JSON NULL value should be used for a value
         regardless of other settings.
 
         .. seealso::
 
-            :ref:`change_3514_jsonnull`
+            :ref:`change_3514_jsonnull` 
 
     .. change::
         :tags: bug, sql
@@ -2705,7 +2705,7 @@
 
         .. seealso::
 
-            :ref:`change_2528`
+            :ref:`change_2528` 
 
     .. change::
         :tags: feature, orm
@@ -2713,12 +2713,12 @@
 
         Added new relationship loading strategy :func:`_orm.raiseload` (also
         accessible via ``lazy='raise'``).  This strategy behaves almost like
-        :func:`_orm.noload` but instead of returning ``None`` it raises an
+        :func:`_orm.noload` but instead of returning ` `None`` it raises an
         InvalidRequestError.  Pull request courtesy Adrian Moennich.
 
         .. seealso::
 
-            :ref:`change_3512`
+            :ref:`change_3512` 
 
     .. change::
         :tags: bug, mssql
@@ -2736,4 +2736,4 @@
 
         .. seealso::
 
-            :ref:`change_3504`
+            :ref:`change_3504` 

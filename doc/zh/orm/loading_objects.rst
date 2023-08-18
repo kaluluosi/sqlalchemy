@@ -1,1 +1,1 @@
-本文档已移动至:doc:`queryguide/index`。
+本文档已迁移到  :doc:`queryguide/index` 

@@ -43,7 +43,7 @@ by queries.   This may be illustrated from code based on the following::
 In the latter case, the issue is due to the ``numpy.int64`` datatype overriding
 the ``__eq__()`` method and enforcing that the return type of an expression is
 ``numpy.True`` or ``numpy.False``, which breaks SQLAlchemy's expression
-language behavior that expects to return :class:`_sql.ColumnElement`
+language behavior that expects to return :class:`_sql.ColumnElement` 
 expressions from Python equality comparisons:
 
 .. sourcecode:: pycon+sql
@@ -73,4 +73,4 @@ applying the Python ``int()`` function to types like ``numpy.int32`` and
 SQL expression for WHERE/HAVING role expected, got True
 -------------------------------------------------------
 
-See :ref:`numpy_int64`.
+See :ref:`numpy_int64` .

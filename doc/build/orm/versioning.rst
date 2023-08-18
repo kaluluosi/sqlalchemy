@@ -3,7 +3,7 @@
 Configuring a Version Counter
 =============================
 
-The :class:`_orm.Mapper` supports management of a :term:`version id column`, which
+The :class:`_orm.Mapper` supports management of a :term:` version id column`, which
 is a single table column that increments or otherwise updates its value
 each time an ``UPDATE`` to the mapped table occurs.  This value is checked each
 time the ORM emits an ``UPDATE`` or ``DELETE`` against the row to ensure that
@@ -12,10 +12,10 @@ the value held in memory matches the database value.
 .. warning::
 
     Because the versioning feature relies upon comparison of the **in memory**
-    record of an object, the feature only applies to the :meth:`.Session.flush`
+    record of an object, the feature only applies to the :meth:`.Session.flush` 
     process, where the ORM flushes individual in-memory rows to the database.
     It does **not** take effect when performing
-    a multirow UPDATE or DELETE using :meth:`_query.Query.update` or :meth:`_query.Query.delete`
+    a multirow UPDATE or DELETE using :meth:`_query.Query.update` or :meth:` _query.Query.delete`
     methods, as these methods only emit an UPDATE or DELETE statement but otherwise
     do not have direct access to the contents of those rows being affected.
 
@@ -23,14 +23,14 @@ The purpose of this feature is to detect when two concurrent transactions
 are modifying the same row at roughly the same time, or alternatively to provide
 a guard against the usage of a "stale" row in a system that might be re-using
 data from a previous transaction without refreshing (e.g. if one sets ``expire_on_commit=False``
-with a :class:`.Session`, it is possible to re-use the data from a previous
+with a :class:`.Session` , it is possible to re-use the data from a previous
 transaction).
 
 .. topic:: Concurrent transaction updates
 
     When detecting concurrent updates within transactions, it is typically the
     case that the database's transaction isolation level is below the level of
-    :term:`repeatable read`; otherwise, the transaction will not be exposed
+    :term:`repeatable read` ; otherwise, the transaction will not be exposed
     to a new row value created by a concurrent update which conflicts with
     the locally updated value.  In this case, the SQLAlchemy versioning
     feature will typically not be useful for in-transaction conflict detection,
@@ -129,7 +129,7 @@ subsequent value.
 
 .. seealso::
 
-    :ref:`custom_guid_type`
+    :ref:`custom_guid_type` 
 
 .. _server_side_version_counter:
 
@@ -178,7 +178,7 @@ values when it emits an INSERT or UPDATE, instead leaving these columns as
 server side version column is used, the ORM needs to actively fetch the newly
 generated value.  This is so that the version counter is set up *before*
 any concurrent transaction may update it again.   This fetching is also
-best done simultaneously within the INSERT or UPDATE statement using :term:`RETURNING`,
+best done simultaneously within the INSERT or UPDATE statement using :term:`RETURNING` ,
 otherwise if emitting a SELECT statement afterwards, there is still a potential
 race condition where the version counter may change before it can be fetched.
 
@@ -206,7 +206,7 @@ missed version counters:
     -- {"param_1": 1}
 
 It is *strongly recommended* that server side version counters only be used
-when absolutely necessary and only on backends that support :term:`RETURNING`,
+when absolutely necessary and only on backends that support :term:`RETURNING` ,
 currently PostgreSQL, Oracle, MariaDB 10.5, SQLite 3.35, and SQL Server.
 
 

@@ -1,6 +1,6 @@
 .. _instrumentation_toplevel:
 
-备选类仪器
+类替代仪器
 ===============================
 
 .. automodule:: sqlalchemy.ext.instrumentation

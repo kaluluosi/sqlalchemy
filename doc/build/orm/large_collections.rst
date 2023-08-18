@@ -22,7 +22,7 @@ for such a collection to be populated into memory under any circumstances,
 as the operation may be overly consuming of time, network and memory
 resources.
 
-This section includes API features intended to allow :func:`_orm.relationship`
+This section includes API features intended to allow :func:`_orm.relationship` 
 to be used with large collections while maintaining adequate performance.
 
 
@@ -105,7 +105,7 @@ Above, the ``account_transactions`` relationship is configured not using the
 ordinary :class:`.Mapped` annotation, but instead
 using the :class:`.WriteOnlyMapped` type annotation, which at runtime will
 assign the :ref:`loader strategy <orm_queryguide_relationship_loaders>` of
-``lazy="write_only"`` to the target :func:`_orm.relationship`.
+``lazy="write_only"`` to the target :func:`_orm.relationship` .
 The :class:`.WriteOnlyMapped` annotation is an
 alternative form of the :class:`_orm.Mapped` annotation which indicate the use
 of the :class:`_orm.WriteOnlyCollection` collection type on instances of the
@@ -118,12 +118,12 @@ are deleted, as well as when ``AccountTransaction`` objects are removed from the
 
 * ``passive_deletes=True`` - allows the :term:`unit of work` to forego having
   to load the collection when ``Account`` is deleted; see
-  :ref:`passive_deletes`.
+  :ref:`passive_deletes` .
 * ``ondelete="cascade"`` configured on the :class:`.ForeignKey` constraint.
-  This is also detailed at :ref:`passive_deletes`.
+  This is also detailed at :ref:`passive_deletes` .
 * ``cascade="all, delete-orphan"`` - instructs the :term:`unit of work` to
   delete ``AccountTransaction`` objects when they are removed from the
-  collection.  See :ref:`cascade_delete_orphan` in the :ref:`unitofwork_cascades`
+  collection.  See :ref:`cascade_delete_orphan` in the :ref:` unitofwork_cascades`
   document.
 
 .. versionadded:: 2.0  Added "Write only" relationship loaders.
@@ -133,10 +133,10 @@ Creating and Persisting New Write Only Collections
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The write-only collection allows for direct assignment of the collection
-as a whole **only** for :term:`transient` or :term:`pending` objects.
+as a whole **only** for :term:`transient` or :term:` pending` objects.
 With our above mapping, this indicates we can create a new ``Account``
 object with a sequence of ``AccountTransaction`` objects to be added
-to a :class:`_orm.Session`.   Any Python iterable may be used as the
+to a :class:`_orm.Session` .   Any Python iterable may be used as the
 source of objects to start, where below we use a Python ``list``::
 
     >>> new_account = Account(
@@ -186,8 +186,8 @@ Adding New Items to an Existing Collection
 
 For write-only collections of persistent objects,
 modifications to the collection using :term:`unit of work` processes may proceed
-only by using the :meth:`.WriteOnlyCollection.add`,
-:meth:`.WriteOnlyCollection.add_all` and :meth:`.WriteOnlyCollection.remove`
+only by using the :meth:`.WriteOnlyCollection.add` ,
+:meth:`.WriteOnlyCollection.add_all` and :meth:` .WriteOnlyCollection.remove`
 methods::
 
     >>> from sqlalchemy import select
@@ -217,7 +217,7 @@ methods::
 
 The items added above are held in a pending queue within the
 :class:`_orm.Session` until the next flush, at which point they are INSERTed
-into the database, assuming the added objects were previously :term:`transient`.
+into the database, assuming the added objects were previously :term:`transient` .
 
 Querying Items
 ~~~~~~~~~~~~~~
@@ -230,7 +230,7 @@ millions of rows, and should never be fully loaded into memory as a side effect
 of any other operation.
 
 Instead, the :class:`_orm.WriteOnlyCollection` includes SQL-generating helpers
-such as :meth:`_orm.WriteOnlyCollection.select`, which will generate
+such as :meth:`_orm.WriteOnlyCollection.select` , which will generate
 a :class:`.Select` construct pre-configured with the correct WHERE / FROM
 criteria for the current parent row, which can then be further modified in
 order to SELECT any range of rows desired, as well as invoked using features
@@ -239,7 +239,7 @@ wish to iterate through the full collection in a memory-efficient manner.
 
 The statement generated is illustrated below. Note it also includes ORDER BY
 criteria, indicated in the example mapping by the
-:paramref:`_orm.relationship.order_by` parameter of :func:`_orm.relationship`;
+:paramref:`_orm.relationship.order_by` parameter of :func:` _orm.relationship`;
 this criteria would be omitted if the parameter were not configured::
 
     >>> print(existing_account.account_transactions.select())
@@ -248,9 +248,9 @@ this criteria would be omitted if the parameter were not configured::
     FROM account_transaction
     WHERE :param_1 = account_transaction.account_id ORDER BY account_transaction.timestamp
 
-We may use this :class:`.Select` construct along with the :class:`_orm.Session`
+We may use this :class:`.Select` construct along with the :class:` _orm.Session`
 in order to query for ``AccountTransaction`` objects, most easily using the
-:meth:`_orm.Session.scalars` method that will return a :class:`.Result` that
+:meth:`_orm.Session.scalars` method that will return a :class:` .Result` that
 yields ORM objects directly. It's typical, though not required, that the
 :class:`.Select` would be modified further to limit the records returned; in
 the example below, additional WHERE criteria to load only "debit" account
@@ -276,7 +276,7 @@ rows::
 Removing Items
 ~~~~~~~~~~~~~~
 
-Individual items that are loaded in the :term:`persistent`
+Individual items that are loaded in the :term:`persistent` 
 state against the current :class:`_orm.Session` may be marked for removal
 from the collection using the :meth:`.WriteOnlyCollection.remove` method.
 The flush process will implicitly consider the object to be already part
@@ -295,7 +295,7 @@ DELETE of that row::
 As with any ORM-mapped collection, object removal may proceed either to
 de-associate the object from the collection while leaving the object present in
 the database, or may issue a DELETE for its row, based on the
-:ref:`cascade_delete_orphan` configuration of the :func:`_orm.relationship`.
+:ref:`cascade_delete_orphan` configuration of the :func:` _orm.relationship`.
 
 Collection removal without deletion involves setting foreign key columns to
 NULL for a :ref:`one-to-many <relationship_patterns_o2m>` relationship, or
@@ -314,7 +314,7 @@ produce bulk insert behavior.  See the section
 
 One to Many Collections
 ^^^^^^^^^^^^^^^^^^^^^^^
-For a **regular one to many collection only**, the :meth:`.WriteOnlyCollection.insert`
+For a **regular one to many collection only**, the :meth:`.WriteOnlyCollection.insert` 
 method will produce an :class:`_dml.Insert` construct which is pre-established with
 VALUES criteria corresponding to the parent object.  As this VALUES criteria
 is entirely against the related table, the statement can be used to
@@ -340,9 +340,9 @@ related collection::
 
 .. seealso::
 
-    :ref:`orm_queryguide_bulk_insert` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_bulk_insert` - in the :ref:` queryguide_toplevel`
 
-    :ref:`relationship_patterns_o2m` - at :ref:`relationship_patterns`
+    :ref:`relationship_patterns_o2m` - at :ref:` relationship_patterns`
 
 
 Many to Many Collections
@@ -350,9 +350,9 @@ Many to Many Collections
 
 For a **many to many collection**, the relationship between two classes
 involves a third table that is configured using the
-:paramref:`_orm.relationship.secondary` parameter of :class:`_orm.relationship`.
+:paramref:`_orm.relationship.secondary` parameter of :class:` _orm.relationship`.
 To bulk insert rows into a collection of this type using
-:class:`.WriteOnlyCollection`, the new records may be bulk-inserted separately
+:class:`.WriteOnlyCollection` , the new records may be bulk-inserted separately
 first, retrieved using RETURNING, and those records then passed to the
 :meth:`.WriteOnlyCollection.add_all` method where the unit of work process
 will proceed to persist them as part of the collection.
@@ -419,9 +419,9 @@ at once with a new ``BankAudit`` object::
 
 .. seealso::
 
-    :ref:`orm_queryguide_bulk_insert` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_queryguide_bulk_insert` - in the :ref:` queryguide_toplevel`
 
-    :ref:`relationships_many_to_many` - at :ref:`relationship_patterns`
+    :ref:`relationships_many_to_many` - at :ref:` relationship_patterns`
 
 
 Bulk UPDATE and DELETE of Items
@@ -429,7 +429,7 @@ Bulk UPDATE and DELETE of Items
 
 In a similar way in which :class:`.WriteOnlyCollection` can generate
 :class:`.Select` constructs with WHERE criteria pre-established, it can
-also generate :class:`.Update` and :class:`.Delete` constructs with that
+also generate :class:`.Update` and :class:` .Delete` constructs with that
 same WHERE criteria, to allow criteria-oriented UPDATE and DELETE statements
 against the elements in a large collection.
 
@@ -511,7 +511,7 @@ for example may be combined with IN to match rows.
 The :class:`.WriteOnlyCollection` still helps us here, as we use the
 :meth:`.WriteOnlyCollection.select` method to generate this SELECT for
 us, making use of the :meth:`_sql.Select.with_only_columns` method to
-produce a :term:`scalar subquery`::
+produce a :term:`scalar subquery` ::
 
     >>> from sqlalchemy import update
     >>> subq = bank_audit.account_transactions.select().with_only_columns(AccountTransaction.id)
@@ -549,7 +549,7 @@ Dynamic Relationship Loaders
 
 .. legacy::  The "dynamic" lazy loader strategy is the legacy form of what is
    now the "write_only" strategy described in the section
-   :ref:`write_only_relationship`.
+   :ref:`write_only_relationship` .
 
    The "dynamic" strategy produces a legacy :class:`_orm.Query` object from the
    related collection. However, a major drawback of "dynamic" relationships is
@@ -559,10 +559,10 @@ Dynamic Relationship Loaders
    collection management, the :class:`_orm.WriteOnlyCollection` should be
    preferred.
 
-   The dynamic loader is also not compatible with the :ref:`asyncio_toplevel`
+   The dynamic loader is also not compatible with the :ref:`asyncio_toplevel` 
    extension. It can be used with some limitations, as indicated in
-   :ref:`Asyncio dynamic guidelines <dynamic_asyncio>`, but again the
-   :class:`_orm.WriteOnlyCollection`, which is fully compatible with asyncio,
+   :ref:`Asyncio dynamic guidelines <dynamic_asyncio>` , but again the
+   :class:`_orm.WriteOnlyCollection` , which is fully compatible with asyncio,
    should be preferred.
 
 The dynamic relationship strategy allows configuration of a
@@ -570,13 +570,13 @@ The dynamic relationship strategy allows configuration of a
 legacy :class:`_orm.Query` object in place of the collection. The
 :class:`_orm.Query` can then be modified further so that the database
 collection may be iterated based on filtering criteria. The returned
-:class:`_orm.Query` object is an instance of :class:`_orm.AppenderQuery`, which
+:class:`_orm.Query` object is an instance of :class:` _orm.AppenderQuery`, which
 combines the loading and iteration behavior of :class:`_orm.Query` along with
 rudimentary collection mutation methods such as
-:meth:`_orm.AppenderQuery.append` and :meth:`_orm.AppenderQuery.remove`.
+:meth:`_orm.AppenderQuery.append` and :meth:` _orm.AppenderQuery.remove`.
 
 The "dynamic" loader strategy may be configured with
-type-annotated Declarative form using the :class:`_orm.DynamicMapped`
+type-annotated Declarative form using the :class:`_orm.DynamicMapped` 
 annotation class::
 
     from sqlalchemy.orm import DynamicMapped
@@ -603,7 +603,7 @@ operations::
     posts = jack.posts[5:20]
 
 The dynamic relationship supports limited write operations, via the
-:meth:`_orm.AppenderQuery.append` and :meth:`_orm.AppenderQuery.remove` methods::
+:meth:`_orm.AppenderQuery.append` and :meth:` _orm.AppenderQuery.remove` methods::
 
     oldpost = jack.posts.filter(Post.headline == "old post").one()
     jack.posts.remove(oldpost)
@@ -652,12 +652,12 @@ application is not emitting any unexpected lazy loads within a certain context.
 Rather than having to read through SQL logs to determine that all necessary
 attributes were eager loaded, the "raise" strategy will cause unloaded
 attributes to raise immediately if accessed.  The raise strategy is
-also available on a query option basis using the :func:`_orm.raiseload`
+also available on a query option basis using the :func:`_orm.raiseload` 
 loader option.
 
 .. seealso::
 
-    :ref:`prevent_lazy_with_raiseload`
+    :ref:`prevent_lazy_with_raiseload` 
 
 Using Passive Deletes
 ---------------------
@@ -682,7 +682,7 @@ the :func:`_orm.relationship` construct; the foreign key constraints in use
 must also be correctly configured.
 
 For further detail on a complete "passive delete" configuration, see the
-section :ref:`passive_deletes`.
+section :ref:`passive_deletes` .
 
 
 

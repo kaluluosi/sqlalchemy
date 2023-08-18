@@ -1,6 +1,6 @@
 .. highlight:: pycon+sql
-.. |prev| replace:: :doc:`index`
-.. |next| replace:: :doc:`inheritance`
+.. |prev| replace:: :doc:`index` 
+.. |next| replace:: :doc:`inheritance` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -10,10 +10,10 @@ Writing SELECT statements for ORM Mapped Classes
 .. admonition:: About this Document
 
     This section makes use of ORM mappings first illustrated in the
-    :ref:`unified_tutorial`, shown in the section
-    :ref:`tutorial_declaring_mapped_classes`.
+    :ref:`unified_tutorial` , shown in the section
+    :ref:`tutorial_declaring_mapped_classes` .
 
-    :doc:`View the ORM setup for this page <_plain_setup>`.
+    :doc:`View the ORM setup for this page <_plain_setup>` .
 
 
 SELECT statements are produced by the :func:`_sql.select` function which
@@ -27,7 +27,7 @@ statement, such as the :meth:`_sql.Select.where` method illustrated below::
 
 Given a completed :class:`_sql.Select` object, in order to execute it within
 the ORM to get rows back, the object is passed to
-:meth:`_orm.Session.execute`, where a :class:`.Result` object is then
+:meth:`_orm.Session.execute` , where a :class:`.Result` object is then
 returned::
 
     >>> result = session.execute(stmt)
@@ -47,11 +47,11 @@ Selecting ORM Entities and Attributes
 
 The :func:`_sql.select` construct accepts ORM entities, including mapped
 classes as well as class-level attributes representing mapped columns, which
-are converted into :term:`ORM-annotated` :class:`_sql.FromClause` and
+are converted into :term:`ORM-annotated` :class:` _sql.FromClause` and
 :class:`_sql.ColumnElement` elements at construction time.
 
 A :class:`_sql.Select` object that contains ORM-annotated entities is normally
-executed using a :class:`_orm.Session` object, and not a :class:`_engine.Connection`
+executed using a :class:`_orm.Session` object, and not a :class:` _engine.Connection`
 object, so that ORM-related features may take effect, including that
 instances of ORM-mapped objects may be returned.  When using the
 :class:`_engine.Connection` directly, result rows will only contain
@@ -62,8 +62,8 @@ column-level data.
 Selecting ORM Entities
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Below we select from the ``User`` entity, producing a :class:`_sql.Select`
-that selects from the mapped :class:`_schema.Table` to which ``User`` is mapped::
+Below we select from the ``User`` entity, producing a :class:`_sql.Select` 
+that selects from the mapped :class:`_schema.Table` to which ` `User`` is mapped::
 
     >>> result = session.execute(select(User).order_by(User.id))
     {execsql}SELECT user_account.id, user_account.name, user_account.fullname
@@ -72,7 +72,7 @@ that selects from the mapped :class:`_schema.Table` to which ``User`` is mapped:
 
 When selecting from ORM entities, the entity itself is returned in the result
 as a row with a single element, as opposed to a series of individual columns;
-for example above, the :class:`_engine.Result` returns :class:`_engine.Row`
+for example above, the :class:`_engine.Result` returns :class:` _engine.Row`
 objects that have just a single element per row, that element holding onto a
 ``User`` object::
 
@@ -88,7 +88,7 @@ When selecting a list of single-element rows containing ORM entities, it is
 typical to skip the generation of :class:`_engine.Row` objects and instead
 receive ORM entities directly.   This is most easily achieved by using the
 :meth:`_orm.Session.scalars` method to execute, rather than the
-:meth:`_orm.Session.execute` method, so that a :class:`.ScalarResult` object
+:meth:`_orm.Session.execute` method, so that a :class:` .ScalarResult` object
 which yields single elements rather than rows is returned::
 
     >>> session.scalars(select(User).order_by(User.id)).all()
@@ -102,7 +102,7 @@ which yields single elements rather than rows is returned::
      User(id=5, name='ehkrabs', fullname='Eugene H. Krabs')]
 
 Calling the :meth:`_orm.Session.scalars` method is the equivalent to calling
-upon :meth:`_orm.Session.execute` to receive a :class:`_engine.Result` object,
+upon :meth:`_orm.Session.execute` to receive a :class:` _engine.Result` object,
 then calling upon :meth:`_engine.Result.scalars` to receive a
 :class:`_engine.ScalarResult` object.
 
@@ -134,7 +134,7 @@ refer to them under the names ``User`` and ``Address``::
     squidward stentcl@sqlalchemy.org
 
 If we wanted to assign different names to these entities in the rows, we would
-use the :func:`_orm.aliased` construct using the :paramref:`_orm.aliased.name`
+use the :func:`_orm.aliased` construct using the :paramref:` _orm.aliased.name`
 parameter to alias them with an explicit name::
 
     >>> from sqlalchemy.orm import aliased
@@ -155,7 +155,7 @@ parameter to alias them with an explicit name::
     spongebob spongebob@sqlalchemy.org
 
 The aliased form above is discussed further at
-:ref:`orm_queryguide_joining_relationships_aliased`.
+:ref:`orm_queryguide_joining_relationships_aliased` .
 
 An existing :class:`_sql.Select` construct may also have ORM classes and/or
 column expressions added to its columns clause using the
@@ -177,8 +177,8 @@ Selecting Individual Attributes
 
 The attributes on a mapped class, such as ``User.name`` and
 ``Address.email_address``, can be used just like :class:`_schema.Column` or
-other SQL expression objects when passed to :func:`_sql.select`. Creating a
-:func:`_sql.select` that is against specific columns will return :class:`.Row`
+other SQL expression objects when passed to :func:`_sql.select` . Creating a
+:func:`_sql.select` that is against specific columns will return :class:` .Row`
 objects, and **not** entities like ``User`` or ``Address`` objects.
 Each :class:`.Row` will have each column represented individually::
 
@@ -192,7 +192,7 @@ Each :class:`.Row` will have each column represented individually::
     ORDER BY user_account.id, address.id
     [...] (){stop}
 
-The above statement returns :class:`.Row` objects with ``name`` and
+The above statement returns :class:`.Row` objects with ` `name`` and
 ``email_address`` columns, as illustrated in the runtime demonstration below::
 
     >>> for row in result:
@@ -234,9 +234,9 @@ order to return alternate data structures; see
 
 .. seealso::
 
-    :class:`_orm.Bundle`
+    :class:`_orm.Bundle` 
 
-    :meth:`_orm.Bundle.create_row_processor`
+    :meth:`_orm.Bundle.create_row_processor` 
 
 
 .. _orm_queryguide_orm_aliases:
@@ -244,8 +244,8 @@ order to return alternate data structures; see
 Selecting ORM Aliases
 ^^^^^^^^^^^^^^^^^^^^^
 
-As discussed in the tutorial at :ref:`tutorial_using_aliases`, to create a
-SQL alias of an ORM entity is achieved using the :func:`_orm.aliased`
+As discussed in the tutorial at :ref:`tutorial_using_aliases` , to create a
+SQL alias of an ORM entity is achieved using the :func:`_orm.aliased` 
 construct against a mapped class::
 
     >>> from sqlalchemy.orm import aliased
@@ -254,7 +254,7 @@ construct against a mapped class::
     {printsql}SELECT user_account_1.id, user_account_1.name, user_account_1.fullname
     FROM user_account AS user_account_1 ORDER BY user_account_1.id
 
-As is the case when using :meth:`_schema.Table.alias`, the SQL alias
+As is the case when using :meth:`_schema.Table.alias` , the SQL alias
 is anonymously named.   For the case of selecting the entity from a row
 with an explicit name, the :paramref:`_orm.aliased.name` parameter may be
 passed as well::
@@ -303,8 +303,8 @@ Given a textual SQL statement we'd like to load from::
 
 We can add column information to the statement by using the
 :meth:`_sql.TextClause.columns` method; when this method is invoked, the
-:class:`_sql.TextClause` object is converted into a :class:`_sql.TextualSelect`
-object, which takes on a role that is comparable to the :class:`_sql.Select`
+:class:`_sql.TextClause` object is converted into a :class:` _sql.TextualSelect`
+object, which takes on a role that is comparable to the :class:`_sql.Select` 
 construct.  The :meth:`_sql.TextClause.columns` method
 is typically passed :class:`_schema.Column` objects or equivalent, and in this
 case we can make use of the ORM-mapped attributes on the ``User`` class
@@ -316,7 +316,7 @@ We now have an ORM-configured SQL construct that as given, can load the "id",
 "name" and "fullname" columns separately.   To use this SELECT statement as a
 source of complete ``User`` entities instead, we can link these columns to a
 regular ORM-enabled
-:class:`_sql.Select` construct using the :meth:`_sql.Select.from_statement`
+:class:`_sql.Select` construct using the :meth:` _sql.Select.from_statement`
 method::
 
     >>> orm_sql = select(User).from_statement(textual_sql)
@@ -332,8 +332,8 @@ method::
 
 The same :class:`_sql.TextualSelect` object can also be converted into
 a subquery using the :meth:`_sql.TextualSelect.subquery` method,
-and linked to the ``User`` entity to it using the :func:`_orm.aliased`
-construct, in a similar manner as discussed below in :ref:`orm_queryguide_subqueries`::
+and linked to the ``User`` entity to it using the :func:`_orm.aliased` 
+construct, in a similar manner as discussed below in :ref:`orm_queryguide_subqueries` ::
 
     >>> orm_subquery = aliased(User, textual_sql.subquery())
     >>> stmt = select(orm_subquery)
@@ -349,7 +349,7 @@ construct, in a similar manner as discussed below in :ref:`orm_queryguide_subque
     User(id=5, name='ehkrabs', fullname='Eugene H. Krabs')
 
 The difference between using the :class:`_sql.TextualSelect` directly with
-:meth:`_sql.Select.from_statement` versus making use of :func:`_sql.aliased`
+:meth:`_sql.Select.from_statement` versus making use of :func:` _sql.aliased`
 is that in the former case, no subquery is produced in the resulting SQL.
 This can in some scenarios be advantageous from a performance or complexity
 perspective.
@@ -386,24 +386,24 @@ derived from those entities, such as in the example below::
 
 .. seealso::
 
-    :ref:`tutorial_subqueries_orm_aliased` - in the :ref:`unified_tutorial`
+    :ref:`tutorial_subqueries_orm_aliased` - in the :ref:` unified_tutorial`
 
-    :ref:`orm_queryguide_join_subqueries`
+    :ref:`orm_queryguide_join_subqueries` 
 
 .. _orm_queryguide_unions:
 
 Selecting Entities from UNIONs and other set operations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :func:`_sql.union` and :func:`_sql.union_all` functions are the most
+The :func:`_sql.union` and :func:` _sql.union_all` functions are the most
 common set operations, which along with other set operations such as
-:func:`_sql.except_`, :func:`_sql.intersect` and others deliver an object known as
-a :class:`_sql.CompoundSelect`, which is composed of multiple
+:func:`_sql.except_` , :func:`_sql.intersect` and others deliver an object known as
+a :class:`_sql.CompoundSelect` , which is composed of multiple
 :class:`_sql.Select` constructs joined by a set-operation keyword.   ORM entities may
-be selected from simple compound selects using the :meth:`_sql.Select.from_statement`
-method illustrated previously at :ref:`orm_queryguide_selecting_text`.  In
+be selected from simple compound selects using the :meth:`_sql.Select.from_statement` 
+method illustrated previously at :ref:`orm_queryguide_selecting_text` .  In
 this method, the UNION statement is the complete statement that will be
-rendered, no additional criteria can be added after :meth:`_sql.Select.from_statement`
+rendered, no additional criteria can be added after :meth:`_sql.Select.from_statement` 
 is used::
 
     >>> from sqlalchemy import union_all
@@ -424,8 +424,8 @@ is used::
 
 A :class:`_sql.CompoundSelect` construct can be more flexibly used within
 a query that can be further modified by organizing it into a subquery
-and linking it to an ORM entity using :func:`_orm.aliased`,
-as illustrated previously at :ref:`orm_queryguide_subqueries`.  In the
+and linking it to an ORM entity using :func:`_orm.aliased` ,
+as illustrated previously at :ref:`orm_queryguide_subqueries` .  In the
 example below, we first use :meth:`_sql.CompoundSelect.subquery` to create
 a subquery of the UNION ALL statement, we then package that into the
 :func:`_orm.aliased` construct where it can be used like any other mapped
@@ -452,23 +452,23 @@ and order by criteria based on its exported columns::
 
 .. seealso::
 
-    :ref:`tutorial_orm_union` - in the :ref:`unified_tutorial`
+    :ref:`tutorial_orm_union` - in the :ref:` unified_tutorial`
 
 .. _orm_queryguide_joins:
 
 Joins
 -----
 
-The :meth:`_sql.Select.join` and :meth:`_sql.Select.join_from` methods
+The :meth:`_sql.Select.join` and :meth:` _sql.Select.join_from` methods
 are used to construct SQL JOINs against a SELECT statement.
 
 This section will detail ORM use cases for these methods.  For a general
-overview of their use from a Core perspective, see :ref:`tutorial_select_join`
-in the :ref:`unified_tutorial`.
+overview of their use from a Core perspective, see :ref:`tutorial_select_join` 
+in the :ref:`unified_tutorial` .
 
-The usage of :meth:`_sql.Select.join` in an ORM context for :term:`2.0 style`
+The usage of :meth:`_sql.Select.join` in an ORM context for :term:` 2.0 style`
 queries is mostly equivalent, minus legacy use cases, to the usage of the
-:meth:`_orm.Query.join` method in :term:`1.x style` queries.
+:meth:`_orm.Query.join` method in :term:` 1.x style` queries.
 
 .. _orm_queryguide_simple_relationship_join:
 
@@ -478,7 +478,7 @@ Simple Relationship Joins
 Consider a mapping between two classes ``User`` and ``Address``,
 with a relationship ``User.addresses`` representing a collection
 of ``Address`` objects associated with each ``User``.   The most
-common usage of :meth:`_sql.Select.join`
+common usage of :meth:`_sql.Select.join` 
 is to create a JOIN along this
 relationship, using the ``User.addresses`` attribute as an indicator
 for how this should occur::
@@ -519,7 +519,7 @@ the ``User.orders`` relationship refers to the ``Order`` entity, and the
 ``Order.items`` relationship refers to the ``Item`` entity, via an association
 table ``order_items``.   Two :meth:`_sql.Select.join` calls will result in
 a JOIN first from ``User`` to ``Order``, and a second from ``Order`` to
-``Item``.  However, since ``Order.items`` is a :ref:`many to many <relationships_many_to_many>`
+``Item``.  However, since ``Order.items`` is a :ref:`many to many <relationships_many_to_many>` 
 relationship, it results in two separate JOIN elements, for a total of three
 JOIN elements in the resulting SQL::
 
@@ -561,7 +561,7 @@ Joins to a Target Entity
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 A second form of :meth:`_sql.Select.join` allows any mapped entity or core
-selectable construct as a target.   In this usage, :meth:`_sql.Select.join`
+selectable construct as a target.   In this usage, :meth:`_sql.Select.join` 
 will attempt to **infer** the ON clause for the JOIN, using the natural foreign
 key relationship between two entities::
 
@@ -577,7 +577,7 @@ between the two mapped :class:`_schema.Table` constructs, or if there are multip
 :class:`_schema.ForeignKeyConstraint` linkages between them such that the
 appropriate constraint to use is ambiguous.
 
-.. note:: When making use of :meth:`_sql.Select.join` or :meth:`_sql.Select.join_from`
+.. note:: When making use of :meth:`_sql.Select.join` or :meth:` _sql.Select.join_from`
     without indicating an ON clause, ORM
     configured :func:`_orm.relationship` constructs are **not taken into account**.
     Only the configured :class:`_schema.ForeignKeyConstraint` relationships between
@@ -598,9 +598,9 @@ a SQL expression as the ON clause is as follows::
     {printsql}SELECT user_account.id, user_account.name, user_account.fullname
     FROM user_account JOIN address ON user_account.id = address.user_id
 
-The expression-based ON clause may also be a :func:`_orm.relationship`-bound
+The expression-based ON clause may also be a :func:`_orm.relationship` -bound
 attribute, in the same way it's used in
-:ref:`orm_queryguide_simple_relationship_join`::
+:ref:`orm_queryguide_simple_relationship_join` ::
 
     >>> stmt = select(User).join(Address, User.addresses)
     >>> print(stmt)
@@ -623,8 +623,8 @@ The ON clause generated by the :func:`_orm.relationship` construct may
 be augmented with additional criteria.  This is useful both for
 quick ways to limit the scope of a particular join over a relationship path,
 as well as for cases like configuring loader strategies such as
-:func:`_orm.joinedload` and :func:`_orm.selectinload`.
-The :meth:`_orm.PropComparator.and_`
+:func:`_orm.joinedload` and :func:` _orm.selectinload`.
+The :meth:`_orm.PropComparator.and_` 
 method accepts a series of SQL expressions positionally that will be joined
 to the ON clause of the JOIN via AND.  For example if we wanted to
 JOIN from ``User`` to ``Address`` but also limit the ON criteria to only certain
@@ -645,8 +645,8 @@ email addresses:
 .. seealso::
 
     The :meth:`_orm.PropComparator.and_` method also works with loader
-    strategies such as :func:`_orm.joinedload` and :func:`_orm.selectinload`.
-    See the section :ref:`loader_option_criteria`.
+    strategies such as :func:`_orm.joinedload` and :func:` _orm.selectinload`.
+    See the section :ref:`loader_option_criteria` .
 
 .. _tutorial_joining_relationships_aliased:
 
@@ -655,11 +655,11 @@ email addresses:
 Using Relationship to join between aliased targets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-When constructing joins using :func:`_orm.relationship`-bound attributes to indicate
+When constructing joins using :func:`_orm.relationship` -bound attributes to indicate
 the ON clause, the two-argument syntax illustrated in
 :ref:`queryguide_join_onclause` can be expanded to work with the
 :func:`_orm.aliased` construct, to indicate a SQL alias as the target of a join
-while still making use of the :func:`_orm.relationship`-bound attribute
+while still making use of the :func:`_orm.relationship` -bound attribute
 to  indicate the ON clause, as in the example below, where the ``User``
 entity is joined twice to two different :func:`_orm.aliased` constructs
 against the ``Address`` entity::
@@ -682,10 +682,10 @@ against the ``Address`` entity::
     AND address_2.email_address = :email_address_2
 
 The same pattern may be expressed more succinctly using the
-modifier :meth:`_orm.PropComparator.of_type`, which may be applied to the
-:func:`_orm.relationship`-bound attribute, passing along the target entity
+modifier :meth:`_orm.PropComparator.of_type` , which may be applied to the
+:func:`_orm.relationship` -bound attribute, passing along the target entity
 in order to indicate the target
-in one step.   The example below uses :meth:`_orm.PropComparator.of_type`
+in one step.   The example below uses :meth:`_orm.PropComparator.of_type` 
 to produce the same SQL statement as the one just illustrated::
 
     >>> print(
@@ -704,7 +704,7 @@ to produce the same SQL statement as the one just illustrated::
 
 
 To make use of a :func:`_orm.relationship` to construct a join **from** an
-aliased entity, the attribute is available from the :func:`_orm.aliased`
+aliased entity, the attribute is available from the :func:`_orm.aliased` 
 construct directly::
 
     >>> user_alias_1 = aliased(User)
@@ -726,8 +726,8 @@ that these targets are stated in terms of an
 :func:`_orm.aliased` construct, but this is not strictly required, particularly
 if the joined entity is not being returned in the results.  For example, to join from the
 ``User`` entity to the ``Address`` entity, where the ``Address`` entity
-is represented as a row limited subquery, we first construct a :class:`_sql.Subquery`
-object using :meth:`_sql.Select.subquery`, which may then be used as the
+is represented as a row limited subquery, we first construct a :class:`_sql.Subquery` 
+object using :meth:`_sql.Select.subquery` , which may then be used as the
 target of the :meth:`_sql.Select.join` method::
 
     >>> subq = select(Address).where(Address.email_address == "pat999@aol.com").subquery()
@@ -746,7 +746,7 @@ return rows that contain ``User`` entities, but not ``Address`` entities. In
 order to include ``Address`` entities to the set of entities that would be
 returned in result sets, we construct an :func:`_orm.aliased` object against
 the ``Address`` entity and :class:`.Subquery` object. We also may wish to apply
-a name to the :func:`_orm.aliased` construct, such as ``"address"`` used below,
+a name to the :func:`_orm.aliased` construct, such as ` `"address"`` used below,
 so that we can refer to it by name in the result row::
 
     >>> address_subq = aliased(Address, subq, name="address")
@@ -768,11 +768,11 @@ Joining to Subqueries along Relationship paths
 
 The subquery form illustrated in the previous section
 may be expressed with more specificity using a
-:func:`_orm.relationship`-bound attribute using one of the forms indicated at
-:ref:`orm_queryguide_joining_relationships_aliased`. For example, to create the
+:func:`_orm.relationship` -bound attribute using one of the forms indicated at
+:ref:`orm_queryguide_joining_relationships_aliased` . For example, to create the
 same join while ensuring the join is along that of a particular
-:func:`_orm.relationship`, we may use the
-:meth:`_orm.PropComparator.of_type` method, passing the :func:`_orm.aliased`
+:func:`_orm.relationship` , we may use the
+:meth:`_orm.PropComparator.of_type` method, passing the :func:` _orm.aliased`
 construct containing the :class:`.Subquery` object that's the target
 of the join::
 
@@ -796,7 +796,7 @@ Subqueries that Refer to Multiple Entities
 A subquery that contains columns spanning more than one ORM entity may be
 applied to more than one :func:`_orm.aliased` construct at once, and
 used in the same :class:`.Select` construct in terms of each entity separately.
-The rendered SQL will continue to treat all such :func:`_orm.aliased`
+The rendered SQL will continue to treat all such :func:`_orm.aliased` 
 constructs as the same subquery, however from the ORM / Python perspective
 the different return values and object attributes can be referred towards
 by using the appropriate :func:`_orm.aliased` construct.
@@ -810,7 +810,7 @@ Given for example a subquery that refers to both ``User`` and ``Address``::
     ...     .subquery()
     ... )
 
-We can create :func:`_orm.aliased` constructs against both ``User`` and
+We can create :func:`_orm.aliased` constructs against both ` `User`` and
 ``Address`` that each refer to the same object::
 
     >>> user_alias = aliased(User, user_address_subq, name="user")
@@ -859,7 +859,7 @@ in the form ``(<join from>, <onclause>)``, or ``(<join from>, <join to>,
     FROM user_account JOIN address ON user_account.id = address.user_id
     WHERE user_account.name = :name_1
 
-To set up the initial FROM clause for a SELECT such that :meth:`_sql.Select.join`
+To set up the initial FROM clause for a SELECT such that :meth:`_sql.Select.join` 
 can be used subsequent, the :meth:`_sql.Select.select_from` method may also
 be used::
 
@@ -876,8 +876,8 @@ be used::
     final say on the order of tables in the FROM clause.    If the statement
     also refers to a :class:`_sql.Join` construct that refers to existing
     tables in a different order, the :class:`_sql.Join` construct takes
-    precedence.    When we use methods like :meth:`_sql.Select.join`
-    and :meth:`_sql.Select.join_from`, these methods are ultimately creating
+    precedence.    When we use methods like :meth:`_sql.Select.join` 
+    and :meth:`_sql.Select.join_from` , these methods are ultimately creating
     such a :class:`_sql.Join` object.   Therefore we can see the contents
     of :meth:`_sql.Select.select_from` being overridden in a case like this::
 
@@ -921,7 +921,7 @@ Relationship WHERE Operators
 
 
 Besides the use of :func:`_orm.relationship` constructs within the
-:meth:`.Select.join` and :meth:`.Select.join_from` methods,
+:meth:`.Select.join` and :meth:` .Select.join_from` methods,
 :func:`_orm.relationship` also plays a role in helping to construct
 SQL expressions that are typically for use in the WHERE clause, using
 the :meth:`.Select.where` method.
@@ -935,7 +935,7 @@ EXISTS forms: has() / any()
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :class:`_sql.Exists` construct was first introduced in the
-:ref:`unified_tutorial` in the section :ref:`tutorial_exists`.  This object
+:ref:`unified_tutorial` in the section :ref:` tutorial_exists`.  This object
 is used to render the SQL EXISTS keyword in conjunction with a
 scalar subquery.   The :func:`_orm.relationship` construct provides for some
 helper methods that may be used to generate some common EXISTS styles
@@ -943,7 +943,7 @@ of queries in terms of the relationship.
 
 For a one-to-many relationship such as ``User.addresses``, an EXISTS against
 the ``address`` table that correlates back to the ``user_account`` table
-can be produced using :meth:`_orm.PropComparator.any`.  This method accepts
+can be produced using :meth:`_orm.PropComparator.any` .  This method accepts
 an optional WHERE criteria to limit the rows matched by the subquery:
 
 .. sourcecode:: pycon+sql
@@ -978,7 +978,7 @@ for ``User`` entities that have no related ``Address`` rows:
     [('Eugene H. Krabs',)]
 
 The :meth:`_orm.PropComparator.has` method works in mostly the same way as
-:meth:`_orm.PropComparator.any`, except that it's used for many-to-one
+:meth:`_orm.PropComparator.any` , except that it's used for many-to-one
 relationships, such as if we wanted to locate all ``Address`` objects
 which belonged to "sandy":
 
@@ -1003,12 +1003,12 @@ Relationship Instance Comparison Operators
 
     >>> session.expunge_all()
 
-The :func:`_orm.relationship`-bound attribute also offers a few SQL construction
-implementations that are geared towards filtering a :func:`_orm.relationship`-bound
+The :func:`_orm.relationship` -bound attribute also offers a few SQL construction
+implementations that are geared towards filtering a :func:`_orm.relationship` -bound
 attribute in terms of a specific instance of a related object, which can unpack
 the appropriate attribute values from a given :term:`persistent` (or less
-commonly a :term:`detached`) object instance and construct WHERE criteria
-in terms of the target :func:`_orm.relationship`.
+commonly a :term:`detached` ) object instance and construct WHERE criteria
+in terms of the target :func:`_orm.relationship` .
 
 * **many to one equals comparison** - a specific object instance can be
   compared to many-to-one relationship, to select rows where the

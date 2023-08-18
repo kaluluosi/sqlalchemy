@@ -2,20 +2,20 @@
 
 .. _mapper_sql_expressions:
 
-将 SQL 表达式作为映射属性
-============================
+将SQL表达式映射为属性
+=============================
 
-在映射类中，可以将属性链接到 SQL 表达式，以便在查询中使用。
+在映射类上的属性可以链接到SQL表达式，在查询中可以使用。
 
-使用混合类型
-----------------
+使用Hybrid
+--------------
 
-将相对简单的 SQL 表达式链接到类上的最简单和最灵活的方法是使用所谓的“混合类型属性”，
-它在 :ref:`混合类型的顶层` 中描述。混合类型提供了一个可以在 Python 级别和 SQL 表达式级别都适用的表达式。例如，下面我们映射了一个类 User，包含属性 firstname 和 lastname，并包括一个 hybrid，它将为我们提供 fullname，也就是两者的字符串拼接::
+将相对简单的SQL表达式链接到类的最简单和最灵活的方法是使用所谓的“混合属性”，
+详见:ref：`混合属性 <hybrids_toplevel>`一节。混合属性提供了既可以在Python级别上使用，也可以在SQL表达式级别上使用的表达式。例如，我们将类“User”映射为包含属性“firstname”和“lastname”的类，并包含一个混合，该混合将为我们提供“fullname”，即两者的字符串连接：
 
     from sqlalchemy.ext.hybrid import hybrid_property
 
-
+    
     class User(Base):
         __tablename__ = "user"
         id = mapped_column(Integer, primary_key=True)
@@ -26,24 +26,23 @@
         def fullname(self):
             return self.firstname + " " + self.lastname
 
-在上面的示例中，fullname 属性在实例和类级别上都被解释，因此可以从实例中使用::
+在上面的代码中，“fullname”属性在实例和类级别上都是可用的，因此可以从实例中使用：
 
     some_user = session.scalars(select(User).limit(1)).first()
     print(some_user.fullname)
 
-并且可以在查询中使用::
+以及可在查询中使用：
 
     some_user = session.scalars(
         select(User).where(User.fullname == "John Smith").limit(1)
     ).first()
 
-字符串连接示例是一个简单的示例，Python 表达式可以在实例和类级别上都实现双重目的。通常，必须区分 SQL 表达式和 Python 表达式，可以使用 :meth:`.hybrid_property.expression` 来实现。下面我们演示调用混合类型的过程中需要存在条件时的情况，使用 Python 中的 if 語句和 SQL 表达式中的 :func:`_expression.case` 构造：
-
+上面的字符串连接示例是一个简单的示例，Python表达式可以在实例和类级别上同时使用。通常，SQL表达式必须与Python表达式区分开来，可以使用:meth：`.hybrid_property.expression`来实现。下面我们列出了需要在混合中存在条件的情况，使用Python的“if”语句和 :func:`_expression.case` 结构来执行SQL表达式：
 
     from sqlalchemy.ext.hybrid import hybrid_property
     from sqlalchemy.sql import case
 
-
+    
     class User(Base):
         __tablename__ = "user"
         id = mapped_column(Integer, primary_key=True)
@@ -64,16 +63,20 @@
                 else_=cls.lastname,
             )
 
-使用 column_property
+.. _mapper_column_property_sql_expressions:
+
+使用column_property
 ---------------------
 
-可以使用 :func:`_orm.column_property` 函数以类似于已映射的 :class:`_schema.Column` 的方式映射 SQL 表达式。使用此技术，属性与在加载时同时加载的所有其他列映射的属性一起加载。在某些情况下，与使用混合类型相比，这是一个优点，因为加载的值可以在对象的父行同时加载的同时加载，特别是如果表达式是一个与其他表格链接（通常作为相关子查询）以访问通常不可用的数据的表达式。
+可以使用:func：`_ orm.column_property`函数以类似于常规映射的方式映射SQL表达式：class:`_schema.Column`。使用这种技术，属性将在加载时与其他列映射属性一起加载。在某些情况下，这比使用混合的优点是，可以在对象的父行同时将该值加载到前面，尤其是如果表达式是链接到其他表（通常作为相关子查询）以访问不会正常可用于已加载的对象的数据的情况。
 
-使用 :func:`_orm.column_property` 映射名为 fullname 的示例如下:
+使用 :func:`_ orm.column_property` 进行SQL表达式的缺点包括，表达式必须与发射给整个类的SELECT语句兼容，并且在使用:func：`_ orm.column_property`从声明性mixin使用时，还可能出现一些配置性问题。
 
-    from sqlalchemy.orm import column_property
+我们可以使用 :func:`_ orm.column_property` 来表示上面提到的“fullname”示例：
 
+from sqlalchemy.orm import column_property
 
+    
     class User(Base):
         __tablename__ = "user"
         id = mapped_column(Integer, primary_key=True)
@@ -81,7 +84,7 @@
         lastname = mapped_column(String(50))
         fullname = column_property(firstname + " " + lastname)
 
-关联子查询也可以使用。下面使用 :func:`_expression.select` 构造函数创建一个 :class:`_sql.ScalarSelect`，它表示一个面向列的 SELECT 语句，将 ``Address`` 对象的计数链接到特定的 ``User`` 身上::
+相关子查询也可以用。下面，我们使用  :func:`_expression.select` ，表示以列为导向的SELECT语句，其中计算可用于特定的'User'的“Address”对象的数量：
 
     from sqlalchemy.orm import column_property
     from sqlalchemy import select, func
@@ -89,7 +92,7 @@
 
     from sqlalchemy.orm import DeclarativeBase
 
-
+    
     class Base(DeclarativeBase):
         pass
 
@@ -110,7 +113,7 @@
             .scalar_subquery()
         )
 
-在上面的示例中，我们创建一个类似于以下所示的 :func:`_expression.ScalarSelect` ——
+在上面的示例中，我们定义了像下面这样的 :func:`_expression.ScalarSelect` 结构：
 
     stmt = (
         select(func.count(Address.id))
@@ -119,20 +122,18 @@
         .scalar_subquery()
     )
 
-上面，我们首先使用 :func:`_sql.select` 创建一个 :class:`_sql.Select` 构造函数，然后使用 :meth:`_sql.Select.scalar_subquery` 方法将其转换为标量子查询，表示我们打算在列表达式上使用此 :class:`_sql.Select` 语句。
+在上面的代码中，我们首先使用  :func:`_sql.select`  _sql.Select` 结构，然后使用  :meth:`_sql.Select.scalar_subquery`  方法将其转换为单值子查询，指示我们打算使用此:class :` _sql.Select` 语句在列表达式上下文中使用。
 
-在 :class:`_sql.Select` 中，我们选择所有的 ``Address`` 表中 ``Address.user_id`` 列等于 ``id`` 的 ``Address.id`` 行数，其中在 ``User`` 类中， ``id`` 是名为 ``id`` 的 :class:`_schema.Column`（请注意， ``id`` 也是 Python 内置函数的名称，这不是我们要在这里使用的 - 如果在 ``User`` 类定义之外，我们将使用 ``User.id``）。
+在  :class:`_sql.Select` （请注意，' 'id'也是Python内置函数的名称，这不是我们要在这里使用的——如果我们在User类定义之外，则会使用User.id）。
 
-:meth:`_sql.Select.correlate_except` 方法指示在这个 :func:`_expression.select` 中，FROM 子句中的每个元素都可能被省略，除了对应于 ``Address`` 的元素。这不是必需的，但它可以避免在 ``User`` 和 Address 表之间的长连接字符串中的情况下意外地省略了 ``Address``。
+  :meth:`_sql.Select.correlate_except`  方法表示  :func:` _expression.select`  FROM子句中的每个元素都可以从FROM列表中省略（也就是说，相关到封闭的User中的SELECT语句）除了与Address对应的。这不是必需的，但可以防止在“User”和“Address”表之间的长字符串的连接中，在SELECT语句和“Address”之间进行嵌套时意外地省略“Address” FROM列表。
 
-对于引用来自多对多关系的列的 :func:`.column_property`，请使用 :func:`.and_` 来将关联表的字段连接到关系中的两个表中的每一个表::
+对于引用自多对多关系的列的column_property，使用 :func:`.and_` 将关联表的字段连接到关系中的两个表中的一个。示例如下：
 
     from sqlalchemy import and_
 
-
     class Author(Base):
         # ...
-
         book_count = column_property(
             select(func.count(books.c.id))
             .where(
@@ -144,31 +145,29 @@
             .scalar_subquery()
         )
 
-将 column_property() 添加到现有的 Declarative 映射类
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+向现有Declarative映射类添加column_property（）^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-如果导入问题阻止 :func:`.column_property` 与类内联，可以在两者配置后将其分配给类。当使用使用 Declarative 基类的映射（即由 :class:`_orm.DeclarativeBase` 超类或 :func:`_orm.declarative_base` 等旧函数生成的映射）时，此属性分配的效果是调用 :meth:`_orm.Mapper.add_property` 来在事实上添加一个属性::
+如果导入问题防止在类的内置使用  :func:`.column_property` ::_orm.Mapper.add_property` 以在事实上添加一个其他属性：
 
-    # 仅适用于使用声明式基类
+    # 仅适用于使用Declarative基类的情况
     User.address_count = column_property(
         select(func.count(Address.id)).where(Address.user_id == User.id).scalar_subquery()
     )
 
-使用不使用 Declarative 基类的映射风格，例如 :meth:`_orm.registry.mapped` 装饰器，可以在查询时显式调用底层 :class:`_orm.Mapper` 对象上的 :meth:`_orm.Mapper.add_property` 方法，该方法可以使用 :func:`_sa.inspect` 获取：
+对于不使用Declarative基类的映射样式，例如使用  :meth:`_orm.registry.mapped`  装饰器，可以在底层 :class：` _orm.Mapper`对象上明确调用  :meth:`_orm.Mapper.add_property`  方法，该方法可以使用 :func:` _sa.inspect`获取：
 
     from sqlalchemy.orm import registry
 
     reg = registry()
 
-
+    
     @reg.mapped
     class User:
         __tablename__ = "user"
 
         # ... additional mapping directives
 
-
-    # later ...
+    # 后来 ...
 
     # 适用于任何类型的映射
     from sqlalchemy import inspect
@@ -183,15 +182,15 @@
 
 .. seealso::
 
-  :ref:`orm_declarative_table_adding_columns`
+    :ref:`orm_declarative_table_adding_columns` 
 
 
 .. _mapper_column_property_sql_expressions_composed:
 
-在映射时间从列属性构成
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+在映射时从列属性组合
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-通常情况下，可以使用多个 :class:`.ColumnProperty` 对象将多个映射属性组合在一起。在 Core 表达式上下文中，当 :class:`.ColumnProperty` 被定位到现有表达式对象时，它将被解释为 SQL 表达式；它是通过 Core 检测到该对象具有返回 SQL 表达式的 ``__clause_element__()`` 方法实现的。然而，在表达式中使用 :class:`.ColumnProperty` 作为主对象，如果没有其他 Core SQL 表达式对象来定位它，则会返回 :attr:`.ColumnProperty.expression` 属性，以便可以将其用于一致地构建 SQL 表达式。下面，类 File 包含一个属性 File.path，它将字符串令牌连接到 File.filename 属性上，而后者本身是 :class:`.ColumnProperty`::
+可以创建将多个  :class:`.ColumnProperty` .ColumnProperty` 将被解释为SQL表达式，前提是存在指向现有表达式对象的其他表达式对象；这是通过Core检测到该对象具有“__clause_element__()”方法返回SQL表达式来实现的。但是，如果在表达式中单独使用  :class:`.ColumnProperty` ，例如在没有其他Core SQL表达式对象将其作为目标的情况下，  :attr:` .ColumnProperty.expression`  属性将返回基础SQL表达。下面，'File'类包含一个属性'File.path'，该属性将字符串令牌连接到'File.filename'属性上，后者本身是类  :class:`.ColumnProperty` ：
 
 
     class File(Base):
@@ -203,17 +202,16 @@
         filename = column_property(name + "." + extension)
         path = column_property("C:/" + filename.expression)
 
-当在通常情况下使用 File 类时，分配给 filename 和 path 的属性可直接使用。只有当 :class:`.ColumnProperty` 直接在映射定义中使用时才需要使用 :attr:`.ColumnProperty.expression` 属性::
+当正常使用文件类时，分配给'filename'和'path'的属性是直接可用的。仅当在映射定义中直接使用  :class:`.ColumnProperty` .ColumnProperty.expression` 属性：
+
 
     stmt = select(File.path).where(File.filename == "foo.txt")
 
-使用列递延与 ``column_property()`` 
--------------------------------------
+使用“column_property（）”添加列延迟^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-查询指南 :ref:`queryguide_toplevel` 中介绍的列递延功能可以通过在映射时间使用 :func:`_orm.deferred` 函数而不是 :func:`_orm.column_property` 映射由 :func:`_orm.column_property` 映射的 SQL 表达式来应用，例如::
+在 :ref:`queryguide_toplevel` 中介绍的列延迟功能可以在映射时应用于由 :func:`_orm.column_property` 映射的SQL表达式，方法是在 :func:`_orm.column_property` 的位置使用 :func:`_orm.deferred` 函数：：
 
     from sqlalchemy.orm import deferred
-
 
     class User(Base):
         __tablename__ = "user"
@@ -225,18 +223,18 @@
 
 .. seealso::
 
-    :ref:`orm_queryguide_deferred_imperative`
+      :ref:`orm_queryguide_deferred_imperative` 
 
 
-使用普通描述符 attribute 
---------------------------
+使用普通描述符
+------------------------
 
-在必须发出比 :func:`_orm.column_property` 或 :class:`.hybrid_property` 更多的 SQL 查询的情况下，可以使用作为属性访问的普通 Python 函数，只要表达式仅需要在已加载的实例上可用即可。使用 Python 自己的 ``@property`` 装饰器将其标记为只读属性。在功能内部，使用 :func:`.object_session` 来定位对应于当前对象的 :class:`.Session`，然后用它来发出查询::
+在发射超出  :class:`_orm.column_property` .hybrid_property` 能力范围的SQL查询时，可以使用访问为属性的普通Python函数，假设表达式仅需要在已加载的实例上可用。将函数用Python自己的``@property``装饰器装饰为只读属性。在函数内部，使用  :func:`.object_session` .Session` ，然后使用它发射查询：
 
     from sqlalchemy.orm import object_session
     from sqlalchemy import select, func
 
-
+    
     class User(Base):
         __tablename__ = "user"
         id = mapped_column(Integer, primary_key=True)
@@ -249,12 +247,5 @@
                 select(func.count(Address.id)).where(Address.user_id == self.id)
             )
 
-普通的描述符方法在必要时很有用，但通常在性能上不如混合类型或 column_property 方法，因为它需要在每次访问时发出 SQL 查询。
-
-.. _mapper_querytime_expression:
-
-映射时间 SQL 表达式加载属性
------------------------------------------------
-
-除了能够在映射类上配置固定的 SQL 表达式外，SQLAlchemy ORM 还包括一种特性，即在查询时间设置的任意 SQL 表达式作为其状态的一部分加载对象。此行为可以使用 :func:`_orm.query_expression` 配置 ORM 映射属性，然后在查询时间使用 :func:`_orm.with_expression` 加载器选项来实现。有关示例映射和用法，请参见本节 :ref:`orm_queryguide_with_expression`。
+对于query_expression配置的映射属性，还可以使用 :func:`_orm.with_expression` 加载程序选项，在查询时将对象加载为任意SQL表达式的结果。请参见 :ref:`orm_queryguide_with_expression` 一节中的映射和用法示例。
 

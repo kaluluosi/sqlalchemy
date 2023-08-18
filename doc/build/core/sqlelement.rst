@@ -8,10 +8,10 @@ specific lexical element within a SQL string.  Composed together
 into a larger structure, they form a statement construct that may
 be *compiled* into a string representation that can be passed to a database.
 The classes are organized into a hierarchy that begins at the basemost
-:class:`.ClauseElement` class. Key subclasses include :class:`.ColumnElement`,
+:class:`.ClauseElement` class. Key subclasses include :class:` .ColumnElement`,
 which represents the role of any column-based expression
 in a SQL statement, such as in the columns clause, WHERE clause, and ORDER BY
-clause, and :class:`.FromClause`, which represents the role of a token that
+clause, and :class:`.FromClause` , which represents the role of a token that
 is placed in the FROM clause of a SELECT statement.
 
 .. _sqlelement_foundational_constructors:
@@ -108,7 +108,7 @@ Functions listed here are more commonly available as methods from any
 
    Synonym for the :func:`_sql.nulls_first` function.
 
-   .. versionchanged:: 2.0.5 restored missing legacy symbol :func:`.nullsfirst`.
+   .. versionchanged:: 2.0.5 restored missing legacy symbol :func:`.nullsfirst` .
 
 .. autofunction:: nulls_last
 
@@ -116,7 +116,7 @@ Functions listed here are more commonly available as methods from any
 
    Legacy synonym for the :func:`_sql.nulls_last` function.
 
-   .. versionchanged:: 2.0.5 restored missing legacy symbol :func:`.nullslast`.
+   .. versionchanged:: 2.0.5 restored missing legacy symbol :func:`.nullslast` .
 
 .. autofunction:: over
 
@@ -127,7 +127,7 @@ Column Element Class Documentation
 
 The classes here are generated using the constructors listed at
 :ref:`sqlelement_foundational_constructors` and
-:ref:`sqlelement_modifier_constructors`.
+:ref:`sqlelement_modifier_constructors` .
 
 
 .. autoclass:: BinaryExpression
@@ -164,7 +164,7 @@ The classes here are generated using the constructors listed at
    .. versionadded:: 2.0.13
 
    This type is used for "column" kinds of expressions that typically represent
-   a single SQL column expression, including :class:`_sql.ColumnElement`, as
+   a single SQL column expression, including :class:`_sql.ColumnElement` , as
    well as ORM-mapped attributes that will have a ``__clause_element__()``
    method.
 

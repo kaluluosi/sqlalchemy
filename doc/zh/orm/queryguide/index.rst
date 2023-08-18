@@ -1,21 +1,22 @@
 .. highlight:: pycon+sql
 
-.. _ORM查询指南:
+.. _queryguide_toplevel:
 
 ==================
-ORM查询指南
+ORM 查询指南
 ==================
 
-本节概述使用SQLAlchemy ORM使用:term:`2.0 style`语法来发出查询。
+本节提供了使用 SQLAlchemy ORM 发出查询的概述，使用了  :term:`2.0 style` .
+本节的读者应该熟悉   :ref:`unified_tutorial`  中的 SQLAlchemy 概述，
+特别是大部分的内容都是在   :ref:`tutorial_selecting_data`  的基础上拓展的。
 
-本节的读者应该熟悉:ref:`unified_tutorial`中的SQLAlchemy概述，特别是本节的大部分内容是在扩展:ref:`tutorial_selecting_data`中的内容。
+.. admonition:: 对于 SQLAlchemy 1.x 的用户
 
-.. admonition:: 对于SQLAlchemy 1.x的用户
-
-   在SQLAlchemy 2.x系列中，ORM的SQL SELECT语句是使用与Core相同的:func:`_sql.select`构造构建的，然后在:class:`_orm.Session`中使用:meth:`_orm.Session.execute`方法调用（与现在用于:ref:`orm_expression_update_delete`特性的:func:`_sql.update`和:func:`_sql.delete`构造相同）。然而，旧版的:class:`_query.Query`对象在这个新系统上执行这些相同的步骤，作为更多"一体化"对象的一种，仍然保持可用，以支持在1.x系列上构建的应用程序，而无需全面替换所有的查询。有关此对象的参考，请参阅:ref:`query_api_toplevel`章节。
-
-
-
+    在 SQLAlchemy 2.x 系列中，ORM 的 SQL SELECT 语句是使用与 Core 中相同的   :func:`_sql.select`  构造而建造的，
+    然后使用   :class:`_orm.Session`  的  :meth:` _orm.Session.execute`  方法（与用于   :ref:`orm_expression_update_delete`  
+    功能的   :func:`_sql.update`  和   :func:` _sql.delete`  构造相同）来调用。但是，旧版的   :class:`_query.Query` 
+    对象同时执行这些步骤，作为一个“全能”的对象，它仍然是可用的，以支持在没有必要全面替换所有查询的情况下建立在 1.x 
+    系列上的应用程序。关于这个对象的参考，可以查看   :ref:`query_api_toplevel` 。
 
 .. toctree::
     :maxdepth: 3

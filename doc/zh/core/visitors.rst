@@ -1,11 +1,11 @@
-访问者和遍历工具
-==================
+游客和遍历工具
+===============
 
-:mod:`sqlalchemy.sql.visitors` 模块由类和函数组成，旨在通用地**遍历**核心 SQL 表达式结构。这类似于 Python ``ast`` 模块，因为它提供了一种程序可以处理 SQL 表达式每个组件的系统。它常见的目的是定位各种元素，如 :class:`_schema.Table` 或 :class:`.BindParameter` 对象，并更改结构的状态，例如将某些 FROM 子句替换为其他子句。
+  :mod:`sqlalchemy.sql.visitors`   模块由类和函数组成，旨在通用地**遍历**核心 SQL 表达式结构，这类似于 Python 中的 ` `ast`` 模块，因为它提供了一个程序可以操作 SQL 表达式的每个组件的系统。它常用于查找各种类型的元素，例如  :class:`_schema.Table` .BindParameter` 对象，以及更改该结构的状态，例如用其他 FROM 子句替换某些子句。
 
-.. note:: :mod:`sqlalchemy.sql.visitors` 模块是一个内部 API，并非完全公开。它可能会发生变化，并且可能不会按照 SQLAlchemy 中未考虑的使用模式的预期方式运行。
+.. note::  :mod:`sqlalchemy.sql.visitors`  模块是一个内部 API，不是完全公开的。它可能会被更改，并且可能不像预期的那样适用于 SQLAlchemy 内部未考虑到的使用模式。
 
-:mod:`sqlalchemy.sql.visitors` 模块是 SQLAlchemy 的**内部**模块，通常不会被调用应用程序代码使用。然而，在某些边缘情况下，例如构建缓存例程以及使用 :ref:`自定义 SQL 构造和编译扩展 <sqlalchemy.ext.compiler_toplevel>` 构建自定义 SQL 表达式时，该模块还是有用的。
+  :mod:`sqlalchemy.sql.visitors`   模块是 SQLAlchemy 内部的一部分，通常情况下不会由调用应用程序代码使用。但是，在某些边缘情况下会使用它，例如构建缓存例程时以及使用   :ref:` Custom SQL Constructs and Compilation Extension <sqlalchemy.ext.compiler_toplevel>`  构建自定义 SQL 表达式时。
 
 .. automodule:: sqlalchemy.sql.visitors
    :members:

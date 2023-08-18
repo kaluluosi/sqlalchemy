@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`data_select`
-.. |next| replace:: :doc:`orm_data_manipulation`
+.. |prev| replace:: :doc:`data_select` 
+.. |next| replace:: :doc:`orm_data_manipulation` 
 
 .. include:: tutorial_nav_include.rst
 
@@ -13,7 +13,7 @@
 Using UPDATE and DELETE Statements
 -------------------------------------
 
-So far we've covered :class:`_sql.Insert`, so that we can get some data into
+So far we've covered :class:`_sql.Insert` , so that we can get some data into
 our database, and then spent a lot of time on :class:`_sql.Select` which
 handles the broad range of usage patterns used for retrieving data from the
 database.   In this section we will cover the :class:`_sql.Update` and
@@ -24,17 +24,17 @@ from a Core-centric perspective.
 
 .. container:: orm-header
 
-    **ORM Readers** - As was the case mentioned at :ref:`tutorial_core_insert`,
-    the :class:`_sql.Update` and :class:`_sql.Delete` operations when used with
-    the ORM are usually invoked internally from the :class:`_orm.Session`
+    **ORM Readers** - As was the case mentioned at :ref:`tutorial_core_insert` ,
+    the :class:`_sql.Update` and :class:` _sql.Delete` operations when used with
+    the ORM are usually invoked internally from the :class:`_orm.Session` 
     object as part of the :term:`unit of work` process.
 
-    However, unlike :class:`_sql.Insert`, the :class:`_sql.Update` and
+    However, unlike :class:`_sql.Insert` , the :class:`_sql.Update` and
     :class:`_sql.Delete` constructs can also be used directly with the ORM,
     using a pattern known as "ORM-enabled update and delete"; for this reason,
     familiarity with these constructs is useful for ORM use.  Both styles of
     use are discussed in the sections :ref:`tutorial_orm_updating` and
-    :ref:`tutorial_orm_deleting`.
+    :ref:`tutorial_orm_deleting` .
 
 .. _tutorial_core_update:
 
@@ -46,7 +46,7 @@ The :func:`_sql.update` function generates a new instance of
 update existing data in a table.
 
 Like the :func:`_sql.insert` construct, there is a "traditional" form of
-:func:`_sql.update`, which emits UPDATE against a single table at a time and
+:func:`_sql.update` , which emits UPDATE against a single table at a time and
 does not return any rows.   However some backends support an UPDATE statement
 that may modify multiple tables at once, and the UPDATE statement also
 supports RETURNING such that columns contained in matched rows may be returned
@@ -64,7 +64,7 @@ A basic UPDATE looks like::
     {printsql}UPDATE user_account SET fullname=:fullname WHERE user_account.name = :name_1
 
 The :meth:`_sql.Update.values` method controls the contents of the SET elements
-of the UPDATE statement.  This is the same method shared by the :class:`_sql.Insert`
+of the UPDATE statement.  This is the same method shared by the :class:`_sql.Insert` 
 construct.   Parameters can normally be passed using the column names as
 keyword arguments.
 
@@ -76,7 +76,7 @@ where we can make use of :class:`_schema.Column` expressions::
     {printsql}UPDATE user_account SET fullname=(:name_1 || user_account.name)
 
 To support UPDATE in an "executemany" context, where many parameter sets will
-be invoked against the same statement, the :func:`_sql.bindparam`
+be invoked against the same statement, the :func:`_sql.bindparam` 
 construct may be used to set up bound parameters; these replace the places
 that literal values would normally go:
 
@@ -112,7 +112,7 @@ Correlated Updates
 ~~~~~~~~~~~~~~~~~~
 
 An UPDATE statement can make use of rows in other tables by using a
-:ref:`correlated subquery <tutorial_scalar_subquery>`.  A subquery may be used
+:ref:`correlated subquery <tutorial_scalar_subquery>` .  A subquery may be used
 anywhere a column expression might be placed::
 
   >>> scalar_subq = (
@@ -223,7 +223,7 @@ allowing for a RETURNING variant on some database backends.
 Multiple Table Deletes
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Like :class:`_sql.Update`, :class:`_sql.Delete` supports the use of correlated
+Like :class:`_sql.Update` , :class:`_sql.Delete` supports the use of correlated
 subqueries in the WHERE clause as well as backend-specific multiple table
 syntaxes, such as ``DELETE FROM..USING`` on MySQL::
 
@@ -242,10 +242,10 @@ syntaxes, such as ``DELETE FROM..USING`` on MySQL::
 Getting Affected Row Count from UPDATE, DELETE
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Both :class:`_sql.Update` and :class:`_sql.Delete` support the ability to
+Both :class:`_sql.Update` and :class:` _sql.Delete` support the ability to
 return the number of rows matched after the statement proceeds, for statements
-that are invoked using Core :class:`_engine.Connection`, i.e.
-:meth:`_engine.Connection.execute`. Per the caveats mentioned below, this value
+that are invoked using Core :class:`_engine.Connection` , i.e.
+:meth:`_engine.Connection.execute` . Per the caveats mentioned below, this value
 is available from the :attr:`_engine.CursorResult.rowcount` attribute:
 
 .. sourcecode:: pycon+sql
@@ -273,7 +273,7 @@ is available from the :attr:`_engine.CursorResult.rowcount` attribute:
     :meth:`_orm.Session.execute` method returns an object of this type for
     all INSERT, UPDATE, and DELETE statements.
 
-Facts about :attr:`_engine.CursorResult.rowcount`:
+Facts about :attr:`_engine.CursorResult.rowcount` :
 
 * The value returned is the number of rows **matched** by the WHERE clause of
   the statement.   It does not matter if the row were actually modified or not.
@@ -294,14 +294,14 @@ Facts about :attr:`_engine.CursorResult.rowcount`:
 * "rowcount" is used by the ORM :term:`unit of work` process to validate that
   an UPDATE or DELETE statement matched the expected number of rows, and is
   also essential for the ORM versioning feature documented at
-  :ref:`mapper_version_counter`.
+  :ref:`mapper_version_counter` .
 
 Using RETURNING with UPDATE, DELETE
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Like the :class:`_sql.Insert` construct, :class:`_sql.Update` and :class:`_sql.Delete`
+Like the :class:`_sql.Insert` construct, :class:` _sql.Update` and :class:`_sql.Delete` 
 also support the RETURNING clause which is added by using the
-:meth:`_sql.Update.returning` and :meth:`_sql.Delete.returning` methods.
+:meth:`_sql.Update.returning` and :meth:` _sql.Delete.returning` methods.
 When these methods are used on a backend that supports RETURNING, selected
 columns from all rows that match the WHERE criteria of the statement
 will be returned in the :class:`_engine.Result` object as rows that can
@@ -336,12 +336,12 @@ Further Reading for UPDATE, DELETE
 
     API documentation for UPDATE / DELETE:
 
-    * :class:`_sql.Update`
+    * :class:`_sql.Update` 
 
-    * :class:`_sql.Delete`
+    * :class:`_sql.Delete` 
 
     ORM-enabled UPDATE and DELETE:
 
-    :ref:`orm_expression_update_delete` - in the :ref:`queryguide_toplevel`
+    :ref:`orm_expression_update_delete` - in the :ref:` queryguide_toplevel`
 
 

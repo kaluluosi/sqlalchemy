@@ -1,35 +1,37 @@
-核心内部
-================
+.. _核心内部层级:
 
-以下列出了一些关键的内部结构。
+核心内部
+========
+
+这里列出了一些关键的内部构造。
 
 .. currentmodule:: sqlalchemy
 
 .. autoclass:: sqlalchemy.engine.BindTyping
     :members:
-    
+
 .. autoclass:: sqlalchemy.engine.Compiled
     :members:
 
 .. autoclass:: sqlalchemy.engine.interfaces.DBAPIConnection
     :members:
-    :undoc-members: （无文档成员）
+    :undoc-members:
 
 .. autoclass:: sqlalchemy.engine.interfaces.DBAPICursor
     :members:
-    :undoc-members: （无文档成员）
+    :undoc-members:
 
 .. autoclass:: sqlalchemy.engine.interfaces.DBAPIType
     :members:
-    :undoc-members: （无文档成员）
+    :undoc-members:
 
 .. autoclass:: sqlalchemy.sql.compiler.DDLCompiler
     :members:
-    :inherited-members:（继承自的成员）
+    :inherited-members:
 
 .. autoclass:: sqlalchemy.engine.default.DefaultDialect
     :members:
-    :inherited-members:（继承自的成员）
+    :inherited-members:
 
 .. autoclass:: sqlalchemy.engine.Dialect
     :members:
@@ -47,7 +49,7 @@
 
 .. autoclass:: sqlalchemy.sql.compiler.GenericTypeCompiler
     :members:
-    :inherited-members:（继承自的成员）
+    :inherited-members:
 
 
 .. autoclass:: sqlalchemy.log.Identified

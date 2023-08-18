@@ -4,11 +4,11 @@
 
     类型改进：
 
-    * 在使用无返回值的DML时，对于一些:meth:`_orm.Session.execute`方法的返回，现返回:class:`.CursorResult`
-    * 修正:meth:`_orm.Query.with_for_update`中:paramref:`_orm.Query.with_for_update.of`参数的类型
+    * 在使用无返回值的DML时，对于一些  :meth:`_orm.Session.execute`  方法的返回，现返回  :class:` .CursorResult` 
+    * 修正  :meth:`_orm.Query.with_for_update`  中  :paramref:` _orm.Query.with_for_update.of`  参数的类型
     * 对一些DML方法时使用的"``_DMLColumnArgument``"类型的表达式传递进行优化。
-    * 为:func:`_sql.literal`添加重载，使得在:paramref:`_sql.literal.type_`参数为None时，推断返回类型为``BindParameter[NullType]``
-    * 为:meth:`_sql.ColumnElement.op`添加重载，使得在没有提供:paramref:`_sql.ColumnElement.op.return_type`时，推断类型为``Callable[[Any], BinaryExpression[Any]]``
+    * 为  :func:`_sql.literal`  参数为None时，推断返回类型为` `BindParameter[NullType]``
+    * 为  :meth:`_sql.ColumnElement.op`  添加重载，使得在没有提供  :paramref:` _sql.ColumnElement.op.return_type`  时，推断类型为``Callable[[Any], BinaryExpression[Any]]``
     * 添加缺失的: meth:`_sql.ColumnElement.__add__`重载
 
     Pull request by Mehdi Gmira.

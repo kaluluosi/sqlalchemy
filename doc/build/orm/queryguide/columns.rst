@@ -1,7 +1,7 @@
 .. highlight:: pycon+sql
 
-.. |prev| replace:: :doc:`dml`
-.. |next| replace:: :doc:`relationships`
+.. |prev| replace:: :doc:`dml` 
+.. |next| replace:: :doc:`relationships` 
 
 .. include:: queryguide_nav_include.rst
 
@@ -23,7 +23,7 @@ Column Loading Options
     large string values for which we may want to limit when they
     are loaded.
 
-    :doc:`View the ORM setup for this page <_deferred_setup>`.  Some
+    :doc:`View the ORM setup for this page <_deferred_setup>` .  Some
     of the examples below will redefine the ``Book`` mapper to modify
     some of the column definitions.
 
@@ -93,8 +93,8 @@ statement to load its value::
     [...] (1,)
 
 Lazy loads are always emitted using the :class:`_orm.Session` to which the
-object is in the :term:`persistent` state.  If the object is :term:`detached`
-from any :class:`_orm.Session`, the operation fails, raising an exception.
+object is in the :term:`persistent` state.  If the object is :term:` detached`
+from any :class:`_orm.Session` , the operation fails, raising an exception.
 
 As an alternative to lazy loading on access, deferred columns may also be
 configured to raise an informative exception when accessed, regardless of their
@@ -104,7 +104,7 @@ See the section :ref:`orm_queryguide_deferred_raiseload` for
 background and examples.
 
 .. tip::  as noted elsewhere, lazy loading is not available when using
-   :ref:`asyncio_toplevel`.
+   :ref:`asyncio_toplevel` .
 
 Using ``load_only()`` with multiple entities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -112,7 +112,7 @@ Using ``load_only()`` with multiple entities
 :func:`_orm.load_only` limits itself to the single entity that is referred
 towards in its list of attributes (passing a list of attributes that span more
 than a single entity is currently disallowed). In the example below, the given
-:func:`_orm.load_only` option applies only to the ``Book`` entity. The ``User``
+:func:`_orm.load_only` option applies only to the ` `Book`` entity. The ``User``
 entity that's also selected is not affected; within the resulting SELECT
 statement, all columns for ``user_account`` are present, whereas only
 ``book.id`` and ``book.title`` are present for the ``book`` table::
@@ -123,7 +123,7 @@ statement, all columns for ``user_account`` are present, whereas only
     book.id AS id_1, book.title
     FROM user_account JOIN book ON user_account.id = book.owner_id
 
-If we wanted to apply :func:`_orm.load_only` options to both ``User`` and
+If we wanted to apply :func:`_orm.load_only` options to both ` `User`` and
 ``Book``, we would make use of two separate options::
 
     >>> stmt = (
@@ -144,7 +144,7 @@ When using :ref:`relationship loaders <loading_toplevel>` to control the
 loading of related objects, the
 :meth:`.Load.load_only` method of any relationship loader may be used
 to apply :func:`_orm.load_only` rules to columns on the sub-entity.  In the example below,
-:func:`_orm.selectinload` is used to load the related ``books`` collection
+:func:`_orm.selectinload` is used to load the related ` `books`` collection
 on each ``User`` object.   By applying :meth:`.Load.load_only` to the resulting
 option object, when objects are loaded for the relationship, the
 SELECT emitted will only refer to the ``title`` column
@@ -172,7 +172,7 @@ in addition to primary key column::
 :func:`_orm.load_only` may also be applied to sub-entities without needing
 to state the style of loading to use for the relationship itself.  If we didn't
 want to change the default loading style of ``User.books`` but still apply
-load only rules to ``Book``, we would link using the :func:`_orm.defaultload`
+load only rules to ``Book``, we would link using the :func:`_orm.defaultload` 
 option, which in this case will retain the default relationship loading
 style of ``"lazy"``, and applying our custom :func:`_orm.load_only` rule to
 the SELECT statement emitted for each ``User.books`` collection::
@@ -201,7 +201,7 @@ Using ``defer()`` to omit specific columns
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :func:`_orm.defer` loader option is a more fine grained alternative to
-:func:`_orm.load_only`, which allows a single specific column to be marked as
+:func:`_orm.load_only` , which allows a single specific column to be marked as
 "dont load".  In the example below, :func:`_orm.defer` is applied directly to the
 ``.cover_photo`` column, leaving the behavior of all other columns
 unchanged::
@@ -219,8 +219,8 @@ unchanged::
     Geodesic Domes: A Retrospective: another long summary
     Rocketry for Squirrels: yet another summary
 
-As is the case with :func:`_orm.load_only`, unloaded columns by default
-will load themselves when accessed using :term:`lazy loading`::
+As is the case with :func:`_orm.load_only` , unloaded columns by default
+will load themselves when accessed using :term:`lazy loading` ::
 
     >>> img_data = books[0].cover_photo
     {execsql}SELECT book.cover_photo AS book_cover_photo
@@ -231,10 +231,10 @@ will load themselves when accessed using :term:`lazy loading`::
 Multiple :func:`_orm.defer` options may be used in one statement in order to
 mark several columns as deferred.
 
-As is the case with :func:`_orm.load_only`, the :func:`_orm.defer` option
+As is the case with :func:`_orm.load_only` , the :func:`_orm.defer` option
 also includes the ability to have a deferred attribute raise an exception on
 access rather than lazy loading.  This is illustrated in the section
-:ref:`orm_queryguide_deferred_raiseload`.
+:ref:`orm_queryguide_deferred_raiseload` .
 
 .. _orm_queryguide_deferred_raiseload:
 
@@ -245,7 +245,7 @@ Using raiseload to prevent deferred column loads
 
   >>> session.expunge_all()
 
-When using the :func:`_orm.load_only` or :func:`_orm.defer` loader options,
+When using the :func:`_orm.load_only` or :func:` _orm.defer` loader options,
 attributes marked as deferred on an object have the default behavior that when
 first accessed, a SELECT statement will be emitted within the current
 transaction in order to load their value. It is often necessary to prevent this
@@ -258,8 +258,8 @@ within the view layer should be caught, so that the up-front loading operation
 can be adjusted to accommodate for that additional data up front, rather than
 incurring additional lazy loading.
 
-For this use case the :func:`_orm.defer` and :func:`_orm.load_only` options
-include a boolean parameter :paramref:`_orm.defer.raiseload`, which when set to
+For this use case the :func:`_orm.defer` and :func:` _orm.load_only` options
+include a boolean parameter :paramref:`_orm.defer.raiseload` , which when set to
 ``True`` will cause the affected attributes to raise on access.  In the
 example below, the deferred column ``.cover_photo`` will disallow attribute
 access::
@@ -296,7 +296,7 @@ to all deferred attributes::
 
 .. note::
 
-    It is not yet possible to mix :func:`_orm.load_only` and :func:`_orm.defer`
+    It is not yet possible to mix :func:`_orm.load_only` and :func:` _orm.defer`
     options which refer to the same entity together in one statement in order
     to change the ``raiseload`` behavior of certain attributes; currently,
     doing so will produce undefined loading behavior of attributes.
@@ -325,7 +325,7 @@ The functionality of :func:`_orm.defer` is available as a default behavior for
 mapped columns, as may be appropriate for columns that should not be loaded
 unconditionally on every query. To configure, use the
 :paramref:`_orm.mapped_column.deferred` parameter of
-:func:`_orm.mapped_column`. The example below illustrates a mapping for
+:func:`_orm.mapped_column` . The example below illustrates a mapping for
 ``Book`` which applies default column deferral to the ``summary`` and
 ``cover_photo`` columns::
 
@@ -350,7 +350,7 @@ include the ``summary`` and ``cover_photo`` columns::
     [...] (2,)
 
 As is the case with all deferral, the default behavior when deferred attributes
-on the loaded object are first accessed is that they will :term:`lazy load`
+on the loaded object are first accessed is that they will :term:`lazy load` 
 their value::
 
     >>> img_data = book.cover_photo
@@ -359,7 +359,7 @@ their value::
     WHERE book.id = ?
     [...] (2,)
 
-As is the case with the :func:`_orm.defer` and :func:`_orm.load_only`
+As is the case with the :func:`_orm.defer` and :func:` _orm.load_only`
 loader options, mapper level deferral also includes an option for ``raiseload``
 behavior to occur, rather than lazy loading, when no other options are
 present in a statement.  This allows a mapping where certain columns
@@ -380,7 +380,7 @@ The :func:`_orm.deferred` function is the earlier, more general purpose
 :func:`_orm.deferred` is used when configuring ORM mappers, and accepts
 arbitrary SQL expressions or
 :class:`_schema.Column` objects. As such it's suitable to be used with
-non-declarative :ref:`imperative mappings <orm_imperative_mapping>`, passing it
+non-declarative :ref:`imperative mappings <orm_imperative_mapping>` , passing it
 to the :paramref:`_orm.registry.map_imperatively.properties` dictionary:
 
 .. sourcecode:: python
@@ -419,7 +419,7 @@ to the :paramref:`_orm.registry.map_imperatively.properties` dictionary:
         },
     )
 
-:func:`_orm.deferred` may also be used in place of :func:`_orm.column_property`
+:func:`_orm.deferred` may also be used in place of :func:` _orm.column_property`
 when mapped SQL expressions should be loaded on a deferred basis:
 
 .. sourcecode:: python
@@ -438,10 +438,10 @@ when mapped SQL expressions should be loaded on a deferred basis:
 .. seealso::
 
     :ref:`mapper_column_property_sql_expressions` - in the section
-    :ref:`mapper_sql_expressions`
+    :ref:`mapper_sql_expressions` 
 
     :ref:`orm_imperative_table_column_options` - in the section
-    :ref:`orm_declarative_table_config_toplevel`
+    :ref:`orm_declarative_table_config_toplevel` 
 
 Using ``undefer()`` to "eagerly" load deferred columns
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -519,9 +519,9 @@ will load both columns at once using just one SELECT statement::
 Undeferring by group with ``undefer_group()``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If deferred columns are configured with :paramref:`_orm.mapped_column.deferred_group`
+If deferred columns are configured with :paramref:`_orm.mapped_column.deferred_group` 
 as introduced in the preceding section, the
-entire group may be indicated to load eagerly using the :func:`_orm.undefer_group`
+entire group may be indicated to load eagerly using the :func:`_orm.undefer_group` 
 option, passing the string name of the group to be eagerly loaded::
 
     >>> from sqlalchemy.orm import undefer_group
@@ -565,9 +565,9 @@ Configuring mapper-level "raiseload" behavior
 The "raiseload" behavior first introduced at :ref:`orm_queryguide_deferred_raiseload` may
 also be applied as a default mapper-level behavior, using the
 :paramref:`_orm.mapped_column.deferred_raiseload` parameter of
-:func:`_orm.mapped_column`.  When using this parameter, the affected columns
+:func:`_orm.mapped_column` .  When using this parameter, the affected columns
 will raise on access in all cases unless explicitly "undeferred" using
-:func:`_orm.undefer` or :func:`_orm.load_only` at query time::
+:func:`_orm.undefer` or :func:` _orm.load_only` at query time::
 
     >>> class Book(Base):
     ...     __tablename__ = "book"
@@ -596,8 +596,8 @@ by default not loadable::
     sqlalchemy.exc.InvalidRequestError: 'Book.summary' is not available due to raiseload=True
 
 Only by overridding their behavior at query time, typically using
-:func:`_orm.undefer` or :func:`_orm.undefer_group`, or less commonly
-:func:`_orm.defer`, may the attributes be loaded.  The example below applies
+:func:`_orm.undefer` or :func:` _orm.undefer_group`, or less commonly
+:func:`_orm.defer` , may the attributes be loaded.  The example below applies
 ``undefer('*')`` to undefer all attributes, also making use of
 :ref:`orm_queryguide_populate_existing` to refresh the already-loaded object's loader options::
 
@@ -671,10 +671,10 @@ entries, one for ``User`` and one for ``func.count(Book.id)``::
 In the above example, the ``User`` entity and the "book count" SQL expression
 are returned separately. However, a popular use case is to produce a query that
 will yield ``User`` objects alone, which can be iterated for example using
-:meth:`_orm.Session.scalars`, where the result of the ``func.count(Book.id)``
+:meth:`_orm.Session.scalars` , where the result of the ``func.count(Book.id)``
 SQL expression is applied *dynamically* to each ``User`` entity. The end result
 would be similar to the case where an arbitrary SQL expression were mapped to
-the class using :func:`_orm.column_property`, except that the SQL expression
+the class using :func:`_orm.column_property` , except that the SQL expression
 can be modified at query time. For this use case SQLAlchemy provides the
 :func:`_orm.with_expression` loader option, which when combined with the mapper
 level :func:`_orm.query_expression` directive may produce this result.
@@ -696,7 +696,7 @@ level :func:`_orm.query_expression` directive may produce this result.
 
 
 To apply :func:`_orm.with_expression` to a query, the mapped class must have
-pre-configured an ORM mapped attribute using the :func:`_orm.query_expression`
+pre-configured an ORM mapped attribute using the :func:`_orm.query_expression` 
 directive; this directive will produce an attribute on the mapped
 class that is suitable for receiving query-time SQL expressions.  Below
 we add a new attribute ``User.book_count`` to ``User``.  This ORM mapped attribute
@@ -738,7 +738,7 @@ to each ``User`` object as it's loaded::
     Username: sandy  Number of books: 3
 
 Above, we moved our ``func.count(Book.id)`` expression out of the columns
-argument of the :func:`_sql.select` construct and into the :func:`_orm.with_expression`
+argument of the :func:`_sql.select` construct and into the :func:` _orm.with_expression`
 loader option.  The ORM then considers this to be a special column load
 option that's applied dynamically to the statement.
 
@@ -746,7 +746,7 @@ The :func:`.query_expression` mapping has these caveats:
 
 * On an object where :func:`_orm.with_expression` were not used to populate
   the attribute, the attribute on an object instance will have the value
-  ``None``, unless on the mapping the :paramref:`_orm.query_expression.default_expr`
+  ``None``, unless on the mapping the :paramref:`_orm.query_expression.default_expr` 
   parameter is set to a default SQL expression.
 
 * The :func:`_orm.with_expression` value **does not populate on an object that is
@@ -776,12 +776,12 @@ The :func:`.query_expression` mapping has these caveats:
     ).first()
 
 * The :func:`_orm.with_expression` SQL expression **is lost when the object is
-  expired**.  Once the object is expired, either via :meth:`.Session.expire`
-  or via the expire_on_commit behavior of :meth:`.Session.commit`, the SQL
+  expired**.  Once the object is expired, either via :meth:`.Session.expire` 
+  or via the expire_on_commit behavior of :meth:`.Session.commit` , the SQL
   expression and its value is no longer associated with the attribute and will
   return ``None`` on subsequent access.
 
-* :func:`_orm.with_expression`, as an object loading option, only takes effect
+* :func:`_orm.with_expression` , as an object loading option, only takes effect
   on the **outermost part
   of a query** and only for a query against a full entity, and not for arbitrary
   column selects, within subqueries, or the elements of a compound
@@ -823,7 +823,7 @@ The :func:`.query_expression` mapping has these caveats:
     The :func:`_orm.with_expression` option is a special option used to
     apply SQL expressions to mapped classes dynamically at query time.
     For ordinary fixed SQL expressions configured on mappers,
-    see the section :ref:`mapper_sql_expressions`.
+    see the section :ref:`mapper_sql_expressions` .
 
 .. _orm_queryguide_with_expression_unions:
 
@@ -848,9 +848,9 @@ referencing the SQL expression within the subquery.
 
 In the example below, two :func:`_sql.select` constructs are used against
 the ORM entity ``A`` with an additional SQL expression labeled in
-``expr``, and combined using :func:`_sql.union_all`.  Then, at the topmost
+``expr``, and combined using :func:`_sql.union_all` .  Then, at the topmost
 layer, the ``A`` entity is SELECTed from this UNION, using the
-querying technique described at :ref:`orm_queryguide_unions`, adding an
+querying technique described at :ref:`orm_queryguide_unions` , adding an
 option with :func:`_orm.with_expression` to extract this SQL expression
 onto newly loaded instances of ``A``::
 

@@ -2,4 +2,4 @@
     :tags: orm, bug
     :tickets: 10139
 
-    修复了 ``lazy="immediateload"`` 加载策略在某些情况下会在ORM映射属性中放置一个内部加载令牌的问题，比如递归自引用加载。这个修复还包括，``lazy="immediateload"`` 策略现在会依据 :paramref:`_orm.relationship.join_depth`参数来处理自引用的贪婪加载，方式和其它贪婪加载相同，当它未设置或者设置为0时，将不进行递归的 `immediateload` 加载；当设置为1或更高值时，将递归地进行加载，直到给定深度。
+    修复了 ``lazy="immediateload"`` 加载策略在某些情况下会在ORM映射属性中放置一个内部加载令牌的问题，比如递归自引用加载。这个修复还包括，``lazy="immediateload"`` 策略现在会依据  :paramref:`_orm.relationship.join_depth`  加载；当设置为1或更高值时，将递归地进行加载，直到给定深度。

@@ -10,7 +10,7 @@ The declarative base and ORM mapping functions described at
 :ref:`mapper_config_toplevel` are the primary configurational interface for the
 ORM. Once mappings are configured, the primary usage interface for
 persistence operations is the
-:class:`.Session`.
+:class:`.Session` .
 
 .. toctree::
     :maxdepth: 3

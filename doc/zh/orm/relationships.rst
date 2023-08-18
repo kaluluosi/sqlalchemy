@@ -1,7 +1,6 @@
 关系配置
 ==========================
-
-本节介绍 :func:`relationship` 函数及其使用的详细讨论。如果想了解关系的概念，可以先阅读 :ref:`unified_tutorial` 中的 :ref:`tutorial_orm_related_objects`。
+这个模块介绍了   :func:`relationship`  函数以及如何使用它。了解关系的入门可以参考   :ref:` unified_tutorial`  中的   :ref:`tutorial_orm_related_objects`  。
 
 .. toctree::
     :maxdepth: 3

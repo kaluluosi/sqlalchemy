@@ -9,20 +9,20 @@ configurational elements of a :class:`_orm.Mapper` construct, which is the
 structure that defines how a particular user defined class is mapped to a
 database table or other SQL construct.    The following sections describe
 specific details about how the declarative system goes about constructing
-the :class:`_orm.Mapper`.
+the :class:`_orm.Mapper` .
 
 .. _orm_declarative_properties:
 
 Defining Mapped Properties with Declarative
 --------------------------------------------
 
-The examples given at :ref:`orm_declarative_table_config_toplevel`
-illustrate mappings against table-bound columns, using the :func:`_orm.mapped_column`
+The examples given at :ref:`orm_declarative_table_config_toplevel` 
+illustrate mappings against table-bound columns, using the :func:`_orm.mapped_column` 
 construct.  There are several other varieties of ORM mapped constructs
 that may be configured besides table-bound columns, the most common being the
 :func:`_orm.relationship` construct.  Other kinds of properties include
-SQL expressions that are defined using the :func:`_orm.column_property`
-construct and multiple-column mappings using the :func:`_orm.composite`
+SQL expressions that are defined using the :func:`_orm.column_property` 
+construct and multiple-column mappings using the :func:`_orm.composite` 
 construct.
 
 While an :ref:`imperative mapping <orm_imperative_mapping>` makes use of
@@ -34,7 +34,7 @@ which in the case of a declarative table mapping are inline with the
 :class:`_schema.Table` object.
 
 Working with the example mapping of ``User`` and ``Address``, we may illustrate
-a declarative table mapping that includes not just :func:`_orm.mapped_column`
+a declarative table mapping that includes not just :func:`_orm.mapped_column` 
 objects but also relationships and SQL expressions::
 
     from typing import List
@@ -79,12 +79,12 @@ objects but also relationships and SQL expressions::
 
 The above declarative table mapping features two tables, each with a
 :func:`_orm.relationship` referring to the other, as well as a simple
-SQL expression mapped by :func:`_orm.column_property`, and an additional
+SQL expression mapped by :func:`_orm.column_property` , and an additional
 :func:`_orm.mapped_column` that indicates loading should be on a
 "deferred" basis as defined
 by the :paramref:`_orm.mapped_column.deferred` keyword.    More documentation
-on these particular concepts may be found at :ref:`relationship_patterns`,
-:ref:`mapper_column_property_sql_expressions`, and :ref:`orm_queryguide_column_deferral`.
+on these particular concepts may be found at :ref:`relationship_patterns` ,
+:ref:`mapper_column_property_sql_expressions` , and :ref:`orm_queryguide_column_deferral` .
 
 Properties may be specified with a declarative mapping as above using
 "hybrid table" style as well; the :class:`_schema.Column` objects that
@@ -140,7 +140,7 @@ hybrid table style::
 
 Things to note above:
 
-* The address :class:`_schema.Table` contains a column called ``address_statistics``,
+* The address :class:`_schema.Table` contains a column called ` `address_statistics``,
   however we re-map this column under the same attribute name to be under
   the control of a :func:`_orm.deferred` construct.
 
@@ -166,7 +166,7 @@ With all mapping forms, the mapping of the class is configured through
 parameters that become part of the :class:`_orm.Mapper` object.
 The function which ultimately receives these arguments is the
 :class:`_orm.Mapper` function, and are delivered to it from one of
-the front-facing mapping functions defined on the :class:`_orm.registry`
+the front-facing mapping functions defined on the :class:`_orm.registry` 
 object.
 
 For the declarative form of mapping, mapper arguments are specified
@@ -263,7 +263,7 @@ abstract base class.
 For example, to omit from the mapping
 any columns that have a special :attr:`.Column.info` value, a mixin
 can use a ``__mapper_args__`` method that scans for these columns from the
-``cls.__table__`` attribute and passes them to the :paramref:`_orm.Mapper.exclude_properties`
+``cls.__table__`` attribute and passes them to the :paramref:`_orm.Mapper.exclude_properties` 
 collection::
 
     from sqlalchemy import Column
@@ -300,13 +300,13 @@ collection::
 Above, the ``ExcludeColsWFlag`` mixin provides a per-class ``__mapper_args__``
 hook that will scan for :class:`.Column` objects that include the key/value
 ``'exclude': True`` passed to the :paramref:`.Column.info` parameter, and then
-add their string "key" name to the :paramref:`_orm.Mapper.exclude_properties`
+add their string "key" name to the :paramref:`_orm.Mapper.exclude_properties` 
 collection which will prevent the resulting :class:`.Mapper` from considering
 these columns for any SQL operations.
 
 .. seealso::
 
-    :ref:`orm_mixins_toplevel`
+    :ref:`orm_mixins_toplevel` 
 
 
 Other Declarative Mapping Directives
@@ -344,24 +344,24 @@ configuration via the :meth:`.MapperEvents.before_configured` event::
 ~~~~~~~~~~~~
 
 The :class:`_schema.MetaData` collection normally used to assign a new
-:class:`_schema.Table` is the :attr:`_orm.registry.metadata` attribute
+:class:`_schema.Table` is the :attr:` _orm.registry.metadata` attribute
 associated with the :class:`_orm.registry` object in use. When using a
 declarative base class such as that produced by the
 :class:`_orm.DeclarativeBase` superclass, as well as legacy functions such as
-:func:`_orm.declarative_base` and :meth:`_orm.registry.generate_base`, this
+:func:`_orm.declarative_base` and :meth:` _orm.registry.generate_base`, this
 :class:`_schema.MetaData` is also normally present as an attribute named
 ``.metadata`` that's directly on the base class, and thus also on the mapped
 class via inheritance. Declarative uses this attribute, when present, in order
 to determine the target :class:`_schema.MetaData` collection, or if not
 present, uses the :class:`_schema.MetaData` associated directly with the
-:class:`_orm.registry`.
+:class:`_orm.registry` .
 
 This attribute may also be assigned towards in order to affect the
 :class:`_schema.MetaData` collection to be used on a per-mapped-hierarchy basis
-for a single base and/or :class:`_orm.registry`. This takes effect whether a
+for a single base and/or :class:`_orm.registry` . This takes effect whether a
 declarative base class is used or if the :meth:`_orm.registry.mapped` decorator
 is used directly, thus allowing patterns such as the metadata-per-abstract base
-example in the next section, :ref:`declarative_abstract`. A similar pattern can
+example in the next section, :ref:`declarative_abstract` . A similar pattern can
 be illustrated using :meth:`_orm.registry.mapped` as follows::
 
     reg = registry()
@@ -397,7 +397,7 @@ be illustrated using :meth:`_orm.registry.mapped` as follows::
 
 .. seealso::
 
-    :ref:`declarative_abstract`
+    :ref:`declarative_abstract` 
 
 .. _declarative_abstract:
 
@@ -406,7 +406,7 @@ be illustrated using :meth:`_orm.registry.mapped` as follows::
 
 ``__abstract__`` causes declarative to skip the production
 of a table or mapper for the class entirely.  A class can be added within a
-hierarchy in the same way as mixin (see :ref:`declarative_mixins`), allowing
+hierarchy in the same way as mixin (see :ref:`declarative_mixins` ), allowing
 subclasses to extend just from the special class::
 
     class SomeAbstractBase(Base):

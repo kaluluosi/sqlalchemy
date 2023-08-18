@@ -26,7 +26,7 @@ The SQL Expression Language is a toolkit on its own, independent of the ORM
 package, which provides a system of constructing SQL expressions represented by
 composable objects, which can then be "executed" against a target database
 within the scope of a specific transaction, returning a result set.
-Inserts, updates and deletes (i.e. :term:`DML`) are achieved by passing
+Inserts, updates and deletes (i.e. :term:`DML` ) are achieved by passing
 SQL expression objects representing these statements along with dictionaries
 that represent parameters to be used with each statement.
 
@@ -34,7 +34,7 @@ The ORM builds upon Core to provide a means of working with a domain object
 model mapped to a database schema. When using the ORM, SQL statements are
 constructed in mostly the same way as when using Core, however the task of DML,
 which here refers to the persistence of business objects in a database, is
-automated using a pattern called :term:`unit of work`, which translates changes
+automated using a pattern called :term:`unit of work` , which translates changes
 in state against mutable objects into INSERT, UPDATE and DELETE constructs
 which are then invoked in terms of those objects. SELECT statements are also
 augmented by ORM-specific automations and object-centric querying capabilities.
@@ -69,7 +69,7 @@ The documentation is separated into four sections:
   pooling services are also described here.
 
 * :ref:`dialect_toplevel` - Provides reference documentation
-  for all :term:`dialect` implementations, including :term:`DBAPI` specifics.
+  for all :term:`dialect` implementations, including :term:` DBAPI` specifics.
 
 
 
@@ -80,7 +80,7 @@ Code Examples
 
 Working code examples, mostly regarding the ORM, are included in the
 SQLAlchemy distribution. A description of all the included example
-applications is at :ref:`examples_toplevel`.
+applications is at :ref:`examples_toplevel` .
 
 There is also a wide variety of examples involving both core SQLAlchemy
 constructs as well as the ORM on the wiki.  See
@@ -159,7 +159,7 @@ using the ``setup.py`` script:
 
 The source install is platform agnostic and will install on any platform
 regardless of whether or not Cython / C build tools are installed. As the next
-section :ref:`c_extensions` details, ``setup.py`` will attempt to build using
+section :ref:`c_extensions` details, ` `setup.py`` will attempt to build using
 Cython / C if possible but will fall back to a pure Python installation
 otherwise.
 
@@ -250,11 +250,11 @@ Next Steps
 ----------
 
 With SQLAlchemy installed, new and old users alike can
-:ref:`Proceed to the SQLAlchemy Tutorial <unified_tutorial>`.
+:ref:`Proceed to the SQLAlchemy Tutorial <unified_tutorial>` .
 
 .. _migration:
 
 1.x to 2.0 Migration
 =====================
 
-Notes on the new API released in SQLAlchemy 2.0 is available here at :doc:`changelog/migration_20`.
+Notes on the new API released in SQLAlchemy 2.0 is available here at :doc:`changelog/migration_20` .

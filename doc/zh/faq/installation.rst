@@ -3,24 +3,26 @@
 
 .. contents::
     :local:
-    :class: faq
+     :class: faq
     :backlinks: none
 
 .. _faq_asyncio_installation:
 
-当我尝试使用asyncio时，出现了关于greenlet未安装的错误
+当我尝试使用asyncio时，出现了greenlet未安装的错误
 ----------------------------------------------------------------------------------
 
-``greenlet`` 依赖在对于 ``greenlet`` 没有提供 `预编译二进制包 <https://pypi.org/project/greenlet/#files>`_ 的CPU架构默认没有安装。
-特别地，**这包括了Apple M1**。 为了安装包含 ``greenlet`` 的版本，请在 ``pip install`` 命令中添加 ``asyncio`` 的 `setuptools额外项 <https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-setuptools-extras>`_：
+默认情况下，对于``greenlet``没有提供' `预构建的二进制wheel文件<https://pypi.org/project/greenlet/#files>`_
+用于CPU架构不提供该文件的情况下，其不会安装。
+尤其是，**这包括苹果 M1**。要包括``greenlet``安装，需向``pip install``添加``asyncio``
+`setuptools extra<https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-setuptools-extras>`_ ：
 
 .. sourcecode:: text
 
     pip install sqlalchemy[asyncio]
 
-更多详细信息，请参阅 :ref:`asyncio_install`。
+有关更多背景信息，请参见：   :ref:`asyncio_install`  。
 
 
 .. seealso::
 
-    :ref:`asyncio_install`
+      :ref:`asyncio_install` 

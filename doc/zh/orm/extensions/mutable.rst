@@ -1,15 +1,15 @@
 .. _mutable_toplevel:
 
-变异跟踪
-=================
+变化追踪
+========
 
 .. automodule:: sqlalchemy.ext.mutable
 
 API 参考
--------------
+--------
 
 .. autoclass:: MutableBase
-    :members: _parents，coerce
+    :members: _parents, coerce
 
 .. autoclass:: Mutable
     :members:

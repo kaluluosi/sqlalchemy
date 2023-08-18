@@ -94,7 +94,7 @@ Operator Reference
 This section details usage of the operators that are available
 to construct SQL expressions.
 
-These methods are presented in terms of the :class:`_sql.Operators`
+These methods are presented in terms of the :class:`_sql.Operators` 
 and :class:`_sql.ColumnOperators` base classes.   The methods are then
 available on descendants of these classes, including:
 
@@ -108,11 +108,11 @@ available on descendants of these classes, including:
 
 The operators are first introduced in the tutorial sections, including:
 
-* :doc:`/tutorial/index` - unified tutorial in :term:`2.0 style`
+* :doc:`/tutorial/index` - unified tutorial in :term:` 2.0 style`
 
-* :doc:`/orm/tutorial` - ORM tutorial in :term:`1.x style`
+* :doc:`/orm/tutorial` - ORM tutorial in :term:` 1.x style`
 
-* :doc:`/core/tutorial` - Core tutorial in :term:`1.x style`
+* :doc:`/core/tutorial` - Core tutorial in :term:` 1.x style`
 
 Comparison Operators
 ^^^^^^^^^^^^^^^^^^^^
@@ -120,49 +120,49 @@ Comparison Operators
 Basic comparisons which apply to many datatypes, including numerics,
 strings, dates, and many others:
 
-* :meth:`_sql.ColumnOperators.__eq__` (Python "``==``" operator)::
+* :meth:`_sql.ColumnOperators.__eq__` (Python "` `==``" operator)::
 
     >>> print(column("x") == 5)
     {printsql}x = :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.__ne__` (Python "``!=``" operator)::
+* :meth:`_sql.ColumnOperators.__ne__` (Python "` `!=``" operator)::
 
     >>> print(column("x") != 5)
     {printsql}x != :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.__gt__` (Python "``>``" operator)::
+* :meth:`_sql.ColumnOperators.__gt__` (Python "` `>``" operator)::
 
     >>> print(column("x") > 5)
     {printsql}x > :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.__lt__` (Python "``<``" operator)::
+* :meth:`_sql.ColumnOperators.__lt__` (Python "` `<``" operator)::
 
     >>> print(column("x") < 5)
     {printsql}x < :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.__ge__` (Python "``>=``" operator)::
+* :meth:`_sql.ColumnOperators.__ge__` (Python "` `>=``" operator)::
 
     >>> print(column("x") >= 5)
     {printsql}x >= :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.__le__` (Python "``<=``" operator)::
+* :meth:`_sql.ColumnOperators.__le__` (Python "` `<=``" operator)::
 
     >>> print(column("x") <= 5)
     {printsql}x <= :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.between`::
+* :meth:`_sql.ColumnOperators.between` ::
 
     >>> print(column("x").between(5, 10))
     {printsql}x BETWEEN :x_1 AND :x_2
@@ -257,8 +257,8 @@ To illustrate the parameters rendered::
 Subquery IN
 ~~~~~~~~~~~
 
-Finally, the :meth:`_sql.ColumnOperators.in_` and :meth:`_sql.ColumnOperators.not_in`
-operators work with subqueries.   The form provides that a :class:`_sql.Select`
+Finally, the :meth:`_sql.ColumnOperators.in_` and :meth:` _sql.ColumnOperators.not_in`
+operators work with subqueries.   The form provides that a :class:`_sql.Select` 
 construct is passed in directly, without any explicit conversion to a named
 subquery::
 
@@ -283,7 +283,7 @@ These operators involve testing for special SQL values such as
 ``NULL``, boolean constants such as ``true`` or ``false`` which some
 databases support:
 
-* :meth:`_sql.ColumnOperators.is_`:
+* :meth:`_sql.ColumnOperators.is_` :
 
   This operator will provide exactly the SQL for "x IS y", most often seen
   as "<expr> IS NULL".   The ``NULL`` constant is most easily acquired
@@ -302,7 +302,7 @@ databases support:
   The :meth:`_sql.ColumnOperators.is_` operator is automatically invoked when
   using the :meth:`_sql.ColumnOperators.__eq__` overloaded operator, i.e.
   ``==``, in conjunction with the ``None`` or :func:`_sql.null` value. In this
-  way, there's typically not a need to use :meth:`_sql.ColumnOperators.is_`
+  way, there's typically not a need to use :meth:`_sql.ColumnOperators.is_` 
   explicitly, paricularly when used with a dynamic value::
 
     >>> a = None
@@ -313,9 +313,9 @@ databases support:
   Python provides hooks to overload operators such as ``==`` and ``!=``,
   it does **not** provide any way to redefine ``is``.
 
-* :meth:`_sql.ColumnOperators.is_not`:
+* :meth:`_sql.ColumnOperators.is_not` :
 
-  Similar to :meth:`_sql.ColumnOperators.is_`, produces "IS NOT"::
+  Similar to :meth:`_sql.ColumnOperators.is_` , produces "IS NOT"::
 
     >>> print(column("x").is_not(None))
     {printsql}x IS NOT NULL
@@ -325,14 +325,14 @@ databases support:
     >>> print(column("x") != None)
     {printsql}x IS NOT NULL
 
-* :meth:`_sql.ColumnOperators.is_distinct_from`:
+* :meth:`_sql.ColumnOperators.is_distinct_from` :
 
   Produces SQL IS DISTINCT FROM::
 
     >>> print(column("x").is_distinct_from("some value"))
     {printsql}x IS DISTINCT FROM :x_1
 
-* :meth:`_sql.ColumnOperators.isnot_distinct_from`:
+* :meth:`_sql.ColumnOperators.isnot_distinct_from` :
 
   Produces SQL IS NOT DISTINCT FROM::
 
@@ -342,14 +342,14 @@ databases support:
 String Comparisons
 ^^^^^^^^^^^^^^^^^^
 
-* :meth:`_sql.ColumnOperators.like`::
+* :meth:`_sql.ColumnOperators.like` ::
 
     >>> print(column("x").like("word"))
     {printsql}x LIKE :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.ilike`:
+* :meth:`_sql.ColumnOperators.ilike` :
 
   Case insensitive LIKE makes use of the SQL ``lower()`` function on a
   generic backend.  On the PostgreSQL backend it will use ``ILIKE``::
@@ -359,7 +359,7 @@ String Comparisons
 
   ..
 
-* :meth:`_sql.ColumnOperators.notlike`::
+* :meth:`_sql.ColumnOperators.notlike` ::
 
     >>> print(column("x").notlike("word"))
     {printsql}x NOT LIKE :x_1
@@ -367,7 +367,7 @@ String Comparisons
   ..
 
 
-* :meth:`_sql.ColumnOperators.notilike`::
+* :meth:`_sql.ColumnOperators.notilike` ::
 
     >>> print(column("x").notilike("word"))
     {printsql}lower(x) NOT LIKE lower(:x_1)
@@ -381,21 +381,21 @@ String containment operators are basically built as a combination of
 LIKE and the string concatenation operator, which is ``||`` on most
 backends or sometimes a function like ``concat()``:
 
-* :meth:`_sql.ColumnOperators.startswith`::
+* :meth:`_sql.ColumnOperators.startswith` ::
 
     >>> print(column("x").startswith("word"))
     {printsql}x LIKE :x_1 || '%'
 
   ..
 
-* :meth:`_sql.ColumnOperators.endswith`::
+* :meth:`_sql.ColumnOperators.endswith` ::
 
     >>> print(column("x").endswith("word"))
     {printsql}x LIKE '%' || :x_1
 
   ..
 
-* :meth:`_sql.ColumnOperators.contains`::
+* :meth:`_sql.ColumnOperators.contains` ::
 
     >>> print(column("x").contains("word"))
     {printsql}x LIKE '%' || :x_1 || '%'
@@ -408,7 +408,7 @@ String matching
 Matching operators are always backend-specific and may provide different
 behaviors and results on different databases:
 
-* :meth:`_sql.ColumnOperators.match`:
+* :meth:`_sql.ColumnOperators.match` :
 
   This is a dialect-specific operator that makes use of the MATCH
   feature of the underlying database, if available::
@@ -418,7 +418,7 @@ behaviors and results on different databases:
 
   ..
 
-* :meth:`_sql.ColumnOperators.regexp_match`:
+* :meth:`_sql.ColumnOperators.regexp_match` :
 
   This operator is dialect specific.  We can illustrate it in terms of
   for example the PostgreSQL dialect::
@@ -441,16 +441,16 @@ behaviors and results on different databases:
 String Alteration
 ^^^^^^^^^^^^^^^^^
 
-* :meth:`_sql.ColumnOperators.concat`:
+* :meth:`_sql.ColumnOperators.concat` :
 
   String concatenation::
 
     >>> print(column("x").concat("some string"))
     {printsql}x || :x_1
 
-  This operator is available via :meth:`_sql.ColumnOperators.__add__`, that
+  This operator is available via :meth:`_sql.ColumnOperators.__add__` , that
   is, the Python ``+`` operator, when working with a column expression that
-  derives from :class:`_types.String`::
+  derives from :class:`_types.String` ::
 
     >>> print(column("x", String) + "some string")
     {printsql}x || :x_1
@@ -463,7 +463,7 @@ String Alteration
 
   ..
 
-* :meth:`_sql.ColumnOperators.regexp_replace`:
+* :meth:`_sql.ColumnOperators.regexp_replace` :
 
   Complementary to :meth:`_sql.ColumnOperators.regexp` this produces REGEXP
   REPLACE equivalent for the backends which support it::
@@ -473,7 +473,7 @@ String Alteration
 
   ..
 
-* :meth:`_sql.ColumnOperators.collate`:
+* :meth:`_sql.ColumnOperators.collate` :
 
   Produces the COLLATE SQL operator which provides for specific collations
   at expression time::
@@ -502,7 +502,7 @@ String Alteration
 Arithmetic Operators
 ^^^^^^^^^^^^^^^^^^^^
 
-* :meth:`_sql.ColumnOperators.__add__`, :meth:`_sql.ColumnOperators.__radd__` (Python "``+``" operator)::
+* :meth:`_sql.ColumnOperators.__add__` , :meth:`_sql.ColumnOperators.__radd__` (Python "` `+``" operator)::
 
     >>> print(column("x") + 5)
     {printsql}x + :x_1{stop}
@@ -513,12 +513,12 @@ Arithmetic Operators
   ..
 
 
-  Note that when the datatype of the expression is :class:`_types.String`
+  Note that when the datatype of the expression is :class:`_types.String` 
   or similar, the :meth:`_sql.ColumnOperators.__add__` operator instead produces
-  :ref:`string concatenation <queryguide_operators_concat_op>`.
+  :ref:`string concatenation <queryguide_operators_concat_op>` .
 
 
-* :meth:`_sql.ColumnOperators.__sub__`, :meth:`_sql.ColumnOperators.__rsub__` (Python "``-``" operator)::
+* :meth:`_sql.ColumnOperators.__sub__` , :meth:`_sql.ColumnOperators.__rsub__` (Python "` `-``" operator)::
 
     >>> print(column("x") - 5)
     {printsql}x - :x_1{stop}
@@ -529,7 +529,7 @@ Arithmetic Operators
   ..
 
 
-* :meth:`_sql.ColumnOperators.__mul__`, :meth:`_sql.ColumnOperators.__rmul__` (Python "``*``" operator)::
+* :meth:`_sql.ColumnOperators.__mul__` , :meth:`_sql.ColumnOperators.__rmul__` (Python "` `*``" operator)::
 
     >>> print(column("x") * 5)
     {printsql}x * :x_1{stop}
@@ -539,7 +539,7 @@ Arithmetic Operators
 
   ..
 
-* :meth:`_sql.ColumnOperators.__truediv__`, :meth:`_sql.ColumnOperators.__rtruediv__` (Python "``/``" operator).
+* :meth:`_sql.ColumnOperators.__truediv__` , :meth:`_sql.ColumnOperators.__rtruediv__` (Python "` `/``" operator).
   This is the Python ``truediv`` operator, which will ensure integer true division occurs::
 
     >>> print(column("x") / 5)
@@ -551,7 +551,7 @@ Arithmetic Operators
 
   ..
 
-* :meth:`_sql.ColumnOperators.__floordiv__`, :meth:`_sql.ColumnOperators.__rfloordiv__` (Python "``//``" operator).
+* :meth:`_sql.ColumnOperators.__floordiv__` , :meth:`_sql.ColumnOperators.__rfloordiv__` (Python "` `//``" operator).
   This is the Python ``floordiv`` operator, which will ensure floor division occurs.
   For the default backend as well as backends such as PostgreSQL, the SQL ``/`` operator normally
   behaves this way for integer values::
@@ -574,7 +574,7 @@ Arithmetic Operators
   ..
 
 
-* :meth:`_sql.ColumnOperators.__mod__`, :meth:`_sql.ColumnOperators.__rmod__` (Python "``%``" operator)::
+* :meth:`_sql.ColumnOperators.__mod__` , :meth:`_sql.ColumnOperators.__rmod__` (Python "` `%``" operator)::
 
     >>> print(column("x") % 5)
     {printsql}x % :x_1{stop}
@@ -596,7 +596,7 @@ boolean operators.
 
 .. versionadded:: 2.0.2 Added dedicated operators for bitwise operations.
 
-* :meth:`_sql.ColumnOperators.bitwise_not`, :func:`_sql.bitwise_not`.
+* :meth:`_sql.ColumnOperators.bitwise_not` , :func:`_sql.bitwise_not` .
   Available as a column-level method, producing a bitwise NOT clause against a
   parent object::
 
@@ -640,7 +640,7 @@ boolean operators.
 
   ..
 
-* :meth:`_sql.ColumnOperators.bitwise_rshift`, :meth:`_sql.ColumnOperators.bitwise_lshift`
+* :meth:`_sql.ColumnOperators.bitwise_rshift` , :meth:`_sql.ColumnOperators.bitwise_lshift` 
   produce bitwise shift operators::
 
     >>> print(column("x").bitwise_rshift(5))
@@ -655,7 +655,7 @@ Using Conjunctions and Negations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The most common conjunction, "AND", is automatically applied if we make repeated use of the :meth:`_sql.Select.where` method, as well as similar methods such as
-:meth:`_sql.Update.where` and :meth:`_sql.Delete.where`::
+:meth:`_sql.Update.where` and :meth:` _sql.Delete.where`::
 
     >>> print(
     ...     select(address_table.c.email_address)
@@ -666,7 +666,7 @@ The most common conjunction, "AND", is automatically applied if we make repeated
     FROM address, user_account
     WHERE user_account.name = :name_1 AND address.user_id = user_account.id
 
-:meth:`_sql.Select.where`, :meth:`_sql.Update.where` and :meth:`_sql.Delete.where` also accept multiple expressions with the same effect::
+:meth:`_sql.Select.where` , :meth:`_sql.Update.where` and :meth:` _sql.Delete.where` also accept multiple expressions with the same effect::
 
     >>> print(
     ...     select(address_table.c.email_address).where(
@@ -678,7 +678,7 @@ The most common conjunction, "AND", is automatically applied if we make repeated
     FROM address, user_account
     WHERE user_account.name = :name_1 AND address.user_id = user_account.id
 
-The "AND" conjunction, as well as its partner "OR", are both available directly using the :func:`_sql.and_` and :func:`_sql.or_` functions::
+The "AND" conjunction, as well as its partner "OR", are both available directly using the :func:`_sql.and_` and :func:` _sql.or_` functions::
 
 
     >>> from sqlalchemy import and_, or_
@@ -712,7 +712,7 @@ It also may apply a keyword such as ``NOT`` when appropriate::
 Conjunction Operators
 ^^^^^^^^^^^^^^^^^^^^^^
 
-The above conjunction functions :func:`_sql.and_`, :func:`_sql.or_`,
+The above conjunction functions :func:`_sql.and_` , :func:`_sql.or_` ,
 :func:`_sql.not_` are also available as overloaded Python operators:
 
 .. note:: The Python ``&``, ``|`` and ``~`` operators take high precedence
@@ -720,7 +720,7 @@ The above conjunction functions :func:`_sql.and_`, :func:`_sql.or_`,
    for operands that themselves contain expressions, as indicated in the
    examples below.
 
-* :meth:`_sql.Operators.__and__` (Python "``&``" operator):
+* :meth:`_sql.Operators.__and__` (Python "` `&``" operator):
 
   The Python binary ``&`` operator is overloaded to behave the same
   as :func:`_sql.and_` (note parenthesis around the two operands)::
@@ -731,7 +731,7 @@ The above conjunction functions :func:`_sql.and_`, :func:`_sql.or_`,
   ..
 
 
-* :meth:`_sql.Operators.__or__` (Python "``|``" operator):
+* :meth:`_sql.Operators.__or__` (Python "` `|``" operator):
 
   The Python binary ``|`` operator is overloaded to behave the same
   as :func:`_sql.or_` (note parenthesis around the two operands)::
@@ -742,10 +742,10 @@ The above conjunction functions :func:`_sql.and_`, :func:`_sql.or_`,
   ..
 
 
-* :meth:`_sql.Operators.__invert__` (Python "``~``" operator):
+* :meth:`_sql.Operators.__invert__` (Python "` `~``" operator):
 
   The Python binary ``~`` operator is overloaded to behave the same
-  as :func:`_sql.not_`, either inverting the existing operator, or
+  as :func:`_sql.not_` , either inverting the existing operator, or
   applying the ``NOT`` keyword to the expression as a whole::
 
     >>> print(~(column("x") == 5))

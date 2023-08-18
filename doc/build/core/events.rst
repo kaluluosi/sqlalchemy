@@ -5,8 +5,8 @@ Core Events
 
 This section describes the event interfaces provided in
 SQLAlchemy Core.
-For an introduction to the event listening API, see :ref:`event_toplevel`.
-ORM events are described in :ref:`orm_event_toplevel`.
+For an introduction to the event listening API, see :ref:`event_toplevel` .
+ORM events are described in :ref:`orm_event_toplevel` .
 
 .. autoclass:: sqlalchemy.event.base.Events
    :members:

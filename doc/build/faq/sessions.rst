@@ -30,7 +30,7 @@ lower isolation level, e.g. "read committed", does it become possible to
 see a row of data change its value.
 
 For information on controlling the isolation level when using the
-SQLAlchemy ORM, see :ref:`session_transaction_isolation`.
+SQLAlchemy ORM, see :ref:`session_transaction_isolation` .
 
 To simplify things dramatically, the :class:`.Session` itself works in
 terms of a completely isolated transaction, and doesn't overwrite any mapped attributes
@@ -42,17 +42,17 @@ are provided to allow specific data to be reloaded within the context
 of an ongoing transaction.
 
 To understand what we mean by "the transaction" when we talk about the
-:class:`.Session`, your :class:`.Session` is intended to only work within
-a transaction.  An overview of this is at :ref:`unitofwork_transaction`.
+:class:`.Session` , your :class:`.Session` is intended to only work within
+a transaction.  An overview of this is at :ref:`unitofwork_transaction` .
 
 Once we've figured out what our isolation level is, and we think that
 our isolation level is set at a low enough level so that if we re-SELECT a row,
-we should see new data in our :class:`.Session`, how do we see it?
+we should see new data in our :class:`.Session` , how do we see it?
 
 Three ways, from most common to least:
 
 1. We simply end our transaction and start a new one on next access
-   with our :class:`.Session` by calling :meth:`.Session.commit` (note
+   with our :class:`.Session` by calling :meth:` .Session.commit` (note
    that if the :class:`.Session` is in the lesser-used "autocommit"
    mode, there would be a call to :meth:`.Session.begin` as well). The
    vast majority of applications and use cases do not have any issues
@@ -62,14 +62,14 @@ Three ways, from most common to least:
    See :ref:`session_faq_whentocreate` for some thoughts on this.
 
 2. We tell our :class:`.Session` to re-read rows that it has already read,
-   either when we next query for them using :meth:`.Session.expire_all`
-   or :meth:`.Session.expire`, or immediately on an object using
-   :class:`.Session.refresh`.  See :ref:`session_expire` for detail on this.
+   either when we next query for them using :meth:`.Session.expire_all` 
+   or :meth:`.Session.expire` , or immediately on an object using
+   :class:`.Session.refresh` .  See :ref:`session_expire` for detail on this.
 
 3. We can run whole queries while setting them to definitely overwrite
    already-loaded objects as they read rows by using "populate existing".
    This is an execution option described at
-   :ref:`orm_queryguide_populate_existing`.
+   :ref:`orm_queryguide_populate_existing` .
 
 But remember, **the ORM cannot see changes in rows if our isolation
 level is repeatable read or higher, unless we start a new transaction**.
@@ -81,10 +81,10 @@ level is repeatable read or higher, unless we start a new transaction**.
 
 This is an error that occurs when a :meth:`.Session.flush` raises an exception, rolls back
 the transaction, but further commands upon the :class:`.Session` are called without an
-explicit call to :meth:`.Session.rollback` or :meth:`.Session.close`.
+explicit call to :meth:`.Session.rollback` or :meth:` .Session.close`.
 
 It usually corresponds to an application that catches an exception
-upon :meth:`.Session.flush` or :meth:`.Session.commit` and
+upon :meth:`.Session.flush` or :meth:` .Session.commit` and
 does not properly handle the exception.    For example::
 
     from sqlalchemy import create_engine, Column, Integer
@@ -142,8 +142,8 @@ including failed flushes.  There are also approaches using function decorators o
 context managers to achieve similar results.   The kind of approach taken
 depends very much on the kind of application being written.
 
-For a detailed discussion on how to organize usage of the :class:`.Session`,
-please see :ref:`session_faq_whentocreate`.
+For a detailed discussion on how to organize usage of the :class:`.Session` ,
+please see :ref:`session_faq_whentocreate` .
 
 But why does flush() insist on issuing a ROLLBACK?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -176,7 +176,7 @@ transaction is not allowed to continue:
     ERROR:  current transaction is aborted, commands ignored until end of transaction block
 
 What SQLAlchemy offers that solves both issues is support of SAVEPOINT, via
-:meth:`.Session.begin_nested`. Using :meth:`.Session.begin_nested`, you can frame an operation that may
+:meth:`.Session.begin_nested` . Using :meth:`.Session.begin_nested` , you can frame an operation that may
 potentially fail within a transaction, and then "roll back" to the point
 before its failure while maintaining the enclosing transaction.
 
@@ -184,7 +184,7 @@ But why isn't the one automatic call to ROLLBACK enough?  Why must I ROLLBACK ag
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The rollback that's caused by the flush() is not the end of the complete transaction
-block; while it ends the database transaction in play, from the :class:`.Session`
+block; while it ends the database transaction in play, from the :class:`.Session` 
 point of view there is still a transaction that is now in an inactive state.
 
 Given a block such as::
@@ -198,13 +198,13 @@ Given a block such as::
         sess.rollback()
 
 Above, when a :class:`.Session` is first created, assuming "autocommit mode"
-isn't used, a logical transaction is established within the :class:`.Session`.
+isn't used, a logical transaction is established within the :class:`.Session` .
 This transaction is "logical" in that it does not actually use any  database
 resources until a SQL statement is invoked, at which point a connection-level
 and DBAPI-level transaction is started.   However, whether or not
 database-level transactions are part of its state, the logical transaction will
-stay in place until it is ended using :meth:`.Session.commit`,
-:meth:`.Session.rollback`, or :meth:`.Session.close`.
+stay in place until it is ended using :meth:`.Session.commit` ,
+:meth:`.Session.rollback` , or :meth:`.Session.close` .
 
 When the ``flush()`` above fails, the code is still within the transaction
 framed by the try/commit/except/rollback block.   If ``flush()`` were to fully
@@ -215,11 +215,11 @@ emit new SQL on an all new transaction, and the call to
 :class:`.Session` would have begun a new transaction by this point, which the
 :meth:`.Session.rollback` would be acting upon erroneously.  Rather than
 allowing SQL operations to proceed on a new transaction in this place where
-normal usage dictates a rollback is about to take place, the :class:`.Session`
+normal usage dictates a rollback is about to take place, the :class:`.Session` 
 instead refuses to continue until the explicit rollback actually occurs.
 
 In other words, it is expected that the calling code will **always** call
-:meth:`.Session.commit`, :meth:`.Session.rollback`, or :meth:`.Session.close`
+:meth:`.Session.commit` , :meth:`.Session.rollback` , or :meth:`.Session.close` 
 to correspond to the current transaction block.  ``flush()`` keeps the
 :class:`.Session` within this transaction block so that the behavior of the
 above code is predictable and consistent.
@@ -237,14 +237,14 @@ My Query does not return the same number of objects as query.count() tells me - 
 
 The :class:`_query.Query` object, when asked to return a list of ORM-mapped objects,
 will **deduplicate the objects based on primary key**.   That is, if we
-for example use the ``User`` mapping described at :ref:`tutorial_orm_table_metadata`,
+for example use the ``User`` mapping described at :ref:`tutorial_orm_table_metadata` ,
 and we had a SQL query like the following::
 
     q = session.query(User).outerjoin(User.addresses).filter(User.name == "jack")
 
 Above, the sample data used in the tutorial has two rows in the ``addresses``
 table for the ``users`` row with the name ``'jack'``, primary key value 5.
-If we ask the above query for a :meth:`_query.Query.count`, we will get the answer
+If we ask the above query for a :meth:`_query.Query.count` , we will get the answer
 **2**::
 
     >>> q.count()
@@ -267,7 +267,7 @@ columns back::
 
 There are two main reasons the :class:`_query.Query` will deduplicate:
 
-* **To allow joined eager loading to work correctly** - :ref:`joined_eager_loading`
+* **To allow joined eager loading to work correctly** - :ref:`joined_eager_loading` 
   works by querying rows using joins against related tables, where it then routes
   rows from those joins into collections upon the lead objects.   In order to do this,
   it has to fetch rows where the lead object primary key is repeated for each
@@ -277,19 +277,19 @@ There are two main reasons the :class:`_query.Query` will deduplicate:
   were queried, e.g. all the ``User()`` objects whose name is ``'jack'`` which
   for us is one object, with
   the ``User.addresses`` collection eagerly loaded as was indicated either
-  by ``lazy='joined'`` on the :func:`_orm.relationship` or via the :func:`_orm.joinedload`
+  by ``lazy='joined'`` on the :func:`_orm.relationship` or via the :func:` _orm.joinedload`
   option.    For consistency, the deduplication is still applied whether or not
   the joinedload is established, as the key philosophy behind eager loading
   is that these options never affect the result.
 
 * **To eliminate confusion regarding the identity map** - this is admittedly
-  the less critical reason.  As the :class:`.Session`
-  makes use of an :term:`identity map`, even though our SQL result set has two
-  rows with primary key 5, there is only one ``User(id=5)`` object inside the :class:`.Session`
+  the less critical reason.  As the :class:`.Session` 
+  makes use of an :term:`identity map` , even though our SQL result set has two
+  rows with primary key 5, there is only one ``User(id=5)`` object inside the :class:`.Session` 
   which must be maintained uniquely on its identity, that is, its primary key /
   class combination.   It doesn't actually make much sense, if one is querying for
   ``User()`` objects, to get the same object multiple times in the list.   An
-  ordered set would potentially be a better representation of what :class:`_query.Query`
+  ordered set would potentially be a better representation of what :class:`_query.Query` 
   seeks to return when it returns full objects.
 
 The issue of :class:`_query.Query` deduplication remains problematic, mostly for the
@@ -298,7 +298,7 @@ current status is that joined eager loading has in recent releases been
 superseded first by the "subquery eager loading" strategy and more recently the
 "select IN eager loading" strategy, both of which are generally more
 appropriate for collection eager loading. As this evolution continues,
-SQLAlchemy may alter this behavior on :class:`_query.Query`, which may also involve
+SQLAlchemy may alter this behavior on :class:`_query.Query` , which may also involve
 new APIs in order to more directly control this behavior, and may also alter
 the behavior of joined eager loading in order to create a more consistent usage
 pattern.
@@ -310,9 +310,9 @@ I've created a mapping against an Outer Join, and while the query returns rows, 
 Rows returned by an outer join may contain NULL for part of the primary key,
 as the primary key is the composite of both tables.  The :class:`_query.Query` object ignores incoming rows
 that don't have an acceptable primary key.   Based on the setting of the ``allow_partial_pks``
-flag on :class:`_orm.Mapper`, a primary key is accepted if the value has at least one non-NULL
+flag on :class:`_orm.Mapper` , a primary key is accepted if the value has at least one non-NULL
 value, or alternatively if the value has no NULL values.  See ``allow_partial_pks``
-at :class:`_orm.Mapper`.
+at :class:`_orm.Mapper` .
 
 
 I'm using ``joinedload()`` or ``lazy=False`` to create a JOIN/OUTER JOIN and SQLAlchemy is not constructing the correct query when I try to add a WHERE, ORDER BY, LIMIT, etc. (which relies upon the (OUTER) JOIN)
@@ -322,14 +322,14 @@ The joins generated by joined eager loading are only used to fully load related
 collections, and are designed to have no impact on the primary results of the query.
 Since they are anonymously aliased, they cannot be referenced directly.
 
-For detail on this behavior, see :ref:`zen_of_eager_loading`.
+For detail on this behavior, see :ref:`zen_of_eager_loading` .
 
 Query has no ``__len__()``, why not?
 ------------------------------------
 
 The Python ``__len__()`` magic method applied to an object allows the ``len()``
 builtin to be used to determine the length of the collection. It's intuitive
-that a SQL query object would link ``__len__()`` to the :meth:`_query.Query.count`
+that a SQL query object would link ``__len__()`` to the :meth:`_query.Query.count` 
 method, which emits a `SELECT COUNT`. The reason this is not possible is
 because evaluating the query as a list would incur two SQL calls instead of
 one::
@@ -358,9 +358,9 @@ How Do I use Textual SQL with ORM Queries?
 
 See:
 
-* :ref:`orm_queryguide_selecting_text` - Ad-hoc textual blocks with :class:`_query.Query`
+* :ref:`orm_queryguide_selecting_text` - Ad-hoc textual blocks with :class:` _query.Query`
 
-* :ref:`session_sql_expressions` - Using :class:`.Session` with textual SQL directly.
+* :ref:`session_sql_expressions` - Using :class:` .Session` with textual SQL directly.
 
 I'm calling ``Session.delete(myobject)`` and it isn't removed from the parent collection!
 ------------------------------------------------------------------------------------------
@@ -376,12 +376,12 @@ how do I use ON DELETE CASCADE with SA's ORM?
 ---------------------------------------------
 
 SQLAlchemy will always issue UPDATE or DELETE statements for dependent
-rows which are currently loaded in the :class:`.Session`.  For rows which
+rows which are currently loaded in the :class:`.Session` .  For rows which
 are not loaded, it will by default issue SELECT statements to load
 those rows and update/delete those as well; in other words it assumes
 there is no ON DELETE CASCADE configured.
 To configure SQLAlchemy to cooperate with ON DELETE CASCADE, see
-:ref:`passive_deletes`.
+:ref:`passive_deletes` .
 
 I set the "foo_id" attribute on my instance to "7", but the "foo" attribute is still ``None`` - shouldn't it have loaded Foo with id #7?
 ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -434,7 +434,7 @@ and expires all state::
     assert o.foo is foo_7
 
 A more minimal operation is to expire the attribute individually - this can
-be performed for any :term:`persistent` object using :meth:`.Session.expire`::
+be performed for any :term:`persistent` object using :meth:` .Session.expire`::
 
     o = session.scalars(select(SomeClass).limit(1)).first()
     o.foo_id = 7
@@ -444,8 +444,8 @@ be performed for any :term:`persistent` object using :meth:`.Session.expire`::
 
     assert o.foo is foo_7  # o.foo lazyloads on access
 
-Note that if the object is not persistent but present in the :class:`.Session`,
-it's known as :term:`pending`.   This means the row for the object has not been
+Note that if the object is not persistent but present in the :class:`.Session` ,
+it's known as :term:`pending` .   This means the row for the object has not been
 INSERTed into the database yet.  For such an object, setting ``foo_id`` does not
 have meaning until the row is inserted; otherwise there is no row yet::
 
@@ -466,9 +466,9 @@ have meaning until the row is inserted; otherwise there is no row yet::
 .. topic:: Attribute loading for non-persistent objects
 
     One variant on the "pending" behavior above is if we use the flag
-    ``load_on_pending`` on :func:`_orm.relationship`.   When this flag is set, the
+    ``load_on_pending`` on :func:`_orm.relationship` .   When this flag is set, the
     lazy loader will emit for ``new_obj.foo`` before the INSERT proceeds; another
-    variant of this is to use the :meth:`.Session.enable_relationship_loading`
+    variant of this is to use the :meth:`.Session.enable_relationship_loading` 
     method, which can "attach" an object to a :class:`.Session` in such a way that
     many-to-one relationships load as according to foreign key attributes
     regardless of the object being in any particular state.
@@ -567,7 +567,7 @@ This `UniqueObject <https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObje
 Why does post_update emit UPDATE in addition to the first UPDATE?
 -----------------------------------------------------------------
 
-The post_update feature, documented at :ref:`post_update`, involves that an
+The post_update feature, documented at :ref:`post_update` , involves that an
 UPDATE statement is emitted in response to changes to a particular
 relationship-bound foreign key, in addition to the INSERT/UPDATE/DELETE that
 would normally be emitted for the target row.  While the primary purpose of this

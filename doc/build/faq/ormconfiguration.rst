@@ -25,8 +25,8 @@ row in the database table; at the very least, this allows the
 object can be targeted for UPDATE and DELETE statements which will affect only
 that object's row and no other.   However, the importance of the primary key
 goes far beyond that.  In SQLAlchemy, all ORM-mapped objects are at all times
-linked uniquely within a :class:`.Session`
-to their specific database row using a pattern called the :term:`identity map`,
+linked uniquely within a :class:`.Session` 
+to their specific database row using a pattern called the :term:`identity map` ,
 a pattern that's central to the unit of work system employed by SQLAlchemy,
 and is also key to the most common (and not-so-common) patterns of ORM usage.
 
@@ -40,7 +40,7 @@ and is also key to the most common (and not-so-common) patterns of ORM usage.
     should really have some kind of primary key, lest you need to actually
     update or delete specific rows).
 
-In almost all cases, a table does have a so-called :term:`candidate key`, which is a column or series
+In almost all cases, a table does have a so-called :term:`candidate key` , which is a column or series
 of columns that uniquely identify a row.  If a table truly doesn't have this, and has actual
 fully duplicate rows, the table is not corresponding to `first normal form <https://en.wikipedia.org/wiki/First_normal_form>`_ and cannot be mapped.   Otherwise, whatever columns comprise the best candidate key can be
 applied directly to the mapper::
@@ -77,7 +77,7 @@ How do I configure a Column that is a Python reserved word or similar?
 ----------------------------------------------------------------------
 
 Column-based attributes can be given any name desired in the mapping. See
-:ref:`mapper_column_distinct_names`.
+:ref:`mapper_column_distinct_names` .
 
 How do I get a list of all columns, relationships, mapped attributes, etc. given a mapped class?
 -------------------------------------------------------------------------------------------------
@@ -95,25 +95,25 @@ From there, all information about the class can be accessed through properties
 such as:
 
 * :attr:`_orm.Mapper.attrs` - a namespace of all mapped attributes.  The attributes
-  themselves are instances of :class:`.MapperProperty`, which contain additional
+  themselves are instances of :class:`.MapperProperty` , which contain additional
   attributes that can lead to the mapped SQL expression or column, if applicable.
 
 * :attr:`_orm.Mapper.column_attrs` - the mapped attribute namespace
   limited to column and SQL expression attributes.   You might want to use
-  :attr:`_orm.Mapper.columns` to get at the :class:`_schema.Column` objects directly.
+  :attr:`_orm.Mapper.columns` to get at the :class:` _schema.Column` objects directly.
 
-* :attr:`_orm.Mapper.relationships` - namespace of all :class:`.RelationshipProperty` attributes.
+* :attr:`_orm.Mapper.relationships` - namespace of all :class:` .RelationshipProperty` attributes.
 
 * :attr:`_orm.Mapper.all_orm_descriptors` - namespace of all mapped attributes, plus user-defined
-  attributes defined using systems such as :class:`.hybrid_property`, :class:`.AssociationProxy` and others.
+  attributes defined using systems such as :class:`.hybrid_property` , :class:`.AssociationProxy` and others.
 
-* :attr:`_orm.Mapper.columns` - A namespace of :class:`_schema.Column` objects and other named
+* :attr:`_orm.Mapper.columns` - A namespace of :class:` _schema.Column` objects and other named
   SQL expressions associated with the mapping.
 
-* :attr:`_orm.Mapper.mapped_table` - The :class:`_schema.Table` or other selectable to which
+* :attr:`_orm.Mapper.mapped_table` - The :class:` _schema.Table` or other selectable to which
   this mapper is mapped.
 
-* :attr:`_orm.Mapper.local_table` - The :class:`_schema.Table` that is "local" to this mapper;
+* :attr:`_orm.Mapper.local_table` - The :class:` _schema.Table` that is "local" to this mapper;
   this differs from :attr:`_orm.Mapper.mapped_table` in the case of a mapper mapped
   using inheritance to a composed selectable.
 
@@ -178,7 +178,7 @@ A mapping which resolves this is as follows::
 
 Suppose we did want ``A.id`` and ``B.id`` to be mirrors of each other, despite
 the fact that ``B.a_id`` is where ``A.id`` is related.  We could combine
-them together using :func:`.column_property`::
+them together using :func:`.column_property` ::
 
     class A(Base):
         __tablename__ = "a"
@@ -205,7 +205,7 @@ Are you doing this?::
             "Dest", primaryjoin=and_("MyClass.id==Dest.foo_id", "MyClass.foo==Dest.bar")
         )
 
-That's an ``and_()`` of two string expressions, which SQLAlchemy cannot apply any mapping towards.  Declarative allows :func:`_orm.relationship` arguments to be specified as strings, which are converted into expression objects using ``eval()``.   But this doesn't occur inside of an ``and_()`` expression - it's a special operation declarative applies only to the *entirety* of what's passed to primaryjoin or other arguments as a string::
+That's an ``and_()`` of two string expressions, which SQLAlchemy cannot apply any mapping towards.  Declarative allows :func:`_orm.relationship` arguments to be specified as strings, which are converted into expression objects using ` `eval()``.   But this doesn't occur inside of an ``and_()`` expression - it's a special operation declarative applies only to the *entirety* of what's passed to primaryjoin or other arguments as a string::
 
     class MyClass(Base):
         # ....
@@ -342,10 +342,10 @@ The primary key is a good choice for this::
 
 Note that the :func:`_orm.joinedload` eager loader strategy does not suffer from
 the same problem because only one query is ever issued, so the load query
-cannot be different from the main query.  Similarly, the :func:`.selectinload`
+cannot be different from the main query.  Similarly, the :func:`.selectinload` 
 eager loader strategy also does not have this issue as it links its collection
 loads directly to primary key values just loaded.
 
 .. seealso::
 
-    :ref:`subquery_eager_loading`
+    :ref:`subquery_eager_loading` 

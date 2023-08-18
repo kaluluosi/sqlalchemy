@@ -2,6 +2,6 @@
     :tags: orm, bug
     :tickets: 10231
 
-    修复了一个较重要的问题，原本传递给:meth:`_orm.Session.execute`的执行选项以及应用于ORM执行语句本身的执行选项不会传递给像:meth:`_orm.subqueryload`等预加载程序，这样就无法禁用单个语句的缓存或使用``schema_translate_map``来应用于单个语句，以及使用用户自定义执行选项。现在的改变是：将:meth:`_orm.Session.execute`中**所有**与用户相关的执行选项都传递给其他预加载器。
+    修复了一个较重要的问题，原本传递给  :meth:`_orm.Session.execute`  的执行选项以及应用于ORM执行语句本身的执行选项不会传递给像  :meth:` _orm.subqueryload`  等预加载程序，这样就无法禁用单个语句的缓存或使用``schema_translate_map``来应用于单个语句，以及使用用户自定义执行选项。现在的改变是：将  :meth:`_orm.Session.execute`  中**所有**与用户相关的执行选项都传递给其他预加载器。
 
-    在此更改的一部分中，可以通过向:meth:`_orm.Session.execute`发送``execution_options = {"compiled_cache": None}``来禁用缓存，以消除“过度深入”的预加载器引起的警告，并且该选项对于该语句范围内的所有语句都将禁用缓存。
+    在此更改的一部分中，可以通过向  :meth:`_orm.Session.execute`  发送` `execution_options = {"compiled_cache": None}``来禁用缓存，以消除“过度深入”的预加载器引起的警告，并且该选项对于该语句范围内的所有语句都将禁用缓存。

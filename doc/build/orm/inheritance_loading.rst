@@ -1,4 +1,4 @@
 :orphan:
 
-This document has moved to :doc:`queryguide/inheritance`
+This document has moved to :doc:`queryguide/inheritance` 
 
