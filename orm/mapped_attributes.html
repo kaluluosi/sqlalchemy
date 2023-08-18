@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="ORM映射类配置" href="mapper_config.html" />
-        <link rel="next" title="组合列类型" href="composites.html" />
-        <link rel="prev" title="将 SQL 表达式作为映射属性" href="mapped_sql_expr.html" />
+        <link rel="next" title="复合列类型" href="composites.html" />
+        <link rel="prev" title="将SQL表达式映射为属性" href="mapped_sql_expr.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,31 +127,40 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">通过声明性方式映射类</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li class="selected"><span class="link-container"><strong>更改属性行为</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id4">简单验证器</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id39">使用自定义数据类型在核心级别</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id40">使用解析器和混合体</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id89">同义词</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id112">自定义比较器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#simple-validators">简单的验证器</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.validates"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id5">在核心级别使用自定义数据类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#hybrids">使用描述符和混合（Hybrids）</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id0"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#synonyms">检验（Synonyms）</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.synonym"><code class="docutils literal notranslate"><span class="pre">synonym()</span></code></a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#custom-comparators">运算符自定义</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -183,9 +192,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="mapped_sql_expr.html" title="previous chapter">将 SQL 表达式作为映射属性</a></li>
+                <a href="mapped_sql_expr.html" title="previous chapter">将SQL表达式映射为属性</a></li>
                 <li><b>Next:</b>
-                <a href="composites.html" title="next chapter">组合列类型</a></li>
+                <a href="composites.html" title="next chapter">复合列类型</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -197,12 +206,21 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">更改属性行为</a><ul>
-<li><a class="reference internal" href="#id4">简单验证器</a></li>
-<li><a class="reference internal" href="#id39">使用自定义数据类型在核心级别</a></li>
-<li><a class="reference internal" href="#id40">使用解析器和混合体</a></li>
-<li><a class="reference internal" href="#id89">同义词</a></li>
-<li><a class="reference internal" href="#id112">自定义比较器</a></li>
+<li><a class="reference internal" href="#mapping-attributes-toplevel">更改属性行为</a><ul>
+<li><a class="reference internal" href="#simple-validators">简单的验证器</a><ul>
+<li><a class="reference internal" href="#sqlalchemy.orm.validates"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">在核心级别使用自定义数据类型</a></li>
+<li><a class="reference internal" href="#hybrids">使用描述符和混合（Hybrids）</a><ul>
+<li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#synonyms">检验（Synonyms）</a><ul>
+<li><a class="reference internal" href="#sqlalchemy.orm.synonym"><code class="docutils literal notranslate"><span class="pre">synonym()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#custom-comparators">运算符自定义</a></li>
 </ul>
 </li>
 </ul>
@@ -216,249 +234,471 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-mapped_attributes" >
         
-<section id="id1">
-<h1>更改属性行为<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>本章将讨论用于修改ORM映射属性行为的功能和技术，包括使用：func:<cite>_orm.mapped_column</cite>，func:<a href="#id2"><span class="problematic" id="id3">`</span></a>_orm.relationship`等映射的属性。</p>
-<section id="id4">
-<h2>简单验证器<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
-<p>向属性添加“验证”程序的快速方法是使用：func:<cite>~sqlalchemy.orm.validates</cite> 装饰器。属性验证器可能抛出异常，停止变异属性的进程，也可能将给定的值更改为不同的值。像所有属性扩展一样，验证器仅由普通用户代码调用；当ORM填充对象时，不会发出它们。</p>
-<dl>
-<dt><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a>python</dt><dd><p>from sqlalchemy.orm import validates</p>
-<dl>
-<dt>class EmailAddress(Base):</dt><dd><p>__tablename__ = “address”</p>
-<p>id = mapped_column(Integer, primary_key=True)
-email = mapped_column(String)</p>
-<p>&#64;validates(“email”)
-def validate_email(self, key, address):</p>
-<blockquote>
-<div><dl class="simple">
-<dt>if “&#64;” not in address:</dt><dd><p>raise ValueError(“failed simple email validation”)</p>
-</dd>
-</dl>
-<p>return address</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
-<p>对于添加到集合中的项目，验证器接收集合追加事件。</p>
-<dl>
-<dt><a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a>python</dt><dd><p>from sqlalchemy.orm import validates</p>
-<dl>
-<dt>class User(Base):</dt><dd><p># …</p>
-<p>addresses = relationship(“Address”)</p>
-<p>&#64;validates(“addresses”)
-def validate_address(self, key, address):</p>
-<blockquote>
-<div><dl class="simple">
-<dt>if “&#64;” not in address.email:</dt><dd><p>raise ValueError(“failed simplified email validation”)</p>
-</dd>
-</dl>
-<p>return address</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id17"><span class="problematic" id="id18">``</span></a><a href="#id19"><span class="problematic" id="id20">`</span></a></p>
-<p>默认情况下，验证函数不会为集合删除事件发出，因为典型期望是删除值不需要验证。但是，：func:<a href="#id21"><span class="problematic" id="id22">`</span></a>.validates`支持通过指定’’Include_removes=True``到装饰器来接收这些事件。当设置此标志时，验证函数必须接收一个额外的布尔参数，如果为True，则表示该操作是删除操作。</p>
-<dl>
-<dt><a href="#id23"><span class="problematic" id="id24">``</span></a><a href="#id25"><span class="problematic" id="id26">`</span></a>python</dt><dd><p>from sqlalchemy.orm import validates</p>
-<dl>
-<dt>class User(Base):</dt><dd><p># …</p>
-<p>addresses = relationship(“Address”)</p>
-<p>&#64;validates(“addresses”, include_removes=True)
-def validate_address(self, key, address, is_remove):</p>
-<blockquote>
-<div><dl>
-<dt>if is_remove:</dt><dd><p>raise ValueError(“not allowed to remove items from the collection”)</p>
-</dd>
-<dt>else:</dt><dd><dl class="simple">
-<dt>if “&#64;” not in address.email:</dt><dd><p>raise ValueError(“failed simplified email validation”)</p>
-</dd>
-</dl>
-<p>return address</p>
-</dd>
-</dl>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a></p>
-<p>当通过backref链接相互关联的验证程序之间存在的情况时，也可以进行定制，使用’’Include_backrefs=False’’选项，当设置为’’False’’时，该选项避免验证函数在由backref导致事件发生时显示。</p>
-<dl>
-<dt><a href="#id31"><span class="problematic" id="id32">``</span></a><a href="#id33"><span class="problematic" id="id34">`</span></a>python</dt><dd><p>from sqlalchemy.orm import validates</p>
-<dl>
-<dt>class User(Base):</dt><dd><p># …</p>
-<p>addresses = relationship(“Address”, backref=”user”)</p>
-<p>&#64;validates(“addresses”, include_backrefs=False)
-def validate_address(self, key, address):</p>
-<blockquote>
-<div><dl class="simple">
-<dt>if “&#64;” not in address:</dt><dd><p>raise ValueError(“failed simplified email validation”)</p>
-</dd>
-</dl>
-<p>return address</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id35"><span class="problematic" id="id36">``</span></a><a href="#id37"><span class="problematic" id="id38">`</span></a></p>
-<p>请注意，：func:<cite>~.validates`装饰器是建立在属性事件之上的便利函数。需要在属性更改行为的配置上具有更多控制的应用程序可以使用此系统，查看：class:`~.AttributeEvents</cite>。</p>
-</section>
-<section id="id39">
-<h2>使用自定义数据类型在核心级别<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h2>
-<p>用于以适当的方式在Python中表示数据与表示数据库中的数据之间转换数据的非ORM方法可以通过使用应用于映射的:_schema.Table元数据的自定义数据类型来实现。这在编码/解码某些样式的情况下更为常见，这些样式既在数据流向数据库时也在数据返回时发生；请查看Core文档中的：ref:<cite>types_typedecorator</cite>。</p>
-</section>
-<section id="id40">
-<h2>使用解析器和混合体<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h2>
-<p>一种更为全面的方法是使用：term:<a href="#id41"><span class="problematic" id="id42">`</span></a>descriptors`生成属性的修改行为。使用``property()``函数在Python中常规使用描述符的方法。描述符的标准SQLAlchemy技术是创建普通描述符，并从另一个名称处的映射属性进行读写。下面我们使用Python 2.6样式的属性说明了这一点：</p>
-<dl>
-<dt><a href="#id43"><span class="problematic" id="id44">``</span></a><a href="#id45"><span class="problematic" id="id46">`</span></a>python</dt><dd><dl>
-<dt>class EmailAddress(Base):</dt><dd><p>__tablename__ = “email_address”</p>
-<p>id = mapped_column(Integer, primary_key=True)</p>
-<p># name the attribute with an underscore,
-# different from the column name
-_email = mapped_column(“email”, String)</p>
-<p># then create an “.email” attribute
-# to get/set “._email”
-&#64;property
-def email(self):</p>
-<blockquote>
-<div><p>return self._email</p>
-</div></blockquote>
-<p>&#64;email.setter
-def email(self, email):</p>
-<blockquote>
-<div><p>self._email = email</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id47"><span class="problematic" id="id48">``</span></a><a href="#id49"><span class="problematic" id="id50">`</span></a></p>
-<p>以上方法有效，但我们可以添加更多内容。虽然我们的``EmailAddress``对象将值通过``email``描述符传递到``_email``映射属性中，但该类级别``EmailAddress.email``属性不具有可与``_sql.Select``一起使用的常规表达式语义。为了提供这些语义，我们使用以下对：mod:<a href="#id51"><span class="problematic" id="id52">`</span></a>~sqlalchemy.ext.hybrid`扩展：</p>
-<dl>
-<dt><a href="#id53"><span class="problematic" id="id54">``</span></a><a href="#id55"><span class="problematic" id="id56">`</span></a>python</dt><dd><p>from sqlalchemy.ext.hybrid import hybrid_property</p>
-<dl>
-<dt>class EmailAddress(Base):</dt><dd><p>__tablename__ = “email_address”</p>
-<p>id = mapped_column(Integer, primary_key=True)</p>
-<p>_email = mapped_column(“email”, String)</p>
-<p>&#64;hybrid_property
-def email(self):</p>
-<blockquote>
-<div><p>return self._email</p>
-</div></blockquote>
-<p>&#64;email.setter
-def email(self, email):</p>
-<blockquote>
-<div><p>self._email = email</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id57"><span class="problematic" id="id58">``</span></a><a href="#id59"><span class="problematic" id="id60">`</span></a></p>
-<p>除了在拥有``EmailAddress``实例时提供getter/setter行为之外，<a href="#id61"><span class="problematic" id="id62">``</span></a>.email``属性在使用类级别时，也提供了SQL表达式，即，在直接从``EmailAddress``类中使用：</p>
-<dl>
-<dt><a href="#id63"><span class="problematic" id="id64">``</span></a><a href="#id65"><span class="problematic" id="id66">`</span></a>sqlalchemy</dt><dd><p>from sqlalchemy.orm import Session
-from sqlalchemy import select</p>
-<p>session = Session()</p>
-<p>address = session.query(EmailAddress).filter(EmailAddress.email == “<a class="reference external" href="mailto:address&#37;&#52;&#48;example&#46;com">address<span>&#64;</span>example<span>&#46;</span>com</a>”).one()
-address.email = “<a class="reference external" href="mailto:otheraddress&#37;&#52;&#48;example&#46;com">otheraddress<span>&#64;</span>example<span>&#46;</span>com</a>”
-session.commit()</p>
-</dd>
-</dl>
-<p><a href="#id67"><span class="problematic" id="id68">``</span></a><a href="#id69"><span class="problematic" id="id70">`</span></a></p>
-<p>: class:<cite>~.hybrid_property`还允许我们更改属性的行为，包括在实例级别和类/表达式级别访问属性时，使用：meth:</cite>.hybrid_property.expression`修饰符定义不同的行为。例如，如果我们想自动添加主机名，我们可能会定义两组字符串操作逻辑：</p>
-<dl>
-<dt><a href="#id71"><span class="problematic" id="id72">``</span></a><a href="#id73"><span class="problematic" id="id74">`</span></a>python</dt><dd><dl>
-<dt>class EmailAddress(Base):</dt><dd><p>__tablename__ = “email_address”</p>
-<p>id = mapped_column(Integer, primary_key=True)</p>
-<p>_email = mapped_column(“email”, String)</p>
-<p>&#64;hybrid_property
-def email(self):</p>
-<blockquote>
-<div><p>“””Return the value of _email up until the last twelve
-characters.”””</p>
-<p>return self._email[:-12]</p>
-</div></blockquote>
-<p>&#64;email.setter
-def email(self, email):</p>
-<blockquote>
-<div><p>“””Set the value of _email, tacking on the twelve character
-value &#64;example.com.”””</p>
-<p>self._email = email + “&#64;example.com”</p>
-</div></blockquote>
-<p>&#64;email.expression
-def email(cls):</p>
-<blockquote>
-<div><p>“””Produce a SQL expression that represents the value
-of the _email column, minus the last twelve characters.”””</p>
-<p>return func.substr(cls._email, 0, func.length(cls._email) - 12)</p>
-</div></blockquote>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id75"><span class="problematic" id="id76">``</span></a><a href="#id77"><span class="problematic" id="id78">`</span></a></p>
-<p>上面，访问``EmailAddress``实例的``email``属性将返回``_email``属性的值，从该值中删除或添加主机名``&#64;example.com``。当我们针对``email``属性查询时，将渲染生成相同效果的SQL函数：</p>
-<dl class="simple">
-<dt><a href="#id79"><span class="problematic" id="id80">``</span></a><a href="#id81"><span class="problematic" id="id82">`</span></a>sqlalchemy</dt><dd><p>address = session.query(EmailAddress).filter(EmailAddress.email == “address”).one()</p>
-</dd>
-</dl>
-<p><a href="#id83"><span class="problematic" id="id84">``</span></a><a href="#id85"><span class="problematic" id="id86">`</span></a></p>
-<p>请查看：ref:<a href="#id87"><span class="problematic" id="id88">`</span></a>hybrids_toplevel`的Hybrids。</p>
-</section>
-<section id="id89">
-<h2>同义词<a class="headerlink" href="#id89" title="Permalink to this heading">¶</a></h2>
-<p>同义词是映射器级别的构造，允许类上的任何属性“镜像”与映射的其他属性。从最基本的角度来看，同义词是一种通过其他名称提供某个属性的简单方式</p>
-<dl>
-<dt><a href="#id90"><span class="problematic" id="id91">``</span></a><a href="#id92"><span class="problematic" id="id93">`</span></a>python</dt><dd><p>from sqlalchemy.orm import synonym</p>
-<dl>
-<dt>class MyClass(Base):</dt><dd><p>__tablename__ = “my_table”</p>
-<p>id = mapped_column(Integer, primary_key=True)
-job_status = mapped_column(String(50))</p>
-<p>status = synonym(“job_status”)</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><a href="#id94"><span class="problematic" id="id95">``</span></a><a href="#id96"><span class="problematic" id="id97">`</span></a></p>
-<p>上面的 `` MyClass``类有两个属性“job_status”和“status”将作为一个属性进行运行，在表达式级别精确地实现：</p>
-<dl>
-<dt><a href="#id98"><span class="problematic" id="id99">``</span></a><a href="#id100"><span class="problematic" id="id101">`</span></a>python</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
-<span class="go">{printsql}my_table.job_status = :job_status_1{stop}</span></pre></div>
+<section id="mapping-attributes-toplevel">
+<span id="id1"></span><h1>更改属性行为<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<p>本节将讨论修改ORM映射属性的特性和技术，包括使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 、  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  和其他方法映射的属性。</p>
+<section id="simple-validators">
+<span id="id2"></span><h2>简单的验证器<a class="headerlink" href="#simple-validators" title="Permalink to this heading">¶</a></h2>
+<p>将”验证”过程添加到属性的快捷方式是使用   <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器。属性验证器可以引发异常，停止改变属性的值的处理，或者可以将给定值更改为不同的值。像所有属性扩展一样，验证器仅由正常的用户代码调用；在ORM填充对象时不会发出。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
+
+
+<span class="k">class</span> <span class="nc">EmailAddress</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">address</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;simplr email validation failed&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">address</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
-<span class="go">{printsql}my_table.job_status = :job_status_1{stop}</span></pre></div>
+<p>验证器还接收集合附加事件的，当向集合中添加项目时会触发事件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">)</span>
+
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">address</span><span class="o">.</span><span class="n">email</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;failed simple email validation&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">address</span></pre><div class="code-annotations-key"></div></div>
 </div>
+<p>默认情况下，验证函数不会在集合删除事件中发出，因为通常的期望是被丢弃的值不需要经过验证。 但是，通过将``include_removes=True``指定给装饰器， :func:<a href="#id3"><span class="problematic" id="id4">`</span></a>.validates`支持接收这些事件。当设置了此标志时，在删除操作上验证函数必须接收一个附加的布尔参数，如果为True则表示操作是删除操作:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">)</span>
+
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;addresses&quot;</span><span class="p">,</span> <span class="n">include_removes</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">address</span><span class="p">,</span> <span class="n">is_remove</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_remove</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;not allowed to remove items from the collection&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">address</span><span class="o">.</span><span class="n">email</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;failed simplified email validation&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">address</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>通过自反引用后另一个验证器相关的情况也可以定制。可以使用``include_backrefs=False``选项来使用此选项，当设置为``False``时，防止在事件作为反向引用的结果出现时发出验证器函数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+    <span class="nd">@validates</span><span class="p">(</span><span class="s2">&quot;addresses&quot;</span><span class="p">,</span> <span class="n">include_backrefs</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;@&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">address</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;failed simplified email validation&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">address</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>上面，如果我们像``some_address.user = some_user``那样给``Address.user``赋值，
+将不会产生``validate_address()``函数，即使向``some_user.addresses``添加一个append事件，事件是由反向引用引起的。</p>
+<p>请注意：  <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器是建立在属性事件基础之上的一种便捷函数。需要更多地控制属性更改行为的应用程序可以利用这个系统在   <a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents" title="sqlalchemy.orm.AttributeEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeEvents</span></code></a>  中描述。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.orm.validates"><span class="sig-name descname">validates</span></a>(*names, [include_removes, include_backrefs])</p></td>
+<td><p>Decorate a method as a ‘validator’ for one or more named properties.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.orm.validates">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">validates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_removes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_backrefs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">_Fn</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_Fn</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.validates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorate a method as a ‘validator’ for one or more named properties.</p>
+<p>Designates a method as a validator, a method which receives the
+name of the attribute as well as a value to be assigned, or in the
+case of a collection, the value to be added to the collection.
+The function can then raise validation exceptions to halt the
+process from continuing (where Python’s built-in <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>
+and <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> exceptions are reasonable choices), or can
+modify or replace the value before proceeding. The function should
+otherwise return the given value.</p>
+<p>Note that a validator for a collection <strong>cannot</strong> issue a load of that
+collection within the validation routine - this usage raises
+an assertion to avoid recursion overflows.  This is a reentrant
+condition which is not supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.*names"></span><strong>*names</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.*names">¶</a> – list of attribute names to be validated.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.include_removes"></span><strong>include_removes</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.include_removes">¶</a> – if True, “remove” events will be
+sent as well - the validation function must accept an additional
+argument “is_remove” which will be a boolean.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.include_backrefs"></span><strong>include_backrefs</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.include_backrefs">¶</a> – <p>defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, the
+validation function will not emit if the originator is an attribute
+event related via a backref.  This can be used for bi-directional
+<a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a> usage where only one validator should emit per
+attribute operation.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0.16: </span>This paramter inadvertently defaulted to
+<code class="docutils literal notranslate"><span class="pre">False</span></code> for releases 2.0.0 through 2.0.15.  Its correct default
+of <code class="docutils literal notranslate"><span class="pre">True</span></code> is restored in 2.0.16.</p>
+</div>
+</p></li>
+</ul>
 </dd>
 </dl>
-<p><a href="#id102"><span class="problematic" id="id103">``</span></a>`
-和在实例级别：</p>
-<dl>
-<dt><a href="#id104"><span class="problematic" id="id105">``</span></a><a href="#id106"><span class="problematic" id="id107">`</span></a>python</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#simple-validators"><span class="std std-ref">简单的验证器</span></a> - usage examples for <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="id5">
+<h2>在核心级别使用自定义数据类型<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
+<p>在不使用ORM的情况下，可以通过使用应用到映射   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据的自定义数据类型以适合转换Python和数据库中表示的数据的方式来影响列的值。这在某种编码/解码样式的情况下更加常见，因为数据在传递到数据库和从数据库返回时都会进行转换。有关更多信息，请参阅Core文档中的   <a class="reference internal" href="../core/custom_types.html#types-typedecorator"><span class="std std-ref">增强现有类型</span></a> 。</p>
+</section>
+<section id="hybrids">
+<span id="mapper-hybrids"></span><h2>使用描述符和混合（Hybrids）<a class="headerlink" href="#hybrids" title="Permalink to this heading">¶</a></h2>
+<p>更全面的一种方法是使用  <span class="xref std std-term">descriptors</span>  来为属性生成修改后的行为。这些通常在Python中使用property()函数。描述符的标准SQLAlchemy技术是创建一个简单的描述符，并通过使用不同的名称从映射的属性读写。以下是使用Python 2.6风格属性的示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EmailAddress</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;email_address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 将属性命名为带有下划线的名称，不同于列名</span>
+    <span class="n">_email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
+
+    <span class="c1"># 然后创建一个&quot;.email&quot;属性以获取/设置&quot;._email&quot;</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span>
+
+    <span class="nd">@email</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上面的方法是有效的，但我们还可以添加更多内容。虽然我们的``EmailAddress``对象将通过``email``描述符将值传递到``_email``映射的属性中，但类级别的``EmailAddress.email``属性没有使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  可用的常规表达式语义。为了提供这些语义，我们改为使用  <a class="reference internal" href="extensions/hybrid.html#module-sqlalchemy.ext.hybrid" title="sqlalchemy.ext.hybrid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hybrid</span></code></a>  扩展，如下所示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.ext.hybrid</span> <span class="kn">import</span> <span class="n">hybrid_property</span>
+
+
+<span class="k">class</span> <span class="nc">EmailAddress</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;email_address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
+
+    <span class="nd">@hybrid_property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span>
+
+    <span class="nd">@email</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>除了为我们有一个``EmailAddress``实例提供getter/setter行为外，<a href="#id6"><span class="problematic" id="id7">``</span></a>.email``属性还在类级别时提供SQL表达式直接使用，也就是从``EmailAddress``类直接使用:</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+
+<span class="n">address</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">EmailAddress</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">EmailAddress</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;address@example.com&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="s1">&#39;address@example.com&#39;</span><span class="p">,)</span>
+</div><span class="n">address</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;otheraddress@example.com&quot;</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">email</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="s1">&#39;otheraddress@example.com&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>: class:<cite>~.hybrid_property</cite> 还允许我们更改属性的行为，包括使用  <a class="reference internal" href="extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property.expression" title="sqlalchemy.ext.hybrid.hybrid_property.expression"><code class="xref py py-meth docutils literal notranslate"><span class="pre">hybrid_property.expression()</span></code></a>  修饰符定义在实例级别和类/表达级别访问属性时的不同行为。例如，如果我们想自动添加主机名，我们可以定义两组字符串操作逻辑:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">EmailAddress</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;email_address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">_email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
+
+    <span class="nd">@hybrid_property</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;返回邮箱地址值中最后12个字符之前的值&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_email</span><span class="p">[:</span><span class="o">-</span><span class="mi">12</span><span class="p">]</span>
+
+    <span class="nd">@email</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;设置邮件地址值，将12个字符的值@example.com拼接在后面&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span> <span class="o">+</span> <span class="s2">&quot;@example.com&quot;</span>
+
+    <span class="nd">@email</span><span class="o">.</span><span class="n">expression</span>
+    <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;生成一种SQL表达式，表示_email列的值，减去了最后12个字符的长度&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">func</span><span class="o">.</span><span class="n">substr</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_email</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">func</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_email</span><span class="p">)</span> <span class="o">-</span> <span class="mi">12</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上述示例中，在访问``EmailAddress``实例的``email``属性时，将返回``_email``属性的值，从中删除或添加邮箱地址。当我们针对``email``属性查询时，将呈现一个SQL函数，该函数产生相同的效果:</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">address</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">EmailAddress</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">EmailAddress</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;address&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">substr</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="k">length</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">email</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;address&#39;</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p>在更复杂的情况下，使用   <a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">hybrid attribute</span></a>  功能更好，因为它更倾向于Python描述符。严格来说，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> .hybrid_property` 所能做到的所有事情，因为它也支持自定义SQL功能的注入，但是混合属性在更复杂的情况下更容易使用。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#id0"><span class="sig-name descname">validates</span></a></p></td>
+<td><p>Decorate a method as a ‘validator’ for one or more named properties.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">validates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_removes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_backrefs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">_Fn</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_Fn</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorate a method as a ‘validator’ for one or more named properties.</p>
+<p>Designates a method as a validator, a method which receives the
+name of the attribute as well as a value to be assigned, or in the
+case of a collection, the value to be added to the collection.
+The function can then raise validation exceptions to halt the
+process from continuing (where Python’s built-in <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>
+and <code class="docutils literal notranslate"><span class="pre">AssertionError</span></code> exceptions are reasonable choices), or can
+modify or replace the value before proceeding. The function should
+otherwise return the given value.</p>
+<p>Note that a validator for a collection <strong>cannot</strong> issue a load of that
+collection within the validation routine - this usage raises
+an assertion to avoid recursion overflows.  This is a reentrant
+condition which is not supported.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.*names"></span><strong>*names</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.*names">¶</a> – list of attribute names to be validated.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.include_removes"></span><strong>include_removes</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.include_removes">¶</a> – if True, “remove” events will be
+sent as well - the validation function must accept an additional
+argument “is_remove” which will be a boolean.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.validates.params.include_backrefs"></span><strong>include_backrefs</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.validates.params.include_backrefs">¶</a> – <p>defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, the
+validation function will not emit if the originator is an attribute
+event related via a backref.  This can be used for bi-directional
+<a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a> usage where only one validator should emit per
+attribute operation.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0.16: </span>This paramter inadvertently defaulted to
+<code class="docutils literal notranslate"><span class="pre">False</span></code> for releases 2.0.0 through 2.0.15.  Its correct default
+of <code class="docutils literal notranslate"><span class="pre">True</span></code> is restored in 2.0.16.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#simple-validators"><span class="std std-ref">简单的验证器</span></a> - usage examples for <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a></p>
+</div>
+</dd></dl>
+
+</section>
+<section id="synonyms">
+<h2>检验（Synonyms）<a class="headerlink" href="#synonyms" title="Permalink to this heading">¶</a></h2>
+<p>检验是一个映射层面的构造，允许您将类上的任何属性“镜像”到映射的另一个属性上。</p>
+<p>在最基本的意义上，同义词是一种简单的方式，通过附加名称来使一个特定的属性可用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">synonym</span>
+
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">job_status</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">synonym</span><span class="p">(</span><span class="s2">&quot;job_status&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上述类 <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> 有两个属性，<code class="docutils literal notranslate"><span class="pre">.job_status</span></code> 和 <a href="#id8"><span class="problematic" id="id9">``</span></a>.status <a href="#id10"><span class="problematic" id="id11">``</span></a>，在表达式级别上表现为一个属性:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
+<div class='show_sql_print'><span class="n">my_table</span><span class="p">.</span><span class="n">job_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">job_status_1</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
+<div class='show_sql_print'><span class="n">my_table</span><span class="p">.</span><span class="n">job_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">job_status_1</span>
+</div></pre></div>
+</div>
+<p>在实例级别和在实例级别表达式中都表现为一个属性:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">(</span><span class="n">status</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">m1</span><span class="o">.</span><span class="n">job_status</span>
-<span class="go">(&#39;x&#39;, &#39;x&#39;)</span></pre></div>
-</div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">job_status</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
+<span class="go">(&#39;x&#39;, &#39;x&#39;)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">job_status</span> <span class="o">=</span> <span class="s2">&quot;y&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">m1</span><span class="o">.</span><span class="n">job_status</span>
 <span class="go">(&#39;y&#39;, &#39;y&#39;)</span></pre></div>
 </div>
+<p>对于任何通过   <a class="reference internal" href="internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>  子类进行了映射的属性，包括映射的列和关系，除了同义词本身， :func:<a href="#id12"><span class="problematic" id="id13">`</span></a>.synonym`也可以用于任何映射属性。</p>
+<p>除了简单反映之外，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> 。我们可以为我们的``status``同义词提供一个``&#64;property``描述符:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">job_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Status: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
+
+    <span class="n">job_status</span> <span class="o">=</span> <span class="n">synonym</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">,</span> <span class="n">descriptor</span><span class="o">=</span><span class="n">job_status</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>使用Declarative时，可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">synonym_for()</span></code>  装饰器更简洁地表示上述模式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.ext.declarative</span> <span class="kn">import</span> <span class="n">synonym_for</span>
+
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="nd">@synonym_for</span><span class="p">(</span><span class="s2">&quot;status&quot;</span><span class="p">)</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">job_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Status: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>虽然   <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>  对于简单的反映是有用的，但是使用混合属性特性更好地处理使用描述符增强属性行为的用例，后者更适用于Python描述符。严格来说，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>  可以做到   <a class="reference internal" href="extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property" title="sqlalchemy.ext.hybrid.hybrid_property"><code class="xref py py-class docutils literal notranslate"><span class="pre">hybrid_property</span></code></a>  所能做到的一切，因为它还支持自定义SQL功能的注入，不过需要在更复杂情况下使用混合。</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.orm.synonym"><span class="sig-name descname">synonym</span></a>(name, *, [map_column, descriptor, comparator_factory, init, repr, default, default_factory, compare, kw_only, info, doc])</p></td>
+<td><p>Denote an attribute name as a synonym to a mapped property,
+in that the attribute will mirror the value and expression behavior
+of another attribute.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.orm.synonym">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">synonym</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_column</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">descriptor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">comparator_factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><span class="pre">PropComparator</span></a><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_T</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_factory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compare</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kw_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_NoArg</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">_NoArg.NO_ARG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_InfoType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">doc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="internals.html#sqlalchemy.orm.Synonym" title="sqlalchemy.orm.Synonym"><span class="pre">Synonym</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.synonym" title="Permalink to this definition">¶</a></dt>
+<dd><p>Denote an attribute name as a synonym to a mapped property,
+in that the attribute will mirror the value and expression behavior
+of another attribute.</p>
+<p>e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;my_table&#39;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">job_status</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">synonym</span><span class="p">(</span><span class="s2">&quot;job_status&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.orm.synonym.params.name"></span><strong>name</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.synonym.params.name">¶</a> – the name of the existing mapped property.  This
+can refer to the string name ORM-mapped attribute
+configured on the class, including column-bound attributes
+and relationships.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.synonym.params.descriptor"></span><strong>descriptor</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.synonym.params.descriptor">¶</a> – a Python <span class="xref std std-term">descriptor</span> that will be used
+as a getter (and potentially a setter) when this attribute is
+accessed at the instance level.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.synonym.params.map_column"></span><strong>map_column</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.synonym.params.map_column">¶</a> – <p><strong>For classical mappings and mappings against
+an existing Table object only</strong>.  if <code class="docutils literal notranslate"><span class="pre">True</span></code>, the <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>
+construct will locate the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>
+object upon the mapped
+table that would normally be associated with the attribute name of
+this synonym, and produce a new <a class="reference internal" href="internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a> that instead
+maps this <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>
+to the alternate name given as the “name”
+argument of the synonym; in this way, the usual step of redefining
+the mapping of the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>
+to be under a different name is
+unnecessary. This is usually intended to be used when a
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>
+is to be replaced with an attribute that also uses a
+descriptor, that is, in conjunction with the
+<a class="reference internal" href="#sqlalchemy.orm.synonym.params.descriptor" title="sqlalchemy.orm.synonym"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">synonym.descriptor</span></code></a> parameter:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+    <span class="s2">&quot;my_table&quot;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;job_status&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+<span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MyClass</span><span class="p">:</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_job_status_descriptor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Status: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">_job_status</span>
+
+
+<span class="n">mapper</span><span class="p">(</span>
+    <span class="n">MyClass</span><span class="p">,</span> <span class="n">my_table</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;job_status&quot;</span><span class="p">:</span> <span class="n">synonym</span><span class="p">(</span>
+            <span class="s2">&quot;_job_status&quot;</span><span class="p">,</span> <span class="n">map_column</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">descriptor</span><span class="o">=</span><span class="n">MyClass</span><span class="o">.</span><span class="n">_job_status_descriptor</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>Above, the attribute named <code class="docutils literal notranslate"><span class="pre">_job_status</span></code> is automatically
+mapped to the <code class="docutils literal notranslate"><span class="pre">job_status</span></code> column:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">j1</span> <span class="o">=</span> <span class="n">MyClass</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">j1</span><span class="o">.</span><span class="n">_job_status</span> <span class="o">=</span> <span class="s2">&quot;employed&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">j1</span><span class="o">.</span><span class="n">job_status</span>
+<span class="go">Status: employed</span></pre></div>
+</div>
+<p>When using Declarative, in order to provide a descriptor in
+conjunction with a synonym, use the
+<code class="xref py py-func docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative.synonym_for()</span></code> helper.  However,
+note that the <a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">hybrid properties</span></a> feature
+should usually be preferred, particularly when redefining attribute
+behavior.</p>
+</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.synonym.params.info"></span><strong>info</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.synonym.params.info">¶</a> – Optional data dictionary which will be populated into the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">InspectionAttr.info</span></code> attribute of this object.</p></li>
+<li><p><span class="target" id="sqlalchemy.orm.synonym.params.comparator_factory"></span><strong>comparator_factory</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.synonym.params.comparator_factory">¶</a> – <p>A subclass of <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>
+that will provide custom comparison behavior at the SQL expression
+level.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For the use case of providing an attribute which redefines both
+Python-level and SQL-expression level behavior of an attribute,
+please refer to the Hybrid attribute introduced at
+<a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">使用描述符和混合（Hybrids）</span></a> for a more effective technique.</p>
+</div>
+</p></li>
+</ul>
 </dd>
 </dl>
-<p><a href="#id108"><span class="problematic" id="id109">``</span></a>`
-<code class="xref py py-func docutils literal notranslate"><span class="pre">synonym`可以用于任何种类的映射属性，该属性是的子类:class:()</span></code>.MapperProperty`，包括映射的列和关系，以及同义词本身。</p>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator`子类可以作为``comparator_factory``参数传递到:</span> <span class="pre">func:</span></code>.column_property`，func:<cite>_orm.relationship`和:func:</cite>.composite`等ORM级函数中，从而为属性行定义提供操作符重新定义。在此级别上自定义运算符的用例是罕见的。请参阅：class:<a href="#id110"><span class="problematic" id="id111">`</span></a>~.PropComparator`的文档进行概述。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">synonyms</span> - Overview of synonyms</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym_for()</span></code> - a helper oriented towards Declarative</p>
+<p><a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">使用描述符和混合（Hybrids）</span></a> - The Hybrid Attribute extension provides an
+updated approach to augmenting attribute behavior more flexibly
+than can be achieved with synonyms.</p>
+</div>
+</dd></dl>
+
 </section>
-<section id="id112">
-<h2>自定义比较器<a class="headerlink" href="#id112" title="Permalink to this heading">¶</a></h2>
-<p>由SQLAlchemy ORM和Core表达式语言使用的“运算符”是完全可定制的。例如，比较表达式``User.name ==’ed’<a href="#id113"><span class="problematic" id="id114">``</span></a>使用了构建在Python的操作符``operator.eq``之上，SQLAlchemy实际上将该操作符所关联的实际SQL构造进行了修改。新的操作还可以与列表达式一起关联。对于列表达式所执行的运算符最直接地在类型级别进行重新定义 - 请参见该部分types_operators的说明。</p>
-<p>像：func:<cite>.column_property</cite>，：func:<cite>_orm.relationship</cite>，和：func:<cite>.composite</cite> ORM级函数也会在每个函数的``comparator_factory``参数中传递:class:<cite>.PropComparator`子类来重新定义运算符。在这个级别上自定义运算符的使用用例是罕见的。请参阅:class:</cite>.PropComparator`文档进行概述。</p>
+<section id="custom-comparators">
+<span id="id14"></span><h2>运算符自定义<a class="headerlink" href="#custom-comparators" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy ORM和Core表达式语言使用的“运算符”是完全可定制的。例如，比较表达式``User.name == ‘ed’`` 使用一个内置的Python运算符：<code class="docutils literal notranslate"><span class="pre">operator.eq</span></code>-实际上SQLAlchemy将这样的运算符关联的SQL结构可以被修改。也可以将新操作与列表达式关联。作用于列表达式的操作最直接地在类型级别重新定义 - 请参阅   <span class="xref std std-ref">types_operators</span>  部分的说明。</p>
+<p>由   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code> ,   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  和   <a class="reference internal" href="composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  等ORM级函数也提供操作重定义，在每个函数中将   <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>  子类传递给 <code class="docutils literal notranslate"><span class="pre">comparator_factory</span></code> 参数。这个级别上的操作符自定义功能使用很少。 在   <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>  的文档中概述了操作符在此级别上的自定义。</p>
 </section>
 </section>
 
@@ -468,9 +708,9 @@ job_status = mapped_column(String(50))</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="mapped_sql_expr.html" title="previous chapter">将 SQL 表达式作为映射属性</a>
+        <a href="mapped_sql_expr.html" title="previous chapter">将SQL表达式映射为属性</a>
         Next:
-        <a href="composites.html" title="next chapter">组合列类型</a>
+        <a href="composites.html" title="next chapter">复合列类型</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -480,7 +720,7 @@ job_status = mapped_column(String(50))</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

@@ -12,7 +12,7 @@
         <title>
             
     
-    ORM内部结构
+    ORM 内核
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,8 +39,8 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="事件和内部实现" href="extending.html" />
-        <link rel="next" title="ORM 异常" href="exceptions.html" />
+        <link rel="up" title="事件和内部机制" href="extending.html" />
+        <link rel="next" title="ORM异常" href="exceptions.html" />
         <link rel="prev" title="ORM 事件" href="events.html" />
     <!-- end layout.mako headers -->
 
@@ -127,11 +127,11 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="events.html">ORM 事件</a></span></li>
-<li class="selected"><span class="link-container"><strong>ORM内部结构</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>ORM 内核</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.AttributeState"><code class="docutils literal notranslate"><span class="pre">AttributeState</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.AttributeState.history"><code class="docutils literal notranslate"><span class="pre">AttributeState.history</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.AttributeState.load_history"><code class="docutils literal notranslate"><span class="pre">AttributeState.load_history()</span></code></a></span></li>
@@ -397,11 +397,11 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM 异常</a></span></li>
+<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM异常</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -435,11 +435,11 @@
                 <li><b>Previous:</b>
                 <a href="events.html" title="previous chapter">ORM 事件</a></li>
                 <li><b>Next:</b>
-                <a href="exceptions.html" title="next chapter">ORM 异常</a></li>
+                <a href="exceptions.html" title="next chapter">ORM异常</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="extending.html" title="事件和内部实现">事件和内部实现</a></li>
+                    <ul><li><a href="extending.html" title="事件和内部机制">事件和内部机制</a></li>
                 </ul>
                 </ul>
 
@@ -447,7 +447,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#orm">ORM内部结构</a><ul>
+<li><a class="reference internal" href="#orm">ORM 内核</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.AttributeState"><code class="docutils literal notranslate"><span class="pre">AttributeState</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.AttributeState.history"><code class="docutils literal notranslate"><span class="pre">AttributeState.history</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.AttributeState.load_history"><code class="docutils literal notranslate"><span class="pre">AttributeState.load_history()</span></code></a></li>
@@ -725,8 +725,8 @@
     <div id="docs-body" role="main" class="withsidebar orm-internals" >
         
 <section id="orm">
-<h1>ORM内部结构<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>在其他部分没有涵盖到的情况下，本文列出了ORM的关键构造。</p>
+<span id="orm-internal-toplevel"></span><h1>ORM 内核<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<p>列举出在其它章节中未被涵盖的主要 ORM 构建。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -801,8 +801,8 @@ attribute.</p></td>
 <td><p>Represent a particular class attribute mapped by <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.orm.merge_frozen_result"><span class="sig-name descname">merge_frozen_result</span></a>(session, statement, frozen_result[, load])</p></td>
-<td><p>Merge a <code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code> back into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>,
-returning a new <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> object with <span class="xref std std-term">persistent</span>
+<td><p>Merge a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></a> back into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>,
+returning a new <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object with <span class="xref std std-term">persistent</span>
 objects.</p></td>
 </tr>
 <tr class="row-odd"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.orm.merge_result"><span class="sig-name descname">merge_result</span></a>(query, iterator[, load])</p></td>
@@ -1047,7 +1047,7 @@ overview.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="nonstandard_mappings.html#maptojoin"><span class="std std-ref">将一个类映射到多个表</span></a> - usage example</p>
+<p><a class="reference internal" href="nonstandard_mappings.html#maptojoin"><span class="std std-ref">将类映射到多个表</span></a> - usage example</p>
 </div>
 </dd></dl>
 
@@ -1127,7 +1127,7 @@ object’s init() method.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions-composed"><span class="std std-ref">在映射时间从列属性构成</span></a></p>
+<p><a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions-composed"><span class="std std-ref">在映射时从列属性组合</span></a></p>
 </div>
 </dd></dl>
 
@@ -1175,7 +1175,7 @@ compatible subclass of <a class="reference internal" href="#sqlalchemy.orm.Compo
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a></p>
+<p><a class="reference internal" href="composites.html#mapper-composite"><span class="std std-ref">复合列类型</span></a></p>
 </div>
 <div class="class-bases docutils container">
 <p><strong>Class signature</strong></p>
@@ -1192,7 +1192,7 @@ of columns as one attribute.</p>
 function.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a></p>
+<p><a class="reference internal" href="composites.html#mapper-composite"><span class="std std-ref">复合列类型</span></a></p>
 </div>
 <div class="class-members docutils container">
 <p><strong>Members</strong></p>
@@ -1207,7 +1207,7 @@ function.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Comparator</span></span><a class="headerlink" href="#sqlalchemy.orm.CompositeProperty.Comparator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce boolean, comparison, and other operators for
 <a class="reference internal" href="#sqlalchemy.orm.Composite" title="sqlalchemy.orm.Composite"><code class="xref py py-class docutils literal notranslate"><span class="pre">Composite</span></code></a> attributes.</p>
-<p>See the example in <a class="reference internal" href="composites.html#composite-operations"><span class="std std-ref">重新定义复合的比较操作</span></a> for an overview
+<p>See the example in <a class="reference internal" href="composites.html#composite-operations"><span class="std std-ref">为复合重新定义比较操作</span></a> for an overview
 of usage , as well as the documentation for <a class="reference internal" href="#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -1231,7 +1231,7 @@ of usage , as well as the documentation for <a class="reference internal" href="
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.CompositeProperty.CompositeBundle.create_row_processor">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.CompositeProperty.CompositeBundle"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.CompositeProperty.CompositeBundle.</span></code></a><span class="sig-name descname"><span class="pre">create_row_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><span class="pre">Select</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">procs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Row</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Row</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.CompositeProperty.CompositeBundle.create_row_processor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.CompositeProperty.CompositeBundle"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.CompositeProperty.CompositeBundle.</span></code></a><span class="sig-name descname"><span class="pre">create_row_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><span class="pre">Select</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">procs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><span class="pre">Row</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><span class="pre">Row</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.CompositeProperty.CompositeBundle.create_row_processor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce the “row processing” function for this <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.Bundle" title="sqlalchemy.orm.Bundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bundle</span></code></a>.</p>
 <p>May be overridden by subclasses to provide custom behaviors when
 results are fetched. The method is passed the statement object and a
@@ -1239,7 +1239,7 @@ set of “row processor” functions at query execution time; these
 processor functions when given a result row will return the individual
 attribute value, which can then be adapted into any kind of return data
 structure.</p>
-<p>The example below illustrates replacing the usual <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code>
+<p>The example below illustrates replacing the usual <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a>
 return structure with a straight Python dictionary:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Bundle</span>
 
@@ -1483,7 +1483,7 @@ functions.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.QueryableAttribute.info" title="sqlalchemy.orm.QueryableAttribute.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">QueryableAttribute.info</span></code></a></p>
-<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem.info" title="sqlalchemy.schema.SchemaItem.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></a></p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></p>
 </div>
 </dd></dl>
 
@@ -1512,7 +1512,7 @@ is to use the <a class="reference internal" href="../core/inspection.html#sqlalc
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate"><span class="std std-ref">映射实例的自省</span></a></p>
+<p><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate"><span class="std std-ref">映射实例的内省</span></a></p>
 </div>
 <div class="class-members docutils container">
 <p><strong>Members</strong></p>
@@ -1873,8 +1873,8 @@ the configuration of ORM attributes such as <code class="xref py py-func docutil
 and <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="declarative_styles.html#orm-explicit-declarative-base"><span class="std std-ref">使用声明基类</span></a></p>
-<p><span class="xref std std-ref">orm_declarative_table</span></p>
+<p><a class="reference internal" href="declarative_styles.html#orm-explicit-declarative-base"><span class="std std-ref">使用声明式基类</span></a></p>
+<p><a class="reference internal" href="declarative_tables.html#orm-declarative-table"><span class="std std-ref">使用 mapped_column() 的Declarative Table</span></a></p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1973,7 +1973,7 @@ expression construction on behalf of this mapped attribute.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperProperty.create_row_processor">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperProperty"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperProperty.</span></code></a><span class="sig-name descname"><span class="pre">create_row_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ORMCompileState</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_MapperEntity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractEntityRegistry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Result</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ORMAdapter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">populators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_PopulatorDict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperProperty.create_row_processor" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperProperty"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperProperty.</span></code></a><span class="sig-name descname"><span class="pre">create_row_processor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ORMCompileState</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query_entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_MapperEntity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">AbstractEntityRegistry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><span class="pre">Result</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adapter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ORMAdapter</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">populators</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_PopulatorDict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperProperty.create_row_processor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce row processing functions and append to the given
 set of populators lists.</p>
 </dd></dl>
@@ -2005,7 +2005,7 @@ functions.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.QueryableAttribute.info" title="sqlalchemy.orm.QueryableAttribute.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">QueryableAttribute.info</span></code></a></p>
-<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem.info" title="sqlalchemy.schema.SchemaItem.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></a></p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></p>
 </div>
 </dd></dl>
 
@@ -2148,7 +2148,7 @@ attribute.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="sqlalchemy.orm.merge_result">
-<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">merge_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><span class="pre">Query</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FrozenResult</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FrozenResult</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.merge_result" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">merge_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><span class="pre">Query</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><span class="pre">FrozenResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><span class="pre">FrozenResult</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.merge_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge a result into the given <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object’s Session.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 2.0: </span>The <a class="reference internal" href="#sqlalchemy.orm.merge_result" title="sqlalchemy.orm.merge_result"><code class="xref py py-func docutils literal notranslate"><span class="pre">merge_result()</span></code></a> function is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The function as well as the method on <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> is superseded by the <a class="reference internal" href="#sqlalchemy.orm.merge_frozen_result" title="sqlalchemy.orm.merge_frozen_result"><code class="xref py py-func docutils literal notranslate"><span class="pre">merge_frozen_result()</span></code></a> function. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>)</p>
@@ -2160,15 +2160,15 @@ function.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="sqlalchemy.orm.merge_frozen_result">
 <em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">merge_frozen_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frozen_result</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.orm.merge_frozen_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Merge a <code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code> back into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>,
-returning a new <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> object with <span class="xref std std-term">persistent</span>
+<dd><p>Merge a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></a> back into a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>,
+returning a new <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> object with <span class="xref std std-term">persistent</span>
 objects.</p>
 <p>See the section <a class="reference internal" href="session_events.html#do-orm-execute-re-executing"><span class="std std-ref">重新执行语句</span></a> for an example.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="session_events.html#do-orm-execute-re-executing"><span class="std std-ref">重新执行语句</span></a></p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.freeze()</span></code></p>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.freeze" title="sqlalchemy.engine.Result.freeze"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.freeze()</span></code></a></p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -2347,8 +2347,8 @@ relationship attribute.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">orm_queryguide_join_on_augmented</span></p>
-<p><a class="reference internal" href="queryguide/relationships.html#loader-option-criteria"><span class="std std-ref">加载程序选项添加筛选条件</span></a></p>
+<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-join-on-augmented"><span class="std std-ref">将 Relationship 与自定义 ON 条件组合</span></a></p>
+<p><span class="xref std std-ref">loader_option_criteria</span></p>
 <p><a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a></p>
 </div>
 </dd></dl>
@@ -3255,7 +3255,7 @@ other forms, see <a class="reference internal" href="../dialects/postgresql.html
 <li><p>MySQL - renders <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">(x)</span> <span class="pre">AGAINST</span> <span class="pre">(y</span> <span class="pre">IN</span> <span class="pre">BOOLEAN</span> <span class="pre">MODE)</span></code></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">match</span></code> - MySQL specific construct with
+<p><a class="reference internal" href="../dialects/mysql.html#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-class docutils literal notranslate"><span class="pre">match</span></code></a> - MySQL specific construct with
 additional features.</p>
 </div>
 </li>
@@ -3489,9 +3489,9 @@ against this specific subclass.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">用别名进行关系联接</span></a> - in the
-<span class="xref std std-ref">queryguide_toplevel</span></p>
-<p><span class="xref std std-ref">inheritance_of_type</span></p>
+<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">使用 Relationship 在别名目标之间进行连接</span></a> - in the
+<a class="reference internal" href="queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a></p>
+<p><a class="reference internal" href="queryguide/inheritance.html#inheritance-of-type"><span class="std std-ref">连接到特定子类型或 with_polymorphic() 实体</span></a></p>
 </div>
 </dd></dl>
 
@@ -3530,7 +3530,7 @@ of 100 will be higher or equal to all operators, and -100 will be
 lower than or equal to all operators.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../faq/sqlexpressions.html#faq-sql-expression-op-parenthesis"><span class="std std-ref">我使用op（）生成自定义运算符，但我的圆括号没有正确输出</span></a> - detailed description
+<p><a class="reference internal" href="../faq/sqlexpressions.html#faq-sql-expression-op-parenthesis"><span class="std std-ref">我正在使用 op() 生成自定义操作符，但是我的括号没有正确显示</span></a> - detailed description
 of how the SQLAlchemy SQL compiler renders parenthesis</p>
 </div>
 </p></li>
@@ -3849,7 +3849,7 @@ compatible subclass for <a class="reference internal" href="#sqlalchemy.orm.Rela
 </div>
 <div class="class-bases docutils container">
 <p><strong>Class signature</strong></p>
-<p>class <a class="reference internal" href="#sqlalchemy.orm.Relationship" title="sqlalchemy.orm.Relationship"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.Relationship</span></code></a> (<a class="reference internal" href="#sqlalchemy.orm.RelationshipProperty" title="sqlalchemy.orm.RelationshipProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.RelationshipProperty</span></code></a>, <code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.base._DeclarativeMapped</span></code>, <a class="reference internal" href="large_collections.html#sqlalchemy.orm.WriteOnlyMapped" title="sqlalchemy.orm.base.WriteOnlyMapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.base.WriteOnlyMapped</span></code></a>, <a class="reference internal" href="large_collections.html#sqlalchemy.orm.DynamicMapped" title="sqlalchemy.orm.base.DynamicMapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.base.DynamicMapped</span></code></a>)</p>
+<p>class <a class="reference internal" href="#sqlalchemy.orm.Relationship" title="sqlalchemy.orm.Relationship"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.Relationship</span></code></a> (<a class="reference internal" href="#sqlalchemy.orm.RelationshipProperty" title="sqlalchemy.orm.RelationshipProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.RelationshipProperty</span></code></a>, <code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.base._DeclarativeMapped</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.base.WriteOnlyMapped</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.base.DynamicMapped</span></code>)</p>
 </div>
 </dd></dl>
 
@@ -4114,7 +4114,7 @@ explicit “outer joins” will need to be used instead.
 See <code class="xref py py-meth docutils literal notranslate"><span class="pre">Comparator.any()</span></code> for
 a less-performant alternative using EXISTS, or refer
 to <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.outerjoin" title="sqlalchemy.orm.Query.outerjoin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.outerjoin()</span></code></a>
-as well as <span class="xref std std-ref">orm_queryguide_joins</span>
+as well as <a class="reference internal" href="queryguide/select.html#orm-queryguide-joins"><span class="std std-ref">连接</span></a>
 for more details on constructing outer joins.</p>
 <p>kwargs may be ignored by this operator but are required for API
 conformance.</p>
@@ -4284,7 +4284,7 @@ attribute expressions.</p>
 <dt class="sig sig-object py" id="sqlalchemy.orm.Synonym">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.</span></span><span class="sig-name descname"><span class="pre">Synonym</span></span><a class="headerlink" href="#sqlalchemy.orm.Synonym" title="Permalink to this definition">¶</a></dt>
 <dd><p>Declarative front-end for the <a class="reference internal" href="#sqlalchemy.orm.SynonymProperty" title="sqlalchemy.orm.SynonymProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynonymProperty</span></code></a> class.</p>
-<p>Public constructor is the <code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code> function.</p>
+<p>Public constructor is the <a class="reference internal" href="mapped_attributes.html#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> function.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.0: </span>Added <a class="reference internal" href="#sqlalchemy.orm.Synonym" title="sqlalchemy.orm.Synonym"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synonym</span></code></a> as a Declarative
 compatible subclass for <a class="reference internal" href="#sqlalchemy.orm.SynonymProperty" title="sqlalchemy.orm.SynonymProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">SynonymProperty</span></code></a></p>
@@ -4305,7 +4305,7 @@ compatible subclass for <a class="reference internal" href="#sqlalchemy.orm.Syno
 <dd><p>Denote an attribute name as a synonym to a mapped property,
 in that the attribute will mirror the value and expression behavior
 of another attribute.</p>
-<p><a class="reference internal" href="#sqlalchemy.orm.Synonym" title="sqlalchemy.orm.Synonym"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synonym</span></code></a> is constructed using the <code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code>
+<p><a class="reference internal" href="#sqlalchemy.orm.Synonym" title="sqlalchemy.orm.Synonym"><code class="xref py py-class docutils literal notranslate"><span class="pre">Synonym</span></code></a> is constructed using the <a class="reference internal" href="mapped_attributes.html#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>
 function.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -4343,7 +4343,7 @@ functions.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.QueryableAttribute.info" title="sqlalchemy.orm.QueryableAttribute.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">QueryableAttribute.info</span></code></a></p>
-<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem.info" title="sqlalchemy.schema.SchemaItem.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></a></p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></p>
 </div>
 </dd></dl>
 
@@ -4443,8 +4443,8 @@ relationship attribute.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">orm_queryguide_join_on_augmented</span></p>
-<p><a class="reference internal" href="queryguide/relationships.html#loader-option-criteria"><span class="std std-ref">加载程序选项添加筛选条件</span></a></p>
+<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-join-on-augmented"><span class="std std-ref">将 Relationship 与自定义 ON 条件组合</span></a></p>
+<p><span class="xref std std-ref">loader_option_criteria</span></p>
 <p><a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a></p>
 </div>
 </dd></dl>
@@ -4467,7 +4467,7 @@ subclass representing a column expression.</p>
 <li><p>If the attribute is a column-mapped property, i.e.
 <a class="reference internal" href="#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a>, which is mapped directly
 to a schema-level <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> object, this attribute
-will return the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem.info" title="sqlalchemy.schema.SchemaItem.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></a> dictionary associated
+will return the <code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code> dictionary associated
 with the core-level <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> object.</p></li>
 <li><p>If the attribute is a <a class="reference internal" href="#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a> but is mapped to
 any other kind of SQL expression other than a
@@ -4490,7 +4490,7 @@ dictionary associated with that <a class="reference internal" href="#sqlalchemy.
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem.info" title="sqlalchemy.schema.SchemaItem.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></a></p>
+<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">SchemaItem.info</span></code></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.MapperProperty.info" title="sqlalchemy.orm.MapperProperty.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MapperProperty.info</span></code></a></p>
 </div>
 </dd></dl>
@@ -4531,9 +4531,9 @@ against this specific subclass.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">用别名进行关系联接</span></a> - in the
-<span class="xref std std-ref">queryguide_toplevel</span></p>
-<p><span class="xref std std-ref">inheritance_of_type</span></p>
+<p><a class="reference internal" href="queryguide/select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">使用 Relationship 在别名目标之间进行连接</span></a> - in the
+<a class="reference internal" href="queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a></p>
+<p><a class="reference internal" href="queryguide/inheritance.html#inheritance-of-type"><span class="std std-ref">连接到特定子类型或 with_polymorphic() 实体</span></a></p>
 </div>
 </dd></dl>
 
@@ -4646,7 +4646,7 @@ previously.</p>
         Previous:
         <a href="events.html" title="previous chapter">ORM 事件</a>
         Next:
-        <a href="exceptions.html" title="next chapter">ORM 异常</a>
+        <a href="exceptions.html" title="next chapter">ORM异常</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -4656,7 +4656,7 @@ previously.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:21:15
 
     </div>
 </div>

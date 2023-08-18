@@ -12,7 +12,7 @@
         <title>
             
     
-    编写继承映射的SELECT语句
+    继承映射中编写SELECT语句
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../../search.html" />
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
-        <link rel="up" title="ORM查询指南" href="index.html" />
-        <link rel="next" title="支持 ORM 的 INSERT、UPDATE 和 DELETE 语句" href="dml.html" />
-        <link rel="prev" title="用ORM Mapper类编写SELECT语句" href="select.html" />
+        <link rel="up" title="ORM 查询指南" href="index.html" />
+        <link rel="next" title="ORM-启用的INSERT、UPDATE和DELETE语句" href="dml.html" />
+        <link rel="prev" title="使用ORM映射类编写SELECT语句" href="select.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,14 +127,28 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="index.html">ORM查询指南</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="select.html">用ORM Mapper类编写SELECT语句</a></span></li>
-<li class="selected"><span class="link-container"><strong>编写继承映射的SELECT语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id1">从基类或特定子类中进行查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="index.html">ORM 查询指南</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="select.html">使用ORM映射类编写SELECT语句</a></span></li>
+<li class="selected"><span class="link-container"><strong>继承映射中编写SELECT语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">从基类和特定子类中选择</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#selectin-polymorphic">使用 selectin_polymorphic()</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与 selectin_polymorphic() 子类加载项结合使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-as-loader-option-target">将 selectin_polymorphic() 应用于现有急切加载</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id6">将选择 selectin_polymorphic() 工具配置到映射器上</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">在映射器上配置 selectin_polymorphic()</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#with-polymorphic">使用 with_polymorphic()</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#with-polymorphic-subclass-attributes">使用 with_polymorphic() 过滤子类的属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#with-polymorphic-aliasing">使用 with_polymorphic 进行别名处理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#with-polymorphic-mapper-config">在映射器上配置 with_polymorphic()</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#inheritance-of-type">连接到特定子类型或 with_polymorphic() 实体</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#eagerloading-polymorphic-subtypes">多态子类型的急加载</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#loading-single-inheritance">单继承映射的 SELECT 语句</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id24">提高单继承属性的加载性能</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#api">继承加载API</a></span><ul>
@@ -144,17 +158,17 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="dml.html">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="columns.html">列载入选项</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationships.html">关系属性加载技术</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api.html">用于查询的ORM API特性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="query.html">旧版查询API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">ORM-启用的INSERT、UPDATE和DELETE语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="columns.html">列加载选项</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系加载技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api.html">查询时使用的ORM API功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="query.html">Legacy查询API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -186,13 +200,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="select.html" title="previous chapter">用ORM Mapper类编写SELECT语句</a></li>
+                <a href="select.html" title="previous chapter">使用ORM映射类编写SELECT语句</a></li>
                 <li><b>Next:</b>
-                <a href="dml.html" title="next chapter">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a></li>
+                <a href="dml.html" title="next chapter">ORM-启用的INSERT、UPDATE和DELETE语句</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="index.html" title="ORM查询指南">ORM查询指南</a></li>
+                    <ul><li><a href="index.html" title="ORM 查询指南">ORM 查询指南</a></li>
                 </ul>
                 </ul>
 
@@ -200,12 +214,26 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#select">编写继承映射的SELECT语句</a><ul>
-<li><a class="reference internal" href="#id1">从基类或特定子类中进行查询</a></li>
+<li><a class="reference internal" href="#select">继承映射中编写SELECT语句</a><ul>
+<li><a class="reference internal" href="#id1">从基类和特定子类中选择</a></li>
 <li><a class="reference internal" href="#selectin-polymorphic">使用 selectin_polymorphic()</a><ul>
-<li><a class="reference internal" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与 selectin_polymorphic() 子类加载项结合使用</a></li>
-<li><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target">将 selectin_polymorphic() 应用于现有急切加载</a></li>
-<li><a class="reference internal" href="#id6">将选择 selectin_polymorphic() 工具配置到映射器上</a></li>
+<li><a class="reference internal" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></li>
+<li><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></li>
+<li><a class="reference internal" href="#id16">在映射器上配置 selectin_polymorphic()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#with-polymorphic">使用 with_polymorphic()</a><ul>
+<li><a class="reference internal" href="#with-polymorphic-subclass-attributes">使用 with_polymorphic() 过滤子类的属性</a></li>
+<li><a class="reference internal" href="#with-polymorphic-aliasing">使用 with_polymorphic 进行别名处理</a></li>
+<li><a class="reference internal" href="#with-polymorphic-mapper-config">在映射器上配置 with_polymorphic()</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#inheritance-of-type">连接到特定子类型或 with_polymorphic() 实体</a><ul>
+<li><a class="reference internal" href="#eagerloading-polymorphic-subtypes">多态子类型的急加载</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loading-single-inheritance">单继承映射的 SELECT 语句</a><ul>
+<li><a class="reference internal" href="#id24">提高单继承属性的加载性能</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#api">继承加载API</a><ul>
@@ -226,17 +254,16 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-queryguide-inheritance" >
         
+<aside class="topic">
+<p class="topic-title">ORM 查询指南</p>
+<p>本页面是  <a class="reference internal" href="index.html"><span class="doc">ORM 查询指南</span></a>  的一部分。</p>
+<p>上一页: <a class="reference internal" href="select.html"><span class="doc">使用ORM映射类编写SELECT语句</span></a>   |   下一页: <a class="reference internal" href="dml.html"><span class="doc">ORM-启用的INSERT、UPDATE和DELETE语句</span></a></p>
+</aside>
 <section id="select">
-<span id="loading-joined-inheritance"></span><span id="inheritance-loading-toplevel"></span><h1>编写继承映射的SELECT语句<a class="headerlink" href="#select" title="Permalink to this heading">¶</a></h1>
-<div class="admonition- admonition">
-<p class="admonition-title">关于此文档</p>
-<p>本文档使用了：使用 <span class="xref std std-ref">ORM Inheritance</span> 功能来配置的 ORM 映射，
-描述于 <span class="xref std std-ref">inheritance_toplevel</span>。笔者将重点介绍 <a class="reference internal" href="../inheritance.html#joined-inheritance"><span class="std std-ref">联接表继承</span></a> ，因为这是最复杂的 ORM 查询案例。</p>
-<p><a class="reference internal" href="_inheritance_setup.html"><span class="doc">查看此页面的 ORM 设置</span></a>。</p>
-</div>
+<span id="loading-joined-inheritance"></span><span id="inheritance-loading-toplevel"></span><h1>继承映射中编写SELECT语句<a class="headerlink" href="#select" title="Permalink to this heading">¶</a></h1>
 <section id="id1">
-<h2>从基类或特定子类中进行查询<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>在查询连接的继承层次结构中的一个类的情况下，SELECT语句将针对类映射到的表以及任何超级表（如果存在），使用JOIN将它们链接在一起。因此，查询将返回所请求类型的对象以及请求类型的任何子类型，使用每行中的 <span class="xref std std-term">discriminator</span> 值来确定正确的类型。下面的查询建立在 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 子类的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 上，然后返回一个结果，其中仅包含类型为Manager的对象:</p>
+<h2>从基类和特定子类中选择<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>一个加入继承层次结构的类的 SELECT 语句将会查询它所映射的表，以及查询可能涉及到的表格，使用 JOIN 将这些表连接起来。然后使用每行中的  <span class="xref std std-term">discriminator</span>  来确定正确的类型，该查询将返回请求类型及其所有的子类型。下面的查询建立在 <cite>Manager</cite> 类的子类之上，然后将返回仅包含 <cite>Manager</cite> 类型对象的结果:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Manager</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Manager</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">managers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -247,8 +274,8 @@
 </div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">managers</span><span class="p">)</span>
 <span class="go">[Manager(&#39;Mr. Krabs&#39;)]</span></pre></div>
 </div>
-<p>当SELECT语句针对继承层次结构中的基类时，默认情况下，只有该类的表将包括在生成的SQL中，而JOIN不会被使用。在所有情况下， <span class="xref std std-term">discriminator</span> 列用于区分不同的请求子类型，这会导致返回任何可能的子类型的对象。返回的对象将具有对应基表的属性，子表对应属性的状态将从未加载状态开始，访问时自动加载。加载子属性是可配置的，可以以多种方式更加 “eager” 进行，稍后在本节中讨论。</p>
-<p>下面的示例创建一个针对 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 超类的查询。这表明结果集中可能包含任何类型的对象，包括 <code class="docutils literal notranslate"><span class="pre">Manager</span></code>、<code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 。</p>
+<p>当 SELECT 子句针对继承层次结构中的基类时，默认行为是仅包含该类的表，并且不使用 JOIN。在所有情况下，将使用  <span class="xref std std-term">discriminator</span>  列来区分不同的子类型，这将导致返回任何可能的子类型对象。返回的对象将会填充对应基表属性的特征，并且子表属性的特征将从未加载到已自动加载状态。可以按照各种方式更具体地配置子属性的加载状态，这将在本节后面讨论。</p>
+<p>以下示例创建了针对 <cite>Employee</cite> 超类的查询，这表示结果集中可能包含任何类型的对象，包括 <cite>Manager</cite>, <cite>Engineer</cite> 和 <cite>Employee</cite>。</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -259,126 +286,308 @@
 <span class="go">{stop}&gt;&gt;&gt; print(objects)</span>
 <span class="go">[Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;SpongeBob&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
 </div>
-<p>在上面的语句中， <code class="docutils literal notranslate"><span class="pre">manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">engineer</span></code> 的其他表未包含在SELECT中，这意味着返回的对象将不包含代表来自这些表的数据，在本示例中是 <code class="docutils literal notranslate"><span class="pre">.manager_name</span></code> 属性和 <code class="docutils literal notranslate"><span class="pre">.engineer_info</span></code> 属性。这些属性的状态从未加载状态开始，并在访问时自动填充。如果加载的数据很多，则惰性加载并不合适，因为在使用 N+1 问题 时，这会导致每行额外的SQL被访问子类特定的属性。这会影响性能，还与使用 <a class="reference internal" href="../extensions/asyncio.html"><span class="std std-ref">asyncio</span></a> 的方法不兼容。另外，在我们的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 对象的查询中，由于查询针对的是基表，我们没有办法以 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 或 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 的术语添加涉及子类特定属性的SQL条件。接下来的两个部分将详细介绍两个构造，它们以不同的方式提供解决这两个问题的解决方案：使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code> 实体构造。</p>
+<p>上面的查询并未包含 <cite>Manager</cite> 和 <cite>Engineer</cite> 的附加表，这意味着返回的对象将不包含表示这些表的数据，例如 <cite>Manager</cite> 类的 <cite>.manager_name</cite> 属性和 <cite>Engineer</cite> 类的 <cite>.engineer_info</cite> 属性。这些属性以已过期的状态开始，当首次访问时，会自动填充自己，使用  <span class="xref std std-term">lazy loading</span>  功能加载，该功能通过访问时自动加载来实现。</p>
+<p>如果已加载大量对象，则此惰性加载行为是不可行的，在消费应用程序需要访问子类特定属性的情况下，这将是产生额外 SQL 查询的  <span class="xref std std-term">N plus one</span>  问题。这将导致性能下降，并且对诸如使用   <a class="reference internal" href="../extensions/asyncio.html"><span class="std std-ref">asyncio</span></a>  的做法也不兼容。此外，在我们针对 <cite>Employee</cite> 对象的查询中，由于查询只针对基表，我们无法通过子类特定属性添加 SQL 标准，例如 <cite>Manager</cite> 或 <cite>Engineer</cite>。下面的两个部分详细介绍了两种解决这两个问题的实现方法，即   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载器选项和   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体结构。</p>
 </section>
 <section id="selectin-polymorphic">
 <span id="polymorphic-selectin"></span><h2>使用 selectin_polymorphic()<a class="headerlink" href="#selectin-polymorphic" title="Permalink to this heading">¶</a></h2>
-<p>为了解决访问子类时的性能问题， <code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic`加载器选项可用于提前一次性</span> <span class="pre">:term:`eagerly</span> <span class="pre">load()</span></code> 许多对象的额外属性。此加载选项的工作方式类似于 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 关系加载器策略，它对于接收到的行将发出针对子表的额外SELECT语句，使用主键基于WHERE IN查询其他行。</p>
-<p>:func:<a href="#id2"><span class="problematic" id="id3">`</span></a>_orm.selectinload`接受查询的基本实体，后跟应为其加载特定属性的该实体的子类所组成的序列:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
+<p>为了解决访问子类特定属性时的性能问题，可以使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载策略来  <span class="xref std std-term">急加载</span>  跨许多对象一起提前加载附加属性。此加载器选项的工作方式与  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> <a href="#id2"><span class="problematic" id="id3">`</span></a>IN``根据主键查询附加行。</p>
+<blockquote>
+<div><p>:func:<a href="#id4"><span class="problematic" id="id5">`</span></a>_orm.selectinload`将其参数作为正在查询的基本实体，然后是该实体的一个子类序列，用于加载其特定属性以供传入行使用：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader_opt</span> <span class="o">=</span> <span class="n">selectin_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">,</span> <span class="n">Engineer</span><span class="p">])</span></pre></div>
 </div>
-<p>然后将 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 用作加载选项，将其传递到 <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 的: meth:<cite>.Select.options</cite> 方法。示例说明使用 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 来立即加载本地对于 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 子类的列:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
+</div></blockquote>
+<p>然后使用  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> .Select`的  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.options" title="sqlalchemy.sql.expression.Select.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.options()</span></code></a>  方法。该示例说明了如何使用  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <a href="#id6"><span class="problematic" id="id7">`</span></a>Manager``和``Engineer``子类的本地列：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader_opt</span> <span class="o">=</span> <span class="n">selectin_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">,</span> <span class="n">Engineer</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">loader_opt</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
-</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+<span class="go">{execsql}BEGIN (implicit)</span>
+<span class="go">SELECT employee.id, employee.name, employee.type, employee.company_id</span>
+<span class="go">FROM employee ORDER BY employee.id</span>
+<span class="go">[...] ()</span>
+<span class="go">SELECT manager.id AS manager_id, employee.id AS employee_id,</span>
+<span class="go">employee.type AS employee_type, manager.manager_name AS manager_manager_name</span>
+<span class="go">FROM employee JOIN manager ON employee.id = manager.id</span>
+<span class="go">WHERE employee.id IN (?) ORDER BY employee.id</span>
+<span class="go">[...] (1,)</span>
+<span class="go">SELECT engineer.id AS engineer_id, employee.id AS employee_id,</span>
+<span class="go">employee.type AS employee_type, engineer.engineer_info AS engineer_engineer_info</span>
+<span class="go">FROM employee JOIN engineer ON employee.id = engineer.id</span>
+<span class="go">WHERE employee.id IN (?, ?) ORDER BY employee.id</span>
+<span class="go">[...] (2, 3)</span>
+<span class="go">{stop}&gt;&gt;&gt; print(objects)</span>
 <span class="go">[Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;SpongeBob&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
 </div>
-<p>上面的示例说明，为了及时获取额外的属性，发出了两个额外的SELECT语句，例如 <code class="docutils literal notranslate"><span class="pre">Engineer.engineer_info</span></code> ，以及 <code class="docutils literal notranslate"><span class="pre">Manager.manager_name</span></code> 。我们现在可以在加载的对象上访问这些子属性，而不必发出任何其他的SQL语句:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span><span class="p">)</span>
+<p>上面的示例说明了发出两个额外的SELECT语句以急性地获取其他属性，例如``Engineer.engineer_info``和``Manager.manager_name``。现在，我们可以在加载的对象上访问这些子属性，而不需要发出任何其他SQL语句：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span><span class="p">)</span>
 <span class="go">Eugene H. Krabs</span></pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 加载器选项还未优化基表 <code class="docutils literal notranslate"><span class="pre">employee</span></code> 不需要包含到第二个“eager load”查询中，因此在上面的例子中我们看到从 <code class="docutils literal notranslate"><span class="pre">employee</span></code> 到 <code class="docutils literal notranslate"><span class="pre">manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">engineer</span></code> 的 JOIN，尽管已经加载了 <code class="docutils literal notranslate"><span class="pre">employee</span></code> 的列。这与 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 关系策略形成对比，在这种情况下，后者更加复杂，可以在不需要时删除JOIN。</p>
+<p><a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <a href="#id8"><span class="problematic" id="id9">`</span></a>employee``表无需包含在后两个“急性加载”查询中的事实。因此，在上面的示例中，尽管已经加载了``employee``的列，但我们看到了从``employee``到``manager``和``engineer``的JOIN。这与：func:<a href="#id10"><span class="problematic" id="id11">`</span></a>_orm.selectinload`关系策略有所不同，后者在这方面更为复杂，并且可以在不需要时将JOIN因素化。</p>
 </div>
 <section id="polymorphic-selectin-w-loader-options">
-<span id="id4"></span><h3>将其他加载器选项与 selectin_polymorphic() 子类加载项结合使用<a class="headerlink" href="#polymorphic-selectin-w-loader-options" title="Permalink to this heading">¶</a></h3>
-<p>由于 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 生成的SELECT语句本身是ORM语句，因此我们还可以添加其他加载器选项（例如那些在 <span class="xref std std-ref">orm_queryguide_relationship_loaders</span> 中记录的选择器）来更具体地加载子类。例如，如果我们认为 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 映射有一个 <a class="reference internal" href="../basic_relationships.html#relationship-patterns-o2m"><span class="std std-ref">one to many</span></a> 关系，引用一个名为 <code class="docutils literal notranslate"><span class="pre">Paperwork</span></code> 的实体，我们可以结合使用 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 来在所有 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 对象上急切地加载此集合。当情况如此，子属性的加载是特别“急切”的，示例如下:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
+<span id="id12"></span><h3>将其他加载器选项与selectin_polymorphic()子类加载器结合使用<a class="headerlink" href="#polymorphic-selectin-w-loader-options" title="Permalink to this heading">¶</a></h3>
+<p>由  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <cite>Manager``映射器有到名为``Paperwork``的实体的  :ref:`one to many &lt;relationship_patterns_o2m&gt;</cite> <a href="#id13"><span class="problematic" id="id14">`</span></a>Manager``对象上急性加载此集合，其中``Manager``对象的子属性也本身已经急性加载：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
-<span class="go">...     select(Employee)</span>
-<span class="go">...     .order_by(Employee.id)</span>
-<span class="go">...     .options(</span>
-<span class="go">...         selectin_polymorphic(Employee, [Manager, Engineer]),</span>
-<span class="go">...         selectinload(Manager.paperwork),</span>
-<span class="go">...     )</span>
-<span class="go">... )</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">options</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">selectin_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">,</span> <span class="n">Engineer</span><span class="p">]),</span>
+<span class="gp">... </span>        <span class="n">selectinload</span><span class="p">(</span><span class="n">Manager</span><span class="o">.</span><span class="n">paperwork</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span>
-<span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_id</span><span class="p">,</span>
-<span class="n">paperwork</span><span class="p">.</span><span class="n">document_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_document_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">paperwork</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span>
-<span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
-</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="go">{execsql}BEGIN (implicit)</span>
+<span class="go">SELECT employee.id, employee.name, employee.type, employee.company_id</span>
+<span class="go">FROM employee ORDER BY employee.id</span>
+<span class="go">[...] ()</span>
+<span class="go">SELECT manager.id AS manager_id, employee.id AS employee_id, employee.type AS employee_type, manager.manager_name AS manager_manager_name</span>
+<span class="go">FROM employee JOIN manager ON employee.id = manager.id</span>
+<span class="go">WHERE employee.id IN (?) ORDER BY employee.id</span>
+<span class="go">[...] (1,)</span>
+<span class="go">SELECT paperwork.manager_id AS paperwork_manager_id, paperwork.id AS paperwork_id, paperwork.document_name AS paperwork_document_name</span>
+<span class="go">FROM paperwork</span>
+<span class="go">WHERE paperwork.manager_id IN (?)</span>
+<span class="go">[...] (1,)</span>
+<span class="go">SELECT engineer.id AS engineer_id, employee.id AS employee_id, employee.type AS employee_type, engineer.engineer_info AS engineer_engineer_info</span>
+<span class="go">FROM employee JOIN engineer ON employee.id = engineer.id</span>
+<span class="go">WHERE employee.id IN (?, ?) ORDER BY employee.id</span>
+<span class="go">[...] (2, 3)</span>
+<span class="go">{stop}&gt;&gt;&gt; print(objects[0])</span>
 <span class="go">Manager(&#39;Mr. Krabs&#39;)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">paperwork</span><span class="p">)</span>
 <span class="go">[Paperwork(&#39;Secret Recipes&#39;), Paperwork(&#39;Krabby Patty Orders&#39;)]</span></pre></div>
 </div>
 </section>
 <section id="polymorphic-selectin-as-loader-option-target">
-<span id="id5"></span><h3>将 selectin_polymorphic() 应用于现有急切加载<a class="headerlink" href="#polymorphic-selectin-as-loader-option-target" title="Permalink to this heading">¶</a></h3>
-<p>除了能够在 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 加载之后添加加载器选项之外，我们还可以指示将 <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 应用于现有加载器的目标。在我们的 <a class="reference internal" href="_inheritance_setup.html"><span class="doc">setup</span></a> 映射中包括一个名为 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 的父实体，其 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 引用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体，我们可以将SELECT针对 <code class="docutils literal notranslate"><span class="pre">公司</span></code> 实体的查询的所有 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 对象及其子类型的所有属性立即加载，如下所示，使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.selectin_polymorphic()</span></code> 作为一个链接的加载器选项； 在这种形式中，第一个参数是由前面的加载选项（在这种情况下为 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> ）隐含地表示的，因此我们只指定我们希望加载的附加目标子类:</p>
+<span id="id15"></span><h3>将selectin_polymorphic()应用于现有的急性加载<a class="headerlink" href="#polymorphic-selectin-as-loader-option-target" title="Permalink to this heading">¶</a></h3>
+<p>除了能够在  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 。
+由于我们的  <a class="reference internal" href="_inheritance_setup.html"><span class="doc">设置</span></a>  映射包括一个父级
+<code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体和一个引用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体的 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code>   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ,
+我们可以演示一个针对 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体的 SELECT 请求，它将急切地加载所有的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 对象以及
+它们子类型的所有属性，如下所示使用  <a class="reference internal" href="relationships.html#sqlalchemy.orm.Load.selectin_polymorphic" title="sqlalchemy.orm.Load.selectin_polymorphic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.selectin_polymorphic()</span></code></a>  作为链式加载器选项；在这种情况下，第一个参数是从
+前面的加载器选项（在这种情况下为   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> ）隐含的，因此，我们只指示我们希望加载的附加目标子类:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
 <span class="go">...     selectinload(Company.employees).selectin_polymorphic([Manager, Engineer])</span>
 <span class="go">... )</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
 <span class="go">...     print(f&quot;company: {company.name}&quot;)</span>
 <span class="go">...     print(f&quot;employees: {company.employees}&quot;)</span>
-<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">company</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">company</span>
 <span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span>
-<span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span>
+<span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_id</span><span class="p">,</span>
-<span class="n">paperwork</span><span class="p">.</span><span class="n">document_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">paperwork_document_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">paperwork</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">paperwork</span><span class="p">.</span><span class="n">manager_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span>
+<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span>
+<span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span><span class="p">,</span>
-<span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span>
+<span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span>
+<span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
 </div><span class="go">company: Krusty Krab</span>
 <span class="go">employees: [Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;SpongeBob&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">eagerloading_polymorphic_subtypes</span> - 演示使用 <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a> 配置的等效示例。</p>
+<p><a class="reference internal" href="#eagerloading-polymorphic-subtypes"><span class="std std-ref">多态子类型的急加载</span></a>  - 用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  相当于上面的例子</p>
 </div>
 </section>
-<section id="id6">
-<h3>将选择 selectin_polymorphic() 工具配置到映射器上<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
-<p><a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 的行为可以在$特定映射器上进行配置，以便默认情况下进行，使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code> 参数，在基类上进行配置或使用每个子类的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code> 参数，传递值 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 。</p>
+<section id="id16">
+<h3>在映射器上配置 selectin_polymorphic()<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>可以在特定映射器上配置   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的行为，以便在默认情况下执行，方法是使用</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>   参数，在 per-subclass 的基础上使用值 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code>。下面的示例说明了</p>
+</dd>
+</dl>
+<p>在 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 子类中使用此参数的方法:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;employee&quot;</span><span class="p">,</span> <span class="s2">&quot;polymorphic_on&quot;</span><span class="p">:</span> <span class="n">type</span><span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">Engineer</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;engineer&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;employee.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">engineer_info</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;polymorphic_load&quot;</span><span class="p">:</span> <span class="s2">&quot;selectin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;engineer&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;manager&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;employee.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">manager_name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;polymorphic_load&quot;</span><span class="p">:</span> <span class="s2">&quot;selectin&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;manager&quot;</span><span class="p">,</span>
+    <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>使用上述映射，在 SELECT 语句使用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 类时，当发出语句时，将自动假定使用``selectin_polymorphic(Employee, [Manager, Engineer])`` 为加载器选项。</p>
+</section>
+</section>
+<section id="with-polymorphic">
+<span id="id17"></span><h2>使用 with_polymorphic()<a class="headerlink" href="#with-polymorphic" title="Permalink to this heading">¶</a></h2>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  相反，后者仅影响对象的加载方式，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>
+构造则影响多态结构的 SQL 查询如何呈现，通常作为到每个包含的子表的 LEFT OUTER JOIN
+系列。这个连接结构被称为**多态可选择项**。通过为多个子表提供视图，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  提供了一种在一个 SELECT 语句中同时
+写入几个继承类的方法，并能基于单个子表添加过滤条件。</p>
+<blockquote>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实质上是   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造的一种特殊形式。它接受一个类似于   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> ` 的参数形式</p>
+</div></blockquote>
+<p>，即进行查询的基础实体，之后是该实体的一系列子类，它们的特定属性应该为传入行加载:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">with_polymorphic</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">,</span> <span class="n">Manager</span><span class="p">])</span></pre></div>
+</div>
+<p>为了表示所有子类都应该成为实体的一部分，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  还将接受字符串 <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>，
+可以代替类的序列，以表示所有类（请注意，这尚未得到   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的支持）:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span><span class="n">下面的示例演示了与上一节中演示的相同操作</span><span class="err">，</span><span class="n">一次加载所有</span><span class="err">“</span><span class="n">Manager</span><span class="err">”</span><span class="n">和</span><span class="err">“</span><span class="n">Engineer</span><span class="err">”</span><span class="n">的列</span><span class="err">：</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">employee_poly</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">employee_poly</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="p">,</span>
+<span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_2</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
+<span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+<span class="go">[Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;SpongeBob&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
+</div>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的情况一样，子类的属性已经加载：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span><span class="p">)</span>
+<span class="go">Eugene H. Krabs</span></pre></div>
+</div>
+<p>由于   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  生成的默认可选使用了 LEFT OUTER JOIN，从数据库的角度来看，不像   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  方法那样优化查询，每个表只使用 JOIN 语句。</p>
+<section id="with-polymorphic-subclass-attributes">
+<span id="id18"></span><h3>使用 with_polymorphic() 过滤子类的属性<a class="headerlink" href="#with-polymorphic-subclass-attributes" title="Permalink to this heading">¶</a></h3>
+<p>通过包含允许对子类进行引用的命名空间，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造可用于包含子类映射器上的属性。在上一节中创建的 <code class="docutils literal notranslate"><span class="pre">employee_poly</span></code> 构造包括名为 <code class="docutils literal notranslate"><span class="pre">.Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.Manager</span></code> 的属性，这些属性提供了关于多态 SELECT 中 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的命名空间。在下面的示例中，我们可以使用   <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code class="xref py py-func docutils literal notranslate"><span class="pre">or_()</span></code></a>  构造同时创建两个类的条件：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">or_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">,</span> <span class="n">Manager</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">employee_poly</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">or_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">employee_poly</span><span class="o">.</span><span class="n">Manager</span><span class="o">.</span><span class="n">manager_name</span> <span class="o">==</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">employee_poly</span><span class="o">.</span><span class="n">Engineer</span><span class="o">.</span><span class="n">engineer_info</span>
+<span class="gp">... </span>            <span class="o">==</span> <span class="s2">&quot;Senior Customer Engagement Engineer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">employee_poly</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">{execsql}SELECT employee.id, employee.name, employee.type, employee.company_id, manager.id AS id_1,</span>
+<span class="go">manager.manager_name, engineer.id AS id_2, engineer.engineer_info</span>
+<span class="go">FROM employee</span>
+<span class="go">LEFT OUTER JOIN manager ON employee.id = manager.id</span>
+<span class="go">LEFT OUTER JOIN engineer ON employee.id = engineer.id</span>
+<span class="go">WHERE manager.manager_name = ? OR engineer.engineer_info = ?</span>
+<span class="go">ORDER BY employee.id</span>
+<span class="go">[...] (&#39;Eugene H. Krabs&#39;, &#39;Senior Customer Engagement Engineer&#39;)</span>
+<span class="go">{stop}&gt;&gt;&gt; print(objects)</span>
+<span class="go">[Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
+</div>
+</section>
+<section id="with-polymorphic-aliasing">
+<span id="id19"></span><h3>使用 with_polymorphic 进行别名处理<a class="headerlink" href="#with-polymorphic-aliasing" title="Permalink to this heading">¶</a></h3>
+<blockquote>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造作为   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的特殊情况，也提供了   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的基本功能，即对多态可选进行别名处理。具体来说，这意味着一个语句中可以同时使用两个或多个引用相同类层次结构的   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体。要在具有联接继承映射的情况下使用此功能，通常需要传递两个参数，即  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.flat" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.flat</span></code></a> 。  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>   参数表示多态可选应该通过唯一于此构造体的别名名称引用。  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.flat" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.flat</span></code></a>  参数适用于默认的 LEFT OUTER JOIN 多态可选，表示应在语句中使用更优化的别名处理形式。</p>
+</div></blockquote>
+<p>为了说明这个特点，下面的示例发出了一个 SELECT 查询，分别使用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 加入的 polymorphic 实体，以及加入 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的 polymorphic 实体。由于这两个 polymorphic 实体都将基本的「employee」表包含在它们的 polymorphic 可选中，因此必须应用别名来区分该表在其两个不同的上下文中。这两个 polymorphic 实体被视为两个单独的表，因此通常需要以某种方式将这些实体彼此连接，如下面的示例所示，其中按照 <code class="docutils literal notranslate"><span class="pre">company_id</span></code> 列将这两个实体与某些附加限制条件一起进行连接：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager_employee</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">],</span> <span class="n">aliased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engineer_employee</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">],</span> <span class="n">aliased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">manager_employee</span><span class="p">,</span> <span class="n">engineer_employee</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">join</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">engineer_employee</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">engineer_employee</span><span class="o">.</span><span class="n">company_id</span> <span class="o">==</span> <span class="n">manager_employee</span><span class="o">.</span><span class="n">company_id</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">or_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">manager_employee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;Mr. Krabs&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">manager_employee</span><span class="o">.</span><span class="n">Manager</span><span class="o">.</span><span class="n">manager_name</span> <span class="o">==</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">engineer_employee</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">manager_employee</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">manager</span><span class="p">,</span> <span class="n">engineer</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">manager</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">engineer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">{execsql}SELECT</span>
+<span class="go">employee_1.id, employee_1.name, employee_1.type, employee_1.company_id,</span>
+<span class="go">manager_1.id AS id_1, manager_1.manager_name,</span>
+<span class="go">employee_2.id AS id_2, employee_2.name AS name_1, employee_2.type AS type_1,</span>
+<span class="go">employee_2.company_id AS company_id_1, engineer_1.id AS id_3, engineer_1.engineer_info</span>
+<span class="go">FROM employee AS employee_1</span>
+<span class="go">LEFT OUTER JOIN manager AS manager_1 ON employee_1.id = manager_1.id</span>
+<span class="go">JOIN在上面的例子中，  :paramref:`_orm.with_polymorphic.flat`   的行为是保持多态可选择的表作为它们各自表的左外连接，这些表本身被赋予匿名别名。还产生了一个右侧嵌套的 JOIN。</span></pre></div>
+</div>
+<p>当省略  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.flat" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.flat</span></code></a>  参数时，通常的行为是每个多态可选择的表格都包含在一个子查询中，从而产生一个更冗长的形式：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager_employee</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">],</span> <span class="n">aliased</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engineer_employee</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">],</span> <span class="n">aliased</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(manager_employee, engineer_employee)</span>
+<span class="go">...     .join(</span>
+<span class="go">...         engineer_employee,</span>
+<span class="go">...         engineer_employee.company_id == manager_employee.company_id,</span>
+<span class="go">...     )</span>
+<span class="go">...     .where(</span>
+<span class="go">...         or_(</span>
+<span class="go">...             manager_employee.name == &quot;Mr. Krabs&quot;,</span>
+<span class="go">...             manager_employee.Manager.manager_name == &quot;Eugene H. Krabs&quot;,</span>
+<span class="go">...         )</span>
+<span class="go">...     )</span>
+<span class="go">...     .order_by(engineer_employee.name, manager_employee.name)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_type</span><span class="p">,</span>
+<span class="n">anon_1</span><span class="p">.</span><span class="n">employee_company_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">manager_manager_name</span><span class="p">,</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">employee_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id_1</span><span class="p">,</span>
+<span class="n">anon_2</span><span class="p">.</span><span class="n">employee_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name_1</span><span class="p">,</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">employee_type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type_1</span><span class="p">,</span>
+<span class="n">anon_2</span><span class="p">.</span><span class="n">employee_company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id_1</span><span class="p">,</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">engineer_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">engineer_engineer_info</span>
+<span class="k">FROM</span>
+<span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span>
+<span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span>
+<span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_id</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span>
+<span class="k">JOIN</span>
+<span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="p">,</span>
+<span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_2</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">employee_company_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_company_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">employee_name_2</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">manager_manager_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">manager_manager_name_1</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">anon_2</span><span class="p">.</span><span class="n">employee_name</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">employee_name</span>
+</div></pre></div>
+</div>
+<p>历史上，以上形式在不一定具有支持右嵌套 JOIN 的后端上更具可移植性，而且当使用   <span class="xref std std-ref">具体的表继承</span>  映射以及一般情况下使用替代多态可选择表格时，也可能是适当的选择。</p>
+</section>
+<section id="with-polymorphic-mapper-config">
+<span id="id20"></span><h3>在映射器上配置 with_polymorphic()<a class="headerlink" href="#with-polymorphic-mapper-config" title="Permalink to this heading">¶</a></h3>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  一样，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  还支持在基类上使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数的映射器配置版本，或者以更现代的形式在每个子类上使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  参数，在这里传递值 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>对于加入的映射，更喜欢在查询中显式使用
-<a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a> 或在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code> 中使用值为 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 的方式进行隐式子类加载，而不是在本节中描述的映射器级：paramref:<cite>.mapper.with_polymorphic</cite> 参数的方法。此参数会调用旨在重写SELECT语句中的FROM子句的复杂启发式方法，可能会干扰构造更复杂的语句，特别是对于引用相同映射实体的嵌套子查询。</p>
+<p>对于连接的继承映射，建议在查询中显式使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a> ，或者在使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  时使用 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 进行隐式急切子类加载，而不是使用在本节中描述的映射器级  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数。该参数调用复杂的启发式算法，旨在重写 SELECT 语句中的 FROM 子句，可能会干扰构造更复杂的语句，特别是那些引用相同映射实体的嵌套子查询。</p>
 </div>
-<p>例如，我们可以在以下情况下表示我们的“Employee”映射，使用 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>：</p>
+<p>例如，我们可以使用如下所示的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  将 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 映射声明为 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -409,7 +618,7 @@
         <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;manager&quot;</span><span class="p">,</span>
     <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>在上述映射中，对于 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 类型的SELECT语句将自动在发出语句时使用 <code class="docutils literal notranslate"><span class="pre">with_polymorphic(Employee,</span> <span class="pre">[Engineer,</span> <span class="pre">Manager])</span></code> 作为主实体。:</p>
+<p>使用上面的映射，在针对 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 类的 SELECT 语句发出时，将自动假定使用 <code class="docutils literal notranslate"><span class="pre">with_polymorphic(Employee,</span> <span class="pre">[Engineer,</span> <span class="pre">Manager])</span></code> 作为主实体。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">print(select(Employee))</span>
 <div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span>
 <span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_2</span><span class="p">,</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span>
@@ -418,221 +627,231 @@
 <span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
 </div></pre></div>
 </div>
-<p>当使用映射器级“with polymorphic”时，查询还可以直接引用子类实体，其中它们隐式地表示多态查询中的连接表。在上述示例中，我们可以自由地引用 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 直接返回默认 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">print(</span>
-<span class="go">    select(Employee).where(</span>
-<span class="go">        or_(Manager.manager_name == &quot;x&quot;, Engineer.engineer_info == &quot;y&quot;)</span>
-<span class="go">    )</span>
-<span class="go">)</span></pre></div>
+<p>使用映射器级“with polymorphic”，查询也可以直接引用子类实体，其中它们隐含地表示多态查询中的连接表格。例如，我们可以自由地针对默认的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体直接引用 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code>。如果我们需要在单独的别名上下文中引用``Employee``实体或它的子实体，我们需要再次直接使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  将这些别名实体定义为所示的方式。在   <a class="reference internal" href="#with-polymorphic-aliasing"><span class="std std-ref">使用 with_polymorphic 进行别名处理</span></a>  中。</p>
+<p>如果需要更加集中地控制多态可选择的内容，可以使用更遗留的形式映射器级多态控制，即基类上配置的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.with_polymorphic</span></code>  参数。该参数接受与   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构建相当的参数，但是使用连接继承映射的常见方法是使用平面的星号，表示所有子表都应左外连接，如下：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">type</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;with_polymorphic&quot;</span><span class="p">:</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;polymorphic_on&quot;</span><span class="p">:</span> <span class="n">type</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">Engineer</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;engineer&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;employee.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">engineer_info</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;engineer&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;manager&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;employee.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">manager_name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;manager&quot;</span><span class="p">,</span>
+    <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">`{printsql}SELECT</span> <span class="pre">employee.id,</span> <span class="pre">employee.name,</span> <span class="pre">employee.type,</span> <span class="pre">engineer.id</span> <span class="pre">AS</span> <span class="pre">id_1,</span>
-<span class="pre">engineer.engineer_info,</span> <span class="pre">manager.id</span> <span class="pre">AS</span> <span class="pre">id_2,</span> <span class="pre">manager.manager_name</span> <span class="pre">FROM</span> <span class="pre">employee</span>
-<span class="pre">LEFT</span> <span class="pre">OUTER</span> <span class="pre">JOIN</span> <span class="pre">engineer</span> <span class="pre">ON</span> <span class="pre">employee.id</span> <span class="pre">=</span> <span class="pre">engineer.id</span>
+<p>总的来说，   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.with_polymorphic</span></code>  使用的 LEFT OUTER JOIN 格式可能在 SQL 和数据库优化器方面非常麻烦；对于连接继承映射中的子类属性的普遍加载，应该首选   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  方法，或者其映射器级别的等效设置  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  为 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code>，仅在需要时按需在每个查询上使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  。</p>
+</section>
+</section>
+<section id="inheritance-of-type">
+<span id="id21"></span><h2>连接到特定子类型或 with_polymorphic() 实体<a class="headerlink" href="#inheritance-of-type" title="Permalink to this heading">¶</a></h2>
+<p>作为   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体是   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的一种特殊情况，为了将多态实体作为一个连接的目标，在使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造作为 ON 子句时，
+我们需要使用与详细说明了正常别名的相同技术，详见   <a class="reference internal" href="select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">使用 Relationship 在别名目标之间进行连接</span></a> ，最简单的方法是使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a> 。
+在下面的示例中，我们演示了从父级 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体沿着一对多关系 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> 加入的方式，这在  <a class="reference internal" href="_inheritance_setup.html"><span class="doc">setup</span></a>  中配置，以链接到 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 对象，使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体作为目标：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee_plus_engineer</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">employee_plus_engineer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">employees</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">employee_plus_engineer</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">or_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">employee_plus_engineer</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SpongeBob&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">employee_plus_engineer</span><span class="o">.</span><span class="n">Engineer</span><span class="o">.</span><span class="n">engineer_info</span>
+<span class="gp">... </span>            <span class="o">==</span> <span class="s2">&quot;Senior Customer Engagement Engineer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">company_name</span><span class="p">,</span> <span class="n">emp_name</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">company_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">emp_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">{execsql}SELECT company.name, employee.name AS name_1</span>
+<span class="go">FROM company JOIN (employee LEFT OUTER JOIN engineer ON employee.id = engineer.id) ON company.id = employee.company_id</span>
+<span class="go">WHERE employee.name = ? OR engineer.engineer_info = ?</span>
+<span class="go">[...] (&#39;SpongeBob&#39;, &#39;Senior Customer Engagement Engineer&#39;)</span>
+<span class="go">{stop}Krusty Krab SpongeBob</span>
+<span class="go">Krusty Krab Squidward</span></pre></div>
+</div>
+<p>更直接地，  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  也用于任何类型的继承映射，以将连接限定在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的目标的特定子类型上。上面的查询可以按如下方式严格编写为“引擎师”目标：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Engineer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">employees</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">Engineer</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">or_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">Engineer</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;SpongeBob&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">Engineer</span><span class="o">.</span><span class="n">engineer_info</span> <span class="o">==</span> <span class="s2">&quot;Senior Customer Engagement Engineer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">company_name</span><span class="p">,</span> <span class="n">emp_name</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">company_name</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">emp_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="go">{execsql}SELECT company.name, employee.name AS name_1</span>
+<span class="go">FROM company JOIN (employee JOIN engineer ON employee.id = engineer.id) ON company.id = employee.company_id</span>
+<span class="go">WHERE employee.name = ? OR engineer.engineer_info = ?</span>
+<span class="go">[...] (&#39;SpongeBob&#39;, &#39;Senior Customer Engagement Engineer&#39;)</span>
+<span class="go">{stop}Krusty Krab SpongeBob</span>
+<span class="go">Krusty Krab Squidward如上所示，与“多态可选择对象” ``with_polymorphic(Employee，[Engineer])`` 相比，</span></pre></div>
+</div>
+<p>直接加入到 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 目标具有使用内部 JOIN 而不是 LEFT OUTER JOIN 的有用特性，
+从 SQL 优化器的角度来看，通常更有效。</p>
+<section id="eagerloading-polymorphic-subtypes">
+<span id="id22"></span><h3>多态子类型的急加载<a class="headerlink" href="#eagerloading-polymorphic-subtypes" title="Permalink to this heading">¶</a></h3>
+<p>在前一节中，使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  和  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>
+方法演示可以等效地应用到   <span class="xref std std-ref">relationship loader options</span>
+中，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 。</p>
+<p>例如，如果我们希望加载 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 对象，并且另外希望使用 <code class="docutils literal notranslate"><span class="pre">_orm.with_polymorphic</span></code> 构建充分的层次结构
+来急切地加载 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> 的所有元素，则可以编写如下代码：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">all_employees</span> <span class="pre">=</span> <span class="pre">with_polymorphic(Employee,</span> <span class="pre">&quot;*&quot;)</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">stmt</span> <span class="pre">=</span> <span class="pre">select(Company).options(selectinload(Company.employees.of_type(all_employees)))</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">for</span> <span class="pre">company</span> <span class="pre">in</span> <span class="pre">session.scalars(stmt):</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">print(f&quot;company:</span> <span class="pre">{company.name}&quot;)</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">print(f&quot;employees:</span> <span class="pre">{company.employees}&quot;)</span>
+<span class="pre">{execsql}SELECT</span> <span class="pre">company.id,</span> <span class="pre">company.name</span>
+<span class="pre">FROM</span> <span class="pre">company</span>
+<span class="pre">[...]</span> <span class="pre">()</span>
+<span class="pre">SELECT</span> <span class="pre">employee.company_id</span> <span class="pre">AS</span> <span class="pre">employee_company_id,</span> <span class="pre">employee.id</span> <span class="pre">AS</span> <span class="pre">employee_id,</span>
+<span class="pre">employee.name</span> <span class="pre">AS</span> <span class="pre">employee_name,</span> <span class="pre">employee.type</span> <span class="pre">AS</span> <span class="pre">employee_type,</span> <span class="pre">manager.id</span> <span class="pre">AS</span> <span class="pre">manager_id,</span>
+<span class="pre">manager.manager_name</span> <span class="pre">AS</span> <span class="pre">manager_manager_name,</span> <span class="pre">engineer.id</span> <span class="pre">AS</span> <span class="pre">engineer_id,</span>
+<span class="pre">engineer.engineer_info</span> <span class="pre">AS</span> <span class="pre">engineer_engineer_info</span>
+<span class="pre">FROM</span> <span class="pre">employee</span>
 <span class="pre">LEFT</span> <span class="pre">OUTER</span> <span class="pre">JOIN</span> <span class="pre">manager</span> <span class="pre">ON</span> <span class="pre">employee.id</span> <span class="pre">=</span> <span class="pre">manager.id</span>
-<span class="pre">WHERE</span> <span class="pre">manager.manager_name</span> <span class="pre">=</span> <span class="pre">:manager_name_1</span> <span class="pre">OR</span> <span class="pre">engineer.engineer_info</span> <span class="pre">=</span> <span class="pre">:engineer_info_1`</span></code></p>
-<p>然而，如果我们需要在不同的别名上下文中引用“Employee”实体或其子实体，我们将再次直接使用:func：<a href="#id7"><span class="problematic" id="id8">`</span></a>_orm.with_polymorphic`来定义这些别名实体，如在:ref：<a href="#id9"><span class="problematic" id="id10">`</span></a>with_polymorphic_aliasing`中所示。</p>
-<p>为了更集中地控制多态可选项，可使用更遗留的映射器级多态控制形式，即配置在基类上的：paramref：<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.Mapper.with_polymorphic`参数。此参数接受与:func：<a href="#id13"><span class="problematic" id="id14">`</span></a>_orm.with_polymorphic`构造可比较的参数，但使用联接继承映射的常见用法是纯星号，表示应LEFT OUTER JOIN所有子表，如下所示：</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">类Employee</span><span class="err">（</span><span class="n">基类</span><span class="err">）：</span>
-    <span class="n">__tablename__</span> <span class="o">=</span><span class="err">“</span><span class="n">employee</span><span class="err">”</span>
-    <span class="n">id</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">整数</span><span class="err">，</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
-    <span class="n">name</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">字符串</span><span class="err">（</span><span class="mi">50</span><span class="err">））</span>
-    <span class="n">type</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">字符串</span><span class="err">（</span><span class="mi">50</span><span class="err">））</span>
-
-    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">employee</span><span class="err">”，</span>
-        <span class="err">“</span><span class="n">with_polymorphic</span><span class="err">”：“</span><span class="o">*</span><span class="err">”，</span>
-        <span class="err">“</span><span class="n">polymorphic_on</span><span class="err">”：</span><span class="n">type</span><span class="err">，</span>
-    <span class="p">}</span>
-
-
-<span class="n">类工程师</span><span class="err">（</span><span class="n">员工</span><span class="err">）：</span>
-    <span class="n">__tablename__</span> <span class="o">=</span><span class="err">“</span><span class="n">engineer</span><span class="err">”</span>
-    <span class="n">id</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">整数</span><span class="err">，</span><span class="n">ForeignKey</span><span class="err">（“</span><span class="n">employee</span><span class="o">.</span><span class="n">id</span><span class="err">”），</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
-    <span class="n">engineer_info</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">字符串</span><span class="err">（</span><span class="mi">30</span><span class="err">））</span>
-
-    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">engineer</span><span class="err">”，</span>
-    <span class="p">}</span>
-
-
-<span class="n">类经理</span><span class="err">（</span><span class="n">员工</span><span class="err">）：</span>
-    <span class="n">__tablename__</span> <span class="o">=</span><span class="err">“</span><span class="n">manager</span><span class="err">”</span>
-    <span class="n">id</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">整数</span><span class="err">，</span><span class="n">ForeignKey</span><span class="err">（“</span><span class="n">employee</span><span class="o">.</span><span class="n">id</span><span class="err">”），</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
-    <span class="n">manager_name</span> <span class="o">=</span><span class="n">映射列</span><span class="err">（</span><span class="n">字符串</span><span class="err">（</span><span class="mi">30</span><span class="err">））</span>
-
-    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">manager</span><span class="err">”，</span>
-    <span class="p">}</span></pre></div>
-</div>
-<p>总的来说，：func：<cite>_orm.with_polymorphic`使用的LEFT OUTER JOIN格式和选项（例如：paramref：`_orm.Mapper.with_polymorphic</cite>）在SQL和数据库优化器方面可能很繁琐；对于加载已加入继承映射中的子类属性，应优先使用：func：<cite>_orm.selectin_polymorphic`方法或将其映射器级等效设置为：paramref：`_orm.Mapper.polymorphic_load`为“selectin”，仅在需要每个查询时根据需要使用:func：`_orm.with_polymorphic</cite>。</p>
-<p id="inheritance-of-type">加入特定的子类型或带多态()的实体
-————————————————– ————</p>
-<p>由于:func：<cite>_orm.with_polymorphic`实体是:func：`_orm.aliased`的一个特殊情况，因此为了将多态实体作为联接的目标处理，特别是在使用: 唐：`_orm.relationship`构造作为ON子句时，使用与常规别名相同的技术如下清楚地列出了在:ref： `orm_queryguide_joining_relationships_aliased`中。 最简洁的方法是使用:meth：`_orm.PropComparator.of_type</cite>。 在下面的示例中，我们展示了从父“Company”实体沿“Company.employees”的一对多关系连接，后者在:doc帮助下进行配置&lt;_inheritance_setup&gt;`链接到“Employee”对象， 并使用:func：<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.with_polymorphic`实体作为目标:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">＆gt;＆gt;＆gt; employee_plus_engineer = with_polymorphic（Employee，[Engineer]）</span>
-<span class="go">＆gt;＆gt;＆gt; stmt = (</span>
-<span class="go">...     select（Company.name，employee_plus_engineer.name）</span>
-<span class="go">...     .join（Company.employees.of_type（employee_plus_engineer））</span>
-<span class="go">...     .where（</span>
-<span class="go">...         or_（</span>
-<span class="go">...             employee_plus_engineer.name ==“SpongeBob”，</span>
-<span class="go">...             employee_plus_engineer.Engineer.engineer_info</span>
-<span class="go">...             ==“Senior Customer Engagement Engineer”，</span>
-<span class="go">...         ）</span>
-<span class="go">...     ）</span>
-<span class="go">... ）</span>
-<span class="go">＆gt;＆gt;＆gt; for company_name，emp_name in session.execute（stmt）：</span>
-<span class="go">...     print（f“ {company_name} {emp_name}”）</span>
-<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">name</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">name_1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">company</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">（</span><span class="n">employee</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="err">）</span><span class="k">ON</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="err">？或</span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="o">=</span><span class="err">？</span>
-<span class="p">[...]</span><span class="err">（</span><span class="s1">&#39;SpongeBob&#39;</span><span class="err">，</span><span class="s1">&#39;Senior Customer Engagement Engineer&#39;</span><span class="err">）</span>
-</div><span class="go">Krusty Krab SpongeBob</span>
-<span class="go">Krusty Krab Squidward</span></pre></div>
-</div>
-<p>更直接的是，: meth：<a href="#id17"><span class="problematic" id="id18">`</span></a>_orm.PropComparator.of_type`也用于任何类型的继承映射，以将对: func：<a href="#id19"><span class="problematic" id="id20">`</span></a>_orm.relationship`的联接限制为其目标的特定子类型。 上面的查询可以严格按照以下方式编写：作为“工程师”目标:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">＆gt;＆gt;＆gt; stmt = (</span>
-<span class="go">...     select（Company.name，Engineer.name）</span>
-<span class="go">...     .join（Company.employees.of_type（Engineer））</span>
-<span class="go">...     .where（</span>
-<span class="go">...         or_（</span>
-<span class="go">...             Engineer.name ==“SpongeBob”，</span>
-<span class="go">...             Engineer.engineer_info ==“高级客户参与工程师”，</span>
-<span class="go">...         ）</span>
-<span class="go">...     ）</span>
-<span class="go">... ）</span>
-<span class="go">＆gt;＆gt;＆gt; for company_name，emp_name in session.execute（stmt）：</span>
-<span class="go">...     print（f“ {company_name} {emp_name}”）</span>
-<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">name</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">name_1</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">company</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">（</span><span class="n">employee</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="err">）</span><span class="k">ON</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="err">？或</span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="o">=</span><span class="err">？</span>
-<span class="p">[...]</span><span class="err">（</span><span class="s1">&#39;SpongeBob&#39;</span><span class="err">，</span><span class="s1">&#39;Senior Customer Engagement Engineer&#39;</span><span class="err">）</span>
-</div><span class="go">Krusty Krab SpongeBob</span>
-<span class="go">Krusty Krab Squidward</span></pre></div>
-</div>
-<p>可以观察到以上，“工程师”目标的直接加入使用内部JOIN，而不是LEFT OUTER JOIN，SQL优化器通常会从SQL优化器角度考虑，更具性能。</p>
-<p id="eagerloading-polymorphic-subtypes">通过急切地加载多态子类型来</p>
-<p>可使用:meth：<cite>_orm.PropComparator.of_type`与继承映射的任何类型等效地将多态实体应用到:ref：`relationship loader options &lt;orm_queryguide_relationship_loaders&gt;</cite>，例如:func： <cite>_orm.selectinload`和:func：`_orm.joinedload</cite>。</p>
-<p>例如，如果我们想要加载“Company”对象，并使用：func：<a href="#id21"><span class="problematic" id="id22">`</span></a>_orm.with_polymorphic`构造对整个层次结构进行快速加载，我们可以写成:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">＆gt;＆gt;＆gt; all_employees = with_polymorphic（Employee，“*”）</span>
-<span class="go">＆gt;＆gt;＆gt; stmt = select（Company）。options（selectinload（Company.employees.of_type（all_employees）））</span>
-<span class="go">＆gt;＆gt;＆gt; for company in session.scalars（stmt）：</span>
-<span class="go">...     print（f“company：{company.name}”）</span>
-<span class="go">...     print（f“employees：{company.employees}”）</span>
-<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">company</span><span class="p">.</span><span class="n">id</span><span class="err">，</span><span class="n">company</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">company</span>
-<span class="p">[...]</span><span class="err">（）</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_company_id</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_id</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_name</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_type</span><span class="err">，</span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_id</span><span class="err">，</span><span class="n">manager</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">manager_manager_name</span><span class="err">，</span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_id</span><span class="err">，</span><span class="n">engineer</span><span class="p">.</span><span class="n">engineer_info</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">engineer_engineer_info</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">engineer</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">engineer</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">company_id</span><span class="w"> </span><span class="k">IN</span><span class="err">（？）</span>
-<span class="p">[...]</span><span class="err">（</span><span class="mi">1</span><span class="err">，）</span>
-<span class="n">company</span><span class="err">：</span><span class="n">Krusty</span><span class="w"> </span><span class="n">Krab</span>
-<span class="n">employees</span><span class="err">：</span><span class="p">[</span><span class="n">Manager</span><span class="err">（</span><span class="s1">&#39;Mr. Krabs&#39;</span><span class="err">），</span><span class="n">Engineer</span><span class="err">（</span><span class="s1">&#39;SpongeBob&#39;</span><span class="err">），</span><span class="n">Engineer</span><span class="err">（</span><span class="s1">&#39;Squidward&#39;</span><span class="err">）</span><span class="p">]</span>
-</div></pre></div>
-</div>
-<p>可以将上述查询直接与在前一节:ref：<a href="#id23"><span class="problematic" id="id24">`</span></a>polymorphic_selectin_as_loader_option_target`中说明的使用: func: <a href="#id25"><span class="problematic" id="id26">`</span></a>_orm.selectin_polymorphic`的版本进行比较。</p>
+<span class="pre">LEFT</span> <span class="pre">OUTER</span> <span class="pre">JOIN</span> <span class="pre">engineer</span> <span class="pre">ON</span> <span class="pre">employee.id</span> <span class="pre">=</span> <span class="pre">engineer.id</span>
+<span class="pre">WHERE</span> <span class="pre">employee.company_id</span> <span class="pre">IN</span> <span class="pre">(?)</span>
+<span class="pre">[...]</span> <span class="pre">(1,)</span>
+<span class="pre">company:</span> <span class="pre">Krusty</span> <span class="pre">Krab</span>
+<span class="pre">employees:</span> <span class="pre">[Manager('Mr.</span> <span class="pre">Krabs'),</span> <span class="pre">Engineer('SpongeBob'),</span> <span class="pre">Engineer('Squidward')]</span>
+<span class="pre">`</span></code></p>
+<p>以上查询可以直接与前一节   <a class="reference internal" href="#polymorphic-selectin-as-loader-option-target"><span class="std std-ref">将selectin_polymorphic()应用于现有的急性加载</span></a>  中
+演示的   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  版本进行比较。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>:ref：<cite>polymorphic_selectin_as_loader_option_target</cite>-举例说明了
-与上述相同的示例，使用：func：<a href="#id27"><span class="problematic" id="id28">`</span></a>_orm.selectin_polymorphic`代替</p>
+<p><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target"><span class="std std-ref">将selectin_polymorphic()应用于现有的急性加载</span></a>  - 演示了与上述相同的例子，但使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a></p>
 </div>
-<p>用于单继承映射的SELECT语句
-————————————————– ————-</p>
-<p>..设置代码，不显示</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="err">（）</span>
-<span class="go">ROLLBACK</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="err">（）</span></pre></div>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>单表继承设置</p>
-<p>这一部分讨论了单表继承，
-描述在：ref：<a href="#id29"><span class="problematic" id="id30">`</span></a>single_inheritance`中，使用单个表表示层次结构中的多个类。</p>
-<p>:doc：<cite>查看此部分的ORM设置 &lt;_single_inheritance&gt;</cite>。</p>
-</div>
-<p>与加入继承映射不同，单继承映射的SELECT语句的构建趋向于更简单，因为对于全单继承层次结构，只有一个表格。</p>
-<p>无论继承层次结构是否全部为单继承，查询基类与子类之间的查询的SELECT语句均可通过添加附加的WHERE条件来进行区分。</p>
-<p>例如，将加载类型为“Manager”，“Engineer”和“Employee”的单继承示例映射为“Employee”的查询将使用表的简单SELECT:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="err">（</span><span class="n">Employee</span><span class="err">）</span><span class="o">.</span><span class="n">order_by</span><span class="err">（</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span><span class="err">）</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="err">（</span><span class="n">stmt</span><span class="err">）：</span>
-<span class="go">...     print（f“{obj}”）</span>
-<div class='show_sql'><span class="k">BEGIN</span><span class="err">（</span><span class="k">implicit</span><span class="err">）</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="k">type</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
-<span class="p">[...]</span><span class="err">（）</span>
-</div><span class="go">Manager（&#39;Mr. Krabs&#39;）</span>
-<span class="go">Engineer（&#39;SpongeBob&#39;）</span>
-<span class="go">Engineer（&#39;Squidward&#39;）</span></pre></div>
-</div>
-<p>针对特定的子类发出负载时，可能会向SELECT添加其他条件以限制行，例如下面针对“工程师”实体执行的SELECT：¶</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="err">（</span><span class="n">Engineer</span><span class="err">）</span><span class="o">.</span><span class="n">order_by</span><span class="err">（</span><span class="n">Engineer</span><span class="o">.</span><span class="n">id</span><span class="err">）</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="err">（</span><span class="n">stmt</span><span class="err">）</span><span class="o">.</span><span class="n">all</span><span class="err">（）</span>
-<span class="go">{execsql}SELECT employee.id，employee.name，employee.type，employee.engineer_info</span>
-<span class="go">FROM employee</span>
-<span class="go">WHERE employee.type IN（？）ORDER BY employee.id</span>
-<span class="go">[...]（&#39;engineer&#39;，）</span>
-<span class="go">{stop}&gt;&gt;&gt; for obj in objects：</span>
-<span class="go">...     print（f“{obj}”）</span>
-<span class="go">Engineer（&#39;SpongeBob&#39;）</span>
-<span class="go">Engineer（&#39;Squidward&#39;）</span></pre></div>
-</div>
-<p>单继承映射的默认行为与加入继承相同，即默认情况下仍通过第二个SELECT发出特定于子类的属性。 在下面的示例中，加载类型为“Manager”的单个“Employee”对象，但由于请求的类是“Employee”，因此默认情况下不包含“Manager.manager_name”属性，当它被访问时发出一个附加的SELECT链接:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mr_krabs</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="err">（</span><span class="n">select</span><span class="err">（</span><span class="n">Employee</span><span class="err">）。</span><span class="n">where</span><span class="err">（</span><span class="n">Employee</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span><span class="err">“</span><span class="n">Mr</span><span class="o">.</span> <span class="n">Krabs</span><span class="err">”））。</span><span class="n">one</span><span class="err">（）</span>
-<div class='show_sql'><span class="k">BEGIN</span><span class="err">（</span><span class="k">implicit</span><span class="err">）</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="err">，</span><span class="n">employee</span><span class="p">.</span><span class="k">type</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="err">？</span>
-<span class="p">[...]</span><span class="w"> </span><span class="err">（</span><span class="s1">&#39;Mr. Krabs&#39;</span><span class="err">，）</span>
-</div><span class="gp">&gt;&gt;&gt; </span><span class="n">mr_krabs</span><span class="o">.</span><span class="n">manager_name</span>
-<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">manager_name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">employee_manager_name</span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="err">？</span><span class="w"> </span><span class="err">和</span><span class="n">employee</span><span class="p">.</span><span class="k">type</span><span class="w"> </span><span class="k">in</span><span class="err">（？）</span>
-<span class="p">[...]</span><span class="w"> </span><span class="err">（</span><span class="mi">1</span><span class="err">，</span><span class="s1">&#39;manager&#39;</span><span class="err">）</span>
-</div><span class="go">&#39;Eugene H. Krabs&#39;</span></pre></div>
-</div>
-<p>要更改此行为，与加入继承加载中使用的相同的常规概念适用于单继承，包括使用:func：_orm选择in_polymorphic选项以及使用:func：_orm.with_polymorphic选项，后者仅包括附加列，并且从SQL的角度来看更加有效效为：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employees</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="err">（</span><span class="n">Employee</span><span class="err">，“</span><span class="o">*</span><span class="err">”）</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="err">（</span><span class="n">employees</span><span class="err">）。</span><span class="n">order_by</span><span class="err">（</span><span class="n">employees</span><span class="o">.</span><span class="n">id</span><span class="err">）</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="err">（</span><span class="n">stmt</span><span class="err">）</span><span class="o">.</span><span class="n">all</span><span class="err">（）</span>
-<span class="go">{execsql}BEGIN（implicit）</span>
-<span class="go">SELECT employee.id，employee.name，employee.type，</span>
-<span class="go">employee.manager_name，employee.engineer_info</span>
+</section>
+</section>
+<section id="loading-single-inheritance">
+<span id="id23"></span><h2>单继承映射的 SELECT 语句<a class="headerlink" href="#loading-single-inheritance" title="Permalink to this heading">¶</a></h2>
+<p>与联接继承映射不同，对于单继承映射的 SELECT 语句构造通常更简单，因为
+对于全单继承层次结构，只有一个表。</p>
+<p>无论继承层次结构是否都是单继承还是混合使用联接继承和单继承，对于单继承来说，
+基类与子类的不同查询仅通过限制 SELECT 语句的 WHERE 条件来区分。</p>
+<p>例如，对 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 的单继承示例映射的查询将使用对表的简单 SELECT 来加载
+<code class="docutils literal notranslate"><span class="pre">Manager</span></code>，<code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 类型的对象：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">stmt</span> <span class="pre">=</span> <span class="pre">select(Employee).order_by(Employee.id)</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">for</span> <span class="pre">obj</span> <span class="pre">in</span> <span class="pre">session.scalars(stmt):</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">print(f&quot;{obj}&quot;)</span>
+<span class="pre">{execsql}BEGIN</span> <span class="pre">(implicit)</span>
+<span class="pre">SELECT</span> <span class="pre">employee.id,</span> <span class="pre">employee.name,</span> <span class="pre">employee.type</span>
+<span class="pre">FROM</span> <span class="pre">employee</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">employee.id</span>
+<span class="pre">[...]</span> <span class="pre">()</span>
+<span class="pre">{stop}Manager('Mr.</span> <span class="pre">Krabs')</span>
+<span class="pre">Engineer('SpongeBob')</span>
+<span class="pre">Engineer('Squidward')</span>
+<span class="pre">`</span></code></p>
+<p>当发出特定子类的加载时，会向 SELECT 添加附加条件来限制行数，
+例如以下是针对 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 实体执行的 SELECT：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">stmt</span> <span class="pre">=</span> <span class="pre">select(Engineer).order_by(Engineer.id)</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">objects</span> <span class="pre">=</span> <span class="pre">session.scalars(stmt).all()</span>
+<span class="pre">{execsql}SELECT</span> <span class="pre">employee.id,</span> <span class="pre">employee.name,</span> <span class="pre">employee.type,</span> <span class="pre">employee.engineer_info</span>
+<span class="pre">FROM</span> <span class="pre">employee</span>
+<span class="pre">WHERE</span> <span class="pre">employee.type</span> <span class="pre">IN</span> <span class="pre">(?)</span> <span class="pre">ORDER</span> <span class="pre">BY</span> <span class="pre">employee.id</span>
+<span class="pre">[...]</span> <span class="pre">('engineer',)</span>
+<span class="pre">{stop}&gt;&gt;&gt;</span> <span class="pre">for</span> <span class="pre">obj</span> <span class="pre">in</span> <span class="pre">objects:</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">print(f&quot;{obj}&quot;)</span>
+<span class="pre">Engineer('SpongeBob')</span>
+<span class="pre">Engineer('Squidward')</span>
+<span class="pre">`</span></code></p>
+<section id="id24">
+<h3>提高单继承属性的加载性能<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
+<p>单继承映射对于如何选择子类上的属性的默认行为类似于联接继承，因此在
+默认情况下，特定子类的属性仍然会发出第二个 SELECT。在下面的示例中，
+加载单个类型为 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code>，但由于请求的类是 <code class="docutils literal notranslate"><span class="pre">Employee</span></code>，
+因此默认情况下不包含属性 <code class="docutils literal notranslate"><span class="pre">Manager.manager_name</span></code>，因此在访问该属性时会发出
+另一个 SELECT：</p>
+<p><a href="#id25"><span class="problematic" id="id26">``</span></a>`
+&gt;&gt;&gt; mr_krabs = session.scalars(select(Employee).where(Employee.name == “Mr. Krabs”)).one()
+{execsql}BEGIN (implicit)
+SELECT employee.id, employee.name, employee.type
+FROM employee
+WHERE employee.name = ?
+[…] (‘Mr. Krabs’,)
+{stop}&gt;&gt;&gt; mr_krabs.manager_name
+{execsql}SELECT employee.manager_name AS employee_manager_name
+FROM employee
+<a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a>WHERE employee.id = ? AND employee.type IN (?)</p>
+<blockquote>
+<div><p>[…] (1, ‘manager’)
+{stop}’Eugene H. Krabs’</p>
+</div></blockquote>
+<p>为了更改这种行为，使用在joined inheritance loading中使用的相同的常规概念也可以用于单一继承，包括使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  选项以及   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  选项，后者仅包括其他列并从SQL角度而言对于单一继承mapper来说更加高效：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employees</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">employees</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">employees</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">{execsql}BEGIN（隐式）</span>
+<span class="go">SELECT employee.id, employee.name, employee.type,</span>
+<span class="go">employee.manager_name, employee.engineer_info</span>
 <span class="go">FROM employee ORDER BY employee.id</span>
-<span class="go">[...]（）</span>
-<span class="go">{stop}&gt;&gt;&gt; for obj in objects：</span>
-<span class="go">...     print（f“{obj}””）</span>
-<span class="go">Manager（&#39;Mr. Krabs&#39;）</span>
-<span class="go">Engineer（&#39;SpongeBob&#39;）</span>
-<span class="go">Engineer（&#39;Squidward&#39;）</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">.</span><span class="n">manager_name</span>
+<span class="go">[...] ()</span>
+<span class="go">{stop}&gt;&gt;&gt; for obj in objects:</span>
+<span class="go">...     print(f&quot;{obj}&quot;)</span>
+<span class="go">Manager(&#39;Mr. Krabs&#39;)</span>
+<span class="go">Engineer(&#39;SpongeBob&#39;)</span>
+<span class="go">Engineer(&#39;Squidward&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span>
 <span class="go">&#39;Eugene H. Krabs&#39;</span></pre></div>
 </div>
-<p>由于加载单继承子类映射的开销通常很小，因此建议对单继承映射包括:paramref：<cite>_orm.Mapper.polymorphic_load`参数，具有“inline”设置那些子类，其中预期其特定子类属性的加载是常见的。 下面的示例说明:doc：`设置 &lt;_single_inheritance&gt;</cite>，修改以包含此选项。</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="err">（</span><span class="n">DeclarativeBase</span><span class="err">）：</span>
-<span class="gp">... </span>   <span class="n">过去</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Employee</span><span class="err">（</span><span class="n">Base</span><span class="err">）：</span>
-<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span><span class="err">“</span><span class="n">employee</span><span class="err">”</span>
-<span class="gp">... </span>    <span class="n">id</span><span class="err">：</span><span class="n">Mapped</span> <span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="err">（</span><span class="n">primary_key</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
-<span class="gp">... </span>    <span class="n">name</span><span class="err">：</span><span class="n">Mapped</span> <span class="p">[</span><span class="n">str</span><span class="p">]</span>
-<span class="gp">... </span>    <span class="n">type</span><span class="err">：</span><span class="n">Mapped</span> <span class="p">[</span><span class="n">str</span><span class="p">]</span>
+<p>由于加载单一继承子类映射的开销通常很小，因此建议单一继承映射包括  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  参数，并对那些预计常见加载其特定子类属性的子类设置为 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>。下面是演示  <a class="reference internal" href="_single_inheritance.html"><span class="doc">设置</span></a>  的示例，其中包含此选项的修改版本：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
+<span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">type</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
 <span class="gp">...</span>
-<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="err">（</span><span class="bp">self</span><span class="err">）：</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="n">f</span><span class="err">“</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">_name__</span><span class="p">}</span><span class="err">（</span><span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="err">！</span><span class="n">r</span><span class="p">}</span><span class="err">）”</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">)&quot;</span>
 <span class="gp">...</span>
 <span class="gp">... </span>    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">employee</span><span class="err">”，</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_on</span><span class="err">”：“</span><span class="n">type</span><span class="err">”，</span>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;employee&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_on&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Manager</span><span class="err">（</span><span class="n">Employee</span><span class="err">）：</span>
-<span class="gp">... </span>    <span class="n">manager_name</span><span class="err">：</span><span class="n">Mapped</span> <span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="err">（</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Manager</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">manager_name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">manager</span><span class="err">”，</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_load</span><span class="err">”：“</span><span class="n">inline</span><span class="err">”，</span>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;manager&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_load&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="p">}</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Engineer</span><span class="err">（</span><span class="n">Employee</span><span class="err">）：</span>
-<span class="gp">... </span>    <span class="n">engineer_info</span><span class="err">：</span><span class="n">Mapped</span> <span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="err">（</span><span class="n">nullable</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Engineer</span><span class="p">(</span><span class="n">Employee</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">engineer_info</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_identity</span><span class="err">”：“</span><span class="n">engineer</span><span class="err">”，</span>
-<span class="gp">... </span>        <span class="err">“</span><span class="n">polymorphic_load</span><span class="err">”：“</span><span class="n">inline</span><span class="err">”，</span>
-<span class="gp">... </span>    <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;engineer&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;polymorphic_load&quot;</span><span class="p">:</span> <span class="s2">&quot;inline&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">}</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>以上映射表明，“Manager”和“Engineer”类的列将自动包含在针对“ Employee”实体的SELECT语句中：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">select</span><span class="err">（</span><span class="n">Employee</span><span class="err">））</span>
-<span class="go">{printsql}SELECT employee.id，employee.name，employee.type，</span>
-<span class="go">employee.manager_name，employee.engineer_info</span>
-<span class="go">FROM employee</span></pre></div>
+<p>有了以上的映射，<code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 类将自动包含在针对 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体的 SELECT 语句中：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">))</span></pre></div>
 </div>
 </section>
 </section>
@@ -667,7 +886,7 @@ instances will also have those columns already loaded so that
 no “post fetch” of those columns will be required.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">with_polymorphic</span> - full discussion of
+<p><a class="reference internal" href="#with-polymorphic"><span class="std std-ref">使用 with_polymorphic()</span></a> - full discussion of
 <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>.</p>
 </div>
 <dl class="field-list simple">
@@ -746,6 +965,10 @@ setting on the <code class="xref py py-paramref docutils literal notranslate"><s
 
 </section>
 </section>
+<aside class="topic">
+<p class="topic-title">ORM 查询指南</p>
+<p>下一个查询指南章节: <a class="reference internal" href="dml.html"><span class="doc">ORM-启用的INSERT、UPDATE和DELETE语句</span></a></p>
+</aside>
 
     </div>
 
@@ -753,9 +976,9 @@ setting on the <code class="xref py py-paramref docutils literal notranslate"><s
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="select.html" title="previous chapter">用ORM Mapper类编写SELECT语句</a>
+        <a href="select.html" title="previous chapter">使用ORM映射类编写SELECT语句</a>
         Next:
-        <a href="dml.html" title="next chapter">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a>
+        <a href="dml.html" title="next chapter">ORM-启用的INSERT、UPDATE和DELETE语句</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -765,7 +988,7 @@ setting on the <code class="xref py py-paramref docutils literal notranslate"><s
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:16
+    Documentation last generated: 2023/8/18 18:44:01
 
     </div>
 </div>

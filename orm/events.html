@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="事件和内部实现" href="extending.html" />
-        <link rel="next" title="ORM内部结构" href="internals.html" />
-        <link rel="prev" title="事件和内部实现" href="extending.html" />
+        <link rel="up" title="事件和内部机制" href="extending.html" />
+        <link rel="next" title="ORM 内核" href="internals.html" />
+        <link rel="prev" title="事件和内部机制" href="extending.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,9 +127,9 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span><ul>
 <li class="selected"><span class="link-container"><strong>ORM 事件</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#id1">会话事件</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.SessionEvents"><code class="docutils literal notranslate"><span class="pre">SessionEvents</span></code></a></span><ul>
@@ -224,7 +224,7 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.orm.instrumentation">仪表盘事件</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.orm.instrumentation">仪器事件</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.InstrumentationEvents"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.InstrumentationEvents.attribute_instrument"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents.attribute_instrument()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.InstrumentationEvents.class_instrument"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents.class_instrument()</span></code></a></span></li>
@@ -236,12 +236,12 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="internals.html">ORM内部结构</a></span></li>
-<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM 异常</a></span></li>
+<li><span class="link-container"><a class="reference external" href="internals.html">ORM 内核</a></span></li>
+<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM异常</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -273,13 +273,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="extending.html" title="previous chapter">事件和内部实现</a></li>
+                <a href="extending.html" title="previous chapter">事件和内部机制</a></li>
                 <li><b>Next:</b>
-                <a href="internals.html" title="next chapter">ORM内部结构</a></li>
+                <a href="internals.html" title="next chapter">ORM 内核</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="extending.html" title="事件和内部实现">事件和内部实现</a></li>
+                    <ul><li><a href="extending.html" title="事件和内部机制">事件和内部机制</a></li>
                 </ul>
                 </ul>
 
@@ -381,7 +381,7 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-sqlalchemy.orm.instrumentation">仪表盘事件</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.orm.instrumentation">仪器事件</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.InstrumentationEvents"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.InstrumentationEvents.attribute_instrument"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents.attribute_instrument()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.InstrumentationEvents.class_instrument"><code class="docutils literal notranslate"><span class="pre">InstrumentationEvents.class_instrument()</span></code></a></li>
@@ -406,17 +406,17 @@
         
 <section id="orm">
 <span id="orm-event-toplevel"></span><h1>ORM 事件<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>ORM 包含了许多可订阅的钩子。</p>
-<p>关于最常用的 ORM 事件的介绍，请参见章节 <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件跟踪查询、对象和会话更改</span></a>。通常的事件系统在章节 <span class="xref std std-ref">event_toplevel</span> 中讨论。描述连接和低级语句执行等非 ORM 事件的文档请参见章节 <a class="reference internal" href="../core/events.html"><span class="std std-ref">核心事件</span></a>。</p>
+<p>ORM 包括一系列可供订阅的钩子。</p>
+<p>关于最常用的 ORM 事件的介绍，请参见章节   <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件追踪查询、对象和会话更改</span></a> 。一般的事件系统在章节   <a class="reference internal" href="../core/event.html"><span class="std std-ref">事件</span></a>  中介绍，关于连接和低级语句执行等非 ORM 事件在章节   <a class="reference internal" href="../core/events.html"><span class="std std-ref">Core事件</span></a>  中描述。</p>
 <section id="id1">
 <h2>会话事件<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>最基本的事件钩子可在 ORM 的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象级别上使用。此处可截获的内容包括：</p>
+<p>最基本的事件钩子可在 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象级别获得。可以截获的操作包括：</p>
 <ul class="simple">
-<li><p><strong>持久化操作</strong> - ORM flush 过程可使用以不同方式触发的事件进行扩展，以增强或修改发送到数据库的数据，或在持久性发生时允许发生其他事情。详见章节 <a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a>。</p></li>
-<li><p><strong>对象生命周期事件</strong> - 对象添加、持久化、从会话中删除等事件的钩子。详见章节 <a class="reference internal" href="session_events.html#session-lifecycle-events"><span class="std std-ref">对象生命周期事件</span></a>。</p></li>
-<li><p><strong>查询事件</strong> - 在 <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> 执行模式的一部分中，对 ORM 实体执行的所有 SELECT 语句以及批量的 UPDATE 和 DELETE 语句（不在 flush 过程中）将从 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法中截获。使用 <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> 方法。详见章节 <a class="reference internal" href="session_events.html#session-execute-events"><span class="std std-ref">执行事件</span></a> 中的这个事件。</p></li>
+<li><p><strong>持久性操作</strong> - ORM 冲刷将更改发送到数据库的过程可以使用在冲刷的不同部分发出的事件进行扩展，以增强或修改发送到数据库的数据或允许其他事情在持久性发生时发生。有关持久性事件的详细信息，请参阅章节   <a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a> 。</p></li>
+<li><p><strong>对象生命周期事件</strong> - 当对象添加到会话中、持久化或从会话中删除时发出的钩子。有关这些的详细信息，请参见章节   <a class="reference internal" href="session_events.html#session-lifecycle-events"><span class="std std-ref">对象生命周期事件</span></a> 。</p></li>
+<li><p><strong>执行事件</strong> - 在  <span class="xref std std-term">2.0 style</span>  执行模型的一部分中，对于针对 ORM 实体发出的所有 SELECT 语句以及冲刷过程之外的批量 UPDATE 和 DELETE 语句，可以使用  <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  方法从  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法截取操作。有关此事件的详细信息，请参见章节   <a class="reference internal" href="session_events.html#session-execute-events"><span class="std std-ref">执行事件</span></a> 。</p></li>
 </ul>
-<p>请务必阅读 <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件跟踪查询、对象和会话更改</span></a> 章节以了解这些事件的背景信息。</p>
+<p>请确保阅读   <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件追踪查询、对象和会话更改</span></a>  章节以获取上下文的内容。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -519,7 +519,7 @@ new <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_att
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.SessionEvents.after_begin">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.SessionEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.SessionEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SessionTransaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.SessionEvents.after_begin" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.SessionEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.SessionEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_begin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Session</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transaction</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SessionTransaction</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.SessionEvents.after_begin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Execute after a transaction is begun on a connection</p>
 <div class="event-signatures docutils container">
 <p>Example argument forms:</p>
@@ -538,7 +538,7 @@ new <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_att
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.SessionEvents.after_begin.params.session"></span><strong>session</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.SessionEvents.after_begin.params.session">¶</a> – The target <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>.</p></li>
 <li><p><span class="target" id="sqlalchemy.orm.SessionEvents.after_begin.params.transaction"></span><strong>transaction</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.SessionEvents.after_begin.params.transaction">¶</a> – The <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.SessionEvents.after_begin.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.SessionEvents.after_begin.params.connection">¶</a> – The <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> object
+<li><p><span class="target" id="sqlalchemy.orm.SessionEvents.after_begin.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.SessionEvents.after_begin.params.connection">¶</a> – The <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> object
 which will be used for SQL statements.</p></li>
 </ul>
 </dd>
@@ -587,9 +587,9 @@ removed in a future release.</p>
 <p class="admonition-title">Legacy Feature</p>
 <p>The <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_bulk_delete" title="sqlalchemy.orm.SessionEvents.after_bulk_delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_bulk_delete()</span></code></a> method
 is a legacy event hook as of SQLAlchemy 2.0.   The event
-<strong>does not participate</strong> in <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> invocations
+<strong>does not participate</strong> in <span class="xref std std-term">2.0 style</span> invocations
 using <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> documented at
-<span class="xref std std-ref">orm_queryguide_update_delete_where</span>.  For 2.0 style use,
+<a class="reference internal" href="queryguide/dml.html#orm-queryguide-update-delete-where"><span class="std std-ref">带有自定义WHERE条件的ORM UPDATE and DELETE</span></a>.  For 2.0 style use,
 the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> hook will intercept
 these calls.</p>
 </div>
@@ -603,7 +603,7 @@ details about the update, including these attributes:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">query</span></code> -the <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
 object that this update operation
 was called upon.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> the <code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>
 returned as a result of the
 bulk DELETE operation.</p></li>
 </ul>
@@ -657,9 +657,9 @@ removed in a future release.</p>
 <p class="admonition-title">Legacy Feature</p>
 <p>The <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_bulk_update" title="sqlalchemy.orm.SessionEvents.after_bulk_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_bulk_update()</span></code></a> method
 is a legacy event hook as of SQLAlchemy 2.0.   The event
-<strong>does not participate</strong> in <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> invocations
+<strong>does not participate</strong> in <span class="xref std std-term">2.0 style</span> invocations
 using <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> documented at
-<span class="xref std std-ref">orm_queryguide_update_delete_where</span>.  For 2.0 style use,
+<a class="reference internal" href="queryguide/dml.html#orm-queryguide-update-delete-where"><span class="std std-ref">带有自定义WHERE条件的ORM UPDATE and DELETE</span></a>.  For 2.0 style use,
 the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> hook will intercept
 these calls.</p>
 </div>
@@ -675,7 +675,7 @@ object that this update operation
 was called upon.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">values</span></code> The “values” dictionary that was passed to
 <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> the <code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code> the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>
 returned as a result of the
 bulk UPDATE operation.</p></li>
 </ul>
@@ -787,7 +787,7 @@ which handles the details of the flush.</p></li>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_flush_postexec" title="sqlalchemy.orm.SessionEvents.after_flush_postexec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush_postexec()</span></code></a></p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -825,7 +825,7 @@ which handles the details of the flush.</p></li>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_flush" title="sqlalchemy.orm.SessionEvents.after_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush()</span></code></a></p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -1111,7 +1111,7 @@ objects which can be passed to the <code class="xref py py-meth docutils literal
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_flush" title="sqlalchemy.orm.SessionEvents.after_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.SessionEvents.after_flush_postexec" title="sqlalchemy.orm.SessionEvents.after_flush_postexec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush_postexec()</span></code></a></p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -1265,8 +1265,8 @@ is triggered <strong>for ORM statement executions only</strong>, meaning those
 invoked via the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> and similar methods on
 the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> object. It does <strong>not</strong> trigger for
 statements that are invoked by SQLAlchemy Core only, i.e. statements
-invoked directly using <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> or
-otherwise originating from an <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> object without
+invoked directly using <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a> or
+otherwise originating from an <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object without
 any <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> involved. To intercept <strong>all</strong> SQL
 executions regardless of whether the Core or ORM APIs are in use,
 see the event hooks at <a class="reference internal" href="../core/events.html#sqlalchemy.events.ConnectionEvents" title="sqlalchemy.events.ConnectionEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConnectionEvents</span></code></a>, such as
@@ -1276,8 +1276,8 @@ see the event hooks at <a class="reference internal" href="../core/events.html#s
 emitted internally within the ORM flush process,
 i.e. the process described at <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">刷新</span></a>; to
 intercept steps within the flush process, see the event
-hooks described at <a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a> as
-well as <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a>.</p>
+hooks described at <a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a> as
+well as <span class="xref std std-ref">session_persistence_mapper</span>.</p>
 </div>
 <p>This event is a <code class="docutils literal notranslate"><span class="pre">do_</span></code> event, meaning it has the capability to replace
 the operation that the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> method normally
@@ -1307,9 +1307,9 @@ all information about the statement to be invoked.  It also
 provides an interface to extend the current statement, options,
 and parameters as well as an option that allows programmatic
 invocation of the statement at any point.</p>
-<p><a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM查询事件</span></a> - includes examples of using
+<p><a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM 查询事件</span></a> - includes examples of using
 <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a></p>
-<p><a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile缓存</span></a> - an example of how to integrate
+<p><a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile 缓存</span></a> - an example of how to integrate
 Dogpile caching with the ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> making use
 of the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> event hook.</p>
 <p><a class="reference internal" href="examples.html#examples-sharding"><span class="std std-ref">水平分片</span></a> - the Horizontal Sharding example /
@@ -1600,10 +1600,10 @@ for this specific transition.  It is invoked typically during the
 </section>
 <section id="id2">
 <h2>映射器事件<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>映射器事件包括与一个或多个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象相关的事件，这是将用户定义的类映射到 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象的中心配置对象。在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 级别上发生的类型包括：</p>
+<p>映射器事件钩子涵盖与单个或多个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象相对应的事物，这些对象是将用户定义的类映射到   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象的中心配置对象。在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  级别发生的事物的类型包括：</p>
 <ul class="simple">
-<li><p><strong>每个对象的持久化操作</strong> - 最常用的 Mapper 钩子是像 <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert" title="sqlalchemy.orm.MapperEvents.before_insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_insert()</span></code></a>、<a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_update" title="sqlalchemy.orm.MapperEvents.after_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_update()</span></code></a> 等的工作单元钩子。这些事件与更粗粒度的会话级事件（如 <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>）不同，因为它们在刷新过程中以每个对象为基础发生。虽然对象上的更细粒度的活动更为直接，但可用的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 特性有限。</p></li>
-<li><p><strong>映射器配置事件</strong> - 另一个重要的映射器钩子类是在将类映射时、映射器完成时以及将映射器集配置为相互引用时发生的钩子。这些事件包括 <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.instrument_class" title="sqlalchemy.orm.MapperEvents.instrument_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.instrument_class()</span></code></a>、<a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_mapper_configured" title="sqlalchemy.orm.MapperEvents.before_mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_mapper_configured()</span></code></a> 和 <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.mapper_configured" title="sqlalchemy.orm.MapperEvents.mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.mapper_configured()</span></code></a> 等这些事件在每个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 的级别，以及 <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a> 和 <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_configured" title="sqlalchemy.orm.MapperEvents.after_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_configured()</span></code></a> 在某些集合级别的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象中。</p></li>
+<li><p><strong>每个对象的持久化操作</strong> - 最受欢迎的映射器钩子通常是诸如  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert" title="sqlalchemy.orm.MapperEvents.before_insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_insert()</span></code></a> 、  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_update" title="sqlalchemy.orm.MapperEvents.after_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_update()</span></code></a>   等的工作单元钩子。与在管道过程中发生的较粗粒度会话级事件相比，这些事件在对于每个对象在冲刷过程中发生，虽然对象上的更细粒度的活动更加简单，但   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  功能的可用性有限。</p></li>
+<li><p><strong>映射器配置事件</strong> - 映射器钩子的另一个主要类别是在映射类时发生的事物，以及在映射器完成时，将映射器配置为相互引用的映射器集合时发生的事物。这些事件包括  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.instrument_class" title="sqlalchemy.orm.MapperEvents.instrument_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.instrument_class()</span></code></a> 、  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_mapper_configured" title="sqlalchemy.orm.MapperEvents.before_mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_mapper_configured()</span></code></a>   和  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.mapper_configured" title="sqlalchemy.orm.MapperEvents.mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.mapper_configured()</span></code></a>  在单个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  级别，以及  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_configured" title="sqlalchemy.orm.MapperEvents.after_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_configured()</span></code></a>  在一组   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象级别。</p></li>
 </ul>
 <table class="longtable docutils align-default">
 <thead>
@@ -1756,7 +1756,7 @@ that a particular event is only called once and no further, the
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.after_delete">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_delete" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance after a DELETE statement
 has been emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -1776,7 +1776,7 @@ has been emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to emit additional SQL statements on
@@ -1790,8 +1790,8 @@ once in a previous step.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -1800,7 +1800,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_delete.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_delete.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_delete.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_delete.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_delete.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_delete.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit DELETE statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -1816,13 +1816,13 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.after_insert">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_insert" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance after an INSERT statement
 is emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -1842,7 +1842,7 @@ is emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to modify in-Python-only
@@ -1862,8 +1862,8 @@ event-&gt;persist-&gt;event steps.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -1872,7 +1872,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_insert.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_insert.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_insert.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_insert.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_insert.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_insert.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit INSERT statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -1888,7 +1888,7 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -1929,7 +1929,7 @@ same configure step when <code class="xref py py-meth docutils literal notransla
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="examples.html#examples-versioning"><span class="std std-ref">版本化对象</span></a> - an example which illustrates the use
+<p><a class="reference internal" href="examples.html#examples-versioning"><span class="std std-ref">版本对象</span></a> - an example which illustrates the use
 of the <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_mapper_configured" title="sqlalchemy.orm.MapperEvents.before_mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_mapper_configured()</span></code></a>
 event to create new mappers to record change-audit histories on
 objects.</p>
@@ -1938,7 +1938,7 @@ objects.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.after_update">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_update" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">after_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.after_update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance after an UPDATE statement
 is emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -1958,7 +1958,7 @@ is emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to modify in-Python-only
@@ -1994,8 +1994,8 @@ steps.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -2004,7 +2004,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_update.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_update.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_update.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_update.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.after_update.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.after_update.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit UPDATE statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -2020,7 +2020,7 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -2084,7 +2084,7 @@ that a particular event is only called once and no further, the
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.before_delete">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_delete" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_delete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance before a DELETE statement
 is emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -2104,7 +2104,7 @@ is emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to emit additional SQL statements on
@@ -2118,8 +2118,8 @@ once in a later step.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -2128,7 +2128,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_delete.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_delete.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_delete.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_delete.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_delete.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_delete.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit DELETE statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -2144,13 +2144,13 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.before_insert">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_insert" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_insert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance before an INSERT statement
 is emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -2170,7 +2170,7 @@ is emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to modify local, non-object related
@@ -2190,8 +2190,8 @@ steps.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -2200,7 +2200,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_insert.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_insert.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_insert.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit INSERT statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -2216,7 +2216,7 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -2278,7 +2278,7 @@ parameter.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.MapperEvents.before_update">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_update" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.MapperEvents"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.MapperEvents.</span></code></a><span class="sig-name descname"><span class="pre">before_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_O</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.orm.MapperEvents.before_update" title="Permalink to this definition">¶</a></dt>
 <dd><p>Receive an object instance before an UPDATE statement
 is emitted corresponding to that instance.</p>
 <div class="event-signatures docutils container">
@@ -2298,7 +2298,7 @@ is emitted corresponding to that instance.</p>
 <p>this event <strong>only</strong> applies to the
 <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a>
 and does <strong>not</strong> apply to the ORM DML operations described at
-<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a>.  To intercept ORM
+<a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>.  To intercept ORM
 DML events, use <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>.</p>
 </div>
 <p>This event is used to modify local, non-object related
@@ -2335,8 +2335,8 @@ steps.</p>
 <p>Mapper-level flush events only allow <strong>very limited operations</strong>,
 on attributes local to the row being operated upon only,
 as well as allowing any SQL to be emitted on the given
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.  <strong>Please read fully</strong> the notes
-at <a class="reference internal" href="session_events.html#session-persistence-mapper"><span class="std std-ref">Mapper级别的 Flush 事件</span></a> for guidelines on using
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.  <strong>Please read fully</strong> the notes
+at <span class="xref std std-ref">session_persistence_mapper</span> for guidelines on using
 these methods; generally, the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 method should be preferred for general on-flush changes.</p>
 </div>
@@ -2345,7 +2345,7 @@ method should be preferred for general on-flush changes.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_update.params.mapper"></span><strong>mapper</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_update.params.mapper">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> which is the target
 of this event.</p></li>
-<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_update.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_update.params.connection">¶</a> – the <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> being used to
+<li><p><span class="target" id="sqlalchemy.orm.MapperEvents.before_update.params.connection"></span><strong>connection</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.MapperEvents.before_update.params.connection">¶</a> – the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> being used to
 emit UPDATE statements for this instance.  This
 provides a handle into the current transaction on the
 target database specific to this instance.</p></li>
@@ -2361,7 +2361,7 @@ object associated with the instance.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久性事件</span></a></p>
+<p><a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -2489,7 +2489,7 @@ of this event.</p></li>
 </section>
 <section id="id3">
 <h2>实例事件<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
-<p>实例事件以 ORM 映射实例的构建为中心，包括在将它们实例化为 <span class="xref std std-term">transient</span> 对象时、在它们从数据库中加载并变为 <span class="xref std std-term">persistent</span> 对象时，以及当在对象上进行数据库刷新或失效操作时发生的事件。</p>
+<p>实例事件侧重于 ORM 映射实例的构造，包括在实例化为  <span class="xref std std-term">transient</span>  对象时、从数据库加载并变为  <span class="xref std std-term">persistent</span>  对象时，以及在对象上发生数据库刷新或过期操作时。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -2937,8 +2937,8 @@ were populated.</p></li>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">orm_server_defaults</span></p>
-<p><a class="reference internal" href="../core/defaults.html"><span class="std std-ref">列的INSERT/UPDATE默认值</span></a></p>
+<p><a class="reference internal" href="persistence_techniques.html#orm-server-defaults"><span class="std std-ref">提取服务器生成的默认值</span></a></p>
+<p><a class="reference internal" href="../core/defaults.html"><span class="std std-ref">列INSERT/UPDATE默认值</span></a></p>
 </div>
 </dd></dl>
 
@@ -2979,10 +2979,10 @@ dictionary which was pickled.</p></li>
 </section>
 <section id="orm-attribute-events">
 <span id="id4"></span><h2>属性事件<a class="headerlink" href="#orm-attribute-events" title="Permalink to this heading">¶</a></h2>
-<p>属性事件在 ORM 映射对象的个别属性上触发，这些事件形成了像 <span class="xref std std-ref">简单验证函数</span> 和 <span class="xref std std-ref">反向引用处理程序</span> 这样的基础。</p>
+<p>属性事件是针对 ORM 映射对象的各个属性发生的事件。这些事件构成了诸如   <a class="reference internal" href="mapped_attributes.html#simple-validators"><span class="std std-ref">custom validation functions</span></a>  和   <span class="xref std std-ref">backref handlers</span>  等的基础。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">mapping_attributes_toplevel</span></p>
+<p><a class="reference internal" href="mapped_attributes.html"><span class="std std-ref">更改属性行为</span></a></p>
 </div>
 <table class="longtable docutils align-default">
 <thead>
@@ -3431,7 +3431,7 @@ features:</p>
 we indicate that this value is to be persisted to the database.
 This supersedes the use of <code class="docutils literal notranslate"><span class="pre">SOME_CONSTANT</span></code> in the default generator
 for the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>.  The <code class="docutils literal notranslate"><span class="pre">active_column_defaults.py</span></code>
-example given at <a class="reference internal" href="examples.html#examples-instrumentation"><span class="std std-ref">属性检测</span></a> illustrates using
+example given at <a class="reference internal" href="examples.html#examples-instrumentation"><span class="std std-ref">属性检查</span></a> illustrates using
 the same approach for a changing default, e.g. a timestamp
 generator.    In this particular example, it is not strictly
 necessary to do this since <code class="docutils literal notranslate"><span class="pre">SOME_CONSTANT</span></code> would be part of the
@@ -3447,7 +3447,7 @@ not use our event handler.</p></li>
 </ul>
 <p>In the above example, the attribute set event
 <a class="reference internal" href="#sqlalchemy.orm.AttributeEvents.set" title="sqlalchemy.orm.AttributeEvents.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.set()</span></code></a> as well as the related validation feature
-provided by <code class="xref py py-obj docutils literal notranslate"><span class="pre">validates</span></code> is <strong>not</strong> invoked when we apply our
+provided by <a class="reference internal" href="mapped_attributes.html#id0" title="sqlalchemy.orm.validates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validates</span></code></a> is <strong>not</strong> invoked when we apply our
 value to the given <code class="docutils literal notranslate"><span class="pre">dict_</span></code>.  To have these events to invoke in
 response to our newly generated value, apply the value to the given
 object as a normal attribute set operation:</p>
@@ -3490,7 +3490,7 @@ INSERT statement generated by the unit of work.</p></li>
 of this event</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.AttributeEvents" title="sqlalchemy.orm.AttributeEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeEvents</span></code></a> - background on listener options such
 as propagation to subclasses.</p>
-<p><a class="reference internal" href="examples.html#examples-instrumentation"><span class="std std-ref">属性检测</span></a> - see the
+<p><a class="reference internal" href="examples.html#examples-instrumentation"><span class="std std-ref">属性检查</span></a> - see the
 <code class="docutils literal notranslate"><span class="pre">active_column_defaults.py</span></code> example.</p>
 </div>
 </dd></dl>
@@ -3665,7 +3665,7 @@ object.</p>
 <p class="admonition-title">Legacy Feature</p>
 <p>The <a class="reference internal" href="#sqlalchemy.orm.QueryEvents" title="sqlalchemy.orm.QueryEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryEvents</span></code></a> event methods are legacy
 as of SQLAlchemy 2.0, and only apply to direct use of the
-<a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object. They are not used for <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>
+<a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object. They are not used for <span class="xref std std-term">2.0 style</span>
 statements. For events to intercept and modify 2.0 style ORM use,
 use the <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> hook.</p>
 </div>
@@ -3704,7 +3704,7 @@ is superseded by the much more capable
 the <a class="reference internal" href="#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a> event is <strong>no longer
 used</strong> for ORM-level attribute loads, such as loads of deferred
 or expired attributes as well as relationship loaders.   See the
-new examples in <a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM查询事件</span></a> which
+new examples in <a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM 查询事件</span></a> which
 illustrate new ways of intercepting and modifying ORM queries
 for the most common purpose of adding arbitrary filter criteria.</p>
 </div>
@@ -3749,7 +3749,7 @@ return  a new <a class="reference internal" href="queryguide/query.html#sqlalche
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.QueryEvents.before_compile_update" title="sqlalchemy.orm.QueryEvents.before_compile_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile_update()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.QueryEvents.before_compile_delete" title="sqlalchemy.orm.QueryEvents.before_compile_delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile_delete()</span></code></a></p>
-<p><span class="xref std std-ref">baked_with_before_compile</span></p>
+<p><a class="reference internal" href="extensions/baked.html#baked-with-before-compile"><span class="std std-ref">使用before_compile事件</span></a></p>
 </div>
 </dd></dl>
 
@@ -3884,7 +3884,7 @@ resulting UPDATE statement.</p></li>
 
 </section>
 <section id="module-sqlalchemy.orm.instrumentation">
-<span id="id6"></span><h2>仪表盘事件<a class="headerlink" href="#module-sqlalchemy.orm.instrumentation" title="Permalink to this heading">¶</a></h2>
+<span id="id6"></span><h2>仪器事件<a class="headerlink" href="#module-sqlalchemy.orm.instrumentation" title="Permalink to this heading">¶</a></h2>
 <p>Defines SQLAlchemy’s system of class instrumentation.</p>
 <p>This module is usually not directly visible to user applications, but
 defines a large part of the ORM’s interactivity.</p>
@@ -4010,9 +4010,9 @@ is established on a superclass.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="extending.html" title="previous chapter">事件和内部实现</a>
+        <a href="extending.html" title="previous chapter">事件和内部机制</a>
         Next:
-        <a href="internals.html" title="next chapter">ORM内部结构</a>
+        <a href="internals.html" title="next chapter">ORM 内核</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -4022,7 +4022,7 @@ is established on a superclass.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:10
+    Documentation last generated: 2023/8/18 18:43:56
 
     </div>
 </div>

@@ -12,7 +12,7 @@
         <title>
             
     
-    事件注册
+    事件
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="核心API基础知识" href="api_basics.html" />
+        <link rel="up" title="Core API基础知识" href="api_basics.html" />
         <link rel="next" title="运行时检查API" href="inspection.html" />
-        <link rel="prev" title="核心API基础知识" href="api_basics.html" />
+        <link rel="prev" title="Core API基础知识" href="api_basics.html" />
     <!-- end layout.mako headers -->
 
 
@@ -120,21 +120,30 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span><ul>
-<li class="selected"><span class="link-container"><strong>事件注册</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#event-named-argument-styles">命名参数风格</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id9">目标</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#event-modifiers">修饰符</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id15">事件参考</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#api">API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span><ul>
+<li class="selected"><span class="link-container"><strong>事件</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2">事件注册</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#event-named-argument-styles">命名参数样式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">目标</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#event-modifiers">修改器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">事件参考</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#api">API参考</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.event.listen"><code class="docutils literal notranslate"><span class="pre">listen()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.event.listens_for"><code class="docutils literal notranslate"><span class="pre">listens_for()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.event.remove"><code class="docutils literal notranslate"><span class="pre">remove()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.event.contains"><code class="docutils literal notranslate"><span class="pre">contains()</span></code></a></span></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><span class="link-container"><a class="reference external" href="inspection.html">运行时检查API</a></span></li>
 <li><span class="link-container"><a class="reference external" href="exceptions.html">核心异常</a></span></li>
 <li><span class="link-container"><a class="reference external" href="internals.html">核心内部</a></span></li>
@@ -171,13 +180,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="api_basics.html" title="previous chapter">核心API基础知识</a></li>
+                <a href="api_basics.html" title="previous chapter">Core API基础知识</a></li>
                 <li><b>Next:</b>
                 <a href="inspection.html" title="next chapter">运行时检查API</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
-                    <ul><li><a href="api_basics.html" title="核心API基础知识">核心API基础知识</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
+                    <ul><li><a href="api_basics.html" title="Core API基础知识">Core API基础知识</a></li>
                 </ul>
                 </ul>
 
@@ -185,16 +194,19 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">事件注册</a></li>
-<li><a class="reference internal" href="#event-named-argument-styles">命名参数风格</a></li>
-<li><a class="reference internal" href="#id9">目标</a></li>
-<li><a class="reference internal" href="#event-modifiers">修饰符</a></li>
-<li><a class="reference internal" href="#id15">事件参考</a></li>
-<li><a class="reference internal" href="#api">API</a><ul>
+<li><a class="reference internal" href="#event-toplevel">事件</a><ul>
+<li><a class="reference internal" href="#id2">事件注册</a></li>
+<li><a class="reference internal" href="#event-named-argument-styles">命名参数样式</a></li>
+<li><a class="reference internal" href="#id6">目标</a></li>
+<li><a class="reference internal" href="#event-modifiers">修改器</a></li>
+<li><a class="reference internal" href="#id8">事件参考</a></li>
+<li><a class="reference internal" href="#api">API参考</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.event.listen"><code class="docutils literal notranslate"><span class="pre">listen()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.event.listens_for"><code class="docutils literal notranslate"><span class="pre">listens_for()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.event.remove"><code class="docutils literal notranslate"><span class="pre">remove()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.event.contains"><code class="docutils literal notranslate"><span class="pre">contains()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -208,73 +220,62 @@
 
     <div id="docs-body" role="main" class="withsidebar core-event" >
         
-<p id="event-toplevel">事件
-===</p>
-<p>SQLAlchemy自带一个事件API，发布了各种钩子，包括对SQLAlchemy核心和ORM内部的钩子。</p>
-<section id="id1">
-<h1>事件注册<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>订阅事件是通过一个API点完成的：：func：` .listen`函数或者alternatively的：func：` .listens_for`。这些函数接受目标，一个标识符，用于标识要拦截的事件，和一个用户定义的监听函数。这两个函数的附加位置和关键字参数可以由特定类型的事件支持，这些事件可以指定给定事件函数的替代接口，或者根据给定目标提供关于二级事件目标的说明。</p>
-<p>事件的名称和相应的监听函数的参数签名源自一个绑定到标记类的规范化方法，该标记类在文档中描述。例如, <code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect`的文档表明事件名称为`()</span></code>”connect”<a href="#id2"><span class="problematic" id="id3">``</span></a>,并且用户定义的监听函数应该接收两个位置参数:</p>
+<section id="event-toplevel">
+<span id="id1"></span><h1>事件<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy包括一个事件API，该API发布了对SQLAlchemy核心和ORM内部的广泛挂钩。</p>
+<section id="id2">
+<h2>事件注册<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>通过一个单一的API点注册事件，即   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数，或者使用装饰器   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a> 。这些函数接受目标参数，一个用于标识要拦截的事件字符串标识符，以及一个用户定义的监听函数。这两个函数的其他位置和关键字参数可能会被特定类型事件所支持，这些事件可能会为给定的事件函数指定备选接口，或者根据给定的目标提供有关次要事件目标的说明。</p>
+<p>事件的名称和对应的监听者函数的参数签名是从一个绑定到标记类的规范方法中推导出来的，这个规范方法在文档中有详细的描述。例如，对于  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  的文档说明了事件名称是 <code class="docutils literal notranslate"><span class="pre">&quot;connect&quot;</span></code>，并且用户定义的监听函数应该接收两个位置参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listen</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
 
 
 <span class="k">def</span> <span class="nf">my_on_connect</span><span class="p">(</span><span class="n">dbapi_con</span><span class="p">,</span> <span class="n">connection_record</span><span class="p">):</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;New DBAPI connection:&quot;</span><span class="p">,</span> <span class="n">dbapi_con</span><span class="p">)</span>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;新的DBAPI连接:&quot;</span><span class="p">,</span> <span class="n">dbapi_con</span><span class="p">)</span>
 
 
 <span class="n">listen</span><span class="p">(</span><span class="n">Pool</span><span class="p">,</span> <span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="n">my_on_connect</span><span class="p">)</span></pre></div>
 </div>
-<p>使用:func: <a href="#id4"><span class="problematic" id="id5">`</span></a>.listens_for`装饰器进行监听,如下所示:</p>
+<p>使用装饰器   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a>  进行监听:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listens_for</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
 
 
 <span class="nd">@listens_for</span><span class="p">(</span><span class="n">Pool</span><span class="p">,</span> <span class="s2">&quot;connect&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">my_on_connect</span><span class="p">(</span><span class="n">dbapi_con</span><span class="p">,</span> <span class="n">connection_record</span><span class="p">):</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;New DBAPI connection:&quot;</span><span class="p">,</span> <span class="n">dbapi_con</span><span class="p">)</span></pre></div>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;新的DBAPI连接:&quot;</span><span class="p">,</span> <span class="n">dbapi_con</span><span class="p">)</span></pre></div>
 </div>
 </section>
 <section id="event-named-argument-styles">
-<span id="id6"></span><h1>命名参数风格<a class="headerlink" href="#event-named-argument-styles" title="Permalink to this heading">¶</a></h1>
-<p>有一些参数风格的变化可以被监听函数所接受。
-以:meth:<cite>_events.PoolEvents.connect`为例，此函数
-记录为接收“dbapi_connection”和“connection_record”参数.
-我们可以选择通过名称接收这些参数，建立一个监听器函数
-接受``**keyword``参数，通过传递``named=True``来实现
-:func:</cite>.listen` 或:func:<cite>.listens_for</cite>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listens_for</span>
-<span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
-
-
-<span class="nd">@listens_for</span><span class="p">(</span><span class="n">Pool</span><span class="p">,</span> <span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">my_on_connect</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;New DBAPI connection:&quot;</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s2">&quot;dbapi_connection&quot;</span><span class="p">])</span></pre></div>
-</div>
-<p>使用命名参数传递时，参数规范中列出的名称将用作字典中的键。</p>
-<p>命名风格将所有参数按名称传递，而不考虑函数签名，因此也可以列出特定参数，以任何顺序，只要名称匹配即可:</p>
+<span id="id3"></span><h2>命名参数样式<a class="headerlink" href="#event-named-argument-styles" title="Permalink to this heading">¶</a></h2>
+<p>有一些参数样式的变体可以被监听函数接受。以  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  为例，此函数文档中有关于接受 <code class="docutils literal notranslate"><span class="pre">dbapi_connection</span></code> 和 <code class="docutils literal notranslate"><span class="pre">connection_record</span></code> 参数的描述。我们可以通过建立一个接受 <code class="docutils literal notranslate"><span class="pre">**keyword</span></code> 参数的监听者函数，通过在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  或   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a>  中传递 <code class="docutils literal notranslate"><span class="pre">named=True</span></code>，来按名称接收这些参数值。</p>
+<blockquote>
+<div><p>from sqlalchemy.event import listens_for
+from sqlalchemy.pool import Pool</p>
+<p>&#64;listens_for(Pool, “connect”, named=True)
+def my_on_connect(<a href="#id4"><span class="problematic" id="id5">**</span></a>kw):</p>
+<blockquote>
+<div><p>print(“新的DBAPI连接:”, kw[“dbapi_connection”])</p>
+</div></blockquote>
+</div></blockquote>
+<p>使用命名参数传递时，函数参数说明中列出的名称将用作字典中的键。</p>
+<p>命名样式通过名称传递所有参数，而不管函数签名，因此可以列出特定的参数，并且可以以任何顺序列出，只要名称匹配即可:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listens_for</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
 
 
 <span class="nd">@listens_for</span><span class="p">(</span><span class="n">Pool</span><span class="p">,</span> <span class="s2">&quot;connect&quot;</span><span class="p">,</span> <span class="n">named</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">my_on_connect</span><span class="p">(</span><span class="n">dbapi_connection</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;New DBAPI connection:&quot;</span><span class="p">,</span> <span class="n">dbapi_connection</span><span class="p">)</span>
-    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;Connection record:&quot;</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s2">&quot;connection_record&quot;</span><span class="p">])</span></pre></div>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;新的DBAPI连接:&quot;</span><span class="p">,</span> <span class="n">dbapi_connection</span><span class="p">)</span>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;连接记录:&quot;</span><span class="p">,</span> <span class="n">kw</span><span class="p">[</span><span class="s2">&quot;connection_record&quot;</span><span class="p">])</span></pre></div>
 </div>
-<p>上述代码中，“<a href="#id7"><span class="problematic" id="id8">**</span></a>kw”的存在告诉:func:<cite>.listens_for</cite>，应该通过名称将参数传递给函数，而不是按顺序传递。</p>
+<p>上面，存在 <code class="docutils literal notranslate"><span class="pre">**kw</span></code> 告诉   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a> ，参数应该通过名称而不是位置传递给函数。</p>
 </section>
-<section id="id9">
-<h1>目标<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h1>
-<dl class="field-list simple">
-<dt class="field-odd">func<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>.listen</cite> 函数针对目标非常灵活。它</p>
-</dd>
-</dl>
-<p>通常接受类，这些类的实例和相关的
-类或对象，可以从中推导出适当的目标。
-例如，上面提到的“connect”事件接受
-中的:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_engine.Engine`类和对象，以及:class:<a href="#id12"><span class="problematic" id="id13">`</span></a>_pool.Pool`类和对象</p>
+<section id="id6">
+<h2>目标<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p><a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数对于目标非常灵活。 它通常接受类、这些类的实例以及相关的类或对象，从中可以派生出适当的目标。例如，上述提到的 <code class="docutils literal notranslate"><span class="pre">&quot;connect&quot;</span></code> 事件接受   <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  类和对象，以及   <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>  类和对象：</p>
 <blockquote>
 <div><p>from sqlalchemy.event import listen
 from sqlalchemy.pool import Pool, QueuePool
@@ -287,56 +288,41 @@ import psycopg2</p>
 </dl>
 <p>my_pool = QueuePool(connect)
 my_engine = create_engine(“postgresql+psycopg2://ed&#64;localhost/test”)</p>
-<p># associate listener with all instances of Pool
+<p># 将监听事件与所有的Pool实例关联
 listen(Pool, “connect”, my_on_connect)</p>
-<p># associate listener with all instances of Pool
-# via the Engine class
+<p># 通过Engine类将监听事件与所有的Pool实例关联
 listen(Engine, “connect”, my_on_connect)</p>
-<p># associate listener with my_pool
+<p># 将监听事件与my_pool关联
 listen(my_pool, “connect”, my_on_connect)</p>
-<p># associate listener with my_engine.pool
+<p># 将监听事件与my_engine.pool关联
 listen(my_engine, “connect”, my_on_connect)</p>
+</div></blockquote>
 </div></blockquote>
 </section>
 <section id="event-modifiers">
-<span id="id14"></span><h1>修饰符<a class="headerlink" href="#event-modifiers" title="Permalink to this heading">¶</a></h1>
-<p>一些监听器允许向:func:<cite>.listen`传递修饰符。
-这些修饰符有时提供了替代调用签名的方法
-侦听器。就像ORM事件一样，一些事件监听器可以有一个
-返回值来修改后续处理。默认情况下，没有
-听众需要返回值，但通过传递``retval=True`</cite>
-可以支持这个值:</p>
+<span id="id7"></span><h2>修改器<a class="headerlink" href="#event-modifiers" title="Permalink to this heading">¶</a></h2>
+<p>一些监听器允许在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  中传递修改器。这些修饰符有时会为监听器提供备用的调用签名。例如，在ORM事件中，一些事件监听器可以有一个返回值，该返回值可以修改后续处理。默认情况下，没有任何监听器需要返回值，但是通过传递 <code class="docutils literal notranslate"><span class="pre">retval=True</span></code>，可以支持此值返回:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validate_phone</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">oldvalue</span><span class="p">,</span> <span class="n">initiator</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Strip non-numeric characters from a phone number&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Strip非数字字符从电话号码中&quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\D&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 
-<span class="c1"># setup listener on UserContact.phone attribute, instructing</span>
-<span class="c1"># it to use the return value</span>
+<span class="c1"># 在UserContact.phone属性上设置监听器，以使用返回值</span>
 <span class="n">listen</span><span class="p">(</span><span class="n">UserContact</span><span class="o">.</span><span class="n">phone</span><span class="p">,</span> <span class="s2">&quot;set&quot;</span><span class="p">,</span> <span class="n">validate_phone</span><span class="p">,</span> <span class="n">retval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
 </div>
 </section>
-<section id="id15">
-<h1>事件参考<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h1>
-<p>SQLAlchemy Core和SQLAlchemy ORM都具有各种事件钩子:</p>
+<section id="id8">
+<h2>事件参考<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy Core和SQLAlchemy ORM都具有各种事件挂钩:</p>
 <ul class="simple">
-<li><p><strong>核心事件</strong> - 这些在中描述</p></li>
+<li><p><strong>Core事件</strong> - 这些在   <a class="reference internal" href="events.html"><span class="std std-ref">Core事件</span></a>  中描述
+，包括特定于连接池生命周期、SQL语句执行、事务生命周期和模式创建和拆卸的事件挂钩。</p></li>
+<li><p><strong>ORM事件</strong> - 这些在   <a class="reference internal" href="../orm/events.html"><span class="std std-ref">ORM 事件</span></a>  中描述，包括特定于类和属性检测、对象初始化钩子、属性更改后钩子、会话状态、刷新和提交钩子、映射器初始化、对象/结果填充和每个实例的持久性钩子的事件挂钩。</p></li>
 </ul>
-<p>  :ref:<a href="#id16"><span class="problematic" id="id17">`</span></a>core_event_toplevel`并包括特定于的事件钩子
-  连接池生命周期，SQL语句执行，
-  事务生命周期和模式创建和拆除。</p>
-<ul class="simple">
-<li><p><strong>ORM事件</strong> - 这些在中描述</p></li>
-</ul>
-<p>  <a class="reference internal" href="../orm/events.html"><span class="std std-ref">ORM 事件</span></a> 并包括特定于的事件钩子
-  类和属性插装，对象初始化
-  钩子， 属性更改钩子，会话状态，流，以及
-  提交挂钩，映射器初始化，对象/结果填充，
-  以及每个实例的持久性钩子。</p>
 </section>
 <section id="api">
-<h1>API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
+<h2>API参考<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -363,7 +349,7 @@ listen(my_engine, “connect”, my_on_connect)</p>
 <em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.event.</span></span><span class="sig-name descname"><span class="pre">listen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.event.listen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Register a listener function for the given target.</p>
 <p>The <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a> function is part of the primary interface for the
-SQLAlchemy event system, documented at <span class="xref std std-ref">event_toplevel</span>.</p>
+SQLAlchemy event system, documented at <a class="reference internal" href="#"><span class="std std-ref">事件</span></a>.</p>
 <p>e.g.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.schema</span> <span class="kn">import</span> <span class="n">UniqueConstraint</span>
@@ -392,7 +378,7 @@ certain user defined functions can run before others, such as when
 <li><p><span class="target" id="sqlalchemy.event.listen.params.named"></span><strong>named</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.event.listen.params.named">¶</a> (<em>bool</em>) – When using named argument passing, the names listed in
 the function argument specification will be used as keys in the
 dictionary.
-See <a class="reference internal" href="#event-named-argument-styles"><span class="std std-ref">命名参数风格</span></a>.</p></li>
+See <a class="reference internal" href="#event-named-argument-styles"><span class="std std-ref">命名参数样式</span></a>.</p></li>
 <li><p><span class="target" id="sqlalchemy.event.listen.params.once"></span><strong>once</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.event.listen.params.once">¶</a> (<em>bool</em>) – Private/Internal API usage. Deprecated.  This parameter
 would provide that an event function would run only once per given
 target. It does not however imply automatic de-registration of the
@@ -442,7 +428,7 @@ from inside of a single listener.</p>
 <em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.event.</span></span><span class="sig-name descname"><span class="pre">listens_for</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identifier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.event.listens_for" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorate a function as a listener for the given target + identifier.</p>
 <p>The <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a> decorator is part of the primary interface for the
-SQLAlchemy event system, documented at <span class="xref std std-ref">event_toplevel</span>.</p>
+SQLAlchemy event system, documented at <a class="reference internal" href="#"><span class="std std-ref">事件</span></a>.</p>
 <p>This function generally shares the same kwargs as <code class="xref py py-func docutils literal notranslate"><span class="pre">listens()</span></code>.</p>
 <p>e.g.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
@@ -523,6 +509,7 @@ from inside of a single listener.</p>
 </dd></dl>
 
 </section>
+</section>
 
     </div>
 
@@ -530,7 +517,7 @@ from inside of a single listener.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="api_basics.html" title="previous chapter">核心API基础知识</a>
+        <a href="api_basics.html" title="previous chapter">Core API基础知识</a>
         Next:
         <a href="inspection.html" title="next chapter">运行时检查API</a>
 
@@ -542,7 +529,7 @@ from inside of a single listener.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:06:56
+    Documentation last generated: 2023/8/18 18:43:46
 
     </div>
 </div>

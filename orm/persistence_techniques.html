@@ -39,7 +39,7 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="使用Session" href="session.html" />
+        <link rel="up" title="用 Session" href="session.html" />
         <link rel="next" title="上下文/线程本地会话" href="contextual.html" />
         <link rel="prev" title="事务和连接管理" href="session_transaction.html" />
     <!-- end layout.mako headers -->
@@ -127,40 +127,27 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="session_basics.html">会话基础知识</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_state_management.html">状态管理</a></span></li>
-<li><span class="link-container"><a class="reference external" href="cascades.html">级联</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_transaction.html">事务和连接管理</a></span></li>
-<li class="selected"><span class="link-container"><strong>附加的持久化技术</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#sql">在会话中使用SQL表达式</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#null">对具有默认值的列强制使用NULL</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#returning">情况2：表包括与RETURNING不兼容的触发器生成的值</a></span></li>
-</ul>
-</li>
-<li><span class="link-container"><a class="reference external" href="#insert-updateon-conflict-upsert-orm">使用INSERT，UPDATE和ON CONFLICT（即upsert）返回ORM对象</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#returningpostgresql-on-conflictupserted-orm">使用带RETURNING的PostgreSQL ON CONFLICT返回upserted ORM的对象</a></span></li>
-</ul>
-</li>
-<li><span class="link-container"><a class="reference external" href="#session">分区策略（例如，每个Session的多个数据库后端）</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id38">简单垂直分区</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id43">多引擎Session的交易协调</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#session-custom-partitioning">自定义垂直分区</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id57">水平分区</a></span></li>
-</ul>
-</li>
+<li class="selected"><span class="link-container"><strong>附加的持久化技术</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql-flush">将SQL插入/更新表达式嵌入到Flush中</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sessionssql">在Sessions中使用SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#null">在具有默认值的列上强制执行NULL</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-server-defaults">提取服务器生成的默认值</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insertupdateon-conflict-upsert-orm">使用INSERT、UPDATE和ON CONFLICT（即upsert）返回ORM对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session">分区策略（例如 Session 上的多个数据库后端）</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#bulk-operations">批量操作</a></span></li>
-</ul>
-</li>
 <li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件追踪查询、对象和会话更改</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -198,7 +185,7 @@
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="session.html" title="使用Session">使用Session</a></li>
+                    <ul><li><a href="session.html" title="用 Session">用 Session</a></li>
                 </ul>
                 </ul>
 
@@ -206,26 +193,28 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">附加的持久化技术</a><ul>
-<li><a class="reference internal" href="#sql">在会话中使用SQL表达式</a></li>
-<li><a class="reference internal" href="#null">对具有默认值的列强制使用NULL</a><ul>
-<li><a class="reference internal" href="#returning">情况2：表包括与RETURNING不兼容的触发器生成的值</a></li>
+<li><a class="reference internal" href="#id1">附加的持久化技术</a></li>
+<li><a class="reference internal" href="#sql-flush">将SQL插入/更新表达式嵌入到Flush中</a></li>
+<li><a class="reference internal" href="#sessionssql">在Sessions中使用SQL表达式</a></li>
+<li><a class="reference internal" href="#null">在具有默认值的列上强制执行NULL</a></li>
+<li><a class="reference internal" href="#orm-server-defaults">提取服务器生成的默认值</a><ul>
+<li><a class="reference internal" href="#returning">情况2：表包含与RETURNING不兼容的触发器生成的值</a></li>
+<li><a class="reference internal" href="#id21">情况3：非主键，不支持或不需要RETURNING或等效</a></li>
+<li><a class="reference internal" href="#orm-server-default-fetching-example">示例</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#insert-updateon-conflict-upsert-orm">使用INSERT，UPDATE和ON CONFLICT（即upsert）返回ORM对象</a><ul>
-<li><a class="reference internal" href="#returningpostgresql-on-conflictupserted-orm">使用带RETURNING的PostgreSQL ON CONFLICT返回upserted ORM的对象</a></li>
+<li><a class="reference internal" href="#insertupdateon-conflict-upsert-orm">使用INSERT、UPDATE和ON CONFLICT（即upsert）返回ORM对象</a><ul>
+<li><a class="reference internal" href="#returningpostgresql-on-conflictupserted-orm">使用带有RETURNING的PostgreSQL ON CONFLICT返回upserted ORM对象</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#session">分区策略（例如，每个Session的多个数据库后端）</a><ul>
-<li><a class="reference internal" href="#id38">简单垂直分区</a></li>
-<li><a class="reference internal" href="#id43">多引擎Session的交易协调</a></li>
+<li><a class="reference internal" href="#session">分区策略（例如 Session 上的多个数据库后端）</a><ul>
+<li><a class="reference internal" href="#id35">简单的垂直分区</a></li>
+<li><a class="reference internal" href="#id38">为多元引擎会话协调事务</a></li>
 <li><a class="reference internal" href="#session-custom-partitioning">自定义垂直分区</a></li>
-<li><a class="reference internal" href="#id57">水平分区</a></li>
+<li><a class="reference internal" href="#id40">水平分区</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#bulk-operations">批量操作</a></li>
-</ul>
-</li>
 </ul>
 
 
@@ -239,9 +228,10 @@
         
 <section id="id1">
 <h1>附加的持久化技术<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p id="flush-embedded-sql-expressions">将SQL插入/更新表达式嵌入刷新
-================================================== ==</p>
-<p>此功能允许将数据库列的值设置为SQL表达式而不是文字值。 它对于原子更新，调用存储过程等特别有用。 您只需将一个表达式分配给属性即可:</p>
+</section>
+<section id="sql-flush">
+<span id="flush-embedded-sql-expressions"></span><h1>将SQL插入/更新表达式嵌入到Flush中<a class="headerlink" href="#sql-flush" title="Permalink to this heading">¶</a></h1>
+<p>此功能允许将数据库列的值设置为SQL表达式而不是文字值。它特别适用于原子更新、调用存储过程等。你只需要将表达式分配给属性即可:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;some_table&quot;</span>
 
@@ -252,67 +242,63 @@
 
 <span class="n">someobject</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 
-<span class="c1">#将 &#39;value&#39; 属性设置为 SQL 表达式 加上1</span>
+<span class="c1"># 将&quot;value&quot;属性设置为SQL表达式加1</span>
 <span class="n">someobject</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mi">1</span>
 
-<span class="c1">#会产生 &quot;UPDATE some_table SET value=value+1&quot;</span>
+<span class="c1"># 发布 &quot;UPDATE some_table SET value=value+1&quot;</span>
 <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>此技术适用于INSERT和UPDATE语句。 刷新/提交操作后，上面的“someobject”的“value”属性将过期，因此下次访问时新生成的值将从数据库加载。</p>
-<p>该功能还具有条件支持，以与主键列一起使用。 对于支持 RETURNING
-的后端（包括Oracle，SQL Server，MariaDB 10.5，SQLite 3.35），也可以将SQL表达式分配给主键列。 这既允许评估SQL表达式，又允许成功检索对INSERT修改主键值的任何服务器端触发器作为对象的主键的一部分：</p>
-<blockquote>
-<div><dl class="simple">
-<dt>class Foo(Base):</dt><dd><p>__tablename__ = “foo”
-pk = mapped_column(Integer, primary_key=True)
-bar = mapped_column(Integer)</p>
-</dd>
-</dl>
-<p>e = create_engine(“postgresql+psycopg2://scott:tiger&#64;localhost/test”, echo=True)
-Base.metadata.create_all(e)</p>
-<p>session = Session(e)</p>
-<p>foo = Foo(pk=sql.select(sql.func.coalesce(sql.func.max(Foo.pk) + 1, 1)))
-session.add(foo)
-session.commit()</p>
-</div></blockquote>
-<p>在PostgreSQL上，上面的:class：<a href="#id2"><span class="problematic" id="id3">`</span></a>Session`将发出以下INSERT：</p>
+<p>此方法适用于INSERT和UPDATE语句。在Flush/commit操作之后，“someobject”上的“value”属性过期，因此在下次访问时，新生成的值将从数据库中加载。</p>
+<p>该功能还具有条件支持，以与主键列一起使用。对于具有RETURNING支持的后端(包括Oracle、SQL Server、MariaDB 10.5、SQLite 3.35)，SQL表达式还可以分配到主键列中。这样，即可以计算SQL表达式，也可以成功检索单个对象的主键中修改主键值的任何服务器端触发器:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Foo</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;foo&quot;</span>
+    <span class="n">pk</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bar</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/test&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+<span class="n">foo</span> <span class="o">=</span> <span class="n">Foo</span><span class="p">(</span><span class="n">pk</span><span class="o">=</span><span class="n">sql</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">coalesce</span><span class="p">(</span><span class="n">sql</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Foo</span><span class="o">.</span><span class="n">pk</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在PostgreSQL上，上述 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>.Session`会发出以下INSERT:</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="p">(</span><span class="n">foopk</span><span class="p">,</span><span class="w"> </span><span class="n">bar</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span>
 <span class="p">((</span><span class="k">SELECT</span><span class="w"> </span><span class="k">coalesce</span><span class="p">(</span><span class="k">max</span><span class="p">(</span><span class="n">foo</span><span class="p">.</span><span class="n">foopk</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">max_1</span><span class="p">)</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">coalesce_2</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">coalesce_1</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">foo</span><span class="p">),</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">bar</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">foo</span><span class="p">.</span><span class="n">foopk</span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.3: </span>ORM刷新期间现在可以通过主键列传递SQL表达式； 如果数据库支持RETURNING或如果正在使用pysqlite，则ORM将能够将服务器生成的值作为主键属性的值检索。</p>
+<p><span class="versionmodified added">New in version 1.3: </span>SQL表达式现在可以在ORM中的Flush期间传递到主键列；如果数据库支持RETURNING，或者正在使用pysqlite，则ORM将能够检索服务器生成的值作为主键属性的值。</p>
 </div>
-<section id="sql">
-<span id="session-sql-expressions"></span><h2>在会话中使用SQL表达式<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
-<p>SQL表达式和字符串可以通过
-<code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code>，以与
-:class:<a href="#id4"><span class="problematic" id="id5">`</span></a>~sqlalchemy.engine.Engine`或
-:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>~sqlalchemy.engine.Connection`相同的方式:</p>
+</section>
+<section id="sessionssql">
+<span id="session-sql-expressions"></span><h1>在Sessions中使用SQL表达式<a class="headerlink" href="#sessionssql" title="Permalink to this heading">¶</a></h1>
+<dl>
+<dt>SQL表达式和字符串可以通过  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ~.Session.execute` 方法完成，该方法以与 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>~sqlalchemy.engine.Engine`或</dt><dd><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ~sqlalchemy.engine.CursorResult`:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 
-<span class="c1">#执行字符串语句</span>
+<span class="c1"># 执行一个字符串语句</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;select * from table where id=:id&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">})</span>
 
-<span class="c1">#执行SQL表达式结构</span>
+<span class="c1"># 执行SQL表达式构造</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">mytable</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mytable</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">7</span><span class="p">))</span></pre></div>
 </div>
-<p>当前的:paramref：<a href="#id8"><span class="problematic" id="id9">`</span></a>~ SQLAlchemy.engine.Connection`由持有
-:meth:<a href="#id10"><span class="problematic" id="id11">`</span></a>~.Session.connection`方法访问:</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ~sqlalchemy.engine.Connection`可通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  方法获得:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span></pre></div>
 </div>
-<p>上述示例处理绑定到单个类的:class:<cite>_engine.Engine`或
-:class:`_engine.Connection`的:class:`_orm.Session</cite>。要执行使用多个
-引擎或根本不绑定（即依赖于已绑定元数据）的：class:<cite>_orm.Session“语句，
-:meth:`_orm.Session.execute`和
-:meth:`_orm.Session.connection`接受绑定参数的字典
-:paramref:`_orm.Session.execute.bind_arguments</cite>，其中可能包括“mapper”
-传递映射类或：class:<a href="#id12"><span class="problematic" id="id13">`</span></a>_orm.Mapper`实例，其中用于定位所需引擎的适当上下文:</p>
+</dd>
+<dt>上述示例处理绑定到单个  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 。如果要使用绑定到多个引擎或未绑定任何引擎的 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.Session`执行语句(即依赖于绑定的元数据)，</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  接受一个绑定参数字典，其中可能包括“mapper”参数，</p>
+</dd>
+</dl>
+<p>这表示映射的类或 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.Mapper`实例，用于定位所需引擎的正确上下文:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 
-<span class="c1">#在执行时需要指定映射器或类</span>
+<span class="c1"># 在执行时需要指定映射器或类</span>
 <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
     <span class="n">text</span><span class="p">(</span><span class="s2">&quot;select * from table where id=:id&quot;</span><span class="p">),</span>
     <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
@@ -326,28 +312,25 @@ session.commit()</p>
 <span class="n">connection</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">connection</span><span class="p">(</span><span class="n">MyMappedClass</span><span class="p">)</span></pre></div>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.4: </span>:meth:<a href="#id14"><span class="problematic" id="id15">`</span></a>_orm.Session.execute`和</p>
+<p><span class="versionmodified changed">Changed in version 1.4: </span><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> <cite>mapper``和``clause``参数现在作为字典的一部分通过发送给  :paramref:`_orm.Session.execute.bind_arguments</cite>  参数而传递。
+先前的参数仍然被接受，但是该用法已被弃用。</p>
 </div>
-<p>   现在将“映射器”和“子句”参数作为字典的一部分传递，
-    发送名为:paramref:<a href="#id16"><span class="problematic" id="id17">`</span></a>_orm.Session.execute.bind_arguments`的初始值。
-   先前的参数仍然可接受，但是此用法已被弃用。</p>
 </section>
 <section id="null">
-<span id="session-forcing-null"></span><h2>对具有默认值的列强制使用NULL<a class="headerlink" href="#null" title="Permalink to this heading">¶</a></h2>
-<p>ORM将任何未在对象上显式设置的属性视为“默认值”情况；该属性将在INSERT语句中被省略：</p>
-<blockquote>
-<div><dl class="simple">
-<dt>class MyObject(Base):</dt><dd><p>__tablename__ = “my_table”
-id = mapped_column(Integer, primary_key=True)
-data = mapped_column(String(50), nullable=True)</p>
-</dd>
-</dl>
-<p>obj = MyObject(id=1)
-session.add(obj)
-session.commit()  #带有’data’列省略的INSERT;数据库</p>
-</div></blockquote>
-<p>                    #本身将它保存为NULL值</p>
-<p>从INSERT中省略列意味着该列将具有设置为NULL的值，<a href="#id18"><span class="problematic" id="id19">*</span></a>除非*该列具有默认设置，在这种情况下，将保留默认值。这适用于SQL的纯视角，其中包括具有服务器端默认值的服务器端，以及在具有客户端和服务器端默认值的情况下使用SQLAlchemy的插入行为：</p>
+<span id="session-forcing-null"></span><h1>在具有默认值的列上强制执行NULL<a class="headerlink" href="#null" title="Permalink to this heading">¶</a></h1>
+<p>ORM将任何未在对象上显式设置的属性都视为”default”情况；属性将从INSERT语句中省略:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># INSERT with the &#39;data&#39; column omitted; the database</span>
+<span class="c1"># itself will persist this as the NULL value</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>从INSERT中省略列意味着该列将设置为NULL值，除非该列设置了默认值，在这种情况下，将保留默认值。从一个纯SQL的角度、从客户端和服务器端的默认行为以及使用客户端和服务器端默认的SQLAlchemy的插入行为都是如此：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>class MyObject(Base):</dt><dd><p>__tablename__ = “my_table”
@@ -357,10 +340,10 @@ data = mapped_column(String(50), nullable=True, server_default=”default”)</p
 </dl>
 <p>obj = MyObject(id=1)
 session.add(obj)
-session.commit()  #INSERT，其中 ‘ data ‘列省略;数据库</p>
+session.commit()  # INSERT with the ‘data’ column omitted; the database
+# itself will persist this as the value ‘default’</p>
 </div></blockquote>
-<p>                    #本身将它保留为值’default’</p>
-<p>但是，对于ORM，即使在对象上显式将Python值None分配给该对象，这也被视为与值未分配同​​​​​​样:</p>
+<p>但是，在ORM中，即使在对象上将Python值``None``显式分配给属性，这也被视为与未分配该值相同:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -369,167 +352,170 @@ session.commit()  #INSERT，其中 ‘ data ‘列省略;数据库</p>
 
 <span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1">#INSERT，其中 &#39;data&#39;列显式设置为None;</span>
-                  <span class="c1">#ORM仍会将其从语句中省略，而且</span></pre><div class="code-non-annotations-key"></div></div>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># INSERT with the &#39;data&#39; column explicitly set to None;</span>
+<span class="c1"># the ORM still omits it from the statement and the</span>
+<span class="c1"># database will still persist this as the value &#39;default&#39;</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>                    #数据库仍将其保存为值’default’</p>
-<p>上述操作将在“data”列中保留服务器默认值“default”，而不是SQL NULL，即使传递了“None”也是ORM的长期行为，许多应用程序将其视为一种假设。</p>
-<p>那么，如果我们希望实际将NULL放入此列中，即使该列具有默认值，怎么办？ 有两种方法。 其一是在每个实例级别上使用:obj:<cite>_expression.null</cite> SQL构造分配属性:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">null</span>
+<p>上述操作将在``data``列中保留服务器的默认值``”default”<code class="docutils literal notranslate"><span class="pre">，而不是SQL</span> <span class="pre">NULL，即使传递了``None</span></code>；这是ORM的长期行为，许多应用程序将其视为假设。</p>
+<p>那么，如果我们希望实际将NULL放入此列中，即使该列具有默认值，该怎么办？有两种方法。一种是在单个实例级别上使用  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.null" title="sqlalchemy.sql.expression.null"><code class="xref py py-obj docutils literal notranslate"><span class="pre">null</span></code></a>   SQL构造分配属性:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">null</span>
 
-<span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">null</span><span class="p">())</span>
+  <span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">null</span><span class="p">())</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+  <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># INSERT with the &#39;data&#39; column explicitly set as null();</span>
+  <span class="c1"># ORM直接使用它，绕过所有客户端和服务器</span>
+  <span class="c1"># 默认值，数据库将将其持久化为NULL值</span>
+
+<span class="p">:</span><span class="n">obj</span><span class="p">:</span><span class="err">`</span><span class="n">_expression</span><span class="o">.</span><span class="n">null</span><span class="err">`</span>   <span class="n">SQL构造总是转换为目标INSERT语句中直接存在的SQL</span> <span class="n">NULL值</span><span class="err">。</span></pre></div>
+</div>
+<p>如果我们希望能够使用Python值``None``，并且这也被持久化为NULL，尽管存在列默认值，我们可以使用Core级修饰符  <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.evaluates_none" title="sqlalchemy.types.TypeEngine.evaluates_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.evaluates_none()</span></code></a>  进行ORM配置。该修饰符指示ORM要将“None”值与任何其他值相同地对待并将其传递，而不是将其视为缺少的“missing”值:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span>
+        <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="o">.</span><span class="n">evaluates_none</span><span class="p">(),</span>  <span class="c1"># 表明None应始终被传递</span>
+        <span class="n">nullable</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">server_default</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="n">obj</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
-<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1">#在&#39;data&#39;列上显式设置为‘null（）’;ORM直接使用它，绕过所有客户端-和服务器端默认值，数据库将将其保留为NULL值</span></pre></div>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># INSERT with the &#39;data&#39; column explicitly set to None;</span>
+<span class="c1"># ORM直接使用它，绕过所有客户端和服务器</span>
+<span class="c1"># 默认值，数据库将将其持久化为NULL值</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>: obj:<cite>_expression.null</cite> SQL构造将始终转换为SQL NULL值直接出现在目标INSERT语句中。</p>
-<p>如果我们希望能够使用Python值“None”，并且尽管存在列默认值，此值也将作为NULL持久化，我们可以使用Core级别的修改器
-<a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.evaluates_none" title="sqlalchemy.types.TypeEngine.evaluates_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.evaluates_none()</span></code></a>，指示ORM该如何将值“None”视为其他任何值并传递它，而不是将其视为“缺少”值，例如该。</p>
+<aside class="topic">
+<p class="topic-title">根据None评估</p>
 <blockquote>
-<div><dl>
-<dt>class MyObject(Base):</dt><dd><p>__tablename__ = “my_table”
-id = mapped_column(Integer, primary_key=True)
-data = mapped_column(</p>
-<blockquote>
-<div><p>String(50).evaluates_none(),  #指示None始终应传递</p>
+<div><p><a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.evaluates_none" title="sqlalchemy.types.TypeEngine.evaluates_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.evaluates_none()</span></code></a>  修饰符主要用于表明Python值“None”是有意义的类型，主要示例是可以将JSON类型持久化为JSON <a href="#id10"><span class="problematic" id="id11">``</span></a>null``而不是SQL NULL。</p>
 </div></blockquote>
-</dd>
-</dl>
-</div></blockquote>
-<dl>
-<dt>            可识别，可为空，server_default=“default”。</dt><dd><blockquote>
-<div><p>)</p>
-</div></blockquote>
-<p>obj = MyObject(id=1，data = None)
-session.add(obj)
-session.commit()  #将“data”列显式设置为None;</p>
-<blockquote>
-<div><p>#ORM将直接使用它，绕过所有客户端-</p>
-</div></blockquote>
-</dd>
-</dl>
-<p>                    #和服务器端默认值，数据库将
-                    #将其保留为NULL值</p>
-<p>  :meth:<a href="#id20"><span class="problematic" id="id21">`</span></a>.TypeEngine.evaluates_none`修改器主要用于表示值Python的类型中
-  “无（None）”的意义，最基本的示例是JSON类型，旨在保留JSON的应用程序
-  <a href="#id22"><span class="problematic" id="id23">``</span></a>null```值而不是SQL NULL。 我们在这里稍微重塑它来
-  表示ORM应该在出现时传递’None’值，并且尽管未分配任何特殊类型级别的行为，仍然传递它。</p>
-<p id="orm-server-defaults">获取服务器生成的默认值
-================================================== ==</p>
-<p>如前所述，Core支持有关数据库列的概念，对于这些列，数据库本身在进行INSERT和在较少的情况下进行UPDATE语句时会生成一个值。 ORM特征支持此类列，以便在刷新时能够获取这些新生成的值。 如果主键列生成服务器，则此行为对于必须知道对象的主键值一旦它被持久化的情况是必需的。</p>
-<p>在绝大多数情况下，具有其值由数据库自动生成的主键列仅为简单必须列，这些列由数据库实现为所谓的“自动递增”列，或者与该列相关联的序列。 SQLALCHEMY都支持这些类型，数据库包括获取“最后插入的ID”之类的功能，其中在不支持RETURNING并且RETURNING不受支持时将自动生成值。</p>
-<p>对于不是主键列或不是简单的自动递增整数列的服务器生成列，ORM要求将这些列标记为适当的“服务器默认值”指令，以允许ORM检索此值。 然而，并非所有的方法都支持所有后端，因此必须注意使用适当的方法。 需要回答的两个问题是，1.此列是否属于主键或不是，
-此外，该数据库是否支持RETURNING或等效项，例如“OUTPUT inserted”。这些是返回服务器生成值的SQL短语，在调用INSERT或UPDATE语句的同时返回该值。目前，POSTGRES，ORACLE，MariaDB 10.5，SQLite 3.35和SQL Server都支持RETURNING。</p>
-<p>情况1：非主键，支持RETURNING或等效项</p>
-<p>在此情况下，列应标记为：class：’FetchedValue’或具有显式值的：paramref：’_schema.Column.server_default’。 如果:paramref：’_orm.Mapper.eager_defaults’参数设置为`True’或对于支持两者的dialect默认设置为`“auto”<a href="#id24"><span class="problematic" id="id25">`</span></a>，则ORM将在执行INSERT语句时自动将这些列添加到RETURNING子句中，如：一样：</p>
-<blockquote>
-<div><dl>
-<dt>class MyModel(Base):</dt><dd><p>__tablename__ = “my_table”</p>
-<p>id = mapped_column(Integer, primary_key=True)</p>
-<p># 服务器端SQL日期函数生成新时间戳
-timestamp = mapped_column(DateTime(), server_default=func.now())</p>
-<p># 其他非此处命名的服务器端函数，例如触发器，
-# 。在INSERT期间将值填充到此列中
-special_identifier = mapped_column(String(50), server_default=FetchedValue())</p>
-<p>#将急切的默认值设置为True。这通常是可选的，因为如果
-#后端支持RETURNING + insertmanyvalues，急切默认值将
-#对于在INSERT时添加新生成的值立即起效</p>
-</dd>
-</dl>
-</div></blockquote>
-<p>上面，没有从客户端端为“timestamp”或“special_identifier”指定明确值的INSERT语句将在RETURNING子句中包含“timestamp”和“special_identifier”列，以便立即可用。 在PostgreSQL数据库上，上面的INSERT将如下所示：</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span></pre></div>
+<p>我们稍微重新解释它的作用，以便ORM能够在存在它时在类型中传递“None”，即使未分配特殊类型级行为。</p>
+</aside>
+</section>
+<section id="orm-server-defaults">
+<span id="id12"></span><h1>提取服务器生成的默认值<a class="headerlink" href="#orm-server-defaults" title="Permalink to this heading">¶</a></h1>
+<p>如   <span class="xref std std-ref">server_defaults</span>  和   <span class="xref std std-ref">triggered_columns</span>  中介绍的那样，Core支持数据库列，其中数据库本身在INSERT和在不太常见的情况下在UPDATE语句中生成一个值。ORM特征支持对这些列进行的查看，
+以便在Flush时检索这些新生成的值。需要在具有服务器生成值的主键列的情况下进行此操作，因为ORM需要知道对象的主键一旦持久化就可以使用。</p>
+<p>在绝大多数情况下，具有自动由数据库生成的主键列都是简单的整数列，这些列通过称为所谓的“自动增量”列的数据库实现，或者从与该列关联的序列中实现。SQLAlchemy Core中的每个数据库方言都支持检索这些主键值的方法，这通常是Python DBAPI原生支持的，通常情况下自动处理这个过程。 更多文档详见  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.autoincrement" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.autoincrement</span></code></a>  。</p>
+<p>对于不是主键列或不是简单自动增量整数列的服务器生成列，ORM要求将这些列标记为适当的``server_default``指令，以允许ORM检索此值。但是，并非所有方法都在所有后端上得到支持，因此必须小心地使用适当的方法。需要回答的两个问题是，1.此列是否是主键列，2.数据库是否支持RETURNING或等效内容，如”OUTPUT inserted” ; 这些是在调用INSERT或UPDATE语句的同时返回服务器生成值的SQL短语。RETURNING目前由PostgreSQL、Oracle、MariaDB 10.5、SQLite 3.35和SQL Server支持。</p>
+<p>情况1：非主键，支持RETURNING或等效内容</p>
+<p>在此情况下，列应使用  <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a>  或显式使用  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>   标记。在Flush语句执行INSERT操作时，假设  <a href="#id13"><span class="problematic" id="id14">:param:`_orm.Mapper.eager_defaults`</span></a>  参数设置为 <a href="#id15"><span class="problematic" id="id16">``</span></a>True``或者对于支持 RETURNING
+以及   <a class="reference internal" href="../core/connections.html#engine-insertmanyvalues"><span class="std std-ref">insertmanyvalues</span></a>  包括在内的方言，ORM将自动将这些列添加到RETURNING子句中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 服务器端SQL日期函数生成新的时间戳</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">(),</span> <span class="n">server_default</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+    <span class="c1"># 在INSERT期间，数据库中的某些其他服务器端函数或触发器名称不在此处，会将一个值分配给该列</span>
+    <span class="n">special_identifier</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">server_default</span><span class="o">=</span><span class="n">FetchedValue</span><span class="p">())</span>
+
+    <span class="c1"># 设置eager_defaults为True。这通常是可选的，因为如果</span>
+    <span class="c1"># 后端支持RETURNING + insertmanyvalues，则INSERT会自动处理提示</span>
+    <span class="c1"># 发生</span>
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;eager_defaults&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>   INSERT INTO my_table（）VALUES（（SELECT coalesce（max（my_table.id）+％（max_1）s，％（coalesce_2）s）作为coalesce_1
-   从my_table），％（id_1）s）返回my_table.id，my_table.timestamp，my_table.special_identifier</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 2.0.0rc1: </span><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.eager_defaults`参数现在为新设置</span>
-<span class="pre">一个名为</span> <span class="pre">`“auto”</span></code> 的设置，如果支持，并让映射：class：’“ORM将能够使用RETURNING检索使用聚合值”<a href="#id26"><span class="problematic" id="id27">`</span></a>。’insertmanyvalues’，急切默认值将在默认情况下生效。</p>
+<p>上面，在客户端上未指定“timestamp”或“special_identifier”的值的INSERT语句将包括在RETURNING子句中的“timestamp”和“特殊标识符”，因此它们将立即可用。在PostgreSQL数据库上，上述表的INSERT如下所示：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="k">timestamp</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">special_identifier</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0.0rc1: </span><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.eager_defaults</span></code>  现在的值默认为一个新的设置”auto”，如果后端数据库既支持 RETURNING 又支持   <a class="reference internal" href="../core/connections.html#engine-insertmanyvalues"><span class="std std-ref">insertmanyvalues</span></a> ，将自动使用 RETURNING 来获取插入的默认值。</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>:paramref:<a href="#id28"><span class="problematic" id="id29">`</span></a>_orm.Mapper.eager_defaults`的值’“auto”’仅</p>
+<p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.eager_defaults</span></code>  的``”auto”<cite>值仅适用于INSERT语句。即使是可用的，UPDATE语句也不会使用RETURNING ，除非将  :paramref:`_orm.Mapper.eager_defaults</cite>  设置为``True``。这是因为不存在等效的 “insertmanyvalues” 功能，因此UPDATE RETURNING将需要为每个要UPDATE的行单独发出UPDATE语句。</p>
 </div>
-<p>  适用于INSERT语句。除非：paramref:<a href="#id30"><span class="problematic" id="id31">`</span></a>_orm.Mapper.eager_defaults`设置为
-  “True”，否则UPDATE语句将不使用RETURNING，即使可用。
-  这是因为没有相应的“insertmanyvalues”功能可用于UPDATE，因此UPDATE RETURNING将要求单独发出UPDATE语句
-  针对每个正在UPDATE的行。</p>
 <section id="returning">
-<h3>情况2：表包括与RETURNING不兼容的触发器生成的值<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h3>
-<p>‘auto’ :paramref：’_orm.Mapper.eager_defaults’参数的设置意味着
-支持RETURNING的后端通常会使用RETURNING在INSERT语句中立即获取新生成的默认值。 但是，触发器生成值的限制如下，以致不能使用RETURNING：</p>
-<p>    • SQL Server不允许在INSERT语句中使用RETURNING检索触发器生成的值；该语句将失败。</p>
-<p>    • SQLite在将RETURNING与触发器组合使用时存在限制，因此
-     RETURNING子句不会将INSERTed值可用</p>
-<p>    • 其他后端可能具有与触发器一起支持RETURNING的限制，或与之相关的其他类型的服务器生成值。</p>
-<p>要禁用用于此类值的RETURNING，包括不仅限于服务器生成的默认值，还要确保映射的：class:<a href="#id32"><span class="problematic" id="id33">`</span></a>.Table`指定：paramref:<a href="#id34"><span class="problematic" id="id35">`</span></a>_schema.Table.implicit_returning`为“False”。使用Declarative映射，这看起来像：</p>
-<p>    class MyModel(Base):
-        __tablename__ =’my_table’</p>
-<p>        id: Mapped[int] = mapped_column(primary_key=True)
-        data: Mapped[str] = mapped_column(String(50))</p>
-<p>        #假设数据库触发器在INSERT期间将值填充到此列中
-        special_identifier = mapped_column(String(50)， server_default=FetchedValue())</p>
-<p>        #禁用表的所有RETURNING用法
-        __table_args__ = {‘implicit_returning’：False}</p>
-<p>在使用pyodbc驱动程序的SQL Server上，上面表的INSERT将不使用RETURNING并使用SQL Server“scope_identity()”函数来检索新生成的主键值：</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span></pre></div>
+<h2>情况2：表包含与RETURNING不兼容的触发器生成的值<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id17"><span class="problematic" id="id18">``</span></a>”auto”<a href="#id19"><span class="problematic" id="id20">``</span></a>设置的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.eager_defaults</span></code>   意味着后端支持RETURNING时，常规情况下会使用RETURNING来获取新生成的默认值。然而，服务器生成值存在以下限制，例如使用触发器时RETURNING不能使用：</p>
+<ul class="simple">
+<li><p>SQL Server不允许在INSERT语句中使用RETURNING检索触发器生成的值；语句将失败。</p></li>
+<li><p>SQLite在将返回的值与触发器结合使用时存在限制，因此返回的子句将无法使用插入的值。</p></li>
+<li><p>其他后端可能存在限制，无法与触发器或其他类型的服务器生成值一起使用RETURNING。</p></li>
+</ul>
+<p>为了禁用这些值的RETURNING使用，这些值包含了但不仅限于服务器生成的默认值，以确保ORM能够检索到它们,  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.implicit_returning" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.implicit_returning</span></code></a> .Table`的值为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。此类Declarative映射如下所示：</p>
+<blockquote>
+<div><dl>
+<dt>class MyModel(Base):</dt><dd><p>__tablename__ = “my_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+data: Mapped[str] = mapped_column(String(50))</p>
+<p>#假设一个触发器在INSERT期间将一个值分配给该列
+special_identifier = mapped_column(String(50), server_default=FetchedValue())</p>
+<p>#禁用表的所有RETURNING用法
+__table_args__ = {“implicit_returning”: False}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在使用pyodbc驱动程序的SQL Server上，以上表的INSERT将不使用RETURNING，并使用SQL Server的``scope_identity()``函数检索新生成的主键值：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="p">(</span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">);</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">scope_identity</span><span class="p">()</span></pre></div>
 </div>
-<p>    INSERT INTO my_table（data）VALUES（？），选择作用范围_identity（）</p>
-<p>    :ref：<cite>mssql_insert_behavior</cite>– SQL Server dialect的背景
-    获取新生成的主键值的方法</p>
-<p>情况3：非主键，RETURNING或等效项不被支持或不需要</p>
-<p>在这种情况下，通常不想使用:paramref：<cite>.orm.Mapper.eager_defaults</cite>，因为在缺少RETURNING支持的情况下，其当前实现是发出选择一行的SELECT-for-row， 不可行的。 因此，在映射下省略参数：paramref：’.orm.Mapper.eager_defaults’：</p>
-<p>    class MyModel(Base):
-        __tablename__ =’my_table’</p>
-<p>        id = mapped_column(Integer, primary_key=True)
-        timestamp = mapped_column(DateTime()， server_default=func.now())</p>
-<p>        #假设数据库触发器在INSERT期间将值填充到此列中
-        special_identifier = mapped_column(String(50)， server_default=FetchedValue())</p>
-<p>在在不包括RETURNING或“ <a href="#id36"><span class="problematic" id="id37">`</span></a>insertmanyvalues’支持的后端处理上述映射作为新的插入的记录后，“timestamp”和“special_identifier”列将保持为空，并且在刷新后第一次访问时将通过第二个SELECT语句进行抓取，例如他们被标记为“过期”。</p>
-<p>如果提供了明确值为`True’的:paramref：<cite>.orm.Mapper.eager_defaults’，并且后端数据库不支持RETURNING或等效项，则ORM将紧随INSERT语句后立即发出SELECT语句以获取新生成的值。每个INSERT行生成一个SELECT语句。这通常不理想，因为它会向冲洗过程中添加可能不需要的附加SELECT语句。使用上面的映射和:paramref：</cite>.orm.Mapper.eager_defaults’标志的版本针对MySQL（不是MariaDB）会产生如下SQL：</p>
-<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span></pre></div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/mssql.html#mssql-insert-behavior"><span class="std std-ref">INSERT behavior</span></a>  - SQL Server方言获取新增生成的主键值的背景</p>
 </div>
-<p>    INSERT INTO my_table（）VALUES（（））
-    当急切的默认值使用时，但RETURNING不受支持时
-    SELECT my_table.timestamp作为my_table_timestamp，my_table.special_identifier作为my_table_special_identifier
-    从my_table中WHERE my_table.id =％s</p>
-<p>SQLALCHEMY的以后的版本可以尝试通过一次语句SELECT许多新插入的行来提高急性默认值在缺少RETURNING的情况下的效率。__mapper_args__ = {“eager_defaults”: True}</p>
-<p>具有类似上面的映射后，ORM用于INSERT和UPDATE的SQL将在RETURNING子句中包括“created”和“updated”：</p>
+</section>
+<section id="id21">
+<h2>情况3：非主键，不支持或不需要RETURNING或等效<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
+<p>此情况与上面的情况1相同，但通常不希望使用  <a href="#id22"><span class="problematic" id="id23">:param:`_orm.Mapper.eager_defaults`</span></a>  ，因为在没有RETURNING支持的情况下，它的当前实现是发出一个SELECT-per-row，这不是高效的。因此，在映射以下情况时略去参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">DateTime</span><span class="p">(),</span> <span class="n">server_default</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+
+    <span class="c1"># 假设数据库中的某些其他服务器端函数或触发器名称不在此处，将一个值分配给该列的INSERT</span>
+    <span class="n">special_identifier</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">server_default</span><span class="o">=</span><span class="n">FetchedValue</span><span class="p">())</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在使用不包括RETURNING或“insertmanyvalues”支持的后端讯息时，上面的记录在执行Flush后加入中的“timestamp”和“special_identifier”列将保持为空，且在在Flush后首次访问它们时将通过第二个SELECT语句中的“过时”标记它们，例如它们在FLUSH之后。如果显式提供  <a href="#id24"><span class="problematic" id="id25">:param:`_orm.Mapper.eager_defaults`</span></a>   值 “True”，并且后端数据库不支持 RETURNING 或等效内容，
+ORM将立即在 INSERT 语句之后发出一个SELECT语句，以获取新生成的值; ORM目前无法在没有RETURNING的情况下批量选择许多新插入的行。这通常是不希望的，因为它会在Flush过程中增加了额外的SELECT语句，可能不需要。在使用上面的映射与MySQL(而不是MariaDB)进行Flush时，会导致文本如下的SQL：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">()</span>
+
+<span class="c1">-- 当 eager_defaults **被**使用，但不支持 RETURNING</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="k">timestamp</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">my_table_timestamp</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">special_identifier</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">my_table_special_identifier</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span></pre></div>
+</div>
+<p>在没有RETURNING的情况下，为了从服务器获取默认值，还要注意客户端生成的SQL表达式的问题。有关这些表达式的详细信息，可参考  <a class="reference internal" href="../core/defaults.html#defaults-client-invoked-sql"><span class="std std-ref">由客户端调用的SQL表达式</span></a> 。这些SQL表达式目前在ORM中受到与真实服务器端默认值相同的限制；即使这些表达式不是DDL服务器端默认值并且由SQLAlchemy本身活跃渲染，它们也不会在  <a href="#id26"><span class="problematic" id="id27">:param:`_orm.Mapper.eager_defaults`</span></a>  设置为 <a href="#id28"><span class="problematic" id="id29">``</span></a>”auto”<a href="#id30"><span class="problematic" id="id31">``</span></a>或``True``且没有与该列关联的  <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a>  上使用 :class:<a href="#id32"><span class="problematic" id="id33">`</span></a>.FetchedValue`指令来强制使用查看, 请参见下面的示例。</p>
+</section>
+<section id="orm-server-default-fetching-example">
+<span id="id34"></span><h2>示例<a class="headerlink" href="#orm-server-default-fetching-example" title="Permalink to this heading">¶</a></h2>
+<p>以下是一个包含举例的示例，展示了两列被指定为数据库在INSERT期间自动生成，另一列需要触发器</p>
+<p>__mapper_args__ = {“eager_defaults”: True}</p>
+<p>如果映射类类似于上述模式，ORM为INSERT和UPDATE生成的SQL将在RETURNING子句中包含“created”和“updated”：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="p">(</span><span class="n">created</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">now</span><span class="p">())</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">created</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">updated</span>
 
 <span class="k">UPDATE</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">updated</span><span class="o">=</span><span class="n">now</span><span class="p">()</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">my_table_id</span><span class="p">)</span><span class="n">s</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">updated</span></pre></div>
 </div>
 </section>
 </section>
-<section id="insert-updateon-conflict-upsert-orm">
-<span id="orm-dml-returning-objects"></span><h2>使用INSERT，UPDATE和ON CONFLICT（即upsert）返回ORM对象<a class="headerlink" href="#insert-updateon-conflict-upsert-orm" title="Permalink to this heading">¶</a></h2>
-<p>SQLAlchemy 2.0包括增强的功能，用于发射几个种类的ORM启用的INSERT、UPDATE和upsert语句。参见文档： <a class="reference internal" href="queryguide/dml.html"><span class="doc">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> 以供文档。有关upsert，请参见：<a class="reference internal" href="queryguide/dml.html#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句</span></a>。</p>
+<section id="insertupdateon-conflict-upsert-orm">
+<span id="orm-dml-returning-objects"></span><h1>使用INSERT、UPDATE和ON CONFLICT（即upsert）返回ORM对象<a class="headerlink" href="#insertupdateon-conflict-upsert-orm" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy 2.0增强了触发几种ORM-enabled INSERT、UPDATE和upsert语句的能力。参见文档  <a class="reference internal" href="queryguide/dml.html"><span class="doc">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>  进行文档化。有关upsert，请参见   <a class="reference internal" href="queryguide/dml.html#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句 （UPSERT语句）</span></a> 。</p>
 <section id="returningpostgresql-on-conflictupserted-orm">
-<h3>使用带RETURNING的PostgreSQL ON CONFLICT返回upserted ORM的对象<a class="headerlink" href="#returningpostgresql-on-conflictupserted-orm" title="Permalink to this heading">¶</a></h3>
-<p>该部分已移至：<a class="reference internal" href="queryguide/dml.html#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句</span></a>。</p>
+<h2>使用带有RETURNING的PostgreSQL ON CONFLICT返回upserted ORM对象<a class="headerlink" href="#returningpostgresql-on-conflictupserted-orm" title="Permalink to this heading">¶</a></h2>
+<p>本节移到了   <a class="reference internal" href="queryguide/dml.html#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句 （UPSERT语句）</span></a> 。</p>
 </section>
 </section>
 <section id="session">
-<span id="session-partitioning"></span><h2>分区策略（例如，每个Session的多个数据库后端）<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h2>
-<section id="id38">
-<h3>简单垂直分区<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h3>
-<p>竖直分区将不同的类、类层次结构或映射表配置到多个数据库中，
-通过在:class:<cite>.Session`中配置:paramref:</cite>.Session.binds`参数实现。
-该参数接收一个字典，其中包含任何组合ORM-mapped类、映射层次结构内的任意类
-（例如，声明基类或mixin）、<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection`对象一样的目标。</span>
-<span class="pre">每当:class:</span></code>.Session`需要代表特定类型的映射类发射SQL以定位适当的数据库连接源时，
-将查找该字典：</p>
+<span id="session-partitioning"></span><h1>分区策略（例如 Session 上的多个数据库后端）<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h1>
+<section id="id35">
+<h2>简单的垂直分区<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h2>
+<p>垂直分区使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.binds</span></code>  参数通过将不同的类、类层次结构或映射表配置在多个数据库中来划分它们。此参数接收一个字典，其中包含任意组合的ORM映射类、映射层次结构中的任意类（例如声明基类或mixin）、  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象和   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象作为键，然后通常引用   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  或较少用   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象作为目标。每当   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  需要代表特定类型的映射类发出SQL以查找相应的数据库连接时，都会使用该字典。例如：</p>
 <blockquote>
 <div><p>engine1 = create_engine(“postgresql+psycopg2://db1”)
 engine2 = create_engine(“postgresql+psycopg2://db2”)</p>
 <p>Session = sessionmaker()</p>
-<p># 将 User 操作绑定到 engine1，将 Account 操作绑定到 engine2
+<p># 将 User 操作绑定到 engine1，将 Account 操作绑定到 engine2。
 Session.configure(binds={User: engine1, Account: engine2})</p>
 <p>session = Session()</p>
 </div></blockquote>
-<p>上述代码中，任何类的SQL操作都将使用其链接到的引擎 class:<cite>_engine.Engine</cite>。 该功能在读写操作方面是全面的；针对映射到“engine1”的实体的:class:<a href="#id39"><span class="problematic" id="id40">`</span></a>_query.Query`（通过查看所请求的项目列表中的第一个实体确定）将使用“engine1”来运行查询。flush操作将对每个类，即“User”和“Account”，基于每个类使用**两个**引擎。</p>
-<p>在更常见的情况下，通常有基础类或mixin类可以用来区分即将用于不同数据库连接的操作。 ：paramref:<a href="#id41"><span class="problematic" id="id42">`</span></a>.Session.binds`参数可以容纳任何任意Python类作为键，如果它被发现在特定映射类的__mro__（Python方法解析顺序）中，将使用该键。假设两个声明基类分别表示两种不同的数据库连接：</p>
+<p>以上，针对任一类进行的 SQL 操作都将使用链接到该类的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 。此功能在读取和写入操作方面是综合性的。对映射到“engine1”（通过查看请求项列表中的第一个实体来确定）的实体进行的   <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  将使用“engine1”来运行查询。在每个类的基础上进行 flush 操作时，会单独使用 <strong>两个</strong> 引擎作为它刷新类型为“User”和“Account”的对象。</p>
+<p>在较常见的情况下，通常有基础类或 mixin 类，可用于区分注定要发送到不同数据库连接的操作。  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.binds</span></code>   参数可以接受任意任意 Python 类作为键，如果发现它在特定映射类的 <a href="#id36"><span class="problematic" id="id37">``</span></a>__mro__``（Python 方法解析顺序）中，则将其用作键。假设两个声明基类表示两个不同的数据库连接：</p>
 <blockquote>
-<div><p>from sqlalchemy.orm import DeclarativeBase, Session</p>
+<div><p>from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import Session</p>
 <dl class="simple">
 <dt>class BaseA(DeclarativeBase):</dt><dd><p>pass</p>
 </dd>
@@ -545,48 +531,43 @@ Session.configure(binds={User: engine1, Account: engine2})</p>
 </dd>
 </dl>
 <p>Session = sessionmaker()</p>
-<p># 所有 User / Address 操作都将在 engine1 上执行，所有
-# Game 操作将在 engine2 上执行
+<p># 所有 User/Address 操作都将在 engine1 上执行，所有 Game 操作都将在 engine2 上执行。
 Session.configure(binds={BaseA: engine1, BaseB: engine2})</p>
 </div></blockquote>
-<p>上述代码中，从”BaseA”和”BaseB”派生的类的SQL操作将根据它们是从哪个超类按继承顺序继承的，选择将其路由到两个引擎之一。</p>
+<p>以上，从 <code class="docutils literal notranslate"><span class="pre">BaseA</span></code> 和 <code class="docutils literal notranslate"><span class="pre">BaseB</span></code> 派生的类将根据其来源父类（如果有的话）被路由到两个引擎之一。如果一个类从多个“绑定”超类派生，则将选择该目标类层次结构中最高的超类代表应使用的引擎。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>：paramref:<cite>.Session.binds</cite></p>
+<p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.binds</span></code></p>
 </div>
 </section>
-<section id="id43">
-<h3>多引擎Session的交易协调<a class="headerlink" href="#id43" title="Permalink to this heading">¶</a></h3>
-<p>使用多个绑定引擎的一个警告是，当在一个引擎上提交操作成功后，在另一个引擎上提交操作可能会失败，这是一个不一致问题，在关系数据库中通过“两阶段事务”解决，它添加了一个附加的“准备”步骤，使多个数据库在实际完成事务之前同意提交。</p>
-<p>由于DBAPI的支持有限，SQLAlchemy对跨后端的两阶段事务提供有限支持。最常见的是，它已被证明在PostgreSQL后端中可行，并在MySQL后端中实现了较小的影响。然而，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session`完全能够利用两阶段事务特性，当后端支持时，通过设置:class:</span></code>.sessionmaker`或：class：<cite>。Session`中的：paramref:</cite>.Session.use_twophase`标志。参见：ref：<cite>two phase transaction&lt;session_twophase&gt;</cite>，以获取示例。</p>
+<section id="id38">
+<h2>为多元引擎会话协调事务<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h2>
+<p>使用多个绑定引擎的一个警告是，在一个提交操作在一个后端成功提交之后，依然有可能在另一个后端中失败（译者注：即无法保证 ACID 特性中的 C 与 I）。这是一个不一致性问题，在关系型数据库中通过“两段事务”来解决，它向提交序列中添加了一个附加的“准备”步骤，以使多个数据库在实际完成事务之前就达成协议。</p>
+<p>由于 DBAPI 的支持有限，SQLAlchemy 在跨多个后端使用两段事务方面的支持有限。通常，它已知可以在 PostgreSQL 后端上很好地使用，在 MySQL 后端上使用较小。但是，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  完全能够利用后端支持时的两阶段事务特性，方法是将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.use_twophase</span></code>  标志设置为   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  或   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中。请参见   <a class="reference internal" href="session_transaction.html#session-twophase"><span class="std std-ref">启用双阶段提交（two-phase commit）机制</span></a>  进行示例。</p>
 </section>
 <section id="session-custom-partitioning">
-<span id="id44"></span><h3>自定义垂直分区<a class="headerlink" href="#session-custom-partitioning" title="Permalink to this heading">¶</a></h3>
-<p>可以通过覆盖:meth:<cite>.Session.get_bind`方法来构建更全面的基于规则的类级分区。下面我们演示一个自定义:class:</cite>.Session`，其中提供以下规则:
-1. flush操作以及批量的”更新”和”删除”操作均传递给名为’leader’的引擎。
-2. 子类化“myotherclass”的对象的操作均在“other”引擎上发生。
-3. 所有其他类的读操作都在“follower1”或“follower2”的数据库上随机选择。</p>
+<span id="id39"></span><h2>自定义垂直分区<a class="headerlink" href="#session-custom-partitioning" title="Permalink to this heading">¶</a></h2>
+<p>通过覆盖  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get_bind()</span></code>  方法可以构建更全面的基于规则的类级分区。以下我们将说明一种定制的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，它提供以下规则：</p>
+<ol class="arabic">
+<li><p>Flush 操作以及批量“update”和“delete”操作均在名为“leader”的引擎上接收。</p></li>
+<li><p>所有子类为“MyOtherClass”的对象操作均发生在“other”引擎上。</p></li>
+<li><p>所有其他类的读操作在“follower1”或“follower2”数据库的随机选择上执行。例如：</p>
 <blockquote>
-<div><dl class="simple">
-<dt>engines = {</dt><dd><p>“leader”: create_engine(“sqlite:///leader.db”),
+<div><p>engines = {
+“leader”: create_engine(“sqlite:///leader.db”),
 “other”: create_engine(“sqlite:///other.db”),
 “follower1”: create_engine(“sqlite:///follower1.db”),
-“follower2”: create_engine(“sqlite:///follower2.db”),</p>
-</dd>
-</dl>
-<p>}</p>
+“follower2”: create_engine(“sqlite:///follower2.db”),
+}</p>
 <p>from sqlalchemy.sql import Update, Delete
 from sqlalchemy.orm import Session, sessionmaker
 import random</p>
 <dl class="simple">
 <dt>class RoutingSession(Session):</dt><dd><dl class="simple">
 <dt>def get_bind(self, mapper=None, clause=None):</dt><dd><dl class="simple">
-<dt>if mapper and issubclass(<a href="#id59"><span class="problematic" id="id60">mapper.class_</span></a>, MyOtherClass):</dt><dd><p>return engines[“other”]</p>
+<dt>if mapper and issubclass(<a href="#id42"><span class="problematic" id="id43">mapper.class_</span></a>, MyOtherClass):</dt><dd><p>return engines[“other”]</p>
 </dd>
-<dt>elif self._flushing or isinstance(clause, (Update, Delete)):</dt><dd><p># NOTE: this is for example, however in practice reader/writer splits are likely more straightforward by using two distinct
-# Sessions at the top of a “reader” or “writer” operation.
-# See note below
-return engines[“leader”]</p>
+<dt>elif self._flushing or isinstance(clause, (Update, Delete)):</dt><dd><p>return engines[“leader”]</p>
 </dd>
 <dt>else:</dt><dd><p>return engines[random.choice([“follower1”, “follower2”])]</p>
 </dd>
@@ -596,33 +577,33 @@ return engines[“leader”]</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>上述:class:<cite>。Session`类使用”class_”参数插入到:class:</cite>. sessionmaker`中：</p>
+</li>
+</ol>
+<p>上面的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  类使用 <code class="docutils literal notranslate"><span class="pre">class_</span></code> 参数插入到   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  中：</p>
 <blockquote>
 <div><p>Session = sessionmaker(class_=RoutingSession)</p>
 </div></blockquote>
-<p>此方法可以与多个:class:<a href="#id45"><span class="problematic" id="id46">`</span></a>_schema.MetaData`对象相结合，使用诸如使用
-声明性的“__abstract__”关键字等方法，如:ref:<a href="#id47"><span class="problematic" id="id48">`</span></a>declarative_abstract`所述。</p>
+<p>该方法与多个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象结合使用，类似于使用声明性 <code class="docutils literal notranslate"><span class="pre">__abstract__</span></code> 关键字的方法，如   <a class="reference internal" href="declarative_config.html#declarative-abstract"><span class="std std-ref">__abstract__</span></a>  中所述。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>尽管上面的示例说明了基于“leader”或“follower”数据库的特定SQL语句的路由操作，但这可能是不切实际的方法，因为它导致了相同操作内读取和写入之间的不协调的事务行为。实际上，最好提前构造一个“reader”或“writer”会话的:class:<cite>_orm.Session</cite>，根据正在进行的总体操作/事务，基于整个操作/事务设置一个操作将使用的类:<a href="#id49"><span class="problematic" id="id50">`</span></a>_orm.sessionmaker`的场景。这样，将写入数据的操作也将在同一个事务范围内发射其读取查询。参见:ref:<a href="#id51"><span class="problematic" id="id52">`</span></a>session_transaction_isolation_enginewide`中设置一个:class:<a href="#id53"><span class="problematic" id="id54">`</span></a>_orm.sessionmaker`的示例，以进行仅“只读”操作的会话，并包含DML/COMMIT的另一个会话。</p>
+<p>上面的示例说明了如何基于重写  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get_bind()</span></code>  方法来将特定的 SQL 语句路由到所谓的“leader”或“follower”数据库上，根据语句是否期望写入数据来判断。但是，这似乎不是实际操作的最佳选择，因为它在读取和写入操作之间产生协调不一致。在实践中，最好根据正在进行的整体操作/事务构建   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，作为“读取”或“写入”会话，以进行一致性处理。这样，将写入数据的操作也会在统一的事务范围内发出它们的读取查询。请参见   <a class="reference internal" href="session_transaction.html#session-transaction-isolation-enginewide"><span class="std std-ref">为Sessionmaker / Engine Wide设置隔离</span></a>  中的示例，以获取使用自动提交连接设置一个 “只读” 操作的   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  和另一个会包含 :keyword: <cite>DML</cite> / COMMIT 操作的 “写入” 操作的配方。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>“SQLAlchemy中的Django-style数据库路由器&lt;<a class="reference external" href="https://techspotzzzeek">https://techspotzzzeek</a>。org/2012/01/11/django-style-database-routers-in-sqlalchemy/&gt;” - 博客，更详细地说明了:meth:<a href="#id55"><span class="problematic" id="id56">`</span></a>。Session.get_bind`的示例。</p>
+<p><a class="reference external" href="https://techspot.zzzeek.org/2012/01/11/django-style-database-routers-in-sqlalchemy/">SQLAlchemy 中的 Django 风格的数据库路由器</a>  - 博客文章介绍了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get_bind()</span></code>  更全面的示例</p>
 </div>
 </section>
-<section id="id57">
-<h3>水平分区<a class="headerlink" href="#id57" title="Permalink to this heading">¶</a></h3>
-<p>水平分区将单个表的行（或一组表）分布到多个数据库中。 SQLAlchemy <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`包含了这个概念的支持，但要完全使用它需要使用:class:</span></code>.Session`和:class:<cite>_query.Query`子类。这些子类的基本版本在:ref:`horizontal_sharding_toplevel</cite> ORM扩展中可用。使用示例在：：<cite>：ref：`水平分片示例</cite>。</p>
+<section id="id40">
+<h2>水平分区<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h2>
+<p>水平分区将单个表（或一组表）的行跨多个数据库进行分区。SQLAlchemy   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  包含这个概念的支持，但要想充分使用，需要使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和   <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  的子类。这些子类的基本版本可在   <span class="xref std std-ref">horizontal_sharding_toplevel</span>  中找到。使用示例请参见：  <a class="reference internal" href="examples.html#examples-sharding"><span class="std std-ref">水平分片</span></a> 。</p>
 </section>
 </section>
 <section id="bulk-operations">
-<span id="id58"></span><h2>批量操作<a class="headerlink" href="#bulk-operations" title="Permalink to this heading">¶</a></h2>
+<span id="id41"></span><h1>批量操作<a class="headerlink" href="#bulk-operations" title="Permalink to this heading">¶</a></h1>
 <div class="admonition legacy">
 <p class="admonition-title">Legacy Feature</p>
-<p>SQLAlchemy 2.0将“ORM插入”和“ORM更新”的批量插入和批量更新功能集成到2.0风格的:meth:<cite>_orm.Session.execute`方法中，直接使用:class:`_dml.Insert`和:class:`_dml.Update`结构。有关文档，请参见：: doc: `queryguide/dml</cite>，包括：ref:<cite>orm_queryguide_legacy_bulk_insert</cite>，它说明从旧方法迁移到新方法的方法。</p>
+<p>SQLAlchemy 2.0 把 “批量插入”和“批量更新”能力集成到 2.0 风格的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法中，直接使用   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  构造体。请参见文档  <a class="reference internal" href="queryguide/dml.html"><span class="doc">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>  进行文档化，包括   <a class="reference internal" href="queryguide/dml.html#orm-queryguide-legacy-bulk-insert"><span class="std std-ref">Legacy Session 批量INSERT方法</span></a> ，其中说明了从旧方法迁移到新方法的步骤。</p>
 </div>
-</section>
 </section>
 
     </div>
@@ -643,7 +624,7 @@ return engines[“leader”]</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

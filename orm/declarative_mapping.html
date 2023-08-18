@@ -12,7 +12,7 @@
         <title>
             
     
-    使用Declarative映射类
+    通过声明性方式映射类
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -127,30 +127,30 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li class="selected"><span class="link-container"><strong>使用Declarative映射类</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>通过声明性方式映射类</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="declarative_styles.html">声明式映射风格</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_tables.html">使用 Declarative 进行表配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_config.html">使用 Declarative 进行映射器配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mixins.html">使用 Mixins 构成映射层次</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_tables.html">使用Declarative配置Table</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_config.html">使用声明式进行Mapper配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mixins.html">使用 Mixin 构建映射层次结构</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -196,7 +196,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#declarative">使用Declarative映射类</a></li>
+<li><a class="reference internal" href="#declarative-config-toplevel">通过声明性方式映射类</a></li>
 </ul>
 
 
@@ -208,41 +208,40 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-declarative_mapping" >
         
-<section id="declarative">
-<span id="declarative-config-toplevel"></span><h1>使用Declarative映射类<a class="headerlink" href="#declarative" title="Permalink to this heading">¶</a></h1>
-<p>Declarative映射样式是SQLAlchemy中主要的映射样式。有关顶层介绍，请参见 <a class="reference internal" href="mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">声明式映射</span></a>。</p>
+<section id="declarative-config-toplevel">
+<span id="id1"></span><h1>通过声明性方式映射类<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<p>声明性映射风格是SQLAlchemy最主要的映射风格。请参见章节   <a class="reference internal" href="mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">声明式映射</span></a>  进行顶层介绍。</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="declarative_styles.html">声明式映射风格</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class">使用声明基类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator">使用装饰器进行声明式映射（无基类）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class">使用声明式基类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator">使用装饰器声明式映射（无声明式基类）</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="declarative_tables.html">使用 Declarative 进行表配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#annotated-declarative-table-mapped-column">使用 Annotated Declarative Table（对 “mapped_column()” 进行类型注释的类型注释格式）</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapped-column-null-mapped"><code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 会将数据类型和可为 Null 的行从 <code class="docutils literal notranslate"><span class="pre">Mapped</span></code> 注释中派生出来</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-type-map">自定义类型映射</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#id2">动态映射多个类型配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#python-enum-pep-586-literal">在类型映射中使用 Python <code class="docutils literal notranslate"><span class="pre">Enum</span></code> 或 pep-586 <code class="docutils literal notranslate"><span class="pre">Literal</span></code> 类型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapped-column-dataclass">``mapped_column()``中的dataclass功能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_tables.html">使用Declarative配置Table</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapped-column-declarative-table">使用 <code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 的Declarative Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#declarative-table-mapped-column">在类型注释中使用注释式的Declarative Table (<code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 的类型注释形式)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-metadata">访问表和元数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-configuration">声明式表配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#declarative-table">使用 Declarative Table 的显式模式名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-column-naming">为映射表列显式命名</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#orm-declarative-metadata">访问表和元数据</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-configuration">声明式表配置</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-schema-name">在声明性表中明确模式名称</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#automap">使用 Automap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapper-automated-reflection-schemes">从反射表自动命名列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapper-primary-key">映射到一组明确的主键列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#include-exclude-cols">映射表中的一个子集列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#imperative-table-declarative-declarative">具有 Imperative Table 的 Declarative （俗称混合 Declarative）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapper-reflection">基于反射的映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#automap">使用 Automap 反射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapper-automated-reflection-schemes">从反射表中自动化列命名方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#mapper-primary-key">映射到一组明确设置的主键列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html#include-exclude-cols">映射表的一个子集的列</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="declarative_config.html">使用 Declarative 进行映射器配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#orm-declarative-properties">使用 Declarative 定义映射属性</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#declarative-mapper">使用 Declarative 进行 Mapper 配置选项</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#id2">动态构造映射器参数</a></li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_config.html">使用声明式进行Mapper配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#orm-declarative-properties">使用声明式定义映射属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#orm-declarative-mapper-options">用声明方式进行Mapper配置选项</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#id3">动态构造映射器参数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#id3">其他 Declarative 映射指令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html#id4">其它声明式映射指令</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="declarative_config.html#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></li>
@@ -252,10 +251,12 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="declarative_mixins.html">使用 Mixins 构成映射层次</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#id15">在混合和基类中添加映射器属性</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixintable-mapper">…从多个Mixin组合Table/Mapper参数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#mixin">使用Mixin创建索引</a></li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_mixins.html">使用 Mixin 构建映射层次结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#id1">混合使用和基础类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#id2">混入列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#orm-declarative-mixins-relationships">混合使用关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#decl-mixin-inheritance">使用Mixin类和基类与 映射继承模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html#id5">使用 Mixin 创建索引</a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +281,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:09
+    Documentation last generated: 2023/8/18 18:43:55
 
     </div>
 </div>

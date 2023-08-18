@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="关系配置" href="relationships.html" />
-        <link rel="next" title="关系 API" href="relationship_api.html" />
-        <link rel="prev" title="特殊关系持久化模式" href="relationship_persistence.html" />
+        <link rel="next" title="关系API" href="relationship_api.html" />
+        <link rel="prev" title="特殊关系的持久化模式" href="relationship_persistence.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,25 +127,25 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">基本关系模式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="self_referential.html">邻接列表关系</a></span></li>
-<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
-<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
-<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置关系联接</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">操作大型集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合自定义和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系的持久化模式</a></span></li>
 <li class="selected"><span class="link-container"><strong>使用传统的“backref”关系参数</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id1">Backref 默认参数</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id2">指定 Backref 参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">backref默认参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id18">指定backref参数</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -177,9 +177,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="relationship_persistence.html" title="previous chapter">特殊关系持久化模式</a></li>
+                <a href="relationship_persistence.html" title="previous chapter">特殊关系的持久化模式</a></li>
                 <li><b>Next:</b>
-                <a href="relationship_api.html" title="next chapter">关系 API</a></li>
+                <a href="relationship_api.html" title="next chapter">关系API</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -192,8 +192,8 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#backref">使用传统的“backref”关系参数</a><ul>
-<li><a class="reference internal" href="#id1">Backref 默认参数</a></li>
-<li><a class="reference internal" href="#id2">指定 Backref 参数</a></li>
+<li><a class="reference internal" href="#id15">backref默认参数</a></li>
+<li><a class="reference internal" href="#id18">指定backref参数</a></li>
 </ul>
 </li>
 </ul>
@@ -209,85 +209,167 @@
         
 <section id="backref">
 <h1>使用传统的“backref”关系参数<a class="headerlink" href="#backref" title="Permalink to this heading">¶</a></h1>
-<p>    有关双向关系的一般信息，请参见以下部分：</p>
-<p>    <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">处理 ORM 相关对象（Related Objects）</span></a> - 在 <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 中，使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 呈现了双向关系的配置和行为概述</p>
-<p>    <a class="reference internal" href="cascades.html#back-populates-cascade"><span class="std std-ref">双向关系下的 save-update 级联行为</span></a> - 关于 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 级联行为的双向 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 视图行为的注意事项。</p>
-<p>    :<cite>_orm.relationship.back_populates</cite></p>
-<p>在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造上的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code> 关键字参数允许自动生成一个新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>。它将自动添加到相关类的 ORM 映射中。然后将其放置在当前 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 配置中，两个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造相互引用。</p>
-<p>从以下示例开始：</p>
-<p>    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship</p>
-<p>    class Base(DeclarativeBase):
-        pass</p>
-<p>    class User(Base):
-        __tablename__ = “user”
-        id = mapped_column(Integer, primary_key=True)
-        name = mapped_column(String)
-        addresses = relationship(“Address”, backref=”user”)</p>
-<p>    class Address(Base):
-        __tablename__ = “address”
-        id = mapped_column(Integer, primary_key=True)
-        email = mapped_column(String)
-        user_id = mapped_column(Integer, ForeignKey(“user.id”))</p>
-<p>以上配置在“User”上建立了一个“Address”对象集合，名为“User.addresses”。它还建立了一个名为“Address.user”的“.user”属性，该属性将引用父“User”对象。使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>，其等效于以下形式：</p>
-<p>    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship</p>
-<p>    class Base(DeclarativeBase):
-        pass</p>
-<p>    class User(Base):
-        __tablename__ = “user”
-        id = mapped_column(Integer, primary_key=True)
-        name = mapped_column(String)
-        addresses = relationship(“Address”, back_populates=”user”)</p>
-<p>    class Address(Base):
-        __tablename__ = “address”
-        id = mapped_column(Integer, primary_key=True)
-        email = mapped_column(String)
-        user_id = mapped_column(Integer, ForeignKey(“user.id”))
-        user = relationship(“User”, back_populates=”addresses”)</p>
-<p>“User.addresses” 和 “Address.user” 关系的行为是它们现在以双向方式运行，表示在关系的一侧进行更改影响其他方。关于此行为的示例和讨论可以在 <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">处理 ORM 相关对象（Related Objects）</span></a> 的 <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 中找到。</p>
-<section id="id1">
-<h2>Backref 默认参数<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>由于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code> 生成了全新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，默认情况下，生成过程将尝试在新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 中包括与原始参数相对应的相应参数。例如，以下是包括 <span class="xref std std-ref">custom join condition</span> 的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，它还包括 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code> 关键字的示例：</p>
-<p>    from sqlalchemy import Column, ForeignKey, Integer, String
-    from sqlalchemy.orm import DeclarativeBase, relationship</p>
-<p>    class Base(DeclarativeBase):
-        pass</p>
-<p>    class User(Base):
-        __tablename__ = “user”
-        id = mapped_column(Integer, primary_key=True)
-        name = mapped_column(String)
-        addresses = relationship(
-            “Address”,
-            primaryjoin=(
-                “and_(User.id==Address.user_id, Address.email.startswith(‘tony’))”
-            ),
-            backref=”user”,
-        )</p>
-<p>    class Address(Base):
-        __tablename__ = “address”
-        id = mapped_column(Integer, primary_key=True)
-        email = mapped_column(String)
-        user_id = mapped_column(Integer, ForeignKey(“user.id”))</p>
-<p>当生成“backref”时，“backref” 与新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 中的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 条件一起副本到新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>。</p>
-<p>其他可传递的参数包括 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数，它引用了许多与许多协会表格，以及 “join” 参数 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondaryjoin</span></code> 的参数;“backref” 足够聪明，知道这两个参数在创建相反作用的同时也应该“翻转”。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<dl class="simple">
+<dt>应该将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code>  关键字视为遗留问题，使用具有显式</dt><dd><p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></p>
+</dd>
+</dl>
+<p>的优先选择。使用单个 <code class="xref py py-func docutils literal notranslate"><span class="pre">0中的新</span>&#160; <span class="pre">:PEP:`484()</span></code>  功能也利用了显式出现在源代码中的属性，而不是使用动态属性生成。</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>有关双向关系的一般信息，请参阅以下各节：</p>
+<blockquote>
+<div><p><a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">使用 ORM 相关对象</span></a> -在 :ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>统一教程`中，</p>
+</div></blockquote>
+<p>提供对使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  进行双向关系配置和行为的概述。</p>
+<blockquote>
+<div><blockquote>
+<div><p><a class="reference internal" href="cascades.html#back-populates-cascade"><span class="std std-ref">双向关系中 save-update 级联的行为</span></a> -有关 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.Session`级联行为的双向 :func:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.relationship`行为的备注。</p>
+</div></blockquote>
+<p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code></p>
+</div></blockquote>
+</div>
+<p>在  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  关键字参数允许
+自动生成一个新的  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，该关键字将自动 添加到相关类的ORM映射中。
+然后，它将放在与当前正在配置的 :func:<a href="#id7"><span class="problematic" id="id8">`</span></a>_orm.relationship`中的</p>
+<blockquote>
+<div><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  配置中，两个  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code></p>
+</div></blockquote>
+<p>构造相互引用。</p>
+<p>从以下示例开始:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>以上配置在``User``上建立了一个集合，其中包含名为``User.addresses``的``Address``
+对象。它还在``Address``上建立了一个``.user``属性，该属性将引用父``User``对象。
+使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  等效于以下内容:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span>
+
+    <span class="n">user</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a>User.addresses``和``Address.user``关系的行为表示它们现在以**双向**方式
+进行操作，表示关系的一侧上的更改会影响另一侧。在 :ref:<a href="#id11"><span class="problematic" id="id12">`</span></a>统一教程`中
+的 :ref:<a href="#id13"><span class="problematic" id="id14">`</span></a>tutorial_orm_related_objects`中有一个示例和讨论此行为。</p>
+<section id="id15">
+<h2>backref默认参数<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
+<p>由于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code>  生成一个全新的  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，
+默认情况下生成过程将尝试在新的 <code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code>  关键字及
+包含  <a class="reference internal" href="join_conditions.html#relationship-configure-joins"><span class="std std-ref">自定义连接条件</span></a>
+作为示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Address&quot;</span><span class="p">,</span>
+        <span class="n">primaryjoin</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;and_(User.id==Address.user_id, Address.email.startswith(&#39;tony&#39;))&quot;</span>
+        <span class="p">),</span>
+        <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<dl>
+<dt>当生成”backref”时，  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code>  条件也被复制到了新的</dt><dd><p>:func:<a href="#id16"><span class="problematic" id="id17">`</span></a>_orm.relationship`中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">primaryjoin</span><span class="p">)</span>
+<span class="go">&quot;user&quot;.id = address.user_id AND address.email LIKE :email_1 || &#39;%%&#39;</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">property</span><span class="o">.</span><span class="n">primaryjoin</span><span class="p">)</span>
+<span class="go">&quot;user&quot;.id = address.user_id AND address.email LIKE :email_1 || &#39;%%&#39;</span>
+<span class="gp">&gt;&gt;&gt;</span></pre></div>
+</div>
+</dd>
+</dl>
+<p>可转移的其他参数包括  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数，该参数引用
+多对多关联表，以及”join”参数  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code>
+和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondaryjoin</span></code>  ；”backref”足够聪明
+可以知道在生成相反方面时这两个参数也应该被“颠倒”。</p>
 </section>
-<section id="id2">
-<h2>指定 Backref 参数<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>“backref” 的许多其他参数都不是隐式的，包括像 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>、<code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code>、<code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code> 这样的参数。对于这种情况，我们在一个字符串 <code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code> 函数中使用我们 ：</p>
+<section id="id18">
+<h2>指定backref参数<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt>“backref”的许多其他参数不是隐式的，包括参数如  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  ，</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code>  ,  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code></p>
+</dd>
+</dl>
+<p>和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade_backrefs</span></code>  。对于这种情况，
+我们在字符串的位置上使用 :func:<a href="#id19"><span class="problematic" id="id20">`</span></a>.backref`函数；这将存储一组特定的参数，这些参数在生成
+新的 :func:<a href="#id21"><span class="problematic" id="id22">`</span></a>_orm.relationship`时将被传递：</p>
 <blockquote>
 <div><p># &lt;other imports&gt;
 from sqlalchemy.orm import backref</p>
+<dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”
+id = mapped_column(Integer, primary_key=True)
+name = mapped_column(String)</p>
+<dl class="simple">
+<dt>addresses = relationship(</dt><dd><p>“Address”,
+backref=backref(“user”, lazy=”joined”),</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
 </div></blockquote>
-<p>    class User(Base):
-        __tablename__ = “user”
-        id = mapped_column(Integer, primary_key=True)
-        name = mapped_column(String)
-        addresses = relationship(
-            “Address”,
-            backref=backref(“user”, lazy=”joined”),
-        )</p>
-<p>在上面，我们仅在 “Address.user” 方面放置了一个 “lazy= joined”的指令，表明在对 “Address” 进行查询时，应该自动进行到 “User” 实体的连接，这将自动填充每个返回的 “Address” 的 “.user” 属性。 <code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code> 函数将我们给出的参数格式化为接受者 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 中的一种形式，作为它创建的新关系的附加参数。</p>
+<p>在上面的示例中，我们只在``Address.user``侧指定了``lazy=”joined”<code class="docutils literal notranslate"><span class="pre">指令，</span>
+<span class="pre">表示当对``Address``进行查询时，应自动连接到``User``实体，</span>
+<span class="pre">这将填充每个返回的``Address``的</span></code>.user``属性。 :func:<a href="#id23"><span class="problematic" id="id24">`</span></a>.backref`函数格式化我们给
+它的参数成为由接收方 :func:<a href="#id25"><span class="problematic" id="id26">`</span></a>_orm.relationship`解释为要应用于其创建新关系的附加参数。</p>
 </section>
 </section>
 
@@ -297,9 +379,9 @@ from sqlalchemy.orm import backref</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="relationship_persistence.html" title="previous chapter">特殊关系持久化模式</a>
+        <a href="relationship_persistence.html" title="previous chapter">特殊关系的持久化模式</a>
         Next:
-        <a href="relationship_api.html" title="next chapter">关系 API</a>
+        <a href="relationship_api.html" title="next chapter">关系API</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -309,7 +391,7 @@ from sqlalchemy.orm import backref</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:08
+    Documentation last generated: 2023/8/18 18:43:53
 
     </div>
 </div>

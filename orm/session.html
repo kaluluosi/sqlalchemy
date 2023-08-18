@@ -12,7 +12,7 @@
         <title>
             
     
-    使用Session
+    用 Session
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -41,7 +41,7 @@
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="SQLAlchemy ORM" href="index.html" />
         <link rel="next" title="会话基础知识" href="session_basics.html" />
-        <link rel="prev" title="旧版查询API" href="queryguide/query.html" />
+        <link rel="prev" title="Legacy查询API" href="queryguide/query.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,21 +127,27 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li class="selected"><span class="link-container"><strong>使用Session</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li class="selected"><span class="link-container"><strong>用 Session</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="session_basics.html">会话基础知识</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_state_management.html">状态管理</a></span></li>
-<li><span class="link-container"><a class="reference external" href="cascades.html">级联</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_transaction.html">事务和连接管理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="persistence_techniques.html">附加的持久化技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#sql-flush">将SQL插入/更新表达式嵌入到Flush中</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#sessionssql">在Sessions中使用SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#null">在具有默认值的列上强制执行NULL</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#orm-server-defaults">提取服务器生成的默认值</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#insertupdateon-conflict-upsert-orm">使用INSERT、UPDATE和ON CONFLICT（即upsert）返回ORM对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#session">分区策略（例如 Session 上的多个数据库后端）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html#bulk-operations">批量操作</a></span></li>
 <li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件追踪查询、对象和会话更改</a></span></li>
 <li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -173,7 +179,7 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="queryguide/query.html" title="previous chapter">旧版查询API</a></li>
+                <a href="queryguide/query.html" title="previous chapter">Legacy查询API</a></li>
                 <li><b>Next:</b>
                 <a href="session_basics.html" title="next chapter">会话基础知识</a></li>
 
@@ -185,7 +191,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.orm.session">使用Session</a></li>
+<li><a class="reference internal" href="#module-sqlalchemy.orm.session">用 Session</a></li>
 </ul>
 
 
@@ -198,105 +204,97 @@
     <div id="docs-body" role="main" class="withsidebar orm-session" >
         
 <section id="module-sqlalchemy.orm.session">
-<span id="session"></span><span id="session-toplevel"></span><h1>使用Session<a class="headerlink" href="#module-sqlalchemy.orm.session" title="Permalink to this heading">¶</a></h1>
-<p>在ORM中，上一节描述的declarative base和ORM映射函数是主要的配置界面。一旦映射配置完成，持久化操作的主使用接口为:class:<cite>.Session</cite>。</p>
+<span id="session"></span><span id="session-toplevel"></span><h1>用 Session<a class="headerlink" href="#module-sqlalchemy.orm.session" title="Permalink to this heading">¶</a></h1>
+<p>在ORM中，   <a class="reference internal" href="mapper_config.html"><span class="std std-ref">ORM映射类配置</span></a>  描述的映射函数声明和ORM是最主要的配置界面。一旦配置好映射，持久性操作的主要使用界面就是   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="session_basics.html">会话基础知识</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="session_basics.html#session">会话（Session）会做些什么？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="session_basics.html#session-basics">使用会话的基础知识</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-getting">打开和关闭会话</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-begin-commit-rollback-block">编写起始 / 提交 / 回滚块</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#sessionmaker">使用sessionmaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_basics.html#id2">会话的作用是什么？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_basics.html#session-basics">使用会话的基础</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-getting">开启和关闭会话</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-begin-commit-rollback-block">构建/提交/回滚块</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#sessionmaker">使用 sessionmaker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-querying-20">查询</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-adding">添加新对象或现有对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-adding">添加新项或现有项</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-deleting">删除</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-flushing">刷新</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-get">按主键检索</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-get">按主键获取</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-expiring">过期/刷新</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#where-update-delete">带任意 WHERE 子句的 UPDATE 和 DELETE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-autobegin">自动开始</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#where-update-delete">使用任意 WHERE 子句进行 UPDATE 和 DELETE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-autobegin">自动启动</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-committing">提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-close">关闭</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-rollback">回滚</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-closing">关闭</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="session_basics.html#session-faq">会话常见问题</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id40">我什么时候创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>？</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-faq-whentocreate">何时构造 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，何时提交，何时关闭？</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id44"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是缓存吗？</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id45">如何在特定对象中获取 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>？</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-asyncio-asyncsession"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是线程安全的吗？<code class="xref py py-class docutils literal notranslate"><span class="pre">_asyncio.AsyncSession</span></code> 在并发任务中共享安全吗？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_basics.html#session-faq">会话常见问答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id20">何时创建   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> ？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session">何时构建   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，何时提交，何时关闭？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id21">Session 是缓存吗？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#id24">如何获取某个对象的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_basics.html#session-asyncsession">Session 是线程安全的吗？在并发任务中共享 AsyncSession 是安全的吗？</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="session_state_management.html">状态管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="session_state_management.html#session-object-states">对象状态简介</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_state_management.html#id17">获得对象的当前状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_state_management.html#id5">获取对象的当前状态</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="session_state_management.html#session">Session 属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_state_management.html#session-attributes">会话属性</a></li>
 <li class="toctree-l2"><a class="reference internal" href="session_state_management.html#session-referencing-behavior">会话引用行为</a></li>
 <li class="toctree-l2"><a class="reference internal" href="session_state_management.html#unitofwork-merging">合并</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_state_management.html#id27">分离</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_state_management.html#session-expire">刷新/到期</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="session_state_management.html#id29">实际加载了什么</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_state_management.html#id30">何时过期或刷新</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cascades.html">级联</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#save-update">save-update</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cascades.html#backref-cascade">双向关系下的 save-update 级联行为</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#delete">delete</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="cascades.html#cascade-delete-many-to-many">使用 delete 级联与多对多关系</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cascades.html#orm-on-delete">使用 ORM 关系的外键 ON DELETE 级联</a></li>
-<li class="toctree-l3"><a class="reference internal" href="cascades.html#on-delete">使用外键 ON DELETE 与多对多关系</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#cascade-merge">合并</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#cascade-refresh-expire">刷新-过期</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#cascade-expunge">删减</a></li>
-<li class="toctree-l2"><a class="reference internal" href="cascades.html#session-deleting-from-collections">删除-删除从集合和标量关系引用的对象</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="session_transaction.html">事务和连接管理</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="session_transaction.html#unitofwork-transaction">管理事务</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#savepoint">使用保存点（SAVEPOINT）</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#orm-session-vs-engine">会话级别与引擎级别的事务控制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#session-explicit-begin">显式开启事务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#session-twophase">启用两段提交</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#dbapi-autocommit">设置事务隔离级别 / DBAPI AUTOCOMMIT</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#id11">用事件跟踪事务状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#savepoint">使用 SAVEPOINT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#orm-session-vs-engine">会话级和引擎级事务控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#session-explicit-begin">显式开始</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#two-phase-commit">启用双阶段提交（two-phase commit）机制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#dbapi-autocommit">设置事务隔离级别 / DBAPI_AUTOCOMMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_transaction.html#id38">使用事件跟踪事务状态</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="session_transaction.html#session-external-transaction">将会话加入外部事务中（例如用于测试套件）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_transaction.html#session-external-transaction">加入外部事务的会话（例如用于测试套件）</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html">附加的持久化技术</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#sql">在会话中使用SQL表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#null">对具有默认值的列强制使用NULL</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#returning">情况2：表包括与RETURNING不兼容的触发器生成的值</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html">附加的持久化技术</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#sql-flush">将SQL插入/更新表达式嵌入到Flush中</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#sessionssql">在Sessions中使用SQL表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#null">在具有默认值的列上强制执行NULL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#orm-server-defaults">提取服务器生成的默认值</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#returning">情况2：表包含与RETURNING不兼容的触发器生成的值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#id21">情况3：非主键，不支持或不需要RETURNING或等效</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#orm-server-default-fetching-example">示例</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#insert-updateon-conflict-upsert-orm">使用INSERT，UPDATE和ON CONFLICT（即upsert）返回ORM对象</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#returningpostgresql-on-conflictupserted-orm">使用带RETURNING的PostgreSQL ON CONFLICT返回upserted ORM的对象</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#insertupdateon-conflict-upsert-orm">使用INSERT、UPDATE和ON CONFLICT（即upsert）返回ORM对象</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#returningpostgresql-on-conflictupserted-orm">使用带有RETURNING的PostgreSQL ON CONFLICT返回upserted ORM对象</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#session">分区策略（例如，每个Session的多个数据库后端）</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#id38">简单垂直分区</a></li>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#id43">多引擎Session的交易协调</a></li>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#session-custom-partitioning">自定义垂直分区</a></li>
-<li class="toctree-l3"><a class="reference internal" href="persistence_techniques.html#id57">水平分区</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#session">分区策略（例如 Session 上的多个数据库后端）</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#id35">简单的垂直分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#id38">为多元引擎会话协调事务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#session-custom-partitioning">自定义垂直分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#id40">水平分区</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html#bulk-operations">批量操作</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="persistence_techniques.html#bulk-operations">批量操作</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contextual.html">上下文/线程本地会话</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contextual.html#id3">隐式方法访问</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html#id10">隐式方法访问</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contextual.html#unitofwork-contextual-threadlocal">线程本地范围</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contextual.html#web">在 Web 应用程序中使用线程本地范围</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contextual.html#id5">使用自定义创建的作用域</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contextual.html#api">上下文会话 API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html#web">在Web应用程序中使用线程本地范围</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html#id30">使用自定义创建的作用域</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html#api">上下文化会话 API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="contextual.html#sqlalchemy.orm.scoped_session"><code class="docutils literal notranslate"><span class="pre">scoped_session</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="contextual.html#sqlalchemy.util.ScopedRegistry"><code class="docutils literal notranslate"><span class="pre">ScopedRegistry</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="contextual.html#sqlalchemy.util.ThreadLocalRegistry"><code class="docutils literal notranslate"><span class="pre">ThreadLocalRegistry</span></code></a></li>
@@ -305,36 +303,28 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="session_events.html">使用事件跟踪查询、对象和会话更改</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="session_events.html">使用事件追踪查询、对象和会话更改</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="session_events.html#session-execute-events">执行事件</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#id5">基本查询截获</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#id5">基本查询拦截</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_events.html#where-on">添加全局WHERE/ON条件</a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_events.html#do-orm-execute-re-executing">重新执行语句</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="session_events.html#session-persistence-events">持久性事件</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#before-flush">before_flush()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#after-flush">after_flush()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#after-flush-postexec">after_flush_postexec()</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#mapper-flush">Mapper级别的 Flush 事件</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#session-persistence-events">持久化事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#after-flush"><code class="docutils literal notranslate"><span class="pre">after_flush()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#after-flush-postexec"><code class="docutils literal notranslate"><span class="pre">after_flush_postexec()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#mapperflush">Mapper级别的Flush事件</a></li>
 <li class="toctree-l2"><a class="reference internal" href="session_events.html#session-lifecycle-events">对象生命周期事件</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#id11">暂态</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#id12">暂态转持久态</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#pending-persistent">pending 转 persistent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#pending-transient">pending 转 transient</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#id13">作为持久态加载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#persistent-transient">persistent 转 transient</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#persistent-deleted">persistent 转 deleted</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#deleted-detached">deleted 转 detached</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#persistent-detached">persistent 转 detached</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#detached-persistent">detached 转 persistent</a></li>
-<li class="toctree-l3"><a class="reference internal" href="session_events.html#deleted-persistent">deleted 转 persistent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#id19">瞬态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#id20">瞬态到待处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#id21">待处理到持久</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#id22">待处理到瞬态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_events.html#insert-session-rollback">如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  <span class="xref std std-term">待处理</span>  对象可以回退到  <span class="xref std std-term">瞬态</span>  。持续生成实例</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#id29">脱离中间状态</a></li>
 <li class="toctree-l2"><a class="reference internal" href="session_events.html#session-transaction-events">事务事件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="session_events.html#id15">属性更改事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html#id33">属性更改事件</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="session_api.html">会话API</a><ul>
@@ -351,6 +341,7 @@
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.init_collection"><code class="docutils literal notranslate"><span class="pre">init_collection()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.flag_modified"><code class="docutils literal notranslate"><span class="pre">flag_modified()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.flag_dirty"><code class="docutils literal notranslate"><span class="pre">flag_dirty()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.instance_state"><code class="docutils literal notranslate"><span class="pre">instance_state()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.instrumentation.is_instrumented"><code class="docutils literal notranslate"><span class="pre">is_instrumented()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.set_attribute"><code class="docutils literal notranslate"><span class="pre">set_attribute()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="session_api.html#sqlalchemy.orm.attributes.set_committed_value"><code class="docutils literal notranslate"><span class="pre">set_committed_value()</span></code></a></li>
@@ -369,7 +360,7 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="queryguide/query.html" title="previous chapter">旧版查询API</a>
+        <a href="queryguide/query.html" title="previous chapter">Legacy查询API</a>
         Next:
         <a href="session_basics.html" title="next chapter">会话基础知识</a>
 
@@ -381,7 +372,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:02
 
     </div>
 </div>

@@ -127,30 +127,30 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">通过声明性方式映射类</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li class="selected"><span class="link-container"><strong>配置版本计数器</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id10">简单版本计数</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id15">自定义版本计数器/类型</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id16">服务器端版本计数器</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id21">编程或条件版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">简单的版本计数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#custom-version-counter">自定义版本计数器/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#server-side-version-counter">服务器端版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id10">编程或条件版本计数器</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -196,11 +196,11 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">配置版本计数器</a><ul>
-<li><a class="reference internal" href="#id10">简单版本计数</a></li>
-<li><a class="reference internal" href="#id15">自定义版本计数器/类型</a></li>
-<li><a class="reference internal" href="#id16">服务器端版本计数器</a></li>
-<li><a class="reference internal" href="#id21">编程或条件版本计数器</a></li>
+<li><a class="reference internal" href="#mapper-version-counter">配置版本计数器</a><ul>
+<li><a class="reference internal" href="#id3">简单的版本计数</a></li>
+<li><a class="reference internal" href="#custom-version-counter">自定义版本计数器/类型</a></li>
+<li><a class="reference internal" href="#server-side-version-counter">服务器端版本计数器</a></li>
+<li><a class="reference internal" href="#id10">编程或条件版本计数器</a></li>
 </ul>
 </li>
 </ul>
@@ -214,39 +214,56 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-versioning" >
         
-<section id="id1">
-<h1>配置版本计数器<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper`支持管理</span> <span class="pre">:term:`版本ID列</span></code>，它是一个单个表列，每当映射表的“UPDATE”发生时增加或以其他方式更新其值。每次ORM发出“UPDATE”或“DELETE”来对行进行操作时都会检查该值，以确保内存中保存的值与数据库中的值匹配。</p>
+<section id="mapper-version-counter">
+<span id="id1"></span><h1>配置版本计数器<a class="headerlink" href="#mapper-version-counter" title="Permalink to this heading">¶</a></h1>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  支持管理单个表列的版本 ID (version id column)，它在映射表更新时增加或更新它的值。每次 ORM 发出 <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> 或 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 命令时，都会检查此值，以确保内存中的值与数据库值匹配。</p>
+</div></blockquote>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>由于版本控制功能依赖于对象的**内存**比较,因此该功能仅适用于:meth:<a href="#id2"><span class="problematic" id="id3">`</span></a>.Session.flush`过程，ORM将每个内存中的行刷新到数据库。在使用:meth:<a href="#id4"><span class="problematic" id="id5">`</span></a>_query.Query.update`或:meth:<a href="#id6"><span class="problematic" id="id7">`</span></a>_query.Query.delete`方法执行多行UPDATE或DELETE时，它不会生效，因为这些方法仅发出UPDATE或DELETE语句，但否则无法直接访问那些受影响的行的内容。</p>
+<p>因为版本控制特性依赖于比较对象的**内存中**记录，所以此特性仅适用于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  过程，ORM 将单个内存行刷新到数据库。但是，当对使用  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a>  或  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.delete" title="sqlalchemy.orm.Query.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.delete()</span></code></a>  方法执行多行更新或删除时，它**不会**生效，因为这些方法仅发出更新或删除语句，但否则不直接访问受影响行的内容。</p>
 </div>
-<p>此功能的目的是检测并发事务在大致同时修改同一行的时间，或提供对在再次使用先前事务的数据而没有刷新的情况下使用“陈旧”行的系统的保护。 （例如，如果使用:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>.Session`并设置了“expire_on_commit=False”，则可以从上一次事务重复使用数据）。</p>
-<section id="id10">
-<h2>简单版本计数<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
-<p>最简单的跟踪版本的方法是向映射表添加一个整数列，然后将其作为“version_id_col”建立在映射器选项中:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
-
-    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">version_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-
-    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;version_id_col&quot;</span><span class="p">:</span> <span class="n">version_id</span><span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
+<p>此特性的目的是检测当两个并行事务在大致相同时间修改同一行时，或者作为防范措施的 “过时” 行的使用，用于可以在不刷新的情况下重新使用从前一个事务获取的数据（例如，如果使用 <code class="docutils literal notranslate"><span class="pre">expire_on_commit=False</span></code> 的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，则可能会重复使用来自以前事务的数据）。</p>
+<aside class="topic">
+<p class="topic-title">并发性事务更新</p>
+<p>在检测事务内并发更新时，通常情况下，数据库的事务隔离级别低于可重复读的级别；否则，事务将不会暴露给与本地更新值冲突的并发更新创建的新行值。在这种情况下，SQLAlchemy 版本控制特性通常无法用于事务内冲突检测，但仍可用于跨事务的过时检测。</p>
+<p>实施可重复读的数据库通常会锁定目标行以防止并发更新，或者使用某种类型的多版本并发控制，在提交事务时发出错误。 SQLAlchemy 的 version_id_col 是一种替代方案，它允许在事务中针对特定表进行版本跟踪，否则该表可能没有设置此隔离级别。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://www.postgresql.org/docs/current/static/transaction-iso.html#XACT-REPEATABLE-READ">可重复读隔离级别</a> - PostgreSQL 的可重复读实现，包括错误条件的说明。</p>
 </div>
-<p>以上，<a href="#id11"><span class="problematic" id="id12">``</span></a>User``映射使用列``version_id``跟踪整数版本。 当首次刷新``User``类型的对象时，<a href="#id13"><span class="problematic" id="id14">``</span></a>version_id``列将被赋予值“1”。然后，以后的表更新将始终以类似于以下方式发出：</p>
+</aside>
+<section id="id3">
+<h2>简单的版本计数<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>追踪版本最简单的方法是在映射表上添加一个整数列，然后将其作为 <code class="docutils literal notranslate"><span class="pre">version_id_col</span></code> 设为 mapper 选项的一部分：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+version_id = mapped_column(Integer, nullable=False)
+name = mapped_column(String(50), nullable=False)</p>
+<p>__mapper_args__ = {“version_id_col”: version_id}</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>强烈建议将 “version_id” 列设置为 NOT NULL。此版本控制特性**不支持**未定义值。</p>
+</div>
+<p>上面的示例中，<code class="docutils literal notranslate"><span class="pre">User</span></code> 映射使用 <code class="docutils literal notranslate"><span class="pre">version_id</span></code> 列跟踪整数版本。当首次刷新其类型为 <code class="docutils literal notranslate"><span class="pre">User</span></code> 的对象时，<code class="docutils literal notranslate"><span class="pre">version_id</span></code> 列将被赋予值 “1”。之后，将总是以类似以下方式发送对表的 UPDATE：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">version_id</span><span class="o">=</span><span class="p">:</span><span class="n">version_id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="p">:</span><span class="n">name</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">version_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">user_version_id</span>
 <span class="c1">-- {&quot;name&quot;: &quot;new name&quot;, &quot;version_id&quot;: 2, &quot;user_id&quot;: 1, &quot;user_version_id&quot;: 1}</span></pre></div>
 </div>
-<p>上述UPDATE语句正在更新与”user.id = 1”匹配且还需要”user.version_id = 1”匹配的行，其中”1”是我们已知用于该对象的最后一个版本标识符。如果在其他地方的事务中独立修改了该行，则该版本ID将不再匹配，UPDATE语句将报告没有匹配的行; SQLAlchemy测试这种情况，即我们的UPDATE（或DELETE）语句只匹配一个行。如果匹配了零行，则表示我们的数据版本已过期，并引发:exc:<cite>.StaleDataError</cite>。</p>
+<p>上述 UPDATE 语句正在更新与 <code class="docutils literal notranslate"><span class="pre">user.id</span> <span class="pre">=</span> <span class="pre">1</span></code> 匹配且需要 <code class="docutils literal notranslate"><span class="pre">user.version_id</span> <span class="pre">=</span> <span class="pre">1</span></code> 的行，其中 “1” 是我们已知在此对象上使用的最后一个版本标识符。如果此前在其他事务中修改了行，则此版本 ID 将不再匹配，UPDATE 语句将报告未匹配任何行。这是 SQLAlchemy 测试的条件，即我们的 UPDATE（或 DELETE）语句只匹配了一行。如果未匹配任何行，则表示我们的数据版本已过时，会引发  <a class="reference internal" href="exceptions.html#sqlalchemy.orm.exc.StaleDataError" title="sqlalchemy.orm.exc.StaleDataError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">StaleDataError</span></code></a>  异常。</p>
 </section>
-<section id="id15">
-<h2>自定义版本计数器/类型<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
-<p>还可以使用其他类型或计数器方案进行版本控制。常见类型包括日期和GUID。使用备用类型或计数器方案时，SQLAlchemy提供了一个使用“version_id_generator”参数的挂钩函数，该参数接受版本生成可调用项。此可调用项将传递当前已知版本的值，并且预计返回后续版本。</p>
-<p>例如，如果我们想要使用随机生成的GUID跟踪“User”类的版本控制，我们可以这样做（请注意，某些后端支持原生GUID类型，但在这里我们使用简单的字符串来说明）：：</p>
+<section id="custom-version-counter">
+<span id="id4"></span><h2>自定义版本计数器/类型<a class="headerlink" href="#custom-version-counter" title="Permalink to this heading">¶</a></h2>
+<p>可以使用其他类型或计数器方案进行版本控制。常见的类型包括日期和 GUID。在使用其他类型或计数器方案时，SQLAlchemy 提供了使用 <code class="docutils literal notranslate"><span class="pre">version_id_generator</span></code> 参数的钩子，接受版本生成可调用的方法。这个可调用方法会传递当前已知版本的值，并预期返回随后的版本值。</p>
+<p>例如，如果我们想要使用随机生成的 GUID 跟踪 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类的版本控制，我们可以这样做（注意，一些后端支持原生的 GUID 类型，但是在这里我们使用简单的字符串来说明）：</p>
 <blockquote>
 <div><p>import uuid</p>
+</div></blockquote>
 <dl>
 <dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
 <p>id = mapped_column(Integer, primary_key=True)
@@ -260,16 +277,14 @@ name = mapped_column(String(50), nullable=False)</p>
 <p>}</p>
 </dd>
 </dl>
-</div></blockquote>
-<p>持久化引擎将在每次一个“User”对象需要执行INSERT或UPDATE时调用“uuid.uuid4()”。在这种情况下，我们的版本生成功能可以忽略“version”的输入值，因为“uuid4()”函数会生成没有任何先决条件值的标识符。如果我们正在使用数字或特殊字符系统等顺序版本控制方案，则可以利用给定的“version”来帮助确定后续值。</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/custom_types.html#custom-guid-type"><span class="std std-ref">后端不受限制的 GUID 类型</span></a></p>
+<p>每当对“User”对象进行INSERT或UPDATE操作时，持久性引擎都会调用``uuid.uuid4()``。在这种情况下，我们的版本生成函数可以忽略``version``的传入值，因为``uuid4()``函数会生成没有任何先决条件的标识符。如果我们使用顺序版本控制方案，例如数字或特殊字符系统，则可以利用给定的``version``来帮助确定后续值。</p>
+<p>可参见:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">ref</span><span class="p">:</span><span class="err">`</span><span class="n">custom_guid_type</span><span class="err">`</span></pre></div>
 </div>
 </section>
-<section id="id16">
-<h2>服务器端版本计数器<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
-<p>“version_id_generator”也可以配置以依赖于由数据库生成的值。在这种情况下，数据库需要一些生成新标识符的方法，当行受到INSERT和UPDATE的影响时需要这些方法。对于UPDATE情况，通常需要更新触发器，除非问题数据库支持某种本机版本标识符。 PostgreSQL数据库特别支持一个名为`xmin &lt;<a class="reference external" href="https://www.postgresql.org/docs/current/static/ddl-system-columns.html">https://www.postgresql.org/docs/current/static/ddl-system-columns.html</a>&gt;`_的系统列，提供UPDATE版本控制，我们可以使用PostgreSQL中的“xmin”列对“User”类进行版本控制，如下所示：：</p>
+<section id="server-side-version-counter">
+<span id="id5"></span><h2>服务器端版本计数器<a class="headerlink" href="#server-side-version-counter" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id6"><span class="problematic" id="id7">``</span></a>version_id_generator``也可以配置为依赖于由数据库生成的值。在这种情况下，当对行进行INSERT或UPDATE操作时，数据库需要某种生成新标识符的方法。对于UPDATE情况，通常需要一个更新触发器，除非所涉及的数据库支持其他本机版本标识符。尤其是PostgreSQL数据库支持一个称为“xmin”&lt;<a class="reference external" href="https://www.postgresql.org/docs/current/static/ddl-system-columns.html">https://www.postgresql.org/docs/current/static/ddl-system-columns.html</a>&gt;`_的系统列，提供UPDATE版本控制。我们可以使用PostgreSQL的``xmin``列按以下方式对``User``类进行版本化：</p>
 <blockquote>
 <div><p>from sqlalchemy import FetchedValue</p>
 <dl>
@@ -281,13 +296,17 @@ xmin = mapped_column(“xmin”, String, system=True, server_default=FetchedValu
 </dd>
 </dl>
 </div></blockquote>
-<p>通过上述映射，ORM将依赖于“xmin”列来自动提供版本ID计数器的新值。</p>
-<p>当ORM发出INSERT或UPDATE时，通常不会积极提取数据库生成的值，而是将这些列保留为“过期”并在下一次访问时获取，除非设置“eager_defaults”:_orm.Mapper标志。但是，当使用服务器端版本列时，ORM需要积极提取新生成的值。这样，版本计数器将在任何并发事务更新它之前设置。最好使用:term:<a href="#id17"><span class="problematic" id="id18">`</span></a>RETURNING`同时在INSERT或UPDATE语句中进行获取，否则如果之后发出SELECT语句，则仍存在潜在的竞争关系，其中版本计数器可能会在获取之前发生更改。</p>
-<p>当目标数据库支持RETURNING时，我们的User类的INSERT语句如下：</p>
+<p>通过以上映射，ORM将依靠``xmin``列自动提供版本ID计数器的新值。</p>
+<aside class="topic">
+<p class="topic-title">创建引用系统列的表格</p>
+<p>在上述方案中，由于``xmin``是PostgreSQL提供的系统列，我们使用``system=True``参数，将其标记为系统提供的列，从``CREATE TABLE``语句中省略。此列的数据类型是一个名为``xid``的内部PostgreSQL类型，它的作用大多像一个字符串，因此我们使用 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_types.String`数据类型。</p>
+</aside>
+<p>当ORM发出INSERT或UPDATE时，通常不会主动提取数据库生成的值，而是将这些列保留为“过期”，在下一次访问它们时再提取，除非设置了``eager_defaults``   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  一次性地在INSERT或UPDATE语句中同时进行此提取，否则，如果之后再发出SELECT语句，则仍然存在可能的竞争条件，版本计数器可能在其被提取之前发生变化。</p>
+<p>当目标数据库支持RETURNING时，我们``User``类的INSERT语句如下所示：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">xmin</span>
 <span class="c1">-- {&#39;name&#39;: &#39;ed&#39;}</span></pre></div>
 </div>
-<p>在上述示例中，ORM可以在一条语句中获取任何新生成的主键值和服务器生成的版本标识符。当后端不支持RETURNING时，必须为**每个**INSERT和UPDATE发出额外的SELECT语句，这效率要低得多，并且还会引入可能的错误版本计数器:</p>
+<p>上述ORM可以在一条语句中获取任何新生成的主键值以及服务器生成的版本标识符。当后端不支持RETURNING时，必须为**每个**INSERT和UPDATE发出额外的SELECT语句，这样效率要低得多，而且还会引入版本计数器丢失的可能性：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
 <span class="c1">-- {&#39;name&#39;: &#39;ed&#39;}</span>
 
@@ -295,31 +314,21 @@ xmin = mapped_column(“xmin”, String, system=True, server_default=FetchedValu
 <span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">param_1</span>
 <span class="c1">-- {&quot;param_1&quot;: 1}</span></pre></div>
 </div>
-<p>强烈建议仅在绝对必要的情况下以及仅在支持:term:<a href="#id19"><span class="problematic" id="id20">`</span></a>RETURNING`的后端上使用服务器端版本计数器，当前为PostgreSQL、Oracle、MariaDB 10.5、SQLite 3.35和SQL Server。</p>
+<p>非常强烈建议只在绝对必要且仅在支持:returning的后端上使用服务器端版本计数器，目前支持此功能的后端为PostgreSQL，Oracle，MariaDB 10.5，SQLite 3.35和SQL Server。</p>
 </section>
-<section id="id21">
-<h2>编程或条件版本计数器<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
-<p>当“version_id_generator”设置为False时，我们还可以以与分配任何其他映射属性相同的方式编程（并有条件地）设置我们对象上的版本标识符。例如，如果我们使用示例UUID，但将“version_id_generator”设置为“False”，我们可以按照我们的选择设置版本标识符：：</p>
+<section id="id10">
+<h2>编程或条件版本计数器<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
+<p>当``version_id_generator``设置为``False``时，我们也可以像分配任何其他映射属性一样在对象上以编程方式(并有条件地)设置版本标识符。例如，如果我们使用UUID示例，但将``version_id_generator``设置为``False``，那么我们可以在任意时刻设置版本标识符:</p>
 <blockquote>
 <div><p>import uuid</p>
 <dl>
 <dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
 <p>id = mapped_column(Integer, primary_key=True)
 version_uuid = mapped_column(String(32), nullable=False)
-name = mapped_column(String(50), nullable=False)</p>
-<p>__mapper_args__ = {“version_id_col”: version_uuid, “version_id_generator”: False}</p>
+name = mapped_column(String(50), nullable=False)我们也可以更新我们的``User``对象而不增加版本计数器；计数器的值将保持不变，并且UPDATE语句仍将根据先前的值进行检查。这可能对只有特定类别的UPDATE敏感于并发问题的方案有用:</p>
 </dd>
 </dl>
-<p>u1 = User(name=”u1”, version_uuid=uuid.uuid4())</p>
-<p>session.add(u1)</p>
-<p>session.commit()</p>
-<p>u1.name = “u2”
-u1.version_uuid = uuid.uuid4()</p>
-<p>session.commit()</p>
-</div></blockquote>
-<p>我们还可以更新我们的“User”对象而不增加版本计数器。计数器的值将保持不变，UPDATE语句仍将检查以前的值。对于仅对并发问题敏感的UPDATE类别，这可能很有用：：</p>
-<blockquote>
-<div><p># will leave version_uuid unchanged
+<p># 将保持version_uuid不变
 u1.name = “u3”
 session.commit()</p>
 </div></blockquote>
@@ -344,7 +353,7 @@ session.commit()</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:02
 
     </div>
 </div>

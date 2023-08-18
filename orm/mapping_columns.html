@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="SQL表达式映射" href="scalar_mapping.html" />
+        <link rel="up" title="映射SQL表达式" href="scalar_mapping.html" />
         <link rel="next" title="关系配置" href="relationships.html" />
-        <link rel="prev" title="SQL表达式映射" href="scalar_mapping.html" />
+        <link rel="prev" title="映射SQL表达式" href="scalar_mapping.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,27 +127,27 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">通过声明性方式映射类</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span><ul>
 <li class="selected"><span class="link-container"><strong>映射表列</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -179,14 +179,14 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="scalar_mapping.html" title="previous chapter">SQL表达式映射</a></li>
+                <a href="scalar_mapping.html" title="previous chapter">映射SQL表达式</a></li>
                 <li><b>Next:</b>
                 <a href="relationships.html" title="next chapter">关系配置</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
                     <ul><li><a href="mapper_config.html" title="ORM映射类配置">ORM映射类配置</a></li>
-                    <ul><li><a href="scalar_mapping.html" title="SQL表达式映射">SQL表达式映射</a></li>
+                    <ul><li><a href="scalar_mapping.html" title="映射SQL表达式">映射SQL表达式</a></li>
                 </ul>
                 </ul>
                 </ul>
@@ -195,7 +195,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#mapping-columns-toplevel">映射表列</a></li>
+<li><a class="reference internal" href="#id1">映射表列</a></li>
 </ul>
 
 
@@ -207,9 +207,9 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-mapping_columns" >
         
-<section id="mapping-columns-toplevel">
-<span id="id1"></span><h1>映射表列<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
-<p>此部分已整合到 <a class="reference internal" href="declarative_tables.html"><span class="std std-ref">使用 Declarative 进行表配置</span></a> 声明式部分。</p>
+<section id="id1">
+<h1>映射表列<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>此部分已集成到“ORM声明表配置”章节中。(  <a class="reference internal" href="declarative_tables.html"><span class="std std-ref">使用Declarative配置Table</span></a> )</p>
 </section>
 
     </div>
@@ -218,7 +218,7 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="scalar_mapping.html" title="previous chapter">SQL表达式映射</a>
+        <a href="scalar_mapping.html" title="previous chapter">映射SQL表达式</a>
         Next:
         <a href="relationships.html" title="next chapter">关系配置</a>
 
@@ -230,7 +230,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

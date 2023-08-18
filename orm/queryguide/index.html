@@ -12,7 +12,7 @@
         <title>
             
     
-    ORM查询指南
+    ORM 查询指南
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="SQLAlchemy ORM" href="../index.html" />
-        <link rel="next" title="用ORM Mapper类编写SELECT语句" href="select.html" />
-        <link rel="prev" title="关系 API" href="../relationship_api.html" />
+        <link rel="next" title="使用ORM映射类编写SELECT语句" href="select.html" />
+        <link rel="prev" title="关系API" href="../relationship_api.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,20 +127,20 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li class="selected"><span class="link-container"><strong>ORM查询指南</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="select.html">用ORM Mapper类编写SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="inheritance.html">编写继承映射的SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="dml.html">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="columns.html">列载入选项</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationships.html">关系属性加载技术</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api.html">用于查询的ORM API特性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="query.html">旧版查询API</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM 查询指南</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="select.html">使用ORM映射类编写SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">继承映射中编写SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">ORM-启用的INSERT、UPDATE和DELETE语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="columns.html">列加载选项</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系加载技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api.html">查询时使用的ORM API功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="query.html">Legacy查询API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -172,9 +172,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="../relationship_api.html" title="previous chapter">关系 API</a></li>
+                <a href="../relationship_api.html" title="previous chapter">关系API</a></li>
                 <li><b>Next:</b>
-                <a href="select.html" title="next chapter">用ORM Mapper类编写SELECT语句</a></li>
+                <a href="select.html" title="next chapter">使用ORM映射类编写SELECT语句</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -184,7 +184,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#orm">ORM查询指南</a></li>
+<li><a class="reference internal" href="#orm">ORM 查询指南</a></li>
 </ul>
 
 
@@ -197,35 +197,71 @@
     <div id="docs-body" role="main" class="withsidebar orm-queryguide-index" >
         
 <section id="orm">
-<span id="id1"></span><h1>ORM查询指南<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>本节概述使用SQLAlchemy ORM使用:term:<a href="#id2"><span class="problematic" id="id3">`</span></a>2.0 style`语法来发出查询。</p>
-<p>本节的读者应该熟悉:ref:<a href="#id4"><span class="problematic" id="id5">`</span></a>unified_tutorial`中的SQLAlchemy概述，特别是本节的大部分内容是在扩展:ref:<a href="#id6"><span class="problematic" id="id7">`</span></a>tutorial_selecting_data`中的内容。</p>
+<span id="queryguide-toplevel"></span><h1>ORM 查询指南<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<p>本节提供了使用 SQLAlchemy ORM 发出查询的概述，使用了  <span class="xref std std-term">2.0 style</span> .
+本节的读者应该熟悉   <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  中的 SQLAlchemy 概述，
+特别是大部分的内容都是在   <a class="reference internal" href="../../tutorial/data_select.html#tutorial-selecting-data"><span class="std std-ref">使用SELECT语句</span></a>  的基础上拓展的。</p>
 <div class="admonition-sqlalchemy-1-x admonition">
-<p class="admonition-title">对于SQLAlchemy 1.x的用户</p>
-<p>在SQLAlchemy 2.x系列中，ORM的SQL SELECT语句是使用与Core相同的:func:<a href="#id8"><span class="problematic" id="id9">`</span></a>_sql.select`构造构建的，然后在:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_orm.Session`中使用:meth:<a href="#id12"><span class="problematic" id="id13">`</span></a>_orm.Session.execute`方法调用（与现在用于:ref:<a href="#id14"><span class="problematic" id="id15">`</span></a>orm_expression_update_delete`特性的:func:<a href="#id16"><span class="problematic" id="id17">`</span></a>_sql.update`和:func:<a href="#id18"><span class="problematic" id="id19">`</span></a>_sql.delete`构造相同）。然而，旧版的:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_query.Query`对象在这个新系统上执行这些相同的步骤，作为更多”一体化”对象的一种，仍然保持可用，以支持在1.x系列上构建的应用程序，而无需全面替换所有的查询。有关此对象的参考，请参阅:ref:<a href="#id22"><span class="problematic" id="id23">`</span></a>query_api_toplevel`章节。</p>
+<p class="admonition-title">对于 SQLAlchemy 1.x 的用户</p>
+<p>在 SQLAlchemy 2.x 系列中，ORM 的 SQL SELECT 语句是使用与 Core 中相同的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造而建造的，
+然后使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法（与用于   <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>
+功能的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  和   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>  构造相同）来调用。但是，旧版的   <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+对象同时执行这些步骤，作为一个“全能”的对象，它仍然是可用的，以支持在没有必要全面替换所有查询的情况下建立在 1.x
+系列上的应用程序。关于这个对象的参考，可以查看   <a class="reference internal" href="query.html"><span class="std std-ref">Legacy查询API</span></a> 。</p>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="select.html">用ORM Mapper类编写SELECT语句</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="select.html#orm">选择ORM实体和属性</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#bundles">总结选定的属性（Bundles）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#orm-queryguide-orm-aliases">ORM别名</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#orm-queryguide-join-subqueries">在子查询中进行ORM联接</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#orm-queryguide-joining-relationships-aliased">用别名进行关系联接</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#on">指定ON从句的目标实体</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#tutorial-joining-relationships-explicit-on">用显式ON从句关联实体和文本时的问题</a></li>
-<li class="toctree-l2"><a class="reference internal" href="select.html#id6">参见</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="select.html#id13">)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="select.html">使用ORM映射类编写SELECT语句</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="select.html#orm">选择ORM实体和属性</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-select-orm-entities">选择ORM实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-select-multiple-entities">同时选择多个ORM实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id3">选择单个属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#bundles">使用 Bundles 分组选择的属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-orm-aliases">选择 ORM 别名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-selecting-text">从文本语句获取 ORM 结果</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-subqueries">从子查询中选择实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#unions">从UNIONs和其他集合操作中选择实体</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="select.html#orm-queryguide-joins">连接</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-simple-relationship-join">简单的关系联接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id10">级联多个连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id13">连接到目标实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#on">使用ON子句连接到目标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#relationship-on">将 Relationship 与自定义 ON 条件组合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#relationship">使用 Relationship 在别名目标之间进行连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-join-subqueries">与子查询连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id21">通过关系路径连接到子查询</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id22">引用多个实体的子查询</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="select.html#where">关系WHERE运算符</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="select.html#has-any">存在形式：has()/any()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-relationship-common-operators">关系实例比较操作符</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="inheritance.html">编写继承映射的SELECT语句</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inheritance.html#id1">从基类或特定子类中进行查询</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inheritance.html">继承映射中编写SELECT语句</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#id1">从基类和特定子类中选择</a></li>
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#selectin-polymorphic">使用 selectin_polymorphic()</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-w-loader-options">将其他加载器选项与 selectin_polymorphic() 子类加载项结合使用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-as-loader-option-target">将 selectin_polymorphic() 应用于现有急切加载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id6">将选择 selectin_polymorphic() 工具配置到映射器上</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id16">在映射器上配置 selectin_polymorphic()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#with-polymorphic">使用 with_polymorphic()</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#with-polymorphic-subclass-attributes">使用 with_polymorphic() 过滤子类的属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#with-polymorphic-aliasing">使用 with_polymorphic 进行别名处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#with-polymorphic-mapper-config">在映射器上配置 with_polymorphic()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#inheritance-of-type">连接到特定子类型或 with_polymorphic() 实体</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#eagerloading-polymorphic-subtypes">多态子类型的急加载</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#loading-single-inheritance">单继承映射的 SELECT 语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id24">提高单继承属性的加载性能</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#api">继承加载API</a><ul>
@@ -235,63 +271,76 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dml.html">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dml.html#orm-insert">ORM 批量 INSERT 语句</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#returning">使用 RETURNING 获取新对象</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#orm-queryguide-insert-heterogeneous-params">使用异构参数字典</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#joined-table-inheritance-insert">Joined Table Inheritance 批量 INSERT</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#sql-orm">使用 SQL 表达式进行 ORM 批量插入</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#session">旧版 Session 批量插入方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dml.html#orm-upsert">ORM “upsert” 语句</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dml.html">ORM-启用的INSERT、UPDATE和DELETE语句</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dml.html#orminsert">ORM大容量INSERT语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dml.html#returning">将 RETURNING 记录与输入数据顺序相关联</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dml.html#orm-queryguide-insert-values">使用每行SQL表达式的ORM批量插入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dml.html#upsertreturning">在upsert语句中使用RETURNING</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dml.html#orm">ORM自定义更新和删除条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dml.html#ormupdate">ORM基于主键的批量UPDATE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dml.html#whereorm-update-and-delete">带有自定义WHERE条件的ORM UPDATE and DELETE</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="columns.html">列载入选项</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#load-only">使用``load_only()``来减少载入的列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#id16">使用``load_only()``作用于多个实体</a></li>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#orm-queryguide-load-only-related">对相关对象和集合使用``load_only()``</a></li>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#defer">使用``defer()``省略特定列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#raiseload">使用 raiseload 防止延迟列载入</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="columns.html#deferral">在映射中配置列 Deferral</a></li>
+<li class="toctree-l1"><a class="reference internal" href="columns.html">列加载选项</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="columns.html#orm-queryguide-column-deferral">使用列延迟选择要加载的列</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#load-only">使用“load_only()”减少加载列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#defer">使用 <code class="docutils literal notranslate"><span class="pre">defer()</span></code> 省略特定列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#raiseload">使用raiseload防止延迟列加载</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="columns.html#deferred-sql">使用``deferred()` `对命令式映射器，映射SQL表达式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="columns.html#ref-orm-queryguide-select-columns-select-sql-sql">如 : ref:<cite>orm_queryguide_select_columns</cite> 和其他地方所述，可以使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code> 结构来加载任意 SQL 表达式结果集中使用计数和其他SQL表达式的添加</a></li>
-<li class="toctree-l3"><a class="reference internal" href="columns.html#api">列加载API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="columns.html#orm-queryguide-deferred-declarative">配置映射的列缓期</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#deferred-sql">使用 <code class="docutils literal notranslate"><span class="pre">deferred()</span></code> 用于命令式映射，映射 SQL 表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#undefer">使用 <code class="docutils literal notranslate"><span class="pre">undefer()</span></code> 来“急切”加载延迟列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#orm-queryguide-deferred-group">按组加载待决列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#id29">使用通配符undefer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#mapper-level-raiseload">配置默认的 mapper-level “raiseload” 行为</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="columns.html#sql">将任意SQL表达式加载到对象上</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#union-with-expression">在 UNION 和其他子查询中使用 <code class="docutils literal notranslate"><span class="pre">with_expression()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="columns.html#api">列加载 API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.defer"><code class="docutils literal notranslate"><span class="pre">defer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.deferred"><code class="docutils literal notranslate"><span class="pre">deferred()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.query_expression"><code class="docutils literal notranslate"><span class="pre">query_expression()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.load_only"><code class="docutils literal notranslate"><span class="pre">load_only()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.undefer"><code class="docutils literal notranslate"><span class="pre">undefer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.undefer_group"><code class="docutils literal notranslate"><span class="pre">undefer_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#sqlalchemy.orm.with_expression"><code class="docutils literal notranslate"><span class="pre">with_expression()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="relationships.html">关系属性加载技术</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#id8">关系加载风格总结</a></li>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#relationship-lazy-option">在映射时配置加载器策略</a></li>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#relationship-loader-options">使用加载程序选项加载关系</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="relationships.html#loader-option-criteria">加载程序选项添加筛选条件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="relationships.html#load-options">使用 Load.options() 指定子选项</a></li>
+<li class="toctree-l1"><a class="reference internal" href="relationships.html">关系加载技术</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#id6">关系加载类型的概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#id9">使用加载器选项加载关系</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="relationships.html#id10">加载器选项添加筛选条件</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#lazy-loading">延迟加载</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="relationships.html#raiseload">使用 raiseload 来防止不必要的惰性加载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#lazy-loading">惰性加载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#joined-eager-loading">连接的及早加载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#in">选择 IN 的加载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#subquery-eager-loading">子查询急加载</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#relationship-loader-api">Relationship Loader API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="relationships.html#sqlalchemy.orm.Load"><code class="docutils literal notranslate"><span class="pre">Load</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#joined-eager-loading">连接式“通常负载”</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">用于查询的ORM API特性</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#orm-loader">ORM Loader选项</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#orm">ORM执行选项</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queryguide-populate-existing">现有数据充填</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">查询时使用的ORM API功能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api.html#orm">ORM加载器选项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html#orm-queryguide-execution-options">ORM执行选项</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api.html#orm-queryguide-populate-existing">填充现有的实例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="api.html#orm-queryguide-autoflush">自动刷新</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#yield-per">使用Yield Per抓取大量结果集</a></li>
-<li class="toctree-l3"><a class="reference internal" href="api.html#queryguide-identity-token">Identity Token</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api.html#queryguide-identity-token">标识符令牌</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="query.html">旧版查询API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="query.html#id5">查询对象</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="query.html">Legacy查询API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="query.html#id1">查询对象</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="query.html#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">Query</span></code></a></li>
 </ul>
 </li>
@@ -308,9 +357,9 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="../relationship_api.html" title="previous chapter">关系 API</a>
+        <a href="../relationship_api.html" title="previous chapter">关系API</a>
         Next:
-        <a href="select.html" title="next chapter">用ORM Mapper类编写SELECT语句</a>
+        <a href="select.html" title="next chapter">使用ORM映射类编写SELECT语句</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -320,7 +369,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:16
+    Documentation last generated: 2023/8/18 18:44:01
 
     </div>
 </div>

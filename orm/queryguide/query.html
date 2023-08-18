@@ -12,7 +12,7 @@
         <title>
             
     
-    旧版查询API
+    Legacy查询API
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../../search.html" />
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
-        <link rel="up" title="ORM查询指南" href="index.html" />
-        <link rel="next" title="使用Session" href="../session.html" />
-        <link rel="prev" title="用于查询的ORM API特性" href="api.html" />
+        <link rel="up" title="ORM 查询指南" href="index.html" />
+        <link rel="next" title="用 Session" href="../session.html" />
+        <link rel="prev" title="查询时使用的ORM API功能" href="api.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,15 +127,15 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="index.html">ORM查询指南</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="select.html">用ORM Mapper类编写SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="inheritance.html">编写继承映射的SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="dml.html">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="columns.html">列载入选项</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationships.html">关系属性加载技术</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api.html">用于查询的ORM API特性</a></span></li>
-<li class="selected"><span class="link-container"><strong>旧版查询API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id5">查询对象</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="index.html">ORM 查询指南</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="select.html">使用ORM映射类编写SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">继承映射中编写SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">ORM-启用的INSERT、UPDATE和DELETE语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="columns.html">列加载选项</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系加载技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api.html">查询时使用的ORM API功能</a></span></li>
+<li class="selected"><span class="link-container"><strong>Legacy查询API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">查询对象</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">Query</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.Query.__init__"><code class="docutils literal notranslate"><span class="pre">Query.__init__()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.Query.add_column"><code class="docutils literal notranslate"><span class="pre">Query.add_column()</span></code></a></span></li>
@@ -222,10 +222,10 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -257,13 +257,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="api.html" title="previous chapter">用于查询的ORM API特性</a></li>
+                <a href="api.html" title="previous chapter">查询时使用的ORM API功能</a></li>
                 <li><b>Next:</b>
-                <a href="../session.html" title="next chapter">使用Session</a></li>
+                <a href="../session.html" title="next chapter">用 Session</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="index.html" title="ORM查询指南">ORM查询指南</a></li>
+                    <ul><li><a href="index.html" title="ORM 查询指南">ORM 查询指南</a></li>
                 </ul>
                 </ul>
 
@@ -271,8 +271,8 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#api">旧版查询API</a><ul>
-<li><a class="reference internal" href="#id5">查询对象</a><ul>
+<li><a class="reference internal" href="#legacyapi">Legacy查询API</a><ul>
+<li><a class="reference internal" href="#id1">查询对象</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">Query</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.Query.__init__"><code class="docutils literal notranslate"><span class="pre">Query.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.Query.add_column"><code class="docutils literal notranslate"><span class="pre">Query.add_column()</span></code></a></li>
@@ -370,25 +370,27 @@
         
 <aside class="topic">
 <p class="topic-title">ORM查询指南</p>
-<p>本页面是 <a class="reference internal" href="index.html"><span class="doc">ORM查询指南</span></a> 的一部分。</p>
-<p>前一页: <a class="reference internal" href="api.html"><span class="doc">用于查询的ORM API特性</span></a></p>
+<p>本页是  <a class="reference internal" href="index.html"><span class="doc">ORM 查询指南</span></a>  的一部分。</p>
+<p>上一页：<a class="reference internal" href="api.html"><span class="doc">查询时使用的ORM API功能</span></a></p>
 </aside>
-<section id="api">
-<span id="query-api-toplevel"></span><h1>旧版查询API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
-<div class="admonition-api admonition">
-<p class="admonition-title">关于旧版查询API</p>
-<p>本页面包含 <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 构造函数的Python生成文档，对于多年来使用SQLAlchemy ORM时唯一的SQL接口而言，这个构造函数非常重要。从版本2.0开始，一个全新的工作方式现在是标准的方法，使用ORM的同样适用于Core的 <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造将提供一致的查询接口。</p>
-<p>对于基于旧版查询API的任何应用程序来说，<a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> API通常代表应用程序中绝大多数数据库访问代码，因此大部分:class:<cite>_query.Query</cite> API <strong>不会从SQLAlchemy 中删除</strong>。在后台，:class:<a href="#id1"><span class="problematic" id="id2">`</span></a>_query.Query`对象现在在查询时将其自身转换为2.0风格的 :func:<a href="#id3"><span class="problematic" id="id4">`</span></a>_sql.select`对象，因此现在它只是一个非常薄的适配器API。</p>
-<p>对于基于:class:<cite>_query.Query`的应用程序的迁移指南到2.0风格，请参见 :ref:`migration_20_query_usage</cite> 。</p>
-<p>对于使用2.0风格为ORM对象编写SQL的概述，请从 <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 开始。 2.0风格查询的其他参考内容位于 <span class="xref std std-ref">queryguide_toplevel</span>。</p>
+<section id="legacyapi">
+<span id="query-api-toplevel"></span><h1>Legacy查询API<a class="headerlink" href="#legacyapi" title="Permalink to this heading">¶</a></h1>
+<div class="admonition-legacyapi admonition">
+<p class="admonition-title">关于Legacy查询API</p>
+<p>本页包含Python生成的文档，针对的是 <cite>查询（Query）</cite> 构造函数。该构造函数多年来一直是使用SQLAlchemy ORM时的唯一SQL接口。从版本2.0开始，全新的工作方式成为标准方法，对于ORM来说，与核心库（Core）使用的相同的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造函数一样即可，为构建查询提供一致的界面。</p>
+<p>对于任何在2.0 API之前构建在SQLAlchemy ORM上的应用程序而言，  <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  API大多数情况下都是应用程序中的大部分数据库访问代码，因此大部分   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  API**不会被从SQLAlchemy中删除**。当执行   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象时，它在后台将自身转换为2.0样式的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  对象，因此它现在只是一个非常薄的适配器API。</p>
+<p>转换基于  <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 。</p>
+<p>关于2.0样式中针对ORM对象编写SQL的介绍，请从   <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  开始。查询2.0样式的附加参考可参阅：  <a class="reference internal" href="index.html"><span class="std std-ref">ORM 查询指南</span></a> 。</p>
 </div>
-<section id="id5">
-<h2>查询对象<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
-<p><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 是基于给定的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 生成的，使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code> 方法：</p>
+<section id="id1">
+<h2>查询对象<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  是在给定的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中生成的，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code>  方法即可生成：</p>
 <blockquote>
 <div><p>q = session.query(SomeMappedClass)</p>
 </div></blockquote>
-<p>以下是 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_query.Query`对象的完整接口。</p>
+</div></blockquote>
+<p>以下是   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象的完整界面。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -409,7 +411,7 @@
 <p class="admonition-title">Legacy Feature</p>
 <p>The ORM <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object is a legacy construct
 as of SQLAlchemy 2.0.   See the notes at the top of
-<a class="reference internal" href="#"><span class="std std-ref">旧版查询API</span></a> for an overview, including links to migration
+<a class="reference internal" href="#"><span class="std std-ref">Legacy查询API</span></a> for an overview, including links to migration
 documentation.</p>
 </div>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> objects are normally initially generated using the
@@ -504,14 +506,14 @@ more details.</p>
 <blockquote>
 <div><div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../../faq/sessions.html#faq-query-deduplicating"><span class="std std-ref">我的查询返回的对象数量与查询.count()测试我告诉我的不同 - 为什么？</span></a></p>
+<p><a class="reference internal" href="../../faq/sessions.html#faq-query-deduplicating"><span class="std std-ref">我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？</span></a></p>
 </div>
 </div></blockquote>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code> - v2 comparable method.</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.all" title="sqlalchemy.engine.Result.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code></a> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.scalars" title="sqlalchemy.engine.Result.scalars"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -582,10 +584,10 @@ returned by this <a class="reference internal" href="#sqlalchemy.orm.Query" titl
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>This API is available using <a class="reference internal" href="../../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> queries as well,
+<p>This API is available using <span class="xref std std-term">2.0 style</span> queries as well,
 documented at:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="api.html#queryguide-inspection"><span class="std std-ref">检查来自启用ORM的SELECT和DML语句的实体和列</span></a></p></li>
+<li><p><a class="reference internal" href="api.html#queryguide-inspection"><span class="std std-ref">检查从启用 ORM 的 SELECT 和 DML 语句中获取的实体和列</span></a></p></li>
 <li><p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.column_descriptions" title="sqlalchemy.sql.expression.Select.column_descriptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Select.column_descriptions</span></code></a></p></li>
 </ul>
 </div>
@@ -641,7 +643,7 @@ only one object of that primary key would be present.  This does
 not apply to a query that is against individual columns.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../../faq/sessions.html#faq-query-deduplicating"><span class="std std-ref">我的查询返回的对象数量与查询.count()测试我告诉我的不同 - 为什么？</span></a></p>
+<p><a class="reference internal" href="../../faq/sessions.html#faq-query-deduplicating"><span class="std std-ref">我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？</span></a></p>
 </div>
 </div>
 <p>For fine grained control over specific columns to count, to skip the
@@ -738,7 +740,7 @@ directly:</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>See the section <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> for important
+<p>See the section <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> for important
 caveats and warnings, including limitations when using bulk UPDATE
 and DELETE with mapper inheritance configurations.</p>
 </div>
@@ -746,7 +748,7 @@ and DELETE with mapper inheritance configurations.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><span class="target" id="sqlalchemy.orm.Query.delete.params.synchronize_session"></span><strong>synchronize_session</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.Query.delete.params.synchronize_session">¶</a> – chooses the strategy to update the
 attributes on objects in the session.   See the section
-<a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> for a discussion of these
+<a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> for a discussion of these
 strategies.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -756,7 +758,7 @@ strategies.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a></p>
+<p><a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a></p>
 </div>
 </dd></dl>
 
@@ -863,7 +865,7 @@ that method for usage examples.</p>
 <em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">execution_options</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.execution_options" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set non-SQL options which take effect during execution.</p>
 <p>Options allowed here include all of those accepted by
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code>, as well as a series
+<a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>, as well as a series
 of ORM specific options:</p>
 <p><code class="docutils literal notranslate"><span class="pre">populate_existing=True</span></code> - equivalent to using
 <a class="reference internal" href="#sqlalchemy.orm.Query.populate_existing" title="sqlalchemy.orm.Query.populate_existing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.populate_existing()</span></code></a></p>
@@ -879,12 +881,12 @@ method or execution option is used.</p>
 <a class="reference internal" href="#sqlalchemy.orm.Query.execution_options" title="sqlalchemy.orm.Query.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.execution_options()</span></code></a></p>
 </div>
 <p>The execution options may also be specified on a per execution basis
-when using <a class="reference internal" href="../../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> queries via the
+when using <span class="xref std std-term">2.0 style</span> queries via the
 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execution_options</span></code> parameter.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>The
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code>
+<a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>
 parameter should not be used at the level of individual ORM
 statement executions, as the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> will not track
 objects from different schema translate maps within a single
@@ -995,8 +997,8 @@ query.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.one" title="sqlalchemy.orm.Query.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.one_or_none" title="sqlalchemy.orm.Query.one_or_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one_or_none()</span></code></a></p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.first()</span></code> - v2 comparable method.</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.first" title="sqlalchemy.engine.Result.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.first()</span></code></a> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.scalars" title="sqlalchemy.engine.Result.scalars"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -1151,11 +1153,11 @@ passing <code class="docutils literal notranslate"><span class="pre">None</span>
 on mappers as well.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>These sections describe GROUP BY in terms of <a class="reference internal" href="../../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>
+<p>These sections describe GROUP BY in terms of <span class="xref std std-term">2.0 style</span>
 invocation but apply to <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> as well:</p>
-<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-group-by-w-aggregates"><span class="std std-ref">使用 GROUP BY / HAVING 进行聚合</span></a> - in the
+<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-group-by-w-aggregates"><span class="std std-ref">使用 GROUP BY / HAVING 的聚合函数</span></a> - in the
 <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
-<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-order-by-label"><span class="std std-ref">按标签排序或分组</span></a> - in the <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
+<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-order-by-label"><span class="std std-ref">按照标签排序或分组</span></a> - in the <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
 <p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a> - v2 equivalent method.</p>
 </div>
 </dd></dl>
@@ -1182,8 +1184,8 @@ functions like COUNT, SUM, AVG, MAX, and MIN, eg.:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.Query.instances">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_proxy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CursorResult</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../internals.html#sqlalchemy.orm.QueryContext" title="sqlalchemy.orm.QueryContext"><span class="pre">QueryContext</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.instances" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return an ORM result given a <code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code> and
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">instances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_proxy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><span class="pre">CursorResult</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../internals.html#sqlalchemy.orm.QueryContext" title="sqlalchemy.orm.QueryContext"><span class="pre">QueryContext</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an ORM result given a <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a> and
 <a class="reference internal" href="../internals.html#sqlalchemy.orm.QueryContext" title="sqlalchemy.orm.QueryContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryContext</span></code></a>.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 2.0: </span>The <a class="reference internal" href="#sqlalchemy.orm.Query.instances" title="sqlalchemy.orm.Query.instances"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.instances()</span></code></a> method is deprecated and will be removed in a future release. Use the Select.from_statement() method or aliased() construct in conjunction with Session.execute() instead.</p>
@@ -1445,7 +1447,7 @@ event.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.orm.Query.merge_result">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">merge_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">FrozenResult</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">FrozenResult</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.merge_result" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">merge_result</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterator</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><span class="pre">FrozenResult</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><span class="pre">FrozenResult</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.merge_result" title="Permalink to this definition">¶</a></dt>
 <dd><p>Merge a result into this <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object’s Session.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 2.0: </span>The <a class="reference internal" href="#sqlalchemy.orm.Query.merge_result" title="sqlalchemy.orm.Query.merge_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.merge_result()</span></code></a> method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. The method is superseded by the <a class="reference internal" href="../internals.html#sqlalchemy.orm.merge_frozen_result" title="sqlalchemy.orm.merge_frozen_result"><code class="xref py py-func docutils literal notranslate"><span class="pre">merge_frozen_result()</span></code></a> function. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../../changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>)</p>
@@ -1464,7 +1466,7 @@ unchecked errors
 will occur.</p>
 <p>The ‘load’ argument is the same as that of <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>.</p>
 <p>For an example of how <a class="reference internal" href="#sqlalchemy.orm.Query.merge_result" title="sqlalchemy.orm.Query.merge_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.merge_result()</span></code></a> is used, see
-the source code for the example <a class="reference internal" href="../examples.html#examples-caching"><span class="std std-ref">Dogpile缓存</span></a>, where
+the source code for the example <a class="reference internal" href="../examples.html#examples-caching"><span class="std std-ref">Dogpile 缓存</span></a>, where
 <a class="reference internal" href="#sqlalchemy.orm.Query.merge_result" title="sqlalchemy.orm.Query.merge_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.merge_result()</span></code></a> is used to efficiently restore state
 from a cache back into a target <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>.</p>
 </dd></dl>
@@ -1494,8 +1496,8 @@ as opposed to full identity-mapped entities.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.first" title="sqlalchemy.orm.Query.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.first()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.one_or_none" title="sqlalchemy.orm.Query.one_or_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one_or_none()</span></code></a></p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.one()</span></code> - v2 comparable method.</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.one" title="sqlalchemy.engine.Result.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.one()</span></code></a> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.scalar_one" title="sqlalchemy.engine.Result.scalar_one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -1515,8 +1517,8 @@ underlying query.</p>
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.first" title="sqlalchemy.orm.Query.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.first()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.one" title="sqlalchemy.orm.Query.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one()</span></code></a></p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.one_or_none()</span></code> - v2 comparable method.</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one_or_none()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.one_or_none" title="sqlalchemy.engine.Result.one_or_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.one_or_none()</span></code></a> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.scalar_one_or_none" title="sqlalchemy.engine.Result.scalar_one_or_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one_or_none()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -1524,15 +1526,15 @@ underlying query.</p>
 <dt class="sig sig-object py" id="sqlalchemy.orm.Query.only_return_tuples">
 <em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.orm.Query"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query.</span></code></a><span class="sig-name descname"><span class="pre">only_return_tuples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><span class="pre">Query</span></a></span></span><a class="headerlink" href="#sqlalchemy.orm.Query.only_return_tuples" title="Permalink to this definition">¶</a></dt>
 <dd><p>When set to True, the query results will always be a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> object.</p>
+<a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> object.</p>
 <p>This can change a query that normally returns a single entity
-as a scalar to return a <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> result in all cases.</p>
+as a scalar to return a <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> result in all cases.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.tuples" title="sqlalchemy.orm.Query.tuples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.tuples()</span></code></a> - returns tuples, but also at the typing
 level will type results as <code class="docutils literal notranslate"><span class="pre">Tuple</span></code>.</p>
 <p><a class="reference internal" href="#sqlalchemy.orm.Query.is_single_entity" title="sqlalchemy.orm.Query.is_single_entity"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.is_single_entity()</span></code></a></p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.tuples" title="sqlalchemy.engine.Result.tuples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -1546,8 +1548,8 @@ mapper options.</p>
 relationship-mapped attributes are loaded.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="columns.html#loading-columns"><span class="std std-ref">列载入选项</span></a></p>
-<p><a class="reference internal" href="relationships.html#relationship-loader-options"><span class="std std-ref">使用加载程序选项加载关系</span></a></p>
+<p><a class="reference internal" href="columns.html#loading-columns"><span class="std std-ref">列加载选项</span></a></p>
+<p><span class="xref std std-ref">relationship_loader_options</span></p>
 </div>
 </dd></dl>
 
@@ -1568,10 +1570,10 @@ then be added by invoking <a class="reference internal" href="#sqlalchemy.orm.Qu
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>These sections describe ORDER BY in terms of <a class="reference internal" href="../../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a>
+<p>These sections describe ORDER BY in terms of <span class="xref std std-term">2.0 style</span>
 invocation but apply to <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> as well:</p>
 <p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-order-by"><span class="std std-ref">ORDER BY</span></a> - in the <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
-<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-order-by-label"><span class="std std-ref">按标签排序或分组</span></a> - in the <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
+<p><a class="reference internal" href="../../tutorial/data_select.html#tutorial-order-by-label"><span class="std std-ref">按照标签排序或分组</span></a> - in the <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a></p>
 <p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a> - v2 equivalent method.</p>
 </div>
 </dd></dl>
@@ -1607,7 +1609,7 @@ that will expire and refresh all instances
 as they are loaded, or reused from the current <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>.</p>
 <p>As of SQLAlchemy 1.4, the <a class="reference internal" href="#sqlalchemy.orm.Query.populate_existing" title="sqlalchemy.orm.Query.populate_existing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.populate_existing()</span></code></a> method
 is equivalent to using the <code class="docutils literal notranslate"><span class="pre">populate_existing</span></code> execution option at
-the ORM level. See the section <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">现有数据充填</span></a>
+the ORM level. See the section <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>
 for further background on this option.</p>
 </dd></dl>
 
@@ -1675,7 +1677,7 @@ raises MultipleResultsFound.</p>
 <p>This results in an execution of the underlying query.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar()</span></code> - v2 comparable method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.scalar" title="sqlalchemy.engine.Result.scalar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar()</span></code></a> - v2 comparable method.</p>
 </div>
 </dd></dl>
 
@@ -1882,12 +1884,12 @@ limit rendering of this suffix to only that dialect.</p></li>
 <dd><p>return a tuple-typed form of this <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>.</p>
 <p>This method invokes the <a class="reference internal" href="#sqlalchemy.orm.Query.only_return_tuples" title="sqlalchemy.orm.Query.only_return_tuples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.only_return_tuples()</span></code></a>
 method with a value of <code class="docutils literal notranslate"><span class="pre">True</span></code>, which by itself ensures that this
-<a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> will always return <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> objects, even
+<a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> will always return <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> objects, even
 if the query is made against a single entity.  It then also
 at the typing level will return a “typed” query, if possible,
 that will type result rows as <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> objects with typed
 elements.</p>
-<p>This method can be compared to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code> method,
+<p>This method can be compared to the <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.tuples" title="sqlalchemy.engine.Result.tuples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code></a> method,
 which returns “self”, but from a typing perspective returns an object
 that will yield typed <code class="docutils literal notranslate"><span class="pre">Tuple</span></code> objects for results.   Typing
 takes effect only if this <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object is a typed
@@ -1897,7 +1899,7 @@ query object already.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code> - v2 equivalent method.</p>
+<p><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.tuples" title="sqlalchemy.engine.Result.tuples"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.tuples()</span></code></a> - v2 equivalent method.</p>
 </div>
 </dd></dl>
 
@@ -1964,7 +1966,7 @@ that method for usage examples.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>See the section <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> for important
+<p>See the section <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> for important
 caveats and warnings, including limitations when using arbitrary
 UPDATE and DELETE with mapper inheritance configurations.</p>
 </div>
@@ -1981,7 +1983,7 @@ flag is passed to the <a class="reference internal" href="#sqlalchemy.orm.Query.
 as well.</p></li>
 <li><p><span class="target" id="sqlalchemy.orm.Query.update.params.synchronize_session"></span><strong>synchronize_session</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.Query.update.params.synchronize_session">¶</a> – chooses the strategy to update the
 attributes on objects in the session.   See the section
-<a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> for a discussion of these
+<a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> for a discussion of these
 strategies.</p></li>
 <li><p><span class="target" id="sqlalchemy.orm.Query.update.params.update_args"></span><strong>update_args</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.orm.Query.update.params.update_args">¶</a> – Optional dictionary, if present will be passed
 to the underlying <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>
@@ -1998,7 +2000,7 @@ as <code class="docutils literal notranslate"><span class="pre">mysql_limit</spa
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a></p>
+<p><a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a></p>
 </div>
 </dd></dl>
 
@@ -2177,12 +2179,12 @@ to a child object or collection, using its attribute state
 as well as an established <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>
 configuration.</p>
 <div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 2.0: </span>The <a class="reference internal" href="#sqlalchemy.orm.Query.with_parent" title="sqlalchemy.orm.Query.with_parent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.with_parent()</span></code></a> method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. Use the <a class="reference internal" href="api.html#sqlalchemy.orm.with_parent" title="sqlalchemy.orm.with_parent"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code></a> standalone construct. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../../changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>)</p>
+<p><span class="versionmodified deprecated">Deprecated since version 2.0: </span>The <a class="reference internal" href="#sqlalchemy.orm.Query.with_parent" title="sqlalchemy.orm.Query.with_parent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.with_parent()</span></code></a> method is considered legacy as of the 1.x series of SQLAlchemy and becomes a legacy construct in 2.0. Use the <code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code> standalone construct. (Background on SQLAlchemy 2.0 at: <a class="reference internal" href="../../changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>)</p>
 </div>
-<p>The method uses the <a class="reference internal" href="api.html#sqlalchemy.orm.with_parent" title="sqlalchemy.orm.with_parent"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code></a> function to generate
+<p>The method uses the <code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code> function to generate
 the clause, the result of which is passed to
 <a class="reference internal" href="#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a>.</p>
-<p>Parameters are the same as <a class="reference internal" href="api.html#sqlalchemy.orm.with_parent" title="sqlalchemy.orm.with_parent"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code></a>, with the exception
+<p>Parameters are the same as <code class="xref py py-func docutils literal notranslate"><span class="pre">with_parent()</span></code>, with the exception
 that the given property can be None, in which case a search is
 performed against this <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object’s target mapper.</p>
 <dl class="field-list simple">
@@ -2277,11 +2279,11 @@ thousands of rows can often double when a suitable yield-per setting
 rows (which are most).</p>
 <p>As of SQLAlchemy 1.4, the <a class="reference internal" href="#sqlalchemy.orm.Query.yield_per" title="sqlalchemy.orm.Query.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.yield_per()</span></code></a> method is
 equivalent to using the <code class="docutils literal notranslate"><span class="pre">yield_per</span></code> execution option at the ORM
-level. See the section <a class="reference internal" href="api.html#orm-queryguide-yield-per"><span class="std std-ref">使用Yield Per抓取大量结果集</span></a> for further
+level. See the section <span class="xref std std-ref">orm_queryguide_yield_per</span> for further
 background on this option.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="api.html#orm-queryguide-yield-per"><span class="std std-ref">使用Yield Per抓取大量结果集</span></a></p>
+<p><span class="xref std std-ref">orm_queryguide_yield_per</span></p>
 </div>
 </dd></dl>
 
@@ -2290,7 +2292,7 @@ background on this option.</p>
 </section>
 <section id="orm">
 <h2>ORM特定的查询构造函数<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
-<p>此部分已转移到 <a class="reference internal" href="api.html#queryguide-additional"><span class="std std-ref">其他ORM API结构</span></a> .</p>
+<p>此部分已移至   <a class="reference internal" href="api.html#queryguide-additional"><span class="std std-ref">其他 ORM API 构件</span></a> 。</p>
 </section>
 </section>
 
@@ -2300,9 +2302,9 @@ background on this option.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="api.html" title="previous chapter">用于查询的ORM API特性</a>
+        <a href="api.html" title="previous chapter">查询时使用的ORM API功能</a>
         Next:
-        <a href="../session.html" title="next chapter">使用Session</a>
+        <a href="../session.html" title="next chapter">用 Session</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -2312,7 +2314,7 @@ background on this option.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:01
 
     </div>
 </div>

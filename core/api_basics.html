@@ -12,7 +12,7 @@
         <title>
             
     
-    核心API基础知识
+    Core API基础知识
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="SQLAlchemy核心模块" href="index.html" />
-        <link rel="next" title="事件注册" href="event.html" />
-        <link rel="prev" title="核心事件" href="events.html" />
+        <link rel="up" title="SQLAlchemy 核心" href="index.html" />
+        <link rel="next" title="事件" href="event.html" />
+        <link rel="prev" title="引擎与连接使用" href="engines_connections.html" />
     <!-- end layout.mako headers -->
 
 
@@ -120,21 +120,16 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li class="selected"><span class="link-container"><strong>核心API基础知识</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="event.html">事件注册</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#event-named-argument-styles">命名参数风格</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#id9">目标</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#event-modifiers">修饰符</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#id15">事件参考</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#api">API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li class="selected"><span class="link-container"><strong>Core API基础知识</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="event.html">事件</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inspection.html">运行时检查API</a></span></li>
 <li><span class="link-container"><a class="reference external" href="exceptions.html">核心异常</a></span></li>
 <li><span class="link-container"><a class="reference external" href="internals.html">核心内部</a></span></li>
@@ -171,19 +166,19 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="events.html" title="previous chapter">核心事件</a></li>
+                <a href="engines_connections.html" title="previous chapter">引擎与连接使用</a></li>
                 <li><b>Next:</b>
-                <a href="event.html" title="next chapter">事件注册</a></li>
+                <a href="event.html" title="next chapter">事件</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
                 </ul>
 
 
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#api">核心API基础知识</a></li>
+<li><a class="reference internal" href="#core-api">Core API基础知识</a></li>
 </ul>
 
 
@@ -195,20 +190,17 @@
 
     <div id="docs-body" role="main" class="withsidebar core-api_basics" >
         
-<section id="api">
-<h1>核心API基础知识<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
+<section id="core-api">
+<h1>Core API基础知识<a class="headerlink" href="#core-api" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="event.html">事件注册</a></li>
-<li class="toctree-l1"><a class="reference internal" href="event.html#event-named-argument-styles">命名参数风格</a></li>
-<li class="toctree-l1"><a class="reference internal" href="event.html#id9">目标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="event.html#event-modifiers">修饰符</a></li>
-<li class="toctree-l1"><a class="reference internal" href="event.html#id15">事件参考</a></li>
-<li class="toctree-l1"><a class="reference internal" href="event.html#api">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="event.html#sqlalchemy.event.listen"><code class="docutils literal notranslate"><span class="pre">listen()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="event.html#sqlalchemy.event.listens_for"><code class="docutils literal notranslate"><span class="pre">listens_for()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="event.html#sqlalchemy.event.remove"><code class="docutils literal notranslate"><span class="pre">remove()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="event.html#sqlalchemy.event.contains"><code class="docutils literal notranslate"><span class="pre">contains()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="event.html">事件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="event.html#id2">事件注册</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#event-named-argument-styles">命名参数样式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#id6">目标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#event-modifiers">修改器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#id8">事件参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="event.html#api">API参考</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="inspection.html">运行时检查API</a><ul>
@@ -275,10 +267,13 @@
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.interfaces.DBAPIConnection"><code class="docutils literal notranslate"><span class="pre">DBAPIConnection</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.interfaces.DBAPICursor"><code class="docutils literal notranslate"><span class="pre">DBAPICursor</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.interfaces.DBAPIType"><code class="docutils literal notranslate"><span class="pre">DBAPIType</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.sql.compiler.DDLCompiler"><code class="docutils literal notranslate"><span class="pre">DDLCompiler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.default.DefaultDialect"><code class="docutils literal notranslate"><span class="pre">DefaultDialect</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect"><code class="docutils literal notranslate"><span class="pre">Dialect</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.default.DefaultExecutionContext"><code class="docutils literal notranslate"><span class="pre">DefaultExecutionContext</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.engine.ExecutionContext"><code class="docutils literal notranslate"><span class="pre">ExecutionContext</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.sql.compiler.ExpandedState"><code class="docutils literal notranslate"><span class="pre">ExpandedState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.sql.compiler.GenericTypeCompiler"><code class="docutils literal notranslate"><span class="pre">GenericTypeCompiler</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.log.Identified"><code class="docutils literal notranslate"><span class="pre">Identified</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.sql.compiler.IdentifierPreparer"><code class="docutils literal notranslate"><span class="pre">IdentifierPreparer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.sql.compiler.SQLCompiler"><code class="docutils literal notranslate"><span class="pre">SQLCompiler</span></code></a></li>
@@ -296,9 +291,9 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="events.html" title="previous chapter">核心事件</a>
+        <a href="engines_connections.html" title="previous chapter">引擎与连接使用</a>
         Next:
-        <a href="event.html" title="next chapter">事件注册</a>
+        <a href="event.html" title="next chapter">事件</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -308,7 +303,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:06:54
+    Documentation last generated: 2023/8/18 18:43:43
 
     </div>
 </div>

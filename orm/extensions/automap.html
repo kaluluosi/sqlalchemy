@@ -40,7 +40,7 @@
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="ORM扩展" href="index.html" />
-        <link rel="next" title="摘要" href="baked.html" />
+        <link rel="next" title="Baked Queries" href="baked.html" />
         <link rel="prev" title="关联代理" href="associationproxy.html" />
     <!-- end layout.mako headers -->
 
@@ -127,9 +127,9 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
@@ -151,7 +151,7 @@
 </li>
 <li><span class="link-container"><a class="reference external" href="#using-automap-with-explicit-declarations">Using Automap with Explicit Declarations</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#intercepting-column-definitions">Intercepting Column Definitions</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#api">API 参考</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#api">API参考</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.automap.automap_base"><code class="docutils literal notranslate"><span class="pre">automap_base()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.automap.AutomapBase"><code class="docutils literal notranslate"><span class="pre">AutomapBase</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.automap.AutomapBase.by_module"><code class="docutils literal notranslate"><span class="pre">AutomapBase.by_module</span></code></a></span></li>
@@ -168,18 +168,18 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="baked.html">摘要</a></span></li>
+<li><span class="link-container"><a class="reference external" href="baked.html">Baked Queries</a></span></li>
 <li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mutable.html">变异跟踪</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orderinglist.html">排序列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mutable.html">变化追踪</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orderinglist.html">有序列表</a></span></li>
 <li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
 <li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="indexable.html">可索引对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="indexable.html">可索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -213,7 +213,7 @@
                 <li><b>Previous:</b>
                 <a href="associationproxy.html" title="previous chapter">关联代理</a></li>
                 <li><b>Next:</b>
-                <a href="baked.html" title="next chapter">摘要</a></li>
+                <a href="baked.html" title="next chapter">Baked Queries</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -225,7 +225,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.ext.automap">自动映射</a><ul>
+<li><a class="reference internal" href="#id1">自动映射</a><ul>
 <li><a class="reference internal" href="#basic-use">Basic Use</a></li>
 <li><a class="reference internal" href="#generating-mappings-from-an-existing-metadata">Generating Mappings from an Existing MetaData</a></li>
 <li><a class="reference internal" href="#generating-mappings-from-multiple-schemas">Generating Mappings from Multiple Schemas</a><ul>
@@ -243,7 +243,7 @@
 </li>
 <li><a class="reference internal" href="#using-automap-with-explicit-declarations">Using Automap with Explicit Declarations</a></li>
 <li><a class="reference internal" href="#intercepting-column-definitions">Intercepting Column Definitions</a></li>
-<li><a class="reference internal" href="#api">API 参考</a><ul>
+<li><a class="reference internal" href="#api">API参考</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.ext.automap.automap_base"><code class="docutils literal notranslate"><span class="pre">automap_base()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase"><code class="docutils literal notranslate"><span class="pre">AutomapBase</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.by_module"><code class="docutils literal notranslate"><span class="pre">AutomapBase.by_module</span></code></a></li>
@@ -271,9 +271,9 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-extensions-automap" >
         
-<section id="module-sqlalchemy.ext.automap">
-<span id="id1"></span><span id="automap-toplevel"></span><h1>自动映射<a class="headerlink" href="#module-sqlalchemy.ext.automap" title="Permalink to this heading">¶</a></h1>
-<p>Define an extension to the <a class="reference internal" href="declarative/api.html#module-sqlalchemy.ext.declarative" title="sqlalchemy.ext.declarative"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative</span></code></a> system
+<section id="id1">
+<h1>自动映射<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-sqlalchemy.ext.automap"></span><p>Define an extension to the <a class="reference internal" href="declarative/api.html#module-sqlalchemy.ext.declarative" title="sqlalchemy.ext.declarative"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative</span></code></a> system
 which automatically generates mapped classes and relationships from a database
 schema, typically though not necessarily one which is reflected.</p>
 <p>It is hoped that the <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase" title="sqlalchemy.ext.automap.AutomapBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutomapBase</span></code></a> system provides a quick
@@ -287,7 +287,7 @@ a well-integrated approach to the issue of expediently auto-generating ad-hoc
 mappings.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>The <a class="reference internal" href="#"><span class="std std-ref">自动映射</span></a> extension is geared towards a
+<p>The <span class="xref std std-ref">automap_toplevel</span> extension is geared towards a
 “zero declaration” approach, where a complete ORM model including classes
 and pre-named relationships can be generated on the fly from a database
 schema. For applications that still want to use explicit class declarations
@@ -332,7 +332,7 @@ asking it to reflect the schema and produce mappings:</p>
 </div>
 <p>Above, calling <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AutomapBase.prepare()</span></code></a> while passing along the
 <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.reflect" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.reflect</span></code></a> parameter indicates that the
-<a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>
 method will be called on this declarative base
 classes’ <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> collection; then, each <strong>viable</strong>
 <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> within the <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>
@@ -360,7 +360,7 @@ the mappings for the two referring tables.</p>
 <a class="reference internal" href="#sqlalchemy.ext.automap.automap_base" title="sqlalchemy.ext.automap.automap_base"><code class="xref py py-func docutils literal notranslate"><span class="pre">automap_base()</span></code></a>.
 This object can be constructed in any way, including programmatically, from
 a serialized file, or from itself being reflected using
-<a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a>.
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>.
 Below we illustrate a combination of reflection and
 explicit table declaration:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ForeignKey</span>
@@ -420,7 +420,7 @@ any number of times; only newly added tables will be mapped
 on each run.   Previously in version 1.4 and earlier, multiple calls would
 cause errors as it would attempt to re-map an already mapped class.
 The previous workaround approach of invoking
-<a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a> directly remains available as well.</p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code> directly remains available as well.</p>
 </div>
 <section id="automapping-same-named-tables-across-multiple-schemas">
 <h3>Automapping same-named tables across multiple schemas<a class="headerlink" href="#automapping-same-named-tables-across-multiple-schemas" title="Permalink to this heading">¶</a></h3>
@@ -880,11 +880,11 @@ may be applied to a <a class="reference internal" href="../../core/metadata.html
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="../../core/events.html#sqlalchemy.events.DDLEvents.column_reflect" title="sqlalchemy.events.DDLEvents.column_reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DDLEvents.column_reflect()</span></code></a></p>
-<p><a class="reference internal" href="../declarative_tables.html#mapper-automated-reflection-schemes"><span class="std std-ref">从反射表自动命名列</span></a> - in the ORM mapping documentation</p>
+<p><a class="reference internal" href="../declarative_tables.html#mapper-automated-reflection-schemes"><span class="std std-ref">从反射表中自动化列命名方案</span></a> - in the ORM mapping documentation</p>
 </div>
 </section>
 <section id="api">
-<h2>API 参考<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
+<h2>API参考<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -957,7 +957,7 @@ using the <a class="reference internal" href="#sqlalchemy.ext.automap.automap_ba
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#"><span class="std std-ref">自动映射</span></a></p>
+<p><span class="xref std std-ref">automap_toplevel</span></p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sqlalchemy.ext.automap.AutomapBase.by_module">
@@ -1012,7 +1012,7 @@ for new <a class="reference internal" href="../../core/metadata.html#sqlalchemy.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.ext.automap.AutomapBase.prepare">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.automap.AutomapBase.</span></code></a><span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoload_with</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Engine</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classname_for_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PythonNameForTableType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulename_for_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PythonNameForTableType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_scalar_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NameForScalarRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_collection_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NameForCollectionRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GenerateRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflection_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">_KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_VT</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">immutabledict</span><span class="p"><span class="pre">[</span></span><span class="pre">_KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_VT</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.ext.automap.AutomapBase.prepare" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.automap.AutomapBase.</span></code></a><span class="sig-name descname"><span class="pre">prepare</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">autoload_with</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><span class="pre">Engine</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">engine</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflect</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">schema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classname_for_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PythonNameForTableType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modulename_for_table</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PythonNameForTableType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collection_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_scalar_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NameForScalarRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_for_collection_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">NameForCollectionRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_relationship</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">GenerateRelationshipType</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reflection_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">_KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_VT</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">immutabledict</span><span class="p"><span class="pre">[</span></span><span class="pre">_KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">_VT</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.ext.automap.AutomapBase.prepare" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract mapped classes and relationships from the
 <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> and perform mappings.</p>
 <p>For full documentation and examples see
@@ -1020,21 +1020,21 @@ for new <a class="reference internal" href="../../core/metadata.html#sqlalchemy.
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with"></span><strong>autoload_with</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with">¶</a> – an <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> or
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> with which
+<li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with"></span><strong>autoload_with</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with">¶</a> – an <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> or
+<a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> with which
 to perform schema reflection; when specified, the
-<a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a> method will be invoked within
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code> method will be invoked within
 the scope of this method.</p></li>
 <li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.engine"></span><strong>engine</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.engine">¶</a> – <p>legacy; use <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.params.autoload_with" title="sqlalchemy.ext.automap.AutomapBase"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.autoload_with</span></code></a>.
-Used to indicate the <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> or
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> with which to reflect tables with,
+Used to indicate the <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> or
+<a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> with which to reflect tables with,
 if <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.params.reflect" title="sqlalchemy.ext.automap.AutomapBase"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.reflect</span></code></a> is True.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.engine" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.engine</span></code></a> parameter is deprecated and will be removed in a future release.  Please use the <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.autoload_with</span></code></a> parameter.</p>
 </div>
 </p></li>
 <li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.reflect"></span><strong>reflect</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.reflect">¶</a> – <p>legacy; use <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.params.autoload_with" title="sqlalchemy.ext.automap.AutomapBase"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.autoload_with</span></code></a>.
-Indicates that <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a> should be invoked.</p>
+Indicates that <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code> should be invoked.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.reflect" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.reflect</span></code></a> parameter is deprecated and will be removed in a future release.  Reflection is enabled when <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.autoload_with</span></code></a> is passed.</p>
 </div>
@@ -1078,8 +1078,8 @@ object is created that represents a
 collection.  Defaults to <code class="docutils literal notranslate"><span class="pre">list</span></code>.</p></li>
 <li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.schema"></span><strong>schema</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.schema">¶</a> – <p>Schema name to reflect when reflecting tables using
 the <a class="reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.autoload_with" title="sqlalchemy.ext.automap.AutomapBase.prepare"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AutomapBase.prepare.autoload_with</span></code></a> parameter. The name
-is passed to the <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect.params.schema" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.reflect.schema</span></code></a> parameter
-of <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a>. When omitted, the default schema
+is passed to the <code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.reflect.schema</span></code> parameter
+of <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>. When omitted, the default schema
 in use by the database connection is used.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1099,7 +1099,7 @@ a second time.</p>
 </div>
 </p></li>
 <li><p><span class="target" id="sqlalchemy.ext.automap.AutomapBase.prepare.params.reflection_options"></span><strong>reflection_options</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.automap.AutomapBase.prepare.params.reflection_options">¶</a> – <p>When present, this dictionary of options
-will be passed to <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.MetaData.reflect" title="sqlalchemy.schema.MetaData.reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code></a>
+will be passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>
 to supply general reflection-specific options like <code class="docutils literal notranslate"><span class="pre">only</span></code> and/or
 dialect-specific options like <code class="docutils literal notranslate"><span class="pre">oracle_resolve_synonyms</span></code>.</p>
 <div class="versionadded">
@@ -1257,7 +1257,7 @@ by the <a class="reference internal" href="#sqlalchemy.ext.automap.generate_rela
         Previous:
         <a href="associationproxy.html" title="previous chapter">关联代理</a>
         Next:
-        <a href="baked.html" title="next chapter">摘要</a>
+        <a href="baked.html" title="next chapter">Baked Queries</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -1267,7 +1267,7 @@ by the <a class="reference internal" href="#sqlalchemy.ext.automap.generate_rela
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:13
+    Documentation last generated: 2023/8/18 18:21:12
 
     </div>
 </div>

@@ -12,7 +12,7 @@
         <title>
             
     
-    可索引对象
+    可索引
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -40,7 +40,7 @@
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="ORM扩展" href="index.html" />
-        <link rel="next" title="备选类仪器" href="instrumentation.html" />
+        <link rel="next" title="类替代仪器" href="instrumentation.html" />
         <link rel="prev" title="混合属性" href="hybrid.html" />
     <!-- end layout.mako headers -->
 
@@ -127,21 +127,21 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="automap.html">自动映射</a></span></li>
-<li><span class="link-container"><a class="reference external" href="baked.html">摘要</a></span></li>
+<li><span class="link-container"><a class="reference external" href="baked.html">Baked Queries</a></span></li>
 <li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mutable.html">变异跟踪</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orderinglist.html">排序列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mutable.html">变化追踪</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orderinglist.html">有序列表</a></span></li>
 <li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
 <li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li class="selected"><span class="link-container"><strong>可索引对象</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>可索引</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#synopsis">Synopsis</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#default-values">Default Values</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#subclassing">Subclassing</a></span></li>
@@ -154,10 +154,10 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -191,7 +191,7 @@
                 <li><b>Previous:</b>
                 <a href="hybrid.html" title="previous chapter">混合属性</a></li>
                 <li><b>Next:</b>
-                <a href="instrumentation.html" title="next chapter">备选类仪器</a></li>
+                <a href="instrumentation.html" title="next chapter">类替代仪器</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -203,7 +203,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#indexable-toplevel">可索引对象</a><ul>
+<li><a class="reference internal" href="#id1">可索引</a><ul>
 <li><a class="reference internal" href="#synopsis">Synopsis</a></li>
 <li><a class="reference internal" href="#default-values">Default Values</a></li>
 <li><a class="reference internal" href="#subclassing">Subclassing</a></li>
@@ -227,8 +227,8 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-extensions-indexable" >
         
-<section id="indexable-toplevel">
-<span id="id1"></span><h1>可索引对象<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<section id="id1">
+<span id="id2"></span><h1>可索引<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <span class="target" id="module-sqlalchemy.ext.indexable"></span><p>Define attributes on ORM-mapped classes that have “index” attributes for
 columns with <a class="reference internal" href="../../core/type_api.html#sqlalchemy.types.Indexable" title="sqlalchemy.types.Indexable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Indexable</span></code></a> types.</p>
 <p>“index” means the attribute is associated with an element of an
@@ -487,7 +487,7 @@ one-based; that is, the first index in SQL is 1, not zero.</p></li>
         Previous:
         <a href="hybrid.html" title="previous chapter">混合属性</a>
         Next:
-        <a href="instrumentation.html" title="next chapter">备选类仪器</a>
+        <a href="instrumentation.html" title="next chapter">类替代仪器</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -497,7 +497,7 @@ one-based; that is, the first index in SQL is 1, not zero.</p></li>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:13
+    Documentation last generated: 2023/8/18 18:21:12
 
     </div>
 </div>

@@ -12,7 +12,7 @@
         <title>
             
     
-    排序列表
+    有序列表
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -41,7 +41,7 @@
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="ORM扩展" href="index.html" />
         <link rel="next" title="水平分片" href="horizontal_shard.html" />
-        <link rel="prev" title="变异跟踪" href="mutable.html" />
+        <link rel="prev" title="变化追踪" href="mutable.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,18 +127,18 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="automap.html">自动映射</a></span></li>
-<li><span class="link-container"><a class="reference external" href="baked.html">摘要</a></span></li>
+<li><span class="link-container"><a class="reference external" href="baked.html">Baked Queries</a></span></li>
 <li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mutable.html">变异跟踪</a></span></li>
-<li class="selected"><span class="link-container"><strong>排序列表</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mutable.html">变化追踪</a></span></li>
+<li class="selected"><span class="link-container"><strong>有序列表</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#api">API 参考</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.orderinglist.ordering_list"><code class="docutils literal notranslate"><span class="pre">ordering_list()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.orderinglist.count_from_0"><code class="docutils literal notranslate"><span class="pre">count_from_0()</span></code></a></span></li>
@@ -159,11 +159,11 @@
 </li>
 <li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
 <li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="indexable.html">可索引对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="indexable.html">可索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -195,7 +195,7 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="mutable.html" title="previous chapter">变异跟踪</a></li>
+                <a href="mutable.html" title="previous chapter">变化追踪</a></li>
                 <li><b>Next:</b>
                 <a href="horizontal_shard.html" title="next chapter">水平分片</a></li>
 
@@ -209,7 +209,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.ext.orderinglist">排序列表</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.ext.orderinglist">有序列表</a><ul>
 <li><a class="reference internal" href="#api">API 参考</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.ext.orderinglist.ordering_list"><code class="docutils literal notranslate"><span class="pre">ordering_list()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.ext.orderinglist.count_from_0"><code class="docutils literal notranslate"><span class="pre">count_from_0()</span></code></a></li>
@@ -240,7 +240,7 @@
     <div id="docs-body" role="main" class="withsidebar orm-extensions-orderinglist" >
         
 <section id="module-sqlalchemy.ext.orderinglist">
-<span id="id1"></span><h1>排序列表<a class="headerlink" href="#module-sqlalchemy.ext.orderinglist" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>有序列表<a class="headerlink" href="#module-sqlalchemy.ext.orderinglist" title="Permalink to this heading">¶</a></h1>
 <p>A custom list that manages index/position information for contained
 elements.</p>
 <dl class="field-list simple">
@@ -534,7 +534,7 @@ ordering information set.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="mutable.html" title="previous chapter">变异跟踪</a>
+        <a href="mutable.html" title="previous chapter">变化追踪</a>
         Next:
         <a href="horizontal_shard.html" title="next chapter">水平分片</a>
 
@@ -546,7 +546,7 @@ ordering information set.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:14
+    Documentation last generated: 2023/8/18 18:21:13
 
     </div>
 </div>

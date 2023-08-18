@@ -251,7 +251,7 @@
 </dl>
 <p>修复了PostgreSQL JSON类型无法保留或以其他方式呈现SQL NULL列值的错误，而不是JSON编码的“null”的错误。为支持此情况，更改如下：</p>
 <p><a href="#id2"><span class="problematic" id="id3">*</span></a>现在可以指定值：func:<cite>.null</cite>，这将始终导致结果语句中的NULL值。</p>
-<p><a href="#id4"><span class="problematic" id="id5">*</span></a>添加了一个新的参数:paramref:<cite>_types.JSON.none_as_null</cite>，当为True时指示应将Python“None”值持久化为SQL NULL，而不是JSON编码的“null”。</p>
+<p><a href="#id4"><span class="problematic" id="id5">*</span></a>添加了一个新的参数  <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON.params.none_as_null" title="sqlalchemy.types.JSON"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">JSON.none_as_null</span></code></a>  ，当为True时指示应将Python“None”值持久化为SQL NULL，而不是JSON编码的“null”。</p>
 <p>检索NULL作为None也已被修复，而不是使用psycopg2之外的DBAPI，即pg8000。</p>
 </dd>
 </dl>
@@ -269,7 +269,7 @@
 <li><p>schema
 - Fixed a bug involving the new flattened JOIN structures which are used with</p>
 <blockquote>
-<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>.</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> .</p>
 </div></blockquote>
 </li>
 </ul>
@@ -283,9 +283,9 @@
 </ul>
 <ul id="change-0-9-1-bug-03">
 <li><p>orm
-- Fixed bug where using a <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code> attribute would fail if the</p>
+- Fixed bug where using a  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code>  attribute would fail if the</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">.info</span></code> argument were only passed to the <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> creation
+<div><p><code class="docutils literal notranslate"><span class="pre">.info</span></code> argument were only passed to the   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  creation
 call but not to the object itself.</p>
 </div></blockquote>
 </li>
@@ -300,7 +300,7 @@ call but not to the object itself.</p>
 </ul>
 <ul id="change-0-9-1-bug-05">
 <li><p>sql
-- The precedence rules for the <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.collate" title="sqlalchemy.sql.expression.ColumnOperators.collate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.collate()</span></code></a> operator have been</p>
+- The precedence rules for the  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.collate" title="sqlalchemy.sql.expression.ColumnOperators.collate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.collate()</span></code></a>  operator have been</p>
 <blockquote>
 <div><p>modified, such that the COLLATE operator is now of lower precedence than the
 comparison operators.</p>
@@ -309,10 +309,10 @@ comparison operators.</p>
 </ul>
 <ul id="change-0-9-1-bug-06">
 <li><p>sqlalchemy.ext.automap
-- Fixed an extremely unlikely memory issue where when using <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.DeferredReflection" title="sqlalchemy.ext.declarative.DeferredReflection"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeferredReflection</span></code></a></p>
+- Fixed an extremely unlikely memory issue where when using   <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.DeferredReflection" title="sqlalchemy.ext.declarative.DeferredReflection"><code class="xref py py-class docutils literal notranslate"><span class="pre">DeferredReflection</span></code></a></p>
 <blockquote>
 <div><p>to define classes pending for reflection, if some subset of those classes were
-discarded before the <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.DeferredReflection.prepare" title="sqlalchemy.ext.declarative.DeferredReflection.prepare"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DeferredReflection.prepare()</span></code></a> method were called to
+discarded before the  <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.DeferredReflection.prepare" title="sqlalchemy.ext.declarative.DeferredReflection.prepare"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DeferredReflection.prepare()</span></code></a>  method were called to
 reflect and map the class, a strong reference to the class would remain held
 within the declarative internals.</p>
 </div></blockquote>
@@ -328,7 +328,7 @@ within the declarative internals.</p>
 </ul>
 <ul id="change-0-9-1-bug-08">
 <li><p>orm
-- The <code class="docutils literal notranslate"><span class="pre">viewonly</span></code> flag on <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> will now prevent attribute history</p>
+- The <code class="docutils literal notranslate"><span class="pre">viewonly</span></code> flag on   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  will now prevent attribute history</p>
 <blockquote>
 <div><p>from being written on behalf of the target attribute.</p>
 </div></blockquote>
@@ -336,11 +336,11 @@ within the declarative internals.</p>
 </ul>
 <ul class="simple" id="change-0-9-1-bug-09">
 <li><p>orm
-- Added support for new <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code> attribute to <a class="reference internal" href="../orm/contextual.html#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a>.</p></li>
+- Added support for new  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code>  attribute to   <a class="reference internal" href="../orm/contextual.html#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .</p></li>
 </ul>
 <ul id="change-0-9-1-bug-10">
 <li><p>orm
-- Fixed bug where usage of new <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.Bundle" title="sqlalchemy.orm.Bundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bundle</span></code></a> object would cause the <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.column_descriptions" title="sqlalchemy.orm.Query.column_descriptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Query.column_descriptions</span></code></a></p>
+- Fixed bug where usage of new   <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.Bundle" title="sqlalchemy.orm.Bundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bundle</span></code></a>  object would cause the  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.column_descriptions" title="sqlalchemy.orm.Query.column_descriptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Query.column_descriptions</span></code></a></p>
 <blockquote>
 <div><p>attribute to fail.</p>
 </div></blockquote>
@@ -361,7 +361,7 @@ within the declarative internals.</p>
 </section>
 <section id="feature-enhancements">
 <h3>Feature Enhancements<a class="headerlink" href="#feature-enhancements" title="Permalink to this heading">¶</a></h3>
-<p>This release does not contain any feature enhancements.修复和测试从反射中解析MySQL外键选项的问题；这与 <a href="#id6"><span class="problematic" id="id7">:ticket:`2183`</span></a> 中完成对外键选项（如 ON UPDATE/ON DELETE cascade 等）的反射支持相补充。</p>
+<p>This release does not contain any feature enhancements.修复和测试从反射中解析MySQL外键选项的问题；这与  <a href="#id6"><span class="problematic" id="id7">:ticket:`2183`</span></a>  中完成对外键选项（如 ON UPDATE/ON DELETE cascade 等）的反射支持相补充。</p>
 </section>
 </section>
 </section>
@@ -384,7 +384,7 @@ within the declarative internals.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:06:51
+    Documentation last generated: 2023/8/18 18:43:39
 
     </div>
 </div>

@@ -318,52 +318,52 @@
 <li><p>修复了ORM声明性映射中的一些问题，包括与混合使用的问题、<a href="#id2"><span class="problematic" id="id3">`</span></a>primary_key`参数在`mapper_args`中使用的问题等等。</p></li>
 </ul>
 <p>其他一些小问题和早期版本中的错误也已纠正。.. _bugs-2.0.0rc4:</p>
-<p id="change-9164">修复了 ORM 模型中使用复合外键的 joined table 继承遇到 Mapper 内部错误的回归问题。 (<span class="xref std std-ref">ticket_9164</span>)</p>
-<p id="change-7664">修正了版本2.0.0中 <a href="#id4"><span class="problematic" id="id5">:ticket:`7664`</span></a> 的修复，以包括无意中遗漏的 <a class="reference internal" href="../core/ddl.html#sqlalchemy.schema.DropSchema" title="sqlalchemy.schema.DropSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">DropSchema</span></code></a>，在这个修复中，允许在没有方言的情况下进行字符串化。这两个修复已被移植到1.4.47。 (<span class="xref std std-ref">ticket_7664</span>)</p>
-<p id="change-9175">添加支持 <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> 中的 <code class="docutils literal notranslate"><span class="pre">NewType</span></code> 用于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 和 <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 构造中。这些类型的行为与当前操作的类型自定义子类相同；它们必须显式出现在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 中以进行映射。(<span class="xref std std-ref">ticket_9175</span>)</p>
-<p id="change-9183">修复了 limit/offset 方法中的类型错误，包括 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.limit" title="sqlalchemy.sql.expression.Select.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.limit()</span></code></a>, <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.offset" title="sqlalchemy.sql.expression.Select.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.offset()</span></code></a>, <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.limit" title="sqlalchemy.orm.Query.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.limit()</span></code></a> 和 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.offset" title="sqlalchemy.orm.Query.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.offset()</span></code></a>，以允许 <code class="docutils literal notranslate"><span class="pre">None</span></code> 这是取消当前的limit/offset。(<span class="xref std std-ref">ticket_9183</span>)</p>
-<p id="change-9179">当使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">MappedAsDataclass</span></code> 超类时，在层级结构内所有的类都是其子类时，无论是否实际映射，都将通过 <code class="docutils literal notranslate"><span class="pre">&#64;dataclasses.dataclass</span></code> 方法运行。这意味着，在映射的子类转换为数据类时，层级内部未映射的非 ORM 字段也将被使用。此行为适用于使用 <code class="docutils literal notranslate"><span class="pre">__abstract__</span> <span class="pre">=</span> <span class="pre">True</span></code> 进行映射的中间类，以及适用于用户定义的声明性基类本身，假设类中存在 <code class="xref py py-class docutils literal notranslate"><span class="pre">MappedAsDataclass</span></code> 作为这些类的超类。(<span class="xref std std-ref">ticket_9179</span>)</p>
-<p id="change-9170">修复了一个类型错误，使得被类型标记为 <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 的 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 对象不能被接受为模式约束，如 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>、<a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.UniqueConstraint" title="sqlalchemy.schema.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a> 或 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>。(<span class="xref std std-ref">ticket_9170</span>)</p>
-<p id="change-9200">修复了 <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code> 类中的回归问题，其中注册表的默认构造函数不会被应用于基类本身，这与之前的 <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code> 构造方式不同。这将阻止具有自己的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法的映射类调用 <code class="docutils literal notranslate"><span class="pre">super().__init__()</span></code> 以访问注册表的默认构造函数并自动填充属性，而是回到了 <code class="docutils literal notranslate"><span class="pre">object.__init__()</span></code>，这将在任何参数上引发错误。(<span class="xref std std-ref">ticket_9171</span>)</p>
-<p id="change-9173">针对新的“insertmanyvalues”功能的实现引起的回归问题进行修复，其中在 CTE 中通过 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 参考另一个 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 的情况下会发生内部 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>，在使用“insertmanyvalues” 时，针对位置方言如 asyncpg 的这种使用情况进行了进一步修复。(<span class="xref std std-ref">ticket_9173</span>)</p>
-<p id="change-9156">修复了 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.cast" title="sqlalchemy.sql.expression.ColumnElement.cast"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.cast()</span></code></a> 的类型注释, 使其可以接受 <code class="docutils literal notranslate"><span class="pre">Type[TypeEngine[T]]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TypeEngine[T]</span></code>。以前只接受 <code class="docutils literal notranslate"><span class="pre">TypeEngine[T]</span></code>。 (<span class="xref std std-ref">ticket_9156</span>)</p>
-<p id="change-9187">添加了支持 <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0586/"><strong>PEP 586</strong></a> 中 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 的能力，用于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 以及在 <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 构造中使用。要使用此类自定义类型，它们必须显式出现在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 中以进行映射。来源于 Frederik Aalund 的拉取请求。</p>
-<p>作为此更改的一部分，对 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 中的 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Enum" title="sqlalchemy.sql.sqltypes.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a> 的支持已扩展，以包括支持包含字符串值的 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 类型的用法，作为 <code class="docutils literal notranslate"><span class="pre">enum.Enum</span></code> 数据类型的补充。如果在 <code class="docutils literal notranslate"><span class="pre">Mapped[]</span></code> 中使用了未在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 中链接到特定数据类型的 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 数据类型，则会默认使用 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Enum" title="sqlalchemy.sql.sqltypes.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>。</p>
+<p id="change-9164">修复了 ORM 模型中使用复合外键的 joined table 继承遇到 Mapper 内部错误的回归问题。 (  <span class="xref std std-ref">ticket_9164</span> )</p>
+<p id="change-7664">修正了版本2.0.0中  <a href="#id4"><span class="problematic" id="id5">:ticket:`7664`</span></a>  的修复，以包括无意中遗漏的   <code class="xref py py-class docutils literal notranslate"><span class="pre">DropSchema</span></code> ，在这个修复中，允许在没有方言的情况下进行字符串化。这两个修复已被移植到1.4.47。 (  <span class="xref std std-ref">ticket_7664</span> )</p>
+<p id="change-9175">添加支持  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  中的 <code class="docutils literal notranslate"><span class="pre">NewType</span></code> 用于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  和   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  构造中。这些类型的行为与当前操作的类型自定义子类相同；它们必须显式出现在  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  中以进行映射。(  <span class="xref std std-ref">ticket_9175</span> )</p>
+<p id="change-9183">修复了 limit/offset 方法中的类型错误，包括  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.limit" title="sqlalchemy.sql.expression.Select.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.limit()</span></code></a> ,  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.offset" title="sqlalchemy.sql.expression.Select.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.offset()</span></code></a> ,  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.limit" title="sqlalchemy.orm.Query.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.limit()</span></code></a>  和  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.offset" title="sqlalchemy.orm.Query.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.offset()</span></code></a> ，以允许 <code class="docutils literal notranslate"><span class="pre">None</span></code> 这是取消当前的limit/offset。(  <span class="xref std std-ref">ticket_9183</span> )</p>
+<p id="change-9179">当使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">MappedAsDataclass</span></code>  超类时，在层级结构内所有的类都是其子类时，无论是否实际映射，都将通过 <code class="docutils literal notranslate"><span class="pre">&#64;dataclasses.dataclass</span></code> 方法运行。这意味着，在映射的子类转换为数据类时，层级内部未映射的非 ORM 字段也将被使用。此行为适用于使用 <code class="docutils literal notranslate"><span class="pre">__abstract__</span> <span class="pre">=</span> <span class="pre">True</span></code> 进行映射的中间类，以及适用于用户定义的声明性基类本身，假设类中存在   <code class="xref py py-class docutils literal notranslate"><span class="pre">MappedAsDataclass</span></code>  作为这些类的超类。(  <span class="xref std std-ref">ticket_9179</span> )</p>
+<p id="change-9170">修复了一个类型错误，使得被类型标记为   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  对象不能被接受为模式约束，如   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 、  <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.UniqueConstraint" title="sqlalchemy.schema.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a>  或   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> 。(  <span class="xref std std-ref">ticket_9170</span> )</p>
+<p id="change-9200">修复了   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  类中的回归问题，其中注册表的默认构造函数不会被应用于基类本身，这与之前的   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>  构造方式不同。这将阻止具有自己的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法的映射类调用 <code class="docutils literal notranslate"><span class="pre">super().__init__()</span></code> 以访问注册表的默认构造函数并自动填充属性，而是回到了 <code class="docutils literal notranslate"><span class="pre">object.__init__()</span></code>，这将在任何参数上引发错误。(  <span class="xref std std-ref">ticket_9171</span> )</p>
+<p id="change-9173">针对新的“insertmanyvalues”功能的实现引起的回归问题进行修复，其中在 CTE 中通过   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  参考另一个   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  的情况下会发生内部 <code class="docutils literal notranslate"><span class="pre">TypeError</span></code>，在使用“insertmanyvalues” 时，针对位置方言如 asyncpg 的这种使用情况进行了进一步修复。(  <span class="xref std std-ref">ticket_9173</span> )</p>
+<p id="change-9156">修复了  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.cast" title="sqlalchemy.sql.expression.ColumnElement.cast"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.cast()</span></code></a>  的类型注释, 使其可以接受 <code class="docutils literal notranslate"><span class="pre">Type[TypeEngine[T]]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">TypeEngine[T]</span></code>。以前只接受 <code class="docutils literal notranslate"><span class="pre">TypeEngine[T]</span></code>。 (  <span class="xref std std-ref">ticket_9156</span> )</p>
+<p id="change-9187">添加了支持  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0586/"><strong>PEP 586</strong></a>  中 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 的能力，用于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  以及在   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  构造中使用。要使用此类自定义类型，它们必须显式出现在  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  中以进行映射。来源于 Frederik Aalund 的拉取请求。</p>
+<p>作为此更改的一部分，对  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  中的   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Enum" title="sqlalchemy.sql.sqltypes.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a>  的支持已扩展，以包括支持包含字符串值的 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 类型的用法，作为 <code class="docutils literal notranslate"><span class="pre">enum.Enum</span></code> 数据类型的补充。如果在 <code class="docutils literal notranslate"><span class="pre">Mapped[]</span></code> 中使用了未在  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  中链接到特定数据类型的 <code class="docutils literal notranslate"><span class="pre">Literal[]</span></code> 数据类型，则会默认使用   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Enum" title="sqlalchemy.sql.sqltypes.Enum"><code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></a> 。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-mapped-column-enums"><span class="std std-ref">在类型映射中使用 Python Enum 或 pep-586 Literal 类型</span></a></p>
+<p><span class="xref std std-ref">orm_declarative_mapped_column_enums</span></p>
 </div>
-<p>(<span class="xref std std-ref">ticket_9187</span>)</p>
-<p id="change-9182">改进了在将策略选项从一个基类链接到子类的另一个属性时报告错误的方式，其中应使用 <code class="docutils literal notranslate"><span class="pre">of_type()</span></code>。以前，当使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.options()</span></code> 时，消息缺乏详细信息，即应使用 <code class="docutils literal notranslate"><span class="pre">of_type()</span></code>，而在直接链接选项时不是这种情况。现在，即使使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.options()</span></code> 时，也会发出详细的信息。</p>
-<p>(<span class="xref std std-ref">ticket_9182</span>)</p>
-<p id="id6">修复了 limit/offset 方法的类型错误，包括 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.limit" title="sqlalchemy.sql.expression.Select.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.limit()</span></code></a>, <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.offset" title="sqlalchemy.sql.expression.Select.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.offset()</span></code></a>, <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.limit" title="sqlalchemy.orm.Query.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.limit()</span></code></a> 和 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.offset" title="sqlalchemy.orm.Query.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.offset()</span></code></a>, 以允许使用 <code class="docutils literal notranslate"><span class="pre">None</span></code> 是已记录的 API，以“取消”当前的limit/offset。</p>
-<p>(<span class="xref std std-ref">ticket_9183</span>)</p>
-<p id="id7">添加了 <code class="docutils literal notranslate"><span class="pre">NewType</span></code> 的支持，可用于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 和 <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 结构中，使其行为与当前操作的自定义类型子类相同。在映射这些类型时，它们必须出现在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code> 中。</p>
-<p>(<span class="xref std std-ref">ticket_9175</span>)</p>
+<p>(  <span class="xref std std-ref">ticket_9187</span> )</p>
+<p id="change-9182">改进了在将策略选项从一个基类链接到子类的另一个属性时报告错误的方式，其中应使用 <code class="docutils literal notranslate"><span class="pre">of_type()</span></code>。以前，当使用  <a class="reference internal" href="../orm/queryguide/relationships.html#sqlalchemy.orm.Load.options" title="sqlalchemy.orm.Load.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.options()</span></code></a>  时，消息缺乏详细信息，即应使用 <code class="docutils literal notranslate"><span class="pre">of_type()</span></code>，而在直接链接选项时不是这种情况。现在，即使使用  <a class="reference internal" href="../orm/queryguide/relationships.html#sqlalchemy.orm.Load.options" title="sqlalchemy.orm.Load.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.options()</span></code></a>  时，也会发出详细的信息。</p>
+<p>(  <span class="xref std std-ref">ticket_9182</span> )</p>
+<p id="id6">修复了 limit/offset 方法的类型错误，包括  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.limit" title="sqlalchemy.sql.expression.Select.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.limit()</span></code></a> ,  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.offset" title="sqlalchemy.sql.expression.Select.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.offset()</span></code></a> ,  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.limit" title="sqlalchemy.orm.Query.limit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.limit()</span></code></a>  和  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.offset" title="sqlalchemy.orm.Query.offset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.offset()</span></code></a> , 以允许使用 <code class="docutils literal notranslate"><span class="pre">None</span></code> 是已记录的 API，以“取消”当前的limit/offset。</p>
+<p>(  <span class="xref std std-ref">ticket_9183</span> )</p>
+<p id="id7">添加了 <code class="docutils literal notranslate"><span class="pre">NewType</span></code> 的支持，可用于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  和   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  结构中，使其行为与当前操作的自定义类型子类相同。在映射这些类型时，它们必须出现在  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">registry.type_annotation_map</span></code>  中。</p>
+<p>(  <span class="xref std std-ref">ticket_9175</span> )</p>
 <p id="id8">修复了 ORM 模型中使用复合外键的 joined table 继承遇到 Mapper 内部错误的回归问题。</p>
-<p>(<span class="xref std std-ref">ticket_9164</span>)</p>
-<p id="id9">修正在版本2.0.0中出现的 <a href="#id10"><span class="problematic" id="id11">:ticket:`7664`</span></a> 的修复，以包括无意中遗漏的 <a class="reference internal" href="../core/ddl.html#sqlalchemy.schema.DropSchema" title="sqlalchemy.schema.DropSchema"><code class="xref py py-class docutils literal notranslate"><span class="pre">DropSchema</span></code></a>，在这个修复中，允许在没有方言的情况下进行字符串化。这两个修复已被移植到1.4.47。</p>
-<p>(<span class="xref std std-ref">ticket_7664</span>)</p>
-<p id="change-9025">对 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 添加了新的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_abstract</span></code> 指令，因此 ORM 现在不会考虑直接实例化或加载类本身，只考虑子类。</p>
-<p>实际上，使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_abstract</span></code> 的类可以用作 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的目标，以及用于查询；子类必须在映射中包含多态身份。</p>
-<p>(<span class="xref std std-ref">ticket_9025</span>).. 将rst文档翻译成中文</p>
+<p>(  <span class="xref std std-ref">ticket_9164</span> )</p>
+<p id="id9">修正在版本2.0.0中出现的  <a href="#id10"><span class="problematic" id="id11">:ticket:`7664`</span></a>  的修复，以包括无意中遗漏的   <code class="xref py py-class docutils literal notranslate"><span class="pre">DropSchema</span></code> ，在这个修复中，允许在没有方言的情况下进行字符串化。这两个修复已被移植到1.4.47。</p>
+<p>(  <span class="xref std std-ref">ticket_7664</span> )</p>
+<p id="change-9025">对   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  添加了新的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_abstract</span></code>  指令，因此 ORM 现在不会考虑直接实例化或加载类本身，只考虑子类。</p>
+<p>实际上，使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_abstract</span></code>  的类可以用作   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的目标，以及用于查询；子类必须在映射中包含多态身份。</p>
+<p>(  <span class="xref std std-ref">ticket_9025</span> ).. 将rst文档翻译成中文</p>
 <p>我翻译了草稿，下面来一个清晰的翻译:</p>
 <section id="b1">
 <h2>版本 2.0.0b1<a class="headerlink" href="#b1" title="Permalink to this heading">¶</a></h2>
 <p>发布日期：2023年1月26日</p>
 <section id="orm-improved-error-messages-on-stolen-state">
 <h3>7433 - orm: Improved error messages on stolen state<a class="headerlink" href="#orm-improved-error-messages-on-stolen-state" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> (and by extension <a class="reference internal" href="../orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a>) now has
+<p>The   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  (and by extension   <a class="reference internal" href="../orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> ) now has
 new state-tracking functionality that will proactively trap any unexpected
 state changes which occur as a particular transactional method proceeds.
-This is to allow situations where the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> is being used in
+This is to allow situations where the   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  is being used in
 a thread-unsafe manner, where event hooks or similar may be calling
 unexpected methods within operations, as well as potentially under other
 concurrency situations such as asyncio or gevent to raise an informative
 message when the illegal access first occurs, rather than passing silently
-leading to secondary failures due to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> being in an
+leading to secondary failures due to the   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  being in an
 invalid state.</p>
-<p>Related tickets: <a href="#id12"><span class="problematic" id="id13">:ticket:`7433`</span></a></p>
+<p>Related tickets:  <a href="#id12"><span class="problematic" id="id13">:ticket:`7433`</span></a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">session_threading</span></p>
@@ -376,9 +376,9 @@ invalid state.</p>
 <span id="change-6842"></span><h3>6842 - postgresql: Add psycopg2 dialect<a class="headerlink" href="#postgresql-add-psycopg2-dialect" title="Permalink to this heading">¶</a></h3>
 <p>Added support for <code class="docutils literal notranslate"><span class="pre">psycopg2</span></code> dialect supporting both sync and async
 execution. This dialect is available under the <code class="docutils literal notranslate"><span class="pre">postgresql+psycopg2</span></code> name
-for both the <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> and <a class="reference internal" href="../orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.create_async_engine" title="sqlalchemy.ext.asyncio.create_async_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_async_engine()</span></code></a>
+for both the   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  and   <a class="reference internal" href="../orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.create_async_engine" title="sqlalchemy.ext.asyncio.create_async_engine"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_async_engine()</span></code></a>
 engine-creation functions.</p>
-<p>Related tickets: <a href="#id14"><span class="problematic" id="id15">:ticket:`6842`</span></a></p>
+<p>Related tickets:  <a href="#id14"><span class="problematic" id="id15">:ticket:`6842`</span></a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">dialects_postgresql_psycopg2</span></p>
@@ -391,7 +391,7 @@ engine-creation functions.</p>
 <span id="change-6195"></span><h3>6195 - sqlite: Support RETURNING on inserts<a class="headerlink" href="#sqlite-support-returning-on-inserts" title="Permalink to this heading">¶</a></h3>
 <p>Added RETURNING support for the SQLite dialect. SQLite supports RETURNING
 since version 3.35.</p>
-<p>Related tickets: <a href="#id16"><span class="problematic" id="id17">:ticket:`6195`</span></a></p>
+<p>Related tickets:  <a href="#id16"><span class="problematic" id="id17">:ticket:`6195`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -402,7 +402,7 @@ since version 3.35.</p>
 dialect.  UPDATE..RETURNING is not yet supported by MariaDB.  MariaDB
 supports INSERT..RETURNING as of 10.5.0 and DELETE..RETURNING as of
 10.0.5.</p>
-<p>Related tickets: <a href="#id18"><span class="problematic" id="id19">:ticket:`7011`</span></a></p>
+<p>Related tickets:  <a href="#id18"><span class="problematic" id="id19">:ticket:`7011`</span></a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">dialects_mariadb</span></p>
@@ -413,12 +413,12 @@ supports INSERT..RETURNING as of 10.5.0 and DELETE..RETURNING as of
 </section>
 <section id="allowed-automatic-resolution-of-values-for-composite-mapping-with-dataclass">
 <span id="change-composite-autoreload"></span><h3>Allowed automatic resolution of values for composite mapping with dataclass<a class="headerlink" href="#allowed-automatic-resolution-of-values-for-composite-mapping-with-dataclass" title="Permalink to this heading">¶</a></h3>
-<p>The <a class="reference internal" href="../orm/composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> mapping construct now supports automatic resolution of
+<p>The   <a class="reference internal" href="../orm/composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  mapping construct now supports automatic resolution of
 values when used with a Python <code class="docutils literal notranslate"><span class="pre">dataclass</span></code>; the <code class="docutils literal notranslate"><span class="pre">__composite_values__()</span></code> method
 no longer needs to be implemented as this method is derived from inspection of the
-dataclass. Additionally, classes mapped by <a class="reference internal" href="../orm/composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-class docutils literal notranslate"><span class="pre">composite</span></code></a> now support
+dataclass. Additionally, classes mapped by   <a class="reference internal" href="../orm/composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-class docutils literal notranslate"><span class="pre">composite</span></code></a>  now support
 ordering comparison operations, e.g. <code class="docutils literal notranslate"><span class="pre">&lt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;=</span></code>, etc.</p>
-<p>See the new documentation at <a class="reference internal" href="../orm/composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a> for examples.</p>
+<p>See the new documentation at   <a class="reference internal" href="../orm/composites.html#mapper-composite"><span class="std std-ref">复合列类型</span></a>  for examples.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">mapping_composite</span></p>
@@ -429,22 +429,26 @@ ordering comparison operations, e.g. <code class="docutils literal notranslate">
 </section>
 <section id="engine-use-consistent-behavior-for-view-table-interplay">
 <span id="change-7161"></span><h3>7161 - engine: Use consistent behavior for view/table interplay<a class="headerlink" href="#engine-use-consistent-behavior-for-view-table-interplay" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.has_table()</span></code> method will now consistently check for
+<p>The  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.has_table()</span></code>  method will now consistently check for
 views of the given name as well as tables. Previously this behavior was dialect
 dependent, with PostgreSQL, MySQL/MariaDB and SQLite supporting it, and Oracle and
-SQL Server not supporting it. Third party dialects should also seek to ensure their
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.has_table()</span></code> method searches for views as well as tables
-for the given name.</p>
-<p>Related tickets: <a href="#id20"><span class="problematic" id="id21">:ticket:`7161`</span></a></p>
+SQL Server not supporting it. Third party dialects should also seek to ensure their</p>
+<blockquote>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.has_table()</span></code>   method searches for views as well as tables</p>
+</div></blockquote>
+<p>for the given name.</p>
+<p>Related tickets:  <a href="#id20"><span class="problematic" id="id21">:ticket:`7161`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="engine-dialect-event-handle-error-moved-to-dialectevents-now-participates-in-connection-pool-pre-ping">
 <span id="change-5648"></span><h3>5648 - engine: Dialect event handle_error moved to DialectEvents, now participates in connection pool ‘pre ping’<a class="headerlink" href="#engine-dialect-event-handle-error-moved-to-dialectevents-now-participates-in-connection-pool-pre-ping" title="Permalink to this heading">¶</a></h3>
-<p>The <a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents.handle_error" title="sqlalchemy.events.DialectEvents.handle_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DialectEvents.handle_error()</span></code></a> event is now moved to the
-<a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents" title="sqlalchemy.events.DialectEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">DialectEvents</span></code></a> suite from the <code class="xref py py-class docutils literal notranslate"><span class="pre">EngineEvents</span></code> suite, and now
-participates in the connection pool “pre ping” event for those dialects that make
+<dl class="simple">
+<dt>The  <a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents.handle_error" title="sqlalchemy.events.DialectEvents.handle_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DialectEvents.handle_error()</span></code></a>  event is now moved to the</dt><dd><p><a class="reference internal" href="../core/events.html#sqlalchemy.events.DialectEvents" title="sqlalchemy.events.DialectEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">DialectEvents</span></code></a>  suite from the   <code class="xref py py-class docutils literal notranslate"><span class="pre">EngineEvents</span></code>  suite, and now</p>
+</dd>
+</dl>
+<p>participates in the connection pool “pre ping” event for those dialects that make
 use of disconnect codes in order to detect if the database is live. This allows
 end-user code to alter the state of “pre ping”. Note that this does not include
 dialects which contain a native “ping” method such as that of psycopg2 or most
@@ -455,12 +459,14 @@ MySQL dialects.</p>
 </section>
 <section id="sql-newly-available-core-type-for-uuid">
 <span id="change-7212"></span><h3>7212 - sql: Newly available core type for UUID<a class="headerlink" href="#sql-newly-available-core-type-for-uuid" title="Permalink to this heading">¶</a></h3>
-<p>Added new backend-agnostic <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Uuid" title="sqlalchemy.types.Uuid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Uuid</span></code></a> datatype generalized from
-the PostgreSQL dialects to now be a core type, as well as migrated
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.UUID" title="sqlalchemy.types.UUID"><code class="xref py py-class docutils literal notranslate"><span class="pre">UUID</span></code></a> from the PostgreSQL dialect. The SQL Server
-<a class="reference internal" href="../dialects/mssql.html#sqlalchemy.dialects.mssql.UNIQUEIDENTIFIER" title="sqlalchemy.dialects.mssql.UNIQUEIDENTIFIER"><code class="xref py py-class docutils literal notranslate"><span class="pre">UNIQUEIDENTIFIER</span></code></a> datatype also becomes a UUID-handling datatype.
-Thanks to Trevor Gross for the help on this.</p>
-<p>Related tickets: <a href="#id22"><span class="problematic" id="id23">:ticket:`7212`</span></a></p>
+<p>Added new backend-agnostic   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Uuid" title="sqlalchemy.types.Uuid"><code class="xref py py-class docutils literal notranslate"><span class="pre">Uuid</span></code></a>  datatype generalized from
+the PostgreSQL dialects to now be a core type, as well as migrated</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.UUID" title="sqlalchemy.types.UUID"><code class="xref py py-class docutils literal notranslate"><span class="pre">UUID</span></code></a>  from the PostgreSQL dialect. The SQL Server
+<a class="reference internal" href="../dialects/mssql.html#sqlalchemy.dialects.mssql.UNIQUEIDENTIFIER" title="sqlalchemy.dialects.mssql.UNIQUEIDENTIFIER"><code class="xref py py-class docutils literal notranslate"><span class="pre">UNIQUEIDENTIFIER</span></code></a>  datatype also becomes a UUID-handling datatype.</p>
+</div></blockquote>
+<p>Thanks to Trevor Gross for the help on this.</p>
+<p>Related tickets:  <a href="#id22"><span class="problematic" id="id23">:ticket:`7212`</span></a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">types_core_uuid</span></p>
@@ -471,14 +477,16 @@ Thanks to Trevor Gross for the help on this.</p>
 </section>
 <section id="orm-very-experimental-feature-added-to-selectinload-and-immediateload">
 <span id="change-8126"></span><h3>8126 - orm: Very experimental feature added to selectinload and immediateload<a class="headerlink" href="#orm-very-experimental-feature-added-to-selectinload-and-immediateload" title="Permalink to this heading">¶</a></h3>
-<p>Added very experimental feature to the <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> and
-<code class="xref py py-func docutils literal notranslate"><span class="pre">immediateload()</span></code> loader options called
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">selectinload.recursion_depth</span></code> /
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">immediateload.recursion_depth</span></code> , which allows a single loader option
-to automatically recurse into self-referential relationships. Is set to an integer
+<dl class="simple">
+<dt>Added very experimental feature to the   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  and</dt><dd><p><code class="xref py py-func docutils literal notranslate"><span class="pre">immediateload()</span></code>  loader options called
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">selectinload.recursion_depth</span></code>   /
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">immediateload.recursion_depth</span></code>   , which allows a single loader option</p>
+</dd>
+</dl>
+<p>to automatically recurse into self-referential relationships. Is set to an integer
 indicating depth, and may also be set to -1 to indicate to continue loading until
-no more levels deep are found. Major internal changes to <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>
-and <code class="xref py py-func docutils literal notranslate"><span class="pre">immediateload()</span></code> allow this feature to work while continuing to make
+no more levels deep are found. Major internal changes to   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>
+and   <code class="xref py py-func docutils literal notranslate"><span class="pre">immediateload()</span></code>  allow this feature to work while continuing to make
 correct use of the compilation cache, as well as not using arbitrary recursion,
 so any level of depth is supported (though would emit that many queries).  This may
 be useful for self-referential structures that must be loaded fully eagerly, such
@@ -489,16 +497,18 @@ excessive recursion depth is detected in related object loading. This operation
 continues to use huge amounts of memory and performs extremely poorly; the cache is
 disabled when this condition is detected to protect the cache from being flooded
 with arbitrary statements.</p>
-<p>Related tickets: <a href="#id24"><span class="problematic" id="id25">:ticket:`8126`</span></a></p>
+<p>Related tickets:  <a href="#id24"><span class="problematic" id="id25">:ticket:`8126`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="orm-new-parameter-to-limit-scope-of-attributes-on-subclasses-declared-by-abstractconcretebase">
 <span id="change-8403"></span><h3>8403 - orm: New parameter to limit scope of attributes on subclasses declared by AbstractConcreteBase<a class="headerlink" href="#orm-new-parameter-to-limit-scope-of-attributes-on-subclasses-declared-by-abstractconcretebase" title="Permalink to this heading">¶</a></h3>
-<p>Added new parameter <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.AbstractConcreteBase.params.strict_attrs" title="sqlalchemy.ext.declarative.AbstractConcreteBase"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AbstractConcreteBase.strict_attrs</span></code></a> to the
-<a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.AbstractConcreteBase" title="sqlalchemy.ext.declarative.AbstractConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractConcreteBase</span></code></a> declarative mixin class. The effect of this parameter
-is that the scope of attributes on subclasses is correctly limited to the subclass
+<dl class="simple">
+<dt>Added new parameter  <a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.AbstractConcreteBase.params.strict_attrs" title="sqlalchemy.ext.declarative.AbstractConcreteBase"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">AbstractConcreteBase.strict_attrs</span></code></a>  to the</dt><dd><p><a class="reference internal" href="../orm/extensions/declarative/index.html#sqlalchemy.ext.declarative.AbstractConcreteBase" title="sqlalchemy.ext.declarative.AbstractConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractConcreteBase</span></code></a>  declarative mixin class. The effect of this parameter</p>
+</dd>
+</dl>
+<p>is that the scope of attributes on subclasses is correctly limited to the subclass
 in which each attribute is declared, rather than the previous behavior where all
 attributes of the entire hierarchy are applied to the base “abstract” class. This
 produces a cleaner, more correct mapping where subclasses no longer have non-useful
@@ -514,22 +524,28 @@ the newer approach, apply explicit attributes to the abstract base class as need
 <span id="change-8503"></span><h3>8503 - mysql, mariadb: Support group by rollup syntax<a class="headerlink" href="#mysql-mariadb-support-group-by-rollup-syntax" title="Permalink to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">ROLLUP</span></code> function will now correctly render <code class="docutils literal notranslate"><span class="pre">WITH</span> <span class="pre">ROLLUP</span></code> on MySql and
 MariaDB, allowing the use of group by rollup with these backends.</p>
-<p>Related tickets: <a href="#id26"><span class="problematic" id="id27">:ticket:`8503`</span></a></p>
+<p>Related tickets:  <a href="#id26"><span class="problematic" id="id27">:ticket:`8503`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="orm-add-optional-flag-to-disable-implicit-transactions">
 <span id="change-6928"></span><h3>6928 - orm: Add optional flag to disable implicit transactions<a class="headerlink" href="#orm-add-optional-flag-to-disable-implicit-transactions" title="Permalink to this heading">¶</a></h3>
-<p>Added new parameter <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code>, which when set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
-will prevent the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> from beginning a transaction implicitly. The
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code> method must be called explicitly first in order to
-proceed with operations, otherwise an error is raised whenever any operation would
-otherwise have begun automatically. This option can be used to create a “safe”
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> that won’t implicitly start new transactions.</p>
-<p>As part of this change, also added a new status variable
-<code class="xref py py-class docutils literal notranslate"><span class="pre">origin</span></code> which may be useful for event handling code to
-be aware of the origin of a particular <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>.</p>
+<p>Added new parameter  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code> , which when set to <code class="docutils literal notranslate"><span class="pre">False</span></code>
+will prevent the   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  from beginning a transaction implicitly. The</p>
+<blockquote>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>   method must be called explicitly first in order to</p>
+</div></blockquote>
+<p>proceed with operations, otherwise an error is raised whenever any operation would
+otherwise have begun automatically. This option can be used to create a “safe”</p>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  that won’t implicitly start new transactions.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>As part of this change, also added a new status variable</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">origin</span></code>  which may be useful for event handling code to</p>
+</dd>
+</dl>
+<p>be aware of the origin of a particular   <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code> .</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -542,7 +558,7 @@ platforms are available on pypi so that building is not an issue for common
 platforms.  For custom builds, <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">build_ext</span></code> works as before, needing
 only the additional Cython install.  <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> is also part of the source
 now which will establish the proper build dependencies when using pip.</p>
-<p>Related tickets: <a href="#id28"><span class="problematic" id="id29">:ticket:`7256`</span></a></p>
+<p>Related tickets:  <a href="#id28"><span class="problematic" id="id29">:ticket:`7256`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -550,22 +566,24 @@ now which will establish the proper build dependencies when using pip.</p>
 <section id="deprecations-remove-implicit-setup-py-build-from-source-distribution">
 <span id="change-7311"></span><h3>7311 - deprecations: Remove implicit setup.py build from source distribution<a class="headerlink" href="#deprecations-remove-implicit-setup-py-build-from-source-distribution" title="Permalink to this heading">¶</a></h3>
 <p>SQLAlchemy’s source build and installation now includes a <code class="docutils literal notranslate"><span class="pre">pyproject.toml</span></code> file
-for full <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0517/"><strong>PEP 517</strong></a> support.</p>
-<p>Related tickets: <a href="#id30"><span class="problematic" id="id31">:ticket:`7311`</span></a></p>
+for full  <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0517/"><strong>PEP 517</strong></a>  support.</p>
+<p>Related tickets:  <a href="#id30"><span class="problematic" id="id31">:ticket:`7311`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="schema-improved-support-for-conditional-ddl">
 <span id="change-7631"></span><h3>7631 - schema: Improved support for conditional DDL<a class="headerlink" href="#schema-improved-support-for-conditional-ddl" title="Permalink to this heading">¶</a></h3>
-<p>Expanded on the “conditional DDL” system implemented by the
-<a class="reference internal" href="../core/ddl.html#sqlalchemy.schema.ExecutableDDLElement" title="sqlalchemy.schema.ExecutableDDLElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExecutableDDLElement</span></code></a> class (renamed from <code class="xref py py-class docutils literal notranslate"><span class="pre">DDLElement</span></code>)
-to be directly available on <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem" title="sqlalchemy.schema.SchemaItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaItem</span></code></a> constructs such as
-<a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>, <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>, etc. such that the
-conditional logic for generating these elements is included within the default DDL
+<dl class="simple">
+<dt>Expanded on the “conditional DDL” system implemented by the</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ExecutableDDLElement</span></code>  class (renamed from   <code class="xref py py-class docutils literal notranslate"><span class="pre">DDLElement</span></code> )</p>
+</dd>
+<dt>to be directly available on   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.SchemaItem" title="sqlalchemy.schema.SchemaItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaItem</span></code></a>  constructs such as</dt><dd><p><a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> ,   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> , etc. such that the</p>
+</dd>
+</dl>
+<p>conditional logic for generating these elements is included within the default DDL
 emitting process. This system can also be accommodated by a future release of
 Alembic to support conditional DDL elements within all schema-management systems.</p>
-<p>Related tickets: <a href="#id32"><span class="problematic" id="id33">:ticket:`7631`</span></a></p>
+<p>Related tickets:  <a href="#id32"><span class="problematic" id="id33">:ticket:`7631`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -574,18 +592,22 @@ Alembic to support conditional DDL elements within all schema-management systems
 <span id="change-4379"></span><h3>4379 - oracle: Reflect materialized views as views, add inspection method for materialized views<a class="headerlink" href="#oracle-reflect-materialized-views-as-views-add-inspection-method-for-materialized-views" title="Permalink to this heading">¶</a></h3>
 <p>Materialized views on oracle are now reflected as views. On previous versions of
 SQLAlchemy the views were returned among the table names, not among the view names.
-As a side effect of this change they are not reflected by default by
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>, unless <code class="docutils literal notranslate"><span class="pre">views=True</span></code> is set. To get a list of
-materialized views, use the new inspection method
-<a class="reference internal" href="../core/reflection.html#sqlalchemy.engine.reflection.Inspector.get_materialized_view_names" title="sqlalchemy.engine.reflection.Inspector.get_materialized_view_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_materialized_view_names()</span></code></a>.</p>
-<p>Related tickets: <a href="#id34"><span class="problematic" id="id35">:ticket:`4379`</span></a></p>
+As a side effect of this change they are not reflected by default by</p>
+<blockquote>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>  , unless <code class="docutils literal notranslate"><span class="pre">views=True</span></code> is set. To get a list of</p>
+</div></blockquote>
+<dl class="simple">
+<dt>materialized views, use the new inspection method</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_materialized_view_names()</span></code>  .</p>
+</dd>
+</dl>
+<p>Related tickets:  <a href="#id34"><span class="problematic" id="id35">:ticket:`4379`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="sqlite-stop-warning-about-non-native-decimal-handling">
 <span id="change-7299"></span><h3>7299 - sqlite: Stop warning about non-native Decimal handling<a class="headerlink" href="#sqlite-stop-warning-about-non-native-decimal-handling" title="Permalink to this heading">¶</a></h3>
-<p>Removed the warning that emits from the <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a> type about DBAPIs not
+<p>Removed the warning that emits from the   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>  type about DBAPIs not
 supporting Decimal values natively. This warning was oriented towards SQLite, which
 does not have any real way without additional extensions or workarounds of handling
 precision numeric values more than 15 significant digits as it only uses floating
@@ -593,10 +615,10 @@ point math to represent numbers. As this is a known and documented limitation in
 SQLite itself, and not a quirk of the pysqlite driver, there’s no need for SQLAlchemy
 to warn for this. The change does not otherwise modify how precision numerics are
 handled. Values can continue to be handled as <code class="docutils literal notranslate"><span class="pre">Decimal()</span></code> or <code class="docutils literal notranslate"><span class="pre">float()</span></code> as
-configured with the <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>, <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Float" title="sqlalchemy.types.Float"><code class="xref py py-class docutils literal notranslate"><span class="pre">Float</span></code></a> , and related
+configured with the   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a> ,   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Float" title="sqlalchemy.types.Float"><code class="xref py py-class docutils literal notranslate"><span class="pre">Float</span></code></a>  , and related
 datatypes, just without the ability to maintain precision beyond 15 significant
 digits when using SQLite, unless alternate representations such as strings are used.</p>
-<p>Related tickets: <a href="#id36"><span class="problematic" id="id37">:ticket:`7299`</span></a></p>
+<p>Related tickets:  <a href="#id36"><span class="problematic" id="id37">:ticket:`7299`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
@@ -611,36 +633,40 @@ to continue functioning, the <code class="docutils literal notranslate"><span cl
 <code class="docutils literal notranslate"><span class="pre">cursor.setinputsizes()</span></code> call specifically when <code class="docutils literal notranslate"><span class="pre">fast_executemany</span></code> is True and
 the specific method in use is <code class="docutils literal notranslate"><span class="pre">cursor.executemany()</span></code>, which doesn’t support
 setinputsizes. The change also adds appropriate pyodbc DBAPI typing to values that are
-typed as <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> or <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.UnicodeText" title="sqlalchemy.types.UnicodeText"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnicodeText</span></code></a>, as well as altered
-the base <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> datatype to consider JSON string values as
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> rather than <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a>.</p>
-<p>Related tickets: <a href="#id38"><span class="problematic" id="id39">:ticket:`8177`</span></a></p>
+typed as   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a>  or   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.UnicodeText" title="sqlalchemy.types.UnicodeText"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnicodeText</span></code></a> , as well as altered
+the base   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>  datatype to consider JSON string values as</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a>  rather than   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a> .</p>
+</div></blockquote>
+<p>Related tickets:  <a href="#id38"><span class="problematic" id="id39">:ticket:`8177`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="sqlite-default-to-using-queuepool-which-holds-onto-connections-when-using-file-based-databases-for-performance">
 <span id="change-7490"></span><h3>7490 - sqlite: Default to using QueuePool, which holds onto connections when using file-based databases for performance<a class="headerlink" href="#sqlite-default-to-using-queuepool-which-holds-onto-connections-when-using-file-based-databases-for-performance" title="Permalink to this heading">¶</a></h3>
-<p>The SQLite dialect now defaults to <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a> when a file based database
+<p>The SQLite dialect now defaults to   <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a>  when a file based database
 is used. This is set along with setting the <code class="docutils literal notranslate"><span class="pre">check_same_thread</span></code> parameter to
-<code class="docutils literal notranslate"><span class="pre">False</span></code>. It has been observed that the previous approach of defaulting to
-<a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullPool</span></code></a>, which does not hold onto database connections after they are
-released, did in fact have a measurable negative performance impact. As always, the
-pool class is customizable via the <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.poolclass</span></code>
+<code class="docutils literal notranslate"><span class="pre">False</span></code>. It has been observed that the previous approach of defaulting to</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.NullPool" title="sqlalchemy.pool.NullPool"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullPool</span></code></a> , which does not hold onto database connections after they are</p>
+</div></blockquote>
+<p>released, did in fact have a measurable negative performance impact. As always, the
+pool class is customizable via the  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.poolclass</span></code>
 parameter.</p>
-<p>Related tickets: <a href="#id40"><span class="problematic" id="id41">:ticket:`7490`</span></a></p>
+<p>Related tickets:  <a href="#id40"><span class="problematic" id="id41">:ticket:`7490`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="schema-add-if-exists-clause-to-drop-constraints">
 <span id="change-8141"></span><h3>8141 - schema: Add IF EXISTS clause to drop constraints<a class="headerlink" href="#schema-add-if-exists-clause-to-drop-constraints" title="Permalink to this heading">¶</a></h3>
-<p>Added parameter <a class="reference internal" href="../core/ddl.html#sqlalchemy.schema.DropConstraint.params.if_exists" title="sqlalchemy.schema.DropConstraint"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">DropConstraint.if_exists</span></code></a> to the <a class="reference internal" href="../core/ddl.html#sqlalchemy.schema.DropConstraint" title="sqlalchemy.schema.DropConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">DropConstraint</span></code></a>
+<p>Added parameter  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">DropConstraint.if_exists</span></code>  to the   <code class="xref py py-class docutils literal notranslate"><span class="pre">DropConstraint</span></code>
 construct which result in “IF EXISTS” DDL being added to the DROP statement. This phrase
 is not accepted by all databases and the operation will fail on a database that does
 not support it as there is no similarly compatible fallback within the scope of a
 single DDL statement.</p>
-<p>Related tickets: <a href="#id42"><span class="problematic" id="id43">:ticket:`8141`</span></a></p>
+<p>Related tickets:  <a href="#id42"><span class="problematic" id="id43">:ticket:`8141`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -648,9 +674,11 @@ single DDL statement.</p>
 <section id="sql-add-support-for-division-operators-and-to-numeric-types">
 <span id="change-4926"></span><h3>4926 - sql: Add support for division operators (// and /) to numeric types<a class="headerlink" href="#sql-add-support-for-division-operators-and-to-numeric-types" title="Permalink to this heading">¶</a></h3>
 <p>Implemented full support for “truediv” and “floordiv” using the “/” and “//”
-operators.  A “truediv” operation between two expressions using
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a> now considers the result to be <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>,
-and the dialect-level compilation will cast the right operand to a numeric type on
+operators.  A “truediv” operation between two expressions using</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>  now considers the result to be   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a> ,</p>
+</div></blockquote>
+<p>and the dialect-level compilation will cast the right operand to a numeric type on
 a dialect-specific basis to ensure truediv is achieved.  For floordiv, conversion is
 also added for those databases that don’t already do floordiv by default (MySQL,
 Oracle) and the <code class="docutils literal notranslate"><span class="pre">FLOOR()</span></code> function is rendered in this case, as well as for cases
@@ -658,7 +686,7 @@ where the right operand is not an integer (needed for PostgreSQL, others). The c
 resolves issues both with inconsistent behavior of the division operator on different
 backends and also fixes an issue where integer division on Oracle would fail to be
 able to fetch a result due to inappropriate outputtypehandlers.</p>
-<p>Related tickets: <a href="#id44"><span class="problematic" id="id45">:ticket:`4926`</span></a></p>
+<p>Related tickets:  <a href="#id44"><span class="problematic" id="id45">:ticket:`4926`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -666,34 +694,36 @@ able to fetch a result due to inappropriate outputtypehandlers.</p>
 <section id="oracle-implement-binary-precision-for-float-datatype-reflect-binary-precision-as-schema-level-info">
 <span id="change-5465"></span><h3>5465 - oracle: Implement binary precision for FLOAT datatype, reflect “binary_precision” as schema-level info<a class="headerlink" href="#oracle-implement-binary-precision-for-float-datatype-reflect-binary-precision-as-schema-level-info" title="Permalink to this heading">¶</a></h3>
 <p>Implemented DDL and reflection support for <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code> datatypes which include an
-explicit “binary_precision” value. Using the Oracle-specific <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-class docutils literal notranslate"><span class="pre">FLOAT</span></code></a>
-datatype, the new parameter <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT.params.binary_precision" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">FLOAT.binary_precision</span></code></a> may be
+explicit “binary_precision” value. Using the Oracle-specific   <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-class docutils literal notranslate"><span class="pre">FLOAT</span></code></a>
+datatype, the new parameter  <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT.params.binary_precision" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">FLOAT.binary_precision</span></code></a>  may be
 specified which will render Oracle’s precision for floating point types directly.
 This value is interpreted during reflection. Upon reflecting back a <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code> datatype,
-the datatype returned is one of <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE_PRECISION" title="sqlalchemy.types.DOUBLE_PRECISION"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></a> for a <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code> for
-a precision of 126 (this is also Oracle’s default precision for <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code>),
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.REAL" title="sqlalchemy.types.REAL"><code class="xref py py-class docutils literal notranslate"><span class="pre">REAL</span></code></a> for a precision of 63, and <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-class docutils literal notranslate"><span class="pre">FLOAT</span></code></a> for a custom
-precision, as per Oracle documentation.</p>
-<p>As part of this change, the generic <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Float.params.precision" title="sqlalchemy.types.Float"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Float.precision</span></code></a> value is
+the datatype returned is one of   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE_PRECISION" title="sqlalchemy.types.DOUBLE_PRECISION"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></a>  for a <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code> for
+a precision of 126 (this is also Oracle’s default precision for <code class="docutils literal notranslate"><span class="pre">FLOAT</span></code>),</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.REAL" title="sqlalchemy.types.REAL"><code class="xref py py-class docutils literal notranslate"><span class="pre">REAL</span></code></a>  for a precision of 63, and   <a class="reference internal" href="../dialects/oracle.html#sqlalchemy.dialects.oracle.FLOAT" title="sqlalchemy.dialects.oracle.FLOAT"><code class="xref py py-class docutils literal notranslate"><span class="pre">FLOAT</span></code></a>  for a custom</p>
+</div></blockquote>
+<p>precision, as per Oracle documentation.</p>
+<p>As part of this change, the generic  <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Float.params.precision" title="sqlalchemy.types.Float"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Float.precision</span></code></a>  value is
 explicitly rejected when generating DDL for Oracle, as this precision cannot be
 accurately converted to “binary precision”; instead, an error message encourages the
-use of <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a> so that Oracle’s specific form of
+use of  <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a>  so that Oracle’s specific form of
 precision may be chosen exactly. This is a backwards-incompatible change in behavior,
 as the previous “precision” value was silently ignored for Oracle.</p>
-<p>Related tickets: <a href="#id46"><span class="problematic" id="id47">:ticket:`5465`</span></a></p>
+<p>Related tickets:  <a href="#id46"><span class="problematic" id="id47">:ticket:`5465`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
 </section>
 <section id="postgresql-use-plainto-tsquery-for-text-searching-match-operation">
 <span id="change-7086"></span><h3>7086 - postgresql: Use plainto_tsquery() for text searching match operation<a class="headerlink" href="#postgresql-use-plainto-tsquery-for-text-searching-match-operation" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.match()</span></code> operator now uses <code class="docutils literal notranslate"><span class="pre">plainto_tsquery()</span></code> for PostgreSQL
+<p>The  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.match()</span></code>  operator now uses <code class="docutils literal notranslate"><span class="pre">plainto_tsquery()</span></code> for PostgreSQL
 full text search, rather than <code class="docutils literal notranslate"><span class="pre">to_tsquery()</span></code>. The rationale for this change is to
 provide better cross-compatibility with match on other database backends. Full support
-for all PostgreSQL full text functions remains available through the use of <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a>
-in conjunction with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.bool_op()</span></code> (an improved version of <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code>
+for all PostgreSQL full text functions remains available through the use of  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a>
+in conjunction with  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.bool_op()</span></code>  (an improved version of  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code>
 for boolean operators).</p>
-<p>Related tickets: <a href="#id48"><span class="problematic" id="id49">:ticket:`7086`</span></a></p>
+<p>Related tickets:  <a href="#id48"><span class="problematic" id="id49">:ticket:`7086`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -705,7 +735,7 @@ space) when using <code class="docutils literal notranslate"><span class="pre">l
 PostgreSQL, MySQL, MariaDB, MSSQL, Oracle dialects. For Oracle, the ISO
 format is wrapped inside of an appropriate TO_DATE() function call. Previously
 this rendering was not implemented for dialect-specific compilation.</p>
-<p>Related tickets: <a href="#id50"><span class="problematic" id="id51">:ticket:`5052`</span></a></p>
+<p>Related tickets:  <a href="#id50"><span class="problematic" id="id51">:ticket:`5052`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0b1.</span></p>
 </div>
@@ -713,7 +743,7 @@ this rendering was not implemented for dialect-specific compilation.</p>
 <section id="deprecations-remove-legacy-dialect-packages">
 <span id="change-7258"></span><h3>7258 - deprecations: Remove legacy dialect packages<a class="headerlink" href="#deprecations-remove-legacy-dialect-packages" title="Permalink to this heading">¶</a></h3>
 <p>Removed the firebird, informix and maxdb dialects that were previously deprecated.</p>
-<p>Related tickets: <a href="#id52"><span class="problematic" id="id53">:ticket:`7258`</span></a></p>
+<p>Related tickets:  <a href="#id52"><span class="problematic" id="id53">:ticket:`7258`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.0b1.</span></p>
 </div>
@@ -733,33 +763,37 @@ like <code class="docutils literal notranslate"><span class="pre">concat(concat(
 string concatenation operator will need to implement a new method
 <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">visit_concat_op_expression_clauselist()</span></code> to accompany the existing
 <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">visit_concat_op_binary()</span></code> method.</p>
-<p>Related tickets: <a href="#id54"><span class="problematic" id="id55">:ticket:`7744`</span></a></p>
+<p>Related tickets:  <a href="#id54"><span class="problematic" id="id55">:ticket:`7744`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.7.</span></p>
 </div>
 </section>
 <section id="postgresql-mysql-add-double-types-to-namespace">
 <span id="change-5469"></span><h3>5469 - postgresql, mysql: Add double types to namespace.<a class="headerlink" href="#postgresql-mysql-add-double-types-to-namespace" title="Permalink to this heading">¶</a></h3>
-<p>Added <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Double" title="sqlalchemy.types.Double"><code class="xref py py-class docutils literal notranslate"><span class="pre">Double</span></code></a>, <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE" title="sqlalchemy.types.DOUBLE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE</span></code></a>,
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE_PRECISION" title="sqlalchemy.types.DOUBLE_PRECISION"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></a>
-datatypes to the base <code class="docutils literal notranslate"><span class="pre">sqlalchemy.</span></code> module namespace, for explicit use of
-double/double precision as well as generic “double” datatypes. Use
-<a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Double" title="sqlalchemy.types.Double"><code class="xref py py-class docutils literal notranslate"><span class="pre">Double</span></code></a> for generic support that will resolve to DOUBLE/DOUBLE
-PRECISION/FLOAT as needed for different backends.</p>
+<dl class="simple">
+<dt>Added   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Double" title="sqlalchemy.types.Double"><code class="xref py py-class docutils literal notranslate"><span class="pre">Double</span></code></a> ,   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE" title="sqlalchemy.types.DOUBLE"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE</span></code></a> ,</dt><dd><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.DOUBLE_PRECISION" title="sqlalchemy.types.DOUBLE_PRECISION"><code class="xref py py-class docutils literal notranslate"><span class="pre">DOUBLE_PRECISION</span></code></a></p>
+</dd>
+</dl>
+<p>datatypes to the base <code class="docutils literal notranslate"><span class="pre">sqlalchemy.</span></code> module namespace, for explicit use of
+double/double precision as well as generic “double” datatypes. Use</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Double" title="sqlalchemy.types.Double"><code class="xref py py-class docutils literal notranslate"><span class="pre">Double</span></code></a>  for generic support that will resolve to DOUBLE/DOUBLE</p>
+</div></blockquote>
+<p>PRECISION/FLOAT as needed for different backends.</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.0.</span></p>
 </div>
 </section>
 <section id="postgresql-add-jsonpath-type-for-cast-expressions">
 <span id="change-8216"></span><h3>8216 - postgresql: Add JSONPATH type for cast expressions<a class="headerlink" href="#postgresql-add-jsonpath-type-for-cast-expressions" title="Permalink to this heading">¶</a></h3>
-<p>Introduced the type <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.JSONPATH" title="sqlalchemy.dialects.postgresql.JSONPATH"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPATH</span></code></a> that can be used
+<p>Introduced the type   <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.JSONPATH" title="sqlalchemy.dialects.postgresql.JSONPATH"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSONPATH</span></code></a>  that can be used
 in cast expressions. This is required by some PostgreSQL dialects
 when using functions such as <code class="docutils literal notranslate"><span class="pre">jsonb_path_exists</span></code> or <code class="docutils literal notranslate"><span class="pre">jsonb_path_match</span></code>
 that accept a <code class="docutils literal notranslate"><span class="pre">jsonpath</span></code> as input.</p>
-<p>Related tickets: <a href="#id56"><span class="problematic" id="id57">:ticket:`8216`</span></a></p>
+<p>Related tickets:  <a href="#id56"><span class="problematic" id="id57">:ticket:`8216`</span></a></p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">postgresql_json_types</span> - PostgreSQL JSON types.</p>
+<p><span class="xref std std-ref">postgresql_json_types</span>  - PostgreSQL JSON types.</p>
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.8.</span></p>
@@ -779,9 +813,9 @@ Supported options are:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">subpartition_by</span></code></p></li>
 </ul>
 <p>These options are also reflected when loading a table from database,
-and will populate the table <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.dialect_options" title="sqlalchemy.schema.Table.dialect_options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.dialect_options</span></code></a>.
+and will populate the table  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.dialect_options</span></code> .
 Pull request courtesy of Ramon Will.</p>
-<p>Related tickets: <a href="#id58"><span class="problematic" id="id59">:ticket:`4038`</span></a></p>
+<p>Related tickets:  <a href="#id58"><span class="problematic" id="id59">:ticket:`4038`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.11.</span></p>
 </div>
@@ -790,7 +824,7 @@ Pull request courtesy of Ramon Will.</p>
 <span id="change-8288"></span><h3>8288 - mssql: Reflect clustered index flag<a class="headerlink" href="#mssql-reflect-clustered-index-flag" title="Permalink to this heading">¶</a></h3>
 <p>Implemented reflection of the “clustered index” flag <code class="docutils literal notranslate"><span class="pre">mssql_clustered</span></code>
 for the SQL Server dialect. Pull request courtesy John Lennox.</p>
-<p>Related tickets: <a href="#id60"><span class="problematic" id="id61">:ticket:`8288`</span></a></p>
+<p>Related tickets:  <a href="#id60"><span class="problematic" id="id61">:ticket:`8288`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.11.</span></p>
 </div>
@@ -798,10 +832,12 @@ for the SQL Server dialect. Pull request courtesy John Lennox.</p>
 <section id="postgresql-reflect-expression-based-indexes">
 <span id="change-7442"></span><h3>7442 - postgresql: Reflect expression-based indexes<a class="headerlink" href="#postgresql-reflect-expression-based-indexes" title="Permalink to this heading">¶</a></h3>
 <p>The PostgreSQL dialect now supports reflection of expression based indexes.
-The reflection is supported both when using
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_indexes()</span></code> and when reflecting a
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> using <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.autoload_with" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.autoload_with</span></code></a>.</p>
-<p>Related tickets: <a href="#id62"><span class="problematic" id="id63">:ticket:`7442`</span></a></p>
+The reflection is supported both when using</p>
+<blockquote>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_indexes()</span></code>   and when reflecting a
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  using  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.autoload_with" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.autoload_with</span></code></a> .</p>
+</div></blockquote>
+<p>Related tickets:  <a href="#id62"><span class="problematic" id="id63">:ticket:`7442`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.18.</span></p>
 </div>
@@ -819,32 +855,34 @@ approach doesn’t apply to Oracle nor is it accepted by SQL Server, nor would i
 with multiple entries in the PostgreSQL search path. The name collision issue resolved
 here has been identified as affecting at least Oracle, PostgreSQL, SQL Server, MySQL and
 MariaDB.</p>
-<p>Related tickets: <a href="#id64"><span class="problematic" id="id65">:ticket:`7471`</span></a></p>
+<p>Related tickets:  <a href="#id64"><span class="problematic" id="id65">:ticket:`7471`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.18.</span></p>
 </div>
 </section>
 <section id="engine-remove-implicit-returning-parameter-from-create-engine">
 <span id="change-6962"></span><h3>6962 - engine: Remove implicit_returning parameter from create_engine()<a class="headerlink" href="#engine-remove-implicit-returning-parameter-from-create-engine" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.implicit_returning</span></code> parameter is deprecated on the
-<code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> function only; the parameter remains available on the
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> object. This parameter was originally intended to enable the
-“implicit returning” feature of SQLAlchemy when it was first developed and was not
+<dl class="simple">
+<dt>The  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.implicit_returning</span></code>  parameter is deprecated on the</dt><dd><p><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  function only; the parameter remains available on the
+<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  object. This parameter was originally intended to enable the</p>
+</dd>
+</dl>
+<p>“implicit returning” feature of SQLAlchemy when it was first developed and was not
 enabled by default. Under modern use, there’s no reason this parameter should be
 disabled, and it has been observed to cause confusion as it degrades performance and
 makes it more difficult for the ORM to retrieve recently inserted server defaults.
-The parameter remains available on <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> to specifically suit
+The parameter remains available on   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  to specifically suit
 database-level edge cases which make RETURNING infeasible, the sole example currently
 being SQL Server’s limitation that INSERT RETURNING may not be used on a table that
 has INSERT triggers on it.</p>
-<p>Related tickets: <a href="#id66"><span class="problematic" id="id67">:ticket:`6962`</span></a></p>
+<p>Related tickets:  <a href="#id66"><span class="problematic" id="id67">:ticket:`6962`</span></a></p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4.18.</span></p>
 </div>
 </section>
 <section id="oracle-implicit-returning-feature-enabled-in-all-cases">
 <span id="change-6962-oracle"></span><h3>6962 - oracle: implicit-returning feature enabled in all cases<a class="headerlink" href="#oracle-implicit-returning-feature-enabled-in-all-cases" title="Permalink to this heading">¶</a></h3>
-<p>Related to the deprecation for <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.implicit_returning</span></code>,
+<p>Related to the deprecation for  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.implicit_returning</span></code> ,
 the “implicit_returning” feature is now enabled for the Oracle dialect in all cases;
 previously, the feature would be turned off when an Oracle 8/8i version were detected,
 however online documentation indicates both versions support the same RETURNING syntax
@@ -856,44 +894,48 @@ as modern versions.</p>
 <section id="orm-remove-warnings-about-reflection-of-constraints-when-columns-are-excluded">
 <span id="change-8102"></span><h3>8102 - orm: Remove warnings about reflection of constraints when columns are excluded<a class="headerlink" href="#orm-remove-warnings-about-reflection-of-constraints-when-columns-are-excluded" title="Permalink to this heading">¶</a></h3>
 <p>The warnings that are emitted regarding reflection of indexes or unique constraints, when
-the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.include_columns" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.include_columns</span></code></a> parameter is used to exclude columns that are
+the  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.include_columns" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.include_columns</span></code></a>  parameter is used to exclude columns that are
 then found to be part of those constraints, have been removed. When the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params. include_columns" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.</span>
-<span class="pre">include_columns</span></code></a> parameter is used it should be expected that the resulting
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> construct will not include constraints that rely upon omitted columns.
-This change was made in response to <a href="#id68"><span class="problematic" id="id69">:ticket:`8100`</span></a> which repaired <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params. include_columns" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.</span>
+<span class="pre">include_columns</span></code></a> parameter is used it should be expected that the resulting</p>
+<blockquote>
+<div><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  construct will not include constraints that rely upon omitted columns.</p>
+</div></blockquote>
+<p>This change was made in response to  <a href="#id68"><span class="problematic" id="id69">:ticket:`8100`</span></a>  which repaired <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params. include_columns" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.</span>
 <span class="pre">include_columns</span></code></a> in conjunction with foreign key constraints that rely upon omitted columns,
 where the use case became clear that omitting such constraints should be expected.</p>
-<p>Related tickets: <a href="#id70"><span class="problematic" id="id71">:ticket:`8102`</span></a></p>
+<p>Related tickets:  <a href="#id70"><span class="problematic" id="id71">:ticket:`8102`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.18.</span></p>
 </div>
 </section>
 <section id="orm-do-not-defer-primary-key-or-polymorphic-discriminator-column">
 <span id="change-7495"></span><h3>7495 - orm: Do not defer primary key or polymorphic discriminator column<a class="headerlink" href="#orm-do-not-defer-primary-key-or-polymorphic-discriminator-column" title="Permalink to this heading">¶</a></h3>
-<p>The behavior of <a class="reference internal" href="../orm/queryguide/columns.html#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a> regarding primary key and “polymorphic
+<p>The behavior of   <a class="reference internal" href="../orm/queryguide/columns.html#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  regarding primary key and “polymorphic
 discriminator” columns is revised such that these columns are no longer
 deferrable, either explicitly or when using a wildcard such as <code class="docutils literal notranslate"><span class="pre">defer('*')</span></code>.
 Previously, a wildcard deferral would not load PK/polymorphic columns which led to
 errors in all cases, as the ORM relies upon these columns to produce object identities.
 The behavior of explicit deferral of primary key columns is unchanged as these
 deferrals already were implicitly ignored.</p>
-<p>Related tickets: <a href="#id72"><span class="problematic" id="id73">:ticket:`7495`</span></a></p>
+<p>Related tickets:  <a href="#id72"><span class="problematic" id="id73">:ticket:`7495`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.18.</span></p>
 </div>
 </section>
 <section id="typing-new-variant-method-returns-full-type">
 <span id="change-6980"></span><h3>6980 - typing: New variant method returns full type<a class="headerlink" href="#typing-new-variant-method-returns-full-type" title="Permalink to this heading">¶</a></h3>
-<p>The <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a> method now returns a copy of
-the original <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> object, rather than wrapping it
+<p>The  <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a>  method now returns a copy of
+the original   <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a>  object, rather than wrapping it
 inside the <code class="docutils literal notranslate"><span class="pre">Variant</span></code> class, which is effectively removed (the import symbol remains
 for backwards compatibility with code that may be testing for this symbol). While the
 previous approach maintained in-Python behaviors, maintaining the original type allows
 for clearer type checking and debugging.</p>
-<p><a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a> also accepts multiple dialect names per call
-as well, in particular this is helpful for related backend names such as <code class="docutils literal notranslate"><span class="pre">&quot;mysql&quot;,</span>
+<blockquote>
+<div><p><a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a>   also accepts multiple dialect names per call</p>
+</div></blockquote>
+<p>as well, in particular this is helpful for related backend names such as <code class="docutils literal notranslate"><span class="pre">&quot;mysql&quot;,</span>
 <span class="pre">&quot;mariadb&quot;</span></code>.</p>
-<p>Related tickets: <a href="#id74"><span class="problematic" id="id75">:ticket:`6980`</span></a></p>
+<p>Related tickets:  <a href="#id74"><span class="problematic" id="id75">:ticket:`6980`</span></a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.18SQLite: </span>datetime、date 和 time 数据类型已使用 Python 标准库中的 fromisoformat() 方法来解析传入的 datetime、date 和 time 字符串值。与以前基于正则表达式的方法相比，这种方法提高了性能，也自动适应了包含六位“毫秒”格式或三位“毫秒”格式的 datetime 和 time 格式。</p>
 </div>
@@ -919,7 +961,7 @@ as well, in particular this is helpful for related backend names such as <code c
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:06:52
+    Documentation last generated: 2023/8/18 18:43:40
 
     </div>
 </div>

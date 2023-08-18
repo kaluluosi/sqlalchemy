@@ -168,7 +168,16 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#mysql-sql">MySQL SQL 构造</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id6">)</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">match</span></code></a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.match.in_boolean_mode"><code class="docutils literal notranslate"><span class="pre">match.in_boolean_mode()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.match.in_natural_language_mode"><code class="docutils literal notranslate"><span class="pre">match.in_natural_language_mode()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.match.inherit_cache"><code class="docutils literal notranslate"><span class="pre">match.inherit_cache</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.match.with_query_expansion"><code class="docutils literal notranslate"><span class="pre">match.with_query_expansion()</span></code></a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#mysql">MySQL 数据类型</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.BIGINT"><code class="docutils literal notranslate"><span class="pre">BIGINT</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.BIGINT.__init__"><code class="docutils literal notranslate"><span class="pre">BIGINT.__init__()</span></code></a></span></li>
 </ul>
@@ -264,9 +273,7 @@
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.YEAR"><code class="docutils literal notranslate"><span class="pre">YEAR</span></code></a></span></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><span class="link-container"><a class="reference external" href="#mysql-dml-constructs">MySQL DML Constructs</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2">MySQL 数据操纵语言构造</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.insert"><code class="docutils literal notranslate"><span class="pre">insert()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.Insert"><code class="docutils literal notranslate"><span class="pre">Insert</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mysql.Insert.inherit_cache"><code class="docutils literal notranslate"><span class="pre">Insert.inherit_cache</span></code></a></span></li>
@@ -276,20 +283,20 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.mysqldb">mysqlclient (MySQL-Python 的 fork)</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.mysqldb">mysqlclient (MySQL-Python 的分支)</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-mysqldb-url">DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-mysqldb-connect">Connecting</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#driver-status">Driver Status</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#mysqldb-unicode">Unicode</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#ssl-connections">SSL Connections</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#using-mysqldb-with-google-cloud-sql">Using MySQLdb with Google Cloud SQL</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id8">Server Side Cursors</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">Server Side Cursors</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.pymysql">PyMySQL</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-pymysql-url">DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-pymysql-connect">Connecting</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id9">Unicode</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id5">Unicode</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#pymysql-ssl">SSL Connections</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#mysql-python-compatibility">MySQL-Python Compatibility</a></span></li>
 </ul>
@@ -297,7 +304,7 @@
 <li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.mariadbconnector">MariaDB-Connector</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-mariadbconnector-url">DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-mariadbconnector-connect">Connecting</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id11">Driver Status</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">Driver Status</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.mysqlconnector">MySQL-Connector</a></span><ul>
@@ -318,6 +325,11 @@
 <li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.cymysql">cymysql</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-cymysql-url">DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#dialect-mysql-cymysql-connect">Connecting</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#module-sqlalchemy.dialects.mysql.pyodbc">pyodbc</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#dialect-mysql-pyodbc-url">DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#dialect-mysql-pyodbc-connect">Connecting</a></span></li>
 </ul>
 </li>
 </ul>
@@ -368,7 +380,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#mysql-mariadb">MySQL 和 MariaDB</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.base">MySQL 和 MariaDB</a><ul>
 <li><a class="reference internal" href="#dialect-mysql">Support for the MySQL / MariaDB database.</a></li>
 <li><a class="reference internal" href="#supported-versions-and-features">Supported Versions and Features</a><ul>
 <li><a class="reference internal" href="#mariadb-support">MariaDB Support</a></li>
@@ -411,7 +423,16 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#mysql-sql">MySQL SQL 构造</a><ul>
-<li><a class="reference internal" href="#id6">)</a><ul>
+<li><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">match</span></code></a><ul>
+<li><a class="reference internal" href="#sqlalchemy.dialects.mysql.match.in_boolean_mode"><code class="docutils literal notranslate"><span class="pre">match.in_boolean_mode()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.dialects.mysql.match.in_natural_language_mode"><code class="docutils literal notranslate"><span class="pre">match.in_natural_language_mode()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.dialects.mysql.match.inherit_cache"><code class="docutils literal notranslate"><span class="pre">match.inherit_cache</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.dialects.mysql.match.with_query_expansion"><code class="docutils literal notranslate"><span class="pre">match.with_query_expansion()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mysql">MySQL 数据类型</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.BIGINT"><code class="docutils literal notranslate"><span class="pre">BIGINT</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.BIGINT.__init__"><code class="docutils literal notranslate"><span class="pre">BIGINT.__init__()</span></code></a></li>
 </ul>
@@ -507,9 +528,7 @@
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.YEAR"><code class="docutils literal notranslate"><span class="pre">YEAR</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#mysql-dml-constructs">MySQL DML Constructs</a><ul>
+<li><a class="reference internal" href="#id2">MySQL 数据操纵语言构造</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.insert"><code class="docutils literal notranslate"><span class="pre">insert()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.Insert"><code class="docutils literal notranslate"><span class="pre">Insert</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mysql.Insert.inherit_cache"><code class="docutils literal notranslate"><span class="pre">Insert.inherit_cache</span></code></a></li>
@@ -519,20 +538,20 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.mysqldb">mysqlclient (MySQL-Python 的 fork)</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.mysqldb">mysqlclient (MySQL-Python 的分支)</a><ul>
 <li><a class="reference internal" href="#dialect-mysql-mysqldb-url">DBAPI</a></li>
 <li><a class="reference internal" href="#dialect-mysql-mysqldb-connect">Connecting</a></li>
 <li><a class="reference internal" href="#driver-status">Driver Status</a></li>
 <li><a class="reference internal" href="#mysqldb-unicode">Unicode</a></li>
 <li><a class="reference internal" href="#ssl-connections">SSL Connections</a></li>
 <li><a class="reference internal" href="#using-mysqldb-with-google-cloud-sql">Using MySQLdb with Google Cloud SQL</a></li>
-<li><a class="reference internal" href="#id8">Server Side Cursors</a></li>
+<li><a class="reference internal" href="#id4">Server Side Cursors</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.pymysql">PyMySQL</a><ul>
 <li><a class="reference internal" href="#dialect-mysql-pymysql-url">DBAPI</a></li>
 <li><a class="reference internal" href="#dialect-mysql-pymysql-connect">Connecting</a></li>
-<li><a class="reference internal" href="#id9">Unicode</a></li>
+<li><a class="reference internal" href="#id5">Unicode</a></li>
 <li><a class="reference internal" href="#pymysql-ssl">SSL Connections</a></li>
 <li><a class="reference internal" href="#mysql-python-compatibility">MySQL-Python Compatibility</a></li>
 </ul>
@@ -540,7 +559,7 @@
 <li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.mariadbconnector">MariaDB-Connector</a><ul>
 <li><a class="reference internal" href="#dialect-mysql-mariadbconnector-url">DBAPI</a></li>
 <li><a class="reference internal" href="#dialect-mysql-mariadbconnector-connect">Connecting</a></li>
-<li><a class="reference internal" href="#id11">Driver Status</a></li>
+<li><a class="reference internal" href="#id7">Driver Status</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.mysqlconnector">MySQL-Connector</a><ul>
@@ -563,6 +582,11 @@
 <li><a class="reference internal" href="#dialect-mysql-cymysql-connect">Connecting</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-sqlalchemy.dialects.mysql.pyodbc">pyodbc</a><ul>
+<li><a class="reference internal" href="#dialect-mysql-pyodbc-url">DBAPI</a></li>
+<li><a class="reference internal" href="#dialect-mysql-pyodbc-connect">Connecting</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -576,13 +600,13 @@
 
     <div id="docs-body" role="main" class="withsidebar dialects-mysql" >
         
-<section id="mysql-mariadb">
-<h1>MySQL 和 MariaDB<a class="headerlink" href="#mysql-mariadb" title="Permalink to this heading">¶</a></h1>
-<span class="target" id="module-sqlalchemy.dialects.mysql.base"></span><section id="dialect-mysql">
+<section id="module-sqlalchemy.dialects.mysql.base">
+<span id="mysql-mariadb"></span><span id="mysql-toplevel"></span><h1>MySQL 和 MariaDB<a class="headerlink" href="#module-sqlalchemy.dialects.mysql.base" title="Permalink to this heading">¶</a></h1>
+<section id="dialect-mysql">
 <p>Support for the MySQL / MariaDB database.</p>
 <p>The following table summarizes current support levels for database release versions.</p>
-<p><table class="docutils align-default" id="id14">
-<caption><span class="caption-text"><strong>Supported MySQL / MariaDB versions</strong></span><a class="headerlink" href="#id14" title="Permalink to this table">¶</a></caption>
+<p><table class="docutils align-default" id="id10">
+<caption><span class="caption-text"><strong>Supported MySQL / MariaDB versions</strong></span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Support type</p></th>
 <th class="head"><p>Versions</p></th>
@@ -610,6 +634,7 @@
 <li><p><a class="reference external" href="#module-sqlalchemy.dialects.mysql.asyncmy">asyncmy</a></p></li>
 <li><p><a class="reference external" href="#module-sqlalchemy.dialects.mysql.aiomysql">aiomysql</a></p></li>
 <li><p><a class="reference external" href="#module-sqlalchemy.dialects.mysql.cymysql">CyMySQL</a></p></li>
+<li><p><a class="reference external" href="#module-sqlalchemy.dialects.mysql.pyodbc">PyODBC</a></p></li>
 </ul>
 </p>
 </section>
@@ -777,8 +802,8 @@ to be used.</p>
 dialect-specific parameter <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.isolation_level</span></code>
 accepted
 by <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>, as well as the
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.isolation_level</span></code> argument as passed to
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code>.
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options.params.isolation_level" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.isolation_level</span></code></a> argument as passed to
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>.
 This feature works by issuing the
 command <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">SESSION</span> <span class="pre">TRANSACTION</span> <span class="pre">ISOLATION</span> <span class="pre">LEVEL</span> <span class="pre">&lt;level&gt;</span></code> for each new
 connection.  For the special AUTOCOMMIT isolation level, DBAPI-specific
@@ -809,12 +834,12 @@ MySQLdb, MySQL-Client, MySQL-Connector Python, and PyMySQL.   Using it,
 the database connection will return true for the value of
 <code class="docutils literal notranslate"><span class="pre">SELECT</span> <span class="pre">&#64;&#64;autocommit;</span></code>.</p>
 <p>There are also more options for isolation level configurations, such as
-“sub-engine” objects linked to a main <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> which each apply
+“sub-engine” objects linked to a main <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> which each apply
 different isolation level settings.  See the discussion at
-<a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置交易隔离级别，包括DBAPI Autocommit</span></a> for background.</p>
+<a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a> for background.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置交易隔离级别，包括DBAPI Autocommit</span></a></p>
+<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a></p>
 </div>
 </section>
 <section id="auto-increment-behavior">
@@ -849,7 +874,7 @@ mariadbconnector dialects and may also be available in others.   This makes use
 of either the “buffered=True/False” flag if available or by using a class such
 as <code class="docutils literal notranslate"><span class="pre">MySQLdb.cursors.SSCursor</span></code> or <code class="docutils literal notranslate"><span class="pre">pymysql.cursors.SSCursor</span></code> internally.</p>
 <p>Server side cursors are enabled on a per-statement basis by using the
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code> connection execution
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a> connection execution
 option:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">stream_results</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select * from table&quot;</span><span class="p">))</span></pre></div>
@@ -860,7 +885,7 @@ used with this option.</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>The dialect-level server_side_cursors flag is deprecated
 and will be removed in a future release.  Please use the
-<code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.stream_results</span></code> execution option for
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.params.stream_results" title="sqlalchemy.engine.Connection"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.stream_results</span></code></a> execution option for
 unbuffered cursor support.</p>
 </div>
 <div class="admonition seealso">
@@ -950,7 +975,7 @@ most efficient place for this additional keyword to be passed.</p>
 backticks and the other using quotes, e.g. <code class="docutils literal notranslate"><span class="pre">`some_identifier`</span></code>  vs.
 <code class="docutils literal notranslate"><span class="pre">&quot;some_identifier&quot;</span></code>.   All MySQL dialects detect which version
 is in use by checking the value of <a class="reference internal" href="#mysql-sql-mode"><span class="std std-ref">sql_mode</span></a> when a connection is first
-established with a particular <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>.
+established with a particular <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>.
 This quoting style comes
 into play when rendering table and column names as well as when reflecting
 existing database structures.  The detection is entirely automatic and
@@ -1117,7 +1142,7 @@ forms are accepted, including a single dictionary:</p>
 </div>
 <p>as well as a list of 2-tuples, which will automatically provide
 a parameter-ordered UPDATE statement in a manner similar to that described
-at <a class="reference internal" href="../tutorial/data_update.html#tutorial-parameter-ordered-updates"><span class="std std-ref">参数有序的更新</span></a>.  Unlike the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>
+at <a class="reference internal" href="../tutorial/data_update.html#tutorial-parameter-ordered-updates"><span class="std std-ref">参数和顺序更新</span></a>.  Unlike the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>
 object,
 no special flag is needed to specify the intent since the argument form is
 this context is unambiguous:</p>
@@ -1183,7 +1208,7 @@ flag, or whatever is equivalent for the target dialect, upon connection.
 This setting is currently hardcoded.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.rowcount</span></code></p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.rowcount</span></code></a></p>
 </div>
 </section>
 <section id="mysql-mariadb-specific-index-options">
@@ -1313,15 +1338,15 @@ these constraints.  However, MySQL / MariaDB does not have a unique constraint
 construct that is separate from a unique index; that is, the “UNIQUE”
 constraint on MySQL / MariaDB is equivalent to creating a “UNIQUE INDEX”.</p>
 <p>When reflecting these constructs, the
-<a class="reference internal" href="../core/reflection.html#sqlalchemy.engine.reflection.Inspector.get_indexes" title="sqlalchemy.engine.reflection.Inspector.get_indexes"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_indexes()</span></code></a>
-and the <a class="reference internal" href="../core/reflection.html#sqlalchemy.engine.reflection.Inspector.get_unique_constraints" title="sqlalchemy.engine.reflection.Inspector.get_unique_constraints"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_unique_constraints()</span></code></a>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_indexes()</span></code>
+and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_unique_constraints()</span></code>
 methods will <strong>both</strong>
 return an entry for a UNIQUE index in MySQL / MariaDB.  However, when performing
 full table reflection using <code class="docutils literal notranslate"><span class="pre">Table(...,</span> <span class="pre">autoload_with=engine)</span></code>,
 the <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.UniqueConstraint" title="sqlalchemy.schema.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a> construct is
 <strong>not</strong> part of the fully reflected <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> construct under any
 circumstances; this construct is always represented by a <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>
-with the <code class="docutils literal notranslate"><span class="pre">unique=True</span></code> setting present in the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.indexes" title="sqlalchemy.schema.Table.indexes"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.indexes</span></code></a>
+with the <code class="docutils literal notranslate"><span class="pre">unique=True</span></code> setting present in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.indexes</span></code>
 collection.</p>
 </section>
 <section id="timestamp-datetime-issues">
@@ -1465,47 +1490,179 @@ SQLAlchemy also emits NOT NULL for TIMESTAMP columns that do specify
 </section>
 <section id="mysql-sql">
 <h2>MySQL SQL 构造<a class="headerlink" href="#mysql-sql" title="Permalink to this heading">¶</a></h2>
-<p>和所有 SQLAlchemy 方言一样，所有 MySQL 可用的大写类型都可以从方言的顶层导入：</p>
-<p><a href="#id2"><span class="problematic" id="id3">``</span></a><a href="#id4"><span class="problematic" id="id5">`</span></a>Python
-from sqlalchemy.dialects.mysql import (</p>
-<blockquote>
-<div><p>BIGINT,
-BINARY,
-BIT,
-BLOB,
-BOOLEAN,
-CHAR,
-DATE,
-DATETIME,
-DECIMAL,
-DOUBLE,
-ENUM,
-FLOAT,
-INTEGER,
-LONGBLOB,
-LONGTEXT,
-MEDIUMBLOB,
-MEDIUMINT,
-MEDIUMTEXT,
-NCHAR,
-NUMERIC,
-NVARCHAR,
-REAL,
-SET,
-SMALLINT,
-TEXT,
-TIME,
-TIMESTAMP,
-TINYBLOB,
-TINYINT,
-TINYTEXT,
-VARBINARY,
-VARCHAR,
-YEAR,</p>
-</div></blockquote>
-<section id="id6">
-<h3>)<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
-<p>以下类型是特定于 MySQL 的，或具有 MySQL 特定的构造参数：</p>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><span class="sig-name descname">match</span></a></p></td>
+<td><p>Produce a <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">(X,</span> <span class="pre">Y)</span> <span class="pre">AGAINST</span> <span class="pre">('TEXT')</span></code> clause.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.dialects.mysql.match">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.dialects.mysql.</span></span><span class="sig-name descname"><span class="pre">match</span></span><a class="headerlink" href="#sqlalchemy.dialects.mysql.match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce a <code class="docutils literal notranslate"><span class="pre">MATCH</span> <span class="pre">(X,</span> <span class="pre">Y)</span> <span class="pre">AGAINST</span> <span class="pre">('TEXT')</span></code> clause.</p>
+<p>E.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">desc</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.dialects.mysql</span> <span class="kn">import</span> <span class="n">match</span>
+
+<span class="n">match_expr</span> <span class="o">=</span> <span class="n">match</span><span class="p">(</span>
+    <span class="n">users_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">firstname</span><span class="p">,</span>
+    <span class="n">users_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">lastname</span><span class="p">,</span>
+    <span class="n">against</span><span class="o">=</span><span class="s2">&quot;Firstname Lastname&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">users_table</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">match_expr</span><span class="o">.</span><span class="n">in_boolean_mode</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">desc</span><span class="p">(</span><span class="n">match_expr</span><span class="p">))</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>Would produce SQL resembling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SELECT</span> <span class="n">id</span><span class="p">,</span> <span class="n">firstname</span><span class="p">,</span> <span class="n">lastname</span>
+<span class="n">FROM</span> <span class="n">user</span>
+<span class="n">WHERE</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">firstname</span><span class="p">,</span> <span class="n">lastname</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(:</span><span class="n">param_1</span> <span class="n">IN</span> <span class="n">BOOLEAN</span> <span class="n">MODE</span><span class="p">)</span>
+<span class="n">ORDER</span> <span class="n">BY</span> <span class="n">MATCH</span><span class="p">(</span><span class="n">firstname</span><span class="p">,</span> <span class="n">lastname</span><span class="p">)</span> <span class="n">AGAINST</span> <span class="p">(:</span><span class="n">param_2</span><span class="p">)</span> <span class="n">DESC</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-func docutils literal notranslate"><span class="pre">match()</span></code></a> function is a standalone version of the
+<a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.match" title="sqlalchemy.sql.expression.ColumnElement.match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.match()</span></code></a> method available on all
+SQL expressions, as when <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.match" title="sqlalchemy.sql.expression.ColumnElement.match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.match()</span></code></a> is
+used, but allows to pass multiple columns</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.dialects.mysql.match.params.cols"></span><strong>cols</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.dialects.mysql.match.params.cols">¶</a> – column expressions to match against</p></li>
+<li><p><span class="target" id="sqlalchemy.dialects.mysql.match.params.against"></span><strong>against</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.dialects.mysql.match.params.against">¶</a> – expression to be compared towards</p></li>
+<li><p><span class="target" id="sqlalchemy.dialects.mysql.match.params.in_boolean_mode"></span><strong>in_boolean_mode</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.dialects.mysql.match.params.in_boolean_mode">¶</a> – boolean, set “boolean mode” to true</p></li>
+<li><p><span class="target" id="sqlalchemy.dialects.mysql.match.params.in_natural_language_mode"></span><strong>in_natural_language_mode</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.dialects.mysql.match.params.in_natural_language_mode">¶</a> – boolean , set “natural language” to true</p></li>
+<li><p><span class="target" id="sqlalchemy.dialects.mysql.match.params.with_query_expansion"></span><strong>with_query_expansion</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.dialects.mysql.match.params.with_query_expansion">¶</a> – boolean, set “query expansion” to true</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.4.19.</span></p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.match" title="sqlalchemy.sql.expression.ColumnElement.match"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.match()</span></code></a></p>
+</div>
+<div class="class-members docutils container">
+<p><strong>Members</strong></p>
+<p><a class="reference internal" href="#sqlalchemy.dialects.mysql.match.in_boolean_mode"><span class="sig-name descname">in_boolean_mode()</span></a>, <a class="reference internal" href="#sqlalchemy.dialects.mysql.match.in_natural_language_mode"><span class="sig-name descname">in_natural_language_mode()</span></a>, <a class="reference internal" href="#sqlalchemy.dialects.mysql.match.inherit_cache"><span class="sig-name descname">inherit_cache</span></a>, <a class="reference internal" href="#sqlalchemy.dialects.mysql.match.with_query_expansion"><span class="sig-name descname">with_query_expansion()</span></a></p>
+</div>
+<div class="class-bases docutils container">
+<p><strong>Class signature</strong></p>
+<p>class <a class="reference internal" href="#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.dialects.mysql.match</span></code></a> (<code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Generative</span></code>, <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.BinaryExpression" title="sqlalchemy.sql.expression.BinaryExpression"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.BinaryExpression</span></code></a>)</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.dialects.mysql.match.in_boolean_mode">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.mysql.match.</span></code></a><span class="sig-name descname"><span class="pre">in_boolean_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#sqlalchemy.dialects.mysql.match.in_boolean_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the “IN BOOLEAN MODE” modifier to the MATCH expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a new <a class="reference internal" href="#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-class docutils literal notranslate"><span class="pre">match</span></code></a> instance with modifications
+applied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.dialects.mysql.match.in_natural_language_mode">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.mysql.match.</span></code></a><span class="sig-name descname"><span class="pre">in_natural_language_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#sqlalchemy.dialects.mysql.match.in_natural_language_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the “IN NATURAL LANGUAGE MODE” modifier to the MATCH
+expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a new <a class="reference internal" href="#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-class docutils literal notranslate"><span class="pre">match</span></code></a> instance with modifications
+applied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.dialects.mysql.match.inherit_cache">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.mysql.match.</span></code></a><span class="sig-name descname"><span class="pre">inherit_cache</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#sqlalchemy.dialects.mysql.match.inherit_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicate if this <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.traversals.HasCacheKey" title="sqlalchemy.sql.traversals.HasCacheKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasCacheKey</span></code></a> instance should make use of the
+cache key generation scheme used by its immediate superclass.</p>
+<p>The attribute defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>, which indicates that a construct has
+not yet taken into account whether or not its appropriate for it to
+participate in caching; this is functionally equivalent to setting the
+value to <code class="docutils literal notranslate"><span class="pre">False</span></code>, except that a warning is also emitted.</p>
+<p>This flag can be set to <code class="docutils literal notranslate"><span class="pre">True</span></code> on a particular class, if the SQL that
+corresponds to the object does not change based on attributes which
+are local to this class, and not its superclass.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/compiler.html#compilerext-caching"><span class="std std-ref">Enabling Caching Support for Custom Constructs</span></a> - General guideslines for setting the
+<a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.traversals.HasCacheKey.inherit_cache" title="sqlalchemy.sql.traversals.HasCacheKey.inherit_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">HasCacheKey.inherit_cache</span></code></a> attribute for third-party or user
+defined SQL constructs.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.dialects.mysql.match.with_query_expansion">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.dialects.mysql.match"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.mysql.match.</span></code></a><span class="sig-name descname"><span class="pre">with_query_expansion</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="headerlink" href="#sqlalchemy.dialects.mysql.match.with_query_expansion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the “WITH QUERY EXPANSION” modifier to the MATCH expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a new <a class="reference internal" href="#sqlalchemy.dialects.mysql.match" title="sqlalchemy.dialects.mysql.match"><code class="xref py py-class docutils literal notranslate"><span class="pre">match</span></code></a> instance with modifications
+applied.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="mysql">
+<h2>MySQL 数据类型<a class="headerlink" href="#mysql" title="Permalink to this heading">¶</a></h2>
+<p>和所有 SQLAlchemy 方言一样，所有已经在 MySQL 中被识别为有效类型的大写类型都可以从顶级方言进行导入：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.mysql</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BIGINT</span><span class="p">,</span>
+    <span class="n">BINARY</span><span class="p">,</span>
+    <span class="n">BIT</span><span class="p">,</span>
+    <span class="n">BLOB</span><span class="p">,</span>
+    <span class="n">BOOLEAN</span><span class="p">,</span>
+    <span class="n">CHAR</span><span class="p">,</span>
+    <span class="n">DATE</span><span class="p">,</span>
+    <span class="n">DATETIME</span><span class="p">,</span>
+    <span class="n">DECIMAL</span><span class="p">,</span>
+    <span class="n">DECIMAL</span><span class="p">,</span>
+    <span class="n">DOUBLE</span><span class="p">,</span>
+    <span class="n">ENUM</span><span class="p">,</span>
+    <span class="n">FLOAT</span><span class="p">,</span>
+    <span class="n">INTEGER</span><span class="p">,</span>
+    <span class="n">LONGBLOB</span><span class="p">,</span>
+    <span class="n">LONGTEXT</span><span class="p">,</span>
+    <span class="n">MEDIUMBLOB</span><span class="p">,</span>
+    <span class="n">MEDIUMINT</span><span class="p">,</span>
+    <span class="n">MEDIUMTEXT</span><span class="p">,</span>
+    <span class="n">NCHAR</span><span class="p">,</span>
+    <span class="n">NUMERIC</span><span class="p">,</span>
+    <span class="n">NVARCHAR</span><span class="p">,</span>
+    <span class="n">REAL</span><span class="p">,</span>
+    <span class="n">SET</span><span class="p">,</span>
+    <span class="n">SMALLINT</span><span class="p">,</span>
+    <span class="n">TEXT</span><span class="p">,</span>
+    <span class="n">TIME</span><span class="p">,</span>
+    <span class="n">TIMESTAMP</span><span class="p">,</span>
+    <span class="n">TINYBLOB</span><span class="p">,</span>
+    <span class="n">TINYINT</span><span class="p">,</span>
+    <span class="n">TINYTEXT</span><span class="p">,</span>
+    <span class="n">VARBINARY</span><span class="p">,</span>
+    <span class="n">VARCHAR</span><span class="p">,</span>
+    <span class="n">YEAR</span><span class="p">,</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>特定于 MySQL 的类型或具有 MySQL 特定构造参数的类型如下：</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>当使用 :noindex: 时，表示该类型未在方言模块中重新定义，只是从 sqltypes 导入。这避免了 sphinx 构建中的警告。</p>
+</div>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -1720,7 +1877,7 @@ have an explicit name in order to support schema-management
 concerns.  This can be established either by setting the
 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Boolean.params.name" title="sqlalchemy.types.Boolean"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Boolean.name</span></code></a> parameter or by setting up an
 appropriate naming convention; see
-<span class="xref std std-ref">constraint_naming_conventions</span> for background.</p>
+<a class="reference internal" href="../core/constraints.html#constraint-naming-conventions"><span class="std std-ref">配置约束命名约定</span></a> for background.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4: </span>- this flag now defaults to False, meaning
@@ -2654,9 +2811,8 @@ only the collation of character data.</p></li>
 </dd></dl>
 
 </section>
-</section>
-<section id="mysql-dml-constructs">
-<h2>MySQL DML Constructs<a class="headerlink" href="#mysql-dml-constructs" title="Permalink to this heading">¶</a></h2>
+<section id="id2">
+<h2>MySQL 数据操纵语言构造<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -2743,8 +2899,8 @@ so as not to conflict with the existing
 <p class="admonition-title">Tip</p>
 <p>The <a class="reference internal" href="#sqlalchemy.dialects.mysql.Insert.inserted" title="sqlalchemy.dialects.mysql.Insert.inserted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Insert.inserted</span></code></a> attribute is an instance
 of <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnCollection" title="sqlalchemy.sql.expression.ColumnCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnCollection</span></code></a>, which provides an
-interface the same as that of the <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.c" title="sqlalchemy.schema.Table.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.c</span></code></a>
-collection described at <a class="reference internal" href="../core/metadata.html#metadata-tables-and-columns"><span class="std std-ref">访问表格和列</span></a>.
+interface the same as that of the <code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.c</span></code>
+collection described at <a class="reference internal" href="../core/metadata.html#metadata-tables-and-columns"><span class="std std-ref">访问表和列</span></a>.
 With this collection, ordinary names are accessible like attributes
 (e.g. <code class="docutils literal notranslate"><span class="pre">stmt.inserted.some_column</span></code>), but special names and
 dictionary method names should be accessed using indexed access,
@@ -2791,7 +2947,7 @@ form:</p>
 in the UPDATE clause should be ordered as sent, in a manner similar
 to that described for the <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>
 construct overall
-in <a class="reference internal" href="../tutorial/data_update.html#tutorial-parameter-ordered-updates"><span class="std std-ref">参数有序的更新</span></a>:</p>
+in <a class="reference internal" href="../tutorial/data_update.html#tutorial-parameter-ordered-updates"><span class="std std-ref">参数和顺序更新</span></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">insert</span><span class="p">()</span><span class="o">.</span><span class="n">on_duplicate_key_update</span><span class="p">(</span>
     <span class="p">[(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;some name&quot;</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="s2">&quot;some value&quot;</span><span class="p">)])</span></pre></div>
 </div>
@@ -2816,7 +2972,7 @@ ordering.</p>
 
 </section>
 <section id="module-sqlalchemy.dialects.mysql.mysqldb">
-<span id="mysqlclient-mysql-python-fork"></span><h2>mysqlclient (MySQL-Python 的 fork)<a class="headerlink" href="#module-sqlalchemy.dialects.mysql.mysqldb" title="Permalink to this heading">¶</a></h2>
+<span id="mysqlclient-mysql-python"></span><h2>mysqlclient (MySQL-Python 的分支)<a class="headerlink" href="#module-sqlalchemy.dialects.mysql.mysqldb" title="Permalink to this heading">¶</a></h2>
 <p>Support for the MySQL / MariaDB database via the mysqlclient (maintained fork of MySQL-Python) driver.</p>
 <section id="dialect-mysql-mysqldb-url">
 <h3>DBAPI<a class="headerlink" href="#dialect-mysql-mysqldb-url" title="Permalink to this heading">¶</a></h3>
@@ -2837,7 +2993,7 @@ that is no longer maintained.  <a class="reference external" href="https://githu
 and is very stable.</p>
 </section>
 <section id="mysqldb-unicode">
-<span id="id7"></span><h3>Unicode<a class="headerlink" href="#mysqldb-unicode" title="Permalink to this heading">¶</a></h3>
+<span id="id3"></span><h3>Unicode<a class="headerlink" href="#mysqldb-unicode" title="Permalink to this heading">¶</a></h3>
 <p>Please see <a class="reference internal" href="#mysql-unicode"><span class="std std-ref">Unicode</span></a> for current recommendations on unicode
 handling.</p>
 </section>
@@ -2880,8 +3036,8 @@ using a URL like the following:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">+</span><span class="n">mysqldb</span><span class="p">:</span><span class="o">//</span><span class="n">root</span><span class="o">@/&lt;</span><span class="n">dbname</span><span class="o">&gt;</span><span class="err">?</span><span class="n">unix_socket</span><span class="o">=/</span><span class="n">cloudsql</span><span class="o">/&lt;</span><span class="n">projectid</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">instancename</span><span class="o">&gt;</span></pre></div>
 </div>
 </section>
-<section id="id8">
-<h3>Server Side Cursors<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<section id="id4">
+<h3>Server Side Cursors<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>The mysqldb dialect supports server-side cursors. See <a class="reference internal" href="#mysql-ss-cursors"><span class="std std-ref">Server Side Cursors</span></a>.</p>
 </section>
 </section>
@@ -2899,13 +3055,13 @@ using a URL like the following:</p>
 </div>
 </p>
 </section>
-<section id="id9">
-<h3>Unicode<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<section id="id5">
+<h3>Unicode<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <p>Please see <a class="reference internal" href="#mysql-unicode"><span class="std std-ref">Unicode</span></a> for current recommendations on unicode
 handling.</p>
 </section>
 <section id="pymysql-ssl">
-<span id="id10"></span><h3>SSL Connections<a class="headerlink" href="#pymysql-ssl" title="Permalink to this heading">¶</a></h3>
+<span id="id6"></span><h3>SSL Connections<a class="headerlink" href="#pymysql-ssl" title="Permalink to this heading">¶</a></h3>
 <p>The PyMySQL DBAPI accepts the same SSL arguments as that of MySQLdb,
 described at <a class="reference internal" href="#mysqldb-ssl"><span class="std std-ref">SSL Connections</span></a>.   See that section for additional examples.</p>
 <p>If the server uses an automatically-generated certificate that is self-signed
@@ -2941,8 +3097,8 @@ to the pymysql driver as well.</p>
 </div>
 </p>
 </section>
-<section id="id11">
-<h3>Driver Status<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<section id="id7">
+<h3>Driver Status<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
 <p>MariaDB Connector/Python enables Python programs to access MariaDB and MySQL
 databases using an API which is compliant with the Python DB API 2.0 (PEP-249).
 It is written in C and uses MariaDB Connector/C client library for client server
@@ -2974,7 +3130,7 @@ The recommended MySQL dialects are mysqlclient and PyMySQL.</p>
 </div>
 </section>
 <section id="asyncmy">
-<span id="id12"></span><h2>asyncmy<a class="headerlink" href="#asyncmy" title="Permalink to this heading">¶</a></h2>
+<span id="id8"></span><h2>asyncmy<a class="headerlink" href="#asyncmy" title="Permalink to this heading">¶</a></h2>
 <span class="target" id="module-sqlalchemy.dialects.mysql.asyncmy"></span><p>Support for the MySQL / MariaDB database via the asyncmy driver.</p>
 <section id="dialect-mysql-asyncmy-url">
 <h3>DBAPI<a class="headerlink" href="#dialect-mysql-asyncmy-url" title="Permalink to this heading">¶</a></h3>
@@ -2997,7 +3153,7 @@ extension package.</p>
 </div>
 </section>
 <section id="aiomysql">
-<span id="id13"></span><h2>aiomysql<a class="headerlink" href="#aiomysql" title="Permalink to this heading">¶</a></h2>
+<span id="id9"></span><h2>aiomysql<a class="headerlink" href="#aiomysql" title="Permalink to this heading">¶</a></h2>
 <span class="target" id="module-sqlalchemy.dialects.mysql.aiomysql"></span><p>Support for the MySQL / MariaDB database via the aiomysql driver.</p>
 <section id="dialect-mysql-aiomysql-url">
 <h3>DBAPI<a class="headerlink" href="#dialect-mysql-aiomysql-url" title="Permalink to this heading">¶</a></h3>
@@ -3041,6 +3197,46 @@ integration</strong> and may have unresolved issues.  The recommended MySQL
 dialects are mysqlclient and PyMySQL.</p>
 </div>
 </section>
+<section id="module-sqlalchemy.dialects.mysql.pyodbc">
+<span id="pyodbc"></span><h2>pyodbc<a class="headerlink" href="#module-sqlalchemy.dialects.mysql.pyodbc" title="Permalink to this heading">¶</a></h2>
+<p>Support for the MySQL / MariaDB database via the PyODBC driver.</p>
+<section id="dialect-mysql-pyodbc-url">
+<h3>DBAPI<a class="headerlink" href="#dialect-mysql-pyodbc-url" title="Permalink to this heading">¶</a></h3>
+<p>Documentation and download information (if applicable) for PyODBC is available at:
+<a class="reference external" href="https://pypi.org/project/pyodbc/">https://pypi.org/project/pyodbc/</a></p>
+</section>
+<section id="dialect-mysql-pyodbc-connect">
+<h3>Connecting<a class="headerlink" href="#dialect-mysql-pyodbc-connect" title="Permalink to this heading">¶</a></h3>
+<p>Connect String:<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">+</span><span class="n">pyodbc</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">username</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">password</span><span class="o">&gt;@&lt;</span><span class="n">dsnname</span><span class="o">&gt;</span></pre></div>
+</div>
+</p>
+</section>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The PyODBC for MySQL dialect is <strong>not tested as part of
+SQLAlchemy’s continuous integration</strong>.
+The recommended MySQL dialects are mysqlclient and PyMySQL.
+However, if you want to use the mysql+pyodbc dialect and require
+full support for <code class="docutils literal notranslate"><span class="pre">utf8mb4</span></code> characters (including supplementary
+characters like emoji) be sure to use a current release of
+MySQL Connector/ODBC and specify the “ANSI” (<strong>not</strong> “Unicode”)
+version of the driver in your DSN or connection string.</p>
+</div>
+<p>Pass through exact pyodbc connection string:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="n">connection_string</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="s1">&#39;DRIVER=MySQL ODBC 8.0 ANSI Driver;&#39;</span>
+    <span class="s1">&#39;SERVER=localhost;&#39;</span>
+    <span class="s1">&#39;PORT=3307;&#39;</span>
+    <span class="s1">&#39;DATABASE=mydb;&#39;</span>
+    <span class="s1">&#39;UID=root;&#39;</span>
+    <span class="s1">&#39;PWD=(whatever);&#39;</span>
+    <span class="s1">&#39;charset=utf8mb4;&#39;</span>
+<span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="n">connection_string</span><span class="p">)</span>
+<span class="n">connection_uri</span> <span class="o">=</span> <span class="s2">&quot;mysql+pyodbc:///?odbc_connect=</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">params</span></pre></div>
+</div>
+</section>
 </section>
 
     </div>
@@ -3061,7 +3257,7 @@ dialects are mysqlclient and PyMySQL.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:05
+    Documentation last generated: 2023/8/18 18:21:05
 
     </div>
 </div>

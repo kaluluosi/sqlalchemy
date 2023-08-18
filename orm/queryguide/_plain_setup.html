@@ -12,7 +12,7 @@
         <title>
             
     
-    ORM查询指南：SELECT的设置
+    ORM 查询指南的设置：SELECT
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -124,7 +124,7 @@
 <li><span class="link-container"><a class="reference external" href="../../intro.html">概述</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../../tutorial/index.html">SQLAlchemy统一教程</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../index.html">SQLAlchemy ORM</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../../core/index.html">SQLAlchemy核心模块</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../../core/index.html">SQLAlchemy 核心</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../../dialects/index.html">方言</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../../faq/index.html">常见问题解答</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../../errors.html">错误消息</a></span></li>
@@ -166,7 +166,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#orm-select">ORM查询指南：SELECT的设置</a></li>
+<li><a class="reference internal" href="#orm-select">ORM 查询指南的设置：SELECT</a></li>
 </ul>
 
 
@@ -179,8 +179,8 @@
     <div id="docs-body" role="main" class="withsidebar orm-queryguide-_plain_setup" >
         
 <section id="orm-select">
-<h1>ORM查询指南：SELECT的设置<a class="headerlink" href="#orm-select" title="Permalink to this heading">¶</a></h1>
-<p>本页展示了由 <span class="xref std std-ref">queryguide_toplevel</span> 中的 <a class="reference internal" href="select.html"><span class="doc">用ORM Mapper类编写SELECT语句</span></a> 文档使用的映射和fixture数据。</p>
+<h1>ORM 查询指南的设置：SELECT<a class="headerlink" href="#orm-select" title="Permalink to this heading">¶</a></h1>
+<p>本页说明了   <a class="reference internal" href="index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的  <a class="reference internal" href="select.html"><span class="doc">使用ORM映射类编写SELECT语句</span></a>  文档使用的映射和样例数据。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="gp">&gt;&gt;&gt;</span>
@@ -193,6 +193,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+<span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
@@ -240,7 +241,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="p">[</span>
 <span class="gp">... </span>        <span class="n">User</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;spongebob&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;海绵宝宝&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">addresses</span><span class="o">=</span><span class="p">[</span><span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;spongebob@sqlalchemy.org&quot;</span><span class="p">)],</span>
 <span class="gp">... </span>        <span class="p">),</span>
@@ -253,16 +254,16 @@
 <span class="gp">... </span>            <span class="p">],</span>
 <span class="gp">... </span>        <span class="p">),</span>
 <span class="gp">... </span>        <span class="n">User</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;patrick&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;派大星&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Patrick Star&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">addresses</span><span class="o">=</span><span class="p">[</span><span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;pat999@aol.com&quot;</span><span class="p">)],</span>
 <span class="gp">... </span>        <span class="p">),</span>
 <span class="gp">... </span>        <span class="n">User</span><span class="p">(</span>
-<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;squidward&quot;</span><span class="p">,</span>
+<span class="gp">... </span>            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;章鱼哥&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">,</span>
 <span class="gp">... </span>            <span class="n">addresses</span><span class="o">=</span><span class="p">[</span><span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;stentcl@sqlalchemy.org&quot;</span><span class="p">)],</span>
 <span class="gp">... </span>        <span class="p">),</span>
-<span class="gp">... </span>        <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">),</span>
+<span class="gp">... </span>        <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Mr.Crabs&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">),</span>
 <span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
@@ -286,7 +287,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

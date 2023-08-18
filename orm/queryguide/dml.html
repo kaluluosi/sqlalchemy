@@ -12,7 +12,7 @@
         <title>
             
     
-    支持 ORM 的 INSERT、UPDATE 和 DELETE 语句
+    ORM-启用的INSERT、UPDATE和DELETE语句
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../../search.html" />
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
-        <link rel="up" title="ORM查询指南" href="index.html" />
-        <link rel="next" title="列载入选项" href="columns.html" />
-        <link rel="prev" title="编写继承映射的SELECT语句" href="inheritance.html" />
+        <link rel="up" title="ORM 查询指南" href="index.html" />
+        <link rel="next" title="列加载选项" href="columns.html" />
+        <link rel="prev" title="继承映射中编写SELECT语句" href="inheritance.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,35 +127,39 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="index.html">ORM查询指南</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="select.html">用ORM Mapper类编写SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="inheritance.html">编写继承映射的SELECT语句</a></span></li>
-<li class="selected"><span class="link-container"><strong>支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#orm-insert">ORM 批量 INSERT 语句</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#returning">使用 RETURNING 获取新对象</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#orm-queryguide-bulk-insert-returning-ordered">将返回记录与输入数据顺序相关联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="index.html">ORM 查询指南</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="select.html">使用ORM映射类编写SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">继承映射中编写SELECT语句</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM-启用的INSERT、UPDATE和DELETE语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#orminsert">ORM大容量INSERT语句</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#returning">将 RETURNING 记录与输入数据顺序相关联</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#orm-queryguide-insert-heterogeneous-params">使用不同类型的参数字典</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insert">使用连接表继承的批量INSERT</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlorm">使用SQL表达式的ORM批量插入</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#orm-queryguide-insert-heterogeneous-params">使用异构参数字典</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#joined-table-inheritance-insert">Joined Table Inheritance 批量 INSERT</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#sql-orm">使用 SQL 表达式进行 ORM 批量插入</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#session">旧版 Session 批量插入方法</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#orm-upsert">ORM “upsert” 语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-queryguide-insert-values">使用每行SQL表达式的ORM批量插入</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#legacy-session-insert">Legacy Session 批量INSERT方法</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-upsert-upsert">ORM “upsert” 语句 （UPSERT语句）</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#orm">ORM自定义更新和删除条件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#upsertreturning">在upsert语句中使用RETURNING</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="columns.html">列载入选项</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationships.html">关系属性加载技术</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api.html">用于查询的ORM API特性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="query.html">旧版查询API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#ormupdate">ORM基于主键的批量UPDATE</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#whereorm-update-and-delete">带有自定义WHERE条件的ORM UPDATE and DELETE</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="columns.html">列加载选项</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系加载技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api.html">查询时使用的ORM API功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="query.html">Legacy查询API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -187,13 +191,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="inheritance.html" title="previous chapter">编写继承映射的SELECT语句</a></li>
+                <a href="inheritance.html" title="previous chapter">继承映射中编写SELECT语句</a></li>
                 <li><b>Next:</b>
-                <a href="columns.html" title="next chapter">列载入选项</a></li>
+                <a href="columns.html" title="next chapter">列加载选项</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="index.html" title="ORM查询指南">ORM查询指南</a></li>
+                    <ul><li><a href="index.html" title="ORM 查询指南">ORM 查询指南</a></li>
                 </ul>
                 </ul>
 
@@ -201,20 +205,24 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#orm-insertupdate-delete">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a><ul>
-<li><a class="reference internal" href="#orm-insert">ORM 批量 INSERT 语句</a><ul>
-<li><a class="reference internal" href="#returning">使用 RETURNING 获取新对象</a><ul>
-<li><a class="reference internal" href="#orm-queryguide-bulk-insert-returning-ordered">将返回记录与输入数据顺序相关联</a></li>
+<li><a class="reference internal" href="#orm-insertupdatedelete">ORM-启用的INSERT、UPDATE和DELETE语句</a><ul>
+<li><a class="reference internal" href="#orminsert">ORM大容量INSERT语句</a><ul>
+<li><a class="reference internal" href="#returning">将 RETURNING 记录与输入数据顺序相关联</a><ul>
+<li><a class="reference internal" href="#orm-queryguide-insert-heterogeneous-params">使用不同类型的参数字典</a></li>
+<li><a class="reference internal" href="#insert">使用连接表继承的批量INSERT</a></li>
+<li><a class="reference internal" href="#sqlorm">使用SQL表达式的ORM批量插入</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#orm-queryguide-insert-heterogeneous-params">使用异构参数字典</a></li>
-<li><a class="reference internal" href="#joined-table-inheritance-insert">Joined Table Inheritance 批量 INSERT</a></li>
-<li><a class="reference internal" href="#sql-orm">使用 SQL 表达式进行 ORM 批量插入</a></li>
-<li><a class="reference internal" href="#session">旧版 Session 批量插入方法</a></li>
-<li><a class="reference internal" href="#orm-upsert">ORM “upsert” 语句</a></li>
+<li><a class="reference internal" href="#orm-queryguide-insert-values">使用每行SQL表达式的ORM批量插入</a><ul>
+<li><a class="reference internal" href="#legacy-session-insert">Legacy Session 批量INSERT方法</a></li>
+<li><a class="reference internal" href="#orm-upsert-upsert">ORM “upsert” 语句 （UPSERT语句）</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#orm">ORM自定义更新和删除条件</a></li>
+<li><a class="reference internal" href="#upsertreturning">在upsert语句中使用RETURNING</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ormupdate">ORM基于主键的批量UPDATE</a></li>
+<li><a class="reference internal" href="#whereorm-update-and-delete">带有自定义WHERE条件的ORM UPDATE and DELETE</a></li>
 </ul>
 </li>
 </ul>
@@ -228,93 +236,103 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-queryguide-dml" >
         
-<section id="orm-insertupdate-delete">
-<span id="orm-expression-update-delete"></span><h1>支持 ORM 的 INSERT、UPDATE 和 DELETE 语句<a class="headerlink" href="#orm-insertupdate-delete" title="Permalink to this heading">¶</a></h1>
-<div class="admonition-about-this-document admonition">
-<p class="admonition-title">About this Document （关于本文件）</p>
-<p>本节使用 ORM 映射，可在 <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 部分阐述的基础上处理 ORM-Enabled
-<a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>, <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 和 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> 对象。
-本节同时使用了继承映射在 <span class="xref std std-ref">inheritance_toplevel</span> 部分展示。</p>
-<p>请查看本页相关的 <a class="reference internal" href="_dml_setup.html"><span class="doc">ORM 设置</span></a>。</p>
+<aside class="topic">
+<p class="topic-title">ORM 查询指南</p>
+<p>本页面是  <a class="reference internal" href="index.html"><span class="doc">ORM 查询指南</span></a>  的一部分。</p>
+<p>上一页: <span class="xref std std-doc">继承</span>   |   下一页: <span class="xref std std-doc">列</span></p>
+</aside>
+<section id="orm-insertupdatedelete">
+<span id="orm-expression-update-delete"></span><h1>ORM-启用的INSERT、UPDATE和DELETE语句<a class="headerlink" href="#orm-insertupdatedelete" title="Permalink to this heading">¶</a></h1>
+<div class="admonition- admonition">
+<p class="admonition-title">关于本文档</p>
+<blockquote>
+<div><p>本节使用ORM映射，这些映射首先在   <span class="xref std std-ref">统一教程</span>  中进行了说明，
+在   <span class="xref std std-ref">教程_声明映射类</span>  中展示，以及顶级继承中展示的继承映射。</p>
+<blockquote>
+<div><p><a class="reference internal" href="_dml_setup.html"><span class="doc">查看此页的ORM设置</span></a> 。</p>
+</div></blockquote>
+</div></blockquote>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法不仅处理ORM启用的 :class:<a href="#id1"><span class="problematic" id="id2">`</span></a>_sql.Select`对象，</p>
 </div>
-<p>在使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法处理 ORM-enabled <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象的基础上，
-该方法可以处理 ORM-enabled <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>, <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 和 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> 对象，从而以各种方式同时插入、更新或删除多个数据库行。
-此外，对于 ORM-enabled “upserts”，即自动使用 UPDATE 为已存在的数据行插入的 INSERT 语句，不同的 SQL 方言提供了不同的支持。</p>
-<p>下面的表总结了本文所讨论的各种调用形式：</p>
-<section id="orm-insert">
-<span id="orm-queryguide-bulk-insert"></span><h2>ORM 批量 INSERT 语句<a class="headerlink" href="#orm-insert" title="Permalink to this heading">¶</a></h2>
-<p>可以通过 ORM 类以 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 构造，再将其传递给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法来设置 ORM 批量 INSERT，通过在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execute.params</span></code> 参数中传递一个参数字典列表来触发。
-除了 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 之外，还会优化此操作以尽可能的快速处理多行：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
+<p>还可以支持ORM启用的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> ,   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  和   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  对象，
+以多种不同的方式处理，用于一次性插入、更新或删除多行数据库。
+还有特定于方言的支持ORM启用的”upsert”，它是INSERT语句，可以自动使用UPDATE来处理已经存在的行。</p>
+<p>以下表格总结了本文档中讨论的调用形式：</p>
+<section id="orminsert">
+<span id="orm-queryguide-bulk-insert"></span><h2>ORM大容量INSERT语句<a class="headerlink" href="#orminsert" title="Permalink to this heading">¶</a></h2>
+<p>一个    <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  构造可以采用ORM类进行构造，并传递给   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法。
+发送到   <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execute.params</span></code>  参数的参数字典列表，与   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  对象本身分开，
+将调用 <strong>大容量INSERT模式</strong>，这实际上意味着该操作将尽可能地针对多行进行优化:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">User</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;patrick&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Patrick Star&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">],</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">{execsql}INSERT INTO user_account (name, fullname) VALUES (?, ?)</span>
-<span class="go">[...] [(&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;), (&#39;sandy&#39;, &#39;Sandy Cheeks&#39;), (&#39;patrick&#39;, &#39;Patrick Star&#39;),</span>
-<span class="go">(&#39;squidward&#39;, &#39;Squidward Tentacles&#39;), (&#39;ehkrabs&#39;, &#39;Eugene H. Krabs&#39;)]</span>
-<span class="go">{stop}&lt;...&gt;</span></pre></div>
+<span class="go">...     insert(User),</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;name&quot;: &quot;spongebob&quot;, &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;sandy&quot;, &quot;fullname&quot;: &quot;Sandy Cheeks&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;patrick&quot;, &quot;fullname&quot;: &quot;Patrick Star&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;squidward&quot;, &quot;fullname&quot;: &quot;Squidward Tentacles&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;ehkrabs&quot;, &quot;fullname&quot;: &quot;Eugene H. Krabs&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">),</span>
+<span class="p">(</span><span class="s1">&#39;squidward&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Squidward Tentacles&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">)]</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
 </div>
-<p>参数字典包含键/值对，这些对应于与映射的 <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 声明相匹配的 ORM 映射属性，以及与 <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">composite</span></a> 声明相一致的属性。如果这两个名称不同，
-则键应与 ORM 映射属性名匹配。</p>
+<p>参数字典包含键值对，这些键值对可能对应于映射到   <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  或   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  声明的映射ORM属性，
+以及   <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">复合</span></a>  声明的映射属性。如果这两个名称恰好不同，键应与**ORM映射属性名称**匹配，而不是实际的数据库列名称。</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span>将 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造传递到 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法现在会调用“批量插入”功能，该功能使用的是与旧版 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_insert_mappings()</span></code> 方法相同的功能。这是与 1.x 系列相比的行为更改，1.x 系列会将 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 解释为基于 Core 的方式，使用列名称作为取值键；现在可以接受 ORM 属性键。可以为 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execution_options</span></code> 参数传递执行选项 <cite>{“dml_strategy”: “raw”}</cite> 以提供 Core 级别的功能。</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span>将   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造传递到  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法中现在会调用“bulk insert”，
+使用与传统的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_insert_mappings()</span></code>  方法相同的功能。这是与 1.x系列相比的行为更改，其中基于列名的Core-centric方式对   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  进行解释；现在接受ORM属性键。Core样式功能可通过将执行选项 <code class="docutils literal notranslate"><span class="pre">{&quot;dml_strategy&quot;:</span> <span class="pre">&quot;raw&quot;}</span></code> 传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execution_options</span></code>  参数来使用。使用 RETURNING 获取新对象</p>
 </div>
-<section id="returning">
-<span id="orm-queryguide-bulk-insert-returning"></span><h3>使用 RETURNING 获取新对象<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h3>
-<p>对于支持 INSERT..RETURNING 语法的选定后端，ORM 批量插入功能支持还可对 SELECT 子句中返回的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象执行相同操作，并返回每个列以及完全构建的 ORM 对象。该操作要求所使用的后端支持 SQL RETURNING 语法以及带有 RETURNING 的 <a class="reference internal" href="../../glossary.html#term-executemany"><span class="xref std std-term">executemany</span></a> 支持；除了 MySQL（MariaDB 包括）之外的所有包括在内的 <a class="reference internal" href="../../dialects/index.html#included-dialects"><span class="std std-ref">SQLAlchemy-included</span></a> 后端都支持此功能。</p>
-<p>例如，可以运行与之前相同的语句，使用 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a> 方法（将完整的“User”实体传递为返回值）：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;patrick&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Patrick Star&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">],</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">{execsql}INSERT INTO user_account (name, fullname)</span>
-<span class="go">VALUES (?, ?), (?, ?), (?, ?), (?, ?), (?, ?)</span>
-<span class="go">RETURNING id, name, fullname, species</span>
-<span class="go">[...] (&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;, &#39;sandy&#39;, &#39;Sandy Cheeks&#39;,</span>
-<span class="go">&#39;patrick&#39;, &#39;Patrick Star&#39;, &#39;squidward&#39;, &#39;Squidward Tentacles&#39;,</span>
-<span class="go">&#39;ehkrabs&#39;, &#39;Eugene H. Krabs&#39;)</span>
-<span class="go">{stop}&gt;&gt;&gt; print(users.all())</span>
+<hr class="docutils" />
+<p>批量 ORM 插入功能支持选定后端的 INSERT..RETURNING，并且能够返回   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象，可以返回独立的列以及与新生成的记录相对应的完整的 ORM 对象。 INSERT..RETURNING 需要使用支持 SQL RETURNING 语法以及支持 RETURNING 和  <span class="xref std std-term">executemany</span>  的后端。此功能在所有   <a class="reference internal" href="../../dialects/index.html#included-dialects"><span class="std std-ref">SQLAlchemy-included</span></a>  后端中都可用，不包括 MySQL（MariaDB 包括在内）。</p>
+<p>例如，我们可以运行与以前相同的语句，添加使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>  方法，传递完整的“User”实体作为我们想要返回的内容。  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code>  用于允许迭代“User”对象</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+<span class="go">...     insert(User).returning(User),</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;name&quot;: &quot;spongebob&quot;, &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;sandy&quot;, &quot;fullname&quot;: &quot;Sandy Cheeks&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;patrick&quot;, &quot;fullname&quot;: &quot;Patrick Star&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;squidward&quot;, &quot;fullname&quot;: &quot;Squidward Tentacles&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;ehkrabs&quot;, &quot;fullname&quot;: &quot;Eugene H. Krabs&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">,</span>
+<span class="s1">&#39;patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;squidward&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Squidward Tentacles&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
 <span class="go">[User(name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;),</span>
 <span class="go"> User(name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;),</span>
 <span class="go"> User(name=&#39;patrick&#39;, fullname=&#39;Patrick Star&#39;),</span>
 <span class="go"> User(name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;),</span>
 <span class="go"> User(name=&#39;ehkrabs&#39;, fullname=&#39;Eugene H. Krabs&#39;)]</span></pre></div>
 </div>
-<p>在上面的示例中，生成的 SQL 使用了 <span class="xref std std-ref">insertmanyvalues</span> 选项使用了将单个参数字典内嵌成单个 INSERT 语句的形式，以便可以使用 RETURNING。</p>
+<p>在上面的例子中，渲染的 SQL 采用了 SQLite 后端要求的形式，即将单个参数字典内联到单个 INSERT 语句中，以便可以使用 RETURNING。</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span>ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 现在在 ORM 上下文中解释 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>, <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 甚至 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> 构造中的 RETURNING 子句，在这些构造中可以混合列表达式和 ORM 映射实体，这些将通过 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a> 方法传递返回，并包括使用 ORM 结果传递时产生的 ORM mapView 映射的实体。此外还提供了对 ORM loader 选项（例如 <a class="reference internal" href="columns.html#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>）的有限支持。</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span>ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  现在在 ORM 上下文中解释   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 、  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  甚至包括   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  结构中的 RETURNING 子句，这意味着可以将列表达式和 ORM 映射实体混合传递给  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>  方法，然后可以按照类似于   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  的方式传递结果，包括映射实体作为 ORM 映射对象的传递方式。 还有 ORM 加载器选项的有限支持，例如   <a class="reference internal" href="columns.html#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 。</p>
 </div>
-<section id="orm-queryguide-bulk-insert-returning-ordered">
-<span id="id1"></span><h4>将返回记录与输入数据顺序相关联<a class="headerlink" href="#orm-queryguide-bulk-insert-returning-ordered" title="Permalink to this heading">¶</a></h4>
-<p>使用带有 RETURNING 的批量 INSERT 时，重要的是要注意，大多数数据库后端并没有正式保证按返回的顺序返回记录，包括没有保证其顺序与输入记录相对应的保证。对于需要确保 RETURNING 记录与输入数据相关的应用程序，可使用附加参数 :paramref:<a href="#id2"><span class="problematic" id="id3">`</span></a>_dml.Insert.returning.sort_by_parameter_order`（根据所使用的后端可能使用保持令牌的特殊 INSERT 表单（该令牌用于正确重新排序返回的行），或在某些情况下，例如在下面使用 SQLite 后端的示例中，操作将一次插入一行：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;pearl&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Pearl Krabs&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;plankton&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Plankton&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;gary&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Gary&quot;</span><span class="p">},</span>
-<span class="gp">... </span><span class="p">]</span>
+<section id="returning">
+<span id="orm-queryguide-bulk-insert-returning-ordered"></span><h3>将 RETURNING 记录与输入数据顺序相关联<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h3>
+<p>使用带有 RETURNING 的批量 INSERT 时，重要的是要注意，大多数数据库后端不提供保证 RETURNING 返回记录的顺序，包括它们的顺序将与输入记录的顺序对应的保证。 对于需要确保 RETURNING 记录与输入数据相关联的应用程序，可以指定附加参数  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a> ，该参数可能使用特殊的 INSERT 表单，以保持有序并且可正确排序返回的行中使用的令牌，或者在某些情况下，例如在下面的示例中使用 SQLite 后端时，该操作将一次插入一行：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+<span class="go">...     {&quot;name&quot;: &quot;pearl&quot;, &quot;fullname&quot;: &quot;Pearl Krabs&quot;},</span>
+<span class="go">...     {&quot;name&quot;: &quot;plankton&quot;, &quot;fullname&quot;: &quot;Plankton&quot;},</span>
+<span class="go">...     {&quot;name&quot;: &quot;gary&quot;, &quot;fullname&quot;: &quot;Gary&quot;},</span>
+<span class="go">... ]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user_ids</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sort_by_parameter_order</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">data</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">{execsql}INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id</span>
-<span class="go">[... (insertmanyvalues) 1/3 (ordered; batch not supported)] (&#39;pearl&#39;, &#39;Pearl Krabs&#39;)</span>
-<span class="go">INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id</span>
-<span class="go">[insertmanyvalues 2/3 (ordered; batch not supported)] (&#39;plankton&#39;, &#39;Plankton&#39;)</span>
-<span class="go">INSERT INTO user_account (name, fullname) VALUES (?, ?) RETURNING id</span>
-<span class="go">[insertmanyvalues 3/3 (ordered; batch not supported)] (&#39;gary&#39;, &#39;Gary&#39;)</span>
-<span class="go">{stop}&gt;&gt;&gt; for user_id, input_record in zip(user_ids, data):</span>
+<span class="go">...     insert(User).returning(User.id, sort_by_parameter_order=True), data</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;pearl&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Pearl Krabs&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[</span><span class="n">insertmanyvalues</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;plankton&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Plankton&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[</span><span class="n">insertmanyvalues</span><span class="w"> </span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;gary&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Gary&#39;</span><span class="p">)</span><span class="w">    </span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">input_record</span> <span class="ow">in</span> <span class="n">zip</span><span class="p">(</span><span class="n">user_ids</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
 <span class="go">...     input_record[&quot;id&quot;] = user_id</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="go">[{&#39;name&#39;: &#39;pearl&#39;, &#39;fullname&#39;: &#39;Pearl Krabs&#39;, &#39;id&#39;: 6},</span>
@@ -322,76 +340,87 @@
 <span class="go">{&#39;name&#39;: &#39;gary&#39;, &#39;fullname&#39;: &#39;Gary&#39;, &#39;id&#39;: 8}]</span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 2.0.10: </span>添加了 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a>，该参数在 <a class="reference internal" href="../../glossary.html#term-insertmanyvalues"><span class="xref std std-term">insertmanyvalues</span></a> 架构中实现。</p>
+<p><span class="versionmodified added">New in version 2.0.10: </span>添加了  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a>  功能，
+该功能已实现在  <span class="xref std std-term">insertmanyvalues</span>  架构中。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../../core/connections.html#engine-insertmanyvalues-returning-order"><span class="std std-ref">将返回行与参数集相关联</span></a> - 这里介绍了在不显著降低性能的情况下保证输入数据与结果行对应的方法的背景知识</p>
+<blockquote>
+<div><p><a class="reference internal" href="../../core/connections.html#engine-insertmanyvalues-returning-order"><span class="std std-ref">将RETURNING行与参数集相关联</span></a>  - 确保输入数据和结果行一一对应</p>
+</div></blockquote>
+<p>的背景及取得良好性能的方法。</p>
 </div>
-</section>
-</section>
 <section id="orm-queryguide-insert-heterogeneous-params">
-<span id="id4"></span><h3>使用异构参数字典<a class="headerlink" href="#orm-queryguide-insert-heterogeneous-params" title="Permalink to this heading">¶</a></h3>
-<p>ORM 批量插入功能支持异构的参数字典列表，”异构” 基本上意味着”每个字典中的键可能不同”。当检测到此条件时，
-ORM 将会根据每组键将这些参数字典分为一组并进行批处理：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">{</span>
-<span class="gp">... </span>            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">,</span>
-<span class="gp">... </span>            <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">,</span>
-<span class="gp">... </span>            <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Sea Sponge&quot;</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">,</span> <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Squirrel&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;patrick&quot;</span><span class="p">,</span> <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Starfish&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span>
-<span class="gp">... </span>            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span>
-<span class="gp">... </span>            <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">,</span>
-<span class="gp">... </span>            <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Squid&quot;</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">,</span> <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="s2">&quot;Crab&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">],</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">{execsql}INSERT INTO user_account (name, fullname, species)</span>
-<span class="go">VALUES (?, ?, ?), (?, ?, ?) RETURNING id, name, fullname, species</span>
-<span class="go">[... (insertmanyvalues) 1/1 (unordered)] (&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;, &#39;Sea Sponge&#39;,</span>
-<span class="go">&#39;sandy&#39;, &#39;Sandy Cheeks&#39;, &#39;Squirrel&#39;)</span>
-<span class="go">INSERT INTO user_account (name, species)</span>
-<span class="go">VALUES (?, ?) RETURNING id, name, fullname, species</span>
-<span class="go">[...] (&#39;patrick&#39;, &#39;Starfish&#39;)</span>
-<span class="go">INSERT INTO user_account (name, fullname, species)</span>
-<span class="go">VALUES (?, ?, ?), (?, ?, ?) RETURNING id, name, fullname, species</span>
-<span class="go">[... (insertmanyvalues) 1/1 (unordered)] (&#39;squidward&#39;, &#39;Squidward Tentacles&#39;,</span>
-<span class="go">&#39;Squid&#39;, &#39;ehkrabs&#39;, &#39;Eugene H. Krabs&#39;, &#39;Crab&#39;)</span></pre></div>
+<span id="id3"></span><h4>使用不同类型的参数字典<a class="headerlink" href="#orm-queryguide-insert-heterogeneous-params" title="Permalink to this heading">¶</a></h4>
+<p>ORM批量插入功能支持”heterogeneous” 的参数字典，基本上意思是“不同的
+字典可以有不同的键”。当检测到此条件时，ORM将把参数字典分成与每个键对应的组，并
+相应地批量处理成单独的INSERT语句:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+<span class="go">...     insert(User).returning(User),</span>
+<span class="go">...     [</span>
+<span class="go">...         {</span>
+<span class="go">...             &quot;name&quot;: &quot;spongebob&quot;,</span>
+<span class="go">...             &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;,</span>
+<span class="go">...             &quot;species&quot;: &quot;Sea Sponge&quot;,</span>
+<span class="go">...         },</span>
+<span class="go">...         {&quot;name&quot;: &quot;sandy&quot;, &quot;fullname&quot;: &quot;Sandy Cheeks&quot;, &quot;species&quot;: &quot;Squirrel&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;patrick&quot;, &quot;species&quot;: &quot;Starfish&quot;},</span>
+<span class="go">...         {</span>
+<span class="go">...             &quot;name&quot;: &quot;squidward&quot;,</span>
+<span class="go">...             &quot;fullname&quot;: &quot;Squidward Tentacles&quot;,</span>
+<span class="go">...             &quot;species&quot;: &quot;Squid&quot;,</span>
+<span class="go">...         },</span>
+<span class="go">...         {&quot;name&quot;: &quot;ehkrabs&quot;, &quot;fullname&quot;: &quot;Eugene H. Krabs&quot;, &quot;species&quot;: &quot;Crab&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span>
+<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">unordered</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sea Sponge&#39;</span><span class="p">,</span>
+<span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Squirrel&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Starfish&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">species</span>
+<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">unordered</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;squidward&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Squidward Tentacles&#39;</span><span class="p">,</span>
+<span class="s1">&#39;Squid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Crab&#39;</span><span class="p">)</span>
+</div></pre></div>
 </div>
-<p>在上面的示例中，传递的五个参数字典分别对应着三个 INSERT 语句，因为每个字典都有特定的键集，因此可以分组，单独处理。</p>
+<p>在上面的示例中，传递的五个参数字典转换成了三个INSERT语句，按每个字典中
+特定的键分组，同时仍然保持行顺序，即 “name”, “fullname”, “species”,
+“name”, “species” 和 “name”,”fullname”, “species”。</p>
 </section>
-<section id="joined-table-inheritance-insert">
-<span id="orm-queryguide-insert-joined-table-inheritance"></span><h3>Joined Table Inheritance 批量 INSERT<a class="headerlink" href="#joined-table-inheritance-insert" title="Permalink to this heading">¶</a></h3>
-<p>ORM 批量插入是在内部单元工作系统中加以实现的。该系统用于生成 INSERT 语句，因此对于多个映射到多个表格的 ORM 实体（通常是使用 <a class="reference internal" href="../inheritance.html#joined-inheritance"><span class="std std-ref">joined table inheritance</span></a> 进行映射的实体），批量 INSERT 操作将为由映射表示的每个表格发出一个 INSERT 语句，并将服务器生成的主键值正确传输到依赖于它们的表格行中。在这里还支持 RETURNING，即 ORM 将接收每条 INSERT 语句执行的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象，然后“水平拼合”它们，以便返回的行包括所有插入的值：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">managers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">Manager</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">Manager</span><span class="p">),</span>
-<span class="gp">... </span>    <span class="p">[</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="s2">&quot;manager_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">},</span>
-<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="s2">&quot;manager_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">},</span>
-<span class="gp">... </span>    <span class="p">],</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="go">{execsql}INSERT INTO employee (name, type) VALUES (?, ?) RETURNING id, name, type</span>
-<span class="go">[... (insertmanyvalues) 1/2 (ordered; batch not supported)] (&#39;sandy&#39;, &#39;manager&#39;)</span>
-<span class="go">INSERT INTO employee (name, type) VALUES (?, ?) RETURNING id, name, type</span>
-<span class="go">[insertmanyvalues 2/2 (ordered; batch not supported)] (&#39;ehkrabs&#39;, &#39;manager&#39;)</span>
-<span class="go">INSERT INTO manager (id, manager_name) VALUES (?, ?), (?, ?) RETURNING id, manager_name, id AS id__1</span>
-<span class="go">[... (insertmanyvalues) 1/1 (ordered)] (1, &#39;Sandy Cheeks&#39;, 2, &#39;Eugene H. Krabs&#39;)</span></pre></div>
+<section id="insert">
+<span id="orm-queryguide-insert-joined-table-inheritance"></span><h4>使用连接表继承的批量INSERT<a class="headerlink" href="#insert" title="Permalink to this heading">¶</a></h4>
+<p>ORM批量插入建立在通常用于发送INSERT语句的传统单元工作体系的基础上。这意味着，
+对于一个映射到多个表的ORM实体，通常使用   <a class="reference internal" href="../inheritance.html#joined-inheritance"><span class="std std-ref">joined table inheritance</span></a>
+进行映射，批量插入操作将为映射表示的每个表发出一个INSERT语句，
+将服务器生成的主键值正确传递到依赖于它们的表行。
+同时也支持RETURNING功能，ORM将收到每个执行的INSERT语句的   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象，
+然后将它们 “横向拼接”在一起，使返回的行包括插入的所有列的值:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">managers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+<span class="go">...     insert(Manager).returning(Manager),</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;name&quot;: &quot;sandy&quot;, &quot;manager_name&quot;: &quot;Sandy Cheeks&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;ehkrabs&quot;, &quot;manager_name&quot;: &quot;Eugene H. Krabs&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span>
+<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;manager&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">type</span>
+<span class="p">[</span><span class="n">insertmanyvalues</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;manager&#39;</span><span class="p">)</span><span class="w">    </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">manager_name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">manager_name</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id__1</span>
+<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;杉迪·奇克丝&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;尤金 H. 克拉布斯&#39;</span><span class="p">)</span>
+</div></pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>批量插入：加入继承映射需要 ORM 在内部使用 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a> 来解析它们，以便可以将来自 RETURNING 的主键值对应到用于插入到“子”表中的参数集中，这就是为什么上面使用 SQLite 后端透明地降级为使用非批处理语句的原因。</p>
+<p>使用ORM进行join继承映射的批量INSERT时，需要ORM在内部使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a>  参数，以便将来自基表的RETURNING行中的主键值与用于INSERT到“子”表中的参数集相关联，这就是为什么上面介绍的SQLite后端透明地退化到使用非批量语句的原因。 关于此功能的背景在   <a class="reference internal" href="../../core/connections.html#engine-insertmanyvalues-returning-order"><span class="std std-ref">将RETURNING行与参数集相关联</span></a>  。</p>
 </div>
 </section>
-<section id="sql-orm">
-<span id="orm-queryguide-bulk-insert-w-sql"></span><h3>使用 SQL 表达式进行 ORM 批量插入<a class="headerlink" href="#sql-orm" title="Permalink to this heading">¶</a></h3>
-<p>ORM 批量插入支持添加一组固定的参数，该组参数可能包括用于每个目标行的 SQL 表达式。为此，请将 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 方法与通常的批量调用形式组合使用，通过在 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 中包括一个具有单独行参数字典的参数字典列表来传递。</p>
-<p>例如，假设 ORM 映射包括“timestamp”列：</p>
+<section id="sqlorm">
+<span id="orm-queryguide-bulk-insert-w-sql"></span><h4>使用SQL表达式的ORM批量插入<a class="headerlink" href="#sqlorm" title="Permalink to this heading">¶</a></h4>
+<p>ORM的批量插入功能支持添加一组固定参数，其中可以包括要应用于每个目标行的SQL表达式。为了实现这一点，结合使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法，传递一个字典参数将应用于所有行，以及通常的批量调用形式，通过在调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  时包含包含单个行值的参数字典列表。</p>
+<p>例如，假设存在一个包括“timestamp”列的ORM映射：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 
 
@@ -402,95 +431,327 @@ ORM 将会根据每组键将这些参数字典分为一组并进行批处理：<
     <span class="n">code</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
     <span class="n">timestamp</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">]</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>如果我们想要插入一系列带有唯一“message”字段的“LogRecord”元素，但是我们希望在所有行中都应用 SQL 函数 “now()”，我们可以通过将 “timestamp” 存储在 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 中来实现，然后使用“批量”模式传递额外的记录。:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
+<p>如果我们想要INSERT一系列具有唯一“message”字段的``LogRecord``元素，但我们想要将SQL函数``now()``应用于所有行，则可以使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  将``timestamp``传递，然后使用“bulk”模式传递其他记录：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">log_record_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
-<span class="go">...     insert(LogRecord).values(code=&quot;SQLA&quot;, timestamp=func.now()).returning(LogRecord),</span>
-<span class="go">...     [</span>
-<span class="go">...         {&quot;message&quot;: &quot;log message #1&quot;},</span>
-<span class="go">...         {&quot;message&quot;: &quot;log message #2&quot;},</span>
-<span class="go">...         {&quot;message&quot;: &quot;log message #3&quot;},</span>
-<span class="go">...         {&quot;message&quot;: &quot;log message #4&quot;},</span>
-<span class="go">...     ],</span>
-<span class="go">... )</span>
-<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">log_record</span><span class="w"> </span><span class="p">(</span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span><span class="p">)</span>
-<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">),</span>
-<span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="p">)</span>
-<span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">message</span><span class="p">,</span><span class="w"> </span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="k">timestamp</span>
-<span class="p">[...</span><span class="w"> </span><span class="p">(</span><span class="n">insertmanyvalues</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="o">/</span><span class="mi">1</span><span class="w"> </span><span class="p">(</span><span class="n">unordered</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;log message #1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;SQLA&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;log message #2&#39;</span><span class="p">,</span>
-<span class="s1">&#39;SQLA&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;log message #3&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;SQLA&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;log message #4&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;SQLA&#39;</span><span class="p">)</span>
-</div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">log_record_result</span><span class="o">.</span><span class="n">all</span><span class="p">())</span>
-<span class="go">[LogRecord(&#39;log message #1&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
-<span class="go"> LogRecord(&#39;log message #2&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
-<span class="go"> LogRecord(&#39;log message #3&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
-<span class="go"> LogRecord(&#39;log message #4&#39;, &#39;SQLA&#39;, datetime.datetime(...))]</span></pre></div>
-</div>
-<p>由于使用了 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>，所以不会使用批量 ORM 插入模式。</p>
-<p>以下特征将不可用：</p>
-<ul class="simple">
-<li><p>不支持 <a class="reference internal" href="#orm-queryguide-insert-joined-table-inheritance"><span class="std std-ref">Joined table inheritance</span></a> 或其他多表映射，因为这需要多个 INSERT 语句。</p></li>
-<li><p>不支持 <a class="reference internal" href="#orm-queryguide-insert-heterogeneous-params"><span class="std std-ref">Heterogenous parameter sets</span></a>。每个 VALUES 集元素必须具有相同的列。</p></li>
-<li><p>不可用 Core 级别的规模优化，例如 <span class="xref std std-ref">insertmanyvalues</span> 的批处理; 语句需要确保参数总数不超过备份数据库强制规定的限制。</p></li>
-</ul>
-<p>出于这些原因，通常不建议在 ORM INSERT 语句中使用 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 的多个参数集，除非存在明确理由，即正在使用“upsert”或需要在每个参数集中嵌入每行的 SQL 表达式。</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句</span></a></p>
+<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;SQLA&quot;</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">LogRecord</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;日志消息 #1&quot;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;日志消息 #2&quot;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;日志消息 #3&quot;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;日志消息 #4&quot;</span><span class="p">},</span>
+<span class="gp">... </span>    <span class="p">],</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{execsql}INSERT INTO log_record (message, code, timestamp)</span>
+<span class="go">VALUES (?, ?, CURRENT_TIMESTAMP), (?, ?, CURRENT_TIMESTAMP),</span>
+<span class="go">(?, ?, CURRENT_TIMESTAMP), (?, ?, CURRENT_TIMESTAMP)</span>
+<span class="go">RETURNING id, message, code, timestamp</span>
+<span class="go">[... (insertmanyvalues) 1/1 (unordered)] (&#39;日志消息 #1&#39;, &#39;SQLA&#39;, &#39;日志消息 #2&#39;,</span>
+<span class="go">&#39;SQLA&#39;, &#39;日志消息 #3&#39;, &#39;SQLA&#39;, &#39;日志消息 #4&#39;, &#39;SQLA&#39;)</span>
+
+
+<span class="go">{stop}&gt;&gt;&gt; print(log_record_result.all())</span>
+<span class="go">[LogRecord(&#39;日志消息 #1&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
+<span class="go"> LogRecord(&#39;日志消息 #2&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
+<span class="go"> LogRecord(&#39;日志消息 #3&#39;, &#39;SQLA&#39;, datetime.datetime(...)),</span>
+<span class="go"> LogRecord(&#39;日志消息 #4&#39;, &#39;SQLA&#39;, datetime.datetime(...))]</span></pre></div>
 </div>
 </section>
-<section id="session">
-<span id="orm-queryguide-legacy-bulk-insert"></span><h3>旧版 Session 批量插入方法<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h3>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 包括处理“批量” INSERT 和 UPDATE 语句的旧版方法。这些方法使用与描述在 <a class="reference internal" href="#orm-queryguide-bulk-insert"><span class="std std-ref">ORM 批量 INSERT 语句</span></a> 和 <span class="xref std std-ref">orm_queryguide_bulk_update</span> 中的 SQLAlchemy 2.0 版本具有相同实现，但不支持很多功能，即没有与回收支持，也不支持使用 RETURNING。</p>
-<p>例如，使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_insert_mappings()</span></code> 的代码可以移植如下：</p>
+</section>
+<section id="orm-queryguide-insert-values">
+<span id="id4"></span><h3>使用每行SQL表达式的ORM批量插入<a class="headerlink" href="#orm-queryguide-insert-values" title="Permalink to this heading">¶</a></h3>
+<p>下面是一个虚构的例子，显示了一个嵌入每行SQL表达式的INSERT，并且还以该形式演示了  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>   ：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address_result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">insert</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">values</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="p">[</span><span class="n">由于上面没有使用批量ORM插入模式</span><span class="err">，</span><span class="n">因此以下功能不可用</span><span class="err">：</span></pre></div>
+</div>
+<ul class="simple">
+<li><p>不支持   <a class="reference internal" href="#orm-queryguide-insert-joined-table-inheritance"><span class="std std-ref">Joined table inheritance</span></a>  或其他多表映射，因为那将需要多个INSERT语句。</p></li>
+<li><p>不支持   <a class="reference internal" href="#orm-queryguide-insert-heterogeneous-params"><span class="std std-ref">Heterogenous parameter sets</span></a>  - VALUES参数集中的每个元素必须具有相同的列。</p></li>
+<li><p>不能使用核心级别的规模优化，例如提供的批处理   <a class="reference internal" href="../../core/connections.html#engine-insertmanyvalues"><span class="std std-ref">insertmanyvalues</span></a> ；语句将需要确保参数总数不超过由后备数据库强加的限制。</p></li>
+</ul>
+<p>由于以上原因，通常不建议使用ORM INSERT语句中的多个参数集  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> ，除非有明确的理由，即正在使用“upsert”，或者需要在每个参数集中嵌入每行SQL表达式。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句 （UPSERT语句）</span></a></p>
+</div>
+<section id="legacy-session-insert">
+<span id="orm-queryguide-legacy-bulk-insert"></span><h4>Legacy Session 批量INSERT方法<a class="headerlink" href="#legacy-session-insert" title="Permalink to this heading">¶</a></h4>
+<blockquote>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  包含了执行“批量”INSERT和UPDATE语句的旧版方法。这些方法共享实现</p>
+</div></blockquote>
+<p>在描述了这些特性的 SQLAlchemy 2.0版本中，
+在这里说明为：  <a class="reference internal" href="#orm-queryguide-bulk-insert"><span class="std std-ref">ORM大容量INSERT语句</span></a>  和   <a class="reference internal" href="#orm-queryguide-bulk-update"><span class="std std-ref">ORM基于主键的批量UPDATE</span></a> ,
+但缺少许多功能，即缺少 RETURNING 支持和 session-synchronization 支持。</p>
+<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_insert_mappings()</span></code>  的代码示例例如，可以将代码移植为以下方式，从此映射示例开始：</p>
 <blockquote>
 <div><p>session.bulk_insert_mappings(User, [{“name”: “u1”}, {“name”: “u2”}, {“name”: “u3”}])</p>
 </div></blockquote>
-<p>上述代码可以用新 API 如下语句表示：</p>
+<p>以上使用新的API表示如下：</p>
 <blockquote>
 <div><p>from sqlalchemy import insert</p>
 <p>session.execute(insert(User), [{“name”: “u1”}, {“name”: “u2”}, {“name”: “u3”}])</p>
 </div></blockquote>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">orm_queryguide_legacy_bulk_update</span></p>
+<p><a class="reference internal" href="#orm-queryguide-legacy-bulk-update"><span class="std std-ref">如   orm_queryguide_legacy_bulk_insert  的</span></a></p>
 </div>
 </section>
-<section id="orm-upsert">
-<span id="orm-queryguide-upsert"></span><h3>ORM “upsert” 语句<a class="headerlink" href="#orm-upsert" title="Permalink to this heading">¶</a></h3>
-<p>使用 SQLAlchemy 的标准 SQL 方言，可能包括有特殊支持 upsert的 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造，它还具有将现有的参数集的行转换为近似 UPDATE 语句的能力。由“现有行”指的是行，这些行具有相同的主键值，或者是在行中被认为是唯一的索引列；这取决于所使用的后端的能力。</p>
-<p>包括具有特定于 SQL 的“upsert” API 功能的 SQLAlchemy 随附方言是：</p>
+<section id="orm-upsert-upsert">
+<span id="orm-queryguide-upsert"></span><h4>ORM “upsert” 语句 （UPSERT语句）<a class="headerlink" href="#orm-upsert-upsert" title="Permalink to this heading">¶</a></h4>
+<p>SQLAlchemy 具有选定的后端可能包括针对方言的专用   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造，此外还具有将参数集中的现有行变为类似于 UPDATE 语句的插入的能力。通过 “现有行”，这可能意味着共享相同主键值的行。
+或者可能是涉及到在行中将被认为是唯一的其他索引列；这取决于使用的后端的能力。</p>
+<p>包括方言特定的 “upsert” API 功能的 SQLAlchemy 包括：</p>
 <ul class="simple">
-<li><p>SQLite - 使用 <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.Insert" title="sqlalchemy.dialects.sqlite.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>，在 <a class="reference internal" href="../../dialects/sqlite.html#sqlite-on-conflict-insert"><span class="std std-ref">INSERT…ON CONFLICT (Upsert)</span></a> 中记录</p></li>
-<li><p>PostgreSQL - 使用 <a class="reference internal" href="../../dialects/postgresql.html#sqlalchemy.dialects.postgresql.Insert" title="sqlalchemy.dialects.postgresql.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>，在 <a class="reference internal" href="../../dialects/postgresql.html#postgresql-insert-on-conflict"><span class="std std-ref">INSERT…ON CONFLICT (Upsert)</span></a> 中记录</p></li>
-<li><p>MySQL/MariaDB - 使用 <a class="reference internal" href="../../dialects/mysql.html#sqlalchemy.dialects.mysql.Insert" title="sqlalchemy.dialects.mysql.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>，在 <a class="reference internal" href="../../dialects/mysql.html#mysql-insert-on-duplicate-key-update"><span class="std std-ref">INSERT…ON DUPLICATE KEY UPDATE (Upsert)</span></a> 中记录</p></li>
+<li><p>SQLite - 使用   <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.Insert" title="sqlalchemy.dialects.sqlite.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> ，文档参见   <a class="reference internal" href="../../dialects/sqlite.html#sqlite-on-conflict-insert"><span class="std std-ref">INSERT…ON CONFLICT (Upsert)</span></a></p></li>
+<li><p>PostgreSQL - 使用   <a class="reference internal" href="../../dialects/postgresql.html#sqlalchemy.dialects.postgresql.Insert" title="sqlalchemy.dialects.postgresql.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> ，文档参见   <a class="reference internal" href="../../dialects/postgresql.html#postgresql-insert-on-conflict"><span class="std std-ref">INSERT…ON CONFLICT (Upsert)</span></a></p></li>
+<li><p>MySQL/MariaDB - 使用   <a class="reference internal" href="../../dialects/mysql.html#sqlalchemy.dialects.mysql.Insert" title="sqlalchemy.dialects.mysql.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> ，文档参见   <a class="reference internal" href="../../dialects/mysql.html#mysql-insert-on-duplicate-key-update"><span class="std std-ref">INSERT…ON DUPLICATE KEY UPDATE (Upsert)</span></a></p></li>
 </ul>
-<p>用户应查看上述各章节了解适当构建这些对象的背景知识；特别是“upsert”方法通常需要参考原始语句，因此通常需要分两个步骤构造声明。</p>
-<p>第三方后端（例如位于 <a class="reference internal" href="../../dialects/index.html"><span class="std std-ref">外部方言</span></a> 中提到的后端）可能也提供类似的构造方法。</p>
-<p>虽然 SQLAlchemy 还没有通用的 upsert 构造，但上述的 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 变体在 ORM 兼容方面仍然可用，因为它们可以用与 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造本身相同的方式使用，如在 <span class="xref std std-ref">orm_queryguide_insert_values</span> 中所述，即通过将期望插入的行嵌入到 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 方法中的方式。在下面的示例中，使用 SQLite 的 <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.insert" title="sqlalchemy.dialects.sqlite.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 函数生成一个 <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.Insert" title="sqlalchemy.dialects.sqlite.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造，其中包括 “ON CONFLICT DO UPDATE” 选项。然后将语句传递给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>，其中还附带了在 <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 中嵌入的所需行参数字典；这些将被解释为 ORM 映射属性键，而不是列名称：</p>
+<p>用户应查看上述章节以了解这些对象的正确构造背景；特别是，“upsert”方法通常需要引用原始语句，因此通常将语句构造为两个单独的步骤。</p>
+<p>第三方后端，如   <a class="reference internal" href="../../dialects/index.html"><span class="std std-ref">外部方言</span></a>  中提到的后端，也可能具有类似的结构。</p>
+<p>虽然 SQLAlchemy 还没有一个后端无关的 upsert 构造，但上述   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  变量仍然是 ORM 兼容的，因为它们可以使用与   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造本身相同的方式使用，如   <a class="reference internal" href="#orm-queryguide-insert-values"><span class="std std-ref">使用每行SQL表达式的ORM批量插入</span></a>  中所述，
+也就是将所需的行嵌入到  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法中。在下面的示例中，使用 SQLite   <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.insert" title="sqlalchemy.dialects.sqlite.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  函数生成包括 “ON CONFLICT DO UPDATE” 支持的   <a class="reference internal" href="../../dialects/sqlite.html#sqlalchemy.dialects.sqlite.Insert" title="sqlalchemy.dialects.sqlite.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> ，其中继续进行正常操作，另外一个特征是</p>
+<p>传递给  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  的参数字典被解释为ORM映射属性键，而不是列名称：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.sqlite</span> <span class="kn">import</span> <span class="n">insert</span> <span class="k">as</span> <span class="n">sqlite_upsert</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">sqlite_upsert</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;name&quot;: &quot;spongebob&quot;, &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;sandy&quot;, &quot;fullname&quot;: &quot;Sandy Cheeks&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;patrick&quot;, &quot;fullname&quot;: &quot;Patrick Star&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;squidward&quot;, &quot;fullname&quot;: &quot;Squidward Tentacles&quot;},</span>
+<span class="go">...         {&quot;name&quot;: &quot;ehkrabs&quot;, &quot;fullname&quot;: &quot;Eugene H. Krabs&quot;},</span>
+<span class="go">...     ]</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">on_conflict_do_update</span><span class="p">(</span>
+<span class="go">...     index_elements=[User.name], set_=dict(fullname=stmt.excluded.fullname)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span>
+<span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="k">ON</span><span class="w"> </span><span class="n">CONFLICT</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">DO</span><span class="w"> </span><span class="k">UPDATE</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">excluded</span><span class="p">.</span><span class="n">fullname</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">,</span>
+<span class="s1">&#39;patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;squidward&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Squidward Tentacles&#39;</span><span class="p">,</span>
+<span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">)</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
+</section>
+</section>
+<section id="upsertreturning">
+<span id="orm-queryguide-upsert-returning"></span><h3>在upsert语句中使用RETURNING<a class="headerlink" href="#upsertreturning" title="Permalink to this heading">¶</a></h3>
+<p>从SQLAlchemy ORM的角度来看，upsert语句看起来像常规的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造，其中包括  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>  与在   <a class="reference internal" href="#orm-queryguide-insert-values"><span class="std std-ref">使用每行SQL表达式的ORM批量插入</span></a>  中演示的方式一样与upsert语句一起使用，因此可以传递任何列表达式或相关的ORM实体类。从上一节的示例中继续执行：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">stmt</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">User</span><span class="p">),</span> <span class="n">execution_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;populate_existing&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{execsql}INSERT INTO user_account (name, fullname)</span>
+<span class="go">VALUES (?, ?), (?, ?), (?, ?), (?, ?), (?, ?)</span>
+<span class="go">ON CONFLICT (name) DO UPDATE SET fullname = excluded.fullname</span>
+<span class="go">RETURNING id, name, fullname, species</span>
+<span class="go">[...] (&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;, &#39;sandy&#39;, &#39;Sandy Cheeks&#39;,</span>
+<span class="go">&#39;patrick&#39;, &#39;Patrick Star&#39;, &#39;squidward&#39;, &#39;Squidward Tentacles&#39;,</span>
+<span class="go">&#39;ehkrabs&#39;, &#39;Eugene H. Krabs&#39;)</span>
+<span class="go">{stop}&gt;&gt;&gt; print(result.all())</span>
+<span class="go">[User(name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;),</span>
+<span class="go">  User(name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;),</span>
+<span class="go">  User(name=&#39;patrick&#39;, fullname=&#39;Patrick Star&#39;),</span>
+<span class="go">  User(name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;),</span>
+<span class="go">  User(name=&#39;ehkrabs&#39;, fullname=&#39;Eugene H. Krabs&#39;)]</span></pre></div>
+</div>
+<p>上面的示例使用 RETURNING 返回每一行插入或 upsert 的 ORM 对象。示例还添加了使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  执行选项。此选项表示对于在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中已存在的行，应该使用新行的数据来 <strong>刷新</strong> 已经存在的“User”对象。对于纯   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  语句，此选项不重要，因为生成的每一行都是全新的主键标识符。但是，当   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  也包含”upsert”选项时，它也可能产生来自已经存在的行的结果，因此可能已经在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象的  <span class="xref std std-term">identity map</span>  中表示了一个主键标识符。</p>
+</section>
+</section>
+<section id="ormupdate">
+<span id="orm-queryguide-bulk-update"></span><h2>ORM基于主键的批量UPDATE<a class="headerlink" href="#ormupdate" title="Permalink to this heading">¶</a></h2>
+<p>对于“批量”版本的 UPDATE，通过一个ORM类形成一个   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  构造体传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法；生成的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  对象**不应该有任何值和通常没有WHERE条件**，也就是说，不使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update.values" title="sqlalchemy.sql.expression.Update.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.values()</span></code></a>  方法，而  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update.where" title="sqlalchemy.sql.expression.Update.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.where()</span></code></a>  方法通常**不会**使用，但在 unusual 的情况下可能需要添加其他过滤条件。</p>
+<p>将一个由多个参数字典组成的列表和   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  构造体一起传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法将会调用 <strong>bulk update by primary key mode</strong> 以进行update操作，为语句生成适当的WHERE条件以匹配每行的主键，并使用  <span class="xref std std-term">executemany</span>  对 UPDATE 语句运行每个参数集:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="go">...     update(User),</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;id&quot;: 1, &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;},</span>
+<span class="go">...         {&quot;id&quot;: 3, &quot;fullname&quot;: &quot;Patrick Star&quot;},</span>
+<span class="go">...         {&quot;id&quot;: 5, &quot;fullname&quot;: &quot;Eugene H. Krabs&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)]</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
+<p>请注意，每个参数字典 <strong>必须</strong> 包括每个记录的完整主键，否则会引发错误。</p>
+<p>与批量INSERT特性一样，异构参数列表也被支持，它们的参数将被分组为更新运行的子批次。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0.11: </span>通过使用 `  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update.where" title="sqlalchemy.sql.expression.Update.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.where()</span></code></a>   方法可以将更多的 WHERE 条件与  :ref: orm_queryguide_bulk_update 一起使用以添加附加过滤条件。 但是，此条件始终是在已经存在的 WHERE 条件之后添加的，其中包括主键值。</p>
+</div>
+<p>使用“bulk update by primary key”功能时，没有可用的RETURNING功能；使用多个参数字典的列表时，DBAPI  <span class="xref std std-term">executemany</span>  通常不支持结果行。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>与单个参数独立值不同，在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法中传递   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  构造体并搭配一个参数字典的列表现在会调用“bulk update”，该特性使用与旧版  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_update_mappings()</span></code>  方法相同的功能。这是与 1.x 系列相比的行为变化，因为在 1.x 系列中，   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  仅支持带有显式 WHERE 条件和内部值。</p>
+</div>
+<p id="orm-queryguide-bulk-update-disabling">ORM的“Bulk Update by Primary Key” 功能，对每个包含每个主键值的WHERE条件的记录运行更新语句，当满足以下条件时自动启用：</p>
+<ol class="arabic simple">
+<li><p>给定的 UPDATE 语句针对 ORM 实体。</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  用于执行语句，而不是核心   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 。</p></li>
+<li><p>传递的参数是**字典列表**。</p></li>
+</ol>
+<p>为了调用不使用“ORM Bulk Update by Primary Key”的UPDATE语句，直接针对   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  执行语句，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  方法获取当前一   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a></p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">bindparam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="go">...     update(User).where(User.name == bindparam(&quot;u_name&quot;)),</span>
+<span class="go">...     [</span>
+<span class="go">...         {&quot;u_name&quot;: &quot;spongebob&quot;, &quot;fullname&quot;: &quot;Spongebob Squarepants&quot;},</span>
+<span class="go">...         {&quot;u_name&quot;: &quot;patrick&quot;, &quot;fullname&quot;: &quot;Patrick Star&quot;},</span>
+<span class="go">...     ],</span>
+<span class="go">... )</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;spongebob&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;patrick&#39;</span><span class="p">)]</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#orm-queryguide-upsert"><span class="std std-ref">ORM “upsert” 语句</span></a>.. _orm_queryguide_update_delete_where:</p>
+<p><a class="reference internal" href="../../errors.html#error-bupq"><span class="std std-ref">使用按主键的 ORM 按行批量更新需要记录包含主键值的记录</span></a></p>
+</div>
+<span class="target" id="orm-queryguide-bulk-update-joined-inh"></span><p>例如：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">session.execute(</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">update(Manager),</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">[</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">{</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;id&quot;:</span> <span class="pre">1,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;name&quot;:</span> <span class="pre">&quot;scheeks&quot;,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;manager_name&quot;:</span> <span class="pre">&quot;Sandy</span> <span class="pre">Cheeks,</span> <span class="pre">President&quot;,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">},</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">{</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;id&quot;:</span> <span class="pre">2,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;name&quot;:</span> <span class="pre">&quot;eugene&quot;,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&quot;manager_name&quot;:</span> <span class="pre">&quot;Eugene</span> <span class="pre">H.</span> <span class="pre">Krabs,</span> <span class="pre">VP</span> <span class="pre">Marketing&quot;,</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">},</span>
+<span class="pre">...</span>&#160;&#160;&#160;&#160; <span class="pre">],</span>
+<span class="pre">...</span> <span class="pre">)</span>
+<span class="pre">{execsql}UPDATE</span> <span class="pre">employee</span> <span class="pre">SET</span> <span class="pre">name=?</span> <span class="pre">WHERE</span> <span class="pre">employee.id</span> <span class="pre">=</span> <span class="pre">?</span>
+<span class="pre">[...]</span> <span class="pre">[('scheeks',</span> <span class="pre">1),</span> <span class="pre">('eugene',</span> <span class="pre">2)]</span>
+<span class="pre">UPDATE</span> <span class="pre">manager</span> <span class="pre">SET</span> <span class="pre">manager_name=?</span> <span class="pre">WHERE</span> <span class="pre">manager.id</span> <span class="pre">=</span> <span class="pre">?</span>
+<span class="pre">[...]</span> <span class="pre">[('Sandy</span> <span class="pre">Cheeks,</span> <span class="pre">President',</span> <span class="pre">1),</span> <span class="pre">('Eugene</span> <span class="pre">H.</span> <span class="pre">Krabs,</span> <span class="pre">VP</span> <span class="pre">Marketing',</span> <span class="pre">2)]</span>
+<span class="pre">{stop}&lt;...&gt;</span>
+<span class="pre">`</span></code></p>
+<dl class="simple" id="orm-queryguide-legacy-bulk-update">
+<dt>如   <a class="reference internal" href="#orm-queryguide-legacy-bulk-insert"><span class="std std-ref">Legacy Session 批量INSERT方法</span></a>  的</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bulk_update_mappings()</span></code>  方法是批量更新的传统形式，ORM在内部解释给定主键参数的  :func:<a href="#id5"><span class="problematic" id="id6">`</span></a>_sql.update`语句时使用此方法；但是，当使用遗留版本时，不包括同步会话支持等功能。</p>
+</dd>
+</dl>
+<p>以下是示例：</p>
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a>`
+session.bulk_update_mappings(</p>
+<blockquote>
+<div><blockquote>
+<div><p>User,
+[</p>
+<blockquote>
+<div><p>{“id”: 1, “name”: “scheeks”, “manager_name”: “Sandy Cheeks, President”},
+{“id”: 2, “name”: “eugene”, “manager_name”: “Eugene H. Krabs, VP Marketing”},</p>
+</div></blockquote>
+<p>],</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a></p>
+<p>新API的表达方式为：</p>
+<p><a href="#id13"><span class="problematic" id="id14">``</span></a>`
+from sqlalchemy import update</p>
+<dl>
+<dt>session.execute(</dt><dd><blockquote>
+<div><p>update(User),
+[</p>
+<blockquote>
+<div><p>{“id”: 1, “name”: “scheeks”, “manager_name”: “Sandy Cheeks, President”},
+{“id”: 2, “name”: “eugene”, “manager_name”: “Eugene H. Krabs, VP Marketing”},</p>
+</div></blockquote>
+<p>],</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+<p><a href="#id15"><span class="problematic" id="id16">``</span></a><a href="#id17"><span class="problematic" id="id18">`</span></a></p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#orm-queryguide-legacy-bulk-insert"><span class="std std-ref">Legacy Session 批量INSERT方法</span></a></p>
 </div>
 </section>
-</section>
-<section id="orm">
-<h2>ORM自定义更新和删除条件<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code>，要更新的值应该使用:meth:<a href="#id5"><span class="problematic" id="id6">`</span></a>_dml.Update.values`传递。</p>
-<p>这种使用方式不同于在 <span class="xref std std-ref">orm_queryguide_bulk_update</span> 中描述的特性，后者使用自动为每个记录生成主键的确切WHERE条件执行UPDATE或DELETE语句，并使用:term:<a href="#id7"><span class="problematic" id="id8">`</span></a>executemany`对每个参数集运行。</p>
-<p>例如，下面的更新语句会影响“fullname”字段的多个行：</p>
+<section id="whereorm-update-and-delete">
+<span id="orm-queryguide-update-delete-where"></span><h2>带有自定义WHERE条件的ORM UPDATE and DELETE<a class="headerlink" href="#whereorm-update-and-delete" title="Permalink to this heading">¶</a></h2>
+<p>可以通过在ORM上下文中将它们传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  而不使用：paramref:<cite>_orm.Session.execute.params`参数进行调用。
+对于`_dml.Update</cite>，应使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update.values" title="sqlalchemy.sql.expression.Update.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.values()</span></code></a>  传递要更新的值。</p>
+<p>使用这种模式的不同之处在于与  :ref:<a href="#id19"><span class="problematic" id="id20">`</span></a>orm_queryguide_bulk_update`中先前介绍的特性不同，ORM使用给定的WHERE子句，而不是将WHERE子句固定为主键。
+这意味着单个UPDATE或DELETE语句可以一次性影响许多行。</p>
+<p>例如，下面发出一个update会影响多行的fullname字段的语句：</p>
+<p><a href="#id21"><span class="problematic" id="id22">``</span></a>`
+from sqlalchemy import update
+stmt = (</p>
+<blockquote>
+<div><blockquote>
+<div><p>update(User)
+.where(User.name.in_([“squidward”, “sandy”]))
+.values(fullname=”Name starts with S”)</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p>session.execute(stmt)
+<a href="#id23"><span class="problematic" id="id24">``</span></a><a href="#id25"><span class="problematic" id="id26">`</span></a></p>
+<p>对于DELETE，以下是基于条件删除行的示例：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">from</span> <span class="pre">sqlalchemy</span> <span class="pre">import</span> <span class="pre">delete</span>
+<span class="pre">stmt</span> <span class="pre">=</span> <span class="pre">delete(User).where(User.name.in_([&quot;squidward&quot;,</span> <span class="pre">&quot;sandy&quot;]))</span>
+<span class="pre">session.execute(stmt)</span>
+<span class="pre">`</span></code></p>
+<p id="orm-queryguide-update-delete-sync">在使用ORM启用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  进行执行时，通过   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  通过“同步”，我们指的是将UPDATE的属性刷新为包含在ORM会话的  <span class="xref std std-term">identity map</span>  中的对象属性。新值，或至少是  <span class="xref std std-term">已过期</span> ，以便它们在下次访问时重新填充其新值，而 DELETE 的对象将被移动到  <span class="xref std std-term">已删除</span>  状态。</p>
+<p>这种同步可以作为“同步策略”进行控制，该策略作为字符串 ORM 执行选项传递，通常使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.execute.execution_options</span></code>  字典实现：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">execution_options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;synchronize_session&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">})</span>
+<span class="go">{execsql}UPDATE user_account SET fullname=? WHERE user_account.name = ?</span>
+<span class="go">[...] (&#39;Squidward Tentacles&#39;, &#39;squidward&#39;)</span>
+<span class="go">{stop}&lt;...&gt;</span></pre></div>
+</div>
+<p>执行选项也可以与语句本身捆绑在一起，使用  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Executable.execution_options" title="sqlalchemy.sql.expression.Executable.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Executable.execution_options()</span></code></a>  方法实现：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>    <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
-<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="s2">&quot;sandy&quot;</span><span class="p">]))</span>
-<span class="gp">... </span>    <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Name starts with S&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">synchronize_session</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
-<span class="go">{execsql}UPDATE user_account SET fullname=? WHERE user_account.name IN (?, ?)</span>
-<span class="go">[...] (&#39;Name starts with S&#39;, &#39;squidward&#39;, &#39;sandy&#39;)</span>
+<span class="go">{execsql}UPDATE user_account SET fullname=? WHERE user_account.name = ?</span>
+<span class="go">[...] (&#39;Squidward Tentacles&#39;, &#39;squidward&#39;)</span>
 <span class="go">{stop}&lt;...&gt;</span></pre></div>
 </div>
-<p>对于DELETE，以下是基于条件删除行的示例：</p>
-<p>在ORM启用的UPDATE和DELETE WHERE标准中，与返回的支持完全兼容，支持完全。可以指定完整ORM对象和/或列来进行返回：</p>
+<p>支持以下的 <code class="docutils literal notranslate"><span class="pre">synchronize_session</span></code> 值：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'auto'</span></code> - 这是默认值。在支持 RETURNING 的后端上将使用 <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> 策略，其中包括所有 SQLAlchemy 本机驱动程序，除 MySQL 外。如果不支持 RETURNING，则改为使用 <code class="docutils literal notranslate"><span class="pre">'evaluate'</span></code> 策略。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> - 通过在 UPDATE 或 DELETE 之前执行 SELECT，或者使用 RETURNING 来检索受影响行的主键标识，以便可以使用新值（更新）刷新受操作影响的内存中的对象，或将其从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> （删除）。即使使用  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>  或  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.delete()</span></code></a>  指定了实体或列，也可以使用此同步策略。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>当使用具有 WHERE 准则的 ORM 启用的 UPDATE 和 DELETE 时，可以将显式  <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>  与 <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> 同步策略相结合。实际语句将包含 <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> 策略要求和请求的列之间的交集。</p>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'evaluate'</span></code> - 这表示在 Python 中评估 UPDATE 或 DELETE 语句中给出的 WHERE 准则，以在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中查找匹配的对象。此方法不会为操作添加任何 SQL 往返，并且在缺少 RETURNING 支持时可能更高效。对于具有复杂准则的 UPDATE 或 DELETE 语句，<code class="docutils literal notranslate"><span class="pre">'evaluate'</span></code> 策略可能无法在 Python 中计算表达式，并会引发错误。如果出现这种情况，应改为使用操作的 <code class="docutils literal notranslate"><span class="pre">'fetch'</span></code> 策略。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>如果 SQL 表达式使用  <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.Operators.op" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code></a>  或   <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.custom_op" title="sqlalchemy.sql.expression.custom_op"><code class="xref py py-class docutils literal notranslate"><span class="pre">custom_op</span></code></a>  特性使用自定义操作符，则可以使用  <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.Operators.op.params.python_impl" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Operators.op.python_impl</span></code></a>  参数来指示将在 <code class="docutils literal notranslate"><span class="pre">&quot;evaluate&quot;</span></code> 同步策略中使用的 Python 函数。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0.</span></p>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如果 UPDATE 操作将在已过期的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  上运行，则应避免使用 <code class="docutils literal notranslate"><span class="pre">&quot;evaluate&quot;</span></code> 同步策略，因为它必须刷新对象以根据给定的 WHERE 准则测试它们，这将为每个对象发出 SELECT。在这种情况下，特别是如果后端支持 RETURNING，则应首选 <code class="docutils literal notranslate"><span class="pre">&quot;fetch&quot;</span></code> 策略。</p>
+</div>
+</li>
+</ul>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">False</span></code> - 不同步会话。在不支持 RETURNING 的后端中，“evaluate”策略无法使用。在这种情况下，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中对象的状态保持不变，不会自动对应于发出的 UPDATE 或 DELETE 语句，如果存在与通常对应于匹配行的对象，则不会对应。</p></li>
+</ul>
+<blockquote id="orm-queryguide-update-delete-where-returning">
+<div><p><a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>   方法与启用 ORM 的 WHERE 准则 UPDATE 和 DELETE 完全兼容。 可以为 RETURNING 指示完整的 ORM 对象和/或列：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>    <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
@@ -505,6 +766,65 @@ ORM 将会根据每组键将这些参数字典分为一组并进行批处理：<
 <span class="go">{stop}&gt;&gt;&gt; print(result.all())</span>
 <span class="go">[User(name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;)]</span></pre></div>
 </div>
+</div></blockquote>
+<p>ORM 将根据需要对 RETURNING 中的列进行排序，以使同步进行得更好，且返回的   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  将按请求的实体和 SQL 列以其请求的顺序进行。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0: </span><a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>  可用于启用 ORM 的 UPDATE 和 DELETE，同时仍然保留了与 <code class="docutils literal notranslate"><span class="pre">fetch</span></code> 同步策略的完全兼容性。</p>
+</div>
+<span class="target" id="orm-queryguide-update-delete-joined-inh"></span><p>与   <a class="reference internal" href="#orm-queryguide-bulk-update"><span class="std std-ref">ORM基于主键的批量UPDATE</span></a>  不同，带有 WHERE criteria 的 UPDATE/DELETE 功能仅对每个  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  或   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>  语句时，该语句必须符合后端当前的功能，其中包括后端不支持引用多个表的 UPDATE 或 DELETE 语句或仅对此提供有限支持。这意味着针对类似连接继承子类的映射，UPDATE/DELETE with WHERE criteria 功能的 ORM 版本只能在具体情况下有限或完全无法使用。</p>
+<p>发出一个 JOIN 表子类的多行 UPDATE 语句的最简单方法是仅引用子类表中的子表。这意味着   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-func docutils literal notranslate"><span class="pre">Update()</span></code></a>  构造只应引用本地于子类表的属性，如下面的示例所示:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(Manager)</span>
+<span class="go">...     .where(Manager.id == 1)</span>
+<span class="go">...     .values(manager_name=&quot;Sandy Cheeks, President&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">manager_name</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Sandy Cheeks, President&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="p">...</span><span class="o">&gt;</span>
+</div></pre></div>
+</div>
+<p>通过上面的形式，为了在任何 SQL 后端上工作，引用基础表以定位行的原始方法是使用子查询:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(Manager)</span>
+<span class="go">...     .where(</span>
+<span class="go">...         Manager.id</span>
+<span class="go">...         == select(Employee.id).where(Employee.name == &quot;sandy&quot;).scalar_subquery()</span>
+<span class="go">...     )</span>
+<span class="go">...     .values(manager_name=&quot;Sandy Cheeks, President&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">manager_name</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Sandy Cheeks, President&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy&#39;</span><span class="p">)</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
+<p>对于支持 UPDATE…FROM 的后端，子查询可以以额外的明文 WHERE 条件表示，然后必须以某种明确的方式显式地表达两个表之间的条件:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(Manager)</span>
+<span class="go">...     .where(Manager.id == Employee.id, Employee.name == &quot;sandy&quot;)</span>
+<span class="go">...     .values(manager_name=&quot;Sandy Cheeks, President&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">manager_name</span><span class="o">=?</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employee</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Sandy Cheeks, President&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy&#39;</span><span class="p">)</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
+<p>对于 DELETE，预期将同时删除基表和子表中的行。为了 <strong>不使用级联外键</strong> 删除连接继承对象的多行，请为每个表单独发出一个 DELETE 语句:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">delete</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">delete</span><span class="p">(</span><span class="n">Manager</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Manager</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+<div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+</div><span class="go">&lt;...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">delete</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+<div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+</div><span class="go">&lt;...&gt;</span></pre></div>
+</div>
+<p>总体而言，对于连接继承和其他多表映射，请优先使用正常的  <span class="xref std std-term">工作单元</span>  进程更新和删除行，除非使用自定义 WHERE criteria 有性能方面的原理。</p>
+<p>ORM 启用的带有 WHERE 的 UPDATE/DELETE 最初是   <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象的一部分，位于  <a class="reference internal" href="query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a>  和  <a class="reference internal" href="query.html#sqlalchemy.orm.Query.delete" title="sqlalchemy.orm.Query.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.delete()</span></code></a>  方法中。这些方法仍然可用，并提供与   <a class="reference internal" href="#orm-queryguide-update-delete-where"><span class="std std-ref">带有自定义WHERE条件的ORM UPDATE and DELETE</span></a>  中所述的相同功能的子集。主要区别是旧的方法不提供明确的 RETURNING 支持。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a></p>
@@ -512,6 +832,10 @@ ORM 将会根据每组键将这些参数字典分为一组并进行批处理：<
 </div>
 </section>
 </section>
+<aside class="topic">
+<p class="topic-title">ORM 查询指南</p>
+<p>下一个查询指南章节: <span class="xref std std-doc">列</span></p>
+</aside>
 
     </div>
 
@@ -519,9 +843,9 @@ ORM 将会根据每组键将这些参数字典分为一组并进行批处理：<
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="inheritance.html" title="previous chapter">编写继承映射的SELECT语句</a>
+        <a href="inheritance.html" title="previous chapter">继承映射中编写SELECT语句</a>
         Next:
-        <a href="columns.html" title="next chapter">列载入选项</a>
+        <a href="columns.html" title="next chapter">列加载选项</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -531,7 +855,7 @@ ORM 将会根据每组键将这些参数字典分为一组并进行批处理：<
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:16
+    Documentation last generated: 2023/8/18 18:44:01
 
     </div>
 </div>

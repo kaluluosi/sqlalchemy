@@ -12,7 +12,7 @@
         <title>
             
     
-    ORM Examples
+    ORM 示例
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="SQLAlchemy ORM" href="index.html" />
-        <link rel="next" title="SQLAlchemy核心模块" href="../core/index.html" />
-        <link rel="prev" title="备选类仪器" href="extensions/instrumentation.html" />
+        <link rel="next" title="SQLAlchemy 核心" href="../core/index.html" />
+        <link rel="prev" title="类替代仪器" href="extensions/instrumentation.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,17 +127,17 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li class="selected"><span class="link-container"><strong>ORM Examples</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id1">映射示例</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#module-examples.adjacency_list">相邻列表</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#module-examples.association">联想</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#module-examples.asyncio">Asyncio集成</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM 示例</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#mapping-recipes">Mapping Recipes</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#module-examples.adjacency_list">邻接列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.association">关联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.asyncio">Asyncio 集成</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.graphs">有向图</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#module-examples.dynamic_dict">动态关系作为字典</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.dynamic_dict">作为字典的动态关系</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.generic_associations">通用关联</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.materialized_paths">材质路径</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.nested_sets">嵌套集</a></span></li>
@@ -149,9 +149,9 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.space_invaders">太空侵略者</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#examples-versioning">版本化对象</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#module-examples.versioned_history">具有历史表的版本控制</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#module-examples.versioned_rows">使用时态行进行版本控制</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#examples-versioning">版本对象</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#module-examples.versioned_history">使用历史表进行版本化</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.versioned_rows">使用时间行进行版本化</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.vertical">垂直属性映射</a></span></li>
@@ -162,13 +162,13 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#api">特殊API</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#module-examples.custom_attributes">属性检测</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.custom_attributes">属性检查</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#module-examples.sharding">水平分片</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#orm">扩展ORM</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#module-examples.extending_query">ORM查询事件</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#module-examples.dogpile_caching">Dogpile缓存</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id18">扩展 ORM</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#module-examples.extending_query">ORM 查询事件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#module-examples.dogpile_caching">Dogpile 缓存</a></span></li>
 </ul>
 </li>
 </ul>
@@ -204,9 +204,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="extensions/instrumentation.html" title="previous chapter">备选类仪器</a></li>
+                <a href="extensions/instrumentation.html" title="previous chapter">类替代仪器</a></li>
                 <li><b>Next:</b>
-                <a href="../core/index.html" title="next chapter">SQLAlchemy核心模块</a></li>
+                <a href="../core/index.html" title="next chapter">SQLAlchemy 核心</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -216,13 +216,13 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#orm-examples">ORM Examples</a><ul>
-<li><a class="reference internal" href="#id1">映射示例</a><ul>
-<li><a class="reference internal" href="#module-examples.adjacency_list">相邻列表</a></li>
-<li><a class="reference internal" href="#module-examples.association">联想</a></li>
-<li><a class="reference internal" href="#module-examples.asyncio">Asyncio集成</a></li>
+<li><a class="reference internal" href="#orm">ORM 示例</a><ul>
+<li><a class="reference internal" href="#mapping-recipes">Mapping Recipes</a><ul>
+<li><a class="reference internal" href="#module-examples.adjacency_list">邻接列表</a></li>
+<li><a class="reference internal" href="#module-examples.association">关联</a></li>
+<li><a class="reference internal" href="#module-examples.asyncio">Asyncio 集成</a></li>
 <li><a class="reference internal" href="#module-examples.graphs">有向图</a></li>
-<li><a class="reference internal" href="#module-examples.dynamic_dict">动态关系作为字典</a></li>
+<li><a class="reference internal" href="#module-examples.dynamic_dict">作为字典的动态关系</a></li>
 <li><a class="reference internal" href="#module-examples.generic_associations">通用关联</a></li>
 <li><a class="reference internal" href="#module-examples.materialized_paths">材质路径</a></li>
 <li><a class="reference internal" href="#module-examples.nested_sets">嵌套集</a></li>
@@ -234,9 +234,9 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#module-examples.space_invaders">太空侵略者</a></li>
-<li><a class="reference internal" href="#examples-versioning">版本化对象</a><ul>
-<li><a class="reference internal" href="#module-examples.versioned_history">具有历史表的版本控制</a></li>
-<li><a class="reference internal" href="#module-examples.versioned_rows">使用时态行进行版本控制</a></li>
+<li><a class="reference internal" href="#examples-versioning">版本对象</a><ul>
+<li><a class="reference internal" href="#module-examples.versioned_history">使用历史表进行版本化</a></li>
+<li><a class="reference internal" href="#module-examples.versioned_rows">使用时间行进行版本化</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-examples.vertical">垂直属性映射</a></li>
@@ -247,13 +247,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#api">特殊API</a><ul>
-<li><a class="reference internal" href="#module-examples.custom_attributes">属性检测</a></li>
+<li><a class="reference internal" href="#module-examples.custom_attributes">属性检查</a></li>
 <li><a class="reference internal" href="#module-examples.sharding">水平分片</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#orm">扩展ORM</a><ul>
-<li><a class="reference internal" href="#module-examples.extending_query">ORM查询事件</a></li>
-<li><a class="reference internal" href="#module-examples.dogpile_caching">Dogpile缓存</a></li>
+<li><a class="reference internal" href="#id18">扩展 ORM</a><ul>
+<li><a class="reference internal" href="#module-examples.extending_query">ORM 查询事件</a></li>
+<li><a class="reference internal" href="#module-examples.dogpile_caching">Dogpile 缓存</a></li>
 </ul>
 </li>
 </ul>
@@ -269,14 +269,14 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-examples" >
         
-<section id="orm-examples">
-<span id="examples-toplevel"></span><h1>ORM Examples<a class="headerlink" href="#orm-examples" title="Permalink to this heading">¶</a></h1>
-<p>SQLAlchemy分发包括各种代码示例，用于说明一组选择的模式，有些是典型的，有些则不太典型。所有示例都是可运行的，可以在发布版的``/examples`路径下找到。这里可以找到所有描述和源代码。</p>
-<p>其他SQLAlchemy示例，一些是用户贡献的，可以在wiki上查找，网址为&lt;<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes">https://www.sqlalchemy.org/trac/wiki/UsageRecipes</a>&gt;`_。</p>
-<section id="id1">
-<h2>映射示例<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<section id="orm">
+<span id="examples-toplevel"></span><h1>ORM 示例<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy 发行版包含各种示例代码，展示了一些典型和非典型的模式。所有可运行的示例都可以在发行版的 <code class="docutils literal notranslate"><span class="pre">/examples</span></code> 目录中找到。这里可以找到所有的描述和源代码。</p>
+<p>另外，有一些SQLAlchemy示例是由用户贡献的，可以在 wiki 上 <a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes">https://www.sqlalchemy.org/trac/wiki/UsageRecipes</a> 找到。</p>
+<section id="mapping-recipes">
+<h2>Mapping Recipes<a class="headerlink" href="#mapping-recipes" title="Permalink to this heading">¶</a></h2>
 <section id="module-examples.adjacency_list">
-<span id="id2"></span><span id="examples-adjacencylist"></span><h3>相邻列表<a class="headerlink" href="#module-examples.adjacency_list" title="Permalink to this heading">¶</a></h3>
+<span id="id1"></span><span id="examples-adjacencylist"></span><h3>邻接列表<a class="headerlink" href="#module-examples.adjacency_list" title="Permalink to this heading">¶</a></h3>
 <p>An example of a dictionary-of-dictionaries structure mapped using
 an adjacency list model.</p>
 <p>E.g.:</p>
@@ -294,7 +294,7 @@ an adjacency list model.</p>
 </p>
 </section>
 <section id="module-examples.association">
-<span id="id3"></span><span id="examples-associations"></span><h3>联想<a class="headerlink" href="#module-examples.association" title="Permalink to this heading">¶</a></h3>
+<span id="id2"></span><span id="examples-associations"></span><h3>关联<a class="headerlink" href="#module-examples.association" title="Permalink to this heading">¶</a></h3>
 <p>Examples illustrating the usage of the “association object” pattern,
 where an intermediary class mediates the relationship between two
 classes that are associated in a many-to-many pattern.</p>
@@ -316,7 +316,7 @@ to <code class="docutils literal notranslate"><span class="pre">OrderItem</span>
 </p>
 </section>
 <section id="module-examples.asyncio">
-<span id="asyncio"></span><span id="examples-asyncio"></span><h3>Asyncio集成<a class="headerlink" href="#module-examples.asyncio" title="Permalink to this heading">¶</a></h3>
+<span id="asyncio"></span><span id="examples-asyncio"></span><h3>Asyncio 集成<a class="headerlink" href="#module-examples.asyncio" title="Permalink to this heading">¶</a></h3>
 <p>Examples illustrating the asyncio engine feature of SQLAlchemy.</p>
 <p>Listing of files:<ul class="simple">
 <li><p><p><a class="reference external" href="../_modules/examples/asyncio/async_orm.html">async_orm.py</a> - Illustrates use of the <code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.asyncio.AsyncSession</span></code> object
@@ -338,7 +338,7 @@ for asynchronous ORM use, including the optional run_sync() method.</p>
 </p>
 </section>
 <section id="module-examples.graphs">
-<span id="id4"></span><h3>有向图<a class="headerlink" href="#module-examples.graphs" title="Permalink to this heading">¶</a></h3>
+<span id="id3"></span><h3>有向图<a class="headerlink" href="#module-examples.graphs" title="Permalink to this heading">¶</a></h3>
 <p>An example of persistence for a directed graph structure.   The
 graph is stored as a collection of edges, each referencing both a
 “lower” and an “upper” node in a table of nodes.  Basic persistence
@@ -354,7 +354,7 @@ and querying for lower- and upper- neighbors are illustrated:</p>
 </p>
 </section>
 <section id="module-examples.dynamic_dict">
-<span id="id5"></span><h3>动态关系作为字典<a class="headerlink" href="#module-examples.dynamic_dict" title="Permalink to this heading">¶</a></h3>
+<span id="id4"></span><h3>作为字典的动态关系<a class="headerlink" href="#module-examples.dynamic_dict" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates how to place a dictionary-like facade on top of a
 “dynamic” relation, so that dictionary operations (assuming simple
 string keys) can operate upon a large collection without loading the
@@ -365,7 +365,7 @@ full collection at once.</p>
 </p>
 </section>
 <section id="module-examples.generic_associations">
-<span id="id6"></span><span id="examples-generic-associations"></span><h3>通用关联<a class="headerlink" href="#module-examples.generic_associations" title="Permalink to this heading">¶</a></h3>
+<span id="id5"></span><span id="examples-generic-associations"></span><h3>通用关联<a class="headerlink" href="#module-examples.generic_associations" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates various methods of associating multiple types of
 parents with a particular child object.</p>
 <p>The examples all use the declarative extension along with
@@ -405,7 +405,7 @@ those objects on behalf of a particular parent class.</p>
 </p>
 </section>
 <section id="module-examples.materialized_paths">
-<span id="id7"></span><h3>材质路径<a class="headerlink" href="#module-examples.materialized_paths" title="Permalink to this heading">¶</a></h3>
+<span id="id6"></span><h3>材质路径<a class="headerlink" href="#module-examples.materialized_paths" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates the “materialized paths” pattern for hierarchical data using the
 SQLAlchemy ORM.</p>
 <p>Listing of files:<ul class="simple">
@@ -415,7 +415,7 @@ SQLAlchemy ORM.</p>
 </p>
 </section>
 <section id="module-examples.nested_sets">
-<span id="id8"></span><h3>嵌套集<a class="headerlink" href="#module-examples.nested_sets" title="Permalink to this heading">¶</a></h3>
+<span id="id7"></span><h3>嵌套集<a class="headerlink" href="#module-examples.nested_sets" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates a rudimentary way to implement the “nested sets”
 pattern for hierarchical data using the SQLAlchemy ORM.</p>
 <p>Listing of files:<ul class="simple">
@@ -425,7 +425,7 @@ pattern for hierarchical data using the SQLAlchemy ORM.</p>
 </p>
 </section>
 <section id="module-examples.performance">
-<span id="id9"></span><span id="examples-performance"></span><h3>性能<a class="headerlink" href="#module-examples.performance" title="Permalink to this heading">¶</a></h3>
+<span id="id8"></span><span id="examples-performance"></span><h3>性能<a class="headerlink" href="#module-examples.performance" title="Permalink to this heading">¶</a></h3>
 <p>A performance profiling suite for a variety of SQLAlchemy use cases.</p>
 <p>Each suite focuses on a specific use case with a particular performance
 profile and associated implications:</p>
@@ -472,7 +472,7 @@ individual suites to be run:</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../faq/performance.html#faq-how-to-profile"><span class="std std-ref">如何对由 SQLAlchemy 驱动的应用进行性能分析？</span></a></p>
+<p><a class="reference internal" href="../faq/performance.html#faq-how-to-profile"><span class="std std-ref">如何为SQLAlchemy提供动态性能分析？</span></a></p>
 </div>
 <section id="file-listing">
 <h4>File Listing<a class="headerlink" href="#file-listing" title="Permalink to this heading">¶</a></h4>
@@ -640,7 +640,7 @@ we can create a file <code class="docutils literal notranslate"><span class="pre
 </section>
 </section>
 <section id="module-examples.space_invaders">
-<span id="id10"></span><span id="examples-spaceinvaders"></span><h3>太空侵略者<a class="headerlink" href="#module-examples.space_invaders" title="Permalink to this heading">¶</a></h3>
+<span id="id9"></span><span id="examples-spaceinvaders"></span><h3>太空侵略者<a class="headerlink" href="#module-examples.space_invaders" title="Permalink to this heading">¶</a></h3>
 <p>A Space Invaders game using SQLite as the state machine.</p>
 <p>Originally developed in 2012.  Adapted to work in Python 3.</p>
 <p>Runs in a textual console using ASCII art.</p>
@@ -658,13 +658,13 @@ we can create a file <code class="docutils literal notranslate"><span class="pre
 </p>
 </section>
 <section id="examples-versioning">
-<span id="id11"></span><h3>版本化对象<a class="headerlink" href="#examples-versioning" title="Permalink to this heading">¶</a></h3>
+<span id="id10"></span><h3>版本对象<a class="headerlink" href="#examples-versioning" title="Permalink to this heading">¶</a></h3>
 <section id="module-examples.versioned_history">
-<span id="id12"></span><span id="examples-versioned-history"></span><h4>具有历史表的版本控制<a class="headerlink" href="#module-examples.versioned_history" title="Permalink to this heading">¶</a></h4>
+<span id="id11"></span><span id="examples-versioned-history"></span><h4>使用历史表进行版本化<a class="headerlink" href="#module-examples.versioned_history" title="Permalink to this heading">¶</a></h4>
 <p>Illustrates an extension which creates version tables for entities and stores
 records for each change. The given extensions generate an anonymous “history”
 class which represents historical versions of the target object.</p>
-<p>Compare to the <a class="reference internal" href="#examples-versioned-rows"><span class="std std-ref">使用时态行进行版本控制</span></a> examples which write updates
+<p>Compare to the <a class="reference internal" href="#examples-versioned-rows"><span class="std std-ref">使用时间行进行版本化</span></a> examples which write updates
 as new rows in the same table, without using a separate history table.</p>
 <p>Usage is illustrated via a unit test module <code class="docutils literal notranslate"><span class="pre">test_versioning.py</span></code>, which can
 be run like any other module, using <code class="docutils literal notranslate"><span class="pre">unittest</span></code> internally:</p>
@@ -716,7 +716,7 @@ can be applied:</p>
 <span class="n">SomeHistoryClass</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="o">.</span><span class="n">__history_mapper__</span><span class="o">.</span><span class="n">class_</span></pre></div>
 </div>
 <p>The versioning example also integrates with the ORM optimistic concurrency
-feature documented at <span class="xref std std-ref">mapper_version_counter</span>.   To enable this feature,
+feature documented at <a class="reference internal" href="versioning.html#mapper-version-counter"><span class="std std-ref">配置版本计数器</span></a>.   To enable this feature,
 set the flag <code class="docutils literal notranslate"><span class="pre">Versioned.use_mapper_versioning</span></code> to True:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="n">Versioned</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;sometable&#39;</span>
@@ -743,12 +743,12 @@ module functions.</p>
 </p>
 </section>
 <section id="module-examples.versioned_rows">
-<span id="id13"></span><span id="examples-versioned-rows"></span><h4>使用时态行进行版本控制<a class="headerlink" href="#module-examples.versioned_rows" title="Permalink to this heading">¶</a></h4>
+<span id="id12"></span><span id="examples-versioned-rows"></span><h4>使用时间行进行版本化<a class="headerlink" href="#module-examples.versioned_rows" title="Permalink to this heading">¶</a></h4>
 <p>Several examples that illustrate the technique of intercepting changes
 that would be first interpreted as an UPDATE on a row, and instead turning
 it into an INSERT of a new row, leaving the previous row intact as
 a historical version.</p>
-<p>Compare to the <a class="reference internal" href="#examples-versioned-history"><span class="std std-ref">具有历史表的版本控制</span></a> example which writes a
+<p>Compare to the <a class="reference internal" href="#examples-versioned-history"><span class="std std-ref">使用历史表进行版本化</span></a> example which writes a
 history row to a separate history table.</p>
 <p>Listing of files:<ul class="simple">
 <li><p><p><a class="reference external" href="../_modules/examples/versioned_rows/versioned_map.html">versioned_map.py</a> - A variant of the versioned_rows example built around the
@@ -773,7 +773,7 @@ to only the most recent version.</p>
 </section>
 </section>
 <section id="module-examples.vertical">
-<span id="id14"></span><span id="examples-vertical-tables"></span><h3>垂直属性映射<a class="headerlink" href="#module-examples.vertical" title="Permalink to this heading">¶</a></h3>
+<span id="id13"></span><span id="examples-vertical-tables"></span><h3>垂直属性映射<a class="headerlink" href="#module-examples.vertical" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates “vertical table” mappings.</p>
 <p>A “vertical table” refers to a technique where individual attributes
 of an object are stored as distinct rows in a table. The “vertical
@@ -809,9 +809,9 @@ information stored in the attribute, such as integer, string, or date.</p>
 </section>
 </section>
 <section id="examples-inheritance">
-<span id="id15"></span><h2>继承映射示例<a class="headerlink" href="#examples-inheritance" title="Permalink to this heading">¶</a></h2>
+<span id="id14"></span><h2>继承映射示例<a class="headerlink" href="#examples-inheritance" title="Permalink to this heading">¶</a></h2>
 <section id="module-examples.inheritance">
-<span id="id16"></span><h3>基本继承映射<a class="headerlink" href="#module-examples.inheritance" title="Permalink to this heading">¶</a></h3>
+<span id="id15"></span><h3>基本继承映射<a class="headerlink" href="#module-examples.inheritance" title="Permalink to this heading">¶</a></h3>
 <p>Working examples of single-table, joined-table, and concrete-table
 inheritance as described in <span class="xref std std-ref">inheritance_toplevel</span>.</p>
 <p>Listing of files:<ul class="simple">
@@ -828,7 +828,7 @@ inheritance as described in <span class="xref std std-ref">inheritance_toplevel<
 <section id="api">
 <h2>特殊API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
 <section id="module-examples.custom_attributes">
-<span id="id17"></span><span id="examples-instrumentation"></span><h3>属性检测<a class="headerlink" href="#module-examples.custom_attributes" title="Permalink to this heading">¶</a></h3>
+<span id="id16"></span><span id="examples-instrumentation"></span><h3>属性检查<a class="headerlink" href="#module-examples.custom_attributes" title="Permalink to this heading">¶</a></h3>
 <p>Examples illustrating modifications to SQLAlchemy’s attribute management
 system.</p>
 <p>Listing of files:<ul class="simple">
@@ -847,14 +847,14 @@ and listen for change events.</p>
 </p>
 </section>
 <section id="module-examples.sharding">
-<span id="id18"></span><span id="examples-sharding"></span><h3>水平分片<a class="headerlink" href="#module-examples.sharding" title="Permalink to this heading">¶</a></h3>
+<span id="id17"></span><span id="examples-sharding"></span><h3>水平分片<a class="headerlink" href="#module-examples.sharding" title="Permalink to this heading">¶</a></h3>
 <p>A basic example of using the SQLAlchemy Sharding API.
 Sharding refers to horizontally scaling data across multiple
 databases.</p>
 <p>The basic components of a “sharded” mapping are:</p>
 <ul class="simple">
-<li><p>multiple <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> instances, each assigned a “shard id”.
-These <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> instances may refer to different databases,
+<li><p>multiple <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> instances, each assigned a “shard id”.
+These <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> instances may refer to different databases,
 or different schemas / accounts within the same database, or they can
 even be differentiated only by options that will cause them to access
 different schemas or tables when used.</p></li>
@@ -893,13 +893,13 @@ have multiple tables using a naming convention.</p>
 </p>
 </section>
 </section>
-<section id="orm">
-<h2>扩展ORM<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
+<section id="id18">
+<h2>扩展 ORM<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h2>
 <section id="module-examples.extending_query">
-<span id="id19"></span><span id="examples-session-orm-events"></span><h3>ORM查询事件<a class="headerlink" href="#module-examples.extending_query" title="Permalink to this heading">¶</a></h3>
+<span id="id19"></span><span id="examples-session-orm-events"></span><h3>ORM 查询事件<a class="headerlink" href="#module-examples.extending_query" title="Permalink to this heading">¶</a></h3>
 <p>Recipes which illustrate augmentation of ORM SELECT behavior as used by
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> with <a class="reference internal" href="../glossary.html#term-2.0-style"><span class="xref std std-term">2.0 style</span></a> use of
-<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>, as well as the <a class="reference internal" href="../glossary.html#term-1.x-style"><span class="xref std std-term">1.x style</span></a> <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> with <span class="xref std std-term">2.0 style</span> use of
+<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>, as well as the <span class="xref std std-term">1.x style</span> <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
 object.</p>
 <p>Examples include demonstrations of the <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>
 option as well as the <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a> hook.</p>
@@ -916,7 +916,7 @@ to selected entities.</p>
 </p>
 </section>
 <section id="module-examples.dogpile_caching">
-<span id="dogpile"></span><span id="examples-caching"></span><h3>Dogpile缓存<a class="headerlink" href="#module-examples.dogpile_caching" title="Permalink to this heading">¶</a></h3>
+<span id="dogpile"></span><span id="examples-caching"></span><h3>Dogpile 缓存<a class="headerlink" href="#module-examples.dogpile_caching" title="Permalink to this heading">¶</a></h3>
 <p>Illustrates how to embed
 <a class="reference external" href="https://dogpilecache.sqlalchemy.org/">dogpile.cache</a>
 functionality with ORM queries, allowing full cache control
@@ -1005,9 +1005,9 @@ the cache is gone.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="extensions/instrumentation.html" title="previous chapter">备选类仪器</a>
+        <a href="extensions/instrumentation.html" title="previous chapter">类替代仪器</a>
         Next:
-        <a href="../core/index.html" title="next chapter">SQLAlchemy核心模块</a>
+        <a href="../core/index.html" title="next chapter">SQLAlchemy 核心</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -1017,7 +1017,7 @@ the cache is gone.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:10
+    Documentation last generated: 2023/8/18 18:21:10
 
     </div>
 </div>

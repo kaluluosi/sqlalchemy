@@ -161,8 +161,7 @@
 <li><span class="link-container"><a class="reference external" href="#triggers">Triggers</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#rowcount-support-orm-versioning">Rowcount Support / ORM Versioning</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#enabling-snapshot-isolation">Enabling Snapshot Isolation</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#sql-server-sql-constructs">SQL Server SQL Constructs</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#sql-server">SQL Server数据类型</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sql-server-sql-constructs">SQL Server SQL Constructs</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mssql.BIT"><code class="docutils literal notranslate"><span class="pre">BIT</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.dialects.mssql.BIT.__init__"><code class="docutils literal notranslate"><span class="pre">BIT.__init__()</span></code></a></span></li>
 </ul>
@@ -312,8 +311,7 @@
 <li><a class="reference internal" href="#triggers">Triggers</a></li>
 <li><a class="reference internal" href="#rowcount-support-orm-versioning">Rowcount Support / ORM Versioning</a></li>
 <li><a class="reference internal" href="#enabling-snapshot-isolation">Enabling Snapshot Isolation</a></li>
-<li><a class="reference internal" href="#sql-server-sql-constructs">SQL Server SQL Constructs</a></li>
-<li><a class="reference internal" href="#sql-server">SQL Server数据类型</a><ul>
+<li><a class="reference internal" href="#sql-server-sql-constructs">SQL Server SQL Constructs</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mssql.BIT"><code class="docutils literal notranslate"><span class="pre">BIT</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.dialects.mssql.BIT.__init__"><code class="docutils literal notranslate"><span class="pre">BIT.__init__()</span></code></a></li>
 </ul>
@@ -403,8 +401,8 @@
 <section id="dialect-mssql">
 <p>Support for the Microsoft SQL Server database.</p>
 <p>The following table summarizes current support levels for database release versions.</p>
-<p><table class="docutils align-default" id="id3">
-<caption><span class="caption-text"><strong>Supported Microsoft SQL Server versions</strong></span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<p><table class="docutils align-default" id="id5">
+<caption><span class="caption-text"><strong>Supported Microsoft SQL Server versions</strong></span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Support type</p></th>
 <th class="head"><p>Versions</p></th>
@@ -494,7 +492,7 @@ to <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.C
 an <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a> object. Specifying both ways of configuring
 an IDENTITY will result in a compile error.
 These options are also no longer returned as part of the
-<code class="docutils literal notranslate"><span class="pre">dialect_options</span></code> key in <a class="reference internal" href="../core/reflection.html#sqlalchemy.engine.reflection.Inspector.get_columns" title="sqlalchemy.engine.reflection.Inspector.get_columns"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_columns()</span></code></a>.
+<code class="docutils literal notranslate"><span class="pre">dialect_options</span></code> key in <code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_columns()</span></code>.
 Use the information in the <code class="docutils literal notranslate"><span class="pre">identity</span></code> key instead.</p>
 </div>
 <div class="deprecated">
@@ -834,9 +832,9 @@ the SQL Server dialect, including DDL generation and reflection.</p>
 both via a dialect-specific parameter
 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.isolation_level</span></code>
 accepted by <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>,
-as well as the <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.isolation_level</span></code>
+as well as the <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options.params.isolation_level" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.isolation_level</span></code></a>
 argument as passed to
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code>.
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>.
 This feature works by issuing the
 command <code class="docutils literal notranslate"><span class="pre">SET</span> <span class="pre">TRANSACTION</span> <span class="pre">ISOLATION</span> <span class="pre">LEVEL</span> <span class="pre">&lt;level&gt;</span></code> for
 each new connection.</p>
@@ -862,18 +860,18 @@ each new connection.</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">SNAPSHOT</span></code> - specific to SQL Server</p></li>
 </ul>
 <p>There are also more options for isolation level configurations, such as
-“sub-engine” objects linked to a main <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> which each apply
+“sub-engine” objects linked to a main <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> which each apply
 different isolation level settings.  See the discussion at
-<a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置交易隔离级别，包括DBAPI Autocommit</span></a> for background.</p>
+<a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a> for background.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置交易隔离级别，包括DBAPI Autocommit</span></a></p>
+<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a></p>
 </div>
 </section>
 <section id="temporary-table-resource-reset-for-connection-pooling">
 <span id="mssql-reset-on-return"></span><h2>Temporary Table / Resource Reset for Connection Pooling<a class="headerlink" href="#temporary-table-resource-reset-for-connection-pooling" title="Permalink to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a> connection pool implementation used
-by the SQLAlchemy <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> object includes
+by the SQLAlchemy <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> object includes
 <a class="reference internal" href="../core/pooling.html#pool-reset-on-return"><span class="std std-ref">reset on return</span></a> behavior that will invoke
 the DBAPI <code class="docutils literal notranslate"><span class="pre">.rollback()</span></code> method when connections are returned to the pool.
 While this rollback will clear out the immediate state used by the previous
@@ -919,7 +917,7 @@ use the <a class="reference internal" href="../core/events.html#sqlalchemy.event
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/pooling.html#pool-reset-on-return"><span class="std std-ref">checkin时重置</span></a> - in the <a class="reference internal" href="../core/pooling.html"><span class="std std-ref">连接池</span></a> documentation</p>
+<p><a class="reference internal" href="../core/pooling.html#pool-reset-on-return"><span class="std std-ref">返回后重置表单</span></a> - in the <span class="xref std std-ref">pooling_toplevel</span> documentation</p>
 </div>
 </section>
 <section id="nullability">
@@ -1237,7 +1235,7 @@ following ALTER DATABASE commands executed at the SQL prompt:</p>
 </section>
 <section id="sql-server-sql-constructs">
 <h2>SQL Server SQL Constructs<a class="headerlink" href="#sql-server-sql-constructs" title="Permalink to this heading">¶</a></h2>
-<p>与所有SQLAlchemy方言一样，所有已知在SQL服务器中有效的大写类型都可以从顶级方言中导入，无论它们起源于 <a class="reference internal" href="../core/type_basics.html#module-sqlalchemy.types" title="sqlalchemy.types"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.types</span></code></a> 还是本地方言:</p>
+<p>与所有SQLAlchemy方言一样，所有已知适用于SQL Server的大写类型都可以从顶级方言中导入，无论它们起源于 :mod：<a href="#id2"><span class="problematic" id="id3">`</span></a>sqlalchemy.types`或本地方言:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects.mssql</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">BIGINT</span><span class="p">,</span>
     <span class="n">BINARY</span><span class="p">,</span>
@@ -1272,10 +1270,7 @@ following ALTER DATABASE commands executed at the SQL prompt:</p>
     <span class="n">VARCHAR</span><span class="p">,</span>
 <span class="p">)</span></pre></div>
 </div>
-</section>
-<section id="sql-server">
-<h2>SQL Server数据类型<a class="headerlink" href="#sql-server" title="Permalink to this heading">¶</a></h2>
-<p>特定于SQL Server或具有SQL Server特定的构造参数的类型如下：</p>
+<p>特定于SQL Server,或具有特定于SQL Server的构造参数的类型如下：</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -1374,7 +1369,7 @@ have an explicit name in order to support schema-management
 concerns.  This can be established either by setting the
 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Boolean.params.name" title="sqlalchemy.types.Boolean"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Boolean.name</span></code></a> parameter or by setting up an
 appropriate naming convention; see
-<span class="xref std std-ref">constraint_naming_conventions</span> for background.</p>
+<a class="reference internal" href="../core/constraints.html#constraint-naming-conventions"><span class="std std-ref">配置约束命名约定</span></a> for background.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4: </span>- this flag now defaults to False, meaning
@@ -2338,7 +2333,7 @@ Server dialect supports this parameter by passing the
 <p><span class="versionmodified changed">Changed in version 2.0.9: </span>- the <code class="docutils literal notranslate"><span class="pre">fast_executemany</span></code> parameter now has its
 intended effect of this PyODBC feature taking effect for all INSERT
 statements that are executed with multiple parameter sets, which don’t
-include RETURNING.  Previously, SQLAlchemy 2.0’s <a class="reference internal" href="../glossary.html#term-insertmanyvalues"><span class="xref std std-term">insertmanyvalues</span></a>
+include RETURNING.  Previously, SQLAlchemy 2.0’s <span class="xref std std-term">insertmanyvalues</span>
 feature would cause <code class="docutils literal notranslate"><span class="pre">fast_executemany</span></code> to not be used in most cases
 even if specified.</p>
 </div>
@@ -2356,7 +2351,7 @@ even if specified.</p>
 <p>As of version 2.0, the pyodbc <code class="docutils literal notranslate"><span class="pre">cursor.setinputsizes()</span></code> method is used for
 all statement executions, except for <code class="docutils literal notranslate"><span class="pre">cursor.executemany()</span></code> calls when
 fast_executemany=True where it is not supported (assuming
-<span class="xref std std-ref">insertmanyvalues</span> is kept enabled,
+<a class="reference internal" href="../core/connections.html#engine-insertmanyvalues"><span class="std std-ref">insertmanyvalues</span></a> is kept enabled,
 “fastexecutemany” will not take place for INSERT statements in any case).</p>
 <p>The use of <code class="docutils literal notranslate"><span class="pre">cursor.setinputsizes()</span></code> can be disabled by passing
 <code class="docutils literal notranslate"><span class="pre">use_setinputsizes=False</span></code> to <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>.</p>
@@ -2408,7 +2403,7 @@ be turned off by passing <code class="docutils literal notranslate"><span class=
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:05
+    Documentation last generated: 2023/8/18 18:21:05
 
     </div>
 </div>

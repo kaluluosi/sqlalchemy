@@ -127,24 +127,24 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li class="selected"><span class="link-container"><strong>ORM映射类配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">通过声明性方式映射类</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -204,66 +204,70 @@
         
 <section id="orm">
 <span id="mapper-config-toplevel"></span><h1>ORM映射类配置<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>本文档对ORM配置进行详细参考，但不包括关系，关系详见：<span class="xref std std-ref">relationship_config_toplevel</span>。</p>
-<p>若要快速了解典型的ORM配置，请先参考:ref:<cite>orm_quickstart</cite>。</p>
-<p>若要介绍ORM概念，建议先参考:ref:<cite>unified_tutorial`中的:ref:`tutorial_orm_table_metadata</cite>。</p>
+<dl class="simple">
+<dt>ORM配置的详细参考，不包括关系的详细信息，这些详细信息请参见</dt><dd><p><span class="xref std std-ref">relationship_config_toplevel</span> .</p>
+</dd>
+<dt>要快速查看典型的ORM配置，请从</dt><dd><p>:ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>orm_quickstart`开始。</p>
+</dd>
+<dt>关于对象关系映射在SQLAlchemy中的实现概念的介绍，首先在   <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  中介绍了</dt><dd><p><a class="reference internal" href="../tutorial/metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a> .</p>
+</dd>
+</dl>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="mapping_styles.html">ORM映射类概述</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapping-styles">ORM映射样式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapping-styles">ORM映射风格</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-declarative-mapping">声明式映射</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-imperative-mapping">命令式映射</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapper-configuration-overview">映射类的必要组件</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id11">要映射的类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id14">表或其他从句对象</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#properties">properties字典</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id15">其他映射器配置参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapper-configuration-overview">映射类的基本组件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id61">被映射的类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id64">表或其他来自句子对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-mapping-properties">属性字典</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id100">其他映射器配置参数</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapped-class-behavior">映射类的行为</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#mapped-class-default-constructor">默认的构造函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection">映射器对象的运行时自省</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-mapper">映射器对象的自省</a></li>
-<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate">映射实例的自省</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#mapped-class-default-constructor">默认构造方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection">映射类、实例和映射器的运行时内省</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-mapper">映射器对象的内省</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate">映射实例的内省</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="declarative_mapping.html">使用Declarative映射类</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="declarative_mapping.html">通过声明性方式映射类</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="declarative_styles.html">声明式映射风格</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class">使用声明基类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator">使用装饰器进行声明式映射（无基类）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class">使用声明式基类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator">使用装饰器声明式映射（无声明式基类）</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html">使用 Declarative 进行表配置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#annotated-declarative-table-mapped-column">使用 Annotated Declarative Table（对 “mapped_column()” 进行类型注释的类型注释格式）</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#mapped-column-null-mapped"><code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 会将数据类型和可为 Null 的行从 <code class="docutils literal notranslate"><span class="pre">Mapped</span></code> 注释中派生出来</a></li>
-<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-type-map">自定义类型映射</a></li>
-<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#id2">动态映射多个类型配置</a></li>
-<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#python-enum-pep-586-literal">在类型映射中使用 Python <code class="docutils literal notranslate"><span class="pre">Enum</span></code> 或 pep-586 <code class="docutils literal notranslate"><span class="pre">Literal</span></code> 类型</a></li>
-<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#mapped-column-dataclass">``mapped_column()``中的dataclass功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html">使用Declarative配置Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapped-column-declarative-table">使用 <code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 的Declarative Table</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#declarative-table-mapped-column">在类型注释中使用注释式的Declarative Table (<code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 的类型注释形式)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#orm-declarative-metadata">访问表和元数据</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-configuration">声明式表配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#declarative-table">使用 Declarative Table 的显式模式名称</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-column-naming">为映射表列显式命名</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-metadata">访问表和元数据</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-configuration">声明式表配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-schema-name">在声明性表中明确模式名称</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#automap">使用 Automap</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-automated-reflection-schemes">从反射表自动命名列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-primary-key">映射到一组明确的主键列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#include-exclude-cols">映射表中的一个子集列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#imperative-table-declarative-declarative">具有 Imperative Table 的 Declarative （俗称混合 Declarative）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-reflection">基于反射的映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#automap">使用 Automap 反射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-automated-reflection-schemes">从反射表中自动化列命名方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-primary-key">映射到一组明确设置的主键列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#include-exclude-cols">映射表的一个子集的列</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_config.html">使用 Declarative 进行映射器配置</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#orm-declarative-properties">使用 Declarative 定义映射属性</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declarative-mapper">使用 Declarative 进行 Mapper 配置选项</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#id2">动态构造映射器参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html">使用声明式进行Mapper配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#orm-declarative-properties">使用声明式定义映射属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#orm-declarative-mapper-options">用声明方式进行Mapper配置选项</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#id3">动态构造映射器参数</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#id3">其他 Declarative 映射指令</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#id4">其它声明式映射指令</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="declarative_config.html#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="declarative_config.html#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="declarative_config.html#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></li>
@@ -273,105 +277,106 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html">使用 Mixins 构成映射层次</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#id15">在混合和基类中添加映射器属性</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#mixintable-mapper">…从多个Mixin组合Table/Mapper参数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#mixin">使用Mixin创建索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html">使用 Mixin 构建映射层次结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#id1">混合使用和基础类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#id2">混入列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#orm-declarative-mixins-relationships">混合使用关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#decl-mixin-inheritance">使用Mixin类和基类与 映射继承模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#id5">使用 Mixin 创建索引</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="dataclasses.html">与dataclasses和attrs集成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses">声明性数据类映射</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id20">类级特性配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id31">关键字配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id42">属性配置</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#id55">列默认值</a></li>
-<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#annotated">与Annotated集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses">声明数据类映射</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id2">类级特征配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id3">属性配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#id6">列默认值</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#id7">与注释</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#mixin">使用mixin和抽象超类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id72">关系配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses-non-mapped-fields">使用非映射数据类字段</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#pydantic">与Pydantic等备用数据类提供者的集成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#orm-declarative-dc-mixins">使用基类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id9">关系配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#pydantic">与Pydantic等替代数据类提供程序集成</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm">将ORM映射应用于现有的数据类（传统数据类使用）</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#declarative-with-imperative-table">使用Declarative With Imperative Table映射预存在的数据类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#declarative-style">使用Declarative-style字段映射预存在的数据类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm">将ORM映射应用于现有数据类（旧数据类用法）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#orm-declarative-dataclasses-imperative-table">使用“自声明式表”​​映射现有数据类</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#mixins-dataclasses">使用声明性 mixins 与预先存在的 dataclasses</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#dataclasses">使用命令式映射映射预先存在的 dataclasses</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm-attrs">将 ORM 映射应用于现有的 attrs 类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id13">使用声明性“命令式表”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#attrs">使用命令式映射映射 attrs</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#id1">使用混合类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#column-property">使用 column_property</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mapped_sql_expr.html#column-property-declarative">将 column_property() 添加到现有的 Declarative 映射类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions-composed">在映射时间从列属性构成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mapped_sql_expr.html">将SQL表达式映射为属性</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#hybrid">使用Hybrid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#column-property">使用column_property</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions-composed">在映射时从列属性组合</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#id3">使用列递延与 <code class="docutils literal notranslate"><span class="pre">column_property()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#attribute">使用普通描述符 attribute</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#mapper-querytime-expression">映射时间 SQL 表达式加载属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#id26">使用普通描述符</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mapped_attributes.html">更改属性行为</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id4">简单验证器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id39">使用自定义数据类型在核心级别</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id40">使用解析器和混合体</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id89">同义词</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id112">自定义比较器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#simple-validators">简单的验证器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapped_attributes.html#sqlalchemy.orm.validates"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="composites.html">组合列类型</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#id4">使用已映射的组合列类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#orm-composite-other-forms">其他用于复合的映射形式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#legacy-non-dataclasses">使用Legacy Non-Dataclasses</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#id32">跟踪复合中的原地突变</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#composite-operations">重新定义复合的比较操作</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#id36">嵌套复合</a></li>
-<li class="toctree-l2"><a class="reference internal" href="composites.html#api">组合API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id5">在核心级别使用自定义数据类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#hybrids">使用描述符和混合（Hybrids）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapped_attributes.html#id0"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#synonyms">检验（Synonyms）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapped_attributes.html#sqlalchemy.orm.synonym"><code class="docutils literal notranslate"><span class="pre">synonym()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#custom-comparators">运算符自定义</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="composites.html">复合列类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id2">使用映射的复合列类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#orm-composite-other-forms">其他复合形式的映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#composite-legacy-no-dataclass">使用旧版非数据类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id5">追踪复合对象上的现场变化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#composite-operations">为复合重新定义比较操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id7">嵌套复合对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#api">复合API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="composites.html#sqlalchemy.orm.composite"><code class="docutils literal notranslate"><span class="pre">composite()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="inheritance.html">映射类继承层次结构</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="inheritance.html#joined-inheritance">联接表继承</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id25">联接继承关系</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id30">载入联接继承映射</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="inheritance.html#id31">单表继承</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#use-existing-column">使用 use_existing_column 解决列冲突</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id54">单表继承关系</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-abstract">使用``polymorphic_abstract``建立更深层次的层级</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id67">载入单表继承映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#joined-inheritance">联结表继承</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id4">联结继承中的关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id5">联结继承映射的加载</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inheritance.html#concrete-polymorphic">具体多态加载配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#abstract-concrete-base">具体抽象类</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id90">与具体继承的关系</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id93">具体继承的加载</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nonstandard_mappings.html">非传统映射</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#maptojoin">将一个类映射到多个表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#maptojoin">将类映射到多个表</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#orm-mapping-arbitrary-subqueries">将类映射到任意子查询</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#id10">一个类的多个映射器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#id6">一个类的多个映射器</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="versioning.html">配置版本计数器</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="versioning.html#id10">简单版本计数</a></li>
-<li class="toctree-l2"><a class="reference internal" href="versioning.html#id15">自定义版本计数器/类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="versioning.html#id16">服务器端版本计数器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="versioning.html#id21">编程或条件版本计数器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id3">简单的版本计数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#custom-version-counter">自定义版本计数器/类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#server-side-version-counter">服务器端版本计数器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id10">编程或条件版本计数器</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="mapping_api.html">类映射API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mapping_api.html#sqlalchemy.orm.util.identity_key"><code class="docutils literal notranslate"><span class="pre">identity_key()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="mapping_api.html">类映射API</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -396,7 +401,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

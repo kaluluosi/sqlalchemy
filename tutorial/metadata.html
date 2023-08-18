@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="SQLAlchemy统一教程" href="index.html" />
-        <link rel="next" title="处理数据" href="data.html" />
-        <link rel="prev" title="处理事务和DBAPI" href="dbapi_transactions.html" />
+        <link rel="next" title="使用数据" href="data.html" />
+        <link rel="prev" title="使用事务和DBAPI" href="dbapi_transactions.html" />
     <!-- end layout.mako headers -->
 
 
@@ -124,22 +124,28 @@
         </h3>
 
         <ul>
-<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">处理事务和DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">使用事务和DBAPI</a></span></li>
 <li class="selected"><span class="link-container"><strong>使用数据库元数据</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#tablemetadata">使用Table对象设置MetaData</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#table">Table 的组件</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id12">声明简单的约束</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#table">使用 Table 对象设置元数据</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2"><code class="docutils literal notranslate"><span class="pre">Table</span></code> 的组件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">声明简单约束</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#ddl">将 DDL 发出到数据库</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#orm">使用 ORM 声明形式定义表元数据</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#base">建立一个声明形式 Base</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-declaring-mapped-classes">声明映射类</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-table-reflection">表反射</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id20">下一步</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id36">下一步</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="data.html">处理数据</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
-<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">使用数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM操作数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">使用 ORM 相关对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">更多阅读</a></span></li>
 </ul>
 
 
@@ -171,9 +177,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="dbapi_transactions.html" title="previous chapter">处理事务和DBAPI</a></li>
+                <a href="dbapi_transactions.html" title="previous chapter">使用事务和DBAPI</a></li>
                 <li><b>Next:</b>
-                <a href="data.html" title="next chapter">处理数据</a></li>
+                <a href="data.html" title="next chapter">使用数据</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a></li>
@@ -184,13 +190,19 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#tutorial-working-with-metadata">使用数据库元数据</a><ul>
-<li><a class="reference internal" href="#tablemetadata">使用Table对象设置MetaData</a><ul>
-<li><a class="reference internal" href="#table">Table 的组件</a></li>
-<li><a class="reference internal" href="#id12">声明简单的约束</a></li>
+<li><a class="reference internal" href="#table">使用 Table 对象设置元数据</a><ul>
+<li><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Table</span></code> 的组件</a></li>
+<li><a class="reference internal" href="#id3">声明简单约束</a></li>
+<li><a class="reference internal" href="#ddl">将 DDL 发出到数据库</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#orm">使用 ORM 声明形式定义表元数据</a><ul>
+<li><a class="reference internal" href="#base">建立一个声明形式 Base</a></li>
+<li><a class="reference internal" href="#tutorial-declaring-mapped-classes">声明映射类</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#tutorial-table-reflection">表反射</a></li>
-<li><a class="reference internal" href="#id20">下一步</a></li>
+<li><a class="reference internal" href="#id36">下一步</a></li>
 </ul>
 </li>
 </ul>
@@ -206,43 +218,24 @@
         
 <section id="tutorial-working-with-metadata">
 <span id="id1"></span><h1>使用数据库元数据<a class="headerlink" href="#tutorial-working-with-metadata" title="Permalink to this heading">¶</a></h1>
-<p>现在我们已经具备了使用SQLAlchemy的SQL表达式语言所需的所有组件。SQLAlchemy的核心和ORM的中心是用于流畅、可组合地构造SQL查询的SQL Expression
-Language。这些查询的基础是表示数据库概念（如表和列）的Python对象。这些对象成为数据库元数据。</p>
-<p>SQLAlchemy中用于数据库元数据的最常见的基本对象是:class:<cite>_schema.MetaData</cite>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code>.
-下面的章节将示例说明这些对象是如何在Core导向风格和ORM导向风格中使用的。</p>
+<p>在了解 SQLAlchemy Core 和 ORM 的引擎和 SQL 执行之后，我们准备开始一些 Alchemy。
+SQL 表达式语言是构建 SQL 查询流畅可组合的元素，数据库概念如表格和列在Python中的代表,我们也将其称为  <span class="xref std std-term">数据库元数据</span> .
+对于数据库元元素数据的基础对象是是   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> ,   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> , 和   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .
+此文章将详细介绍这些对象是如何在使用面向核心的风格和面向ORM的风格中使用.</p>
 <div class="orm-header docutils container">
-<p><strong>ORM 读者，就跟我们走吧！</strong></p>
-<p>与其他章节一样，Core用户可以跳过ORM部分，但ORM用户最好从两个角度都熟悉这些对象。
-在使用ORM时，所讨论的:class:<cite>_schema.Table</cite>
-对象是用更间接的（也是完全Python类型化的）方式声明的，但是ORM配置中仍有一个
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象。</p>
+<p><strong>ORM readers, stay with us!</strong></p>
+<p>如其他章节所述，Core 用户可以跳过 ORM 部分，但 ORM 用户最好从两种角度熟悉这些对象。讨论的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象在使用 ORM 时以一种更间接的方式（也是完全 Python 类型）声明，但 ORM 的配置中仍有一个  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象。</p>
 </div>
-<section class="core-header orm-dependency" id="tablemetadata">
-<span id="tutorial-core-metadata"></span><h2>使用Table对象设置MetaData<a class="headerlink" href="#tablemetadata" title="Permalink to this heading">¶</a></h2>
-<p>当我们使用关系型数据库时，数据库中的基本数据保存结构
-我们从中查询的是一个称为 <strong>table</strong> 的数据结构。 在SQLAlchemy中，
-数据库 “table” 最终由一个Python对象来表示，这个对象名字也叫
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>。</p>
-<p>为了开始使用SQLAlchemy Expression Language，我们将需要建立
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code>
-可通过程序方式构建，直接使用
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 构造函数，也可以间接地使用ORM映射的类
-（稍后在 <span class="xref std std-ref">tutorial_orm_table_metadata</span> 中介绍）。还有一个选择是从现有数据库中加载一些或所有表信息，称为 <a class="reference internal" href="../glossary.html#term-reflection"><span class="xref std std-term">reflection</span></a>。</p>
-<p>无论使用哪种方法，我们都始终从一个集合开始
-这是我们放置表的地方，被称为 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>
-对象。 这个对象本质上是一个 <a class="reference internal" href="../glossary.html#term-facade"><span class="xref std std-term">facade</span></a> ，用于存储一个
-以字符串名为键的:class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_schema.Table`对象系列。
-虽然ORM为获取此集合提供了一些选项，但我们始终可以通过自己创建一个集合来实现，它看起来像这样：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">MetaData</span>
+<section class="core-header orm-dependency" id="table">
+<span id="tutorial-core-metadata"></span><h2>使用 Table 对象设置元数据<a class="headerlink" href="#table" title="Permalink to this heading">¶</a></h2>
+<p>当与关系型数据库一起使用时，数据库中的基本数据持有数据的数据结构被称为**表**。
+在 SQLAlchemy 中，数据库 “table” 最终由类似命名为的Python对象   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  表示.</p>
+<p>为了开始使用 SQLAlchemy Expression Language, 我们需要构建   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  代表我们感兴趣的数据库所有表的对象.    <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象通过程序进行构建，直接使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  构造函数，或者通过使用 ORM Mapped 类 (在   <a class="reference internal" href="#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a>  中介绍) 间接构造. 也有选项从现有数据库中加载所有或部分表信息，称为  <span class="xref std std-term">reflection</span> 。</p>
+<p>无论使用哪种方法，我们始终从一个集合开始，将我们的表放置在这里，这被称为   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象. 该对象本质上是一个Python字典的  <span class="xref std std-term">facade</span> , 存储按其字符串名称键入的一系列   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象。虽然ORM提供了一些选项来获取此集合的位置，但我们始终可以直接创建一个集合，其如下所示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">MetaData</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span></pre></div>
 </div>
-<p>当我们拥有一个:class:<cite>_schema.MetaData`对象时，我们可以声明一些
-:class:`_schema.Table`对象。本教程将从经典的开始
-SQLAlchemy教程模型，其中具有名为``user_account``的表，其中存储了例如
-网站的用户，以及一个相关的表``address`</cite>，其中存储与
-<a href="#id4"><span class="problematic" id="id5">``</span></a>user_account``表中的行关联的电子邮件地址。
-当不使用ORM Declarative模型时，我们直接构造每个
-:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_schema.Table`对象，通常将每个分配给一个变量，该变量将是我们在应用程序代码中引用表的方式:</p>
+<p>有了   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象后，我们可以声明一些   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象。此教程将从经典的SQLAlchemy教程模型开始，该模型具有名为 “user_account” 表，其中存储例如网站用户的行，以及一个相关表 “address”，该表存储与 “user_account” 表中的行相关联的电子邮件地址。当完全不使用 ORM Declarative 模型时，我们直接构造每个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象，通常将每个对象分配给变量，“user_table” 就是我们在本文中所用的命名:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;user_account&quot;</span><span class="p">,</span>
@@ -252,60 +245,41 @@ SQLAlchemy教程模型，其中具有名为``user_account``的表，其中存储
 <span class="gp">... </span>    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;fullname&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
 <span class="gp">... </span><span class="p">)</span></pre></div>
 </div>
-<p>在上面的示例中，当我们希望编写引用数据库中的
-<code class="docutils literal notranslate"><span class="pre">user_account``表的代码时，我们将使用``user_table</span></code>
-Python变量参考它。</p>
+<p>通过以上示例，当我们希望编写引用数据库中 “user_account” 表的代码时，我们将使用 “user_table” Python 变量引用该表。</p>
 <aside class="topic">
-<p class="topic-title">我什么时候在我的程序中创建一个 <code class="docutils literal notranslate"><span class="pre">MetaData</span></code> 对象？</p>
-<p>对于整个应用程序而言，具有单个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 对象是最常见的情况，该对象在应用程序的单个位置（通常是在“models”或“dbschema”类型的包中的模块级变量）表示为模块级变量。使用ORM-和Core-declared
-<code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code> 是通常的选择，
-这些表存储在应用程序中与Core和ORM相关的所有元数据中。</p>
-<p>也可以有多个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合; <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象
-可以引用其他集合中的:class:<cite>_schema.Table`对象而不受任何限制。但是，
-对于相互关联的 :class:`_schema.Table</cite> 对象组，从声明和DDL（例如 CREATE 和 DROP）语句发出的角度来看，它们都是在单个:class:<cite>_schema.MetaData</cite> 集合中设置的。</p>
+<p class="topic-title">什么时候在程序中创建 “MetaData” 对象?</p>
+<p>一个恰当的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象对于整个应用程序来说是最常见的情况，常表示为单个位置的模块级变量，通常在“模型”或“dbschema”类别的包中。通常，使用 ORM-centric 的   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  或   <a class="reference internal" href="#tutorial-orm-declarative-base"><span class="std std-ref">Declarative Base</span></a>  基础类访问   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> ，以便 ORM 和 Core 声明的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象共享此相同的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 。</p>
+<p>同样也可以有多个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  集合；   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象可以引用任何其他集合中的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象。但是，对于群组我们建议使用单个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 。  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  集合内从声明和 DDL（即 CREATE 和 DROP）语句的角度来看都更加简单和直接。</p>
 </aside>
-<section id="table">
-<h3>Table 的组件<a class="headerlink" href="#table" title="Permalink to this heading">¶</a></h3>
-<p>我们可以观察到，Python中的:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_schema.Table`构造具有类似于SQL CREATE TABLE语句的外观；以表名称开始，然后列出每个列，其中每个列都有一个名称和数据类型。上面我们使用的对象是：</p>
+<section id="id2">
+<h3><code class="docutils literal notranslate"><span class="pre">Table</span></code> 的组件<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>我们可以观察到在 Python 中编写的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  结构类似于 SQL CREATE TABLE 语句；从表的名称开始，然后列出每列，其中每列都有一个名称和一个数据类型。我们使用的对象如下：</p>
 <ul>
-<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> - 表示数据库表并将其分配给:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_schema.MetaData`集合。</p></li>
-<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> - 表示数据库表中的列，并将其分配给:class:<cite>_schema.Table`对象。:class:`_schema.Column</cite>
-通常包括字符串名称和类型对象。在父类:class:<cite>_schema.Table`的基础上用于保存 :class:`_schema.Column</cite> 对象的集合通常可以通过位于 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.c" title="sqlalchemy.schema.Table.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.c</span></code></a> 的一个关联数组来访问</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span>
-<span class="go">Column(&#39;name&#39;, String(length=30), table=&lt;user_account&gt;)</span>
-
-<span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  - 表示一个数据库表，并将其分配给一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  集合。</p></li>
+<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  - 表示数据库表中的一列，并将其分配给一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象。  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  通常包括一个字符串名称和一个类型对象。在父级   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  中，一组   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象通常通过位于  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.c</span></code>  的关联数组访问:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span></pre></div>
+</div>
+<p>Column(‘name’, String(length=30), table=&lt;user_account&gt;)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 <span class="go">[&#39;id&#39;, &#39;name&#39;, &#39;fullname&#39;]</span></pre></div>
 </div>
 </li>
-<li><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>， <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a> - 这些类表示SQL数据类型，可以将其与 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 一起使用，也可以不实例化地使用。在上面的示例中，我们想将长度为“30”的“name”列分配给“String (30)”，所以我们对其进行了实例化。但是对于”id”和”fullname”，我们没有指定它们，因此我们可以发送类本身。</p></li>
+<li><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a> ，  <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a>  - 这些类表示 SQL 数据类型，并可传递给   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，无论是否需要实例化。在上面的示例中，我们想要为 “name” 列提供长度为 “30”，因此实例化了 <code class="docutils literal notranslate"><span class="pre">String(30)</span></code>。但是对于 “id” 和 “fullname”，我们没有指定这些，因此可以发送类本身。</p></li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>、
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Column`的参考和API文档在</span> <span class="pre">:ref:`metadata_toplevel</span></code> 中。
-数据类型的参考文档在 <a class="reference internal" href="../core/types.html"><span class="std std-ref">SQL数据库类型对象</span></a> 中。</p>
+<p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 、  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  和   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  的参考和 API 文档位于   <span class="xref std std-ref">metadata_toplevel</span> 。数据类型的参考文档位于   <a class="reference internal" href="../core/types.html"><span class="std std-ref">SQL 数据类型对象</span></a> 。</p>
 </div>
-<p>在接下来的部分中，我们将说明
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 最基本的一个函数，它
-在特定的数据库连接上生成 <span class="xref std std-term">DDL</span> 。但是首先
-我们将声明第二个:class:<cite>_schema.Table</cite>，以查看完成的结果。</p>
+<p>接下来，我们将说明   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  的一个基本功能，即在特定的数据库连接上生成  <span class="xref std std-term">DDL</span> 。但首先我们将声明第二个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 。</p>
 </section>
-<section id="id12">
-<h3>声明简单的约束<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
-<p>示例“user_table”中的第一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 包括
-<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.primary_key" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.primary_key</span></code></a> 参数，这是一个简写技术
-表明此 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 应为此表的主键的部分。一般来说，主键
-本身通常是隐含地声明，由 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.PrimaryKeyConstraint" title="sqlalchemy.schema.PrimaryKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimaryKeyConstraint</span></code></a> 构造表示，我们可以在:class:<a href="#id13"><span class="problematic" id="id14">`</span></a>_schema.Table.primary_key`attribut 上看到它:</p>
+<section id="id3">
+<h3>声明简单约束<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>上面示例中的第一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  包括  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.primary_key" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.primary_key</span></code></a>  参数，它是一种简写技术，用于指示此   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  应该是此表的主键的一部分。主键本身通常是隐式声明的，并由   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.PrimaryKeyConstraint" title="sqlalchemy.schema.PrimaryKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrimaryKeyConstraint</span></code></a>  结构表示，我们可以在   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象上的  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.primary_key</span></code>  属性中看到它:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span><span class="o">.</span><span class="n">primary_key</span>
 <span class="go">PrimaryKeyConstraint(Column(&#39;id&#39;, Integer(), table=&lt;user_account&gt;, primary_key=True, nullable=False))</span></pre></div>
 </div>
-<p>明确声明的约束最常见的是表示数据库
-<span class="xref std std-term">foreign key constraint`的 :class:`_schema.ForeignKeyConstraint</span> 对象。当我们声明相互关联的表时，SQLAlchemy不仅会使用这些外键约束声明将其发出到
-数据库，而且还帮助构建SQL表达式。</p>
-<p>含有仅涉及目标表上的单个列的 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>
-通常使用列级简写符号来声明 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 对象。通常，表二
-称为``address``，将具有引用``user``表的外键约束，如下所示:</p>
+<p>通常显式声明的约束是对应于数据库  <span class="xref std std-term">外键约束</span>  的   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>  对象。当我们声明相互关联的表时，SQLAlchemy 不仅使用这些外键约束声明，以便将它们发出到数据库中的 CREATE 语句中，而且对于构建 SQL 表达式也很有帮助。</p>
+<p>涉及目标表中仅包含单个列的   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>  通常使用基于列的快捷方式符号   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  对象进行声明。下面声明了一个将具有引用 <code class="docutils literal notranslate"><span class="pre">user</span></code> 表的外键约束的第二个表 <code class="docutils literal notranslate"><span class="pre">address</span></code>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">address_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;address&quot;</span><span class="p">,</span>
@@ -315,15 +289,163 @@ Python变量参考它。</p>
 <span class="gp">... </span>    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;email_address&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
 <span class="gp">... </span><span class="p">)</span></pre></div>
 </div>
-<p>上面的表还采用了第三种约束，这在SQL中是“NOT NULL”约束，使用
-:paramref:<a href="#id15"><span class="problematic" id="id16">`</span></a>_schema.Column.nullable`参数来指示。</p>
+<p>以上表还使用了第三种约束，即在 SQL 中为“NOT NULL”约束，上面使用  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.nullable" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.nullable</span></code></a>  参数表示。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>在 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 定义中使用 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 对象时，我们可以省略该 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 的数据类型；它将从相关列的类型自动推断出来，在上面的示例中是“user_account.id”的 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a> 数据类型。</p>
+<p>在   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  定义中使用   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  对象时，我们可以省略该   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  的数据类型；它将从相关列的数据类型自动推断出来，在上面的示例中是 <code class="docutils literal notranslate"><span class="pre">user_account.id</span></code> 列的   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>  数据类型。</p>
 </div>
-<p>在下一节中，我们将发出DDL的完整结果。</p>
-<p>从ORM映射将DDL发出到数据库
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^由于我们的 ORM 映射类与 <cite>~sqlalchemy.schema.MetaData</cite> 中包含的 <cite>~sqlalchemy.schema.Table</cite> 对象相关联，因此使用 Declarative Base 发出 DDL 的过程与 <span class="xref std std-ref">tutorial_emitting_ddl</span> 中描述的过程相同。在我们的情况下，我们已经在 SQLite 数据库中生成了``user``和 <a href="#id17"><span class="problematic" id="id18">``</span></a>address``表。如果我们还没有这样做，我们可以自由地使用与 ORM Declarative Base 类相关联的 <cite>~sqlalchemy.schema.MetaData</cite>，通过访问 <code class="xref py py-attr docutils literal notranslate"><span class="pre">DeclarativeBase.metadata</span></code> 属性中的集合，然后像之前一样使用 <cite>~sqlalchemy.schema.MetaData.create_all</cite> 来生成表。在这种情况下，运行 PRAGMA 语句，但不会生成新表，因为它们已经存在：</p>
+<p>在下一节中，我们将发出“user”和“address”表的完整 DDL，以查看完成的结果。</p>
+</section>
+<section id="ddl">
+<span id="tutorial-emitting-ddl"></span><h3>将 DDL 发出到数据库<a class="headerlink" href="#ddl" title="Permalink to this heading">¶</a></h3>
+<p>我们构建了一个表示数据库中两个表的对象结构，从根   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象开始，然后进入两个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象，每个对象都持有一组   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  和   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Constraint" title="sqlalchemy.schema.Constraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">Constraint</span></code></a>  对象。这个对象结构将是大多数操作的中心。我们将继续使用Core和ORM。</p>
+<p>我们可以使用这个结构的第一个有用的操作是，将 CREATE TABLE 语句或 DDL 发送到我们的 SQLite 数据库，以便我们可以向其中插入和查询数据。我们已经拥有了执行此操作所需的所有工具，只需在我们的 _schema.MetaData 上调用 _schema.MetaData.create_all 方法，将引用目标数据库的 _engine.Engine 发送给它：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_obj</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;user_account&quot;</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;address&quot;</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+<span class="w">    </span><span class="n">fullname</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="p">...</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">email_address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="p">...</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>上述 DDL 创建过程包括一些特定于 SQLite 的 PRAGMA 语句，用于测试每个表在发出 CREATE 语句之前是否存在。完整的步骤也包括在 BEGIN/COMMIT 对中，以适应事务 DDL。</p>
+<p>创建过程还会注意以正确的顺序发出 CREATE 语句；在上面的示例中，外键约束取决于存在 “user” 表，因此 “address” 表在第二次创建。在更复杂的依赖关系场景中，FOREIGN KEY 约束也可以在事后使用 ALTER 应用于表。</p>
+<p>_schema.MetaData 对象还带有一个 _schema.MetaData.drop_all 方法，它会以与发出 CREATE 相反的顺序发出 DROP 语句以删除模式元素。</p>
+<aside class="topic">
+<p class="topic-title">迁移工具通常是恰当的</p>
+<p>总体而言，_schema.MetaData 的 CREATE/DROP 功能对测试套件、小型和/或新应用程序以及使用短期数据库的应用程序非常有用。然而，对于长期管理应用程序数据库模式的应用程序而言，一个基于 SQLAlchemy 的模式管理工具，例如 <a class="reference external" href="https://alembic.SQLAlchemy.org">Alembic</a>，更具优势，因为它可以管理和协调随着应用程序设计的更改而逐步更改固定数据库模式的过程。</p>
+</aside>
+</section>
+</section>
+<section class="orm-header" id="orm">
+<span id="tutorial-orm-table-metadata"></span><h2>使用 ORM 声明形式定义表元数据<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
+<aside class="topic">
+<p class="topic-title">另一种创建 Table 对象的方式？</p>
+<p>上面的例子演示了   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  直接使用的过程，它是 SQLAlchemy 在构建 SQL 表达式时最终引用到数据库表的基础。正如前面提到的，SQLAlchemy ORM 提供了称为 <strong>声明形式 Table</strong> 的一种绕路，它的声明过程指向构建   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象，但在此过程中还提供了一个称为 ORM 映射类或者是映射类的东西。映射类是使用 ORM 时最常见的基础 SQL 单元，在现代 SQLAlchemy 中也可以与面向 Core 的使用相当有效地结合使用。</p>
+<p>使用声明形式 Table 的一些好处包括：</p>
+<ul class="simple">
+<li><p>更简洁、更 Pythonic 的设置列定义的方式，其中可以使用 Python 类型来表示要在数据库中使用的 SQL 类型</p></li>
+<li><p>结果映射类可以用于形成 SQL 表达式，在许多情况下保持  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  类型信息，这些信息被静态分析工具如 Mypy 和 IDE 类型检查器拾取</p></li>
+<li><p>允许声明表元数据和 ORM 映射类在持久性/对象加载操作中同时使用。</p></li>
+</ul>
+<p>本节将演示使用声明形式 Table 构建与前面部分相同的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据。</p>
+</aside>
+<p>当使用 ORM 时，我们声明   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据的过程通常与声明  <a class="reference internal" href="../glossary.html#term-40"><span class="xref std std-term">映射</span></a>  类的过程结合在一起。映射类是我们想要创建的任何 Python 类，然后它将在其中具有链接到数据库表中的列的属性。虽然有几种实现方式，但最常见的风格称为   <a class="reference internal" href="../orm/declarative_config.html"><span class="std std-ref">声明性</span></a> ，它允许我们同时声明用户定义类和   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据。</p>
+<section id="base">
+<span id="tutorial-orm-declarative-base"></span><h3>建立一个声明形式 Base<a class="headerlink" href="#base" title="Permalink to this heading">¶</a></h3>
+<p>使用 ORM 时，_schema.MetaData 集合仍然存在，但它本身与一个仅用于 ORM 的构造物关联起来，通常称为 <strong>声明形式 Base</strong>。获取新的声明形式 Base 的最简单方法是创建一个子类，该子类是 SQLAlchemy   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  类：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在上面的示例中，”Base” 类是我们将要引用的声明形式 Base。当我们创建新的类作为 <code class="docutils literal notranslate"><span class="pre">Base</span></code> 的子类时，并结合适当的类级指令，它们将在类创建时建立为新的**ORM映射类**，每个映射通常（但不总是）与特定的 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>_schema.Table`对象相关联。</p>
+<p>Declarative Base指的是一个  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> .MetaData`集合可以通过  <code class="xref py py-class docutils literal notranslate"><span class="pre">metadata</span></code> .MetaData`集合中的一个  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span><span class="o">.</span><span class="n">metadata</span>
+<span class="go">MetaData()</span></pre></div>
+</div>
+<p>Declarative Base也指一个名为   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  的集合， 这是SQLAlchemy ORM中的中心`映射器配置`单元。虽然很少直接访问这个对象，但是这个对象对映射器配置过程非常重要，因为一组ORM映射类将通过这个注册表相互协调。就像  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> （可以通过传递自己的 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.registry`进行选项），可以通过 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.DeclarativeBase.registry`类变量进行访问：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span><span class="o">.</span><span class="n">registry</span>
+<span class="go">&lt;sqlalchemy.orm.decl_api.registry object at 0x...&gt;</span></pre></div>
+</div>
+<aside class="topic">
+<p class="topic-title">使用``registry``映射的其他方式</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  中都有相关的参考文档。</p>
+</aside>
+</section>
+<section id="tutorial-declaring-mapped-classes">
+<span id="id10"></span><h3>声明映射类<a class="headerlink" href="#tutorial-declaring-mapped-classes" title="Permalink to this heading">¶</a></h3>
+<p>有了 <code class="docutils literal notranslate"><span class="pre">Base</span></code> 类之后，我们现在可以为 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表定义ORM映射类，这使用了新的类 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code>。下面我们展示最现代的声明式形式，它是通过使用特殊类型  <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  类型注释进行驱动，表示要映射为特定类型的属性：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user_account&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">fullname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">addresses</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Address&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;User(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, fullname=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="si">!r}</span><span class="s2">)&quot;</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">email_address</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user_account.id&quot;</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">User</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Address(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, email_address=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email_address</span><span class="si">!r}</span><span class="s2">)&quot;</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>上面的两个类，<code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code>，现在被称为**ORM映射类**，并可用于ORM持久性和查询操作，这将在后面描述。关于这些类的详细信息包括：</p>
+<ul>
+<li><p>每个类引用了作为声明映射过程的一部分生成的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  属性来实现的。一旦创建类，此生成的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  属性中获得。</p></li>
+<li><p>如前所述，这种形式被称为：ref:<cite>orm_declarative_table_configuration</cite>。几种备选声明样式之一将直接构建  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  来构建该对象。这种风格被称为：ref:<cite>Declarative with Imperative Table &lt;orm_imperative_table_configuration&gt;</cite>。</p></li>
+<li><p>要指示 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>_schema.Table`中的列，我们使用 :func:<a href="#id13"><span class="problematic" id="id14">`</span></a>_orm.mapped_column`结构，与基于 :class:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.Mapped`类型的类型注释结合使用。 此对象将生成应用于构建 :class:<a href="#id17"><span class="problematic" id="id18">`</span></a>_schema.Table`的 :class:<a href="#id19"><span class="problematic" id="id20">`</span></a>_schema.Column`对象。</p></li>
+<li><p>对于具有简单数据类型且没有其他选项的列，我们可以仅使用  <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> <cite>int``和``str``等简单Python类型表示  :class:</cite>.Integer` .String`。如何在声明式映射过程中自定义 Python 类型的解释是非常开放的。详见   <a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">在类型注释中使用注释式的Declarative Table (mapped_column() 的类型注释形式)</span></a>  和   <a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-mapped-column-type-map"><span class="std std-ref">自定义类型映射</span></a>  章节。</p></li>
+<li><p>一个列（column）可以依据是否有 <code class="docutils literal notranslate"><span class="pre">Optional[&lt;typ&gt;]</span></code> 类型注释（或其等效形式 <code class="docutils literal notranslate"><span class="pre">&lt;typ&gt;</span> <span class="pre">|</span> <span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">Union[&lt;typ&gt;,</span> <span class="pre">None]</span></code>）来声明为可空或非空。也可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.nullable</span></code>  参数来显式指定（而且该指定不一定要与注释的可选属性一致）。</p></li>
+<li><p>显式类型注释的使用是**完全可选的**。我们也可以在没有注释时使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 。这种情况下，我们将在每一个   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造中使用更明确的类型对象，比如   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>  和   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a> ，以及根据需要的 <code class="docutils literal notranslate"><span class="pre">nullable=False</span></code>。</p></li>
+<li><p>两个附加属性， <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address.user</span></code>，定义了一种不同类型的属性，称为   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，其中的注释感知配置样式与前述的属性类似。关于   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造，更详细的内容在   <a class="reference internal" href="orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">使用 ORM 相关对象</span></a>  章节中讨论。</p></li>
+<li><p>如果我们没有声明自己的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法，那么该类会自动被分配一个。这个方法的默认形式接受所有的属性名作为可选的关键字参数：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;sandy&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Sandy Cheeks&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>要自动生成一个完整的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法，既能提供位置参数，也能提供具有默认关键字值的参数，可以使用在   <a class="reference internal" href="../orm/dataclasses.html#orm-declarative-native-dataclasses"><span class="std std-ref">声明数据类映射</span></a>  中介绍的 dataclasses 功能。当然，使用显式的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法也是一种选择。</p>
+</div></blockquote>
+</li>
+<li><p>添加 <code class="docutils literal notranslate"><span class="pre">__repr__()</span></code> 方法是为了让我们得到可读的字符串输出；这些方法不必存在的要求。与 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 相同，使用   <a class="reference internal" href="../orm/dataclasses.html#orm-declarative-native-dataclasses"><span class="std std-ref">dataclasses</span></a>  特性可以自动地生成一个 <code class="docutils literal notranslate"><span class="pre">__repr__()</span></code> 方法。</p></li>
+</ul>
+<aside class="topic">
+<p class="topic-title">旧的 Declarative 去哪儿了？</p>
+<p>使用 SQLAlchemy 1.4 或更早版本的用户会注意到，上述映射的形式与以往截然不同；它不仅在 Declarative 映射中使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> ，而且还使用 Python 类型注释来派生列信息。</p>
+<p>为了提供“旧”方式的使用者的背景，仍然可以使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象进行 Declarative 映射（以及使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>  函数创建基类），这些形式将继续得到支持，没有删除的计划。这两种设施被新构造所取代的原因首先是为了与  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  工具（包括诸如 VSCode、Mypy 和 Pyright 的类型检查器）平滑集成，而无需插件。其次，从类型注释派生声明是 SQLAlchemy 与 Python dataclasses 集成的一部分，现在可以从映射中   <a class="reference internal" href="../orm/dataclasses.html#orm-declarative-native-dataclasses"><span class="std std-ref">原生生成</span></a> 。</p>
+<p>对于喜欢“旧”方式的用户，但仍希望 IDE 不会错误地报告其 Declarative 映射的类型错误的情况，  <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造是 ORM Declarative 映射中   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  的一种可替换方案（注意，  <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  仅用于 ORM Declarative 映射；它不能在   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  构造中使用），类型注释是可选的。我们上面的映射可以这样写，不带注释：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user_account”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+name = mapped_column(String(30), nullable=False)
+fullname = mapped_column(String)</p>
+<p>addresses = relationship(“Address”, back_populates=”user”)</p>
+<p># … definition continues</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上面的类比直接使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  有一个优势，即 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类以及 <code class="docutils literal notranslate"><span class="pre">User</span></code> 的实例将向类型工具指示正确的类型信息，而无需使用插件。   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  还允许使用其他 ORM 特定参数来配置行为，例如延迟列加载，这之前需要使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  和   <a class="reference internal" href="../orm/queryguide/columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  两个单独的函数。</p>
+<p>还有一个将旧式 Declarative 类转换为新式的例子，可以参见   <a class="reference internal" href="../changelog/whatsnew_20.html#whatsnew-20-orm-declarative-typing"><span class="std std-ref">ORM Declarative Models</span></a>  章节中的   <a class="reference internal" href="../changelog/whatsnew_20.html"><span class="std std-ref">SQLAlchemy 2.0 有什么新特性？</span></a>  指南。</p>
+</aside>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/mapping_styles.html#orm-mapping-styles"><span class="std std-ref">ORM映射风格</span></a>  - ORM 配置样式的全面背景。</p>
+<p><a class="reference internal" href="../orm/mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">声明式映射</span></a>  - Declarative 类映射的概述</p>
+<p><a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-table"><span class="std std-ref">使用 mapped_column() 的Declarative Table</span></a>  - 有关如何使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  和   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  定义要映射的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  中的列时，使用 Declarative 的详细信息。从ORM映射向数据库发出DDL</p>
+</div>
+<hr class="docutils" />
+<p>由于ORM映射的类引用了包含在  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  属性访问集合，然后像以前一样使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code>  。在这种情况下，运行PRAGMA语句，但由于它们已经存在，因此不会生成新表：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;user_account&quot;</span><span class="p">)</span>
@@ -336,17 +458,17 @@ Python变量参考它。</p>
 </section>
 </section>
 <section class="core-header orm-addin" id="tutorial-table-reflection">
-<span id="id19"></span><h2>表反射<a class="headerlink" href="#tutorial-table-reflection" title="Permalink to this heading">¶</a></h2>
+<span id="id21"></span><h2>表反射<a class="headerlink" href="#tutorial-table-reflection" title="Permalink to this heading">¶</a></h2>
 <aside class="topic">
-<p class="topic-title">可选章节</p>
-<p>本节仅是有关表反射的简要介绍，或如何从现有数据库自动生成 <cite>~ sqlalchemy.schema.Table</cite> 对象。想要继续编写查询的教程读者可以跳过本节。</p>
+<p class="topic-title">可选部分</p>
+<p>这个部分只是关于相关主题“表反射”的一个简要介绍，或者如何从现有的数据库自动地生成 :class:<a href="#id22"><span class="problematic" id="id23">`</span></a>_schema.Table`对象。想要写查询的教程读者可以自由地跳过本节。</p>
 </aside>
-<p>为了完成与表元数据一起工作的部分，我们将演示另一种在本节开始时提到的操作，即 <strong>表反射</strong>。表反射是指通过读取数据库的当前状态来生成 <cite>~ sqlalchemy.schema.Table</cite> 和相关对象的过程。在前面的部分中，我们已经在 Python 中声明了 <cite>~ sqlalchemy.schema.Table</cite> 对象，然后我们可以选择向数据库发出 DDL 以生成此类模式。反射过程将这两个步骤颠倒过来，从现有数据库开始并生成用于表示该数据库中的模式的 In-Python 数据结构。</p>
+<p>为了完成有关处理表元数据的部分，我们将演示另一种在该部分开头提到的操作，即**表反射**。表反射指的是通过读取数据库的当前状态来生成 :class:<a href="#id24"><span class="problematic" id="id25">`</span></a>_schema.Table`和相关对象的过程。在以前的部分中，我们在Python中声明了 :class:<a href="#id26"><span class="problematic" id="id27">`</span></a>_schema.Table`对象，然后我们可以选择发出DDL到数据库以生成这样的架构，而反射过程则在此过程的两个步骤中以相反的顺序执行，从现有的数据库开始生成Python内的数据结构，以表示该数据库中的模式。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>不必使用反射才能将 SQLAlchemy 用于现有数据库。通常情况下，SQLAlchemy 应用程序在 Python 中明确声明所有元数据，使其结构与现有数据库的结构相对应。元数据结构也不必包括不需要本地应用程序运行的现有数据库中的表、列或其他约束和结构。</p>
+<p>反射不必使用以前存在的数据库，在使用SQLAlchemy时强制使用。 SQLAlchemy应用程序完全典型，它在Python中明确声明了所有元数据，以便其结构对应于现有数据库的结构。元数据结构也不必包括在现有数据库中不需要的表、列或其他约束和构造。</p>
 </div>
-<p>例如反射，我们将创建一个新的 <cite>~ sqlalchemy.schema.Table</cite> 对象，该对象表示我们在本文档的前面部分手动创建的 <code class="docutils literal notranslate"><span class="pre">some_table</span></code> 对象。此处有一些不同的方法，但是最基本的方法是构建一个 <cite>~sqlalchemy.schema.Table</cite> 对象，给出表的名称和一个 <cite>~sqlalchemy.schema.MetaData</cite> 集合，然后通过使用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.params.autoload_with" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.autoload_with</span></code></a> 参数将目标 <cite>~sqlalchemy.engine.Engine</cite> 传递给它：</p>
+<p>作为反射的示例，我们将创建一个新的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  传递目标: class: <cite>_engine.Engine</cite>：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s2">&quot;some_table&quot;</span><span class="p">,</span> <span class="n">metadata_obj</span><span class="p">,</span> <span class="n">autoload_with</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;some_table&quot;</span><span class="p">)</span>
@@ -360,7 +482,7 @@ Python变量参考它。</p>
 <span class="k">ROLLBACK</span>
 </div></pre></div>
 </div>
-<p>此过程结束时，<code class="docutils literal notranslate"><span class="pre">some_table</span></code> 对象现在包含表中存在的 <cite>~ sqlalchemy.schema.Column</cite> 对象的信息，该对象可以与我们明确声明的 <cite>~ sqlalchemy.schema.Table</cite> 以完全相同的方式使用：</p>
+<p>在此过程结束时，“some_table”对象现在包含关于存在于表中的 :class:<a href="#id28"><span class="problematic" id="id29">`</span></a>_schema.Column`对象的信息，并且对象可以按与我们明确声明的 :class:<a href="#id30"><span class="problematic" id="id31">`</span></a>_schema一样使用，<a href="#id32"><span class="problematic" id="id33">`</span></a>_schema.Table`以完全相同的方式。：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_table</span>
 <span class="go">Table(&#39;some_table&#39;, MetaData(),</span>
 <span class="go">    Column(&#39;x&#39;, INTEGER(), table=&lt;some_table&gt;),</span>
@@ -369,13 +491,13 @@ Python变量参考它。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>关于表和模式反射的更多信息请参见 <a class="reference internal" href="../core/reflection.html"><span class="std std-ref">反射数据库对象</span></a>。</p>
-<p>对于 ORM 相关的表反射变体，本节 <span class="xref std std-ref">orm_declarative_reflected</span> 包括可以使用的可用选项的概述。</p>
+<p>在   :ref:` metadata_reflection_toplevel`  中阅读有关表和模式反射的更多信息。</p>
+<p>对于与ORM相关的表反射变体，部分 :ref:<a href="#id34"><span class="problematic" id="id35">`</span></a>orm_declarative_reflected`包括可用选项的概述。</p>
 </div>
 </section>
-<section id="id20">
-<h2>下一步<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h2>
-<p>我们现在准备好使用两个表与 Core 和 ORM 与表有关的构造与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 和/或 ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 进行交互。 在接下来的几个部分中，我们将说明如何使用这些结构创建、操作和选择数据。</p>
+<section id="id36">
+<h2>下一步<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h2>
+<p>我们现在拥有一个SQLite数据库，其中包含两个表，并具有可以使用 :class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_engine.Connection`和/或ORM :class:<a href="#id39"><span class="problematic" id="id40">`</span></a>_orm.Session`来与这些表进行交互的Core和ORM面向表的结构。在以下部分中，我们将说明如何使用这些结构来创建、操作和选择数据。</p>
 </section>
 </section>
 
@@ -385,9 +507,9 @@ Python变量参考它。</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="dbapi_transactions.html" title="previous chapter">处理事务和DBAPI</a>
+        <a href="dbapi_transactions.html" title="previous chapter">使用事务和DBAPI</a>
         Next:
-        <a href="data.html" title="next chapter">处理数据</a>
+        <a href="data.html" title="next chapter">使用数据</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -397,7 +519,7 @@ Python变量参考它。</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:19
+    Documentation last generated: 2023/8/18 18:44:03
 
     </div>
 </div>

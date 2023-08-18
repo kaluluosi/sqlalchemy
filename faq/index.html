@@ -126,18 +126,16 @@
 <li><span class="link-container"><a class="reference external" href="../intro.html">概述</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../tutorial/index.html">SQLAlchemy统一教程</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../orm/index.html">SQLAlchemy ORM</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../core/index.html">SQLAlchemy核心模块</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../core/index.html">SQLAlchemy 核心</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../dialects/index.html">方言</a></span></li>
 <li class="selected"><span class="link-container"><strong>常见问题解答</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="installation.html">安装</a></span></li>
 <li><span class="link-container"><a class="reference external" href="connections.html">连接/引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据 / 模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据/模式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="sqlexpressions.html">SQL表达式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="ormconfiguration.html">ORM配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#sqlalchemy">如何对由 SQLAlchemy 驱动的应用进行性能分析？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#orm-400-000">我正在使用 ORM 插入 400,000 行，这很慢！</a></span></li>
-<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">性能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">会话/查询</a></span></li>
 <li><span class="link-container"><a class="reference external" href="thirdparty.html">第三方集成问题</a></span></li>
 </ul>
 </li>
@@ -198,85 +196,65 @@
         
 <section id="faq-toplevel">
 <span id="id1"></span><h1>常见问题解答<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
-<p>常见问题解答部分是常见问题的集锦，用于解决广为人知的问题。</p>
+<p>常见问题解答部分是关于常见问题及其解决方案的不断积累。</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">安装</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#asyncio-greenlet">当我尝试使用asyncio时，出现了关于greenlet未安装的错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#asyncio-greenlet">当我尝试使用asyncio时，出现了greenlet未安装的错误</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="connections.html">连接/引擎</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#id2">如何配置日志记录?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#id3">如何对数据库连接进行池化?我的连接是否已经池化了?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#api">如何将自定义连接参数传递给我的数据库API?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#mysql">“MySQL服务器已经停止工作”</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#mysql-sync-errors">“命令不同步；您现在无法运行此命令”/“此结果对象不返回行。它已自动关闭”</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#faq-execute-retry">如何自动执行“重试”语句执行?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#sqlalchemyrollbacks">为什么SQLAlchemy会发出很多ROLLBACKs命令？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#myisam">我正在使用MyISAM，该怎么关闭它？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#sql-server-rollbackcommit">我正在使用SQL Server - 如何将这些ROLLBACK转换为COMMIT？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#sqlite">我正在使用SQLite数据库的多个连接（通常是用于测试事务操作），但我的测试程序无效！</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#enginedbapi">在使用Engine时如何获得原始DBAPI连接?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="connections.html#python-multiprocessingos-fork">如何在Python multiprocessing或os.fork()中使用引擎/连接/会话?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id2">如何配置日志?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id3">如何池化数据库连接?  连接池在哪里维护？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#connect-arguments-api">如何传递自定义的 connect arguments 给我的数据库API ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#mysql-server-has-gone-away">“MySQL Server has gone away” 该怎么办？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#commands-out-of-sync-you-can-t-run-this-command-now-this-result-object-does-not-return-rows-it-has-been-closed-automatically">“Commands out of sync; you can’t run this command now” / “This result object does not return rows. It has been closed automatically”</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#faq-execute-retry">如何自动“重试”语句执行？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#sqlalchemy">为什么SQLAlchemy发出这么多回滚操作？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#enginedbapi">使用Engine时如何获取原始的DBAPI连接？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#asyncio">如何在使用asyncio驱动程序时访问底层连接?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#python-multiprocessing-os-fork">如何在Python multiprocessing或 os.fork() 中使用连接/引擎/会话？</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="metadata_schema.html">元数据 / 模式</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata_schema.html#table-drop-metadata-drop-all">当我说 “table.drop()” / “metadata.drop_all()” 时，程序卡住了</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata_schema.html#sqlalchemy-alter-tablecreate-viewcreate-trigger">SQLAlchemy 是否支持 ALTER TABLE、CREATE VIEW、CREATE TRIGGER、模式升级功能？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata_schema.html#id2">如何按它们的依赖关系对表对象进行排序？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata_schema.html#create-table-drop-table">如何将 CREATE TABLE / DROP TABLE 输出作为字符串获取？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata_schema.html#table-column">如何子类化 Table / Column 以提供某些行为/配置？</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="metadata_schema.html">元数据/模式</a></li>
 <li class="toctree-l1"><a class="reference internal" href="sqlexpressions.html">SQL表达式</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有联接的参数？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#faq-sql-expression-percent-signs">生成SQL语句字符串时百分号为什么会被双倍加上？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#op">我使用op（）生成自定义运算符，但我的圆括号没有正确输出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有内联的绑定参数？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#faq-sql-expression-percent-signs">为什么字符串化SQL语句时百分号会被双倍？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sqlexpressions.html#op">我正在使用 op() 生成自定义操作符，但是我的括号没有正确显示</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ormconfiguration.html">ORM配置</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#faq-mapper-primary-key">如何映射一个没有主键的表？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#python">如何配置一个Python保留字或类似的列？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#id4">如何获得一个映射类的所有列、关系、映射属性等的列表？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#xy">我收到有关“隐式组合列X的属性Y”的警告或错误消息</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#declarativeand-or-primaryjoin-secondaryjoin">我正在使用Declarative并使用“and_()”或“or_()”设置primaryjoin / secondaryjoin，我收到有关外键的错误消息。</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#limitorder-by-subqueryload">为什么推荐使用“LIMIT”与“ORDER BY”（特别是与“subqueryload()”一起）？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#faq-mapper-primary-key">如何映射没有主键的表？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#python">如何配置为 Python 保留字或类似的列？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#id3">如何获取给定映射类的所有列，关系，映射属性等的列表？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#x-y">我收到有关“隐式组合列 X 在属性 Y 下”的警告或错误消息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ormconfiguration.html#limit-subqueryload-order-by">为什么建议使用带有“LIMIT”（特别是使用“subqueryload()”）的“ORDER BY”？</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="performance.html">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#sql">第一步-打开 SQL 日志并确认是否启用了缓存</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#id3">第二步-识别阻止启用缓存的构造的对象</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#id4">第三步-针对给定的对象启用缓存和/或寻找替代方案</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">性能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#x">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#sqlalchemy">如何为SQLAlchemy提供动态性能分析？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="performance.html#orm400-000">我正在使用ORM插入400,000行，但速度非常慢！</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="performance.html#sqlalchemy">如何对由 SQLAlchemy 驱动的应用进行性能分析？</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#id5">查询分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#faq-code-profiling">代码分析</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#id7">执行缓慢</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#core">结果获取速度缓慢-Core</a></li>
-<li class="toctree-l2"><a class="reference internal" href="performance.html#orm">结果获取速度缓慢-ORM</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="performance.html#orm-400-000">我正在使用 ORM 插入 400,000 行，这很慢！</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sessions.html">Sessions / Queries</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#session">重载数据到我的Session中，但是它没有看到我在其他地方提交的更改</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#faq-session-rollback">此Session的事务由于刷新期间之前的异常而被回滚了。 。 （或类似的）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#id18">如何使每个查询始终添加某个过滤器以过滤每个查询？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#count">我的查询返回的对象数量与查询.count()测试我告诉我的不同 - 为什么？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#outer-join">我已经创建了一个映射以与Outer Join相关联，而虽然查询返回了行，但没有返回任何对象。为什么不是这样呢？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#joinedload-lazy-false-join-outer-join-where-order-by-limit-outer-join-sqlalchemy">我正在使用``joinedload（）``或``lazy = False``创建JOIN / OUTER JOIN，并且在尝试添加WHERE，ORDER BY，LIMIT等（依赖于（OUTER）JOIN）时，SQLAlchemy无法构建正确的查询 - 为什么？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#len">查询没有“__len __（）”方法，为什么没有？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#ormtextual-sql">如何用ORM查询使用Textual SQL？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#session-delete-myobject">我调用了``Session.delete（myobject）’’，但它没有从父集合中删除！</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#sa-ormon-delete-cascade">如何使用SA ORM使用ON DELETE CASCADE？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#is-7-foo-none-id-7foo">我将”is”属性设置为”7”，但”foo”属性仍然为``None`` - 它不应该加载id＃7的Foo吗？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#id51">有没有一种自动将关键字（或其他类型的对象）设置为唯一的方法，而不需要查询关键字并获取包含该关键字的行的引用？</a></li>
-<li class="toctree-l2"><a class="reference internal" href="sessions.html#post-update-update-update">为什么 post_update 会发出 UPDATE 以及第一次 UPDATE？</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sessions.html">会话/查询</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#faq-session-identity">我正在使用会话重新加载数据，但是没有看到在其他地方提交的更改</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">“This Session’s transaction has been rolled back due to a previous exception during flush.” (或类似消息)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#flush-rollback">为什么flush()要发出ROLLBACK？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#rollback-rollback">为什么不滚动本来应该是一个自动的调用ROLLBACK？为什么我必须再次ROLLBACK？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#id21">如何创建总是为每个查询添加一定过滤器的查询？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#faq-query-deduplicating">我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#outer-join">我已经创建了一个映射，使其针对Outer Join，虽然该查询返回行，但没有返回对象。为什么？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#session-delete-myobject">当我调用”Session.delete(myobject)”时，它没有从父集合中删除！</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#init">为什么在加载对象时不调用我的“__init __()”函数？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#ormsql">如何在ORM查询中使用文本SQL？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#id39">我调用“Session.delete(myobject)”，但它没有从父集合中删除！</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#foo-id7-foonone-id-7foo">为什么我的“foo_id”实例属性设置为“7”，但“foo”属性仍为“None”-它没有加载ID为#7的Foo吗？</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sessions.html#faq-walk-objects">如何遍历与给定对象相关的所有对象？</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="thirdparty.html">第三方集成问题</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="thirdparty.html#numpy-int64-numpy-bool">我得到了与“<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”等相关的错误。</a></li>
-<li class="toctree-l2"><a class="reference internal" href="thirdparty.html#sqlwhere-having-true">SQL表达式为WHERE/HAVING预期的角色，得到True</a></li>
+<li class="toctree-l2"><a class="reference internal" href="thirdparty.html#where-havingsqltrue">WHERE/HAVING角色的SQL表达式期望得到True</a></li>
 </ul>
 </li>
 </ul>
@@ -301,7 +279,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:08
+    Documentation last generated: 2023/8/18 18:43:52
 
     </div>
 </div>

@@ -12,7 +12,7 @@
         <title>
             
     
-    变异跟踪
+    变化追踪
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="ORM扩展" href="index.html" />
-        <link rel="next" title="排序列表" href="orderinglist.html" />
-        <link rel="prev" title="Mypy / Pep-484的ORM映射支持" href="mypy.html" />
+        <link rel="next" title="有序列表" href="orderinglist.html" />
+        <link rel="prev" title="Mypy / Pep-484 ORM映射支持" href="mypy.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,17 +127,17 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="automap.html">自动映射</a></span></li>
-<li><span class="link-container"><a class="reference external" href="baked.html">摘要</a></span></li>
+<li><span class="link-container"><a class="reference external" href="baked.html">Baked Queries</a></span></li>
 <li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li class="selected"><span class="link-container"><strong>变异跟踪</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li class="selected"><span class="link-container"><strong>变化追踪</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#establishing-mutability-on-scalar-column-values">Establishing Mutability on Scalar Column Values</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#supporting-pickling">Supporting Pickling</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#receiving-events">Receiving Events</a></span></li>
@@ -149,7 +149,11 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#api">API 参考</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">MutableBase</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">MutableBase</span></code></a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.MutableBase._parents"><code class="docutils literal notranslate"><span class="pre">MutableBase._parents</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.MutableBase.coerce"><code class="docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a></span></li>
+</ul>
+</li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.Mutable"><code class="docutils literal notranslate"><span class="pre">Mutable</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.Mutable._get_listen_keys"><code class="docutils literal notranslate"><span class="pre">Mutable._get_listen_keys()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.mutable.Mutable._listen_on_attribute"><code class="docutils literal notranslate"><span class="pre">Mutable._listen_on_attribute()</span></code></a></span></li>
@@ -205,14 +209,14 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="orderinglist.html">排序列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orderinglist.html">有序列表</a></span></li>
 <li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
 <li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="indexable.html">可索引对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="indexable.html">可索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -244,9 +248,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="mypy.html" title="previous chapter">Mypy / Pep-484的ORM映射支持</a></li>
+                <a href="mypy.html" title="previous chapter">Mypy / Pep-484 ORM映射支持</a></li>
                 <li><b>Next:</b>
-                <a href="orderinglist.html" title="next chapter">排序列表</a></li>
+                <a href="orderinglist.html" title="next chapter">有序列表</a></li>
 
             <li><b>Up:</b> <a href="../../index.html">Home</a></li>
                     <ul><li><a href="../index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -258,7 +262,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.ext.mutable">变异跟踪</a><ul>
+<li><a class="reference internal" href="#module-sqlalchemy.ext.mutable">变化追踪</a><ul>
 <li><a class="reference internal" href="#establishing-mutability-on-scalar-column-values">Establishing Mutability on Scalar Column Values</a><ul>
 <li><a class="reference internal" href="#supporting-pickling">Supporting Pickling</a></li>
 <li><a class="reference internal" href="#receiving-events">Receiving Events</a></li>
@@ -270,7 +274,11 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#api">API 参考</a><ul>
-<li><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">MutableBase</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">MutableBase</span></code></a><ul>
+<li><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase._parents"><code class="docutils literal notranslate"><span class="pre">MutableBase._parents</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce"><code class="docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable"><code class="docutils literal notranslate"><span class="pre">Mutable</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable._get_listen_keys"><code class="docutils literal notranslate"><span class="pre">Mutable._get_listen_keys()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable._listen_on_attribute"><code class="docutils literal notranslate"><span class="pre">Mutable._listen_on_attribute()</span></code></a></li>
@@ -338,13 +346,13 @@
     <div id="docs-body" role="main" class="withsidebar orm-extensions-mutable" >
         
 <section id="module-sqlalchemy.ext.mutable">
-<span id="id1"></span><span id="mutable-toplevel"></span><h1>变异跟踪<a class="headerlink" href="#module-sqlalchemy.ext.mutable" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><span id="mutable-toplevel"></span><h1>变化追踪<a class="headerlink" href="#module-sqlalchemy.ext.mutable" title="Permalink to this heading">¶</a></h1>
 <p>Provide support for tracking of in-place changes to scalar values,
 which are propagated into ORM change events on owning parent objects.</p>
 <section id="establishing-mutability-on-scalar-column-values">
 <span id="mutable-scalars"></span><h2>Establishing Mutability on Scalar Column Values<a class="headerlink" href="#establishing-mutability-on-scalar-column-values" title="Permalink to this heading">¶</a></h2>
 <p>A typical example of a “mutable” structure is a Python dictionary.
-Following the example introduced in <a class="reference internal" href="../../core/types.html"><span class="std std-ref">SQL数据库类型对象</span></a>, we
+Following the example introduced in <a class="reference internal" href="../../core/types.html"><span class="std std-ref">SQL 数据类型对象</span></a>, we
 begin with a custom type that marshals Python dictionaries into
 JSON strings before being persisted:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">TypeDecorator</span><span class="p">,</span> <span class="n">VARCHAR</span>
@@ -492,7 +500,7 @@ callbacks. In our case, this is a good thing, since if this dictionary were
 picklable, it could lead to an excessively large pickle size for our value
 objects that are pickled by themselves outside of the context of the parent.
 The developer responsibility here is only to provide a <code class="docutils literal notranslate"><span class="pre">__getstate__</span></code> method
-that excludes the <code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code> collection from the pickle
+that excludes the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase._parents" title="sqlalchemy.ext.mutable.MutableBase._parents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code></a> collection from the pickle
 stream:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMutableType</span><span class="p">(</span><span class="n">Mutable</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__getstate__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -546,13 +554,13 @@ from within the mutable extension:</p>
 <p>Composites are a special ORM feature which allow a single scalar attribute to
 be assigned an object value which represents information “composed” from one
 or more columns from the underlying mapped table. The usual example is that of
-a geometric “point”, and is introduced in <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a>.</p>
+a geometric “point”, and is introduced in <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">复合列类型</span></a>.</p>
 <p>As is the case with <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a>, the user-defined composite class
 subclasses <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a> as a mixin, and detects and delivers
 change events to its parents via the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite.changed" title="sqlalchemy.ext.mutable.MutableComposite.changed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableComposite.changed()</span></code></a> method.
 In the case of a composite class, the detection is usually via the usage of the
 special Python method <code class="docutils literal notranslate"><span class="pre">__setattr__()</span></code>. In the example below, we expand upon the <code class="docutils literal notranslate"><span class="pre">Point</span></code>
-class introduced in <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a> to include
+class introduced in <a class="reference internal" href="../composites.html#mapper-composite"><span class="std std-ref">复合列类型</span></a> to include
 <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a> in its bases and to route attribute set events via
 <code class="docutils literal notranslate"><span class="pre">__setattr__</span></code> to the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite.changed" title="sqlalchemy.ext.mutable.MutableComposite.changed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableComposite.changed()</span></code></a> method:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
@@ -616,11 +624,11 @@ will flag the attribute as “dirty” on the parent object:</p>
 </div>
 <section id="coercing-mutable-composites">
 <h3>Coercing Mutable Composites<a class="headerlink" href="#coercing-mutable-composites" title="Permalink to this heading">¶</a></h3>
-<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code> method is also supported on composite types.
-In the case of <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a>, the <code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code>
+<p>The <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce" title="sqlalchemy.ext.mutable.MutableBase.coerce"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a> method is also supported on composite types.
+In the case of <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a>, the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce" title="sqlalchemy.ext.mutable.MutableBase.coerce"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a>
 method is only called for attribute set operations, not load operations.
-Overriding the <code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code> method is essentially equivalent
-to using a <code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code> validation routine for all attributes which
+Overriding the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce" title="sqlalchemy.ext.mutable.MutableBase.coerce"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a> method is essentially equivalent
+to using a <a class="reference internal" href="../mapped_attributes.html#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a> validation routine for all attributes which
 make use of the custom composite type:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
 <span class="k">class</span> <span class="nc">Point</span><span class="p">(</span><span class="n">MutableComposite</span><span class="p">):</span>
@@ -639,7 +647,7 @@ make use of the custom composite type:</p>
 <h3>Supporting Pickling<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>As is the case with <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a>, the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a> helper
 class uses a <code class="docutils literal notranslate"><span class="pre">weakref.WeakKeyDictionary</span></code> available via the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code> attribute which isn’t picklable. If we need to
+<a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase._parents" title="sqlalchemy.ext.mutable.MutableBase._parents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code></a> attribute which isn’t picklable. If we need to
 pickle instances of <code class="docutils literal notranslate"><span class="pre">Point</span></code> or its owning class <code class="docutils literal notranslate"><span class="pre">Vertex</span></code>, we at least need
 to define a <code class="docutils literal notranslate"><span class="pre">__getstate__</span></code> that doesn’t include the <code class="docutils literal notranslate"><span class="pre">_parents</span></code> dictionary.
 Below we define both a <code class="docutils literal notranslate"><span class="pre">__getstate__</span></code> and a <code class="docutils literal notranslate"><span class="pre">__setstate__</span></code> that package up
@@ -656,7 +664,7 @@ the minimal form of our <code class="docutils literal notranslate"><span class="
 </div>
 <p>As with <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a>, the <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a> augments the
 pickling process of the parent’s object-relational state so that the
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code> collection is restored to all <code class="docutils literal notranslate"><span class="pre">Point</span></code> objects.</p>
+<a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase._parents" title="sqlalchemy.ext.mutable.MutableBase._parents"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase._parents()</span></code></a> collection is restored to all <code class="docutils literal notranslate"><span class="pre">Point</span></code> objects.</p>
 </section>
 </section>
 <section id="api">
@@ -695,8 +703,55 @@ owning parent or parents.</p></td>
 <dl class="py class">
 <dt class="sig sig-object py" id="sqlalchemy.ext.mutable.MutableBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.ext.mutable.</span></span><span class="sig-name descname"><span class="pre">MutableBase</span></span><a class="headerlink" href="#sqlalchemy.ext.mutable.MutableBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Common base class to <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a>
+<dd><div class="class-members docutils container">
+<p><strong>Members</strong></p>
+<p><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase._parents"><span class="sig-name descname">_parents</span></a>, <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce"><span class="sig-name descname">coerce()</span></a></p>
+</div>
+<p>Common base class to <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a>
 and <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sqlalchemy.ext.mutable.MutableBase._parents">
+<em class="property"><span class="pre">attribute</span> </em><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.mutable.MutableBase.</span></code></a><span class="sig-name descname"><span class="pre">_parents</span></span><a class="headerlink" href="#sqlalchemy.ext.mutable.MutableBase._parents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of parent object’s <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>-&gt;attribute
+name on the parent.</p>
+<p>This attribute is a so-called “memoized” property.  It initializes
+itself with a new <code class="docutils literal notranslate"><span class="pre">weakref.WeakKeyDictionary</span></code> the first time
+it is accessed, returning the same object upon subsequent access.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>the <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a> is now used
+as the key in the weak dictionary rather than the instance
+itself.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.mutable.MutableBase.coerce">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.mutable.MutableBase.</span></code></a><span class="sig-name descname"><span class="pre">coerce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.ext.mutable.MutableBase.coerce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a value, coerce it into the target type.</p>
+<p>Can be overridden by custom subclasses to coerce incoming
+data into a particular type.</p>
+<p>By default, raises <code class="docutils literal notranslate"><span class="pre">ValueError</span></code>.</p>
+<p>This method is called in different scenarios depending on if
+the parent class is of type <a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable" title="sqlalchemy.ext.mutable.Mutable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mutable</span></code></a> or of type
+<a class="reference internal" href="#sqlalchemy.ext.mutable.MutableComposite" title="sqlalchemy.ext.mutable.MutableComposite"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableComposite</span></code></a>.  In the case of the former, it is called
+for both attribute-set operations as well as during ORM loading
+operations.  For the latter, it is only called during attribute-set
+operations; the mechanics of the <a class="reference internal" href="../composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> construct
+handle coercion during load operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><span class="target" id="sqlalchemy.ext.mutable.MutableBase.coerce.params.key"></span><strong>key</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce.params.key">¶</a> – string name of the ORM-mapped attribute being set.</p></li>
+<li><p><span class="target" id="sqlalchemy.ext.mutable.MutableBase.coerce.params.value"></span><strong>value</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce.params.value">¶</a> – the incoming value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the method should return the coerced value, or raise
+<code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the coercion cannot be completed.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -824,7 +879,7 @@ mapped descriptor.</p>
 <dt class="sig sig-object py" id="sqlalchemy.ext.mutable.Mutable.coerce">
 <em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><a class="reference internal" href="#sqlalchemy.ext.mutable.Mutable"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.mutable.Mutable.</span></code></a><span class="sig-name descname"><span class="pre">coerce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="headerlink" href="#sqlalchemy.ext.mutable.Mutable.coerce" title="Permalink to this definition">¶</a></dt>
 <dd><div class="inherited-member docutils container">
-<p><em>inherited from the</em> <code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code> <em>method of</em> <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase" title="sqlalchemy.ext.mutable.MutableBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableBase</span></code></a></p>
+<p><em>inherited from the</em> <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase.coerce" title="sqlalchemy.ext.mutable.MutableBase.coerce"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MutableBase.coerce()</span></code></a> <em>method of</em> <a class="reference internal" href="#sqlalchemy.ext.mutable.MutableBase" title="sqlalchemy.ext.mutable.MutableBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">MutableBase</span></code></a></p>
 </div>
 <p>Given a value, coerce it into the target type.</p>
 <p>Can be overridden by custom subclasses to coerce incoming
@@ -1149,9 +1204,9 @@ Raises KeyError if the set is empty.</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="mypy.html" title="previous chapter">Mypy / Pep-484的ORM映射支持</a>
+        <a href="mypy.html" title="previous chapter">Mypy / Pep-484 ORM映射支持</a>
         Next:
-        <a href="orderinglist.html" title="next chapter">排序列表</a>
+        <a href="orderinglist.html" title="next chapter">有序列表</a>
 
     <div id="docs-copyright">
         &copy; <a href="../../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -1161,7 +1216,7 @@ Raises KeyError if the set is empty.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:14
+    Documentation last generated: 2023/8/18 18:21:13
 
     </div>
 </div>

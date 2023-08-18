@@ -12,7 +12,7 @@
         <title>
             
     
-    摘要
+    Baked Queries
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -127,25 +127,51 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="automap.html">自动映射</a></span></li>
-<li class="selected"><span class="link-container"><strong>摘要</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mutable.html">变异跟踪</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orderinglist.html">排序列表</a></span></li>
-<li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
-<li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="indexable.html">可索引对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li class="selected"><span class="link-container"><strong>Baked Queries</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">原理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">特殊查询技巧</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#in">使用IN语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">使用子查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#before-compile">使用before_compile事件</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id13">禁用烘焙查询会话范围</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">懒加载集成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#api">API文档</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.bakery"><code class="docutils literal notranslate"><span class="pre">bakery()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">BakedQuery</span></code></a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.add_criteria"><code class="docutils literal notranslate"><span class="pre">BakedQuery.add_criteria()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.bakery"><code class="docutils literal notranslate"><span class="pre">BakedQuery.bakery()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.for_session"><code class="docutils literal notranslate"><span class="pre">BakedQuery.for_session()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.spoil"><code class="docutils literal notranslate"><span class="pre">BakedQuery.spoil()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.to_query"><code class="docutils literal notranslate"><span class="pre">BakedQuery.to_query()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.BakedQuery.with_criteria"><code class="docutils literal notranslate"><span class="pre">BakedQuery.with_criteria()</span></code></a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.baked.Bakery"><code class="docutils literal notranslate"><span class="pre">Bakery</span></code></a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mutable.html">变化追踪</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orderinglist.html">有序列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="horizontal_shard.html">水平分片</a></span></li>
+<li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="indexable.html">可索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -191,7 +217,33 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">摘要</a></li>
+<li><a class="reference internal" href="#module-sqlalchemy.ext.baked">Baked Queries</a><ul>
+<li><a class="reference internal" href="#id1">概述</a></li>
+<li><a class="reference internal" href="#id2">原理</a></li>
+<li><a class="reference internal" href="#id3">特殊查询技巧</a><ul>
+<li><a class="reference internal" href="#in">使用IN语句</a></li>
+<li><a class="reference internal" href="#id4">使用子查询</a></li>
+<li><a class="reference internal" href="#before-compile">使用before_compile事件</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13">禁用烘焙查询会话范围</a></li>
+<li><a class="reference internal" href="#id16">懒加载集成</a></li>
+<li><a class="reference internal" href="#api">API文档</a><ul>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.bakery"><code class="docutils literal notranslate"><span class="pre">bakery()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">BakedQuery</span></code></a><ul>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.add_criteria"><code class="docutils literal notranslate"><span class="pre">BakedQuery.add_criteria()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.bakery"><code class="docutils literal notranslate"><span class="pre">BakedQuery.bakery()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.for_session"><code class="docutils literal notranslate"><span class="pre">BakedQuery.for_session()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.spoil"><code class="docutils literal notranslate"><span class="pre">BakedQuery.spoil()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.to_query"><code class="docutils literal notranslate"><span class="pre">BakedQuery.to_query()</span></code></a></li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.with_criteria"><code class="docutils literal notranslate"><span class="pre">BakedQuery.with_criteria()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlalchemy.ext.baked.Bakery"><code class="docutils literal notranslate"><span class="pre">Bakery</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 
@@ -203,29 +255,26 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-extensions-baked" >
         
-<p>模块: sqlalchemy.ext.baked</p>
-<p><code class="docutils literal notranslate"><span class="pre">baked</span></code> 提供了一种用于创建 <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象的替代方式，它允许缓存对象的构建和字符串编译步骤。这意味着，对于经常使用的特定 <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 构建场景，构建查询语句所涉及的所有 Python 函数调用，始终仅会发生一次，而不是每次构建和执行查询时都会发生一次。</p>
-<p>这个系统的理由是为了大大减少 Python 解释器在**发出 SQL 之前的所有活动的开销。** “baked” 系统的缓存**不会**以任何方式减少 SQL 调用或缓存数据库**返回结果**。展示缓存 SQL 调用和结果集本身的技术在 <a class="reference internal" href="../examples.html#examples-caching"><span class="std std-ref">Dogpile缓存</span></a> 中提供。</p>
+<section id="module-sqlalchemy.ext.baked">
+<span id="baked-queries"></span><span id="baked-toplevel"></span><h1>Baked Queries<a class="headerlink" href="#module-sqlalchemy.ext.baked" title="Permalink to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">baked</span></code> 提供了一种替代的创建   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象的模式，它允许缓存对象的构建和字符串编译步骤。这意味着对于一个常用的   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  构建场景，从它的初始构造到生成 SQL 字符串的每个 Python 函数调用将仅发生 <strong>一次</strong>，而不是每次构建和执行查询时都要发生。</p>
+<p>建立这个系统的原因是为了极大地减少 Python 解释器**在 SQL 发出之前** 的开销。 “baked” 系统的缓存**不会**以任何方式减少 SQL 调用或缓存从数据库的返回结果。一种演示缓存 SQL 调用和结果集本身的技术在   <a class="reference internal" href="../examples.html#examples-caching"><span class="std std-ref">Dogpile 缓存</span></a>  中。</p>
 <div class="deprecated">
-<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>SQLAlchemy 1.4 和 2.0 提供了一种全新的直接查询缓存系统，消除了 <code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code> 系统的必要性。缓存现在对所有 Core 和 ORM 查询都是透明激活的，用户无需采取任何行动，使用 <a class="reference internal" href="../../core/connections.html#sql-caching"><span class="std std-ref">SQL编译缓存</span></a> 中描述的系统即可。</p>
+<p><span class="versionmodified deprecated">Deprecated since version 1.4: </span>SQLAlchemy 1.4 和 2.0 具有全新的直接查询缓存系统，完全不需要   <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>  系统。对于所有 Core 和 ORM 查询，缓存现在都是透明激活的，无需用户进行任何操作，使用在   <a class="reference internal" href="../../core/connections.html#sql-caching"><span class="std std-ref">SQL 编译缓存</span></a>  中描述的系统。</p>
 </div>
 <div class="admonition deepalchemy">
 <p class="admonition-title">Deep Alchemy</p>
-<dl class="field-list simple">
-<dt class="field-odd">mod<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>sqlalchemy.ext.baked</cite> 扩展不适合初学者。这需要对 SQLAlchemy、数据库驱动程序和后端数据库之间的交互有很好的高级理解。这个扩展程序提供了一种不寻常的优化方法，通常是不需要的。正如上面所述，它**不缓存查询结果**，只缓存 SQL 本身的字符串公式。</p>
-</dd>
-</dl>
+<p><a class="reference internal" href="#module-sqlalchemy.ext.baked" title="sqlalchemy.ext.baked"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked</span></code></a>  扩展不适合初学者。正确使用它需要对 SQLAlchemy，数据库驱动程序和后端数据库如何相互交互拥有良好的高级别理解。该扩展程序提供一种非常特定的优化类型，通常不需要。如上所述，它**不会缓存查询**，只会缓存 SQL 本身的字符串表述。</p>
 </div>
 <section id="id1">
-<h1>摘要<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>借助 baked 系统的使用，你首先需要生成一个所谓的“面包房”，它表示某个特定系列查询对象的存储:</p>
+<h2>概述<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>使用 baked 系统的方法通过生成所谓的“面包屑”，该面包屑代表了存储特定查询对象系列的存储方法开始：</p>
 <blockquote>
 <div><p>from sqlalchemy.ext import baked</p>
 <p>bakery = baked.bakery()</p>
 </div></blockquote>
-<p>上面的“面包房”将使用 LRU 缓存存储缓存数据，默认为 200 个元素，注意 ORM 查询通常包含 ORM 查询作为被调用的输入和每个 SQL 字符串的数据库方言输入的一个条目。</p>
-<p>面包房允许我们通过指定其构造方式作为一系列 Python 调用（通常为lambda）来构建 <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象。 为了简洁使用起见，它重写了“+ =”运算符，因此典型的查询构建如下所示:</p>
+<p>上面的“bakery”将默认在 LRU 缓存中存储缓存数据，缓存值为 200 个元素，注意 ORM 查询通常会包含一个针对调用的 ORM 查询条目，以及每个 SQL 字符串的数据库语言。</p>
+<p>这个 bakery 允许我们通过将其构造方式指定为一系列 Python 可调用来构建一个   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象，这些可调用通常是 lambda，对于简洁的用法，它重载了 “+=” 运算符，以便典型的查询构建看起来像：</p>
 <blockquote>
 <div><p>from sqlalchemy import bindparam</p>
 <dl>
@@ -241,64 +290,497 @@ baked_query += lambda q: q.filter(User.name == bindparam(“username”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>以下是有关上述代码的一些观察结果:</p>
+<p>下面是对上面代码的一些观察：</p>
 <ol class="arabic simple">
-<li><p>“baked_query”对象是 <code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code> 类的一个实例。这个对象本质上是负责构建真正的 ORM <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象的“生成器”，但它本身不是实际的:class:<a href="#id2"><span class="problematic" id="id3">`</span></a>~.query.Query`对象。</p></li>
-<li><p>实际的:class:<cite>~.query.Query`只有在函数结束，在调用 :meth:`_baked.Result.all</cite> 方法时才会被构建。</p></li>
-<li><p>添加到 “baked_query” 对象中的步骤都表示为 Python 函数，通常为lambda。传递给 <code class="xref py py-func docutils literal notranslate"><span class="pre">bakery()</span></code> 函数的第一个lambda接收作为参数的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>。其余的 lambda 每个都接收一个 <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 作为它们的参数。</p></li>
-<li><p>在上面的代码中，即使我们的应用程序在许多情况下调用“search_for_user()”，并且即使在每次调用中我们都建立一个全新的:class:<a href="#id4"><span class="problematic" id="id5">`</span></a>.BakedQuery`对象，每个 lambda 都只被调用一次。只要在面包房中这个查询被缓存，那么每个 lambda 都**永远**不会被第二次调用。</p></li>
-<li><p>缓存通过存储对**lambda 对象的引用**来实现以便构造一个缓存密钥；也就是说，Python 解释器给这些函数指定一种内部 Python 身份，它决定了如何在后续运行中识别查询，为那些指定了 “email” 参数的“search_for_user()”调用，可调用函数``lambda q: q.filter(User.email == bindparam(‘email’))`` 将是所检索到的缓存密钥的一部分；当“email”为 <code class="docutils literal notranslate"><span class="pre">None</span></code> 时，这个可调用对象不属于缓存密钥。</p></li>
-<li><p>因为这些lambda只被调用一次，所以很重要的一点是它们**不引用可能在每次调用时都会更改的变量**；相反，假定这些是要绑定到 SQL 字符串中的值，使用 <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a> 构造命名参数，稍后使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.params()</span></code> 应用它们的实际值。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">baked_query</span></code> 对象是   <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>  的一个实例。这个对象实际上是一个真正的 orm   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象的“构建器”，但它本身不是*实际*   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象。</p></li>
+<li><p>实际的   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象不会在所有情况下构建，直到最后调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code>  时才真正构建。</p></li>
+<li><p>添加到 <code class="docutils literal notranslate"><span class="pre">baked_query</span></code> 对象的步骤都表现为 Python 函数，通常是 lambda，传递给   <a class="reference internal" href="#sqlalchemy.ext.baked.bakery" title="sqlalchemy.ext.baked.bakery"><code class="xref py py-func docutils literal notranslate"><span class="pre">bakery()</span></code></a>  函数的第一个 lambda 接收一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  作为其参数。其余 lambdas 每个接收一个 ：class:<cite>~ .query.Query</cite> 作为其参数。</p></li>
+<li><p>在上面的代码中，即使我们的应用可能在很多情况下调用 <code class="docutils literal notranslate"><span class="pre">search_for_user()</span></code>，即使在每次调用中我们构建一个全新的   <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>  对象，<em>所有 lambda 都只被调用一次</em>。每个 lambda 只是在该查询在面包屑缓存中缓存期间**不会**再次被调用。</p></li>
+<li><p>通过储存引用的**lambda 对象本身**来实现缓存。即 Python 解释器在这些函数中为函数分配了一个 Python 标识（identity），这就决定了如何在后续运行中标识查询。对于那些指定了“email”参数的 <code class="docutils literal notranslate"><span class="pre">search_for_user()</span></code> 调用，可调用 <code class="docutils literal notranslate"><span class="pre">lambda</span> <span class="pre">q:</span> <span class="pre">q.filter(User.email</span> <span class="pre">==</span> <span class="pre">bindparam('email'))</span></code> 将成为检索的缓存键的一部分; 当“email”是“None”时，此可调用不是缓存键的一部分。</p></li>
+<li><p>因为这些 lambda 只被调用一次，所以非常重要的是在 lambda 中**不引用可以在调用间更改的变量**； 相反，假设这些是要绑定到 SQL 字符串中的值，我们使用   <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a>  来构造命名参数，在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.params()</span></code>  中稍后应用实际值。</p></li>
 </ol>
-<p>性能
-—</p>
-<p>烘焙查询可能看起来有点奇怪，有点笨重而且有点冗长。然而，在应用程序中经常调用查询时，可以大大提高 Python 的性能。 示例套件 <a href="#id6"><span class="problematic" id="id7">``</span></a>short_selects``演示了一些返回一个行的查询之间的比较，例如下面的常规查询:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
+<p>性能烘培查询可能看上去有点奇怪、有点笨重、略显繁琐。然而，当一个查询在应用程序中被频繁调用时，通过使用烘培查询可以大幅提高 Python 的性能。
+示例套件 <cite>short_selects</cite> 在 :re和 <cite>examples_performance</cite> 说明中演示了每次仅返回一行记录的查询语句的比较，例如下面的普通查询语句：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Customer</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Customer</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">id_</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span></pre></div>
 </div>
-<p>与等效的“baked”查询相比为:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+<p>与相应的“烘培”查询语句进行比较：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
 <span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">id_</span> <span class="ow">in</span> <span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="n">q</span> <span class="o">=</span> <span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Customer</span><span class="p">))</span>
     <span class="n">q</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Customer</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
     <span class="n">q</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span></pre></div>
 </div>
-<p>每个块10000个迭代调用的Python函数调用的差异是:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">sourcecode</span><span class="p">::</span> <span class="n">text</span></pre></div>
+<p>对于每个块进行 10000 次迭代的 Python 函数调用数量之间的差异为：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>test_baked_query : test a baked query of the full entity.
+                   (10000 iterations); total fn calls 1951294
+
+test_orm_query :   test a straight ORM query of the full entity.
+                   (10000 iterations); total fn calls 7900535</pre></div>
 </div>
+<p>以强大的笔记本电脑的秒数为单位，结论如下：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>test_baked_query : test a baked query of the full entity.
+                   (10000 iterations); total time 2.174126 sec
+
+test_orm_query :   test a straight ORM query of the full entity.
+                   (10000 iterations); total time 7.958516 sec</pre></div>
+</div>
+<p>需要注意的是，这个测试非常重视只返回一行记录的查询。对于返回多行记录的查询，使用烘培查询的性能优势将会越来越小，比例与获取记录所花费的时间成正比。需要特别注意的是，<strong>烘培查询功能仅适用于构建查询本身，而不是提取结果</strong>。使用烘培功能并非一定能够提高应用程序的性能；它仅仅是对于那些由此类开销影响的应用程序而言的一个潜在的有用功能。</p>
+<aside class="topic">
+<p class="topic-title">量力而行</p>
+<p>关于如何对 SQLAlchemy 应用程序进行性能分析的背景，请参见 :re这一章节。对于尝试改善应用程序性能，必须使用性能度量技术。</p>
+</aside>
+</section>
+<section id="id2">
+<h2>原理<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>以上“lambda”方法是更传统的“参数”方法的超集。假设我们希望构建一个简单的系统，其中我们只构建一个   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，然后将其存储在字典中以供重复使用。现在可以直接通过构建查询并通过调用 <code class="docutils literal notranslate"><span class="pre">my_cached_query</span> <span class="pre">=</span> <span class="pre">query.with_session(None)</span></code> 删除其   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  来实现这一点：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_simple_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;my_key&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">my_simple_cache</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+        <span class="n">my_simple_cache</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">my_simple_cache</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>以上方法为我们带来了非常微小的性能收益。通过重复使用   <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，我们可以节省在 <code class="docutils literal notranslate"><span class="pre">session.query(Model)</span></code> 构造函数中所执行的 Python 工作，以及调用 <code class="docutils literal notranslate"><span class="pre">filter(Model.id</span> <span class="pre">==</span> <span class="pre">bindparam('id'))</span></code> 所执行的工作，这将为我们跳过构建 Core 表达式以及将其发送到  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a> 。但是，通过在调用  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.all" title="sqlalchemy.orm.Query.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.all()</span></code></a>  时每次重新生成全新的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  对象，这种方法仍然会产生所有额外的开销，并且会额外地把这个全新的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  对象传递给字符串编译步骤，这对于上面这个简单情况来说可能是开销的 70%。</p>
+<p>为了减少额外的开销，我们需要一些更专业的逻辑，一些可以记忆化选择对象和 SQL 构造的方式。在 wiki 中的 <a class="reference external" href="https://bitbucket.org/zzzeek/sqlalchemy/wiki/UsageRecipes/BakedQuery">BakedQuery</a> 部分有一个示例，它是此功能的前身，然而在那个系统中，我们没有缓存查询的 <em>构造</em>。为了消除所有开销，我们需要缓存查询的构造以及 SQL 编译。假设我们按照这种方式改进了该方法，并制作了一个 <code class="docutils literal notranslate"><span class="pre">.bake()</span></code> 方法，该方法可预编译用于查询的 SQL，生成一个可用于快速调用的新对象。我们的示例变为：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_simple_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s2">&quot;my_key&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">my_simple_cache</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+        <span class="n">my_simple_cache</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">my_simple_cache</span><span class="p">[</span><span class="s2">&quot;my_key&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="n">以上</span><span class="err">，</span><span class="n">我们已经解决了性能问题</span><span class="err">，</span><span class="n">但仍需要处理字符串缓存密钥</span><span class="err">。</span></pre></div>
+</div>
+<p>我们可以使用“面包房”方法重构以上内容，以一种看起来不那么不寻常的方式，而更像一个简单的改进，可以比简单的“重用查询”的方法更好的实现：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_model_query</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+
+    <span class="n">parameterized_query</span> <span class="o">=</span> <span class="n">bakery</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">create_model_query</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parameterized_query</span><span class="p">(</span><span class="n">session</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>以上，我们使用“baked”系统的方式非常类似于简单的“缓存查询”系统。然而，它使用了少了两行代码，不需要制造一个“my_key”的缓存密钥，并且还包括与我们自定义的“bake”函数相同的特性，它将查询构造函数、过滤器调用、生成   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  对象和字符串编译步骤的 100％ Python 调用工作缓存起来。</p>
+<p>从以上内容出发，如果我们问自己，“如果lookup需要根据查询结构做出条件决策怎么办？”，这就是希望“baked”是这样的原因。与其从一个函数（这就是我们最初认为的baked可能起作用的方式）开始构建参数化查询，我们可以从*任意数量*的函数构建它。考虑我们的Naïve示例，如果我们需要在条件基础上在查询中添加附加子句：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_simple_cache</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">,</span> <span class="n">include_frobnizzle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">include_frobnizzle</span><span class="p">:</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="s2">&quot;my_key_with_frobnizzle&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cache_key</span> <span class="o">=</span> <span class="s2">&quot;my_key_without_frobnizzle&quot;</span>
+
+    <span class="k">if</span> <span class="n">cache_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">my_simple_cache</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">include_frobnizzle</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">frobnizzle</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">my_simple_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">bake</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="n">my_simple_cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>我们的“简单”参数化系统现在必须负责生成缓存密钥，考虑到是否传递了“include_frobnizzle”标志，因为该标志的存在表示生成的SQL将完全不同。显然，随着查询构建的复杂性增加，缓存这些查询的任务会非常快地变得繁琐。我们可以将上面的示例转换为以下“bakery”直接使用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">,</span> <span class="n">include_frobnizzle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">create_model_query</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+
+    <span class="n">parameterized_query</span> <span class="o">=</span> <span class="n">bakery</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span><span class="n">create_model_query</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">include_frobnizzle</span><span class="p">:</span>
+
+        <span class="k">def</span> <span class="nf">include_frobnizzle_in_query</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">frobnizzle</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">parameterized_query</span> <span class="o">=</span> <span class="n">parameterized_query</span><span class="o">.</span><span class="n">with_criteria</span><span class="p">(</span>
+            <span class="n">include_frobnizzle_in_query</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parameterized_query</span><span class="p">(</span><span class="n">session</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>以上，我们不仅缓存查询对象，而且还缓存生成SQL所需的所有工作。我们也不再需要处理确保我们生成的缓存密钥准确考虑到我们所做的所有结构性修改的任务；这现在是自动处理的，没有出错的机会。</p>
+<p>该代码示例比Naive示例要短几行，消除了处理缓存密钥的需要，并具有完整的所谓“烘烤”功能的巨大性能优势。但仍然有点冗长！因此，我们将类似于  <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.add_criteria" title="sqlalchemy.ext.baked.BakedQuery.add_criteria"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BakedQuery.add_criteria()</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.with_criteria" title="sqlalchemy.ext.baked.BakedQuery.with_criteria"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BakedQuery.with_criteria()</span></code></a>  这样的方法缩短为运算符，并鼓励（当然不要求！）使用简单的lambda，只作为减少冗长的手段：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">id_argument</span><span class="p">,</span> <span class="n">include_frobnizzle</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">parameterized_query</span> <span class="o">=</span> <span class="n">bakery</span><span class="o">.</span><span class="n">bake</span><span class="p">(</span>
+        <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Model</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">include_frobnizzle</span><span class="p">:</span>
+        <span class="n">parameterized_query</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Model</span><span class="o">.</span><span class="n">frobnizzle</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parameterized_query</span><span class="p">(</span><span class="n">session</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">id_argument</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p>在上面的方法中，该方法更容易实现，并且在代码流中更类似于非缓存查询函数的样子，从而使代码更易于移植。</p>
+<p>以上描述实际上是用于到达当前“烘焙”方法的设计过程的摘要。从“正常”方法开始，还需解决缓存密钥的构建和管理，去除所有冗余的Python执行以及需要根据条件语句构建的查询等附加问题，从而形成最终方法。</p>
+</section>
+<section id="id3">
+<h2>特殊查询技巧<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>本节将描述特定查询情况的一些技术。</p>
+<section id="in">
+<span id="baked-in"></span><h3>使用IN语句<a class="headerlink" href="#in" title="Permalink to this heading">¶</a></h3>
+<p>在SQLAlchemy中，  <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_" title="sqlalchemy.sql.expression.ColumnOperators.in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.in_()</span></code></a>  方法历史上基于传递给该方法的项目列表生成可变的绑定参数集，但这不适用于“烘焙的”查询，因为该列表的长度可能会在不同的调用中更改。为了解决这个问题，  <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.bindparam.params.expanding" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">bindparam.expanding</span></code></a>  参数支持后期渲染IN安全的表达式，可以在烘焙查询内缓存。实际元素列表在语句执行时呈现，而不是在语句编译时呈现：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+
+<span class="n">baked_query</span> <span class="o">=</span> <span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">session</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">))</span>
+<span class="n">baked_query</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="n">expanding</span><span class="o">=</span><span class="kc">True</span><span class="p">)))</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">baked_query</span><span class="o">.</span><span class="n">with_session</span><span class="p">(</span><span class="n">session</span><span class="p">)</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;ed&quot;</span><span class="p">,</span> <span class="s2">&quot;fred&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.bindparam.params.expanding" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">bindparam.expanding</span></code></a></p>
+<p><a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_" title="sqlalchemy.sql.expression.ColumnOperators.in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.in_()</span></code></a></p>
+</div>
+</section>
+<section id="id4">
+<h3>使用子查询<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>在使用  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+对象用于在另一个对象中生成子查询。在</p>
 <blockquote>
-<div><dl class="simple">
-<dt>test_baked_query<span class="classifier">测试一个完整实体的 baked 查询。</span></dt><dd><p>(10000 次迭代); 总的函数调用1951294</p>
-</dd>
-<dt>test_orm_query<span class="classifier">测试单个完整实体的 ORM 查询。</span></dt><dd><p>(10000 次迭代); 总的函数调用7900535</p>
+<div><p>:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_query.Query`当前处于烘焙形式的情况下，可以使用中间方法来</p>
+</div></blockquote>
+<p>检索  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> .BakedQuery.to_query` 方法
+检索对象。此方法传递了作为参数的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，作为用于生成特定步骤的lambda可调用对象的参数。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bakery</span> <span class="o">=</span> <span class="n">baked</span><span class="o">.</span><span class="n">bakery</span><span class="p">()</span>
+
+<span class="c1"># a baked query that will end up being used as a subquery</span>
+<span class="n">my_subq</span> <span class="o">=</span> <span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+<span class="n">my_subq</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+
+<span class="c1"># select a correlated subquery in the top columns list,</span>
+<span class="c1"># we have the &quot;session&quot; argument, pass that</span>
+<span class="n">my_q</span> <span class="o">=</span> <span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">my_subq</span><span class="o">.</span><span class="n">to_query</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">as_scalar</span><span class="p">()))</span>
+
+<span class="c1"># use a correlated subquery in some of the criteria, we have</span>
+<span class="c1"># the &quot;query&quot; argument, pass that.</span>
+<span class="n">my_q</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">my_subq</span><span class="o">.</span><span class="n">to_query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.</span></p>
+</div>
+</section>
+<section id="before-compile">
+<span id="baked-with-before-compile"></span><h3>使用before_compile事件<a class="headerlink" href="#before-compile" title="Permalink to this heading">¶</a></h3>
+<p>从SQLAlchemy1.3.11开始，对于特定的  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，使用  <a class="reference internal" href="../events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>
+事件将禁止烘焙查询系统缓存查询，如果事件钩子返回与传递的不同的新的  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+对象。这样，  <a class="reference internal" href="../events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>   hook可以针对特定的</p>
+<blockquote>
+<div><p>:class:<a href="#id7"><span class="problematic" id="id8">`</span></a>_query.Query`每次使用都被调用，以适应不同的钩子情况</p>
+</div></blockquote>
+<dl class="simple">
+<dt>每次都更改查询。为了允许</dt><dd><p><a class="reference internal" href="../events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>  修改  <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.Query()</span></code></a>  对象，但仍然允许缓存结果，可以</p>
 </dd>
 </dl>
-</div></blockquote>
-<p>在强大的笔记本电脑上，它的秒数是:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">sourcecode</span><span class="p">::</span> <span class="n">text</span></pre></div>
+<p>在注册事件时传递``bake_ok=True``标志。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">Query</span><span class="p">,</span> <span class="s2">&quot;before_compile&quot;</span><span class="p">,</span> <span class="n">retval</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bake_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_event</span><span class="p">(</span><span class="n">query</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">query</span><span class="o">.</span><span class="n">column_descriptions</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">desc</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="n">User</span><span class="p">:</span>
+            <span class="n">entity</span> <span class="o">=</span> <span class="n">desc</span><span class="p">[</span><span class="s2">&quot;entity&quot;</span><span class="p">]</span>
+            <span class="n">query</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">entity</span><span class="o">.</span><span class="n">deleted</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">query</span></pre></div>
 </div>
-<blockquote>
-<div><dl class="simple">
-<dt>test_baked_query<span class="classifier">测试一个完整实体的 baked 查询。</span></dt><dd><p>(10000 迭代); 总时间2.174126 秒</p>
-</dd>
-<dt>test_orm_query<span class="classifier">测试一个完整实体的 ORM 查询。</span></dt><dd><p>(10000 迭代); 总时间7.958516 秒</p>
+<p>上述策略适用于每次以完全相同的方式修改给定的 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>_query.Query`的事件，
+不依赖于特定参数或更改的外部状态。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.11: </span>- 添加了“bake_ok”标志到  <a class="reference internal" href="../events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>  事件，并禁止缓存通过的“烘焙”扩展发生
+如果该标志未设置，则返回新的 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>_query.Query`对象的事件处理程序。</p>
+</div>
+</section>
+</section>
+<section id="id13">
+<h2>禁用烘焙查询会话范围<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h2>
+<p>可以将标志  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.enable_baked_queries</span></code>  设置为False，
+导致使用该标志时，所有烘焙请求都不使用高速缓存，而使用该标志时 , 当使用该请求对 :class:<a href="#id14"><span class="problematic" id="id15">`</span></a>.Session`进行操作时。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">enable_baked_queries</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></pre></div>
+</div>
+<dl class="simple">
+<dt>与所有会话标志一样，它也被工厂对象和方法接受，例如</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> .sessionmaker.configure` 。</p>
 </dd>
 </dl>
-</div></blockquote>
-<p>请注意，此测试非常有意地使用仅返回一行的查询。对于返回许多行的查询，baked 查询的性能优势将越来越小，与取回行花费的时间成比例地减少。需要始终牢记的是，<strong>baked 查询特性仅适用于构建查询本身，而不是取回结果</strong>。使用 baked 特性绝不是大大加速应用程序的保证；它仅仅是一个潜在有用的特性，适用于那些通过测量已被证明受到这种开销特定形式影响的应用程序。</p>
-<p>===</p>
-<p>你现在是一个 .rst 文档的翻译器。</p>
-<p>你必须满足以下几点：</p>
-<ul class="simple">
-<li><p>不要破坏 .rst 语法。</p></li>
-<li><p>不要将原文的标点符号转换成中文标点符号（非常重要）。</p></li>
-<li><p>要区分术语和说明文本，不用翻译术语。</p></li>
-<li><p>“[链接名]:(..路径)” 碰到这种格式不要修改英文冒号！</p></li>
-<li><p>只翻译描述性语言文本，.rst 代码不要做任何修改。</p></li>
-<li><p>不要破坏 python sphinx 文档相关语法标记。</p></li>
-</ul>
+<p>立即实现此标志的理由是，应用程序
+可能由于用户定义的烘焙查询或其他烘焙问题而遇到问题，导致缓存关键字冲突的问题。
+可以关闭此行为，以识别或消除烘焙查询作为问题的原因。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+</section>
+<section id="id16">
+<h2>懒加载集成<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>从SQLAlchemy 1.4开始，“烘焙查询”系统不再是关系加载系统的一部分。
+相反，使用了 :ref:<a href="#id17"><span class="problematic" id="id18">`</span></a>本地缓存 &lt;sql_caching&gt;`系统。</p>
+</div>
+</section>
+<section id="api">
+<h2>API文档<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
+<table class="longtable docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head">Object Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><span class="sig-name descname">BakedQuery</span></a></p></td>
+<td><p>A builder object for <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> objects.</p></td>
+</tr>
+<tr class="row-odd"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.ext.baked.bakery"><span class="sig-name descname">bakery</span></a></p></td>
+<td><p>Construct a new bakery.</p></td>
+</tr>
+<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.ext.baked.Bakery"><span class="sig-name descname">Bakery</span></a></p></td>
+<td><p>Callable which returns a <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.bakery">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.ext.baked.</span></span><span class="sig-name descname"><span class="pre">bakery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_size_alert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.bakery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new bakery.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an instance of <a class="reference internal" href="#sqlalchemy.ext.baked.Bakery" title="sqlalchemy.ext.baked.Bakery"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bakery</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.ext.baked.</span></span><span class="sig-name descname"><span class="pre">BakedQuery</span></span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery" title="Permalink to this definition">¶</a></dt>
+<dd><div class="class-members docutils container">
+<p><strong>Members</strong></p>
+<p><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.add_criteria"><span class="sig-name descname">add_criteria()</span></a>, <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.bakery"><span class="sig-name descname">bakery()</span></a>, <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.for_session"><span class="sig-name descname">for_session()</span></a>, <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.spoil"><span class="sig-name descname">spoil()</span></a>, <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.to_query"><span class="sig-name descname">to_query()</span></a>, <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.with_criteria"><span class="sig-name descname">with_criteria()</span></a></p>
+</div>
+<p>A builder object for <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> objects.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.add_criteria">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">add_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.add_criteria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a criteria function to this <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>.</p>
+<p>This is equivalent to using the <code class="docutils literal notranslate"><span class="pre">+=</span></code> operator to
+modify a <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> in-place.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.bakery">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">bakery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_size_alert</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.bakery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a new bakery.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an instance of <a class="reference internal" href="#sqlalchemy.ext.baked.Bakery" title="sqlalchemy.ext.baked.Bakery"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bakery</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.for_session">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">for_session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.for_session" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> object for this
+<a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>.</p>
+<p>This is equivalent to calling the <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> as a
+Python callable, e.g. <code class="docutils literal notranslate"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">my_baked_query(session)</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.spoil">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">spoil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.spoil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cancel any query caching that will occur on this BakedQuery object.</p>
+<p>The BakedQuery can continue to be used normally, however additional
+creational functions will not be cached; they will be called
+on every invocation.</p>
+<p>This is to support the case where a particular step in constructing
+a baked query disqualifies the query from being cacheable, such
+as a variant that relies upon some uncacheable value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="target" id="sqlalchemy.ext.baked.BakedQuery.spoil.params.full"></span><strong>full</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.baked.BakedQuery.spoil.params.full">¶</a> – if False, only functions added to this
+<a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> object subsequent to the spoil step will be
+non-cached; the state of the <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> up until
+this point will be pulled from the cache.   If True, then the
+entire <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object is built from scratch each
+time, with all creational functions being called on each
+invocation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.to_query">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">to_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_or_session</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.to_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object for use as a subquery.</p>
+<p>This method should be used within the lambda callable being used
+to generate a step of an enclosing <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>.   The
+parameter should normally be the <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object that
+is passed to the lambda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sub_bq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="n">sub_bq</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+
+<span class="n">main_bq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="p">))</span>
+<span class="n">main_bq</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">sub_bq</span><span class="o">.</span><span class="n">to_query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">())</span></pre></div>
+</div>
+<p>In the case where the subquery is used in the first callable against
+a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>, the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> is also accepted:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sub_bq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bakery</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="n">sub_bq</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="n">q</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+    <span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">Address</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+
+<span class="n">main_bq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bakery</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+    <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">sub_bq</span><span class="o">.</span><span class="n">to_query</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">.</span><span class="n">scalar_subquery</span><span class="p">())</span>
+<span class="p">)</span></pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="target" id="sqlalchemy.ext.baked.BakedQuery.to_query.params.query_or_session"></span><strong>query_or_session</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.baked.BakedQuery.to_query.params.query_or_session">¶</a> – <p>a <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object or a class
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> object, that is assumed to be within the context
+of an enclosing <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> callable.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3.</span></p>
+</div>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.BakedQuery.with_criteria">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.BakedQuery.</span></code></a><span class="sig-name descname"><span class="pre">with_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sqlalchemy.ext.baked.BakedQuery.with_criteria" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a criteria function to a <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> cloned from this
+one.</p>
+<p>This is equivalent to using the <code class="docutils literal notranslate"><span class="pre">+</span></code> operator to
+produce a new <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> with modifications.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sqlalchemy.ext.baked.Bakery">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.ext.baked.</span></span><span class="sig-name descname"><span class="pre">Bakery</span></span><a class="headerlink" href="#sqlalchemy.ext.baked.Bakery" title="Permalink to this definition">¶</a></dt>
+<dd><p>Callable which returns a <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a>.</p>
+<p>This object is returned by the class method
+<a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery.bakery" title="sqlalchemy.ext.baked.BakedQuery.bakery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BakedQuery.bakery()</span></code></a>.  It exists as an object
+so that the “cache” can be easily inspected.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.ext.baked.</span></span><span class="sig-name descname"><span class="pre">Result</span></span></dt>
+<dd><p>Invokes a <a class="reference internal" href="#sqlalchemy.ext.baked.BakedQuery" title="sqlalchemy.ext.baked.BakedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code></a> against a <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>.</p>
+<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> object is where the actual <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+object gets created, or retrieved from the cache,
+against a target <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>, and is then invoked for results.</p>
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">all</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return all rows.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.all" title="sqlalchemy.orm.Query.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.all()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>return the ‘count’.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.count" title="sqlalchemy.orm.Query.count"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.count()</span></code></a>.</p>
+<p>Note this uses a subquery to ensure an accurate count regardless
+of the structure of the original statement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">first</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return the first row.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.first" title="sqlalchemy.orm.Query.first"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.first()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ident</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Retrieve an object based on identity.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.get" title="sqlalchemy.orm.Query.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.get()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">one</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return exactly one result or raise an exception.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.one" title="sqlalchemy.orm.Query.one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">one_or_none</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return one or zero results, or raise an exception for multiple
+rows.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.one_or_none" title="sqlalchemy.orm.Query.one_or_none"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.one_or_none()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Specify parameters to be replaced into the string SQL statement.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">scalar</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Return the first element of the first result or None
+if no rows present.  If multiple rows are returned,
+raises MultipleResultsFound.</p>
+<p>Equivalent to <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.scalar" title="sqlalchemy.orm.Query.scalar"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.scalar()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.baked.Result"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.baked.Result.</span></code></a><span class="sig-name descname"><span class="pre">with_post_criteria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Add a criteria function that will be applied post-cache.</p>
+<p>This adds a function that will be run against the
+<a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> object after it is retrieved from the
+cache.    This currently includes <strong>only</strong> the
+<a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.params" title="sqlalchemy.orm.Query.params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.params()</span></code></a> and <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.execution_options" title="sqlalchemy.orm.Query.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.execution_options()</span></code></a>
+methods.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.with_post_criteria()</span></code>
+functions are applied
+to the <a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+object <strong>after</strong> the query’s SQL statement
+object has been retrieved from the cache.   Only
+<a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.params" title="sqlalchemy.orm.Query.params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.params()</span></code></a> and
+<a class="reference internal" href="../queryguide/query.html#sqlalchemy.orm.Query.execution_options" title="sqlalchemy.orm.Query.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.execution_options()</span></code></a>
+methods should be used.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.2.</span></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
     </div>
@@ -319,7 +801,7 @@ baked_query += lambda q: q.filter(User.name == bindparam(“username”))</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:13
+    Documentation last generated: 2023/8/18 18:43:59
 
     </div>
 </div>

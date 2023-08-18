@@ -12,7 +12,7 @@
         <title>
             
     
-    Schema定义语言
+    模式定义语言 (Schema Definition Language)
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="SQLAlchemy核心模块" href="index.html" />
-        <link rel="next" title="使用 MetaData 描述数据库" href="metadata.html" />
-        <link rel="prev" title="访问者和遍历工具" href="visitors.html" />
+        <link rel="up" title="SQLAlchemy 核心" href="index.html" />
+        <link rel="next" title="使用MetaData描述数据库" href="metadata.html" />
+        <link rel="prev" title="游客和遍历工具" href="visitors.html" />
     <!-- end layout.mako headers -->
 
 
@@ -120,22 +120,22 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li class="selected"><span class="link-container"><strong>Schema定义语言</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="metadata.html">使用 MetaData 描述数据库</a></span></li>
-<li><span class="link-container"><a class="reference external" href="reflection.html">反射数据库对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="defaults.html">列的INSERT/UPDATE默认值</a></span></li>
+<li class="selected"><span class="link-container"><strong>模式定义语言 (Schema Definition Language)</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="metadata.html">使用MetaData描述数据库</a></span></li>
+<li><span class="link-container"><a class="reference external" href="reflection.html">从数据库反射对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="defaults.html">列INSERT/UPDATE默认值</a></span></li>
 <li><span class="link-container"><a class="reference external" href="constraints.html">定义约束和索引</a></span></li>
-<li><span class="link-container"><a class="reference external" href="ddl.html">自定义DDL</a></span></li>
+<li><span class="link-container"><a class="reference external" href="ddl.html">自定义 DDL</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span></li>
 </ul>
 
 
@@ -167,19 +167,19 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="visitors.html" title="previous chapter">访问者和遍历工具</a></li>
+                <a href="visitors.html" title="previous chapter">游客和遍历工具</a></li>
                 <li><b>Next:</b>
-                <a href="metadata.html" title="next chapter">使用 MetaData 描述数据库</a></li>
+                <a href="metadata.html" title="next chapter">使用MetaData描述数据库</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
                 </ul>
 
 
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#schema">Schema定义语言</a></li>
+<li><a class="reference internal" href="#schema-definition-language">模式定义语言 (Schema Definition Language)</a></li>
 </ul>
 
 
@@ -191,20 +191,29 @@
 
     <div id="docs-body" role="main" class="withsidebar core-schema" >
         
-<section id="schema">
-<span id="schema-toplevel"></span><h1>Schema定义语言<a class="headerlink" href="#schema" title="Permalink to this heading">¶</a></h1>
-<p>本节说明SQLAlchemy的**模式元数据**，一种描述和检查数据库结构的全面系统。</p>
-<p>SQLAlchemy查询和对象映射操作的核心由Python对象构成，这些对象描述表和其他模式级对象。这些对象是三种主要类型操作的核心——发出CREATE和DROP语句（也称为DDL），构建SQL查询和表达关于数据库中已经存在的结构的信息。</p>
-<p>可以通过明确命名不同组件及其属性来表达数据库元数据，使用诸如:class:<cite>~sqlalchemy.schema.Table</cite>、<a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>、<code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code>）开始对其进行命名，然后指示SQLAlchemy从特定的引擎源中加载所有与该名称相关的其他信息。</p>
-<p>SQLAlchemy的数据库元数据结构的一个关键特点是它们被设计成以*声明式*风格使用，其密切类似于真正的DDL。因此，它们对于那些具有创建真实模式生成脚本背景的人最直观。</p>
+<section id="schema-definition-language">
+<span id="schema-toplevel"></span><h1>模式定义语言 (Schema Definition Language)<a class="headerlink" href="#schema-definition-language" title="Permalink to this heading">¶</a></h1>
+<p>这一节具体涉及SQLAlchemy <strong>模式元数据</strong>，即一套描述和检查数据库模式的全面系统。</p>
+<p>SQLAlchemy的查询和对象映射操作的核心受到*数据库元数据*的支持，这些元数据由描述表和其他模式级对象的Python对象组成。这些对象是发出CREATE和DROP语句(称为*DDL*)、构造SQL查询以及表达有关已存在于数据库中的结构信息的三种主要类型操作的核心。</p>
+<p>数据库的元数据可以通过明确命名各种组件及其属性来表示，使用构造如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 、  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 、   <a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  和   <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>  的语句。它也可以通过SQLAlchemy使用一种称为*反射*的过程生成，即您从一个单一对象开始，如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，为其分配名称，然后指示SQLAlchemy从特定引擎源中加载与该名称相关的所有其他信息。</p>
+<p>SQLAlchemy的数据库元数据构造的一个关键特点是，它们被设计成以*申明式*样式使用，这与真正的DDL非常相似。因此，它们对于那些具有创建真正的模式生成脚本的背景的人来说是最直观的。</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="metadata.html">使用 MetaData 描述数据库</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#metadata-tables-and-columns">访问表格和列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#id2">创建和删除数据库表</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#schema-migrations">通过迁移更改数据库对象</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#schema-table-schema-name">指定模式名称</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#columntable-metadata-api">Column、Table 和 MetaData API</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">使用MetaData描述数据库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#metadata-tables-and-columns">访问表和列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#id20">创建和删除数据库表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#migrations">通过Migrations修改数据库对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#schema-table-schema-name">指定模式名称</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-metadata-schema-name">使用MetaData指定默认模式名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-dynamic-naming-convention">应用动态模式命名约定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-set-default-connections">为新连接设置默认模式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#id43">模式和反射</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#id44">特定于后端的选项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#metadata-api">列，表，MetaData API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.sqlalchemy.schema.BLANK_SCHEMA"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.schema.BLANK_SCHEMA</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.sqlalchemy.schema.RETAIN_SCHEMA"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.schema.RETAIN_SCHEMA</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column"><code class="docutils literal notranslate"><span class="pre">Column</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData"><code class="docutils literal notranslate"><span class="pre">MetaData</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.SchemaConst"><code class="docutils literal notranslate"><span class="pre">SchemaConst</span></code></a></li>
@@ -215,47 +224,31 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="reflection.html">反射数据库对象</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#reflection-overriding-columns">覆盖反映的列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#id27">反射视图</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#id30">一次性反射所有表</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#metadata-reflection-schemas">从其他模式中反射表</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#reflection-schema-qualified-interaction">使用模式限定反映的交互</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reflection.html">从数据库反射对象</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id2">重写反映列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id3">反映视图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id4">一次反映所有表格</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id5">从其他模式反映表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id6">反射的限制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id7">从数据库无关类型反映</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reflection.html#id8">反射的限制</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#inspector">使用 Inspector 进行细粒度反映</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.reflection.Inspector"><code class="docutils literal notranslate"><span class="pre">Inspector</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedColumn"><code class="docutils literal notranslate"><span class="pre">ReflectedColumn</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedComputed"><code class="docutils literal notranslate"><span class="pre">ReflectedComputed</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedCheckConstraint"><code class="docutils literal notranslate"><span class="pre">ReflectedCheckConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedForeignKeyConstraint"><code class="docutils literal notranslate"><span class="pre">ReflectedForeignKeyConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedIdentity"><code class="docutils literal notranslate"><span class="pre">ReflectedIdentity</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedIndex"><code class="docutils literal notranslate"><span class="pre">ReflectedIndex</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedPrimaryKeyConstraint"><code class="docutils literal notranslate"><span class="pre">ReflectedPrimaryKeyConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedUniqueConstraint"><code class="docutils literal notranslate"><span class="pre">ReflectedUniqueConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reflection.html#sqlalchemy.engine.interfaces.ReflectedTableComment"><code class="docutils literal notranslate"><span class="pre">ReflectedTableComment</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#metadata-reflection-dbagnostic-types">使用数据库非相关类型进行反映</a></li>
-<li class="toctree-l2"><a class="reference internal" href="reflection.html#id86">反射的局限性</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="defaults.html">列的INSERT/UPDATE默认值</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id1">标量默认值</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#python">Python执行函数</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="defaults.html">列INSERT/UPDATE默认值</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id5">标量默认值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#python-executed-functions">Python-Executed Functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="defaults.html#context-default-functions">上下文敏感的默认函数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#sql">客户端调用的SQL表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#ddl">DDL显式默认表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#timestamp">标记隐式生成的值、Timestamp 和激发列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#sql">由客户端调用的SQL表达式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#defaults-sequences">定义序列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#serial">在一个SERIAL列上关联序列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id26">单独执行序列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#metadata">将序列与MetaData相关联</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id27">将序列与服务器端默认值相关联</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-as">计算列（GENERATED ALWAYS AS）</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-by-default-as-identity">身份列（GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#ddl">基于服务器调用DDL显式默认表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#triggered-columns">标记隐式生成的值、时间戳和触发列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id45">定义序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id53">基于服务器调用DDL显式默认表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id59">标记隐式生成的值、时间戳和触发列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-as">计算列 (GENERATED ALWAYS AS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-by-default-as-identity">标识列 (GENERATED {ALWAYS | BY DEFAULT} AS IDENTITY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#api">默认对象API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="defaults.html#sqlalchemy.schema.Computed"><code class="docutils literal notranslate"><span class="pre">Computed</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="defaults.html#sqlalchemy.schema.ColumnDefault"><code class="docutils literal notranslate"><span class="pre">ColumnDefault</span></code></a></li>
@@ -270,47 +263,50 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="constraints.html">定义约束和索引</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="constraints.html#metadata-foreignkeys">定义外键</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id29">为元数据集合配置命名约定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#alter">通过ALTER创建/删除外键约束</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#on-updateon-delete">ON UPDATE和ON DELETE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#schema-unique-constraint">唯一约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id12">检查约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id15">主键约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#declarative-orm">使用Declarative ORM扩展时设置约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#constraint-naming-conventions">配置约束命名约定</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="constraints.html#constraint-default-naming-convention">默认命名约定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id33">截断长名称</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id34">创建自定义的命名约定令牌</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#check">命名CHECK约束</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#id48">长名称的截断</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#id49">为命名约定创建自定义标记</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#naming-check-constraints">命名检查约束</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="constraints.html#checkconstraint-columns-0-name-s-schema-column-expression-column-constraints-indexes"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint`还支持</span> <span class="pre">``%(columns_0_name)s`</span></code> 令牌；我们可以通过确保在约束的表达式中使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">_schema.Column</span></code> 或 <code class="xref py py-func docutils literal notranslate"><span class="pre">_expression.column()</span></code> 元素来利用它，无论是将约束声明与表分开还是将其定义在表中：：约束（Constraints）和索引（Indexes）</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id38">配置约束名称</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id39">创建约束</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#indexes">创建 Indexes</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id40">功能性索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#check-naming">配置 Check 约束和 Naming</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#naming-schematypes">配置布尔值、枚举值和其他模式类型的命名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#api">约束 API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.Constraint"><code class="docutils literal notranslate"><span class="pre">Constraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.ColumnCollectionMixin"><code class="docutils literal notranslate"><span class="pre">ColumnCollectionMixin</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.ColumnCollectionConstraint"><code class="docutils literal notranslate"><span class="pre">ColumnCollectionConstraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.CheckConstraint"><code class="docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKey"><code class="docutils literal notranslate"><span class="pre">ForeignKey</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKeyConstraint"><code class="docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.HasConditionalDDL"><code class="docutils literal notranslate"><span class="pre">HasConditionalDDL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.PrimaryKeyConstraint"><code class="docutils literal notranslate"><span class="pre">PrimaryKeyConstraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.UniqueConstraint"><code class="docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.conv"><code class="docutils literal notranslate"><span class="pre">conv()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#schema-indexes">索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id57">函数式索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id58">索引 API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.Index"><code class="docutils literal notranslate"><span class="pre">Index</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ddl.html">自定义DDL</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id7">自定义DDL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id10">控制DDL序列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#ddlelement">使用内置的DDLElement类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id27">控制约束和索引的DDL生成</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#ddlapi">DDL表达式构造API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.sort_tables"><code class="docutils literal notranslate"><span class="pre">sort_tables()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.sort_tables_and_constraints"><code class="docutils literal notranslate"><span class="pre">sort_tables_and_constraints()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.BaseDDLElement"><code class="docutils literal notranslate"><span class="pre">BaseDDLElement</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.ExecutableDDLElement"><code class="docutils literal notranslate"><span class="pre">ExecutableDDLElement</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DDL"><code class="docutils literal notranslate"><span class="pre">DDL</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema._CreateDropBase"><code class="docutils literal notranslate"><span class="pre">_CreateDropBase</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateTable"><code class="docutils literal notranslate"><span class="pre">CreateTable</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DropTable"><code class="docutils literal notranslate"><span class="pre">DropTable</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateColumn"><code class="docutils literal notranslate"><span class="pre">CreateColumn</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateSequence"><code class="docutils literal notranslate"><span class="pre">CreateSequence</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DropSequence"><code class="docutils literal notranslate"><span class="pre">DropSequence</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateIndex"><code class="docutils literal notranslate"><span class="pre">CreateIndex</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DropIndex"><code class="docutils literal notranslate"><span class="pre">DropIndex</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.AddConstraint"><code class="docutils literal notranslate"><span class="pre">AddConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DropConstraint"><code class="docutils literal notranslate"><span class="pre">DropConstraint</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateSchema"><code class="docutils literal notranslate"><span class="pre">CreateSchema</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="ddl.html#sqlalchemy.schema.DropSchema"><code class="docutils literal notranslate"><span class="pre">DropSchema</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="ddl.html">自定义 DDL</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id7">用户自定义 DDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id8">控制 DDL 序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#ddlelement">使用内置 DDLElement 类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id9">控制约束和索引的 DDL 生成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#ddl-api">DDL 表达式构造 API</a></li>
 </ul>
 </li>
 </ul>
@@ -323,9 +319,9 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="visitors.html" title="previous chapter">访问者和遍历工具</a>
+        <a href="visitors.html" title="previous chapter">游客和遍历工具</a>
         Next:
-        <a href="metadata.html" title="next chapter">使用 MetaData 描述数据库</a>
+        <a href="metadata.html" title="next chapter">使用MetaData描述数据库</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -335,7 +331,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:00
+    Documentation last generated: 2023/8/18 18:43:47
 
     </div>
 </div>

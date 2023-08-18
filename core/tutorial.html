@@ -12,7 +12,7 @@
         <title>
             
     
-    &lt;no title&gt;
+    Introduction
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -124,7 +124,7 @@
 <li><span class="link-container"><a class="reference external" href="../intro.html">概述</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../tutorial/index.html">SQLAlchemy统一教程</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../orm/index.html">SQLAlchemy ORM</a></span></li>
-<li><span class="link-container"><a class="reference external" href="index.html">SQLAlchemy核心模块</a></span></li>
+<li><span class="link-container"><a class="reference external" href="index.html">SQLAlchemy 核心</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../dialects/index.html">方言</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../faq/index.html">常见问题解答</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../errors.html">错误消息</a></span></li>
@@ -165,7 +165,9 @@
 
 
             <li><b>On this page:</b></li>
-            <ul class="simple">
+            <ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#the-basics">The Basics</a></li>
 </ul>
 
 
@@ -179,8 +181,67 @@
         
 <div class="admonition- admonition">
 <p class="admonition-title">我们已经迁移！</p>
-<p>这个页面是 SQLAlchemy 1.x 教程的原始主页。截至2.0，SQLAlchemy 提供了一种修订后的工作方法和全新的教程，以集成方式呈现核心和ORM使用了所有最新的用法模式。请参阅 <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>。</p>
+<p>这个页面曾经是SQLAlchemy 1.x教程的旧址。从2.0版本开始，SQLAlchemy采用了一种经过修订的工作方式，并提供了全新的教程，在最新的使用模式中集成了核心和ORM。请见   <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 。</p>
 </div>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<p>The SQLAlchemy SQL Expression Language presents a system of representing
+structured data in Python. It provides a simple way to express complex queries
+in a way that is familiar to SQL users, leveraging all the benefits of the
+Python programming language like expression syntax, namedtuple &amp; object
+relational mapping, and rich data types.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The expressions in the SQL Expression Language are constructed in Python
+using regular Python statements, not SQLAlchemy-specific strings.  All the
+benefits of Python code - including error handling, code completion,
+refactoring tools, and more - are available when constructing SQL
+expressions using the SQL Expression Language.</p>
+</div>
+</section>
+<section id="the-basics">
+<h1>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy’s SQL Expression Language makes use of Python’s powerful expression
+language to make writing SQL statements easy.</p>
+<p>Consider a users table with columns id, name, age, and created_date.</p>
+<p>Here’s a simple select statement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="n">users</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span>
+        <span class="n">Column</span><span class="p">(</span><span class="s1">&#39;created_date&#39;</span><span class="p">,</span> <span class="n">DateTime</span><span class="p">),</span>
+        <span class="p">)</span>
+
+<span class="c1"># select * from users</span>
+<span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="p">])</span></pre></div>
+</div>
+<p>This statement will build a SQL expression that will select all columns from a
+users table. The   <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  function takes a list of columns or expressions
+to return from the SELECT statement.</p>
+<p>In this example, the <cite>Table</cite> object is defined with the <code class="docutils literal notranslate"><span class="pre">metadata</span></code> object as
+a parent object, which represents all the database objects in SQLAlchemy. Once
+we have the table, we can build a <code class="docutils literal notranslate"><span class="pre">select()</span></code> statement that returns all
+columns of that table by passing the <code class="docutils literal notranslate"><span class="pre">Table</span></code> instance to the select function.</p>
+<p>Expressions can be combined using Python operators to provide more complex
+queries. For example, we can select only the <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">name</span></code> columns of
+users under 30 years old:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># select name, id from users where age &lt; 30</span>
+<span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">])</span><span class="o">.</span>\
+                <span class="n">where</span><span class="p">(</span><span class="n">users</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">age</span> <span class="o">&lt;</span> <span class="mi">30</span><span class="p">)</span></pre></div>
+</div>
+<p>In this case, we use the <code class="docutils literal notranslate"><span class="pre">where()</span></code> method to filter only rows whose <code class="docutils literal notranslate"><span class="pre">age</span></code>
+column is less than 30.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>It is always necessary to specify the <code class="docutils literal notranslate"><span class="pre">.c</span></code> attribute before using the
+column object.</p>
+</div>
+<p>The result of the select statement is a SQLAlchemy select object, which can be
+executed using an engine’s  <a class="reference internal" href="internals.html#sqlalchemy.engine.interfaces.DBAPICursor.execute" title="sqlalchemy.engine.interfaces.DBAPICursor.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">execute()</span></code></a>  method. An engine is SQLAlchemy’s
+core interface for executing SQL statements.</p>
+</section>
 
     </div>
 
@@ -196,7 +257,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:04
+    Documentation last generated: 2023/8/18 18:43:51
 
     </div>
 </div>

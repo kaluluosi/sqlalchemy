@@ -40,8 +40,8 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="关系配置" href="relationships.html" />
-        <link rel="next" title="配置 Relationship Joins" href="join_conditions.html" />
-        <link rel="prev" title="关系模式基础知识" href="basic_relationships.html" />
+        <link rel="next" title="配置关系联接" href="join_conditions.html" />
+        <link rel="prev" title="基本关系模式" href="basic_relationships.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,26 +127,26 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">基本关系模式</a></span></li>
 <li class="selected"><span class="link-container"><strong>邻接列表关系</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#id2">复合邻接列表</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#self-referential-query">自引用查询策略</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#self-referential-eager-loading">配置自引用关系的预加载</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#self-referential-eager-loading">配置自引用关系的急加载</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
-<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
-<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置关系联接</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">操作大型集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合自定义和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系的持久化模式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
-<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -178,9 +178,9 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="basic_relationships.html" title="previous chapter">关系模式基础知识</a></li>
+                <a href="basic_relationships.html" title="previous chapter">基本关系模式</a></li>
                 <li><b>Next:</b>
-                <a href="join_conditions.html" title="next chapter">配置 Relationship Joins</a></li>
+                <a href="join_conditions.html" title="next chapter">配置关系联接</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -195,7 +195,7 @@
 <li><a class="reference internal" href="#self-referential">邻接列表关系</a><ul>
 <li><a class="reference internal" href="#id2">复合邻接列表</a></li>
 <li><a class="reference internal" href="#self-referential-query">自引用查询策略</a></li>
-<li><a class="reference internal" href="#self-referential-eager-loading">配置自引用关系的预加载</a></li>
+<li><a class="reference internal" href="#self-referential-eager-loading">配置自引用关系的急加载</a></li>
 </ul>
 </li>
 </ul>
@@ -211,23 +211,26 @@
         
 <section id="self-referential">
 <span id="id1"></span><h1>邻接列表关系<a class="headerlink" href="#self-referential" title="Permalink to this heading">¶</a></h1>
-<p><strong>邻接列表模式**是一种常见的关系模式，其中一个表包含对本身的外键引用，也就是**自引用关系</strong>。这是在平面表中表示分层数据的最常见方式。
-其他方法包括**嵌套集**(有时称为“修改遍历”)，以及**材料化路径**。尽管从在 SQL 查询中的流畅度来衡量修改遍历的吸引力，但邻接列表模型很可能是大多数分层存储需求中最合适的模式，因为它具有并发性、简化性和修改遍历对于能够完全将子树加载到应用程序空间的应用来说没有优势的原因。</p>
-<p>在这个例子中，我们将使用一个单一映射的名为 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 的类来表示树结构:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<p><strong>邻接列表**模式是一种常见的关系模式，其中一个表包含对自身的外键引用，换句话说是一种**自引用关系</strong>。这是用平坦的表表示分层数据的最常见方法。其他方法包括 <strong>嵌套集</strong>，有时称为“修改先序遍历”，以及 <strong>物化路径</strong>。尽管修改先序遍历在评估其在SQL查询中的流畅性时具有吸引力，但邻接列表模型可能是大多数分层存储需求的最合适模式，原因是并发性、减少复杂性以及修改先序遍历在可以完全加载子树到应用程序空间的应用程序上几乎没有优势。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>本节详细介绍了自引用关系的单表版本。有关使用第二个表作为关联表的自引用关系，请参见   <span class="xref std std-ref">self_referential_many_to_many</span>  节。</p>
+</div>
+<p>在本示例中，我们将使用一个名为“Node”的单个映射类，表示树形结构:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
     <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>对于上述结构，类似以下形式的图：</p>
+<p>有了这个结构，如下所示的图表:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>root --+---&gt; child1
        +---&gt; child2 --+--&gt; subchild1
        |              +--&gt; subchild2
        +---&gt; child3</pre></div>
 </div>
-<p>可以用以下数据来表示：</p>
+<p>将表示为以下数据:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>id       parent_id     data
 ---      -------       ----
 1        NULL          root
@@ -237,59 +240,74 @@
 5        3             subchild2
 6        1             child3</pre></div>
 </div>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 在这里的配置方式与 “通常” 的一对多关系相同，唯一的
-例外是默认情况下假定关系是一对多还是多对一 。为了将关系建立为多对一，需要添加一个额外指令 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code>。它是一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象的集合，表示应该视为 “远程” 的内容。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
-    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">id</span><span class="p">])</span></pre><div class="code-non-annotations-key"></div></div>
-</div>
-<p>上述代码将 <code class="docutils literal notranslate"><span class="pre">id</span></code> 指定为 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 的 <code class="docutils literal notranslate"><span class="pre">remote_side</span></code>，从而将 <code class="docutils literal notranslate"><span class="pre">parent_id</span></code> 视为“本地”方向，然后关系的行为就会变为多对一。</p>
-<p>同样，两个方向可以结合为双向关系，使用由 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 关联的两个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造来链接:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
-    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
-    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
-    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">id</span><span class="p">])</span></pre><div class="code-non-annotations-key"></div></div>
+<p>此处的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  配置与“正常”的一对多关系相同，唯一的区别在于“方向”，即关系是一对多还是多对一，默认情况下假定为一对多。要将关系建立为多对一，需要添加额外的指令，称为  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code> ，它是一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  或一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象集合，表示那些应被视为“远程”的对象：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class Node(Base):</dt><dd><p>__tablename__ = “node”
+id = mapped_column(Integer, primary_key=True)
+parent_id = mapped_column(Integer, ForeignKey(“node.id”))
+data = mapped_column(String(50))
+parent = relationship(“Node”, remote_side=[id])</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在上述例子中，将``id``列应用为``parent``函数的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code> ，因此将``parent_id``视为“本地”侧面，关系然后表现为多对一。</p>
+<p>像往常一样，可以通过两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  结构相互连接，这两个结构之间可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  形成双向关系：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class Node(Base):</dt><dd><p>__tablename__ = “node”
+id = mapped_column(Integer, primary_key=True)
+parent_id = mapped_column(Integer, ForeignKey(“node.id”))
+data = mapped_column(String(50))
+children = relationship(“Node”, back_populates=”parent”)
+parent = relationship(“Node”, back_populates=”children”, remote_side=[id])</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="examples.html#examples-adjacencylist"><span class="std std-ref">邻接列表</span></a>  - 此工作示例已更新为SQLAlchemy 2.0</p>
 </div>
 <section id="id2">
 <h2>复合邻接列表<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>邻接列表关系的一个子类别是某些情况下为本地和远程连接条件都存在的表添加特定的列的情况。
-下面是 <code class="docutils literal notranslate"><span class="pre">Folder</span></code> 类的一个示例，使用复合主键，<code class="docutils literal notranslate"><span class="pre">account_id</span></code> 列引用它自身，以表示与父级在同一帐户中的子文件夹, <a href="#id3"><span class="problematic" id="id4">``</span></a>folder_id``则表示该帐户中特定的文件夹:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
-    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;folder&quot;</span>
-    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">ForeignKeyConstraint</span><span class="p">(</span>
-            <span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">,</span> <span class="s2">&quot;parent_id&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;folder.account_id&quot;</span><span class="p">,</span> <span class="s2">&quot;folder.folder_id&quot;</span><span class="p">]</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
-
-    <span class="n">account_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">folder_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-
-    <span class="n">parent_folder</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
-        <span class="s2">&quot;Folder&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;child_folders&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">account_id</span><span class="p">,</span> <span class="n">folder_id</span><span class="p">]</span>
-    <span class="p">)</span>
-
-    <span class="n">child_folders</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Folder&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent_folder&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
-</div>
-<p>上面，将 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 传递到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code> 列表中。 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 识别到，在两侧都存在 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 时
-，将“远程”列与 <code class="docutils literal notranslate"><span class="pre">folder_id</span></code> 列对齐，后者被认为是仅出现在“远程”方向上的列。</p>
+<p>邻接列表关系的子类别是一种特殊情况，即在联接条件的“本地”和“远程”侧上都存在特定列。下面是一个 <code class="docutils literal notranslate"><span class="pre">Folder</span></code> 类的示例；使用复合主键， <code class="docutils literal notranslate"><span class="pre">account_id</span></code>
+列引用自身，以指示与父级相同帐户中的子文件夹；而``folder_id``引用该帐户中的特定文件夹：</p>
+<blockquote>
+<div><dl>
+<dt>class Folder(Base):</dt><dd><p>__tablename__ = “folder”
+__table_args__ = (</p>
+<blockquote>
+<div><dl class="simple">
+<dt>ForeignKeyConstraint(</dt><dd><p>[“account_id”, “parent_id”], [“folder.account_id”, “folder.folder_id”]</p>
+</dd>
+</dl>
+<p>),</p>
+</div></blockquote>
+<p>)</p>
+<p>account_id = mapped_column(Integer, primary_key=True)
+folder_id = mapped_column(Integer, primary_key=True)
+parent_id = mapped_column(Integer)
+name = mapped_column(String)</p>
+<dl class="simple">
+<dt>parent_folder = relationship(</dt><dd><p>“Folder”, back_populates=”child_folders”, remote_side=[account_id, folder_id]</p>
+</dd>
+</dl>
+<p>)</p>
+<p>child_folders = relationship(“Folder”, back_populates=”parent_folder”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在上述示例中，将 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 传递到  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code>  列表中。 <code class="docutils literal notranslate"><span class="pre">relationship</span></code> 函数识别到在此处 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 列在两侧，并将“远程”列与它识别为唯一存在于“远程”侧的 <code class="docutils literal notranslate"><span class="pre">folder_id</span></code> 列。</p>
 </section>
 <section id="self-referential-query">
-<span id="id5"></span><h2>自引用查询策略<a class="headerlink" href="#self-referential-query" title="Permalink to this heading">¶</a></h2>
-<p>查询自引用结构的工作方式与任何其他查询相同:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取名为 &#39;child2&#39; 的所有节点</span>
-<span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;child2&quot;</span><span class="p">))</span></pre></div>
-</div>
-<p>但是，在尝试从一级树到上一级树模式上连接的时候需要格外小心。在SQL中，从表连接自身至少会要求将表达式的某一侧”别名”，以便可以无歧义地引用它。</p>
-<p>还记得教程中在 ORM 中使用 <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 的代码吗？我们通常使用它来提供ORM实体的“别名”。使用此技术从 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 连接到自身将如下所示：</p>
+<span id="id3"></span><h2>自引用查询策略<a class="headerlink" href="#self-referential-query" title="Permalink to this heading">¶</a></h2>
+<p>自引用结构的查询与任何其他查询一样：</p>
+<blockquote>
+<div><p># 获取名称为“child2”的所有节点
+session.scalars(select(Node).where(Node.data == “child2”))</p>
+</div></blockquote>
+<p>但是，在尝试沿着树的一级到下一级的外键连接时，需要特别小心。在SQL中，从表连接到自身需要将表达式的至少一侧“别名”，以便可以确切地引用它。</p>
+<p>回顾一下 ORM 教程中的   <a class="reference internal" href="queryguide/select.html#orm-queryguide-orm-aliases"><span class="std std-ref">选择 ORM 别名</span></a> ，通常使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  结构为 ORM 实体提供“别名”。使用这种技术将 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 连接到自身如下所示：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">aliased</span>
 
 <span class="n">nodealias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span>
@@ -311,8 +329,8 @@
 </div>
 </section>
 <section id="self-referential-eager-loading">
-<span id="id6"></span><h2>配置自引用关系的预加载<a class="headerlink" href="#self-referential-eager-loading" title="Permalink to this heading">¶</a></h2>
-<p>使用连接或外连接从父表到子表进行关系的即时加载，使得可以从单个 SQL 语句或者所有即时子集的第二个语句来填充父级和其子级引用 or 集合。SQLAlchemy 的并入和子查询即时加载在连接到关联项时，在所有情况下都使用别名表，因此与自引用关联性的连接可以兼容。但是，为了使用自引用关系的即时加载，SQLAlchemy 需要告诉它需要连接和/或查询多深的层级；否则，即时加载将根本不会发生。该深度设置通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationships.join_depth</span></code> 进行配置。</p>
+<span id="id4"></span><h2>配置自引用关系的急加载<a class="headerlink" href="#self-referential-eager-loading" title="Permalink to this heading">¶</a></h2>
+<p>关系的快速加载是通过从父到子表使用连接或外连接进行的，以便可以从单个SQL语句或所有立即子代集合的第二个语句填充父及其即时子集合或引用。SQLAlchemy 在连接到相关项目时在所有情况下使用别名表，因此与自引用连接兼容。但是，要使用自引用关系的急加载，需要告诉SQLAlchemy它应该加入和/或查询多少级;否则，快速加载将不会发生。通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationships.join_depth</span></code>  配置此深度设置：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -348,9 +366,9 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="basic_relationships.html" title="previous chapter">关系模式基础知识</a>
+        <a href="basic_relationships.html" title="previous chapter">基本关系模式</a>
         Next:
-        <a href="join_conditions.html" title="next chapter">配置 Relationship Joins</a>
+        <a href="join_conditions.html" title="next chapter">配置关系联接</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -360,7 +378,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:02
 
     </div>
 </div>

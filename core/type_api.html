@@ -12,7 +12,7 @@
         <title>
             
     
-    基础类型 API
+    数据库类型 API
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,8 +39,8 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="SQL数据库类型对象" href="types.html" />
-        <link rel="next" title="引擎和连接使用" href="engines_connections.html" />
+        <link rel="up" title="SQL 数据类型对象" href="types.html" />
+        <link rel="next" title="引擎与连接使用" href="engines_connections.html" />
         <link rel="prev" title="自定义类型" href="custom_types.html" />
     <!-- end layout.mako headers -->
 
@@ -120,16 +120,16 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="type_basics.html">类型层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="custom_types.html">自定义类型</a></span></li>
-<li class="selected"><span class="link-container"><strong>基础类型 API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>数据库类型 API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.TypeEngine"><code class="docutils literal notranslate"><span class="pre">TypeEngine</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.TypeEngine.Comparator"><code class="docutils literal notranslate"><span class="pre">TypeEngine.Comparator</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.TypeEngine.Comparator.operate"><code class="docutils literal notranslate"><span class="pre">TypeEngine.Comparator.operate()</span></code></a></span></li>
@@ -183,8 +183,8 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span></li>
 </ul>
 
 
@@ -218,11 +218,11 @@
                 <li><b>Previous:</b>
                 <a href="custom_types.html" title="previous chapter">自定义类型</a></li>
                 <li><b>Next:</b>
-                <a href="engines_connections.html" title="next chapter">引擎和连接使用</a></li>
+                <a href="engines_connections.html" title="next chapter">引擎与连接使用</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
-                    <ul><li><a href="types.html" title="SQL数据库类型对象">SQL数据库类型对象</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
+                    <ul><li><a href="types.html" title="SQL 数据类型对象">SQL 数据类型对象</a></li>
                 </ul>
                 </ul>
 
@@ -230,7 +230,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#api">基础类型 API</a><ul>
+<li><a class="reference internal" href="#api">数据库类型 API</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.types.TypeEngine"><code class="docutils literal notranslate"><span class="pre">TypeEngine</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.types.TypeEngine.Comparator"><code class="docutils literal notranslate"><span class="pre">TypeEngine.Comparator</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.types.TypeEngine.Comparator.operate"><code class="docutils literal notranslate"><span class="pre">TypeEngine.Comparator.operate()</span></code></a></li>
@@ -294,7 +294,7 @@
     <div id="docs-body" role="main" class="withsidebar core-type_api" >
         
 <section id="api">
-<span id="types-api"></span><h1>基础类型 API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
+<span id="types-api"></span><h1>数据库类型 API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -333,10 +333,10 @@ workaround recipes, however this actual type should not be used.</p></td>
 <p>Common subclasses of <a class="reference internal" href="#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> include
 <a class="reference internal" href="type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a>, <a class="reference internal" href="type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>, and <a class="reference internal" href="type_basics.html#sqlalchemy.types.Boolean" title="sqlalchemy.types.Boolean"><code class="xref py py-class docutils literal notranslate"><span class="pre">Boolean</span></code></a>.</p>
 <p>For an overview of the SQLAlchemy typing system, see
-<a class="reference internal" href="types.html"><span class="std std-ref">SQL数据库类型对象</span></a>.</p>
+<a class="reference internal" href="types.html"><span class="std std-ref">SQL 数据类型对象</span></a>.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="types.html"><span class="std std-ref">SQL数据库类型对象</span></a></p>
+<p><a class="reference internal" href="types.html"><span class="std std-ref">SQL 数据类型对象</span></a></p>
 </div>
 <div class="class-members docutils container">
 <p><strong>Members</strong></p>
@@ -421,7 +421,7 @@ heuristic rule is not sufficient.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="reflection.html#metadata-reflection-dbagnostic-types"><span class="std std-ref">使用数据库非相关类型进行反映</span></a> - describes the
+<p><span class="xref std std-ref">metadata_reflection_dbagnostic_types</span> - describes the
 use of <a class="reference internal" href="#sqlalchemy.types.TypeEngine.as_generic" title="sqlalchemy.types.TypeEngine.as_generic"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.as_generic()</span></code></a> in conjunction with
 the <code class="xref py py-meth docutils literal notranslate"><span class="pre">DDLEvents.column_reflect()</span></code> event, which is its
 intended use.</p>
@@ -466,7 +466,7 @@ of <a class="reference internal" href="custom_types.html#sqlalchemy.types.TypeDe
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="custom_types.html#types-sql-value-processing"><span class="std std-ref">应用 SQL 级别的绑定/结果处理</span></a></p>
+<p><a class="reference internal" href="custom_types.html#types-sql-value-processing"><span class="std std-ref">应用SQL级别的Bind/Result处理</span></a></p>
 </div>
 </dd></dl>
 
@@ -555,7 +555,7 @@ of <a class="reference internal" href="custom_types.html#sqlalchemy.types.TypeDe
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="custom_types.html#types-sql-value-processing"><span class="std std-ref">应用 SQL 级别的绑定/结果处理</span></a></p>
+<p><a class="reference internal" href="custom_types.html#types-sql-value-processing"><span class="std std-ref">应用SQL级别的Bind/Result处理</span></a></p>
 </div>
 </dd></dl>
 
@@ -653,7 +653,7 @@ still means “no default”.</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/persistence_techniques.html#session-forcing-null"><span class="std std-ref">对具有默认值的列强制使用NULL</span></a> - in the ORM documentation</p>
+<p><a class="reference internal" href="../orm/persistence_techniques.html#session-forcing-null"><span class="std std-ref">在具有默认值的列上强制执行NULL</span></a> - in the ORM documentation</p>
 <p><a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.JSON.params.none_as_null" title="sqlalchemy.dialects.postgresql.JSON"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">JSON.none_as_null</span></code></a> - PostgreSQL JSON
 interaction with this flag.</p>
 <p><a class="reference internal" href="#sqlalchemy.types.TypeEngine.should_evaluate_none" title="sqlalchemy.types.TypeEngine.should_evaluate_none"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TypeEngine.should_evaluate_none</span></code></a> - class-level flag</p>
@@ -856,7 +856,7 @@ for one variant.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="type_basics.html#types-with-variant"><span class="std std-ref">对于多个后端使用“UPPERCASE”和特定后端的数据类型</span></a> - illustrates the use of
+<p><a class="reference internal" href="type_basics.html#types-with-variant"><span class="std std-ref">将“UPPERCASE”和特定于后端的类型应用于多个后端</span></a> - illustrates the use of
 <a class="reference internal" href="#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a>.</p>
 </div>
 </dd></dl>
@@ -944,8 +944,8 @@ construction level or at the bind-parameter/result processing level.
 <a class="reference internal" href="#sqlalchemy.types.NullType" title="sqlalchemy.types.NullType"><code class="xref py py-class docutils literal notranslate"><span class="pre">NullType</span></code></a> will result in a <a class="reference internal" href="exceptions.html#sqlalchemy.exc.CompileError" title="sqlalchemy.exc.CompileError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CompileError</span></code></a> if the compiler
 is asked to render the type itself, such as if it is used in a
 <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> operation or within a schema creation operation such as that
-invoked by <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.create_all" title="sqlalchemy.schema.MetaData.create_all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code></a> or the
-<a class="reference internal" href="ddl.html#sqlalchemy.schema.CreateTable" title="sqlalchemy.schema.CreateTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">CreateTable</span></code></a>
+invoked by <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code> or the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">CreateTable</span></code>
 construct.</p>
 <div class="class-bases docutils container">
 <p><strong>Class signature</strong></p>
@@ -1101,7 +1101,7 @@ and <a class="reference internal" href="custom_types.html#sqlalchemy.types.UserD
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="connections.html#sql-caching"><span class="std std-ref">SQL编译缓存</span></a></p>
+<p><a class="reference internal" href="connections.html#sql-caching"><span class="std std-ref">SQL 编译缓存</span></a></p>
 </div>
 </dd></dl>
 
@@ -1166,7 +1166,7 @@ for one variant.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="type_basics.html#types-with-variant"><span class="std std-ref">对于多个后端使用“UPPERCASE”和特定后端的数据类型</span></a> - illustrates the use of
+<p><a class="reference internal" href="type_basics.html#types-with-variant"><span class="std std-ref">将“UPPERCASE”和特定于后端的类型应用于多个后端</span></a> - illustrates the use of
 <a class="reference internal" href="#sqlalchemy.types.TypeEngine.with_variant" title="sqlalchemy.types.TypeEngine.with_variant"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.with_variant()</span></code></a>.</p>
 </div>
 </dd></dl>
@@ -1183,7 +1183,7 @@ for one variant.</p>
         Previous:
         <a href="custom_types.html" title="previous chapter">自定义类型</a>
         Next:
-        <a href="engines_connections.html" title="next chapter">引擎和连接使用</a>
+        <a href="engines_connections.html" title="next chapter">引擎与连接使用</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -1193,7 +1193,7 @@ for one variant.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:04
+    Documentation last generated: 2023/8/18 18:21:03
 
     </div>
 </div>

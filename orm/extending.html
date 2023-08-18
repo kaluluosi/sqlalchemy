@@ -12,7 +12,7 @@
         <title>
             
     
-    事件和内部实现
+    事件和内部机制
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -127,16 +127,16 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li class="selected"><span class="link-container"><strong>事件和内部实现</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li class="selected"><span class="link-container"><strong>事件和内部机制</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="events.html">ORM 事件</a></span></li>
-<li><span class="link-container"><a class="reference external" href="internals.html">ORM内部结构</a></span></li>
-<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM 异常</a></span></li>
+<li><span class="link-container"><a class="reference external" href="internals.html">ORM 内核</a></span></li>
+<li><span class="link-container"><a class="reference external" href="exceptions.html">ORM异常</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -180,7 +180,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">事件和内部实现</a></li>
+<li><a class="reference internal" href="#id1">事件和内部机制</a></li>
 </ul>
 
 
@@ -193,8 +193,8 @@
     <div id="docs-body" role="main" class="withsidebar orm-extending" >
         
 <section id="id1">
-<h1>事件和内部实现<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>SQLAlchemy的ORM以及Core通常通过使用事件钩子来扩展。请务必在 <span class="xref std std-ref">event_toplevel</span> 上一般性地查看事件系统的使用。</p>
+<h1>事件和内部机制<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy ORM 和 Core 一般是通过使用事件钩子进行扩展。请务必在   <a class="reference internal" href="../core/event.html"><span class="std std-ref">事件</span></a>  中概览事件系统的使用情况。</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="events.html">ORM 事件</a><ul>
@@ -203,10 +203,10 @@
 <li class="toctree-l2"><a class="reference internal" href="events.html#id3">实例事件</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html#orm-attribute-events">属性事件</a></li>
 <li class="toctree-l2"><a class="reference internal" href="events.html#id5">查询事件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="events.html#module-sqlalchemy.orm.instrumentation">仪表盘事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#module-sqlalchemy.orm.instrumentation">仪器事件</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="internals.html">ORM内部结构</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">ORM 内核</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.orm.AttributeState"><code class="docutils literal notranslate"><span class="pre">AttributeState</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.orm.CascadeOptions"><code class="docutils literal notranslate"><span class="pre">CascadeOptions</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.orm.ClassManager"><code class="docutils literal notranslate"><span class="pre">ClassManager</span></code></a></li>
@@ -240,7 +240,7 @@
 <li class="toctree-l2"><a class="reference internal" href="internals.html#sqlalchemy.orm.UOWTransaction"><code class="docutils literal notranslate"><span class="pre">UOWTransaction</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ORM 异常</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">ORM异常</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html#sqlalchemy.orm.exc.ConcurrentModificationError"><code class="docutils literal notranslate"><span class="pre">ConcurrentModificationError</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html#sqlalchemy.orm.exc.DetachedInstanceError"><code class="docutils literal notranslate"><span class="pre">DetachedInstanceError</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="exceptions.html#sqlalchemy.orm.exc.FlushError"><code class="docutils literal notranslate"><span class="pre">FlushError</span></code></a></li>
@@ -277,7 +277,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:10
+    Documentation last generated: 2023/8/18 18:43:56
 
     </div>
 </div>

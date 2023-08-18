@@ -12,7 +12,7 @@
         <title>
             
     
-    SQL数据库类型对象
+    SQL 数据类型对象
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="SQLAlchemy核心模块" href="index.html" />
+        <link rel="up" title="SQLAlchemy 核心" href="index.html" />
         <link rel="next" title="类型层次结构" href="type_basics.html" />
-        <link rel="prev" title="自定义DDL" href="ddl.html" />
+        <link rel="prev" title="自定义 DDL" href="ddl.html" />
     <!-- end layout.mako headers -->
 
 
@@ -120,20 +120,20 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li class="selected"><span class="link-container"><strong>SQL数据库类型对象</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQL 数据类型对象</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="type_basics.html">类型层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="custom_types.html">自定义类型</a></span></li>
-<li><span class="link-container"><a class="reference external" href="type_api.html">基础类型 API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="type_api.html">数据库类型 API</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span></li>
 </ul>
 
 
@@ -165,19 +165,19 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="ddl.html" title="previous chapter">自定义DDL</a></li>
+                <a href="ddl.html" title="previous chapter">自定义 DDL</a></li>
                 <li><b>Next:</b>
                 <a href="type_basics.html" title="next chapter">类型层次结构</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
                 </ul>
 
 
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#sql">SQL数据库类型对象</a></li>
+<li><a class="reference internal" href="#sql">SQL 数据类型对象</a></li>
 </ul>
 
 
@@ -190,15 +190,15 @@
     <div id="docs-body" role="main" class="withsidebar core-types" >
         
 <section id="sql">
-<span id="types-toplevel"></span><h1>SQL数据库类型对象<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h1>
+<span id="types-toplevel"></span><h1>SQL 数据类型对象<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="type_basics.html">类型层次结构</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#camelcase">“CamelCase”数据类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#uppercase">“UPPERCASE”数据类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-vendor">特定于后端的“UPPERCASE”数据类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-with-variant">对于多个后端使用“UPPERCASE”和特定后端的数据类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-generic">一般的“CamelCase”类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#camelcase">“CamelCase” 数据类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#uppercase">“UPPERCASE” 数据类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-vendor">特定于后端的“UPPERCASE” 数据类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-with-variant">将“UPPERCASE”和特定于后端的类型应用于多个后端</a></li>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#types-generic">通用“CamelCase” 类型</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.BigInteger"><code class="docutils literal notranslate"><span class="pre">BigInteger</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.Boolean"><code class="docutils literal notranslate"><span class="pre">Boolean</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.Date"><code class="docutils literal notranslate"><span class="pre">Date</span></code></a></li>
@@ -222,7 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.Uuid"><code class="docutils literal notranslate"><span class="pre">Uuid</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="type_basics.html#sqluppercase">SQL标准和多供应商“UPPERCASE”类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="type_basics.html#sql-uppercase">SQL 标准和多个供应商的“UPPERCASE”数据类型</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.ARRAY"><code class="docutils literal notranslate"><span class="pre">ARRAY</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.BIGINT"><code class="docutils literal notranslate"><span class="pre">BIGINT</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="type_basics.html#sqlalchemy.types.BINARY"><code class="docutils literal notranslate"><span class="pre">BINARY</span></code></a></li>
@@ -260,23 +260,23 @@
 <li class="toctree-l3"><a class="reference internal" href="custom_types.html#sqlalchemy.types.TypeDecorator"><code class="docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="custom_types.html#typedecorator-recipes">TypeDecorator Recipes</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="custom_types.html#unicode">将编码的字符串转换为 Unicode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_types.html#id20">四舍五入数值型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_types.html#utc">以UTC时区不带时区的形式存储时区感知时间戳</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_types.html#guid">后端不受限制的 GUID 类型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="custom_types.html#json">采用 JSON 字符串</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_types.html#typedecorator">TypeDecorator配方</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="custom_types.html#unicode">强制编码字符串为Unicode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_types.html#id14">保留数字</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_types.html#utc">存储时区感知时间戳为时区感知的UTC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_types.html#guid">跨数据库的GUID类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="custom_types.html#marshal-json-strings">Marshal JSON Strings</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="custom_types.html#sql">应用 SQL 级别的绑定/结果处理</a></li>
-<li class="toctree-l2"><a class="reference internal" href="custom_types.html#id39">创建新类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_types.html#sqlbind-result">应用SQL级别的Bind/Result处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_types.html#id31">创建新类型</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="custom_types.html#sqlalchemy.types.UserDefinedType"><code class="docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="custom_types.html#custom-and-decorated-types-reflection">使用自定义类型和反射操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_types.html#custom-and-decorated-types-reflection">处理自定义类型和反射</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="type_api.html">基础类型 API</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="type_api.html">数据库类型 API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine"><code class="docutils literal notranslate"><span class="pre">TypeEngine</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine.Comparator"><code class="docutils literal notranslate"><span class="pre">TypeEngine.Comparator</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine.adapt"><code class="docutils literal notranslate"><span class="pre">TypeEngine.adapt()</span></code></a></li>
@@ -334,7 +334,7 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="ddl.html" title="previous chapter">自定义DDL</a>
+        <a href="ddl.html" title="previous chapter">自定义 DDL</a>
         Next:
         <a href="type_basics.html" title="next chapter">类型层次结构</a>
 
@@ -346,7 +346,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:04
+    Documentation last generated: 2023/8/18 18:43:51
 
     </div>
 </div>

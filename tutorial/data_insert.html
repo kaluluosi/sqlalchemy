@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="处理数据" href="data.html" />
-        <link rel="next" title="使用 SELECT 语句" href="data_select.html" />
-        <link rel="prev" title="处理数据" href="data.html" />
+        <link rel="up" title="使用数据" href="data.html" />
+        <link rel="next" title="使用SELECT语句" href="data_select.html" />
+        <link rel="prev" title="使用数据" href="data.html" />
     <!-- end layout.mako headers -->
 
 
@@ -124,25 +124,27 @@
         </h3>
 
         <ul>
-<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">处理事务和DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">使用事务和DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="metadata.html">使用数据库元数据</a></span></li>
-<li><span class="link-container"><a class="reference external" href="data.html">处理数据</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="data.html">使用数据</a></span><ul>
 <li class="selected"><span class="link-container"><strong>使用 INSERT 语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#insert-sql">insert() SQL 表达式构造器</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id1">执行语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#insert-values">INSERT 通常会自动生成 “values” 子句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql-insert">SQL 表达式构造的 insert() 方法</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql">执行 SQL 语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-core-insert-values-clause">INSERT 通常会自动生成“值”子句</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#insert-returning">INSERT…RETURNING</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#insert-from-select">INSERT…FROM SELECT</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="data_select.html">使用 SELECT 语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#returning">使用 RETURNING 检查插入结果</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-insert-from-select">插入…从选择操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html">使用SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html#orm-orm-aliased-user-address-sql-fromclause-sql-alias-orm-aliased-sql-select-schema-table-scalar-and-correlated-subqueries">在ORM中，  <code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code> <cite>User`</cite></a></span></li>
 <li><span class="link-container"><a class="reference external" href="data_update.html">使用UPDATE和DELETE语句</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
-<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM操作数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">使用 ORM 相关对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">更多阅读</a></span></li>
 </ul>
 
 
@@ -174,13 +176,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="data.html" title="previous chapter">处理数据</a></li>
+                <a href="data.html" title="previous chapter">使用数据</a></li>
                 <li><b>Next:</b>
-                <a href="data_select.html" title="next chapter">使用 SELECT 语句</a></li>
+                <a href="data_select.html" title="next chapter">使用SELECT语句</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a></li>
-                    <ul><li><a href="data.html" title="处理数据">处理数据</a></li>
+                    <ul><li><a href="data.html" title="使用数据">使用数据</a></li>
                 </ul>
                 </ul>
 
@@ -189,13 +191,14 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#insert">使用 INSERT 语句</a><ul>
-<li><a class="reference internal" href="#insert-sql">insert() SQL 表达式构造器</a></li>
-<li><a class="reference internal" href="#id1">执行语句</a></li>
-<li><a class="reference internal" href="#insert-values">INSERT 通常会自动生成 “values” 子句</a></li>
+<li><a class="reference internal" href="#sql-insert">SQL 表达式构造的 insert() 方法</a></li>
+<li><a class="reference internal" href="#sql">执行 SQL 语句</a></li>
+<li><a class="reference internal" href="#tutorial-core-insert-values-clause">INSERT 通常会自动生成“值”子句</a></li>
 <li><a class="reference internal" href="#insert-returning">INSERT…RETURNING</a></li>
-<li><a class="reference internal" href="#insert-from-select">INSERT…FROM SELECT</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#returning">使用 RETURNING 检查插入结果</a></li>
+<li><a class="reference internal" href="#tutorial-insert-from-select">插入…从选择操作</a></li>
 </ul>
 
 
@@ -209,35 +212,35 @@
         
 <section class="core-header orm-addin" id="insert">
 <span id="tutorial-core-insert"></span><h1>使用 INSERT 语句<a class="headerlink" href="#insert" title="Permalink to this heading">¶</a></h1>
-<p>在使用 Core 同时使用 ORM 进行批量操作时，可以直接使用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 函数生成 SQL INSERT 语句。这个函数会生成一个 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 的实例，表示在 SQL 中将新数据添加到表中的 INSERT 语句。</p>
+<p>在通常使用 ORM 进行批量操作时，使用 Core 也需要直接生成 SQL INSERT 语句，这个过程使用 <cite>SQLAlchemy</cite> 的   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  方法生成一个新的：class:<cite>_sql.Insert</cite> 类的实例，该实例表示包含添加到表中的新数据的SQL语句。</p>
 <div class="orm-header docutils container">
-<p><strong>ORM读者注意</strong> -</p>
-<p>本节详细介绍了 Core 生成单个 SQL INSERT 语句的方法，以添加新行到表中。当使用 ORM 时，我们通常使用顶在其上的另一个工具，称为 <span class="xref std std-term">unit of work</span>，它会自动化地生成许多 INSERT 语句。</p>
-<p>但即使 ORM 为我们运行它，了解 Core 如何处理数据创建和操作也非常有用。此外，ORM 支持使用称为 <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-bulk"><span class="std std-ref">批量/多行INSERT、upsert、UPDATE和DELETE</span></a> 的功能直接使用 INSERT。</p>
-<p>要直接跳转到使用通常的单位操作模式使用 ORM 插入行，请参见 <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>。</p>
+<p><strong>ORM Readers</strong> -</p>
+<p>本节将详细介绍生成单个SQL INSERT语句的Core方法，以便向表中添加新行。当使用ORM时，通常使用另一个名为  <span class="xref std std-term">unit of work</span>  的工具，在这基础上可以自动化生产多个 INSERT 语句。即使ORM在运行时为我们处理SQL语句，了解Core如何处理数据的创建和操作也非常有用。此外，ORM 还支持使用称为   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-bulk"><span class="std std-ref">批量处理：插入，更新和删除多行</span></a>  的功能直接使用 INSERT。</p>
+<p>要跳过如何使用常规工作单元模式使用ORM插入行，请参见   <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a> 。</p>
 </div>
-<section id="insert-sql">
-<h2>insert() SQL 表达式构造器<a class="headerlink" href="#insert-sql" title="Permalink to this heading">¶</a></h2>
-<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 的简单示例展示了目标表和 VALUES 子句:</p>
+<section id="sql-insert">
+<h2>SQL 表达式构造的 insert() 方法<a class="headerlink" href="#sql-insert" title="Permalink to this heading">¶</a></h2>
+<blockquote>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  的一个简单示例，同时演示了目标表和 VALUES 子句:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;spongebob&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Spongebob Squarepants&quot;</span><span class="p">)</span></pre></div>
 </div>
-<p>上述 <code class="docutils literal notranslate"><span class="pre">stmt</span></code> 变量是 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 的一个实例。大多数 SQL 表达式可以在其地方字符串化，以查看正在生成的对象的一般形式:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
-<div class='show_sql_print'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(:</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">fullname</span><span class="p">)</span>
-</div></pre></div>
+</div></blockquote>
+<p>上述 <code class="docutils literal notranslate"><span class="pre">stmt</span></code> 变量是   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  的实例。 大多数 SQL 表达式都可以在代码中直接打印出来，以查看将要生成的语法结构</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="go">{printsql}INSERT INTO user_account (name, fullname) VALUES (:name, :fullname)</span></pre></div>
 </div>
-<p>字符串化形式是通过生成该对象的 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a> 形式创建的，该形式包括语句的特定于数据库的字符串 SQL 表示形式；我们可以使用 <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a> 方法直接获取该对象:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span></pre></div>
+<p>上面的字符串形式是通过生成   <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a>  对象来创建的，该对象包含 SQL 语句的具体数据库特定字符串 SQL 表示形式；我们可以直接使用  <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>  方法获取这个对象。</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span></pre></div>
 </div>
-<p>我们的 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造是带有参数的构造，如 <a class="reference internal" href="dbapi_transactions.html#tutorial-sending-parameters"><span class="std std-ref">发送参数</span></a> 中所示；绑定的 <code class="docutils literal notranslate"><span class="pre">name</span></code> 和 <code class="docutils literal notranslate"><span class="pre">fullname</span></code> 参数也可以在 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a> 构造中使用:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span><span class="o">.</span><span class="n">params</span>
+<p>我们可以从   <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a>  中获取 bound parameter（绑定参数）的 <code class="docutils literal notranslate"><span class="pre">name</span></code> 和 <code class="docutils literal notranslate"><span class="pre">fullname</span></code> 属性。</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">compiled</span><span class="o">.</span><span class="n">params</span>
 <span class="go">{&#39;name&#39;: &#39;spongebob&#39;, &#39;fullname&#39;: &#39;Spongebob Squarepants&#39;}</span></pre></div>
 </div>
 </section>
-<section id="id1">
-<h2>执行语句<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>我们可以使用执行语句将行插入到 <code class="docutils literal notranslate"><span class="pre">user_table</span></code>。INSERT SQL 和绑定的参数可以在 SQL 日志中看到：</p>
+<section id="sql">
+<h2>执行 SQL 语句<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
+<p>调用语句时，可以将数据插入到 <code class="docutils literal notranslate"><span class="pre">user_table</span></code> 中。可以在 SQL 记录中查看 INSERT SQL 以及捆绑的参数。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
 <span class="go">...     result = conn.execute(stmt)</span>
 <span class="go">...     conn.commit()</span>
@@ -247,26 +250,25 @@
 <span class="k">COMMIT</span>
 </div></pre></div>
 </div>
-<p>在上面的简单形式中，INSERT 语句不返回任何行，如果仅插入一行，则通常会包含返回有关插入该行时生成的列级默认值（最常见的是整数主键值）的信息。在上面的情况下，SQLite 数据库中的第一行通常为第一个整数主键值返回 <code class="docutils literal notranslate"><span class="pre">1</span></code>，我们可以使用 <code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code> 访问器获取：</p>
+<p>在上面的简单形式中，INSERT 语句不返回任何行，如果只插入了一行，它通常包含返回有关在 INSERT 行期间生成的列级默认值的信息，最常见的是整数主键值。在上面的情况下，SQLite 数据库中的第一行通常将为第一个整数主键值返回 <code class="docutils literal notranslate"><span class="pre">1</span></code>。我们可以使用  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  访问器获取它。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result</span><span class="o">.</span><span class="n">inserted_primary_key</span>
 <span class="go">(1,)</span></pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code> 返回元组，因为主键可能包含多列。这称为 <span class="xref std std-term">composite primary key</span>。<code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code> 有意包含刚刚插入的记录的完整主键，而不仅是 “cursor.lastrowid” 这样的值，也旨在在使用了 “autoincrement” 的情况下填充，因此表示完整主键的元组。</p>
+<p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  返回一个元组，因为主键可能包含多列。这称为  <span class="xref std std-term">composite primary key</span> 。  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  旨在始终包含刚插入的记录的完整主键，而不仅仅是 “cursor.lastrowid” 类型的值，并且旨在在使用“自动递增”与否时填充该值，因此为了表示完整的主键，它是一个元组。</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.4.8，: </span><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code> 返回的元组现在是由以特定名称返回 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 对象履行的命名元组。</p>
+<p><span class="versionmodified changed">Changed in version 1.4.8: </span>由  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  返回的元组现在是一个命名元组，通过将其作为  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a>  对象返回来满足。</p>
 </div>
 </section>
-<section id="insert-values">
-<span id="tutorial-core-insert-values-clause"></span><h2>INSERT 通常会自动生成 “values” 子句<a class="headerlink" href="#insert-values" title="Permalink to this heading">¶</a></h2>
-<p>上面的示例使用了 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 方法来显式创建 SQL INSERT 语句的 VALUES 子句。如果我们没有使用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 仅打印出 “空” 语句，我们将获得一个将表中每列插入一个 INSERT:</p>
-<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">))</span>
-<div class='show_sql_print'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(:</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">fullname</span><span class="p">)</span>
-</div></pre></div>
+<section id="tutorial-core-insert-values-clause">
+<span id="id1"></span><h2>INSERT 通常会自动生成“值”子句<a class="headerlink" href="#tutorial-core-insert-values-clause" title="Permalink to this heading">¶</a></h2>
+<p>上面的示例使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法显式创建了SQL INSERT语句的 VALUES 子句，如果我们不使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> ，而只是打印出一个“空”语句，我们将获得 INSERT，这个 INSERT 会插入表中每个列的值。</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">))</span>
+<span class="go">{printsql}INSERT INTO user_account (id, name, fullname) VALUES (:id, :name, :fullname)</span></pre></div>
 </div>
-<p>如果获取没有调用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 的 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造，并执行它而不打印它，则语句将基于传递给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> 方法的参数编译为字符串，并仅包括与传递的参数相关的列。这实际上是插入行的一般方式，而无需输入明确的 VALUES 子句。下面的示例展示了使用列表参数同时执行两列 INSERT 语句的示例：</p>
+<p>如果我们拿到了   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造器，却没有调用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法，并执行 INSERT 语句，生成的语句将被编译为基于表定义的一条 SQL。在  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>   方法中传递的参数上，只包括与传递的参数相关的列。实际上，这是使用   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  插入行的通常方式，而不必键入明确的 VALUES 子句。下面的示例说明了使用列表一次性执行具有两列的 INSERT 语句：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
 <span class="go">...     result = conn.execute(</span>
 <span class="go">...         insert(user_table),</span>
@@ -282,12 +284,12 @@
 <span class="k">COMMIT</span>
 </div></pre></div>
 </div>
-<p>以上执行特征在 <a class="reference internal" href="dbapi_transactions.html#tutorial-multiple-parameters"><span class="std std-ref">发送多个参数</span></a> 中首次展示了“executemany”形式，但与使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 构造不同，我们不必拼写任何 SQL。通过将字典或字典列表与 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造一起传递给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> 方法，<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 确保传递的列名将自动在 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造的 VALUES 子句中表示。</p>
+<p>上面的执行首次展示了 “executemany” 形式，但与使用   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>  构造函数时不同，我们不必拼写任何 SQL 。通过在  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法中与   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造函数一起传递字典或字典列表，  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  确保传递的列名将自动在   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造函数的 VALUES 子句中表达。</p>
 <div class="admonition deepalchemy">
 <p class="admonition-title">Deep Alchemy</p>
-<p>欢迎来到 <strong>Deep Alchemy</strong> 的第一版。左边的人被称为 <strong>炼金术士</strong>，你会注意到他们 <strong>不是</strong> 巫师，因为尖头的帽子没有竖起来。炼金术士来描述通常**更高级和/或棘手**的事情，此外**通常不需要**，但由于某种原因，他们觉得您应该了解SQLAlchemy可以做的这一点。</p>
-<p>在此版本中，为了在 <code class="docutils literal notranslate"><span class="pre">address_table</span></code> 中有一些有趣的数据，下面是一个更高级的示例，说明如何同时显式使用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a> 方法，同时从参数生成额外的 <cite>VALUES</cite>。构建了一个标量子查询，使用下一个章节中介绍的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造，使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a> 构建了一个明确的绑定参数名称来设置子查询中使用的参数。</p>
-<p>这是一个有点**深入**的炼金术，以便我们可以在将相关行添加到应用程序时，无需从 <code class="docutils literal notranslate"><span class="pre">user_table</span></code> 操作中提取主键标识符。大多数炼金术师将简单地使用 ORM，ORM 为此类事情提供了帮助。</p>
+<p>你好，欢迎阅读 <strong>Deep Alchemy</strong> 的第一版。左边的人被称为 <strong>炼金术士</strong>，你会注意到他们**不是**巫师，因为尖顶帽没有朝上伸。炼金术士会描述一些通常**更高级和/或棘手**的事情，并且通常**不需要**，但由于某种原因，他们觉得你应该了解 SQLAlchemy 可以做的这个东西。</p>
+<p>为了让``address_table``中有一些有趣的数据，下面是一个更高级的示例，说明如何在显式使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法的同时，生成来自参数的额外 VALUES。构建了一个  <span class="xref std std-term">标量子查询</span> ，利用了下一节介绍的   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造函数，子查询中使用的参数使用   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.bindparam" title="sqlalchemy.sql.expression.bindparam"><code class="xref py py-func docutils literal notranslate"><span class="pre">bindparam()</span></code></a>  构造函数建立了一个显式的绑定参数名。</p>
+<p>这是一些稍微 <strong>深入</strong> 的炼金术，只是为了在不将主键标识符从``user_table``操作获取到应用程序时添加相关的行。大多数炼金术师将简单地使用 ORM 为我们处理这样的事情。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">bindparam</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">scalar_subq</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(user_table.c.id)</span>
@@ -317,11 +319,11 @@
 <span class="k">COMMIT</span>
 </div></pre></div>
 </div>
-<p>经过这样的处理，我们在表中有了一些更有趣的数据，我们将在下一节中使用它们。</p>
+<p>通过以上方式，我们在表中有一些更有趣的数据，我们将在后面的章节中利用它们。</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>如果要将“默认”仅插入到表中而不包括任何明确值的“真正”空 INSERT 语句，可以指示不带参数调用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>。并不是每个后端数据库都支持这样做，但这是 SQLite 产生的：</p>
+<p>如果我们指示  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  不带参数，则会生成真正的仅插入表中 “默认值” 而不包括任何明确值的 INSERT；并非所有的数据库后端都支持这个功能，但以下是 SQLite 生成的结果：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">engine</span><span class="p">))</span>
 <span class="go">{printsql}INSERT INTO user_account DEFAULT VALUES</span></pre></div>
 </div>
@@ -329,53 +331,84 @@
 </section>
 <section id="insert-returning">
 <span id="tutorial-insert-returning"></span><h2>INSERT…RETURNING<a class="headerlink" href="#insert-returning" title="Permalink to this heading">¶</a></h2>
-<p>对于支持的后端，RETURNING 子句自动用于检索最后插入的主键值以及服务器默认值。但是，RETURNING 子句也可以使用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a> 方法显式指定；在这种情况下，执行语句时返回的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象有可获取的行：</p>
+<p>为了检索最后插入的主键值及服务器默认值的值，在支持的后端上自动使用 RETURNING 子句。但是 RETURNING 子句也可以使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>  方法明确指定；在这种情况下，执行该语句时返回的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象具有可抓取的行：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span>
 <span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span>
-<span class="go">{printsql}INSERT INTO address (id, user_id, email_address)</span>
-<span class="go">VALUES (:id, :user_id, :email_address)</span>
-<span class="go">RETURNING address.id, address.email_address</span></pre></div>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span><span class="o">..</span> <span class="n">_tutorial_insert_returning</span><span class="p">:</span></pre></div>
 </div>
-<p>它也可以与 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a> 配合使用，在以下示例中构建自 <a class="reference internal" href="#tutorial-insert-from-select"><span class="std std-ref">INSERT…FROM SELECT</span></a> 开始的示例：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">))</span>
-<span class="go">{printsql}INSERT INTO address (user_id, email_address)</span>
-<span class="go">SELECT user_account.id, user_account.name || :name_1 AS anon_1</span>
-<span class="go">FROM user_account RETURNING address.id, address.email_address</span></pre></div>
+</section>
+</section>
+<section id="returning">
+<h1>使用 RETURNING 检查插入结果<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h1>
+<p>在许多情况下，添加单个行只需要像例子中的样子制作唯一   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  对象，这个   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  可以在执行它的时候带回新的 ID :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;spongebob&#39;</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">inserted_primary_key</span><span class="p">)</span></pre></div>
 </div>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>RETURNING 功能也支持 UPDATE 和 DELETE 语句，稍后将在本教程中介绍。</p>
-<p>对于 INSERT 语句，RETURNING 功能既可以用于插入单行语句，也可以用于同时插入多行的语句。RETURNING 支持多行 INSERT 的适用于特定的方言，但对于 SQLAlchemy 中支持 RETURNING 的所有方言都是支持的。有关此功能的背景，请参见 <span class="xref std std-ref">engine_insertmanyvalues</span> 部分。</p>
+<p>当支持 RETURNING 功能的后端的话，SQLAlchemy 还支持直接在 INSERT 语句中获取已经插入的行的某些列的值，例如 psycopg2 支持 RETURNING , 那么你可以很容易就从一个 INSERT 中|fetched-column|  <span class="xref std std-term">fetched-columns</span>  中获取它，以这个例子来说我们将列 id 和 email_address 从 address 表中返回：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">insert</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span>
+    <span class="n">values</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">email_address</span><span class="o">=</span><span class="s1">&#39;foo@bar.com&#39;</span><span class="p">)</span><span class="o">.</span>
+    <span class="n">returning</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">new_id</span><span class="p">,</span> <span class="n">email_address</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span></pre></div>
+</div>
+<p>返回值是一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">ResultProxy</span></code> , 包含了由返回操作返回的行的所有元素。 最后，你也可以检索从 INSERT 包含多行时返回的多个行，只需传入一个元素列表即可：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+    <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span>
+    <span class="n">values</span><span class="p">([</span>
+        <span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">:</span> <span class="s2">&quot;foo@bar.com&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">:</span> <span class="s2">&quot;bar@foo.com&quot;</span><span class="p">},</span>
+    <span class="p">])</span><span class="o">.</span>
+    <span class="n">returning</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">new_rows</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span></pre></div>
+</div>
+<p>如前所述，每个支持 RETURNING 的后端都有一些限制或在如何使用它方面的沟通问题。这个应用程序是 PostgreSQL-specifc的，因为它是最好支持 RETURNING 功能的数据库之一。</p>
+<div class="admonition-tip admonition">
+<p class="admonition-title">tip</p>
+<p>UPDATE 和 DELETE 语句也支持 RETURNING 功能，它们将在教程后面介绍。</p>
+<p>对于单行和多行 INSERT 语句，都可以使用 RETURNING 功能。 目前支持 RETURNING 功能的 SQLAlchemy 的所有方言都支持多行 INSERT 。 有关此功能的背景，请参见    <span class="xref std std-ref">engine_insertmanyvalues</span>  章节。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>ORM 也支持带有或不带有 RETURNING 的批量 INSERT。请参见 <a class="reference internal" href="../orm/queryguide/dml.html#orm-queryguide-bulk-insert"><span class="std std-ref">ORM 批量 INSERT 语句</span></a> 获取参考文档。</p>
+<p>ORM 支持带或不带返回值的大量的 INSERT 操作。 请参阅   <a class="reference internal" href="../orm/queryguide/dml.html#orm-queryguide-bulk-insert"><span class="std std-ref">ORM大容量INSERT语句</span></a>  以获取参考文档。</p>
 </div>
 </section>
-<section id="insert-from-select">
-<span id="tutorial-insert-from-select"></span><h2>INSERT…FROM SELECT<a class="headerlink" href="#insert-from-select" title="Permalink to this heading">¶</a></h2>
-<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造器的一个不常用的功能，但作为完整性而存在，是 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造器可以使用 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a> 方法直接从 SELECT 中获取行，该方法接受 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造器，该构造器将在下一节中讨论，以及在实际 INSERT 中将纳入目标的列名列表。下面的示例向 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表添加行，这些行是从 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 表中派生的行，为每个用户提供免费的&#64;aol.com 邮箱地址：</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
-<span class="gp">... </span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span>
-<span class="go">{printsql}INSERT INTO address (user_id, email_address)</span>
-<span class="go">SELECT user_account.id, user_account.name || :name_1 AS anon_1</span>
-<span class="go">FROM user_account</span></pre></div>
+<section id="tutorial-insert-from-select">
+<span id="id2"></span><h1>插入…从选择操作<a class="headerlink" href="#tutorial-insert-from-select" title="Permalink to this heading">¶</a></h1>
+<blockquote>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造函数的一个不太常用的特性，是可以使 INSERT 通过  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a>  方法直接从 SELECT 获取行。</p>
+</div></blockquote>
+<p>该方法接受一个   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造函数，该构造函数在下一节中将进行讨论，以及要在实际 INSERT 中进行定位的列名称列表。 在下面的示例中，从 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 表中派生的行被添加到 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表中，每个用户都在 <code class="docutils literal notranslate"><span class="pre">aol.com</span></code> 上得到了一个免费的电子邮件地址：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
+<span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
+<span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span></pre></div>
 </div>
-<p>当希望直接将数据从数据库的其他部分复制到新的行集中时，而无需从客户端获取和重新发送数据时，可以使用此构造。</p>
+<p>下面是此构造函数的另一个例子，使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.from_select" title="sqlalchemy.sql.expression.Insert.from_select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.from_select()</span></code></a>  结合   <span class="xref std std-ref">tutorial_select</span>  中的   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  函数使用：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">select_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;@aol.com&quot;</span><span class="p">)</span>
+<span class="n">insert_stmt</span> <span class="o">=</span> <span class="n">insert</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span><span class="o">.</span><span class="n">from_select</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;user_id&quot;</span><span class="p">,</span> <span class="s2">&quot;email_address&quot;</span><span class="p">],</span> <span class="n">select_stmt</span>
+<span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="p">)</span></pre></div>
+</div>
+<p>当您想要直接将数据库中的某些数据复制到新的行集时，而无需从客户端获取并重新发送数据时，请使用此构造函数。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> - 在 SQL 表达式 api 文档中。</p>
+<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  - SQL Expression API 文档。</p>
 </div>
-</section>
 </section>
 
     </div>
@@ -384,9 +417,9 @@
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="data.html" title="previous chapter">处理数据</a>
+        <a href="data.html" title="previous chapter">使用数据</a>
         Next:
-        <a href="data_select.html" title="next chapter">使用 SELECT 语句</a>
+        <a href="data_select.html" title="next chapter">使用SELECT语句</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -396,7 +429,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:02
 
     </div>
 </div>

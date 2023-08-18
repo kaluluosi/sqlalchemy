@@ -40,7 +40,7 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="常见问题解答" href="index.html" />
-        <link rel="next" title="为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？" href="performance.html" />
+        <link rel="next" title="性能" href="performance.html" />
         <link rel="prev" title="SQL表达式" href="sqlexpressions.html" />
     <!-- end layout.mako headers -->
 
@@ -126,21 +126,18 @@
         <ul>
 <li><span class="link-container"><a class="reference external" href="installation.html">安装</a></span></li>
 <li><span class="link-container"><a class="reference external" href="connections.html">连接/引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据 / 模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据/模式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="sqlexpressions.html">SQL表达式</a></span></li>
 <li class="selected"><span class="link-container"><strong>ORM配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#faq-mapper-primary-key">如何映射一个没有主键的表？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#python">如何配置一个Python保留字或类似的列？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id4">如何获得一个映射类的所有列、关系、映射属性等的列表？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#xy">我收到有关“隐式组合列X的属性Y”的警告或错误消息</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#declarativeand-or-primaryjoin-secondaryjoin">我正在使用Declarative并使用“and_()”或“or_()”设置primaryjoin / secondaryjoin，我收到有关外键的错误消息。</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#limitorder-by-subqueryload">为什么推荐使用“LIMIT”与“ORDER BY”（特别是与“subqueryload()”一起）？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#faq-mapper-primary-key">如何映射没有主键的表？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#python">如何配置为 Python 保留字或类似的列？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">如何获取给定映射类的所有列，关系，映射属性等的列表？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#x-y">我收到有关“隐式组合列 X 在属性 Y 下”的警告或错误消息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#limit-subqueryload-order-by">为什么建议使用带有“LIMIT”（特别是使用“subqueryload()”）的“ORDER BY”？</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="performance.html">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#sqlalchemy">如何对由 SQLAlchemy 驱动的应用进行性能分析？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#orm-400-000">我正在使用 ORM 插入 400,000 行，这很慢！</a></span></li>
-<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">性能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">会话/查询</a></span></li>
 <li><span class="link-container"><a class="reference external" href="thirdparty.html">第三方集成问题</a></span></li>
 </ul>
 
@@ -175,7 +172,7 @@
                 <li><b>Previous:</b>
                 <a href="sqlexpressions.html" title="previous chapter">SQL表达式</a></li>
                 <li><b>Next:</b>
-                <a href="performance.html" title="next chapter">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a></li>
+                <a href="performance.html" title="next chapter">性能</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="常见问题解答">常见问题解答</a></li>
@@ -186,12 +183,11 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#orm">ORM配置</a><ul>
-<li><a class="reference internal" href="#faq-mapper-primary-key">如何映射一个没有主键的表？</a></li>
-<li><a class="reference internal" href="#python">如何配置一个Python保留字或类似的列？</a></li>
-<li><a class="reference internal" href="#id4">如何获得一个映射类的所有列、关系、映射属性等的列表？</a></li>
-<li><a class="reference internal" href="#xy">我收到有关“隐式组合列X的属性Y”的警告或错误消息</a></li>
-<li><a class="reference internal" href="#declarativeand-or-primaryjoin-secondaryjoin">我正在使用Declarative并使用“and_()”或“or_()”设置primaryjoin / secondaryjoin，我收到有关外键的错误消息。</a></li>
-<li><a class="reference internal" href="#limitorder-by-subqueryload">为什么推荐使用“LIMIT”与“ORDER BY”（特别是与“subqueryload()”一起）？</a></li>
+<li><a class="reference internal" href="#faq-mapper-primary-key">如何映射没有主键的表？</a></li>
+<li><a class="reference internal" href="#python">如何配置为 Python 保留字或类似的列？</a></li>
+<li><a class="reference internal" href="#id3">如何获取给定映射类的所有列，关系，映射属性等的列表？</a></li>
+<li><a class="reference internal" href="#x-y">我收到有关“隐式组合列 X 在属性 Y 下”的警告或错误消息</a></li>
+<li><a class="reference internal" href="#limit-subqueryload-order-by">为什么建议使用带有“LIMIT”（特别是使用“subqueryload()”）的“ORDER BY”？</a></li>
 </ul>
 </li>
 </ul>
@@ -207,35 +203,29 @@
         
 <section id="orm">
 <h1>ORM配置<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<nav class="contents faq local" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#faq-mapper-primary-key" id="id35">如何映射一个没有主键的表？</a></p></li>
-<li><p><a class="reference internal" href="#python" id="id36">如何配置一个Python保留字或类似的列？</a></p></li>
-<li><p><a class="reference internal" href="#id4" id="id37">如何获得一个映射类的所有列、关系、映射属性等的列表？</a></p></li>
-<li><p><a class="reference internal" href="#xy" id="id38">我收到有关“隐式组合列X的属性Y”的警告或错误消息</a></p></li>
-<li><p><a class="reference internal" href="#declarativeand-or-primaryjoin-secondaryjoin" id="id39">我正在使用Declarative并使用“and_()”或“or_()”设置primaryjoin / secondaryjoin，我收到有关外键的错误消息。</a></p></li>
-<li><p><a class="reference internal" href="#limitorder-by-subqueryload" id="id40">为什么推荐使用“LIMIT”与“ORDER BY”（特别是与“subqueryload()”一起）？</a></p></li>
-</ul>
-</nav>
 <section id="faq-mapper-primary-key">
-<span id="id1"></span><h2>如何映射一个没有主键的表？<a class="headerlink" href="#faq-mapper-primary-key" title="Permalink to this heading">¶</a></h2>
-<p>SQLAlchemy ORM要映射到特定的表，需要至少有一列标识为主键列；多列的复合主键当然也是可行的。 但这些列不需要实际上被数据库知道为主键列，虽然最好是。重要的是列的行为要像主键一样，例如对于一个行是一个唯一且不可为空的标识符。</p>
-<p>大多数ORM都要求对象定义了一些主键，因为内存中的对象必须对应于数据库表中的唯一可识别的行；至少，这允许将对象定位为仅影响该对象行而不影响其他行的UPDATE和DELETE语句。 但是，主键的重要性远远超出了这一点。 在SQLAlchemy中，所有ORM映射的对象始终链接到其特定的数据库行，使用的模式称为：term：<cite>identity map</cite>，它是SQLAlchemy使用的工作单元系统的中心模式，也是最常见的模式（以及不太常见的）ORM使用。</p>
-<p>几乎所有情况下，表格都有名为term：<a href="#id2"><span class="problematic" id="id3">`</span></a>candidate key`的东西，它是唯一标识行的一列或一系列列。
-如果表格确实没有这种情况，并且拥有真正重复的行，则该表格不对应于
-“第一范式”于关系型数据库，不能映射。否则，组成最佳候选键的列可以直接应用于映射器：</p>
+<span id="id1"></span><h2>如何映射没有主键的表？<a class="headerlink" href="#faq-mapper-primary-key" title="Permalink to this heading">¶</a></h2>
+<p>为了映射到特定的表，SQLAlchemy ORM 至少需要有一个标为主键的列；
+多列即复合主键当然也是可行的。这些列不必实际上被数据库识别为主键列，
+不过最好是这样。 唯一需要的是这些列的行为与主键相同，
+例如它们应该是行的唯一标识符并且不可以为空。</p>
+<p>大多数 ORM 需要定义某种主键，因为内存中的对象必须对应于唯一标识的数据库表的行；
+至少，这允许只影响该对象的行的 UPDATE 和 DELETE 语句。 然而，主键的重要性
+远远超出此。在 SQLAlchemy 中，所有 ORM 映射的对象始终通过一个称为</p>
 <blockquote>
-<div><dl>
-<dt>class SomeClass(Base):</dt><dd><p>__table__ = some_table_with_no_pk
-__mapper_args__ = {</p>
-<blockquote>
-<div><p>“primary_key”: [some_table_with_no_pk.c.uid, some_table_with_no_pk.c.bar]</p>
+<div><p><span class="xref std std-term">identity map</span>   的模式与其特定数据库行唯一链接在一起，</p>
 </div></blockquote>
-<p>}</p>
-</dd>
-</dl>
-</div></blockquote>
-<p>最好的方法是在使用完全声明的表元数据时，在这些列上使用primary_key=True标志：</p>
+<p>这是 SQLAlchemy 使用的工作单元系统的核心模式，也是 ORM 用法的最常见（和不常见的）模式之一。</p>
+<p>几乎所有情况下，表都有所谓的  <span class="xref std std-term">候选键</span> ，这是唯一标识行的一列或多列。
+如果表确实没有这个，而且具有实际上完全重复的行，则表不符合 <a class="reference external" href="https://en.wikipedia.org/wiki/First_normal_form">第一正规化</a>
+并且无法映射。 否则，组成最佳候选键的任何列都可以应用于映射器:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SomeClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__table__</span> <span class="o">=</span> <span class="n">some_table_with_no_pk</span>
+        <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;primary_key&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">some_table_with_no_pk</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">some_table_with_no_pk</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">bar</span><span class="p">]</span>
+    <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>更好地使用完全声明的表元数据时，在这些列上使用 <code class="docutils literal notranslate"><span class="pre">primary_key=True</span></code> 标记：</p>
 <blockquote>
 <div><dl>
 <dt>class SomeClass(Base):</dt><dd><p>__tablename__ = “some_table_with_no_pk”</p>
@@ -244,7 +234,8 @@ bar = Column(String, primary_key=True)</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>关系型数据库中的所有表都应该有主键。甚至一个多对多的关联表 - 主键是两个关联列的复合：</p>
+<p>关系数据库中的所有表都应该具有主键。即使是多对多的关联表，
+主键也将是两个关联列的组合：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">my_association</span><span class="w"> </span><span class="p">(</span>
 <span class="w">  </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="k">user</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
 <span class="w">  </span><span class="n">account_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">account</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
@@ -253,41 +244,54 @@ bar = Column(String, primary_key=True)</p>
 </div>
 </section>
 <section id="python">
-<h2>如何配置一个Python保留字或类似的列？<a class="headerlink" href="#python" title="Permalink to this heading">¶</a></h2>
-<p>在映射中，基于列的属性可以被赋予任何所需的名称。参见
-<span class="xref std std-ref">mapper_column_distinct_names</span>。</p>
+<h2>如何配置为 Python 保留字或类似的列？<a class="headerlink" href="#python" title="Permalink to this heading">¶</a></h2>
+<p>映射时基于列的属性可以被赋予任何所需的名称。请参见   <span class="xref std std-ref">mapper_column_distinct_names</span> 。</p>
 </section>
-<section id="id4">
-<h2>如何获得一个映射类的所有列、关系、映射属性等的列表？<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
-<p>此信息都可以从:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.Mapper`对象中获取。</p>
-<p>要获取特定映射类的:attr:<cite>_orm.Mapper</cite>，请对其调用:func:<a href="#id7"><span class="problematic" id="id8">`</span></a>_sa.inspect`函数：</p>
-<blockquote>
-<div><p>from sqlalchemy import inspect</p>
-<p>mapper = inspect(MyClass)</p>
-</div></blockquote>
-<p>从那里，可以通过以下属性访问有关类的所有信息：</p>
+<section id="id3">
+<h2>如何获取给定映射类的所有列，关系，映射属性等的列表？<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>所有这些信息都可以从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象中获得。</p>
+<p>要获取特定映射类的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，请在其上调用   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
+
+<span class="n">mapper</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span></pre></div>
+</div>
+<p>从那里，可以通过属性访问有关类的所有信息，例如：</p>
 <ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.attrs</span></code> - 所有映射属性的名称空间。这些属性
-本身是:class:<a href="#id9"><span class="problematic" id="id10">`</span></a>.MapperProperty`的实例，其中包含其他属性，如果适用，则可以导致映射的SQL表达式或列。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.column_attrs</span></code> - 仅列和SQL表达式属性的映射属性名称空间。
-您可能希望使用:attr:<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.Mapper.columns`来直接获取:class:<a href="#id13"><span class="problematic" id="id14">`</span></a>_schema.Column`对象。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.relationships</span></code> - 所有:class:<a href="#id15"><span class="problematic" id="id16">`</span></a>.RelationshipProperty`属性的名称空间。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.all_orm_descriptors</span></code> - 所有映射属性的名称空间，以及使用系统定义的用户定义属性，例如：class:<cite>.hybrid_property</cite>、:class:<a href="#id17"><span class="problematic" id="id18">`</span></a>.AssociationProxy`等。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code> - 一个:class:<a href="#id19"><span class="problematic" id="id20">`</span></a>_schema.Column`对象和与映射相关的其他命名SQL表达式的名称空间。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code> - 这个映射程序映射到的:class:<a href="#id21"><span class="problematic" id="id22">`</span></a>_schema.Table`或其他可选择的表。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code> - “本地”表格是该映射程序的:class:<cite>_schema.Table</cite>；
-对于使用继承映射到组合可选择性的映射程序，这与: attr:<a href="#id23"><span class="problematic" id="id24">`</span></a>_orm.Mapper.mapped_table`不同。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.attrs</span></code>  - 所有映射属性的名称空间。属性本身是   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>  的实例，如果适用，</p></li>
 </ul>
+<blockquote>
+<div><p>它们包含可导致映射的 SQL 表达式或列的其他属性。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.column_attrs</span></code>  - 映射属性名称空间</p></li>
+</ul>
+<p>涵盖列和SQL 表达式属性。您可能希望使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  直接获取   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象。</p>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.relationships</span></code>  - 所有关系属性的名称空间。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.all_orm_descriptors</span></code>  - 所有映射属性的名称空间，以及使用诸如   <a class="reference internal" href="../orm/extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property" title="sqlalchemy.ext.hybrid.hybrid_property"><code class="xref py py-class docutils literal notranslate"><span class="pre">hybrid_property</span></code></a> 、</p></li>
+</ul>
+<blockquote>
+<div><p><a class="reference internal" href="../orm/extensions/associationproxy.html#sqlalchemy.ext.associationproxy.AssociationProxy" title="sqlalchemy.ext.associationproxy.AssociationProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a>  等系统定义的用户定义属性。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  - 用于映射的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象和其他命名 SQL 表达式的名称空间。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code>  - 此映射器所映射到的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  或其他可选择项。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code>  - 与此映射器“本地”的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ;</p></li>
+</ul>
+<blockquote>
+<div><p>在使用继承将映射器映射到复合可选择项的情况下，这与  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code>  不同。</p>
+</div></blockquote>
 </section>
-<section id="xy">
-<span id="faq-combining-columns"></span><h2>我收到有关“隐式组合列X的属性Y”的警告或错误消息<a class="headerlink" href="#xy" title="Permalink to this heading">¶</a></h2>
-<p>这种情况指的是当映射包含两个由于名称而被映射到相同属性名称的列时，
-但没有迹象表明这是有意的。映射类需要对每个将存储独立值的属性指定显式名称；
-当两个列具有相同的名称并且未被消除歧义时，它们将落在同一属性下
-效果是从一个列复制到另一个列，基于哪个列首先被分配到属性中。</p>
-<p>这种行为通常是可取的，并且仅在由具有外键关系链接在一起的两个列时，
-使用继承映射。当警告或异常发生时，可以通过将列分配给不同命名的属性来解决问题，或者如果希望将它们组合在一起，则使用:func:<a href="#id25"><span class="problematic" id="id26">`</span></a>.column_property`使这种情况明确。</p>
-<p>例如：</p>
+<section id="x-y">
+<span id="faq-combining-columns"></span><h2>我收到有关“隐式组合列 X 在属性 Y 下”的警告或错误消息<a class="headerlink" href="#x-y" title="Permalink to this heading">¶</a></h2>
+<p>当映射包含两个由于名称而被映射到同一属性名称的列，并且没有表明这是有意的，
+则出现该情况。由于映射类需要显式为存储独立值的每个属性指定名称；
+当两个列具有相同的名称并且未加区别时，它们将落入同一属性下，
+其效果是该属性从一个列复制值到另一个列，基于先将哪个列分配给属性的原则。</p>
+<p>此行为通常是可取的，并且在使用外键关系将两个列链接在继承映射中的情况下，
+可以无需警告地执行操作。 当发生警告或异常时，可以通过将这些列分配给具有不同名称的属性来解决问题，
+或者如果希望将它们组合在一起，则使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  明确说明这一点。</p>
+<p>给出如下示例：</p>
 <blockquote>
 <div><p>from sqlalchemy import Integer, Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base</p>
@@ -302,8 +306,9 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>在SQLAlchemy版本0.9.5中，检测到上述条件，并警告“将“A”和“B”的”id“列”组合起来“，这是一个严重的问题，因为这意味着“B”对象的主键将始终镜像其“A”的主键。</p>
-<p>可以解决缺陷的映射如下：</p>
+<p>截至 SQLAlchemy 版本 0.9.5，上述条件被检测到，并且将警告表示“id”列（即 A 和 B 中的 id）正在组合在同名属性“id”下，
+这是一个严重的问题，因为它意味着“B”对象的主键将始终与其“a”的主键镜像。</p>
+<p>解决此问题的映射如下：</p>
 <blockquote>
 <div><dl>
 <dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
@@ -315,7 +320,8 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>假设我们确实希望“A.id”和“B.id”相互镜像，尽管“B.a_id”是与“A.id”相关的。我们可以使用：func:<a href="#id27"><span class="problematic" id="id28">`</span></a>.column_property`组合它们在一起：</p>
+<p>假设我们确实希望“ A.id ”和“ B.id ”相互映射，尽管 “B.a_id” 是 “A.id” 相关的。我们可以
+使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  将它们组合在一起：</p>
 <blockquote>
 <div><dl>
 <dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
@@ -328,10 +334,10 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-</section>
-<section id="declarativeand-or-primaryjoin-secondaryjoin">
-<h2>我正在使用Declarative并使用“and_()”或“or_()”设置primaryjoin / secondaryjoin，我收到有关外键的错误消息。<a class="headerlink" href="#declarativeand-or-primaryjoin-secondaryjoin" title="Permalink to this heading">¶</a></h2>
-<p>您是否在做这个？：</p>
+<p>我正在使用 Declarative，并使用 <code class="docutils literal notranslate"><span class="pre">and_()</span></code> 或 <code class="docutils literal notranslate"><span class="pre">or_()</span></code> 设置 primaryjoin/secondaryjoin，
+为此我收到有关外键的错误消息。
+————————————————————————————————–</p>
+<p>您这样做了吗？</p>
 <blockquote>
 <div><dl>
 <dt>class MyClass(Base):</dt><dd><p># ….</p>
@@ -343,7 +349,9 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>那是两个字符串表达式的“and_()”，SQLAlchemy无法应用任何映射。Declarative允许将：func:<a href="#id29"><span class="problematic" id="id30">`</span></a>_orm.relationship`参数指定为字符串，这些字符串使用“eval()”转换为表达式对象。但这不会在“and_()”表达式内发生 - 这是declarative仅适用于*作为字符串传递给primaryjoin或其他参数的整体性*的特殊操作：</p>
+<p>这是两个字符串表达式的 <code class="docutils literal notranslate"><span class="pre">and_()</span></code>，SQLAlchemy 不能将其应用于任何映射。Declarative 允许将   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>
+参数指定为字符串，这些字符串使用 <code class="docutils literal notranslate"><span class="pre">eval()</span></code> 转换为表达式对象。但这不会在 <code class="docutils literal notranslate"><span class="pre">and_()</span></code> 表达式内发生 -
+这是 Declarative 仅应用于字符串作为一个整体的特殊操作：  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 。</p>
 <blockquote>
 <div><dl>
 <dt>class MyClass(Base):</dt><dd><p># ….</p>
@@ -355,7 +363,7 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>或者，如果您已经拥有所需的对象，则跳过字符串：</p>
+<p>或者，如果您需要的对象已经可用，则可以跳过字符串：</p>
 <blockquote>
 <div><dl>
 <dt>class MyClass(Base):</dt><dd><p># ….</p>
@@ -367,15 +375,15 @@ a_id = Column(Integer, ForeignKey(“a.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>同样的想法适用于所有其他参数，例如“foreign_keys”：</p>
+<p>相同的思想适用于所有其他参数，如 <code class="docutils literal notranslate"><span class="pre">foreign_keys</span></code>：</p>
 <blockquote>
-<div><p># wrong !
+<div><p># 不正确！
 foo = relationship(Dest, foreign_keys=[“Dest.foo_id”, “Dest.bar_id”])</p>
-<p># correct !
+<p># 正确！
 foo = relationship(Dest, foreign_keys=”[Dest.foo_id, Dest.bar_id]”)</p>
-<p># also correct !
+<p># 还是正确的！
 foo = relationship(Dest, foreign_keys=[Dest.foo_id, Dest.bar_id])</p>
-<p># if you’re using columns from the class that you’re inside of, just use the column objects !
+<p># 如果您正在使用来自所在类的列，请使用列对象！
 class MyClass(Base):</p>
 <blockquote>
 <div><p>foo_id = Column(…)
@@ -385,20 +393,22 @@ bar_id = Column(…)
 </div></blockquote>
 </div></blockquote>
 </section>
-<section id="limitorder-by-subqueryload">
-<span id="faq-subqueryload-limit-sort"></span><h2>为什么推荐使用“LIMIT”与“ORDER BY”（特别是与“subqueryload()”一起）？<a class="headerlink" href="#limitorder-by-subqueryload" title="Permalink to this heading">¶</a></h2>
-<p>当不为返回行的SELECT语句使用ORDER BY时，关系型数据库可以自由地以任意顺序返回匹配的行。虽然此排序很多时候对应于表格中行的自然顺序，但并非对于所有数据库和所有查询都是如此。这意味着即使有多行符合查询的标准，
-使用“LIMIT”或“OFFSET”的任何查询，或者仅选择结果的第一行，舍弃其余部分，
-在返回什么结果行方面是不确定的，假设存在多个匹配的行与查询的标准。
-虽然我们对通常返回将行按自然顺序排列的数据库上的简单查询可能不会注意到这一点，但如果我们还使用：func:<a href="#id31"><span class="problematic" id="id32">`</span></a>_orm.subqueryload`将相关集合加载，则这将成为更大的问题，并且我们可能不会
-正在按预期加载集合。</p>
-<p>SQLAlchemy通过发出单独的查询来实现：func:<cite>_orm.subqueryload</cite>，其结果与第一个查询匹配。
-我们看到如下两个发出的查询：</p>
+<section id="limit-subqueryload-order-by">
+<span id="faq-subqueryload-limit-sort"></span><h2>为什么建议使用带有“LIMIT”（特别是使用“subqueryload()”）的“ORDER BY”？<a class="headerlink" href="#limit-subqueryload-order-by" title="Permalink to this heading">¶</a></h2>
+<p>当未使用 ORDER BY 返回行时，关系数据库可自由以任何任意顺序返回匹配的行。
+尽管此排序通常对应于表中的自然行顺序，但这并不适用于所有数据库和所有查询。
+这意味着对使用 LIMIT 或 OFFSET 限制行或仅选择结果的查询而言，
+如果匹配的行不止一行，则查询结果在某种程度上是不确定的。</p>
+<p>尽管我们在通常返回自然排序行的数据库上可能不注意到这一点，
+但如果我们还使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  加载相关集合，则可能会更成为问题。
+这可能不会按预期加载集合。</p>
+<p>SQLAlchemy 通过发出单独的查询来实现   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code> ，其结果与第一次查询的结果保持匹配。</p>
+<p>我们看到如下的两个发出查询：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
-<div class='show_sql'><span class="c1">-- the &quot;main&quot; query</span>
+<div class='show_sql'><span class="c1">-- 主要查询</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_id</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
-</div><div class='show_sql'><span class="c1">-- the &quot;load&quot; query issued by subqueryload</span>
+</div><div class='show_sql'><span class="c1">-- subqueryload 发出的“加载”查询</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">addresses</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">addresses_id</span><span class="p">,</span>
 <span class="w">       </span><span class="n">addresses</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">addresses_user_id</span><span class="p">,</span>
 <span class="w">       </span><span class="n">anon_1</span><span class="p">.</span><span class="n">users_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_users_id</span>
@@ -407,16 +417,17 @@ bar_id = Column(…)
 <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">users_id</span>
 </div></pre></div>
 </div>
-<p>第二个查询将第一个查询作为行的来源嵌入其中。当内部查询使用“OFFSET”和/或“LIMIT”而没有排序时，
-这两个查询可能不会看到相同的结果：</p>
+<p>第二个查询将第一个查询作为行源嵌入其中。
+当内部查询使用 OFFSET 和/或 LIMIT 而不进行排序时，
+两个查询可能不会看到相同的结果：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
 <span class="go">...     select(User).options(subqueryload(User.addresses)).limit(1)</span>
 <span class="go">... ).first()</span>
-<div class='show_sql'><span class="c1">-- the &quot;main&quot; query</span>
+<div class='show_sql'><span class="c1">-- 主要查询</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_id</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">users</span>
 <span class="w"> </span><span class="k">LIMIT</span><span class="w"> </span><span class="mi">1</span>
-</div><div class='show_sql'><span class="c1">-- the &quot;load&quot; query issued by subqueryload</span>
+</div><div class='show_sql'><span class="c1">-- subqueryload 发出的“加载”查询</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">addresses</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">addresses_id</span><span class="p">,</span>
 <span class="w">       </span><span class="n">addresses</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">addresses_user_id</span><span class="p">,</span>
 <span class="w">       </span><span class="n">anon_1</span><span class="p">.</span><span class="n">users_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_users_id</span>
@@ -425,15 +436,15 @@ bar_id = Column(…)
 <span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">users_id</span>
 </div></pre></div>
 </div>
-<p>取决于数据库的具体情况，我们可能会得到以下结果的结果两个查询：</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-- query #1
+<p>根据数据库具体情况，我们可能会为这两个查询获取以下结果：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>-- 查询 #1
 +--------+
 |users_id|
 +--------+
 |       1|
 +--------+
 
--- query #2
+-- 查询 #2
 +------------+-----------------+---------------+
 |addresses_id|addresses_user_id|anon_1_users_id|
 +------------+-----------------+---------------+
@@ -442,24 +453,23 @@ bar_id = Column(…)
 |           4|                2|              2|
 +------------+-----------------+---------------+</pre></div>
 </div>
-<p>上面，我们接收了两个与“user.id”为2相对应的“addresses”行，并且没有任何行与1相对应。
-我们浪费了两行并未实际加载集合。这是一个隐蔽的错误，因为除非查看SQL和结果，否则ORM不会显示任何问题；如果我们访问对于我们已经有的“User”的“addresses”，它将向懒加载发出集合查询
-和我们看不出实际上出了什么问题。</p>
-<p>解决此问题的方法是始终指定确定性排序，以便主查询始终返回相同的行集。这通常
-意味着您应该:meth:<a href="#id33"><span class="problematic" id="id34">`</span></a>_sql.Select.order_by`在表上选择一个唯一的列。
-主键对此是一个不错的选择：</p>
-<blockquote>
-<div><dl class="simple">
-<dt>session.scalars(</dt><dd><p>select(User).options(subqueryload(User.addresses)).order_by(User.id).limit(1)</p>
-</dd>
-</dl>
-<p>).first()</p>
-</div></blockquote>
-<p>请注意：func:<cite>_orm.joinedload`贪婪加载器策略不会遇到相同的问题，因为只发出一个查询，因此加载查询
-不能与主查询不同。类似地，：func:</cite>.selectinload`贪婪加载策略也没有此问题，因为它将其集合加载直接链接到已加载的主键值。</p>
+<p>上述示例中，我们收到了 “帐户” 的两个行，其 “user.id” 均为 2，但没有获得 1 的行。
+我们浪费了两行并未正确加载集合。这是一个隐蔽的错误，因为如果不查看 SQL 和结果，
+则 ORM 将不会显示任何问题；如果我们访问我们拥有的“ addresses ”，
+它将为集合发出惰性加载，并且我们将看不出实际上发生了什么错误。</p>
+<p>解决此问题的方法是始终指定确定性排序顺序，
+以便主查询始终返回相同的行集。这通常意味着您应该  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a>
+表上的唯一列。主键是此目的的一个好选择:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">subqueryload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
+</div>
+<p>请注意，  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  极端加载程序策略不受此问题的影响，
+因为仅发出了一个查询，因此加载查询无法与主查询不同。
+类似地，  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  也不会出现此问题，因为它将其集合加载直接链接到刚加载的主键值。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">subquery_eager_loading</span></p>
+<p><a class="reference internal" href="../orm/queryguide/relationships.html#subquery-eager-loading"><span class="std std-ref">子查询急加载</span></a></p>
 </div>
 </section>
 </section>
@@ -472,7 +482,7 @@ bar_id = Column(…)
         Previous:
         <a href="sqlexpressions.html" title="previous chapter">SQL表达式</a>
         Next:
-        <a href="performance.html" title="next chapter">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a>
+        <a href="performance.html" title="next chapter">性能</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -482,7 +492,7 @@ bar_id = Column(…)
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:08
+    Documentation last generated: 2023/8/18 18:43:52
 
     </div>
 </div>

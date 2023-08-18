@@ -12,7 +12,7 @@
         <title>
             
     
-    访问者和遍历工具
+    游客和遍历工具
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -40,7 +40,7 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="SQL语句和表达式API" href="expression_api.html" />
-        <link rel="next" title="Schema定义语言" href="schema.html" />
+        <link rel="next" title="模式定义语言 (Schema Definition Language)" href="schema.html" />
         <link rel="prev" title="SQL表达式语言基础构造" href="foundation.html" />
     <!-- end layout.mako headers -->
 
@@ -120,20 +120,20 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="sqlelement.html">列元素和表达式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="operators.html">运算符参考</a></span></li>
-<li><span class="link-container"><a class="reference external" href="selectable.html">SELECT和相关结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="selectable.html">选择和相关结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dml.html">插入、更新、删除</a></span></li>
 <li><span class="link-container"><a class="reference external" href="functions.html">SQL和通用函数</a></span></li>
-<li><span class="link-container"><a class="reference external" href="compiler.html">自定义 SQL 构造和编译扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="serializer.html">表达式序列化扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="compiler.html">自定义SQL构造和编译扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="serializer.html">表达式序列化器扩展</a></span></li>
 <li><span class="link-container"><a class="reference external" href="foundation.html">SQL表达式语言基础构造</a></span></li>
-<li class="selected"><span class="link-container"><strong>访问者和遍历工具</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>游客和遍历工具</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.sql.visitors.ExternalTraversal.chain"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal.chain()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.sql.visitors.ExternalTraversal.iterate"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal.iterate()</span></code></a></span></li>
@@ -190,10 +190,10 @@
 </li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span></li>
 </ul>
 
 
@@ -227,10 +227,10 @@
                 <li><b>Previous:</b>
                 <a href="foundation.html" title="previous chapter">SQL表达式语言基础构造</a></li>
                 <li><b>Next:</b>
-                <a href="schema.html" title="next chapter">Schema定义语言</a></li>
+                <a href="schema.html" title="next chapter">模式定义语言 (Schema Definition Language)</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
                     <ul><li><a href="expression_api.html" title="SQL语句和表达式API">SQL语句和表达式API</a></li>
                 </ul>
                 </ul>
@@ -239,7 +239,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#id1">访问者和遍历工具</a><ul>
+<li><a class="reference internal" href="#id1">游客和遍历工具</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal.chain"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal.chain()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.sql.visitors.ExternalTraversal.iterate"><code class="docutils literal notranslate"><span class="pre">ExternalTraversal.iterate()</span></code></a></li>
@@ -306,13 +306,15 @@
     <div id="docs-body" role="main" class="withsidebar core-visitors" >
         
 <section id="id1">
-<h1>访问者和遍历工具<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> 模块由类和函数组成，旨在通用地**遍历**核心 SQL 表达式结构。这类似于 Python <code class="docutils literal notranslate"><span class="pre">ast</span></code> 模块，因为它提供了一种程序可以处理 SQL 表达式每个组件的系统。它常见的目的是定位各种元素，如 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 或 <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.BindParameter" title="sqlalchemy.sql.expression.BindParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindParameter</span></code></a> 对象，并更改结构的状态，例如将某些 FROM 子句替换为其他子句。</p>
+<h1>游客和遍历工具<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<blockquote>
+<div><p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a>   模块由类和函数组成，旨在通用地**遍历**核心 SQL 表达式结构，这类似于 Python 中的 <code class="docutils literal notranslate"><span class="pre">ast</span></code> 模块，因为它提供了一个程序可以操作 SQL 表达式的每个组件的系统。它常用于查找各种类型的元素，例如  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .BindParameter`对象，以及更改该结构的状态，例如用其他 FROM 子句替换某些子句。</p>
+</div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> 模块是一个内部 API，并非完全公开。它可能会发生变化，并且可能不会按照 SQLAlchemy 中未考虑的使用模式的预期方式运行。</p>
+<p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a>  模块是一个内部 API，不是完全公开的。它可能会被更改，并且可能不像预期的那样适用于 SQLAlchemy 内部未考虑到的使用模式。</p>
+<p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a>   模块是 SQLAlchemy 内部的一部分，通常情况下不会由调用应用程序代码使用。但是，在某些边缘情况下会使用它，例如构建缓存例程时以及使用   <span class="xref std std-ref">Custom SQL Constructs and Compilation Extension</span>  构建自定义 SQL 表达式时。</p>
 </div>
-<p><a class="reference internal" href="#module-sqlalchemy.sql.visitors" title="sqlalchemy.sql.visitors"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlalchemy.sql.visitors</span></code></a> 模块是 SQLAlchemy 的**内部**模块，通常不会被调用应用程序代码使用。然而，在某些边缘情况下，例如构建缓存例程以及使用 <a class="reference internal" href="compiler.html"><span class="std std-ref">自定义 SQL 构造和编译扩展</span></a> 构建自定义 SQL 表达式时，该模块还是有用的。</p>
 <span class="target" id="module-sqlalchemy.sql.visitors"></span><p>Visitor/traversal interface and library functions.</p>
 <table class="longtable docutils align-default">
 <thead>
@@ -884,7 +886,7 @@ for details on this dictionary.</p></li>
         Previous:
         <a href="foundation.html" title="previous chapter">SQL表达式语言基础构造</a>
         Next:
-        <a href="schema.html" title="next chapter">Schema定义语言</a>
+        <a href="schema.html" title="next chapter">模式定义语言 (Schema Definition Language)</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -894,7 +896,7 @@ for details on this dictionary.</p></li>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:05
+    Documentation last generated: 2023/8/18 18:43:51
 
     </div>
 </div>

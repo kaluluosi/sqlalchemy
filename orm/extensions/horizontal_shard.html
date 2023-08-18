@@ -41,7 +41,7 @@
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../../index.html" />
         <link rel="up" title="ORM扩展" href="index.html" />
         <link rel="next" title="混合属性" href="hybrid.html" />
-        <link rel="prev" title="排序列表" href="orderinglist.html" />
+        <link rel="prev" title="有序列表" href="orderinglist.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,18 +127,18 @@
 <li><span class="link-container"><a class="reference external" href="../quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="../relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="index.html">ORM扩展</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="asyncio.html">异步 I/O (asyncio)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="associationproxy.html">关联代理</a></span></li>
 <li><span class="link-container"><a class="reference external" href="automap.html">自动映射</a></span></li>
-<li><span class="link-container"><a class="reference external" href="baked.html">摘要</a></span></li>
+<li><span class="link-container"><a class="reference external" href="baked.html">Baked Queries</a></span></li>
 <li><span class="link-container"><a class="reference external" href="declarative/index.html">声明式扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484的ORM映射支持</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mutable.html">变异跟踪</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orderinglist.html">排序列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mypy.html">Mypy / Pep-484 ORM映射支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mutable.html">变化追踪</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orderinglist.html">有序列表</a></span></li>
 <li class="selected"><span class="link-container"><strong>水平分片</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#api">API 文档</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.horizontal_shard.ShardedSession"><code class="docutils literal notranslate"><span class="pre">ShardedSession</span></code></a></span><ul>
@@ -161,11 +161,11 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="hybrid.html">混合属性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="indexable.html">可索引对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="instrumentation.html">备选类仪器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="indexable.html">可索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="instrumentation.html">类替代仪器</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="../examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -197,7 +197,7 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="orderinglist.html" title="previous chapter">排序列表</a></li>
+                <a href="orderinglist.html" title="previous chapter">有序列表</a></li>
                 <li><b>Next:</b>
                 <a href="hybrid.html" title="next chapter">混合属性</a></li>
 
@@ -325,7 +325,7 @@ supersedes the <code class="docutils literal notranslate"><span class="pre">quer
 </div>
 </p></li>
 <li><p><span class="target" id="sqlalchemy.ext.horizontal_shard.ShardedSession.params.shards"></span><strong>shards</strong><a class="paramlink headerlink reference internal" href="#sqlalchemy.ext.horizontal_shard.ShardedSession.params.shards">¶</a> – A dictionary of string shard names
-to <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> objects.</p></li>
+to <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> objects.</p></li>
 </ul>
 </dd>
 </dl>
@@ -333,8 +333,8 @@ to <code class="xref py py-class docutils literal notranslate"><span class="pre"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sqlalchemy.ext.horizontal_shard.ShardedSession.connection_callable">
-<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.horizontal_shard.ShardedSession"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.horizontal_shard.ShardedSession.</span></code></a><span class="sig-name descname"><span class="pre">connection_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shard_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ShardIdentifier</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Connection</span></span></span><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedSession.connection_callable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Provide a <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> to use in the unit of work
+<em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.horizontal_shard.ShardedSession"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.horizontal_shard.ShardedSession.</span></code></a><span class="sig-name descname"><span class="pre">connection_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapper</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shard_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ShardIdentifier</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><span class="pre">Connection</span></a></span></span><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedSession.connection_callable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provide a <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> to use in the unit of work
 flush process.</p>
 </dd></dl>
 
@@ -342,9 +342,9 @@ flush process.</p>
 <dt class="sig sig-object py" id="sqlalchemy.ext.horizontal_shard.ShardedSession.get_bind">
 <em class="property"><span class="pre">method</span> </em><a class="reference internal" href="#sqlalchemy.ext.horizontal_shard.ShardedSession"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.horizontal_shard.ShardedSession.</span></code></a><span class="sig-name descname"><span class="pre">get_bind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_EntityBindKey</span><span class="p"><span class="pre">[</span></span><span class="pre">_O</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shard_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ShardIdentifier</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clause</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../../core/foundation.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><span class="pre">ClauseElement</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kw</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_SessionBind</span></span></span><a class="headerlink" href="#sqlalchemy.ext.horizontal_shard.ShardedSession.get_bind" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a “bind” to which this <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> is bound.</p>
-<p>The “bind” is usually an instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>,
+<p>The “bind” is usually an instance of <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>,
 except in the case where the <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> has been
-explicitly bound directly to a <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>.</p>
+explicitly bound directly to a <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>.</p>
 <p>For a multiply-bound or unbound <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>, the
 <code class="docutils literal notranslate"><span class="pre">mapper</span></code> or <code class="docutils literal notranslate"><span class="pre">clause</span></code> arguments are used to determine the
 appropriate bind to return.</p>
@@ -400,7 +400,7 @@ bound <a class="reference internal" href="../../core/metadata.html#sqlalchemy.sc
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../persistence_techniques.html#session-partitioning"><span class="std std-ref">分区策略（例如，每个Session的多个数据库后端）</span></a></p>
+<p><a class="reference internal" href="../persistence_techniques.html#session-partitioning"><span class="std std-ref">分区策略（例如 Session 上的多个数据库后端）</span></a></p>
 <p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.binds</span></code></p>
 <p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_mapper()</span></code></p>
 <p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_table()</span></code></p>
@@ -516,7 +516,7 @@ bind_arguments dictionary of <code class="xref py py-meth docutils literal notra
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="orderinglist.html" title="previous chapter">排序列表</a>
+        <a href="orderinglist.html" title="previous chapter">有序列表</a>
         Next:
         <a href="hybrid.html" title="next chapter">混合属性</a>
 
@@ -528,7 +528,7 @@ bind_arguments dictionary of <code class="xref py py-meth docutils literal notra
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:13
+    Documentation last generated: 2023/8/18 18:21:12
 
     </div>
 </div>

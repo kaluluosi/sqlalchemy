@@ -12,7 +12,7 @@
         <title>
             
     
-    ORM 异常
+    ORM异常
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -39,9 +39,9 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="事件和内部实现" href="extending.html" />
+        <link rel="up" title="事件和内部机制" href="extending.html" />
         <link rel="next" title="ORM扩展" href="extensions/index.html" />
-        <link rel="prev" title="ORM内部结构" href="internals.html" />
+        <link rel="prev" title="ORM 内核" href="internals.html" />
     <!-- end layout.mako headers -->
 
 
@@ -127,12 +127,12 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="events.html">ORM 事件</a></span></li>
-<li><span class="link-container"><a class="reference external" href="internals.html">ORM内部结构</a></span></li>
-<li class="selected"><span class="link-container"><strong>ORM 异常</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="internals.html">ORM 内核</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM异常</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.exc.ConcurrentModificationError"><code class="docutils literal notranslate"><span class="pre">ConcurrentModificationError</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.exc.DetachedInstanceError"><code class="docutils literal notranslate"><span class="pre">DetachedInstanceError</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.exc.FlushError"><code class="docutils literal notranslate"><span class="pre">FlushError</span></code></a></span></li>
@@ -162,7 +162,7 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -194,13 +194,13 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="internals.html" title="previous chapter">ORM内部结构</a></li>
+                <a href="internals.html" title="previous chapter">ORM 内核</a></li>
                 <li><b>Next:</b>
                 <a href="extensions/index.html" title="next chapter">ORM扩展</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
-                    <ul><li><a href="extending.html" title="事件和内部实现">事件和内部实现</a></li>
+                    <ul><li><a href="extending.html" title="事件和内部机制">事件和内部机制</a></li>
                 </ul>
                 </ul>
 
@@ -208,7 +208,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.orm.exc">ORM 异常</a><ul>
+<li><a class="reference internal" href="#orm">ORM异常</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.exc.ConcurrentModificationError"><code class="docutils literal notranslate"><span class="pre">ConcurrentModificationError</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.exc.DetachedInstanceError"><code class="docutils literal notranslate"><span class="pre">DetachedInstanceError</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.exc.FlushError"><code class="docutils literal notranslate"><span class="pre">FlushError</span></code></a></li>
@@ -246,9 +246,9 @@
 
     <div id="docs-body" role="main" class="withsidebar orm-exceptions" >
         
-<section id="module-sqlalchemy.orm.exc">
-<span id="orm"></span><span id="orm-exceptions-toplevel"></span><h1>ORM 异常<a class="headerlink" href="#module-sqlalchemy.orm.exc" title="Permalink to this heading">¶</a></h1>
-<p>SQLAlchemy ORM exceptions.</p>
+<section id="orm">
+<span id="id1"></span><h1>ORM异常<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-sqlalchemy.orm.exc"></span><p>SQLAlchemy ORM exceptions.</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -436,7 +436,7 @@ recent “parent”.</p></li>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="internals.html" title="previous chapter">ORM内部结构</a>
+        <a href="internals.html" title="previous chapter">ORM 内核</a>
         Next:
         <a href="extensions/index.html" title="next chapter">ORM扩展</a>
 
@@ -448,7 +448,7 @@ recent “parent”.</p></li>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:10
+    Documentation last generated: 2023/8/18 18:21:10
 
     </div>
 </div>

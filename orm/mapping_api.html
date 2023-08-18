@@ -40,7 +40,7 @@
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="ORM映射类配置" href="mapper_config.html" />
-        <link rel="next" title="SQL表达式映射" href="scalar_mapping.html" />
+        <link rel="next" title="映射SQL表达式" href="scalar_mapping.html" />
         <link rel="prev" title="配置版本计数器" href="versioning.html" />
     <!-- end layout.mako headers -->
 
@@ -127,27 +127,24 @@
 <li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">通过声明性方式映射类</a></span></li>
 <li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
-<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将SQL表达式映射为属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
-<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">复合列类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
 <li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
 <li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
-<li class="selected"><span class="link-container"><strong>类映射API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.util.identity_key"><code class="docutils literal notranslate"><span class="pre">identity_key()</span></code></a></span></li>
-</ul>
-</li>
-<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+<li class="selected"><span class="link-container"><strong>类映射API</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">映射SQL表达式</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
-<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
-<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM 查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">用 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
-<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM 示例</a></span></li>
 </ul>
 
 
@@ -181,7 +178,7 @@
                 <li><b>Previous:</b>
                 <a href="versioning.html" title="previous chapter">配置版本计数器</a></li>
                 <li><b>Next:</b>
-                <a href="scalar_mapping.html" title="next chapter">SQL表达式映射</a></li>
+                <a href="scalar_mapping.html" title="next chapter">映射SQL表达式</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
                     <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
@@ -193,10 +190,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#api">类映射API</a><ul>
-<li><a class="reference internal" href="#sqlalchemy.orm.util.identity_key"><code class="docutils literal notranslate"><span class="pre">identity_key()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#api">类映射API</a></li>
 </ul>
 
 
@@ -217,15 +211,11 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="autosummary-name"><p><a class="reference internal" href="#sqlalchemy.orm.util.identity_key"><span class="sig-name descname">identity_key</span></a>([class_, ident], *, [instance, row, identity_token])</p></td>
-<td><p>Generate “identity key” tuples, as are used as keys in the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.identity_map</span></code> dictionary.</p></td>
-</tr>
 </tbody>
 </table>
 <dl class="py function">
-<dt class="sig sig-object py" id="sqlalchemy.orm.util.identity_key">
-<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.util.</span></span><span class="sig-name descname"><span class="pre">identity_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.Tuple" title="sqlalchemy.sql.expression.Tuple"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_T</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Row</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">RowMapping</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_IdentityKeyType</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#sqlalchemy.orm.util.identity_key" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">function</span> </em><span class="sig-prename descclassname"><span class="pre">sqlalchemy.orm.util.</span></span><span class="sig-name descname"><span class="pre">identity_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">class_</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ident</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.Tuple" title="sqlalchemy.sql.expression.Tuple"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_T</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><span class="pre">Row</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.RowMapping" title="sqlalchemy.engine.RowMapping"><span class="pre">RowMapping</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">identity_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">_IdentityKeyType</span><span class="p"><span class="pre">[</span></span><span class="pre">_T</span><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dd><p>Generate “identity key” tuples, as are used as keys in the
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.identity_map</span></code> dictionary.</p>
 <p>This function has several call styles:</p>
@@ -274,7 +264,7 @@ if the object is expired.</p>
 </li>
 <li><p><code class="docutils literal notranslate"><span class="pre">identity_key(class,</span> <span class="pre">row=row,</span> <span class="pre">identity_token=token)</span></code></p>
 <p>This form is similar to the class/tuple form, except is passed a
-database result row as a <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">RowMapping</span></code> object.</p>
+database result row as a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> or <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.RowMapping" title="sqlalchemy.engine.RowMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">RowMapping</span></code></a> object.</p>
 <p>E.g.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>\
 <span class="go">    text(&quot;select * from table where a=1 and b=2&quot;)\</span>
@@ -287,7 +277,7 @@ database result row as a <code class="xref py py-class docutils literal notransl
 <dd class="field-odd"><p>mapped class (must be a positional argument)</p>
 </dd>
 <dt class="field-even">param row<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> row returned by a <code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code>
+<dd class="field-even"><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a> row returned by a <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>
 (must be given as a keyword arg)</p>
 </dd>
 <dt class="field-odd">param identity_token<span class="colon">:</span></dt>
@@ -311,7 +301,7 @@ database result row as a <code class="xref py py-class docutils literal notransl
         Previous:
         <a href="versioning.html" title="previous chapter">配置版本计数器</a>
         Next:
-        <a href="scalar_mapping.html" title="next chapter">SQL表达式映射</a>
+        <a href="scalar_mapping.html" title="next chapter">映射SQL表达式</a>
 
     <div id="docs-copyright">
         &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
@@ -321,7 +311,7 @@ database result row as a <code class="xref py py-class docutils literal notransl
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:15
+    Documentation last generated: 2023/8/18 18:44:00
 
     </div>
 </div>

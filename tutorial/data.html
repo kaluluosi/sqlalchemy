@@ -12,7 +12,7 @@
         <title>
             
     
-    处理数据
+    使用数据
  &mdash;
     SQLAlchemy 2.0 Documentation
 
@@ -124,18 +124,21 @@
         </h3>
 
         <ul>
-<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">处理事务和DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - Engine</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">使用事务和DBAPI</a></span></li>
 <li><span class="link-container"><a class="reference external" href="metadata.html">使用数据库元数据</a></span></li>
-<li class="selected"><span class="link-container"><strong>处理数据</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li class="selected"><span class="link-container"><strong>使用数据</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="data_insert.html">使用 INSERT 语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="data_select.html">使用 SELECT 语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_insert.html#returning">使用 RETURNING 检查插入结果</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_insert.html#tutorial-insert-from-select">插入…从选择操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html">使用SELECT语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html#orm-orm-aliased-user-address-sql-fromclause-sql-alias-orm-aliased-sql-select-schema-table-scalar-and-correlated-subqueries">在ORM中，  <code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code> <cite>User`</cite></a></span></li>
 <li><span class="link-container"><a class="reference external" href="data_update.html">使用UPDATE和DELETE语句</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
-<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
-<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM操作数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">使用 ORM 相关对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">更多阅读</a></span></li>
 </ul>
 
 
@@ -179,7 +182,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#tutorial-working-with-data">处理数据</a></li>
+<li><a class="reference internal" href="#tutorial-working-with-data">使用数据</a></li>
 </ul>
 
 
@@ -192,13 +195,13 @@
     <div id="docs-body" role="main" class="withsidebar tutorial-data" >
         
 <section class="core-header orm-addin" id="tutorial-working-with-data">
-<span id="id1"></span><h1>处理数据<a class="headerlink" href="#tutorial-working-with-data" title="Permalink to this heading">¶</a></h1>
-<p>在 <a class="reference internal" href="dbapi_transactions.html#tutorial-working-with-transactions"><span class="std std-ref">处理事务和DBAPI</span></a> 这一部分中，我们学习了如何与Python DBAPI以及其事务状态进行交互的基础知识。 然后，在: ref:<cite>tutorial_working_with_metadata`中，我们学习了如何使用`_schema.MetaData`和相关对象在SQLAlchemy中表示数据库表、列和约束。在本节中，我们将结合上述两个概念，创建、选择和操作关系数据库中的数据。即使我们将数据库驱动程序设置为在幕后使用: ref:`autocommit&lt;dbapi_autocommit&gt;</cite>，我们与数据库的交互也始终是基于事务的。</p>
-<p>本节的组成部分如下:</p>
+<span id="id1"></span><h1>使用数据<a class="headerlink" href="#tutorial-working-with-data" title="Permalink to this heading">¶</a></h1>
+<p>在   <a class="reference internal" href="dbapi_transactions.html#tutorial-working-with-transactions"><span class="std std-ref">使用事务和DBAPI</span></a>  中，我们学习了如何与 Python DBAPI 及其事务状态进行交互的基础知识。然后，在   <a class="reference internal" href="metadata.html#tutorial-working-with-metadata"><span class="std std-ref">使用数据库元数据</span></a>  中，我们学习了如何使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  和相关对象在 SQLAlchemy 中表示数据库表格、列和约束。在本节中，我们将结合上述两个概念来创建、选择和操作关系数据库中的数据。我们与数据库的交互始终是基于事务的，即使我们将数据库驱动程序设置为在幕后使用   <a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">autocommit</span></a> 。</p>
+<p>本节的组成部分如下：</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="data_insert.html#tutorial-core-insert"><span class="std std-ref">使用 INSERT 语句</span></a> - 要将一些数据插入数据库，我们介绍并演示了Core :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_sql.Insert`构造。 插入是从ORM角度描述在下一节 :ref:<a href="#id4"><span class="problematic" id="id5">`</span></a>tutorial_orm_data_manipulation`中。</p></li>
-<li><p><a class="reference internal" href="data_select.html#tutorial-selecting-data"><span class="std std-ref">使用 SELECT 语句</span></a> - 本节将详细介绍:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_sql.Select`构造，这是SQLAlchemy中最常用的对象。 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_sql.Select`构造发出Core和ORM-centric应用程序的SELECT语句，并将两种用例描述在本文中。稍后的 :ref:<a href="#id10"><span class="problematic" id="id11">`</span></a>tutorial_select_relationships`部分以及 :ref:<a href="#id12"><span class="problematic" id="id13">`</span></a>queryguide_toplevel`中还注意到了其他ORM用例。</p></li>
-<li><p><a class="reference internal" href="data_update.html#tutorial-core-update-delete"><span class="std std-ref">使用UPDATE和DELETE语句</span></a> - 围绕插入和选择数据，本节将从Core的角度描述:class:<cite>_sql.Update`和:class:`_sql.Delete`构造的用法。 ORM特定的UPDATE和DELETE在 `tutorial_orm_data_manipulation</cite> 部分中同样有所描述。</p></li>
+<li><p><a class="reference internal" href="data_insert.html#tutorial-core-insert"><span class="std std-ref">使用 INSERT 语句</span></a>  - 为了将某些数据放入数据库中，我们引入并演示了 Core   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造。从 ORM 的角度描述的 INSERT 将在下一节   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-data-manipulation"><span class="std std-ref">使用ORM操作数据</span></a>  中描述。</p></li>
+<li><p><a class="reference internal" href="data_select.html#tutorial-selecting-data"><span class="std std-ref">使用SELECT语句</span></a>  - 本节将详细描述   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构造，这是 SQLAlchemy 中最常用的对象。  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构造发射 Core 和 ORM-centric 应用程序的 SELECT 语句，两种用例都将在此描述。在稍后的   <span class="xref std std-ref">tutorial_select_relationships</span>  和   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中还注意到了其他 ORM 用例。</p></li>
+<li><p><a class="reference internal" href="data_update.html#tutorial-core-update-delete"><span class="std std-ref">使用UPDATE和DELETE语句</span></a>  - 完成插入和数据选择之后，本节将从 Core 的角度描述   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  构造的使用。ORM 特定的 UPDATE 和 DELETE 类似地在   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-data-manipulation"><span class="std std-ref">使用ORM操作数据</span></a>  中描述。</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
@@ -222,7 +225,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:18
+    Documentation last generated: 2023/8/18 18:44:02
 
     </div>
 </div>

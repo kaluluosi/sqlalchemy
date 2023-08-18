@@ -41,7 +41,7 @@
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
         <link rel="up" title="常见问题解答" href="index.html" />
         <link rel="next" title="错误消息" href="../errors.html" />
-        <link rel="prev" title="Sessions / Queries" href="sessions.html" />
+        <link rel="prev" title="会话/查询" href="sessions.html" />
     <!-- end layout.mako headers -->
 
 
@@ -126,16 +126,13 @@
         <ul>
 <li><span class="link-container"><a class="reference external" href="installation.html">安装</a></span></li>
 <li><span class="link-container"><a class="reference external" href="connections.html">连接/引擎</a></span></li>
-<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据 / 模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据/模式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="sqlexpressions.html">SQL表达式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="ormconfiguration.html">ORM配置</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#sqlalchemy">如何对由 SQLAlchemy 驱动的应用进行性能分析？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="performance.html#orm-400-000">我正在使用 ORM 插入 400,000 行，这很慢！</a></span></li>
-<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">性能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">会话/查询</a></span></li>
 <li class="selected"><span class="link-container"><strong>第三方集成问题</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#numpy-int64-numpy-bool">我得到了与“<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”等相关的错误。</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#sqlwhere-having-true">SQL表达式为WHERE/HAVING预期的角色，得到True</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#where-havingsqltrue">WHERE/HAVING角色的SQL表达式期望得到True</a></span></li>
 </ul>
 </li>
 </ul>
@@ -169,7 +166,7 @@
         <div id="docs-narrow-top-navigation">
             <ul>
                 <li><b>Previous:</b>
-                <a href="sessions.html" title="previous chapter">Sessions / Queries</a></li>
+                <a href="sessions.html" title="previous chapter">会话/查询</a></li>
                 <li><b>Next:</b>
                 <a href="../errors.html" title="next chapter">错误消息</a></li>
 
@@ -182,8 +179,7 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#id1">第三方集成问题</a><ul>
-<li><a class="reference internal" href="#numpy-int64-numpy-bool">我得到了与“<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”等相关的错误。</a></li>
-<li><a class="reference internal" href="#sqlwhere-having-true">SQL表达式为WHERE/HAVING预期的角色，得到True</a></li>
+<li><a class="reference internal" href="#where-havingsqltrue">WHERE/HAVING角色的SQL表达式期望得到True</a></li>
 </ul>
 </li>
 </ul>
@@ -199,17 +195,11 @@
         
 <section id="id1">
 <h1>第三方集成问题<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<nav class="contents faq local" id="contents">
-<ul class="simple">
-<li><p><a class="reference internal" href="#numpy-int64-numpy-bool" id="id4">我得到了与“<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”等相关的错误。</a></p></li>
-<li><p><a class="reference internal" href="#sqlwhere-having-true" id="id5">SQL表达式为WHERE/HAVING预期的角色，得到True</a></p></li>
-</ul>
-</nav>
-<section id="numpy-int64-numpy-bool">
-<span id="numpy-int64"></span><h2>我得到了与“<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code>”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code>”等相关的错误。<a class="headerlink" href="#numpy-int64-numpy-bool" title="Permalink to this heading">¶</a></h2>
-<p>numpy_包有其自己的数字数据类型，这些数据类型扩展了Python的数字类型，但它们包含某些行为，这些行为在某些情况下使它们无法与SQLAlchemy的一些行为协调，以及在某些情况下 用底层的DBAPI驱动程序不兼容。</p>
-<p>可能会出现两个错误：“ProgrammingError：无法适应类型``numpy.int64’’”在像psycopg2这样的后端上，以及“ArgumentError：SQL表达式对象预期得到的是&lt;class ‘<a href="#id6"><span class="problematic" id="id7">numpy.bool_</span></a>’&gt;类型的对象，而不是实际情况”的情况 在最近的SQLAlchemy版本中，可能是“ArgumentError：SQL表达式为WHERE / HAVING预期的角色，得到True”。</p>
-<p>在第一种情况下，问题是由于psycopg2没有适当的查找项来查找“int64”数据类型，因此它不会被查询直接接受。这可以基于以下代码进行说明：</p>
+<p id="numpy-int64">我收到了与“ <code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> ”，“<code class="docutils literal notranslate"><span class="pre">numpy.bool_</span></code> ”等相关的错误。
+————————————————– ———————-</p>
+<p>numpy_包具有自己的数字数据类型，这些数据类型从Python的数字类型扩展，但包含某些行为，有些情况下使它们无法与SqlAlchemy的某些行为相协调，有些情况下与底层的DBAPI驱动程序不兼容。</p>
+<p>可能会发生两个错误是``ProgrammingError：cannot adapt type ‘numpy.int64’<code class="docutils literal notranslate"><span class="pre">等后端出现错误，以及``ArgumentError：SQL</span> <span class="pre">expression</span> <span class="pre">object</span> <span class="pre">expected，got</span> <span class="pre">object</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">&lt;class</span> <span class="pre">'numpy.bool_'&gt;</span> <span class="pre">instead</span></code>; 在SqlAlchemy的更高版本中，这可能是``ArgumentError：SQL expression for WHERE / HAVING role expected，got True``。</p>
+<p>在第一种情况下，问题是因为psycopg2没有适当的查找条目以使 <code class="docutils literal notranslate"><span class="pre">int64</span></code> 数据类型不被直接接受。这可以基于以下代码说明：</p>
 <blockquote>
 <div><p>import numpy</p>
 <dl>
@@ -218,11 +208,11 @@
 data = Column(Integer)</p>
 </dd>
 </dl>
-<p># .. 后面
+<p># .. later
 session.add(A(data=numpy.int64(10)))
 session.commit()</p>
 </div></blockquote>
-<p>在后一种情况下，问题是由于``numpy.int64``数据类型覆盖了``__eq __（）``方法并强制执行表达式的返回类型为``numpy.True’’或``numpy.False’’，这将破坏SQLAlchemy的表达式功能语法，该语法希望从python相等比较返回:class：<a href="#id2"><span class="problematic" id="id3">``</span></a>_sql.ColumnElement``表达式：</p>
+<p>在后一种情况下，问题是因为 <code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> 数据类型覆盖了 <code class="docutils literal notranslate"><span class="pre">__eq</span> <span class="pre">__（）</span></code> 方法，并强制执行表达式的返回类型为 <code class="docutils literal notranslate"><span class="pre">numpy.True</span></code> 或 <code class="docutils literal notranslate"><span class="pre">numpy.False</span></code>，这会破坏SQLAlchemy的表达式语言行为，因为表达式语言预计从Python等式比较中返回：class:<a href="#id2"><span class="problematic" id="id3">`</span></a>~sqlalchemy.sql.expression.ColumnElement`表达式：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span><span class="p">,</span> <span class="n">Integer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">)</span> <span class="o">==</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>  <span class="c1"># works</span>
@@ -230,17 +220,17 @@ session.commit()</p>
 </div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>  <span class="c1"># breaks</span>
 <span class="go">False</span></pre></div>
 </div>
-<p>这些错误都可以通过相同的方式解决，即需要将特殊的numpy数据类型替换为常规的Python值。例如，将Python <code class="docutils literal notranslate"><span class="pre">int（）``函数应用于诸如``numpy.int32``和``numpy.int64``之类的类型，以及将Python</span> <span class="pre">``float（）``函数应用于``numpy.float32</span></code>：</p>
+<p>这些错误都可以通过相同的方式解决，即特殊的numpy数据类型需要用普通的Python值替换。例如，将Python的``int()``
+函数应用于像 <code class="docutils literal notranslate"><span class="pre">numpy.int32</span></code> 和 <code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> 这样的类型，将 Python <code class="docutils literal notranslate"><span class="pre">float()</span></code> 函数应用于``numpy.float32``：</p>
 <blockquote>
 <div><p>data = numpy.int64(10)</p>
 <p>session.add(A(data=int(data)))</p>
 <p>result = session.execute(select(A.data).where(int(data) == A.data))</p>
 <p>session.commit()</p>
 </div></blockquote>
-</section>
-<section id="sqlwhere-having-true">
-<h2>SQL表达式为WHERE/HAVING预期的角色，得到True<a class="headerlink" href="#sqlwhere-having-true" title="Permalink to this heading">¶</a></h2>
-<p>请参见 <a class="reference internal" href="#numpy-int64"><span class="std std-ref">我得到了与“numpy.int64”，“numpy.bool_”等相关的错误。</span></a>.</p>
+<section id="where-havingsqltrue">
+<h2>WHERE/HAVING角色的SQL表达式期望得到True<a class="headerlink" href="#where-havingsqltrue" title="Permalink to this heading">¶</a></h2>
+<p>请参阅：  <span class="xref std std-ref">numpy_int64</span> .</p>
 </section>
 </section>
 
@@ -250,7 +240,7 @@ session.commit()</p>
 
 <div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
         Previous:
-        <a href="sessions.html" title="previous chapter">Sessions / Queries</a>
+        <a href="sessions.html" title="previous chapter">会话/查询</a>
         Next:
         <a href="../errors.html" title="next chapter">错误消息</a>
 
@@ -262,7 +252,7 @@ session.commit()</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:07:08
+    Documentation last generated: 2023/8/18 18:43:53
 
     </div>
 </div>

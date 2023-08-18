@@ -39,7 +39,7 @@
     <link rel="search" title="Search" href="../search.html" />
         <link rel="copyright" title="Copyright" href="../copyright.html" />
     <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
-        <link rel="up" title="核心API基础知识" href="api_basics.html" />
+        <link rel="up" title="Core API基础知识" href="api_basics.html" />
         <link rel="next" title="核心内部" href="internals.html" />
         <link rel="prev" title="运行时检查API" href="inspection.html" />
     <!-- end layout.mako headers -->
@@ -120,21 +120,16 @@
 
         
         <h3>
-            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+            <a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a>
         </h3>
 
         <ul>
 <li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
-<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
-<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
-<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="event.html">事件注册</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#event-named-argument-styles">命名参数风格</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#id9">目标</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#event-modifiers">修饰符</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#id15">事件参考</a></span></li>
-<li><span class="link-container"><a class="reference external" href="event.html#api">API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">模式定义语言 (Schema Definition Language)</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL 数据类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎与连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">Core API基础知识</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="event.html">事件</a></span></li>
 <li><span class="link-container"><a class="reference external" href="inspection.html">运行时检查API</a></span></li>
 <li class="selected"><span class="link-container"><strong>核心异常</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.exc.AmbiguousForeignKeysError"><code class="docutils literal notranslate"><span class="pre">AmbiguousForeignKeysError</span></code></a></span></li>
@@ -262,8 +257,8 @@
                 <a href="internals.html" title="next chapter">核心内部</a></li>
 
             <li><b>Up:</b> <a href="../index.html">Home</a></li>
-                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
-                    <ul><li><a href="api_basics.html" title="核心API基础知识">核心API基础知识</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy 核心">SQLAlchemy 核心</a></li>
+                    <ul><li><a href="api_basics.html" title="Core API基础知识">Core API基础知识</a></li>
                 </ul>
                 </ul>
 
@@ -271,7 +266,7 @@
 
             <li><b>On this page:</b></li>
             <ul>
-<li><a class="reference internal" href="#module-sqlalchemy.exc">核心异常</a><ul>
+<li><a class="reference internal" href="#core-exceptions-toplevel">核心异常</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.exc.AmbiguousForeignKeysError"><code class="docutils literal notranslate"><span class="pre">AmbiguousForeignKeysError</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.exc.ArgumentError"><code class="docutils literal notranslate"><span class="pre">ArgumentError</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.exc.AwaitRequired"><code class="docutils literal notranslate"><span class="pre">AwaitRequired</span></code></a></li>
@@ -369,9 +364,9 @@
 
     <div id="docs-body" role="main" class="withsidebar core-exceptions" >
         
-<section id="module-sqlalchemy.exc">
-<span id="id1"></span><h1>核心异常<a class="headerlink" href="#module-sqlalchemy.exc" title="Permalink to this heading">¶</a></h1>
-<p>Exceptions used with SQLAlchemy.</p>
+<section id="core-exceptions-toplevel">
+<span id="id1"></span><h1>核心异常<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<span class="target" id="module-sqlalchemy.exc"></span><p>Exceptions used with SQLAlchemy.</p>
 <p>The base exception class is <a class="reference internal" href="#sqlalchemy.exc.SQLAlchemyError" title="sqlalchemy.exc.SQLAlchemyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SQLAlchemyError</span></code></a>.  Exceptions which are
 raised as a result of DBAPI exceptions are all subclasses of
 <a class="reference internal" href="#sqlalchemy.exc.DBAPIError" title="sqlalchemy.exc.DBAPIError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DBAPIError</span></code></a>.</p>
@@ -415,7 +410,7 @@ was awaited when it required one.</p>
 SQLAlchemy 2.0.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../errors.html#error-b8d9"><span class="std std-ref">在 SQLAlchemy 2.0 中，&lt;某些函数&gt; 将不再 &lt;做某事&gt;</span></a>.</p>
+<p><a class="reference internal" href="../errors.html#error-b8d9"><span class="std std-ref">在 SQLAlchemy 2.0 中，&lt;某些函数&gt; 将不再&lt;某些行为&gt;</span></a>.</p>
 <p><a class="reference internal" href="../changelog/migration_14.html#deprecation-20-mode"><span class="std std-ref">SQLAlchemy 2.0 退化模式</span></a></p>
 </div>
 <div class="class-bases docutils container">
@@ -440,13 +435,13 @@ SQLAlchemy 2.0.</p>
 on each other, they can not be inserted or deleted via INSERT or
 DELETE statements alone; an UPDATE will be needed to post-associate
 or pre-deassociate one of the foreign key constrained values.
-The <code class="docutils literal notranslate"><span class="pre">post_update</span></code> flag described at <a class="reference internal" href="../orm/relationship_persistence.html#post-update"><span class="std std-ref">自身引用的行/互相依赖的行</span></a> can resolve
+The <code class="docutils literal notranslate"><span class="pre">post_update</span></code> flag described at <a class="reference internal" href="../orm/relationship_persistence.html#post-update"><span class="std std-ref">自我指向/相互依赖行</span></a> can resolve
 this cycle.</p></li>
-<li><p>In a <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.sorted_tables" title="sqlalchemy.schema.MetaData.sorted_tables"><code class="xref py py-attr docutils literal notranslate"><span class="pre">MetaData.sorted_tables</span></code></a> operation, two
+<li><p>In a <code class="xref py py-attr docutils literal notranslate"><span class="pre">MetaData.sorted_tables</span></code> operation, two
 <a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>
 or <a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> objects mutually refer to each
 other.  Apply the <code class="docutils literal notranslate"><span class="pre">use_alter=True</span></code> flag to one or both,
-see <span class="xref std std-ref">use_alter</span>.</p></li>
+see <a class="reference internal" href="constraints.html#use-alter"><span class="std std-ref">通过ALTER创建/删除外键约束</span></a>.</p></li>
 </ul>
 <div class="class-bases docutils container">
 <p><strong>Class signature</strong></p>
@@ -1067,8 +1062,8 @@ the <a class="reference internal" href="#sqlalchemy.exc.StatementError.orig" tit
 <dd><p>Raised when an operation is not supported by the given compiler.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../faq/sqlexpressions.html#faq-sql-expression-string"><span class="std std-ref">如何将SQL表达式呈现为字符串，可能带有联接的参数？</span></a></p>
-<p><a class="reference internal" href="../errors.html#error-l7de"><span class="std std-ref">Compiler StrSQLCompiler can’t render element of type &lt;element type&gt;</span></a></p>
+<p><a class="reference internal" href="../faq/sqlexpressions.html#faq-sql-expression-string"><span class="std std-ref">如何将SQL表达式呈现为字符串，可能带有内联的绑定参数？</span></a></p>
+<p><span class="xref std std-ref">error_l7de</span></p>
 </div>
 <div class="class-bases docutils container">
 <p><strong>Class signature</strong></p>
@@ -1101,7 +1096,7 @@ the <a class="reference internal" href="#sqlalchemy.exc.StatementError.orig" tit
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 10:06:57
+    Documentation last generated: 2023/8/18 18:20:57
 
     </div>
 </div>
