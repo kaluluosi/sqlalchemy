@@ -1,0 +1,1115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    使用 SELECT 语句
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="处理数据" href="data.html" />
+        <link rel="next" title="使用UPDATE和DELETE语句" href="data_update.html" />
+        <link rel="prev" title="使用 INSERT 语句" href="data_insert.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">处理事务和DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">使用数据库元数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">处理数据</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="data_insert.html">使用 INSERT 语句</a></span></li>
+<li class="selected"><span class="link-container"><strong>使用 SELECT 语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#select-sql">select() SQL 表达式构造</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#columns-from">设置 COLUMNS 和 FROM 子句</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#orm">选择 ORM 实体和列</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-selecting-arbitrary-text">使用文本列表达式进行 Select</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#where">WHERE子句</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#outer-full-join">OUTER 和 FULL JOIN</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#order-bygroup-by-having">ORDER BY、GROUP BY 和 HAVING</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#order-by">ORDER BY</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#group-by-having">使用 GROUP BY / HAVING 进行聚合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-order-by-label">按标签排序或分组</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-using-aliases">使用别名</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-orm-entity-aliases">ORM实体别名</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#cte">子查询和CTE</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id53">通用表达式（CTE）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-cte">ORM实体子查询/CTE</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-scalar-subquery">标量和相关子查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-orm-union">从联合选择中选择ORM实体</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-exists">存在子查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql">使用SQL函数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-casts">数据转换和类型转换</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#type-coerce-python">type_coerce() - Python 专用转换</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="data_update.html">使用UPDATE和DELETE语句</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="data_insert.html" title="previous chapter">使用 INSERT 语句</a></li>
+                <li><b>Next:</b>
+                <a href="data_update.html" title="next chapter">使用UPDATE和DELETE语句</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a></li>
+                    <ul><li><a href="data.html" title="处理数据">处理数据</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#select">使用 SELECT 语句</a><ul>
+<li><a class="reference internal" href="#select-sql">select() SQL 表达式构造</a></li>
+<li><a class="reference internal" href="#columns-from">设置 COLUMNS 和 FROM 子句</a><ul>
+<li><a class="reference internal" href="#orm">选择 ORM 实体和列</a></li>
+<li><a class="reference internal" href="#tutorial-selecting-arbitrary-text">使用文本列表达式进行 Select</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#where">WHERE子句</a><ul>
+<li><a class="reference internal" href="#outer-full-join">OUTER 和 FULL JOIN</a><ul>
+<li><a class="reference internal" href="#order-bygroup-by-having">ORDER BY、GROUP BY 和 HAVING</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#order-by">ORDER BY</a></li>
+<li><a class="reference internal" href="#group-by-having">使用 GROUP BY / HAVING 进行聚合</a></li>
+<li><a class="reference internal" href="#tutorial-order-by-label">按标签排序或分组</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-using-aliases">使用别名</a><ul>
+<li><a class="reference internal" href="#tutorial-orm-entity-aliases">ORM实体别名</a></li>
+<li><a class="reference internal" href="#cte">子查询和CTE</a></li>
+<li><a class="reference internal" href="#id53">通用表达式（CTE）</a></li>
+<li><a class="reference internal" href="#orm-cte">ORM实体子查询/CTE</a></li>
+<li><a class="reference internal" href="#tutorial-scalar-subquery">标量和相关子查询</a></li>
+<li><a class="reference internal" href="#tutorial-orm-union">从联合选择中选择ORM实体</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tutorial-exists">存在子查询</a></li>
+<li><a class="reference internal" href="#sql">使用SQL函数</a></li>
+<li><a class="reference internal" href="#tutorial-casts">数据转换和类型转换</a><ul>
+<li><a class="reference internal" href="#type-coerce-python">type_coerce() - Python 专用转换</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar tutorial-data_select" >
+        
+<section class="core-header orm-dependency" id="select">
+<span id="tutorial-selecting-data"></span><h1>使用 SELECT 语句<a class="headerlink" href="#select" title="Permalink to this heading">¶</a></h1>
+<p>在 Core 和 ORM 中，<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 函数可以生成一个 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 构造，用于所有的 SELECT 查询。将 SELECT 语句传递给 Core 中的方法，例如 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> 或者 ORM 中的方法 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>，一个 SELECT 语句将被发出并且执行的结果可通过返回的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象访问结果行。</p>
+<div class="orm-header docutils container">
+<p><strong>ORM 读者</strong> - 这里的内容同样适用于 Core 和 ORM 的基本使用方法，但是也可以使用许多更多面向 ORM 的特性；这些内容在 <span class="xref std std-ref">queryguide_toplevel</span> 标题下进行了详细的文档介绍。</p>
+</div>
+<section id="select-sql">
+<h2>select() SQL 表达式构造<a class="headerlink" href="#select-sql" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造函数像其它 SQL 语句构造函数一样，使用增量的方式生成一条查询语句。query_clause = select()相当于query_clause = select().select_from(None)
+SQLAlchemy提供了 select() 的语法糖 select_from()，表示select的from部分,explain select if_exists(select_from(user_table).where(and_(col1==xxx),))
+:<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 接收的位置参数表示多个 class:<cite>_schema.Column</cite> 和 <cite>table-like</cite> 的表达式，也接受一些兼容对象，这些对象被解析为要从 “”SELECT” 这个列才可以) 通过展示is_in_t1这一列的输出结果，此时你的我只能获得表达式最终的布尔值; 如果要查看两张表某个列的相等与不等，需要将这一表达式放在where的一侧，其他表达式放在另一侧。
+将列和类似表达式用于简单的情况，可以创建 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造中的 FROM 子句；它被解释为通过查询中提供的列和类似表达式来构建。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">name_1</span>
+</div></pre></div>
+</div>
+<p>与其它语句级 SQL 构造一样，要执行该语句，我们将它传递到执行方法中。由于 SELECT 语句返回行，因此我们始终可以迭代结果对象以返回名为 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 的对象。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     for row in conn.execute(stmt):</span>
+<span class="go">...         print(row)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="p">(</span><span class="n">implicitly</span><span class="p">)</span>
+<span class="w">       </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,)</span>
+</div><span class="go">(1, &#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;)</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>使用 ORM 时，特别是使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造针对 ORM 实体的情况下，我们将使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 对象，但是这些行现在可以将完整的实体（例如“User”类的实例）作为每行中的单独元素来包括。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     for row in session.execute(stmt):</span>
+<span class="go">...         print(row)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="p">(</span><span class="n">implicitly</span><span class="p">)</span>
+<span class="w">       </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,)</span>
+</div><span class="go">(User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;),)</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<aside class="topic">
+<p class="topic-title">从表中选择与从 ORM 类中选择</p>
+<p>虽然这些示例中生成的 SQL 看起来在索引了 <code class="docutils literal notranslate"><span class="pre">select(user_table)</span></code> 或 <code class="docutils literal notranslate"><span class="pre">select(User)</span></code> 之后是一样的，但在一般情况下，它们并不一定会生成相同的语句，因为 ORM 映射的类可能还会映射到表以外的其他“selectables”，同时转到一个 ORM 实体上的 select() 还表明可能会作为结果返回 ORM 映射的实例，当从 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象中选择时则不会返回此结果。</p>
+</aside>
+<p>接下来的部分将更详细地讨论 SELECT 构造。</p>
+</section>
+<section id="columns-from">
+<span id="tutorial-selecting-columns"></span><h2>设置 COLUMNS 和 FROM 子句<a class="headerlink" href="#columns-from" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 函数接受位置元素，表示任何数量的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 和/或 <cite>table-like</cite> 表达式，以及许多兼容对象，它们被解析成要作为结果集中的列返回的 SQL 表达式列表。这些元素在较简单的情况下还用作创建 FROM 子句，该子句根据传递的列和表类似表达式进行推断：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+</div></pre></div>
+</div>
+<p>使用 Core 方法从单个列中选择列时，可以直接从 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table.c" title="sqlalchemy.schema.Table.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Table.c</span></code></a> 访问 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象，并且可以直接发送列。 FROM 子句将推断为表示它们的所有 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 和其他 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> 对象的集合。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+</div></pre></div>
+</div>
+<p>或者，当使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause.c" title="sqlalchemy.sql.expression.FromClause.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FromClause.c</span></code></a> 集合时，可以通过使用字符串名称的元组选择 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 中的多个列。::- 2.0 添加元组访问器功能到 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause.c" title="sqlalchemy.sql.expression.FromClause.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FromClause.c</span></code></a> 集合</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;fullname&quot;</span><span class="p">]))</span>
+<span class="go">{printsql}SELECT user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account</span></pre></div>
+</div>
+<section id="orm">
+<span id="tutorial-selecting-orm-entities"></span><h3>选择 ORM 实体和列<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h3>
+<p>ORM 实体，如我们的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类以及其中映射的列，例如 <code class="docutils literal notranslate"><span class="pre">User.name</span></code>，还参与表示表和列的 SQL 表达式语言系统中。下面举例说明从 <code class="docutils literal notranslate"><span class="pre">User</span></code> 实体中 SELECT，最终呈现的方式与我们直接使用 <code class="docutils literal notranslate"><span class="pre">user_table</span></code> 是相同的：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+</div></pre></div>
+</div>
+<p>当我们使用 ORM <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法调用上述语句时，如果选择整个实体，例如 <code class="docutils literal notranslate"><span class="pre">User</span></code>，则有一个重要区别，因为 <strong>每行中实际上都返回实体本身</strong>。也就是说，当我们从上述语句中提取行时，由于只有 <code class="docutils literal notranslate"><span class="pre">User</span></code> 实体在要提取的结果中，我们获取到的是仅有一个元素的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 对象，其中包含 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类的实例：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="p">(</span><span class="n">implicitly</span><span class="p">)</span>
+<span class="w">       </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span>
+<span class="go">(User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;),)</span></pre></div>
+</div>
+<p>上述 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 有一个元素，表示 <code class="docutils literal notranslate"><span class="pre">User</span></code> 实体：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span></pre></div>
+</div>
+<p>一个高度推荐的方式是使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code> 方法直接执行查询，这种方法将返回一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarResult</span></code> 对象，可以一次性得到每行的第一个 “列”，在这种情况下，是 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类的实例：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span>
+<span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span></pre></div>
+</div>
+<p>或者，我们可以将 ORM 实体的单个列选择为结果行中的不同元素，方法是使用类绑定的属性；当它们被传递给诸如 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 这样的结构时，它们被解析为每个属性所代表的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或其他 SQL 表达式：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+</div></pre></div>
+</div>
+<p>当我们使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 调用 <em>此</em> 语句时，我们接收到指向一个元素的行，每个元素都对应于单个列或其他 SQL 表达式。如下所示，每个值都对应于单个列或其他 SQL 表达式。  <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code>：：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">row</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="go">{execsql}SELECT user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account</span>
+<span class="go">       WHERE user_account.name = ?</span>
+<span class="go">       [...] (&#39;spongebob&#39;,){stop}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">row</span>
+<span class="go">(&#39;spongebob&#39;, &#39;Spongebob Squarepants&#39;)</span></pre></div>
+</div>
+<p>这些方法也可以混用，如下面的例子，我们将 <code class="docutils literal notranslate"><span class="pre">User</span></code> 实体的 <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性作为行的第一个元素选择，然后与第二个元素中的完整的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 实体进行组合。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<span class="go">...     select(User.name, Address).where(User.id == Address.user_id).order_by(Address.id)</span>
+<span class="go">... ).all()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="p">,</span><span class="w"> </span><span class="n">address</span>
+<span class="w">       </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">[(&#39;spongebob&#39;, Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)),</span>
+<span class="go">(&#39;sandy&#39;, Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)),</span>
+<span class="go">(&#39;sandy&#39;, Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;))]</span></pre></div>
+</div>
+<p>在 <a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-select-columns"><span class="std std-ref">选择ORM实体和属性</span></a> 中可以进一步了解有关选择 ORM 实体和列以及将行转换为实体的常见方法。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-select-columns"><span class="std std-ref">选择ORM实体和属性</span></a> - 在 <span class="xref std std-ref">queryguide_toplevel</span> 中</p>
+</div>
+</section>
+<section id="tutorial-selecting-arbitrary-text">
+<span id="id1"></span><h3>使用文本列表达式进行 Select<a class="headerlink" href="#tutorial-selecting-arbitrary-text" title="Permalink to this heading">¶</a></h3>
+<p>当我们使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 函数构造 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象时，通常会在查询语句中注入任意 SQL 代码块，例如常量字符串表达式或者直接通过字符串快速编写的其他 SQL 代码块。</p>
+<p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 构造函数可以直接嵌入到 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 构造中，如下面的例子所示，在查询中制造硬编码字符串文字 “some phrase”：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+<span class="go">...     text(&quot;&#39;some phrase&#39;&quot;), user_table.c.name).order_by(user_table.c.name)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     print(conn.execute(stmt).all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="p">(</span><span class="n">implicitly</span><span class="p">)</span>
+<span class="w">         </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;some phrase&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="w">         </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="w">         </span><span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">[(&#39;some phrase&#39;, &#39;patrick&#39;), (&#39;some phrase&#39;, &#39;sandy&#39;), (&#39;some phrase&#39;, &#39;spongebob&#39;)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>虽然 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 构造函数可以在大多数地方注入文本 SQL 短语，但在此并非总是必要的。通常我们要处理的是表示单个“列”的文本单元，使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.literal_column" title="sqlalchemy.sql.expression.literal_column"><code class="xref py py-func docutils literal notranslate"><span class="pre">literal_column()</span></code></a> 可以获得更多的功能，该对象类似于 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>，不同的是它显式表示一个“单列”，然后可以被赋予标签，并且可以称为子查询和其他表达式中引用的任意名称:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">literal_column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">literal_column</span><span class="p">(</span><span class="s2">&quot;&#39;some phrase&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">),</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span>
+<span class="go">...     user_table.c.name</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     for row in conn.execute(stmt):</span>
+<span class="go">...         print(f&quot;{row.p}, {row.name}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="p">(</span><span class="n">implicitly</span><span class="p">)</span>
+<span class="w">         </span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;some phrase&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">p</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="w">         </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="w">         </span><span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">some phrase, patrick</span>
+<span class="go">some phrase, sandy</span>
+<span class="go">some phrase, spongebob</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>请注意，在使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 或 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.literal_column" title="sqlalchemy.sql.expression.literal_column"><code class="xref py py-func docutils literal notranslate"><span class="pre">literal_column()</span></code></a> 时，我们编写的是一种经过语法处理的 SQL 表达式，而不是字面值。我们还必须包含所需的任何引号或语法等，这是我们要查看的视图要呈现的 SQL。</p>
+</section>
+</section>
+<section id="where">
+<span id="tutorial-select-where-clause"></span><h2>WHERE子句<a class="headerlink" href="#where" title="Permalink to this heading">¶</a></h2>
+<p>使用标准 Python 操作符，结合 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 和类似的对象，SQLAlchemy 允许我们组合 SQL 表达式，例如 <code class="docutils literal notranslate"><span class="pre">name</span> <span class="pre">=</span> <span class="pre">'squidward'</span></code> 或 <code class="docutils literal notranslate"><span class="pre">user_id</span> <span class="pre">&gt;</span> <span class="pre">10</span></code>。对于布尔表达式，类似于 <code class="docutils literal notranslate"><span class="pre">==</span></code> 、<code class="docutils literal notranslate"><span class="pre">!=</span></code>、<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>、<code class="docutils literal notranslate"><span class="pre">&gt;=</span></code> 等大多数 Python 运算符在涉及到原表达式时都会生成新的 SQL 表达式对象，而不是生成纯布尔值 <cite>True</cite> 或 <cite>False</cite>：。</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span>
+<span class="go">user_account.name = :name_1</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">address.user_id &gt; :user_id_1</span></pre></div>
+</div>
+<p>我们可以将这些表达式用于 WHERE 子句，方法是将结果对象传递到 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a> 方法中：：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">))</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account WHERE user_account.name = :name_1</span></pre></div>
+</div>
+<p>要生成由 AND 连接起来的多个表达式，请多次调用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a> 方法:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">    FROM user_account, address</span>
+<span class="go">    WHERE user_account.name = :name_1 AND address.user_id = user_account.id</span></pre></div>
+</div>
+<p>一次调用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a> 方法还可以直接接受多个表达式，效果相同：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">       FROM user_account, address</span>
+<span class="go">       WHERE user_account.name = :name_1 AND address.user_id = user_account.id</span></pre></div>
+</div>
+<p>使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a> 和 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code class="xref py py-func docutils literal notranslate"><span class="pre">or_()</span></code></a> 函数，可以在 FROM 子句或最后一个实体后面直接使用 “AND” 和 “OR” 连接：：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">and_</span><span class="p">,</span> <span class="n">or_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">or_</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;sandy&quot;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="n">Address</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">       FROM address, user_account</span>
+<span class="go">       WHERE (user_account.name = :name_1 OR user_account.name = :name_2)</span>
+<span class="go">       AND address.user_id = user_account.id</span></pre></div>
+</div>
+<p>对于左侧和右侧没有外键约束，或存在多个外键约束的左右目标的情况，如果左侧和右侧目标没有这样的约束，则 SELECT 构造不会默认为 WHERE 子句生成 ON 子句，此时我们需要直接指定 ON 子句。<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a> 方法都接受额外的 ON 子句参数，使用的方法与 <a class="reference internal" href="#tutorial-selecting-columns"><span class="std std-ref">设置 COLUMNS 和 FROM 子句</span></a> 部分介绍的 SQL 表达式机制相同。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="go">...     select(address_table.c.email_address)</span>
+<span class="go">...     .select_from(user_table)</span>
+<span class="go">...     .join(address_table, user_table.c.id == address_table.c.user_id)</span>
+<span class="go">... )</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+</div></pre></div>
+</div>
+<aside class="sidebar">
+<p class="sidebar-title">ON 子句是被自动生成的</p>
+<p>当使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a> 或 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a> 时，我们会发现，在简单的外键情况下，自动为我们生成了 JOIN 的 ON 子句。下一部分将进一步介绍。</p>
+</aside>
+<section id="outer-full-join">
+<h3>OUTER 和 FULL JOIN<a class="headerlink" href="#outer-full-join" title="Permalink to this heading">¶</a></h3>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a> 方法都接受关键字参数 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join.params.isouter" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Select.join.isouter</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join.params.full" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Select.join.full</span></code></a>，从而将生成 LEFT OUTER JOIN 和 FULL OUTER JOIN，如下面所示:：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">address_table</span><span class="p">,</span> <span class="n">isouter</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account LEFT OUTER JOIN address ON user_account.id = address.user_id{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">address_table</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account FULL OUTER JOIN address ON user_account.id = address.user_id{stop}</span></pre></div>
+</div>
+<p>还有一个方法 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.outerjoin" title="sqlalchemy.sql.expression.Select.outerjoin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.outerjoin()</span></code></a> 等效于 “使用``.join(…, isouter=True) <a href="#id2"><span class="problematic" id="id3">``</span></a>。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>SQL 还有一个“RIGHT OUTER JOIN”，SQLAlchemy 不直接生成此项；取而代之的，我们需要对表进行倒转并使用“LEFT OUTER JOIN”进行操作。</p>
+</div>
+<section id="order-bygroup-by-having">
+<span id="tutorial-order-by-group-by-having"></span><h4>ORDER BY、GROUP BY 和 HAVING<a class="headerlink" href="#order-bygroup-by-having" title="Permalink to this heading">¶</a></h4>
+<p>SELECT SQL 语句包括一个节点叫 ORDER BY，用于按给出顺序返回选择的行。</p>
+<p>GROUP BY 子句类似于 ORDER BY 子句，在构造上类似，其目的是将所选行分成特定的组，从而可以对每个组分别应用聚合功能，如计数、计算平均值，以及查找一组值中的最大值或最小值。</p>
+<p>HAVING 子句通常与 GROUP BY 子句一起使用，该子句类似于 WHERE 子句，除了它是应用于聚合函数，而不是应用于直接包含在行中的某个内容。</p>
+</section>
+</section>
+<section id="order-by">
+<span id="tutorial-order-by"></span><h3>ORDER BY<a class="headerlink" href="#order-by" title="Permalink to this heading">¶</a></h3>
+<p>ORDER BY 子句基于 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或类似对象构造。<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a> 方法接受一个或多个这些表达式表示的位置参数:：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account ORDER BY user_account.name</span></pre></div>
+</div>
+<p>升序/降序可以使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.asc" title="sqlalchemy.sql.expression.ColumnElement.asc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.asc()</span></code></a> 和 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement.desc" title="sqlalchemy.sql.expression.ColumnElement.desc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.desc()</span></code></a> 修改符号来修改，ORM 相关属性中也存在这些元素：：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="o">.</span><span class="n">desc</span><span class="p">()))</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">       FROM user_account ORDER BY user_account.fullname DESC</span></pre></div>
+</div>
+<p>上述语句将生成按 <code class="docutils literal notranslate"><span class="pre">user_account.fullname</span></code> 列进行排序的行。</p>
+</section>
+<section id="group-by-having">
+<span id="tutorial-group-by-w-aggregates"></span><h3>使用 GROUP BY / HAVING 进行聚合<a class="headerlink" href="#group-by-having" title="Permalink to this heading">¶</a></h3>
+<p>在 SQL 中，聚合函数允许将跨多行的列表达式聚合在一起，从而生成单个结果。示例包括计数、计算平均值，以及查找一组值中的最大值或最小值。</p>
+<p>SQLAlchemy 使用一个名为 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 的命名空间提供 SQL 函数，这是一个特殊的构造函数对象，当给出特定的 SQL 函数名称时，它会创建 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> 的新实例，该实例可以有任何名称，以及零个或多个要传递给函数的参数，这些参数与所有其他情况一样，都是 SQL 表达式构造。例如，要根据 <code class="docutils literal notranslate"><span class="pre">user_account.id</span></code> 列渲染 SQL COUNT() 函数，我们调用 <code class="docutils literal notranslate"><span class="pre">count()</span></code> 名称：:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">count_fn</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">count_fn</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">count</span><span class="p">(</span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p>SQL 函数在本教程晚些时候的 <a class="reference internal" href="#tutorial-functions"><span class="std std-ref">使用SQL函数</span></a> 一节将详细介绍。</p>
+<p>在使用 SQL 聚合函数时，GROUP BY 子句非常重要，因为它允许行分成组，聚合函数将单独应用于每个组。 在选择SELECT语句的COLUMNS子句中请求非聚合列时，SQL 要求这些列全部都要受到 GROUP BY 子句的影响，直接或间接地基于主键关联。</p>
+<p>可使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.having" title="sqlalchemy.sql.expression.Select.having"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.having()</span></code></a> 方法提供这两个子句。 下面我们说明如何将用户名称字段与地址计数一起选择，以获得拥有多个地址的用户。:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(</span>
+<span class="go">...         select(User.name, func.count(Address.id).label(&quot;count&quot;))</span>
+<span class="go">...         .join(Address)</span>
+<span class="go">...         .group_by(User.name)</span>
+<span class="go">...         .having(func.count(Address.id) &gt; 1)</span>
+<span class="go">...     )</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="k">IMPLICIT</span>
+<span class="w">       </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">count</span>
+<span class="w">       </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="w">       </span><span class="k">HAVING</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span>
+<span class="w">       </span><span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+</div><span class="go">[(&#39;sandy&#39;, 2)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+</section>
+<section id="tutorial-order-by-label">
+<span id="id4"></span><h3>按标签排序或分组<a class="headerlink" href="#tutorial-order-by-label" title="Permalink to this heading">¶</a></h3>
+<p>在某些数据库后端上，特别是在ORDER BY或GROUP BY一个已在列子句中已经存在的表达式的能力是一种重要的技术，而不必在ORDER BY或GROUP BY子句中重新声明该表达式，而是可以使用COLUMNS子句中的列名称或标签名称。可以通过将名称的字符串文本传递给:meth:<cite>_sql.Select.order_by`或:meth:`_sql.Select.group_by`方法来使用此形式。传递的文本**不会直接呈现**；相反，在列子句中给出一个表达式的名称，并在上下文中呈现为该表达式名称，如果找不到匹配项，则引发错误。还可以使用一元修饰符:func:</cite>.asc`和:func:<a href="#id5"><span class="problematic" id="id6">`</span></a>.desc`使用此形式：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span><span class="p">,</span> <span class="n">desc</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(Address.user_id, func.count(Address.id).label(&quot;num_addresses&quot;))</span>
+<span class="go">...     .group_by(&quot;user_id&quot;)</span>
+<span class="go">...     .order_by(&quot;user_id&quot;, desc(&quot;num_addresses&quot;))</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">num_addresses</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">num_addresses</span><span class="w"> </span><span class="k">DESC</span>
+</div></pre></div>
+</div>
+</section>
+</section>
+<section id="tutorial-using-aliases">
+<span id="id7"></span><h2>使用别名<a class="headerlink" href="#tutorial-using-aliases" title="Permalink to this heading">¶</a></h2>
+<p>既然我们正在从多个表中进行选择并使用连接，那么很快就会遇到需要在语句的FROM子句中多次引用同一张表格的情况。我们使用SQL别名来完成这一点，这是一种语法，为表或子查询提供另一种名称，以便可以在语句中引用它。</p>
+<p>在SQLAlchemy表达式语言中，这些“名称”由称为:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_sql.Alias`的:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_sql.FromClause`对象表示，该对象是使用:meth:<a href="#id12"><span class="problematic" id="id13">`</span></a>_sql.FromClause.alias`方法在Core中构造的。:class:<a href="#id14"><span class="problematic" id="id15">`</span></a>_sql.Alias`构造类似于:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_sql.Table`构造，因为它也具有:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_schema.Column`对象的命名空间，该命名空间在:attr:<a href="#id20"><span class="problematic" id="id21">`</span></a>_sql.Alias.c`中。例如，下面的SELECT语句返回所有唯一的用户名对:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_alias_1</span> <span class="o">=</span> <span class="n">user_table</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user_alias_2</span> <span class="o">=</span> <span class="n">user_table</span><span class="o">.</span><span class="n">alias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="go">...     select(user_alias_1.c.name, user_alias_2.c.name).join_from(</span>
+<span class="go">...         user_alias_1, user_alias_2, user_alias_1.c.id &gt; user_alias_2.c.id</span>
+<span class="go">...     )</span>
+<span class="go">... )</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account_1</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account_2</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">name_1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_1</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">user_account_2</span><span class="p">.</span><span class="n">id</span>
+</div></pre></div>
+</div>
+<section id="tutorial-orm-entity-aliases">
+<span id="id22"></span><h3>ORM实体别名<a class="headerlink" href="#tutorial-orm-entity-aliases" title="Permalink to this heading">¶</a></h3>
+<p>:meth:<a href="#id23"><span class="problematic" id="id24">`</span></a>_sql.FromClause.alias`方法的ORM等效方法是ORM:func:<a href="#id25"><span class="problematic" id="id26">`</span></a>_orm.aliased`函数，它可以应用于实体，例如“User”和“Address”。这将在针对原始映射的:class:<a href="#id27"><span class="problematic" id="id28">`</span></a>_schema.Table`对象的:class:<a href="#id29"><span class="problematic" id="id30">`</span></a>_sql.Alias`对象内部产生一个对象，同时保持ORM功能。下面的SELECT从“User”实体中选择所有包含两个特定电子邮件地址的对象：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">aliased</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address_alias_1</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address_alias_2</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">join_from</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">address_alias_1</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">address_alias_1</span><span class="o">.</span><span class="n">email_address</span> <span class="o">==</span> <span class="s2">&quot;patrick@aol.com&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">join_from</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">address_alias_2</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">address_alias_2</span><span class="o">.</span><span class="n">email_address</span> <span class="o">==</span> <span class="s2">&quot;patrick@gmail.com&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">FROM user_account</span>
+<span class="go">JOIN address AS address_1 ON user_account.id = address_1.user_id</span>
+<span class="go">JOIN address AS address_2 ON user_account.id = address_2.user_id</span>
+<span class="go">WHERE address_1.email_address = :email_address_1</span>
+<span class="go">AND address_2.email_address = :email_address_2</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>如前所述，在:ref:<a href="#id31"><span class="problematic" id="id32">`</span></a>tutorial_select_join_onclause`中，ORM提供了使用:func:<a href="#id33"><span class="problematic" id="id34">`</span></a>_orm.relationship`构造另一种连接方式。使用别名的上述示例在:ref:<a href="#id35"><span class="problematic" id="id36">`</span></a>tutorial_joining_relationships_aliased`中进行了演示。</p>
+</div>
+</section>
+<section id="cte">
+<span id="tutorial-subqueries-ctes"></span><h3>子查询和CTE<a class="headerlink" href="#cte" title="Permalink to this heading">¶</a></h3>
+<p>在SQL中，子查询是在括号内呈现并放置在包含语句（通常是SELECT语句，但不一定）的上下文中的SELECT语句。</p>
+<p>本节将介绍所谓的“非标量”子查询，通常位于封闭的SELECT的FROM子句中。我们还将介绍Common Table Expression或CTE，其用法类似于子查询，但包括其他功能。</p>
+<p>SQLAlchemy使用:class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_sql.Subquery`对象表示子查询和:class:<a href="#id39"><span class="problematic" id="id40">`</span></a>_sql.CTE`表示CTE，通常使用:meth:<a href="#id41"><span class="problematic" id="id42">`</span></a>_sql.Select.subquery`和:meth:<a href="#id43"><span class="problematic" id="id44">`</span></a>_sql.Select.cte`方法获得这些对象。可以将任何对象用作FROM元素。更大的:func:<a href="#id45"><span class="problematic" id="id46">`</span></a>_sql.select`结构。</p>
+<p>我们可以构造一个:class:<cite>_sql.Subquery</cite>，该子查询将从“address”表中选择一行的聚合计数（聚合函数和GROUP BY在:ref:<a href="#id47"><span class="problematic" id="id48">`</span></a>tutorial_group_by_w_aggregates`中介绍过）：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subq</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">),</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">subquery</span><span class="p">()</span>
+<span class="gp">... </span><span class="p">)</span></pre></div>
+</div>
+<p>如果自行将子查询的字符串化，则其默认字符串形式没有任何封闭括号，只会呈现为一个普通的SELECT语句:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">subq</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">count</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+</div></pre></div>
+</div>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subquery</span></code></a> 对象的行为类似于其他FROM对象，例如:class:<cite>_schema.Table</cite>，其中值得注意的是，它包括一组:attr:<a href="#id49"><span class="problematic" id="id50">`</span></a>_sql.Subquery.c`列用于选择。我们可以使用此命名空间引用“user_id”列以及自定义的标记为“count”的表达式:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">subq</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span> <span class="n">subq</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">count</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="k">count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">count</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span>
+</div></pre></div>
+</div>
+<p>拥有contained rows的子查询的选择，我们可以将对象应用于更大的:class:<cite>_sql.Select</cite>，该类将数据连接到“user_account”表：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span> <span class="n">subq</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">join_from</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">user_table</span><span class="p">,</span> <span class="n">subq</span>
+<span class="gp">... </span><span class="p">)</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="go">{printsql}SELECT user_account.name, user_account.fullname, anon_1.count</span>
+<span class="go">FROM user_account JOIN (SELECT count(address.id) AS count, address.user_id AS user_id</span>
+<span class="go">FROM address GROUP BY address.user_id) AS anon_1 ON user_account.id = anon_1.user_id</span></pre></div>
+</div>
+<p>为了从“user_account”连接到“address”，我们使用:meth:<a href="#id51"><span class="problematic" id="id52">`</span></a>_sql.Select.join_from`方法。正如先前示例所示，此连接的ON子句再次被**推断**，这是基于外键约束的。即使SQL子查询本身没有任何约束，SQLAlchemy也可以通过确定“subq.c.user_id”列**派生**自“address_table.c.user_id”列来作用于列上的约束，该列实际上表示外键关系返回到“user_table .*id”列，然后用于生成ON子句。</p>
+</section>
+<section id="id53">
+<h3>通用表达式（CTE）<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h3>
+<p>使用:class:<cite>_sql.CTE`构造在SQLAlchemy中的使用方式几乎与使用:class:`_sql.Subquery`构造相同。通过将调用:meth:`_sql.Select.subquery`方法更改为使用:meth:`_sql.Select.cte</cite>，我们可以使用所得到的对象作为相同的方法中的FROM元素。但是，呈现的SQL是非常不同的常用表达式语法:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subq</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(func.count(address_table.c.id).label(&quot;count&quot;), address_table.c.user_id)</span>
+<span class="go">...     .group_by(address_table.c.user_id)</span>
+<span class="go">...     .cte()</span>
+<span class="go">... )</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">fullname</span><span class="p">,</span> <span class="n">subq</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">join_from</span><span class="p">(</span>
+<span class="go">...     user_table, subq</span>
+<span class="go">... )</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">WITH</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">AS</span>
+<span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">count</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="p">)</span>
+<span class="w"> </span><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="k">count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span>
+</div></pre></div>
+</div>
+<p>:class:<a href="#id54"><span class="problematic" id="id55">`</span></a>_sql.CTE`结构还提供了使用“递归”样式的能力，并且在更复杂的情况下可能由INSERT、UPDATE或DELETE语句的RETURNING子句组成。:class:<a href="#id56"><span class="problematic" id="id57">`</span></a>_sql.CTE`的 docstring中包含有关这些其他模式的详细信息。</p>
+<p>在两种情况下，子查询和CTE都是用匿名名称在SQL级别命名的。在Python代码中，我们根本不需要提供这些名称。当呈现时，:class:<a href="#id58"><span class="problematic" id="id59">`</span></a>_sql.Subquery`或:class:<a href="#id60"><span class="problematic" id="id61">`</span></a>_sql.CTE`实例的对象标识作为对象的语法标识。可以通过将其作为:meth:<a href="#id62"><span class="problematic" id="id63">`</span></a>_sql.Select.subquery`或:meth:<a href="#id64"><span class="problematic" id="id65">`</span></a>_sql.Select.cte`方法的第一个参数传递来提供编译为SQL的名称。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.subquery" title="sqlalchemy.sql.expression.Select.subquery"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.subquery()</span></code></a> - 有关子查询的更多详细信息</p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.cte" title="sqlalchemy.sql.expression.Select.cte"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.cte()</span></code></a> - 包括如何使用CTE的示例，以及如何使用RECURSIVE以及DML导向的CTE</p>
+</div>
+</section>
+<section id="orm-cte">
+<span id="tutorial-subqueries-orm-aliased"></span><h3>ORM实体子查询/CTE<a class="headerlink" href="#orm-cte" title="Permalink to this heading">¶</a></h3>
+<p>在ORM中，:func:<a href="#id66"><span class="problematic" id="id67">`</span></a>_orm.aliased`构造函数可用于将ORM实体，例如我们的“User”或“Address”类，与任何表示行源的:class:<a href="#id68"><span class="problematic" id="id69">`</span></a>_sql.FromClause`概念相关联。前面的一节:ref:<a href="#id70"><span class="problematic" id="id71">`</span></a>tutorial_orm_entity_aliases`说明了如何使用:func:<a href="#id72"><span class="problematic" id="id73">`</span></a>_orm.aliased`将映射类与其映射的:class:<a href="#id74"><span class="problematic" id="id75">`</span></a>_schema.Table`的:class:<a href="#id76"><span class="problematic" id="id77">`</span></a>_sql.Alias`相关联。在这里，我们将演示如何使用:func:<a href="#id78"><span class="problematic" id="id79">`</span></a>_orm.aliased`将其应用于对:class:<a href="#id80"><span class="problematic" id="id81">`</span></a>_sql.Subquery`的生成以及对:class:<a href="#id82"><span class="problematic" id="id83">`</span></a>_sql.CTE`使用的相同概念。</p>
+<p>以下是将:func:<a href="#id84"><span class="problematic" id="id85">`</span></a>_orm.aliased`应用于:class:<a href="#id86"><span class="problematic" id="id87">`</span></a>_sql.Subquery`构造的示例，以便我们可以从其行中提取ORM实体。结果显示了一系列“User”和“Address”对象，其中每个“Address”对象的数据最终源自“address”表的子查询而不是该表本身：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subq</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">Address</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;%@aol.com&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">subquery</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address_subq</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">subq</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(User, address_subq)</span>
+<span class="go">...     .join_from(User, address_subq)</span>
+<span class="go">...     .order_by(User.id, address_subq.id)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     for user, address in session.execute(stmt):</span>
+<span class="go">...         print(f&quot;{user} {address}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="p">,</span>
+<span class="n">anon_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span>
+<span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;%@aol.com&#39;</span><span class="p">,)</span>
+</div><span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;) Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;)</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>接下来的另一个示例完全相同，只是使用:meth:<a href="#id88"><span class="problematic" id="id89">`</span></a>_sql.CTE`构造代替了:class:<a href="#id90"><span class="problematic" id="id91">`</span></a>_sql.Subquery`构造：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cte_obj</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="o">~</span><span class="n">Address</span><span class="o">.</span><span class="n">email_address</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;%@aol.com&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">cte</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address_cte</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">cte_obj</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(User, address_cte)</span>
+<span class="go">...     .join_from(User, address_cte)</span>
+<span class="go">...     .order_by(User.id, address_cte.id)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     for user, address in session.execute(stmt):</span>
+<span class="go">...         print(f&quot;{user} {address}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">WITH</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">AS</span>
+<span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="p">,</span>
+<span class="n">anon_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;%@aol.com&#39;</span><span class="p">,)</span>
+</div><span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;) Address(id=1, email_address=&#39;spongebob@sqlalchemy.org&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;) Address(id=3, email_address=&#39;sandy@squirrelpower.org&#39;)</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">orm_queryguide_subqueries</span> - 在 <span class="xref std std-ref">queryguide_toplevel</span> 中</p>
+</div>
+</section>
+<section id="tutorial-scalar-subquery">
+<span id="id92"></span><h3>标量和相关子查询<a class="headerlink" href="#tutorial-scalar-subquery" title="Permalink to this heading">¶</a></h3>
+<p>标量子查询是返回正好零行或一行的子查询，以及正好一列。然后，在封闭的SELECT语句的COLUMNS或WHERE子句中使用该子查询，这与常规子查询不同，后者用于FROM子句中。ScalarSelect构造表示标量子查询，该标量子查询是:类:<a href="#id93"><span class="problematic" id="id94">`</span></a>_sql.ColumnElement`表达式层次结构中的一部分，与表示常规子查询的:class:<a href="#id95"><span class="problematic" id="id96">`</span></a>_sql.Subquery`构造不同，在:class:<a href="#id97"><span class="problematic" id="id98">`</span></a>_sql.FromClause`层次结构中表示。</p>
+<p>通常情况下，如果SELECT语句引用“table1 JOIN（SELECT…）AS subquery”在其FROM子句中，则右侧的子查询可能不引用左侧的“table1”表达式；相关可以仅引用完全包含此SELECT的另一个SELECT的一张表。LATERAL关键字允许我们将这种行为反转并允许来自右侧JOIN的相关性。</p>
+<p>SQLAlchemy使用:meth:<cite>_expression.Select.lateral`方法支持该特性，该方法创建一个称为:class:</cite>.Lateral`的对象。<code class="xref py py-class docutils literal notranslate"><span class="pre">Lateral`与:class:</span></code>.Subquery`和:class:<a href="#id99"><span class="problematic" id="id100">`</span></a>.Alias`在同一系列中，但在添加到含有母语的SELECT的FROM子句中时还包括相关行为，与:ref:<a href="#id101"><span class="problematic" id="id102">`</span></a>tutorial_expressions_lateral`中的例子类似，关联电子邮件字符串。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Lateral" title="sqlalchemy.sql.expression.Lateral"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lateral</span></code></a></p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.lateral" title="sqlalchemy.sql.expression.Select.lateral"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.lateral()</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">_or</span></code> 子句，例如SELECT UNION</p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.union_all" title="sqlalchemy.sql.expression.union_all"><code class="xref py py-func docutils literal notranslate"><span class="pre">union_all()</span></code></a></p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.intersect" title="sqlalchemy.sql.expression.intersect"><code class="xref py py-func docutils literal notranslate"><span class="pre">intersect()</span></code></a></p>
+<p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.except_" title="sqlalchemy.sql.expression.except_"><code class="xref py py-func docutils literal notranslate"><span class="pre">except_()</span></code></a></p>
+</div>
+</section>
+<section id="tutorial-orm-union">
+<span id="id103"></span><h3>从联合选择中选择ORM实体<a class="headerlink" href="#tutorial-orm-union" title="Permalink to this heading">¶</a></h3>
+<p>先前的示例说明了如何使用两个:class:<a href="#id104"><span class="problematic" id="id105">`</span></a>_schema.Table`对象构造UNION，然后返回数据库行。如果我们想使用UNION或其他集合操作来选择我们然后作为ORM对象接收的行，则可以使用两种方法。在这两种情况下，我们首先构造一个表示我们要执行的SELECT / UNION /等语句的:func:<a href="#id106"><span class="problematic" id="id107">`</span></a>_sql.select`或:class:<a href="#id108"><span class="problematic" id="id109">`</span></a>_sql.CompoundSelect`对象。应根据目标ORM实体或其基本映射的:class:<a href="#id110"><span class="problematic" id="id111">`</span></a>_schema.Table`对象组成此语句:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt1</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;sandy&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt2</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;spongebob&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u</span> <span class="o">=</span> <span class="n">union_all</span><span class="p">(</span><span class="n">stmt1</span><span class="p">,</span> <span class="n">stmt2</span><span class="p">)</span></pre></div>
+</div>
+<p>对于不包含在子查询中的简单SELECT和UNION，这些功能通常可以使用:meth:<a href="#id112"><span class="problematic" id="id113">`</span></a>_sql.Select.from_statement`方法在ORM对象获取上下文中使用。使用此方法，UNION语句表示整个查询；在使用:meth:<a href="#id114"><span class="problematic" id="id115">`</span></a>_sql.Select.from_statement`之后，无法添加任何其他标准：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">orm_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">from_statement</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">orm_stmt</span><span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">print</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="go">{execsql}BEGIN (implicit)</span>
+<span class="go">SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">FROM user_account</span>
+<span class="go">WHERE user_account.name = ? UNION ALL SELECT user_account.id, user_account.name, user_account.fullname</span>
+<span class="go">FROM user_account</span>
+<span class="go">WHERE user_account.name = ?</span>
+<span class="go">[generated in ...] (&#39;sandy&#39;, &#39;spongebob&#39;)</span>
+<span class="go">{stop}User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)</span>
+<span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span>
+<span class="go">{execsql}ROLLBACK{stop}</span></pre></div>
+</div>
+<p>要将UNION或其他集合相关构造用作与实体相关的组件​​的更灵活的方式，可以使用:meth:<a href="#id116"><span class="problematic" id="id117">`</span></a>_sql.CompoundSelect.subquery`将:class:<a href="#id118"><span class="problematic" id="id119">`</span></a>_sql.CompoundSelect`构造组织成子查询，然后使用:func:<a href="#id120"><span class="problematic" id="id121">`</span></a>_orm.aliased`函数将其链接到ORM对象。这与在:ref:<a href="#id122"><span class="problematic" id="id123">`</span></a>tutorial_subqueries_orm_aliased`中介绍的方式相同，首先为所需的实体创建一个临时的“映射”，然后选择该映射的新实体，就好像它是任何其他映射类一样。在下面的示例中，我们可以添加额外的条件，例如ORDER BY，因为我们可以过滤或按导出的列排序。</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_alias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">subquery</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">orm_stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">user_alias</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">user_alias</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">orm_stmt</span><span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">():</span>
+<span class="gp">... </span>        <span class="n">print</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+<span class="go">{execsql}BEGIN (implicit)</span>
+<span class="go">SELECT anon_1.id, anon_1.name, anon_1.fullname</span>
+<span class="go">FROM (SELECT user_account.id AS id, user_account.name AS name, user_account.fullname AS fullname</span>
+<span class="go">FROM user_account</span>
+<span class="go">WHERE user_account.name = ? UNION ALL SELECT user_account.id AS id, user_account.name AS name, user_account.fullname AS fullname</span>
+<span class="go">FROM user_account</span>
+<span class="go">WHERE user_account.name = ?)</span>
+<span class="go">AS anon_1 ORDER BY anon_1.id</span>
+<span class="go">[generated in ...] (&#39;sandy&#39;, &#39;spongebob&#39;)</span>
+<span class="go">{stop}User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)</span>
+<span class="go">{execsql}ROLLBACK{stop}</span></pre></div>
+</div>
+<p>WHERE user_account.name = ? UNION ALL SELECT user_account.id AS id, user_account.name AS name, user_account.fullname AS fullname
+FROM user_account
+WHERE user_account.name = ?) AS anon_1 ORDER BY anon_1.id
+[生成于…] (‘sandy’, ‘spongebob’)
+{stop}User(id=1, name=’spongebob’, fullname=’Spongebob Squarepants’)
+User(id=2, name=’sandy’, fullname=’Sandy Cheeks’)
+{execsql}ROLLBACK{stop}</p>
+</section>
+</section>
+<section id="tutorial-exists">
+<span id="id124"></span><h2>存在子查询<a class="headerlink" href="#tutorial-exists" title="Permalink to this heading">¶</a></h2>
+<p>SQL中的EXISTS关键字是一种与 <a class="reference internal" href="#tutorial-scalar-subquery"><span class="std std-ref">scalar subqueries</span></a>
+一起使用的运算符，根据SELECT语句是否返回行返回一个布尔值真或假。
+SQLAlchemy包括一种:class:<cite>_sql.ScalarSelect`对象的变体，
+称为:class:`_sql.Exists</cite>，它将生成一个EXISTS子查询，
+并且最方便地使用:meth:<a href="#id125"><span class="problematic" id="id126">`</span></a>_sql.SelectBase.exists`方法生成。
+下面我们生成一个EXISTS，以便我们可以返回在“address”中具有多个相关行的“user_account”行：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">subq</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(func.count(address_table.c.id))</span>
+<span class="go">...     .where(user_table.c.id == address_table.c.user_id)</span>
+<span class="go">...     .group_by(address_table.c.user_id)</span>
+<span class="go">...     .having(func.count(address_table.c.id) &gt; 1)</span>
+<span class="go">... ).exists()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(select(user_table.c.name).where(subq))</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">count_1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+</div><span class="go">[(&#39;sandy&#39;,)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>在上面的代码中，我们使用了:meth:<a href="#id127"><span class="problematic" id="id128">`</span></a>_sql.SelectBase.exists`方法，生成了一个EXISTS子查询，
+并且最后返回了查询结果的所有行。</p>
+</section>
+<section id="sql">
+<span id="tutorial-functions"></span><h2>使用SQL函数<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
+<p>在本章的前面部分:tutorial_group_by_w_aggregates中首次引入的 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 对象用作用于函数的工厂，
+当被用于诸如 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 这样的表达式中时，
+它会生成一个SQL函数显示，通常由一个名称、括号（虽然不总是）和可能的一些参数组成。常见的SQL函数示例包括：</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">count()</span></code> 函数，一个聚合函数，用于计算返回行数：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">user_table</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">count_1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+</div></pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lower()</span></code> 函数，一个字符串函数，将字符串转换为小写：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="s2">&quot;A String With Much UPPERCASE&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="k">lower</span><span class="p">(:</span><span class="n">lower_2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">lower_1</span>
+</div></pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">now()</span></code> 函数，用于提供当前日期和时间；由于这是一个常用的函数，因此SQLAlchemy会根据后端的不同情况进行不同的显示，例如SQLite中使用``CURRENT_TIMESTAMP``函数：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(stmt)</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">CURRENT_TIMESTAMP</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">now_1</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+<span class="p">[(</span><span class="n">datetime</span><span class="p">.</span><span class="n">datetime</span><span class="p">(...),)]</span>
+<span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+</li>
+</ul>
+<p>由于大多数数据库用后百甚至数百个不同的SQL函数，因此 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 尝试尽可能宽松地接受任何名称。
+从此命名空间中访问的任何名称都会自动被视为将以一种通用方式呈现的SQL函数，并通过上下文中的数据来确定SQL语法。</p>
+<p>并不是所有的SQL函数都被 SQLAlchemy 这个小型函数列表所知，例如“lower”和“upper”这样的方便操作并不是它所知道的函数，这是非常常见的状况。</p>
+<p id="tutorial-window-functions">窗口函数是一种特殊的 SQL 聚合函数模式，它计算作为单个结果行被处理时，一组计算此聚合函数值的行的值。
+虽然诸如“MAX()”等聚合函数会为您提供一组行中的最高值，但将相同的函数用作“窗口函数”将为您提供该行的最高值，即该行上的值。。
+在SQL中，窗口函数允许指定应应用函数的行，一个“分区” 值，其中考虑不同的行子集的窗口以及一个“order by”表达式，
+它特别重视是在哪个顺序将行应用于聚合函数。</p>
+<p>在SQLAlchemy中， <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 命名空间生成的所有 SQL 函数都包括 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over" title="sqlalchemy.sql.functions.FunctionElement.over"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.over()</span></code></a> 方法，该方法授予窗口函数或“over”语法；它生成的构造是“:class：_sql.Over”构造。</p>
+<p>常用于窗口函数的函数是“row_number()”函数，它仅计算行数。我们可以将此行计数划分为用户名，以为单个用户编号的电子邮件地址：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(</span>
+<span class="go">...         func.row_number().over(partition_by=user_table.c.name),</span>
+<span class="go">...         user_table.c.name,</span>
+<span class="go">...         address_table.c.email_address,</span>
+<span class="go">...     )</span>
+<span class="go">...     .select_from(user_table)</span>
+<span class="go">...     .join(address_table)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>  
+<span class="go">...     result = conn.execute(stmt)</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">row_number</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span><span class="p">,</span>
+<span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">[(&#39;1&#39;, &#39;sandy&#39;, &#39;sandy@sqlalchemy.org&#39;), (&#39;2&#39;, &#39;sandy&#39;, &#39;sandy@squirrelpower.org&#39;), (&#39;1&#39;, &#39;spongebob&#39;, &#39;spongebob@sqlalchemy.org&#39;)]</span>
+<div class='show_sql_print'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>在上面的代码中，我们使用了 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over" title="sqlalchemy.sql.functions.FunctionElement.over"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.over()</span></code></a> 方法，
+生成了一个_OVER构造，并且最后返回了查询结果的所有行。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>值得注意的是， <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.over" title="sqlalchemy.sql.functions.FunctionElement.over"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.over()</span></code></a> 方法仅适用于那些 SQL 聚合函数，
+如果函数本身不是 SQL 聚合函数，虽然 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.Over" title="sqlalchemy.sql.expression.Over"><code class="xref py py-class docutils literal notranslate"><span class="pre">Over</span></code></a> 构造将很愉快地呈现。
+但如果函数本身不是 SQL 聚合函数，则数据库将拒绝表达。</p>
+</div>
+<p id="tutorial-functions-within-group">“WITHIN GROUP” SQL语法与“有序集”或“虚拟集”聚合函数一起使用，
+并计算被返回的行中作为单个结果行处理的聚合值。
+常见的“有序集”函数包括“percentile_cont ()”和“rank ()”。
+SQLAlchemy 包括内置的实现 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.rank" title="sqlalchemy.sql.functions.rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">rank</span></code></a>， <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.dense_rank" title="sqlalchemy.sql.functions.dense_rank"><code class="xref py py-class docutils literal notranslate"><span class="pre">dense_rank</span></code></a>，
+<a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.mode" title="sqlalchemy.sql.functions.mode"><code class="xref py py-class docutils literal notranslate"><span class="pre">mode</span></code></a>， <code class="xref py py-class docutils literal notranslate"><span class="pre">percentile_disc</span></code>，
+它们包括 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.within_group" title="sqlalchemy.sql.functions.FunctionElement.within_group"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.within_group()</span></code></a> 方法:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="go">...     func.unnest(</span>
+<span class="go">...         func.percentile_disc([0.25, 0.5, 0.75, 1]).within_group(user_table.c.name)</span>
+<span class="go">...     )</span>
+<span class="go">... )</span>
+<div class='show_sql_print'><span class="k">unnest</span><span class="p">(</span><span class="n">percentile_disc</span><span class="p">(:</span><span class="n">percentile_disc_1</span><span class="p">)</span><span class="w"> </span><span class="n">WITHIN</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">))</span>
+</div></pre></div>
+</div>
+<p>“FILTER”由一些后端支持，以将聚合函数的范围限制为与返回的总行不同的特定子集，
+可使用 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.filter" title="sqlalchemy.sql.functions.FunctionElement.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.filter()</span></code></a> 方法来实现:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(</span>
+<span class="go">...         func.count(address_table.c.email_address).filter(user_table.c.name == &quot;sandy&quot;),</span>
+<span class="go">...         func.count(address_table.c.email_address).filter(</span>
+<span class="go">...             user_table.c.name == &quot;spongebob&quot;</span>
+<span class="go">...         ),</span>
+<span class="go">...     )</span>
+<span class="go">...     .select_from(user_table)</span>
+<span class="go">...     .join(address_table)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>  
+<span class="go">...     result = conn.execute(stmt)</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span><span class="p">,</span>
+<span class="k">count</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="p">)</span><span class="w"> </span><span class="n">FILTER</span><span class="w"> </span><span class="p">(</span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_2</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;spongebob&#39;</span><span class="p">)</span>
+</div><span class="go">[(2, 1)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p id="tutorial-functions-table-valued">表值 SQL 函数支持包含命名子元素的标量表示。通常用于 JSON 和 ARRAY 导向的函数，
+以及函数例如：generate_series（）等。表值函数在PostgreSQL数据库中很常见，
+但某些表值函数形式也受到SQLite、Oracle和SQL Server的支持。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/postgresql.html#postgresql-table-valued-overview"><span class="std std-ref">Table values, Table and Column valued functions, Row and Tuple objects</span></a> - in the <a class="reference internal" href="../dialects/postgresql.html"><span class="std std-ref">PostgreSQL</span></a> documentation.</p>
+</div>
+<p>SQLAlchemy 提供了 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.table_valued" title="sqlalchemy.sql.functions.FunctionElement.table_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.table_valued()</span></code></a> 方法作为基本的“表值函数”构造，
+该构造将 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 对象转换为包含一系列命名列的 FROM 子句。这将返回一个 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.TableValuedAlias" title="sqlalchemy.sql.expression.TableValuedAlias"><code class="xref py py-class docutils literal notranslate"><span class="pre">TableValuedAlias</span></code></a> 对象，
+这是一个支持函数的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code class="xref py py-class docutils literal notranslate"><span class="pre">Alias</span></code></a> 构造，可像其他 FROM 子句一样使用，如：在 <a class="reference internal" href="#tutorial-using-aliases"><span class="std std-ref">使用别名</span></a> 中介绍的那样。
+下面我们用JSON格式的“json_each（）”函数来说明它的应用，虽然它在PostgreSQL上很常见，但现在SQLite的现代版本也支持。</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">onetwothree</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">json_each</span><span class="p">(</span><span class="s1">&#39;[&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">table_valued</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">onetwothree</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">onetwothree</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;two&quot;</span><span class="p">,</span> <span class="s2">&quot;three&quot;</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(stmt)</span>
+<span class="go">...     result.all()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">value</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">json_each</span><span class="p">(</span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;[&quot;one&quot;, &quot;two&quot;, &quot;three&quot;]&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;two&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;three&#39;</span><span class="p">)</span>
+</div><span class="go">[(&#39;two&#39;,), (&#39;three&#39;,)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>上面的代码中，我们使用“json_each（）”JSON函数，它在SQLite和PostgreSQL中都很常见，用于生成一个包含单个列
+的表值表达式，该列被称为“value”。 然后我们选择了其三行中的两行。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/postgresql.html#postgresql-table-valued"><span class="std std-ref">Table-Valued Functions</span></a> - in the <a class="reference internal" href="../dialects/postgresql.html"><span class="std std-ref">PostgreSQL</span></a> documentation -
+此节将详细介绍额外的PostgreSQL语法，例如特殊列派生和“WITH ORDINALITY”。
+它们众所周知，在 PostgreSQL 中会产生非常多的表值函数，并且一些情形下也很流行。</p>
+</div>
+<p id="tutorial-functions-column-valued">由 PostgreSQL 和 Oracle 支持的一种特殊语法是，在 FROM 子句中引用函数，然后将其作为 SELECT 语句或其他列表达式的列提供。
+PostgreSQL将这个句法用到了许多函数中，例如“json_array_elements（）”、“json_object_keys（）”、“json_each_text（）”、“json_each（）”等。</p>
+<p>SQLAlchemy 将其称为“ 列值 函数”，可通过在 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.Function" title="sqlalchemy.sql.functions.Function"><code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></a> 构造中应用 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.column_valued" title="sqlalchemy.sql.functions.FunctionElement.column_valued"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.column_valued()</span></code></a> 修改符来使用：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">func</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">json_array_elements</span><span class="p">(</span><span class="s1">&#39;[&quot;one&quot;, &quot;two&quot;]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">column_valued</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="go">{printsql}SELECT x</span>
+<span class="go">FROM json_array_elements(:json_array_elements_1) AS x</span></pre></div>
+</div>
+<p>这个“列值”的形式也支持Oracle方言，其中它可用于自定义SQL函数：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">oracle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">scalar_strings</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">column_valued</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">oracle</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">{printsql}SELECT s.COLUMN_VALUE</span>
+<span class="go">FROM TABLE (scalar_strings(:scalar_strings_1)) s</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/postgresql.html#postgresql-column-valued"><span class="std std-ref">Column Valued Functions</span></a> - 在 <a class="reference internal" href="../dialects/postgresql.html"><span class="std std-ref">PostgreSQL</span></a> 文档中阅读</p>
+</div>
+</section>
+<section id="tutorial-casts">
+<span id="id129"></span><h2>数据转换和类型转换<a class="headerlink" href="#tutorial-casts" title="Permalink to this heading">¶</a></h2>
+<p>在 SQL 中，我们经常需要为表达式显式指定数据类型，要么是为了告诉数据库预期在其它情况下模棱两可的表达式中的类型是什么，
+要么是为了在某些情况下将 SQL 表达式的隐式数据类型转换为其他类型。
+CAST 是用于此任务的 SQL CAST 关键字，在 SQLAlchemy 中是由 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> 函数提供的。
+这个函数接受一个列表达式和一个数据类型对象作为参数，
+如下图所示，我们从 user_table.c.id 列对象生成了一个 SQL 表达式“CAST(user_account.id AS VARCHAR)”：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">cast</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">String</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">result</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">{execsql}BEGIN (implicit)</span>
+<span class="go">SELECT CAST(user_account.id AS VARCHAR) AS id</span>
+<span class="go">FROM user_account</span>
+<span class="go">[...] ()</span>
+<span class="go">{stop}[(&#39;1&#39;,), (&#39;2&#39;,), (&#39;3&#39;,)]</span>
+<span class="go">{execsql}ROLLBACK{stop}</span></pre></div>
+</div>
+<p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> 函数不仅渲染 SQL CAST 语法，而且还将生成 SQLAlchemy 列表达式，该表达式在 Python 方面也拥有给定的数据类型。例如，将一个被 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> 转换为 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> 的字符串表达式涉及 JSON 子脚本和比较运算符：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">JSON</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">cast</span><span class="p">(</span><span class="s2">&quot;{&#39;a&#39;: &#39;b&#39;}&quot;</span><span class="p">,</span> <span class="n">JSON</span><span class="p">)[</span><span class="s2">&quot;a&quot;</span><span class="p">])</span>
+<span class="go">{printsql}CAST(:param_1 AS JSON)[:param_2]</span></pre></div>
+</div>
+<section id="type-coerce-python">
+<h3>type_coerce() - Python 专用转换<a class="headerlink" href="#type-coerce-python" title="Permalink to this heading">¶</a></h3>
+<p>有时需要告诉 SQLAlchemy 表达式的数据类型，出于上述所有原因，但不应在 SQL 方面呈现 CAST 表达式，
+在 SQL 方面，这可能会干扰已经可以正常工作的 SQL 操作。对于这个很常见的用例，有另一个函数 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code></a>，
+与 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> 密切相关，它会将特定的 SQL 数据库类型设置为 Python 表达式，但不会在数据库方面渲染 <code class="docutils literal notranslate"><span class="pre">CAST</span></code> 关键字或数据类型。
+<a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code></a> 在处理 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a> 数据类型时特别重要，
+因为它在不同平台上通常与面向字符串的数据类型具有复杂的关系甚至可能不是显式数据类型，例如在 SQLite 和 MariaDB 上。</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">JSON</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">type_coerce</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">mysql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">type_coerce</span><span class="p">({</span><span class="s2">&quot;some_key&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;foo&quot;</span><span class="p">:</span> <span class="s2">&quot;bar&quot;</span><span class="p">}},</span> <span class="n">JSON</span><span class="p">)[</span><span class="s2">&quot;some_key&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">JSON_EXTRACT</span><span class="p">(</span><span class="o">%</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span>
+</div></pre></div>
+</div>
+<p>上面的代码中，我们使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code></a> 来指示 Python 字典应该被视为 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.JSON" title="sqlalchemy.types.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>，这是特别重要的。
+Python <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code> 运算符，<code class="docutils literal notranslate"><span class="pre">['some_key']</span></code> 在这种情况下获得了这种功能并允许呈现 “JSON_EXTRACT” 路径表达式。</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="data_insert.html" title="previous chapter">使用 INSERT 语句</a>
+        Next:
+        <a href="data_update.html" title="next chapter">使用UPDATE和DELETE语句</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:19
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

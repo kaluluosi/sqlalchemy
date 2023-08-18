@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    邻接列表关系
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="关系配置" href="relationships.html" />
+        <link rel="next" title="配置 Relationship Joins" href="join_conditions.html" />
+        <link rel="prev" title="关系模式基础知识" href="basic_relationships.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li class="selected"><span class="link-container"><strong>邻接列表关系</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2">复合邻接列表</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#self-referential-query">自引用查询策略</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#self-referential-eager-loading">配置自引用关系的预加载</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="basic_relationships.html" title="previous chapter">关系模式基础知识</a></li>
+                <li><b>Next:</b>
+                <a href="join_conditions.html" title="next chapter">配置 Relationship Joins</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="relationships.html" title="关系配置">关系配置</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#self-referential">邻接列表关系</a><ul>
+<li><a class="reference internal" href="#id2">复合邻接列表</a></li>
+<li><a class="reference internal" href="#self-referential-query">自引用查询策略</a></li>
+<li><a class="reference internal" href="#self-referential-eager-loading">配置自引用关系的预加载</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-self_referential" >
+        
+<section id="self-referential">
+<span id="id1"></span><h1>邻接列表关系<a class="headerlink" href="#self-referential" title="Permalink to this heading">¶</a></h1>
+<p><strong>邻接列表模式**是一种常见的关系模式，其中一个表包含对本身的外键引用，也就是**自引用关系</strong>。这是在平面表中表示分层数据的最常见方式。
+其他方法包括**嵌套集**(有时称为“修改遍历”)，以及**材料化路径**。尽管从在 SQL 查询中的流畅度来衡量修改遍历的吸引力，但邻接列表模型很可能是大多数分层存储需求中最合适的模式，因为它具有并发性、简化性和修改遍历对于能够完全将子树加载到应用程序空间的应用来说没有优势的原因。</p>
+<p>在这个例子中，我们将使用一个单一映射的名为 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 的类来表示树结构:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>对于上述结构，类似以下形式的图：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>root --+---&gt; child1
+       +---&gt; child2 --+--&gt; subchild1
+       |              +--&gt; subchild2
+       +---&gt; child3</pre></div>
+</div>
+<p>可以用以下数据来表示：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>id       parent_id     data
+---      -------       ----
+1        NULL          root
+2        1             child1
+3        1             child2
+4        3             subchild1
+5        3             subchild2
+6        1             child3</pre></div>
+</div>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 在这里的配置方式与 “通常” 的一对多关系相同，唯一的
+例外是默认情况下假定关系是一对多还是多对一 。为了将关系建立为多对一，需要添加一个额外指令 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code>。它是一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象的集合，表示应该视为 “远程” 的内容。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">id</span><span class="p">])</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上述代码将 <code class="docutils literal notranslate"><span class="pre">id</span></code> 指定为 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 的 <code class="docutils literal notranslate"><span class="pre">remote_side</span></code>，从而将 <code class="docutils literal notranslate"><span class="pre">parent_id</span></code> 视为“本地”方向，然后关系的行为就会变为多对一。</p>
+<p>同样，两个方向可以结合为双向关系，使用由 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 关联的两个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造来链接:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">id</span><span class="p">])</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<section id="id2">
+<h2>复合邻接列表<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p>邻接列表关系的一个子类别是某些情况下为本地和远程连接条件都存在的表添加特定的列的情况。
+下面是 <code class="docutils literal notranslate"><span class="pre">Folder</span></code> 类的一个示例，使用复合主键，<code class="docutils literal notranslate"><span class="pre">account_id</span></code> 列引用它自身，以表示与父级在同一帐户中的子文件夹, <a href="#id3"><span class="problematic" id="id4">``</span></a>folder_id``则表示该帐户中特定的文件夹:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Folder</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;folder&quot;</span>
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">ForeignKeyConstraint</span><span class="p">(</span>
+            <span class="p">[</span><span class="s2">&quot;account_id&quot;</span><span class="p">,</span> <span class="s2">&quot;parent_id&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;folder.account_id&quot;</span><span class="p">,</span> <span class="s2">&quot;folder.folder_id&quot;</span><span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">account_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">folder_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+    <span class="n">parent_folder</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Folder&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;child_folders&quot;</span><span class="p">,</span> <span class="n">remote_side</span><span class="o">=</span><span class="p">[</span><span class="n">account_id</span><span class="p">,</span> <span class="n">folder_id</span><span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="n">child_folders</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Folder&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent_folder&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上面，将 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 传递到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.remote_side</span></code> 列表中。 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 识别到，在两侧都存在 <code class="docutils literal notranslate"><span class="pre">account_id</span></code> 时
+，将“远程”列与 <code class="docutils literal notranslate"><span class="pre">folder_id</span></code> 列对齐，后者被认为是仅出现在“远程”方向上的列。</p>
+</section>
+<section id="self-referential-query">
+<span id="id5"></span><h2>自引用查询策略<a class="headerlink" href="#self-referential-query" title="Permalink to this heading">¶</a></h2>
+<p>查询自引用结构的工作方式与任何其他查询相同:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 获取名为 &#39;child2&#39; 的所有节点</span>
+<span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;child2&quot;</span><span class="p">))</span></pre></div>
+</div>
+<p>但是，在尝试从一级树到上一级树模式上连接的时候需要格外小心。在SQL中，从表连接自身至少会要求将表达式的某一侧”别名”，以便可以无歧义地引用它。</p>
+<p>还记得教程中在 ORM 中使用 <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 的代码吗？我们通常使用它来提供ORM实体的“别名”。使用此技术从 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 连接到自身将如下所示：</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">aliased</span>
+
+<span class="n">nodealias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">Node</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;subchild1&quot;</span><span class="p">)</span>
+    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Node</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">nodealias</span><span class="p">))</span>
+    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nodealias</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;child2&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="n">parent_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_parent_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_data</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_1</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">parent_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_1</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">node_1</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[</span><span class="s1">&#39;subchild1&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;child2&#39;</span><span class="p">]</span>
+</div></pre></div>
+</div>
+</section>
+<section id="self-referential-eager-loading">
+<span id="id6"></span><h2>配置自引用关系的预加载<a class="headerlink" href="#self-referential-eager-loading" title="Permalink to this heading">¶</a></h2>
+<p>使用连接或外连接从父表到子表进行关系的即时加载，使得可以从单个 SQL 语句或者所有即时子集的第二个语句来填充父级和其子级引用 or 集合。SQLAlchemy 的并入和子查询即时加载在连接到关联项时，在所有情况下都使用别名表，因此与自引用关联性的连接可以兼容。但是，为了使用自引用关系的即时加载，SQLAlchemy 需要告诉它需要连接和/或查询多深的层级；否则，即时加载将根本不会发生。该深度设置通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationships.join_depth</span></code> 进行配置。</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;node&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;node.id&quot;</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Node&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s2">&quot;joined&quot;</span><span class="p">,</span> <span class="n">join_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Node</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">node_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_1_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node_1</span><span class="p">.</span><span class="n">parent_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_1_parent_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node_1</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_1_data</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node_2</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_2_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node_2</span><span class="p">.</span><span class="n">parent_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_2_parent_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node_2</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_2_data</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="n">parent_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_parent_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">node</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_data</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">node</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_2</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">node</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_2</span><span class="p">.</span><span class="n">parent_id</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">node_1</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">node_2</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">node_1</span><span class="p">.</span><span class="n">parent_id</span>
+<span class="p">[]</span>
+</div></pre><div class="code-non-annotations-key"></div></div>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="basic_relationships.html" title="previous chapter">关系模式基础知识</a>
+        Next:
+        <a href="join_conditions.html" title="next chapter">配置 Relationship Joins</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:18
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

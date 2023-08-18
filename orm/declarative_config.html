@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    使用 Declarative 进行映射器配置
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="使用Declarative映射类" href="declarative_mapping.html" />
+        <link rel="next" title="使用 Mixins 构成映射层次" href="declarative_mixins.html" />
+        <link rel="prev" title="使用 Declarative 进行表配置" href="declarative_tables.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="declarative_styles.html">声明式映射风格</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_tables.html">使用 Declarative 进行表配置</a></span></li>
+<li class="selected"><span class="link-container"><strong>使用 Declarative 进行映射器配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#orm-declarative-properties">使用 Declarative 定义映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#declarative-mapper">使用 Declarative 进行 Mapper 配置选项</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2">动态构造映射器参数</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id3">其他 Declarative 映射指令</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#abstract"><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#table-cls"><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code></a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="declarative_mixins.html">使用 Mixins 构成映射层次</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="declarative_tables.html" title="previous chapter">使用 Declarative 进行表配置</a></li>
+                <li><b>Next:</b>
+                <a href="declarative_mixins.html" title="next chapter">使用 Mixins 构成映射层次</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="mapper_config.html" title="ORM映射类配置">ORM映射类配置</a></li>
+                    <ul><li><a href="declarative_mapping.html" title="使用Declarative映射类">使用Declarative映射类</a></li>
+                </ul>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#declarative">使用 Declarative 进行映射器配置</a><ul>
+<li><a class="reference internal" href="#orm-declarative-properties">使用 Declarative 定义映射属性</a></li>
+<li><a class="reference internal" href="#declarative-mapper">使用 Declarative 进行 Mapper 配置选项</a><ul>
+<li><a class="reference internal" href="#id2">动态构造映射器参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">其他 Declarative 映射指令</a><ul>
+<li><a class="reference internal" href="#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></li>
+<li><a class="reference internal" href="#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></li>
+<li><a class="reference internal" href="#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></li>
+<li><a class="reference internal" href="#abstract"><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code></a></li>
+<li><a class="reference internal" href="#table-cls"><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-declarative_config" >
+        
+<section id="declarative">
+<span id="orm-declarative-mapper-config-toplevel"></span><h1>使用 Declarative 进行映射器配置<a class="headerlink" href="#declarative" title="Permalink to this heading">¶</a></h1>
+<p>在 <a class="reference internal" href="mapping_styles.html#orm-mapper-configuration-overview"><span class="std std-ref">映射类的必要组件</span></a> 章节中讲述了 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 的一般配置元素，该结构定义了特定用户定义类如何映射到数据库表或其他 SQL 结构。以下章节描述了 Declarative 系统如何构建 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 的具体细节。</p>
+<section id="orm-declarative-properties">
+<span id="id1"></span><h2>使用 Declarative 定义映射属性<a class="headerlink" href="#orm-declarative-properties" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference internal" href="declarative_tables.html"><span class="std std-ref">使用 Declarative 进行表配置</span></a> 章节中给出的示例演示了针对基于表的列使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 构造进行映射。除了基于表的列之外，还可以配置多种其他类型的 ORM 映射结构，其中最常见的是 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造。其他类型的属性包括使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code> 构造定义的 SQL 表达式和使用 <a class="reference internal" href="composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> 构造的多列映射。</p>
+<p>使用命令式映射时，使用 <a class="reference internal" href="mapping_styles.html#orm-mapping-properties"><span class="std std-ref">properties</span></a> 字典来建立所有映射类属性，在声明式映射中，这些属性都在与类定义内联的位置指定，就像在声明式表映射中与将用于生成 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象的对象类一样。</p>
+<p>在使用 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 的示例映射中，我们可以演示一个声明式表映射，其中不仅包括 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 对象，还包括关系和 SQL 表达式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Text</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">column_property</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+    <span class="n">firstname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">lastname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">))</span>
+    <span class="n">fullname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">column_property</span><span class="p">(</span><span class="n">firstname</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="n">lastname</span><span class="p">)</span>
+
+    <span class="n">addresses</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Address&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span>
+    <span class="n">email_address</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+    <span class="n">address_statistics</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Text</span><span class="p">,</span> <span class="n">deferred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>上述声明式表映射包含两个表，每个表都有一个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 引用另一个表，并且由 <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code> 映射的一个简单的 SQL 表达式以及一个额外的 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>，它表示加载应以由 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred</span></code> 关键字定义的“延迟”方式。有关这些特定概念的详细信息可以在 <a class="reference internal" href="basic_relationships.html#relationship-patterns"><span class="std std-ref">关系模式基础知识</span></a>、<span class="xref std std-ref">mapper_column_property_sql_expressions</span> 和 <span class="xref std std-ref">orm_queryguide_column_deferral</span> 中找到。</p>
+<p>可以使用混合表风格来指定使用声明性映射的上述属性；直接与表相关的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象移到 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 定义中，但所有其他内容，包括组成的 SQL 表达式，仍然内联于类定义中。需要引用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 的构造函数需要使用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象来引用它。使用混合表风格来说明上述映射：</p>
+<blockquote>
+<div><p># mapping attributes using declarative with imperative table
+# i.e. __table__</p>
+<p>from sqlalchemy import Column, ForeignKey, Integer, String, Table, Text
+from sqlalchemy.orm import column_property
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import deferred
+from sqlalchemy.orm import relationship</p>
+<dl>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class User(Base):</dt><dd><dl class="simple">
+<dt>__table__ = Table(</dt><dd><p>“user”,
+Base.metadata,
+Column(“id”, Integer, primary_key=True),
+Column(“name”, String),
+Column(“firstname”, String(50)),
+Column(“lastname”, String(50)),</p>
+</dd>
+</dl>
+<p>)</p>
+<p>fullname = column_property(__table__.c.firstname + “ “ + __table__.c.lastname)</p>
+<p>addresses = relationship(“Address”, back_populates=”user”)</p>
+</dd>
+<dt>class Address(Base):</dt><dd><dl class="simple">
+<dt>__table__ = Table(</dt><dd><p>“address”,
+Base.metadata,
+Column(“id”, Integer, primary_key=True),
+Column(“user_id”, ForeignKey(“user.id”)),
+Column(“email_address”, String),
+Column(“address_statistics”, Text),</p>
+</dd>
+</dl>
+<p>)</p>
+<p>address_statistics = deferred(__table__.c.address_statistics)</p>
+<p>user = relationship(“User”, back_populates=”addresses”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>请注意以下几点：</p>
+<ul class="simple">
+<li><p>address <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 中包含一个名为 <code class="docutils literal notranslate"><span class="pre">address_statistics</span></code> 的列，但我们将该列重新映射到属性名相同的属性，以便受 <a class="reference internal" href="queryguide/columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a> 构造的控制。</p></li>
+<li><p>当我们使用 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 构造时，始终使用 <strong>表名称</strong> 而不是映射类名称来命名目标表。</p></li>
+<li><p>当我们定义 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造时，由于这些构造在一个映射类之间创建链接，其中一个必然在另一个之前定义，所以我们可以使用字符串名称来引用远程类。对 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上指定的其他参数（如“primary join”和“order by”参数）的功能也可以扩展到此功能。有关详细信息，请参见 <a class="reference internal" href="basic_relationships.html#orm-declarative-relationship-eval"><span class="std std-ref">关系参数的延迟评估</span></a> 节。</p></li>
+</ul>
+</section>
+<section id="declarative-mapper">
+<span id="orm-declarative-mapper-options"></span><h2>使用 Declarative 进行 Mapper 配置选项<a class="headerlink" href="#declarative-mapper" title="Permalink to this heading">¶</a></h2>
+<p>在所有映射形式中，类的映射是通过成为 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象的一部分的参数来配置的。最终接收这些参数的函数是 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 函数，并且是从 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 对象上定义的其中一个前置映射函数将其传递给该函数。</p>
+<p>对于映射形式，使用 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 声明类变量来指定映射器参数，它是一个将作为关键字参数传递给 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 函数的字典。下面是一些示例：</p>
+<p><strong>映射特定的主键列</strong></p>
+<p>下面的示例演示了针对 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.primary_key</span></code> 参数的 Declarative 级别设置，这些参数定义了特定列作为 ORM 应该视为主键，而独立于架构级别的主键约束：</p>
+<blockquote>
+<div><dl>
+<dt>class GroupUsers(Base):</dt><dd><p>__tablename__ = “group_users”</p>
+<p>user_id = mapped_column(String(40))
+group_id = mapped_column(String(40))</p>
+<p>__mapper_args__ = {“primary_key”: [user_id, group_id]}</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="declarative_tables.html#mapper-primary-key"><span class="std std-ref">映射到一组明确的主键列</span></a> - 关于显式列映射为主键列的 ORM 映射的更多背景信息</p>
+</div>
+<p><strong>Version ID 列</strong></p>
+<p>下面的示例演示了关于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.version_id_col</span></code> 和
+<code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.version_id_generator</span></code> 参数的 Declarative 级别设置，它们配置了一个在 <span class="xref std std-term">unit of work</span> 刷新过程中更新并检查的 ORM 维护的版本计数器：</p>
+<blockquote>
+<div><p>from datetime import datetime</p>
+<dl>
+<dt>class Widget(Base):</dt><dd><p>__tablename__ = “widgets”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+timestamp = mapped_column(DateTime, nullable=False)</p>
+<dl class="simple">
+<dt>__mapper_args__ = {</dt><dd><p>“version_id_col”: timestamp,
+“version_id_generator”: lambda v: datetime.now(),</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">mapper_version_counter</span> - 关于 ORM 版本计数器功能的说明</p>
+</div>
+<p><strong>单表继承</strong></p>
+<p>下面的示例演示了关于 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_on</span></code> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code> 参数的 Declarative 级别设置，它们用于配置单表继承映射：</p>
+<blockquote>
+<div><dl>
+<dt>class Person(Base):</dt><dd><p>__tablename__ = “person”</p>
+<p>person_id = mapped_column(Integer, primary_key=True)
+type = mapped_column(String, nullable=False)</p>
+<dl class="simple">
+<dt>__mapper_args__ = dict(</dt><dd><p>polymorphic_on=type,
+polymorphic_identity=”person”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+<dt>class Employee(Person):</dt><dd><dl class="simple">
+<dt>__mapper_args__ = dict(</dt><dd><p>polymorphic_identity=”employee”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">single_inheritance</span> - 有关 ORM 单表继承映射功能的背景</p>
+</div>
+<section id="id2">
+<h3>动态构造映射器参数<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>可以使用类绑定的描述符方法来从可调用对象或类中生成 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 字典，而不是从固定字典中生成。这对于从表配置或映射类的其他方面编程派生映射器参数非常有用。动态 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 属性通常在使用 Declarative Mixin 或抽象基类时是有用的。</p>
+<p>例如，为了从映射表中排除具有特殊 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.info" title="sqlalchemy.schema.Column.info"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.info</span></code></a> 值的任何列，Mixin 可以使用一个 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 方法，该方法扫描 <code class="docutils literal notranslate"><span class="pre">cls.__table__</span></code> 属性中的这些列并将它们添加到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.exclude_properties</span></code> 集合中：</p>
+<blockquote>
+<div><p>from sqlalchemy import Column
+from sqlalchemy import Integer
+from sqlalchemy import select
+from sqlalchemy import String
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import declared_attr</p>
+<dl>
+<dt>class ExcludeColsWFlag:</dt><dd><p>&#64;declared_attr
+def __mapper_args__(cls):</p>
+<blockquote>
+<div><dl>
+<dt>return {</dt><dd><dl class="simple">
+<dt>“exclude_properties”: [</dt><dd><p>column.key
+for column in cls.__table__.c
+if column.info.get(“exclude”, False)</p>
+</dd>
+</dl>
+<p>]</p>
+</dd>
+</dl>
+<p>}</p>
+</div></blockquote>
+</dd>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class SomeClass(ExcludeColsWFlag, Base):</dt><dd><p>__tablename__ = “some_table”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+data = mapped_column(String)
+not_needed = mapped_column(String, info={“exclude”: True})</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述 <code class="docutils literal notranslate"><span class="pre">ExcludeColsWFlag</span></code> Mixin 提供了一个每类的 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 钩子，该钩子将扫描包括 <code class="docutils literal notranslate"><span class="pre">'exclude':</span> <span class="pre">True</span></code> 在内的参数传递给 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.info" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.info</span></code></a> 的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象，然后将它们的字符串“键”名称添加到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.exclude_properties</span></code> 集合中，这将防止产生的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 考虑这些列进行任何 SQL 操作。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">orm_mixins_toplevel</span></p>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2>其他 Declarative 映射指令<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<section id="declare-last">
+<h3><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code><a class="headerlink" href="#declare-last" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code> 钩子允许定义一个类级函数，它将在 <a class="reference internal" href="events.html#sqlalchemy.orm.MapperEvents.after_configured" title="sqlalchemy.orm.MapperEvents.after_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_configured()</span></code></a> 事件自动调用，该事件在映射被视为完成并且“配置”步骤已完成后发生：</p>
+<blockquote>
+<div><dl>
+<dt>class MyClass(Base):</dt><dd><p>&#64;classmethod
+def __declare_last__(cls):</p>
+<blockquote>
+<div><p>“”” “””
+# do something with mappings</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="declare-first">
+<h3><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code><a class="headerlink" href="#declare-first" title="Permalink to this heading">¶</a></h3>
+<p>像 <code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code> 一样，但通过 <a class="reference internal" href="events.html#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a> 事件在映射配置开始时调用：</p>
+<blockquote>
+<div><dl>
+<dt>class MyClass(Base):</dt><dd><p>&#64;classmethod
+def __declare_first__(cls):</p>
+<blockquote>
+<div><p>“”” “””
+# do something before mappings are configured</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+<section id="metadata">
+<span id="declarative-metadata"></span><h3><code class="docutils literal notranslate"><span class="pre">metadata</span></code><a class="headerlink" href="#metadata" title="Permalink to this heading">¶</a></h3>
+<p>通常用于分配新 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合是 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 对象附带的 <code class="xref py py-attr docutils literal notranslate"><span class="pre">registry.metadata</span></code> 属性。当使用 Declarative 基类（例如，由 <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code> 超类产生的），以及 <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code> 和 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.generate_base()</span></code> 等遗留函数时，该 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 通常作为名为 <code class="docutils literal notranslate"><span class="pre">.metadata</span></code> 的属性直接存在于基类上，因此也存在于映射类通过继承。 Declarative 使用此属性（如果存在）来确定要使用的目标 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合，如果不存在，则使用与 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 直接相关联的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>。</p>
+<p>此属性也可以分配给每个映射层次结构以基类和/或 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 为基础，以影响要针对单个基类和/或 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 使用的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合。这将生效，无论使用的是否是声明性基类或直接使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code> 装饰器，从而允许模式（例如每个抽象基类的元数据）在多个数据库中生成表。下面的示例说明了使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code> 语句来说明此映射：</p>
+<blockquote>
+<div><p>reg = registry()</p>
+<dl class="simple">
+<dt>class BaseOne:</dt><dd><p>metadata = MetaData()</p>
+</dd>
+<dt>class BaseTwo:</dt><dd><p>metadata = MetaData()</p>
+</dd>
+</dl>
+<p>&#64;reg.mapped
+class ClassOne:</p>
+<blockquote>
+<div><p>__tablename__ = “t1”  # will use reg.metadata</p>
+<p>id = mapped_column(Integer, primary_key=True)</p>
+</div></blockquote>
+<p>&#64;reg.mapped
+class ClassTwo(BaseOne):</p>
+<blockquote>
+<div><p>__tablename__ = “t1”  # will use BaseOne.metadata</p>
+<p>id = mapped_column(Integer, primary_key=True)</p>
+</div></blockquote>
+<p>&#64;reg.mapped
+class ClassThree(BaseTwo):</p>
+<blockquote>
+<div><p>__tablename__ = “t1”  # will use BaseTwo.metadata</p>
+<p>id = mapped_column(Integer, primary_key=True)</p>
+</div></blockquote>
+</div></blockquote>
+<p>上述示例中，从 <code class="docutils literal notranslate"><span class="pre">DefaultBase</span></code> 继承的类将使用一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 作为表的注册表，从 <code class="docutils literal notranslate"><span class="pre">OtherBase</span></code> 继承的类将使用不同的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>。然后表本身可以在不同的数据库中生成，例如：</p>
+<blockquote>
+<div><p>DefaultBase.metadata.create_all(some_engine)
+OtherBase.metadata.create_all(some_other_engine)</p>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#declarative-abstract"><span class="std std-ref">__abstract__</span></a></p>
+</div>
+</section>
+<section id="abstract">
+<span id="declarative-abstract"></span><h3><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code><a class="headerlink" href="#abstract" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code> 使 Declarative 完全跳过为此类生成表或映射器的过程。类可以像 Mixin 一样添加到层次结构中，允许子类仅从特殊的类继承：</p>
+<blockquote>
+<div><dl>
+<dt>class SomeAbstractBase(Base):</dt><dd><p>__abstract__ = True</p>
+<dl class="simple">
+<dt>def some_helpful_method(self):</dt><dd><p>“”” “””</p>
+</dd>
+</dl>
+<p>&#64;declared_attr
+def __mapper_args__(cls):</p>
+<blockquote>
+<div><p>return {“helpful mapper arguments”: True}</p>
+</div></blockquote>
+</dd>
+<dt>class MyMappedClass(SomeAbstractBase):</dt><dd><p>pass</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code> 的一个可能用途是使用不同的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 为不同基类生成表:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">DefaultBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">OtherBase</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__abstract__</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上述类继承自 <code class="docutils literal notranslate"><span class="pre">DefaultBase</span></code> 的类将使用一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 作为表的注册表，而继承自 <code class="docutils literal notranslate"><span class="pre">OtherBase</span></code> 的类将使用不同的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>。然后表本身可以在不同的数据库中生成。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">orm_inheritance_abstract_poly</span> - 适用于继承层次结构的“抽象”映射类的另一种形式。</p>
+</div>
+</section>
+<section id="table-cls">
+<span id="declarative-table-cls"></span><h3><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code><a class="headerlink" href="#table-cls" title="Permalink to this heading">¶</a></h3>
+<p>允许自定义用于生成 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 的可调用/类。这是一个非常开放的钩子，可以允许特殊自定义到一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 中，该表在此处生成：</p>
+<blockquote>
+<div><dl>
+<dt>class MyMixin:</dt><dd><p>&#64;classmethod
+def __table_cls__(cls, name, metadata_obj, <a href="#id4"><span class="problematic" id="id5">*</span></a>arg, <a href="#id6"><span class="problematic" id="id7">**</span></a>kw):</p>
+<blockquote>
+<div><p>return Table(f”my_{name}”, metadata_obj, <a href="#id8"><span class="problematic" id="id9">*</span></a>arg, <a href="#id10"><span class="problematic" id="id11">**</span></a>kw)</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<p>以上 Mixin 将导致生成所有 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象时包含前缀 <code class="docutils literal notranslate"><span class="pre">&quot;my_&quot;</span></code>，后跟通常使用 <code class="docutils literal notranslate"><span class="pre">__tablename__</span></code> 属性指定的名称。</p>
+<p><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code> 还支持返回 <code class="docutils literal notranslate"><span class="pre">None</span></code> 的情况，这将导致将此类视为单表继承的子类。这在某些自定义方案中可能会有用，以便基于表本身的参数（例如，没有主键时定义为单继承）确定单表继承是否应该发生：</p>
+<blockquote>
+<div><dl>
+<dt>class AutoTable:</dt><dd><p>&#64;declared_attr
+def __tablename__(cls):</p>
+<blockquote>
+<div><p>return cls.__name__</p>
+</div></blockquote>
+<p>&#64;classmethod
+def __table_cls__(cls, <a href="#id12"><span class="problematic" id="id13">*</span></a>arg, <a href="#id14"><span class="problematic" id="id15">**</span></a>kw):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>for obj in arg[1:]:</dt><dd><dl class="simple">
+<dt>if (isinstance(obj, Column) and obj.primary_key) or isinstance(</dt><dd><p>obj, PrimaryKeyConstraint</p>
+</dd>
+<dt>):</dt><dd><p>return Table(<a href="#id16"><span class="problematic" id="id17">*</span></a>arg, <a href="#id18"><span class="problematic" id="id19">**</span></a>kw)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>return None</p>
+</div></blockquote>
+</dd>
+<dt>class Person(AutoTable, Base):</dt><dd><p>id = mapped_column(Integer, primary_key=True)</p>
+</dd>
+<dt>class Employee(Person):</dt><dd><p>employee_name = mapped_column(String)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 类将映射为单表继承，针对 <code class="docutils literal notranslate"><span class="pre">Person</span></code>； <code class="docutils literal notranslate"><span class="pre">employee_name</span></code> 列将添加为 <code class="docutils literal notranslate"><span class="pre">Person</span></code> 表的成员。</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="declarative_tables.html" title="previous chapter">使用 Declarative 进行表配置</a>
+        Next:
+        <a href="declarative_mixins.html" title="next chapter">使用 Mixins 构成映射层次</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:10
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

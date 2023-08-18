@@ -1,0 +1,553 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQL表达式
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="常见问题解答" href="index.html" />
+        <link rel="next" title="ORM配置" href="ormconfiguration.html" />
+        <link rel="prev" title="元数据 / 模式" href="metadata_schema.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="常见问题解答">常见问题解答</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="installation.html">安装</a></span></li>
+<li><span class="link-container"><a class="reference external" href="connections.html">连接/引擎</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据 / 模式</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQL表达式</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有联接的参数？</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id12">渲染联接参数</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#faq-sql-expression-percent-signs">生成SQL语句字符串时百分号为什么会被双倍加上？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#op">我使用op（）生成自定义运算符，但我的圆括号没有正确输出</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id24">为什么会这样圆括号规则呢？</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="ormconfiguration.html">ORM配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html">为什么升级到 1.4 和/或 2.x 后我的应用变得很慢？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html#sqlalchemy">如何对由 SQLAlchemy 驱动的应用进行性能分析？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="performance.html#orm-400-000">我正在使用 ORM 插入 400,000 行，这很慢！</a></span></li>
+<li><span class="link-container"><a class="reference external" href="sessions.html">Sessions / Queries</a></span></li>
+<li><span class="link-container"><a class="reference external" href="thirdparty.html">第三方集成问题</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="metadata_schema.html" title="previous chapter">元数据 / 模式</a></li>
+                <li><b>Next:</b>
+                <a href="ormconfiguration.html" title="next chapter">ORM配置</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="常见问题解答">常见问题解答</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sql">SQL表达式</a><ul>
+<li><a class="reference internal" href="#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有联接的参数？</a><ul>
+<li><a class="reference internal" href="#id12">渲染联接参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#faq-sql-expression-percent-signs">生成SQL语句字符串时百分号为什么会被双倍加上？</a></li>
+<li><a class="reference internal" href="#op">我使用op（）生成自定义运算符，但我的圆括号没有正确输出</a><ul>
+<li><a class="reference internal" href="#id24">为什么会这样圆括号规则呢？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar faq-sqlexpressions" >
+        
+<section id="sql">
+<h1>SQL表达式<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h1>
+<nav class="contents faq local" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#faq-sql-expression-string" id="id27">如何将SQL表达式呈现为字符串，可能带有联接的参数？</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id12" id="id28">渲染联接参数</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#faq-sql-expression-percent-signs" id="id29">生成SQL语句字符串时百分号为什么会被双倍加上？</a></p></li>
+<li><p><a class="reference internal" href="#op" id="id30">我使用op（）生成自定义运算符，但我的圆括号没有正确输出</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id24" id="id31">为什么会这样圆括号规则呢？</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<section id="faq-sql-expression-string">
+<span id="id1"></span><h2>如何将SQL表达式呈现为字符串，可能带有联接的参数？<a class="headerlink" href="#faq-sql-expression-string" title="Permalink to this heading">¶</a></h2>
+<p>大多数情况下，将SQLAlchemy Core语句对象或表达式片段以及ORM :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_query.Query`对象“字符串化”，可以简单地使用“str（）”内置函数，如下所示：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;my_table&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">statement</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="n">x</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span>
+</div></pre></div>
+</div>
+<p>可以对ORM <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象以及任何语句（例如:func:<cite>_expression.select</cite>, :func:<a href="#id4"><span class="problematic" id="id5">`</span></a>_expression.insert`等）进行调用。常用的表达式片段如下：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;some value&quot;</span><span class="p">)</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">x_1</span>
+</div></pre></div>
+</div>
+<p>具有特定数据库字符串格式的功能或一些特定数据库中才能使用的元素时，stringify这些状态或片段变得复杂。这种情况下，我们可能会得到不正确的语法甚至是:class:<cite>.UnsupportedCompilationError`异常。解决方法是使用:meth:`_expression.ClauseElement.compile`方法的方法，同时传递一个代表目标数据库的：class:`_engine.Engine`或:class:</cite>.Dialect`对象。例如下面的例子，如果我们使用MySQL数据库，请将语句字符串化：</p>
+<blockquote>
+<div><p>from sqlalchemy import create_engine</p>
+<p>engine = create_engine(“mysql+pymysql://scott:tiger&#64;localhost/test”)
+print(statement.compile(engine))</p>
+</div></blockquote>
+<p>更直接的方法是，不用构建: class:<cite>_engine.Engine`对象，直接实例化:class:</cite>.Dialect`对象，例如我们使用PostgreSQL分支：</p>
+<blockquote>
+<div><p>from sqlalchemy.dialects import postgresql</p>
+<p>print(statement.compile(dialect=postgresql.dialect()))</p>
+</div></blockquote>
+<p>请注意，任何dialect都可以使用 :func:<a href="#id6"><span class="problematic" id="id7">`</span></a>_sa.create_engine`本身来组装，使用虚拟URL，然后访问: attr:<a href="#id8"><span class="problematic" id="id9">`</span></a>_engine.Engine.dialect`属性，例如，假设我们想要一个psycopg2的dialect对象：</p>
+<blockquote>
+<div><p>e = create_engine(“postgresql+psycopg2://”)
+psycopg2_dialect = e.dialect</p>
+</div></blockquote>
+<p>对于给定的ORM <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象，要获得
+<a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>
+方法，我们只需要首先访问:attr:<a href="#id10"><span class="problematic" id="id11">`</span></a>~.orm.query.Query.statement`访问器即可：</p>
+<blockquote>
+<div><p>statement = query.statement
+print(statement.compile(someengine))</p>
+</div></blockquote>
+<section id="id12">
+<h3>渲染联接参数<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>永远不要**使用这些技术与来自于不受信任输入的字符串内容，比如来自于网络表单或其他用户输入的应用程序。在计算非DDL SQL语句时，SQLAlchemy的将Python值转换为直接SQL字符串值的功能是**不安全的，不经过任何类型的数据验证</strong>。 对于针对关系数据库的非DDL SQL语句编程调用时，始终使用绑定参数。</p>
+</div>
+<p>上面的方法将呈现SQL语句作为传递给Python：term：<cite>DBAPI</cite>，这包括联接的参数不会呈现为联接。SQLAlchemy通常不会执行字符串联接参数操作，因为这是通过Python DBAPI适当处理的，更不用说绕过绑定参数可能是现代网络应用程序中最广泛利用的安全漏洞。SQLAlchemy的一部分功能可以在某些情况下执行此类字符串串联操作，例如DDL的发射。为了访问此功能，我们可以使用“literal_binds”标志传递给“compile_kwargs”:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">select</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># **对不受信任的输入请勿使用!!!**</span>
+<span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;literal_binds&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}))</span>
+
+<span class="c1"># 渲染具体分支</span>
+<span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">dialect</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;literal_binds&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}))</span>
+
+<span class="c1"># 或者，如果有引擎，请作为第一个参数传递</span>
+<span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">some_engine</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;literal_binds&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}))</span></pre></div>
+</div>
+<p>此功能主要用于记录或调试目的，其中查询的原始 SQL 字符串可能被证明是有用的。</p>
+<p>以上方法的注意事项是它仅支持基本类型，例如整数和字符串，而且另外，如果直接使用一个无预设值的:func:<cite>.bindparam</cite>，它也无法对这个类型的链接字符串操作。无条件地对所有参数字符串操作的方法在下面给出。</p>
+<p>因为SQLAlchemy故意不支持所有字面值的完全字符串操作，因此在特定的调试情况下进行字符串操作的技术包括以下内容。作为示例，我们将使用PostgreSQL <code class="xref py py-class docutils literal notranslate"><span class="pre">UUID</span></code> 数据类型:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.dialects.postgresql</span> <span class="kn">import</span> <span class="n">UUID</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
+
+
+<span class="n">Base</span> <span class="o">=</span> <span class="n">declarative_base</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">UUID</span><span class="p">)</span>
+
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>针对用于将列与单个UUID值进行比较的列和语句，呈现包括联接的选项包括：</p>
+<ul>
+<li><p>一些DBAPI，例如psycopg2支持辅助函数，如`mogrify（）&lt;<a class="reference external" href="https://www.psycopg.org/docs/cursor.html#cursor.mogrify">https://www.psycopg.org/docs/cursor.html#cursor.mogrify</a>&gt;`_，提供对它们的字面量呈现功能的访问。要使用这些功能，请在不使用``literal_binds``的情况下呈现SQL字符串，并通过 :attr:<a href="#id13"><span class="problematic" id="id14">`</span></a>.SQLCompiler.params`访问参数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/test&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">e</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+    <span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="n">print</span><span class="p">(</span><span class="n">cursor</span><span class="o">.</span><span class="n">mogrify</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">compiled</span><span class="p">),</span> <span class="n">compiled</span><span class="o">.</span><span class="n">params</span><span class="p">))</span></pre></div>
+</div>
+<p>上述代码将生成psycopg2的原始字节串：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="ss">&quot;SELECT a.id, a.data \nFROM a \nWHERE a.data = &#39;a511b0fc-76da-4c47-a4b4-716a8189b7ac&#39;::uuid&quot;</span></pre></div>
+</div>
+</li>
+<li><p>直接将 <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.params" title="sqlalchemy.sql.compiler.SQLCompiler.params"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.params</span></code></a> 渲染到语句中，使用
+目标DBAPI的适当位置的  <a class="reference external" href="https://www.python.org/dev/peps/pep-0249/#paramstyle">paramstyle</a>。
+例如，psycopg2 DBAPI使用命名``pyformat``样式。 <code class="docutils literal notranslate"><span class="pre">render_postcompile</span></code>
+的意义在下一节将被讨论。<strong>警告这是不安全的，不要使用不可信的输入</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://&quot;</span><span class="p">)</span>
+
+<span class="c1"># 将使用pyformat样式，例如param%(name)s 用于param</span>
+<span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;render_postcompile&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="n">print</span><span class="p">(</span><span class="n">str</span><span class="p">(</span><span class="n">compiled</span><span class="p">)</span> <span class="o">%</span> <span class="n">compiled</span><span class="o">.</span><span class="n">params</span><span class="p">)</span></pre></div>
+</div>
+<p>这将产生一个工作不良的字符串，尽管它适用于调试：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="n">eec1209</span><span class="o">-</span><span class="mi">50</span><span class="n">b4</span><span class="o">-</span><span class="mi">4253</span><span class="o">-</span><span class="n">b74b</span><span class="o">-</span><span class="n">f82461ed80c1</span></pre></div>
+</div>
+<p>另一个例子使用位置的样式,诸如``qmark``，我们还可以使用
+<a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.positiontup" title="sqlalchemy.sql.compiler.SQLCompiler.positiontup"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.positiontup</span></code></a> 集合，同时与 :attr:<a href="#id15"><span class="problematic" id="id16">`</span></a>.SQLCompiler.params`一起使用，以便编译的语句中能够以其位置为顺序检索参数。:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite+pysqlite://&quot;</span><span class="p">)</span>
+
+<span class="c1"># 会使用qmark样式，也就是? for param</span>
+<span class="n">compiled</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;render_postcompile&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+
+<span class="c1"># 按位置的顺序传递参数</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">(</span><span class="n">repr</span><span class="p">(</span><span class="n">compiled</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">name</span><span class="p">])</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">compiled</span><span class="o">.</span><span class="n">positiontup</span><span class="p">)</span>
+
+<span class="c1"># 将经过处理的参数代入查询字符串中</span>
+<span class="n">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\?&quot;</span><span class="p">,</span>
+             <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">next</span><span class="p">(</span><span class="n">params</span><span class="p">),</span>
+             <span class="n">str</span><span class="p">(</span><span class="n">compiled</span><span class="p">)))</span></pre></div>
+</div>
+<p>上部分脚本产生：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;1bd70375-db17-4d8c-94f1-fc2ef3aada26&#39;</span><span class="p">)</span></pre></div>
+</div>
+</li>
+<li><p>使用 <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span> 扩展，以自定义方式呈现
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BindParameter`对象,当用户定义的标志存在时。该标志通过与其他标志一样通过</span> <span class="pre">``compile_kwargs`</span></code> 字典发送:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">sqlalchemy.ext.compiler</span> <span class="kn">import</span> <span class="n">compiles</span>
+  <span class="kn">from</span> <span class="nn">sqlalchemy.sql.expression</span> <span class="kn">import</span> <span class="n">BindParameter</span>
+
+  <span class="nd">@compiles</span><span class="p">(</span><span class="n">BindParameter</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">_render_literal_bindparam</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">compiler</span><span class="p">,</span> <span class="n">use_my_literal_recipe</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+      <span class="k">if</span> <span class="ow">not</span> <span class="n">use_my_literal_recipe</span><span class="p">:</span>
+          <span class="c1"># 使用bindparam处理</span>
+          <span class="k">return</span> <span class="n">compiler</span><span class="o">.</span><span class="n">visit_bindparam</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+      <span class="c1"># 如果在compiler_kwargs中传递了use_my_literal_recipe，</span>
+      <span class="c1"># 就将值渲染为直接值</span>
+      <span class="k">return</span> <span class="n">repr</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://&quot;</span><span class="p">)</span>
+<span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;use_my_literal_recipe&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}))</span></pre></div>
+</div>
+<p>上述脚本将给出：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;47b154cd-36b2-42ae-9718-888629ab9857&#39;</span><span class="p">)</span></pre></div>
+</div>
+</li>
+<li><p>对于内置于模型或语句中的自定义字符串化的特定类型，可以使用
+<a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 类来提供自定义字符串化。使用方法是 <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator.process_literal_param" title="sqlalchemy.types.TypeDecorator.process_literal_param"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeDecorator.process_literal_param()</span></code></a> 方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">TypeDecorator</span>
+
+<span class="k">class</span> <span class="nc">UUIDStringify</span><span class="p">(</span><span class="n">TypeDecorator</span><span class="p">):</span>
+    <span class="n">impl</span> <span class="o">=</span> <span class="n">UUID</span>
+
+    <span class="k">def</span> <span class="nf">process_literal_param</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">dialect</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">repr</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上述数据类型需要明确地在模型中或在语句中使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code></a>，例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">type_coerce</span>
+
+<span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">type_coerce</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">UUIDStringify</span><span class="p">)</span> <span class="o">==</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span>
+
+<span class="c1"># 显示呈现类型为串联形式，同时输出直接绑定的参数</span>
+<span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">compile_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;literal_binds&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}))</span></pre></div>
+</div>
+</li>
+</ul>
+<p>联接参数的呈现不像绑定参数那样直截了当，因为绑定参数会由调用的数据库API完成。呈现联接参数的方法自由度不高。需要对特定数据库进行相当多的工作，而且很可能需要写针对每个数据类型的自定义字符串化函数。此外，通篇使用绑定参数更为安全，因为SQLAlchemy会对输入值进行验证并通过正确的机制传递给SQL服务器，从而避免了始终的SQL注入问题。</p>
+</section>
+</section>
+<section id="faq-sql-expression-percent-signs">
+<span id="id17"></span><h2>生成SQL语句字符串时百分号为什么会被双倍加上？<a class="headerlink" href="#faq-sql-expression-percent-signs" title="Permalink to this heading">¶</a></h2>
+<p>很多 <span class="xref std std-term">DBAPI</span> 实现使用 <code class="docutils literal notranslate"><span class="pre">pyformat</span></code> 或 <code class="docutils literal notranslate"><span class="pre">format</span></code> <cite>paramstyle</cite>，它们在语法上必然涉及百分号。大多数这样做的 DBAPI 都期望百分号用于其他原因的情况下被加倍（例如转义）在使用 SQLAlchemy 传递给底层 DBAPI 的 SQL 语句中，绑定参数的替换方式类似于 Python 字符串插值运算符 <code class="docutils literal notranslate"><span class="pre">%</span></code> ，在很多情况下，DBAPI 实际上是直接使用它。在上面，绑定参数的替换看起来像这样：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="n">modulus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span></pre></div>
+</div>
+<p>当 SQLAlchemy 传递 SQL 语句时，驱动程序代替 SQL 语句中的百分号并使用参数值（在 Python DBAPI 要求的方法中）代替百分号。 在上面的例子中，替换的情况将是：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">modulus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span></pre></div>
+</div>
+<p>对于使用重新定义了百分号的某些DBAPI，例如PostgreSQL和MySQL，它们具有特定的百分号转义行为：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;my_table&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;value </span><span class="si">% o</span><span class="s2">ne&quot;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;value % two&quot;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value %% one&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value %% two&quot;</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span>
+</div></pre></div>
+</div>
+<p>在使用上述方言时，如果需要生成不具有绑定参数符号的非DBAPI语句，则移除百分号的简便方法是使用Python的 <code class="docutils literal notranslate"><span class="pre">%</span></code> 运算符直接将其替换为空集：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">strstmt</span> <span class="o">=</span> <span class="n">str</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">strstmt</span> <span class="o">%</span> <span class="p">())</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value % one&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value % two&quot;</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span>
+</div></pre></div>
+</div>
+<p>另一个解决方案是在dialect中设置不同的参数样式； 所有 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> 实现都接受
+<code class="docutils literal notranslate"><span class="pre">paramstyle</span></code> 参数，它会引起dialect的编译器使用给定的参数格式。 例如，在使用PostgreSQL时，
+可以使用非常常见的 <cite>named</cite> 参数样式来设置 Dialect，因此不再需要对百分号进行转义：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">select</span><span class="p">()</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">(</span><span class="n">paramstyle</span><span class="o">=</span><span class="s2">&quot;named&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value % one&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">my_table</span><span class="p">.</span><span class="ss">&quot;value % two&quot;</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span>
+</div></pre></div>
+</div>
+</section>
+<section id="op">
+<span id="faq-sql-expression-op-parenthesis"></span><h2>我使用op（）生成自定义运算符，但我的圆括号没有正确输出<a class="headerlink" href="#op" title="Permalink to this heading">¶</a></h2>
+<p>:meth:<a href="#id18"><span class="problematic" id="id19">`</span></a>.Operators.op`方法允许创建自定义的数据库运算符，否则为SQLAlchemy未知：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">)(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="n">q</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span>
+</div></pre></div>
+</div>
+<p>然而，在将运算符用于复合表达式的右侧时，它不会生成圆括号，如下所示：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">((</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;q1&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;q2&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">)(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span>
+</div></pre></div>
+</div>
+<p>在上述例子中，我们期望得到 <code class="docutils literal notranslate"><span class="pre">(q1</span> <span class="pre">+</span> <span class="pre">q2)</span> <span class="pre">-&gt;</span> <span class="pre">p</span></code>。</p>
+<p>解决此问题的方法是使用:paramref:<a href="#id20"><span class="problematic" id="id21">`</span></a>.Operators.op.precedence`参数设置操作数优先级的高值，在100是最大值的情况下，任何SQLAlchemy运算符的运行最高数字是15：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">((</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;q1&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;q2&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">precedence</span><span class="o">=</span><span class="mi">100</span><span class="p">)(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="p">(</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span>
+</div></pre></div>
+</div>
+<p>我们也可以使用:meth:<a href="#id22"><span class="problematic" id="id23">`</span></a>_expression.ColumnElement.self_group`方法来通常强制执行二进制表达式的圆括号（例如，具有左参数/右参数和运算符的表达式）：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">((</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;q1&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;q2&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">self_group</span><span class="p">()</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">)(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="p">(</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span>
+</div></pre></div>
+</div>
+<section id="id24">
+<h3>为什么会这样圆括号规则呢？<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
+<p>很多数据库在存在过多括号或存在于不同于它期望的其他位置的括号时会出现故障，因此 SQLAlchemy 不会基于程序中的括号使用括号，而是使用操作符优先级和已知为关联的操作符确定分组方式。否则，表达式：</p>
+<blockquote>
+<div><p>column(“a”) &amp; column(“b”) &amp; column(“c”) &amp; column(“d”)</p>
+</div></blockquote>
+<p>会产生：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">(((</span><span class="n">a</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">d</span><span class="p">)</span></pre></div>
+</div>
+<p>正常情况下没问题，但可能会让人生气（并报告为错误）。在其他情况下，这会产生更难以理解或阅读的表达式，例如：</p>
+<blockquote>
+<div><p>column(“q”, ARRAY(Integer, dimensions=2))[5][6]</p>
+</div></blockquote>
+<p>将产生：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="n">q</span><span class="p">[</span><span class="mi">5</span><span class="p">])[</span><span class="mi">6</span><span class="p">])</span></pre></div>
+</div>
+<p>有时会出现``”(x) = 7”<a href="#id25"><span class="problematic" id="id26">``</span></a>等情况，数据库真的不喜欢这种写法。因此，括号不会简单地排列，而是使用运算符的优先级和运算符的综合性来确定分组方式。</p>
+<p>对于 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.Operators.op" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code></a>，优先级的默认值为零。</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="metadata_schema.html" title="previous chapter">元数据 / 模式</a>
+        Next:
+        <a href="ormconfiguration.html" title="next chapter">ORM配置</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:09
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

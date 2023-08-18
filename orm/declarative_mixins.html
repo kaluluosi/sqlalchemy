@@ -1,0 +1,448 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    使用 Mixins 构成映射层次
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="使用Declarative映射类" href="declarative_mapping.html" />
+        <link rel="next" title="与dataclasses和attrs集成" href="dataclasses.html" />
+        <link rel="prev" title="使用 Declarative 进行映射器配置" href="declarative_config.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="declarative_styles.html">声明式映射风格</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_tables.html">使用 Declarative 进行表配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_config.html">使用 Declarative 进行映射器配置</a></span></li>
+<li class="selected"><span class="link-container"><strong>使用 Mixins 构成映射层次</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id15">在混合和基类中添加映射器属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mixintable-mapper">…从多个Mixin组合Table/Mapper参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mixin">使用Mixin创建索引</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="declarative_config.html" title="previous chapter">使用 Declarative 进行映射器配置</a></li>
+                <li><b>Next:</b>
+                <a href="dataclasses.html" title="next chapter">与dataclasses和attrs集成</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="mapper_config.html" title="ORM映射类配置">ORM映射类配置</a></li>
+                    <ul><li><a href="declarative_mapping.html" title="使用Declarative映射类">使用Declarative映射类</a></li>
+                </ul>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#mixins">使用 Mixins 构成映射层次</a><ul>
+<li><a class="reference internal" href="#id15">在混合和基类中添加映射器属性</a></li>
+<li><a class="reference internal" href="#mixintable-mapper">…从多个Mixin组合Table/Mapper参数</a></li>
+<li><a class="reference internal" href="#mixin">使用Mixin创建索引</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-declarative_mixins" >
+        
+<section id="mixins">
+<h1>使用 Mixins 构成映射层次<a class="headerlink" href="#mixins" title="Permalink to this heading">¶</a></h1>
+<p>使用 :ref: <cite>声明式 &lt;orm_declarative_mapping&gt;</cite> 风格来映射类时，有一个常见的需求，就是跨类共享
+常见的功能，例如特定的列、表或映射器选项，命名方案或其他映射的属性。当使用声明式映射时，可以通过使用
+:meth: <cite>申明属性(dec_属性&lt; 函数 &lt;搜寻结构脚本 &gt;])</cite> 类和通过增加声明基类本身来支持这种语言习惯。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>除了 mixin 类之外，还可以使用 :pep: <cite>593</cite>“已注解”类型共享许多类之间的常见列选项。</p>
+</div>
+<p>  有关这些 SQLAlchemy 2.0 功能的背景，请参见下面的相关章节。</p>
+<p>例如，下面是一些常见混合语言的例子:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+ <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declared_attr</span>
+ <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+ <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+ <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+ <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+ <span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+     <span class="k">pass</span>
+
+
+ <span class="k">class</span> <span class="nc">CommonMixin</span><span class="p">:</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;将此类用作 mixin 类应用于映射类时，定义了一系列通用元素。&quot;&quot;&quot;</span>
+
+     <span class="nd">@declared_attr</span><span class="o">.</span><span class="n">directive</span>
+     <span class="k">def</span> <span class="nf">__tablename__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span><span class="p">:</span>
+         <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+     <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mysql_engine&quot;</span><span class="p">:</span> <span class="s2">&quot;InnoDB&quot;</span><span class="p">}</span>
+     <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;eager_defaults&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+     <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+ <span class="k">class</span> <span class="nc">HasLogRecord</span><span class="p">:</span>
+<span class="w">     </span><span class="sd">&quot;&quot;&quot;标记具有对“LogRecord”类的多对一关系的类。&quot;&quot;&quot;</span>
+
+     <span class="n">log_record_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;logrecord.id&quot;</span><span class="p">))</span>
+
+     <span class="nd">@declared_attr</span>
+     <span class="k">def</span> <span class="nf">log_record</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;LogRecord&quot;</span><span class="p">]:</span>
+         <span class="k">return</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;LogRecord&quot;</span><span class="p">)</span>
+
+
+ <span class="k">class</span> <span class="nc">LogRecord</span><span class="p">(</span><span class="n">CommonMixin</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+     <span class="n">log_info</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+
+
+ <span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">CommonMixin</span><span class="p">,</span> <span class="n">HasLogRecord</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+     <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>上面的示例说明了一个名为“ MyModel”的类，其中包括两个 mixin “CommonMixin”和“ HasLogRecord”
+作为其基础，以及一个辅助类“ LogRecord”，
+该辅助类还包括“ CommonMixin”，展示了有许多结构支持了 mixin 和基类，包括：</p>
+<ul class="simple">
+<li><p>使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.mapped_column()</span></code>, <a href="#id1"><span class="problematic" id="id2">:类:`~_orm.Mapped`或 :类:`~_schema.Column`</span></a> 声明的列从mixin或基类复制到将要映射的目标类中</p></li>
+</ul>
+<p>列属性“CommonMixin.id”和“ HasLogRecord.log_record_id”通过上述方法进行了说明。
+* 混合或基类本身可以分配声明性指令，例如``__table_args__`` 和 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code>，其中它们会自动
+适用于从混合或基类继承的任何类。 上面的例子使用 <code class="docutils literal notranslate"><span class="pre">__table_args__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 属性进行说明。
+* 所有 Declarative 指令，包括所有 <code class="docutils literal notranslate"><span class="pre">__tablename__</span></code>、<code class="docutils literal notranslate"><span class="pre">__table__</span></code>、<code class="docutils literal notranslate"><span class="pre">__table_args__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__mapper_args__</span></code> 指令，
+可以使用用户定义的类方法来实现，这些类方法装饰了 <a href="#id3"><span class="problematic" id="id4">:类:`_orm.declared_attr`</span></a> 装饰符(特别的是</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">attr<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>_orm.declared_attr.directive</cite> 子成员, 稍后将在详细讨论) 。</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>这在上面的例子中使用一个``def __tablename__(cls)``类方法，该方法动态生成了一个 <a href="#id5"><span class="problematic" id="id6">:类:`.Table`名称。
+当应用于&quot; MyModel &quot;类时，表名将被生成为 &quot;mymodel &quot;，而当应用于 &quot;LogRecord &quot;类时，表名将被生成为 &quot;logrecord&quot;。
+* 其他 ORM 属性（例如 :功能：`_orm.relationship`</span></a>）可以使用用户定义的类方法生成到映射的目标类中，
+也用由带有 <a href="#id7"><span class="problematic" id="id8">:类:`_orm.declared_attr`</span></a> 装饰符的用户定义的类方法显示。 上面，这是
+通过生成多对一 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 到名为“ LogRecord ”的映射对象来说明的。</p>
+<p>上述功能都可以使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 示例演示：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">MyModel</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MyModel</span><span class="o">.</span><span class="n">log_record</span><span class="p">))</span>
+<span class="go">{print sql}SELECT mymodel.name, mymodel.id, mymodel.log_record_id</span>
+<span class="go">FROM mymodel JOIN logrecord ON logrecord.id = mymodel.log_record_id</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><a href="#id9"><span class="problematic" id="id10">:类:`_orm.declared_attr`</span></a> 的示例将尝试提供每个方法示例的 <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> 注释。</p>
+</div>
+<p>. <a href="#id11"><span class="problematic" id="id12">:类:`_orm.declared_attr`</span></a> 函数的注释是完全可选的，并且不
+为 Declarative 消费; 但是，必须使用这些注释，以便
+通过 Mypy <code class="docutils literal notranslate"><span class="pre">--</span> <span class="pre">strict</span></code> 类型检查。</p>
+<p>  并且 <code class="xref py py-attr docutils literal notranslate"><span class="pre">declared_attr.directive</span></code> 子成员上面也是可选的，仅适用于 <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> 类型工具，
+  它在创建方法以覆盖声明式指令时调整预期的返回类型方面。 包括， 示例上面的
+  使用“ _orm.declared_attr.directive ”实例说明在 :pep: <cite>484</cite> 中的类型支持时添加了 :版本添加:2.0&gt;`ORM SQLAlchemy`，以区分 :类:` Mapper <a href="#id13"><span class="problematic" id="id14">`</span></a>属性和声明性配置性属性。</p>
+<section id="id15">
+<h2>在混合和基类中添加映射器属性<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
+<p>与许多执行类具有相同功能的手段（例如列、表和映射器选项、命名计划或其他映射属性） 的行为类似的
+进化过程，任何映射到“ _orm.declared_attr”中装饰的函数的mixed-in属性都将被设计为
+加入到基本类或任何由基本类衍生的其他目标类的元素中，因此任何这种构造都可以应用于一组类。</p>
+<p>如下所示，任何使用混合的模式都可以表示为类的本机继承：</p>
+<blockquote>
+<div><p>from sqlalchemy import ForeignKey
+from sqlalchemy.orm import declared_attr
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column</p>
+<dl class="simple">
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class Mixin:</dt><dd><p>column_a: Mapped[str] = mapped_column()
+column_b: Mapped[str] = mapped_column()</p>
+</dd>
+<dt>class A(Mixin, Base):</dt><dd><p>column_c: Mapped[str] = mapped_column()</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>由于继承的特点，再次声明“ column_a”，“ column_b”即可在生成的子类上覆盖它们。
+此外，对于任何前面的混合体，它们都将将其余部分保留在新目标类中。任何列或其它输出，例如“ column_c”，
+都是将基类和任何相关派生类的元素合并在一起。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.0：这是标准行为，但只在: </span>1.0.0 后才被正式记录。</p>
+</div>
+</section>
+<section id="mixintable-mapper">
+<h2>…从多个Mixin组合Table/Mapper参数<a class="headerlink" href="#mixintable-mapper" title="Permalink to this heading">¶</a></h2>
+<p>在使用声明式mixin指定``__table_args__``或``__mapper_args__``时，您可能希望将一些参数从多个mixin与您希望在类本身上定义的参数组合在一起。这里可以使用
+:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_orm.declared_attr`装饰器创建用户定义的收集程序，从多个集合中获取值。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_mixin</span><span class="p">,</span> <span class="n">declared_attr</span>
+
+
+<span class="k">class</span> <span class="nc">MySQLSettings</span><span class="p">:</span>
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;mysql_engine&quot;</span><span class="p">:</span> <span class="s2">&quot;InnoDB&quot;</span><span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">MyOtherMixin</span><span class="p">:</span>
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">MySQLSettings</span><span class="p">,</span> <span class="n">MyOtherMixin</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_model&quot;</span>
+
+    <span class="nd">@declared_attr</span>
+    <span class="k">def</span> <span class="nf">__table_args__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="n">dict</span><span class="p">()</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">MySQLSettings</span><span class="o">.</span><span class="n">__table_args__</span><span class="p">)</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">MyOtherMixin</span><span class="o">.</span><span class="n">__table_args__</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">args</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+</section>
+<section id="mixin">
+<h2>使用Mixin创建索引<a class="headerlink" href="#mixin" title="Permalink to this heading">¶</a></h2>
+<p>为了定义一个命名的，可能是多列的:class:<cite>.Index</cite>，它应用于从Mixin派生的所有表，可以使用``__table_args__``将其作为“inline”形式的:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>.Index`之一来确定：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyMixin</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span>
+
+    <span class="nd">@declared_attr</span>
+    <span class="k">def</span> <span class="nf">__table_args__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">Index</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;test_idx_</span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">__tablename__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">),)</span>
+
+
+<span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">MyMixin</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;atable&quot;</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="declarative_config.html" title="previous chapter">使用 Declarative 进行映射器配置</a>
+        Next:
+        <a href="dataclasses.html" title="next chapter">与dataclasses和attrs集成</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:10
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

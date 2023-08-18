@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    引擎和连接使用
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy核心模块" href="index.html" />
+        <link rel="next" title="引擎配置" href="engines.html" />
+        <link rel="prev" title="基础类型 API" href="type_api.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
+<li class="selected"><span class="link-container"><strong>引擎和连接使用</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="engines.html">引擎配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="connections.html">使用Engine和Connection</a></span></li>
+<li><span class="link-container"><a class="reference external" href="pooling.html">连接池</a></span></li>
+<li><span class="link-container"><a class="reference external" href="events.html">核心事件</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="type_api.html" title="previous chapter">基础类型 API</a></li>
+                <li><b>Next:</b>
+                <a href="engines.html" title="next chapter">引擎配置</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">引擎和连接使用</a></li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar core-engines_connections" >
+        
+<section id="id1">
+<h1>引擎和连接使用<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="engines.html">引擎配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#database">支持的Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="engines.html#database-urls">Database URLs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#id29">转义密码中的特殊字符，例如&#64;字符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engines.html#id37">隐藏参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="connections.html">使用Engine和Connection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id5">基本用法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id6">使用事务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id7">走你所能到的地方</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id8">首次进入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#engine">从Engine连接并开始一次</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id9">混合模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#dbapi-autocommit">设置交易隔离级别，包括DBAPI Autocommit</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#dbapi">对连接设置隔离级别或DBAPI自动提交</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#enginedbapi-autocommit">为一个Engine设置隔离级别或DBAPI Autocommit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#dbapi-autocommit-multiple">在单个Engine中保持多个隔离级别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#dbapi-autocommit-understanding">了解DBAPI级别的自动提交隔离级别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#yield-per">通过yield_per使用固定缓冲流</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#stream-results">动态增长缓冲区使用stream_results流式传输</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#schema-translating">模式名称的翻译</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#sql">SQL编译缓存</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id85">配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#sql-caching-logging">使用日志记录估计缓存性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id93">缓存使用了多少内存？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#engine-compiled-cache">禁用或使用其他字典缓存某些（或全部）语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#engine-thirdparty-caching">第三方方言的缓存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#lambda">使用 Lambda 将语句生成速度显著提高</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#insert-many-values">关于插入语句的“Insert Many Values”行为</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id100">当前支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id102">禁用功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id107">批处理模式操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#engine-insertmanyvalues-returning-order">将返回行与参数集相关联</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id133">语句执行模型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#engine-insertmanyvalues-events">记录和事件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#upsert">Upsert支持</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#engine-disposal">引擎处置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#sql-dbapi">使用驱动程序 SQL 和原始 DBAPI 连接</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id166">直接调用驱动程序的 SQL 字符串</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#dbapi-connections-cursor">直接使用 DBAPI 光标</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#stored-procedures">调用存储过程和用户定义函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id169">多结果集</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id170">注册新方言</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="connections.html#id171">注册进程中的方言</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#api">连接 / 引擎 API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="connections.html#id172">结果集 API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pooling.html">连接池</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id4">连接池配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-switching">切换池实现</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id8">使用自定义连接函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id9">构建一个池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#checkin">checkin时重置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#reset-on-return">自定义reset-on-return方案</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id14">记录重置事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id19">池事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-disconnects">处理断开连接</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#pool-disconnects-pessimistic">断开连接处理-悲观</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id36">支持断开连接情况下新数据库错误码</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#pool-disconnects-optimistic">断开连接处理 - 乐观</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-setting-recycle">设置池重建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-connection-invalidation">更多禁用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#pool-new-disconnect-codes">支持新数据库错误码</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#pool-use-lifo">使用先进后出和先进先出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#os-fork">在多进程或者 os.fork() 中使用连接池</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#id77">直接使用池实例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pooling.html#api">API 文档 - 可用的池实现</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool"><code class="docutils literal notranslate"><span class="pre">Pool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool"><code class="docutils literal notranslate"><span class="pre">QueuePool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.SingletonThreadPool"><code class="docutils literal notranslate"><span class="pre">SingletonThreadPool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.AssertionPool"><code class="docutils literal notranslate"><span class="pre">AssertionPool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.NullPool"><code class="docutils literal notranslate"><span class="pre">NullPool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.StaticPool"><code class="docutils literal notranslate"><span class="pre">StaticPool</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.ManagesConnection"><code class="docutils literal notranslate"><span class="pre">ManagesConnection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.ConnectionPoolEntry"><code class="docutils literal notranslate"><span class="pre">ConnectionPoolEntry</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool.PoolProxiedConnection"><code class="docutils literal notranslate"><span class="pre">PoolProxiedConnection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool._ConnectionFairy"><code class="docutils literal notranslate"><span class="pre">_ConnectionFairy</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pooling.html#sqlalchemy.pool._ConnectionRecord"><code class="docutils literal notranslate"><span class="pre">_ConnectionRecord</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="events.html">核心事件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="events.html#sqlalchemy.event.base.Events"><code class="docutils literal notranslate"><span class="pre">Events</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.event.base.Events.dispatch"><code class="docutils literal notranslate"><span class="pre">Events.dispatch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#id2">连接池事件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents"><code class="docutils literal notranslate"><span class="pre">PoolEvents</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.PoolResetState"><code class="docutils literal notranslate"><span class="pre">PoolResetState</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#sql">SQL执行和连接事件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.ConnectionEvents"><code class="docutils literal notranslate"><span class="pre">ConnectionEvents</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.DialectEvents"><code class="docutils literal notranslate"><span class="pre">DialectEvents</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="events.html#id3">架构事件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.DDLEvents"><code class="docutils literal notranslate"><span class="pre">DDLEvents</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="events.html#sqlalchemy.events.SchemaEventTarget"><code class="docutils literal notranslate"><span class="pre">SchemaEventTarget</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="type_api.html" title="previous chapter">基础类型 API</a>
+        Next:
+        <a href="engines.html" title="next chapter">引擎配置</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:30:58
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

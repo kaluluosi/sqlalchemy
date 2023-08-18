@@ -1,0 +1,1359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQLAlchemy 2.0 - 主要迁移指南
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="变更和迁移" href="index.html" />
+        <link rel="next" title="SQLAlchemy 2.0 有什么新特性？" href="whatsnew_20.html" />
+        <link rel="prev" title="变更和迁移" href="index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="变更和迁移">变更和迁移</a>
+        </h3>
+
+        <ul>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy 2.0 - 主要迁移指南</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">1.4-&gt;2.0迁移路径</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#x-2-x">1.x -&gt; 2.x迁移概述</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id2">第一个先决条件，步骤一 - 可工作的1.3应用程序</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id9">第一个先决条件，第二步 - 可工作的1.4应用程序</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#python-3-python-3-72-0">迁移到2.0步骤一 - 仅使用Python 3（Python 3.7是2.0兼容性的最低要求）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#removedin20warnings">迁移到2.0步骤二 - 打开RemovedIn20Warnings</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id28">迁移到2.0步骤三 - 解决所有RemovedIn20Warnings</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#enginefuture">迁移到2.0步骤四 - 在Engine上使用“future”标志</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#orm2-0">ORM使用2.0迁移</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#orm">ORM查询与核心选择器统一</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-get-session">ORM 查询 - get() 方法移至 Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-joining-loading-on-relationships">ORM 查询 - Joining / loading on relationships 使用属性，而不是字符串</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-join-aliased-true-from-joinpoint">ORM 查询 - join(…，aliased=True)，from_joinpoint已去除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#distinct">使用DISTINCT选项选择其他列，但仅选择实体</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#from-self">选择子查询自身作为查询，例如”from_self()”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#selectable-query-select-entity-from">从备选selectable选择实体; Query.select_entity_from()</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#joinedload-not-uniqued">ORM行默认情况下不具有唯一性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id56">“动态”关系加载器被“只写”取代</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session">移除Session的自动提交模式; 增加自动开始支持</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#migration-20-session-subtransaction">删除Session“子事务”行为</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id84">2.0迁移 - ORM扩展和配方更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#dogpileapi">Dogpile缓存配方和水平切分使用新的会话API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id91">烘焙查询扩展被内置缓存替换</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#asyncio">Asyncio支持</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="whatsnew_20.html">SQLAlchemy 2.0 有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_20.html">2.0 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_14.html">1.4 版本更新历史</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_13.html">1.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_12.html">1.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_11.html">1.1 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_10.html">1.0 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_09.html">0.9版本更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_08.html">0.8 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_06.html">0.6 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_05.html">0.5 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_04.html">0.4 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_03.html">0.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_02.html">0.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_01.html">版本记录</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_14.html">SQLAlchemy 1.4有哪些新内容？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_13.html">SQLAlchemy 1.3有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_12.html">SQLAlchemy 1.2有哪些新特性?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_11.html">SQLAlchemy 1.1新功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_10.html">SQLAlchemy 1.0有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_09.html">SQLAlchemy 0.9 的新特性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_08.html">SQLAlchemy 0.8有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_07.html">SQLAlchemy 0.7有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_06.html">SQLAlchemy 0.6 有哪些新变化?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html">SQLAlchemy 0.5有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id1">主要文档更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id6">退化源</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id7">需求更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id8">ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id21">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id22">模式/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id23">连接池不再默认为线程本地</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#args-args">*args已接受，不再接受*args</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id44">删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id77">已重命名或已移动</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id86">已弃用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html">SQLAlchemy 0.4有什么新功能？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id1">首先要做什么</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id2">模块导入</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id3">对象关系映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id22">SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id26">架构和反射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id28">SQL执行</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="index.html" title="previous chapter">变更和迁移</a></li>
+                <li><b>Next:</b>
+                <a href="whatsnew_20.html" title="next chapter">SQLAlchemy 2.0 有什么新特性？</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="变更和迁移">变更和迁移</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sqlalchemy-2-0">SQLAlchemy 2.0 - 主要迁移指南</a><ul>
+<li><a class="reference internal" href="#id1">1.4-&gt;2.0迁移路径</a></li>
+<li><a class="reference internal" href="#x-2-x">1.x -&gt; 2.x迁移概述</a><ul>
+<li><a class="reference internal" href="#id2">第一个先决条件，步骤一 - 可工作的1.3应用程序</a></li>
+<li><a class="reference internal" href="#id9">第一个先决条件，第二步 - 可工作的1.4应用程序</a></li>
+<li><a class="reference internal" href="#python-3-python-3-72-0">迁移到2.0步骤一 - 仅使用Python 3（Python 3.7是2.0兼容性的最低要求）</a></li>
+<li><a class="reference internal" href="#removedin20warnings">迁移到2.0步骤二 - 打开RemovedIn20Warnings</a></li>
+<li><a class="reference internal" href="#id28">迁移到2.0步骤三 - 解决所有RemovedIn20Warnings</a></li>
+<li><a class="reference internal" href="#enginefuture">迁移到2.0步骤四 - 在Engine上使用“future”标志</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#orm2-0">ORM使用2.0迁移</a><ul>
+<li><a class="reference internal" href="#orm">ORM查询与核心选择器统一</a></li>
+<li><a class="reference internal" href="#orm-get-session">ORM 查询 - get() 方法移至 Session</a></li>
+<li><a class="reference internal" href="#orm-joining-loading-on-relationships">ORM 查询 - Joining / loading on relationships 使用属性，而不是字符串</a></li>
+<li><a class="reference internal" href="#orm-join-aliased-true-from-joinpoint">ORM 查询 - join(…，aliased=True)，from_joinpoint已去除</a></li>
+<li><a class="reference internal" href="#distinct">使用DISTINCT选项选择其他列，但仅选择实体</a></li>
+<li><a class="reference internal" href="#from-self">选择子查询自身作为查询，例如”from_self()”</a></li>
+<li><a class="reference internal" href="#selectable-query-select-entity-from">从备选selectable选择实体; Query.select_entity_from()</a></li>
+<li><a class="reference internal" href="#joinedload-not-uniqued">ORM行默认情况下不具有唯一性</a></li>
+<li><a class="reference internal" href="#id56">“动态”关系加载器被“只写”取代</a></li>
+<li><a class="reference internal" href="#session">移除Session的自动提交模式; 增加自动开始支持</a></li>
+<li><a class="reference internal" href="#migration-20-session-subtransaction">删除Session“子事务”行为</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id84">2.0迁移 - ORM扩展和配方更改</a><ul>
+<li><a class="reference internal" href="#dogpileapi">Dogpile缓存配方和水平切分使用新的会话API</a></li>
+<li><a class="reference internal" href="#id91">烘焙查询扩展被内置缓存替换</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#asyncio">Asyncio支持</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar changelog-migration_20" >
+        
+<section id="sqlalchemy-2-0">
+<span id="migration-20-toplevel"></span><h1>SQLAlchemy 2.0 - 主要迁移指南<a class="headerlink" href="#sqlalchemy-2-0" title="Permalink to this heading">¶</a></h1>
+<div class="admonition- admonition">
+<p class="admonition-title">读者注意事项</p>
+<p>SQLAlchemy 2.0的转换文档分成**两个**文档 - 一个细节描述了从1.x到2.x的主要API转换系列，
+另一个则描述了与SQLAlchemy 1.4相比的新特性和行为：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a> - 本文档，从1.x到2.x的API转换</p></li>
+<li><p><a class="reference internal" href="whatsnew_20.html"><span class="std std-ref">SQLAlchemy 2.0 有什么新特性？</span></a> - SQLAlchemy 2.0的新特性和行为</p></li>
+</ul>
+<p>它们都是适用于已经将1.4应用程序更新为遵循SQLAlchemy 2.0引擎和ORM约定的读者，为SQLAlchemy 2.0的新特性和功能提供概述。</p>
+</div>
+<div class="admonition- admonition">
+<p class="admonition-title">关于本文档</p>
+<p>本文档描述了SQLAlchemy版本1.4与SQLAlchemy版本2.0之间的更改。</p>
+<p>SQLAlchemy 2.0为核心和ORM组件中的许多关键SQLAlchemy使用模式的一种结构性变革。本次更新的目标是在SQLAlchemy早期以来的若干项最基本的假设上进行轻微调整，并提供新的流畅的使用模型，通过这种方式，与Core和ORM组件之间的极简主义和一致性以及更强大的能力（以及更为标准化的能力）有望得到显著提高。将Python移动为Python 3only以及针对Python 3的渐进式类型系统的出现是这种转变的初始灵感，Python社区的变化以及不仅包括另一大批数据库程序员，而且还包括众多不同学科的数据科学家和学生。</p>
+<p>SQLAlchemy始于Python 2.3，当时没有上下文管理器，没有函数装饰器，Unicode只是一个第二类的功能，以及其他一些当今不知道的缺点。在SQLAlchemy 2.0中，最大的变化针对的是早期阶段SQLAlchemy开发中剩余的假设以及由于关键API特性的增量引入（例如：class:<cite>.orm.query.Query</cite> 和声明式）。它也希望标准化一些新的被证明非常有效的能力。</p>
+</div>
+<section id="id1">
+<h2>1.4-&gt;2.0迁移路径<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>被视为“SQLAlchemy 2.0”的最重要的体系结构特性和API更改实际上是作为完全可用的SQLAlchemy 1.4系列发布的，以提供从1.x到2.x系列的清洁升级路径，并作为功能本身的Beta平台。这些更改包括：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="migration_14.html#change-5159"><span class="std std-ref">New ORM statement paradigm</span></a></p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-4639"><span class="std std-ref">SQL caching throughout Core and ORM</span></a></p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-5508"><span class="std std-ref">New Declarative features, ORM integration</span></a></p></li>
+<li><p><span class="xref std std-ref">New Result object</span></p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-5284"><span class="std std-ref">select() / case() Accept Positional Expressions</span></a></p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-3414"><span class="std std-ref">asyncio support for Core and ORM</span></a></p></li>
+</ul>
+<p>以上各项目录链接到SQLAlchemy 1.4中引入这些新范式的描述中。 <a class="reference internal" href="migration_14.html"><span class="std std-ref">SQLAlchemy 1.4有哪些新内容？</span></a> 。</p>
+<p>对于SQLAlchemy 2.0，所有被标记为 <a class="reference internal" href="migration_14.html#deprecation-20-mode"><span class="std std-ref">deprecated for 2.0</span></a> 的API特性和行为现在都已最终确定; 特别是，不再存在的主要API包括：</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">Bound MetaData and connectionless execution</span></p></li>
+<li><p><span class="xref std std-ref">Emulated autocommit on Connection</span></p></li>
+<li><p><a class="reference internal" href="#migration-20-session-autocommit"><span class="std std-ref">The Session.autocommit parameter / mode</span></a></p></li>
+<li><p><span class="xref std std-ref">List / keyword arguments to select()</span></p></li>
+<li><p>Python 2的支持</p></li>
+</ul>
+<p>以上各项目录中的内容是最显著的完全向后不兼容的更改， 它们进入2.0的发行中被最终决定。要适应这些变化以及其他变化的应用程序迁移路径，首先定义为过渡路径与1.4系列的环境相结合，该系列中“将来”API可用，以提供“2.0”工作方式，然后移动到删除的应用程序API。上述标头引用了此迁移路径的完整步骤 <a class="reference internal" href="#migration-20-overview"><span class="std std-ref">1.x -&gt; 2.x迁移概述</span></a> 。</p>
+</section>
+<section id="x-2-x">
+<span id="migration-20-overview"></span><h2>1.x -&gt; 2.x迁移概述<a class="headerlink" href="#x-2-x" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy 2.0转换在SQLAlchemy 1.4发行版中呈现出来，作为一系列步骤，允许使用渐进的迭代过程将任何规模或复杂度的应用程序迁移到SQLAlchemy 2.0。从Python 2到Python 3转换中学到的教训启发了一个系统，其可能性尽可能不需要任何“破坏性”更改，或必须普遍更改或不做任何更改。</p>
+<p>作为检验2.0架构并允许完全迭代的转换环境的一种手段，整个2.0的新API和功能范围都存在并可用于1.4系列；这包括Core库的新功能领域，如SQL缓存系统，新的ORM声明性执行模式，用于ORM和Core的新型事务范式，统一经典映射和声明映射的新型ORM声明性系统，支持Python数据类以及Core和ORM的asyncio支持。</p>
+<p>实现2.0迁移的步骤在以下各小节中进行了说明。总体而言，总体策略是一旦应用程序在1.4上运行，并开启了所有警告标志，并且不发出任何2.0-deprecation警告，那么它现在就**基本**与SQLAlchemy 2.0跨兼容了。 <strong>请注意：可能会有附加的API和行为更改，当运行针对SQLAlchemy 2.0的代码时，可能会有不同的行为；在迁移的最后一步中始终针对实际的SQLAlchemy 2.0版本测试代码</strong>。</p>
+<section id="id2">
+<h3>第一个先决条件，步骤一 - 可工作的1.3应用程序<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<p>对于典型的非平凡应用程序而言，使其在1.4上运行的第一步是确保其可以在SQLAlchemy 1.3上运行且没有deprecation警告。发布版1.4确实有一些与之前版本相关的警告，包括在1.3中发布的一些警告，特别是与:paramref:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.relationship.viewonly`和:paramref:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.relationship.sync_backref`标志相关的一些更改。</p>
+<p>为了获得最佳结果，应用程序应该能够在最新的SQLAlchemy 1.3版本上运行，或者至少对至少使用Python 3.6的Python 3系列的SQLAlchemy无deprecation warnings。这些警告会发出:class:<a href="#id7"><span class="problematic" id="id8">`</span></a>_exc.SADeprecationWarning`类的警告。</p>
+</section>
+<section id="id9">
+<h3>第一个先决条件，第二步 - 可工作的1.4应用程序<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>一旦程序可在SQLAlchemy 1.3上使用，下一步是让其在SQLAlchemy 1.4上运行。在绝大多数情况下，应用程序应该可以在从SQLAlchemy 1.3到1.4的过程中没有问题地运行。 但是，在任何1.x和1.y版本之间的情况下，API和行为都会发生变化，或者在某些情况下更微妙地发生变化。 SQLAlchemy项目总是收到了大量回归报告的情况，这是在最初几个月中发生的现象。</p>
+<p>1.x-&gt;1.y发行版通常在边缘周围进行了一些更改，这些更改基于预计几乎不会或根本不会使用的用例。对于1.4，被识别为位于此领域的更改如下：</p>
+<ul class="simple">
+<li><p><span class="xref std std-ref">change_5526</span> - 这影响对:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_engine.URL`对象进行操作的代码，并可能影响使用:class:<a href="#id12"><span class="problematic" id="id13">`</span></a>_engine.CreateEnginePlugin`扩展点的代码。这是一个不常见的情况，但可能会对特殊数据库配置逻辑使用的某些测试套件产生影响。通过对使用相对较新而又鲜为人知的:class:<a href="#id14"><span class="problematic" id="id15">`</span></a>_engine.CreateEnginePlugin`类的代码进行github搜索，找到了两个未受此更改影响的项目。</p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-4617"><span class="std std-ref">不再将 SELECT 语句隐式视为 FROM 子句</span></a> - 此更改可能会影响在某种程度上依赖于:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_sql.Select`构造的大部分代码，其中会创建通常会导致混淆且不起作用的匿名子查询。除了SQLite外，大多数数据库都会拒绝这些子查询，因为通常需要名称，但仍有可能需要调整某些无意中依赖这些查询的查询的查询。</p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-select-join"><span class="std std-ref">select().join() 和 outerjoin() 将添加 JOIN 条件到当前查询中，而不是创建子查询</span></a> - 相关的，<code class="xref py py-class docutils literal notranslate"><span class="pre">Select`类特别具有`</span></code>.join()``和``.outerjoin()``方法，它们隐含地创建子查询，然后返回:class:<cite>_sql.Join</cite> 构造，这会导致大多数无用且产生大量混乱。决定采用极为有用的2.0风格连接构建方法前进，这里的这些方法现在与ORM :meth:<a href="#id18"><span class="problematic" id="id19">`</span></a>_orm.Query.join`方法的工作方式相同。</p></li>
+<li><p><a class="reference internal" href="migration_14.html#change-deferred-construction"><span class="std std-ref">许多Core和ORM语句对象现在在编译阶段执行大量构建和验证</span></a> - 与:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_orm.Query`或:class:<a href="#id22"><span class="problematic" id="id23">`</span></a>_sql.Select`的构造有关的一些错误消息可能不会在构造时间而是在编译/执行时发送。这可能会影响一些测试套件，这些套件针对失败模式进行测试。</p></li>
+</ul>
+<p>更改的完整概述请参见 <a class="reference internal" href="migration_14.html"><span class="doc">SQLAlchemy 1.4有哪些新内容？</span></a> 文档。</p>
+</section>
+<section id="python-3-python-3-72-0">
+<h3>迁移到2.0步骤一 - 仅使用Python 3（Python 3.7是2.0兼容性的最低要求）<a class="headerlink" href="#python-3-python-3-72-0" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy 2.0最初受到Python 2的EOL是在2020年的事实的启发。相对于其他主要项目而言，SQLAlchemy需要比较长的时间才能放弃对Python 2.7的支持。但是，为了使用SQLAlchemy 2.0，应用程序需要在至少**Python 3.7**上运行。 SQLALchemy 1.4支持Python 3系列中的Python 3.6或更新版本；在1.4系列的整个过程中，应用程序可以继续运行在Python 2.7或至少Python 3.6上。但以Python 3.7开始的SQLAlchemy 2.0。</p>
+</section>
+<section id="removedin20warnings">
+<span id="migration-20-deprecations-mode"></span><h3>迁移到2.0步骤二 - 打开RemovedIn20Warnings<a class="headerlink" href="#removedin20warnings" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy 1.4具有一种条件性退化警告系统，该系统受启发于Python“-3”标记，该标记将在运行应用程序时指示遗留模式。对于SQLAlchemy 1.4，只有当环境变量“SQLALCHEMY_WARN_20”设置为“true”或“1”时，才会发出 :class:<a href="#id24"><span class="problematic" id="id25">`</span></a>_exc.RemovedIn20Warning`退化类。</p>
+<p>给定下面的示例程序：</p>
+<blockquote>
+<div><p>from sqlalchemy import column
+from sqlalchemy import create_engine
+from sqlalchemy import select
+from sqlalchemy import table</p>
+<p>engine = create_engine(“sqlite://”)</p>
+<p>engine.execute(“CREATE TABLE foo (id integer)”)
+engine.execute(“INSERT INTO foo (id) VALUES (1)”)</p>
+<p>foo = table(“foo”, column(“id”))
+result = engine.execute(select([foo.c.id]))</p>
+<p>print(result.fetchall())</p>
+</div></blockquote>
+<p>上面的程序使用许多许多用户已经将其视为“遗留”的模式，即包括:meth:<a href="#id26"><span class="problematic" id="id27">`</span></a>_engine.Engine.execute`方法的使用（这是“无连接执行”API的一部分）。当我们在1.4上运行上面的程序时，它返回单个行：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ python test3.py
+[(1,)]</pre></div>
+</div>
+<p>为了启用“2.0 deprecations mode”，我们启用“SQLALCHEMY_WARN_20=1”变量，另外确保选择不会抑制任何警告的警告过滤器：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>SQLALCHEMY_WARN_20=1 python -W always::DeprecationWarning test3.py</pre></div>
+</div>
+<p>由于报告的警告位置不总是正确的位置，因此可能很难找到引发错误的代码。可以通过指定本文档中描述的 <code class="xref py py-class docutils literal notranslate"><span class="pre">RemovedIn20Warning</span></code> 的 <code class="docutils literal notranslate"><span class="pre">error</span></code> 警告过滤器将警告转换为异常来实现。</p>
+<p>使用打开警告的方式，我们的程序会发出很多更严重的警告：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ SQLALCHEMY_WARN_20=1 python2 -W always::DeprecationWarning test3.py
+test3.py:9: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  engine.execute(&quot;CREATE TABLE foo (id integer)&quot;)
+/home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  return connection.execute(statement, *multiparams, **params)
+/home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in SQLAlchemy 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  self._commit_impl(autocommit=True)
+test3.py:10: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  engine.execute(&quot;INSERT INTO foo (id) VALUES (1)&quot;)
+/home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:2856: RemovedIn20Warning: Passing a string to Connection.execute() is deprecated and will be removed in version 2.0.  Use the text() construct, or the Connection.exec_driver_sql() method to invoke a driver-level SQL string. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  return connection.execute(statement, *multiparams, **params)
+/home/classic/dev/sqlalchemy/lib/sqlalchemy/engine/base.py:1639: RemovedIn20Warning: The current statement is being autocommitted using implicit autocommit.Implicit autocommit will be removed in SQLAlchemy 2.0.   Use the .begin() method of Engine or Connection in order to use an explicit transaction for DML and DDL statements. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  self._commit_impl(autocommit=True)
+/home/classic/dev/sqlalchemy/lib/sqlalchemy/sql/selectable.py:4271: RemovedIn20Warning: The legacy calling style of select() is deprecated and will be removed in SQLAlchemy 2.0.  Please use the new calling style described at select(). (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  return cls.create_legacy_select(*args, **kw)
+test3.py:14: RemovedIn20Warning: The Engine.execute() function/method is considered legacy as of the 1.x series of SQLAlchemy and will be removed in 2.0. All statement execution in SQLAlchemy 2.0 is performed by the Connection.execute() method of Connection, or in the ORM by the Session.execute() method of Session. (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9) (Background on SQLAlchemy 2.0 at: https://sqlalche.me/e/b8d9)
+  result = engine.execute(select([foo.c.id]))
+[(1,)]</pre></div>
+</div>
+<p>有了上面的指导，我们可以将程序迁移到使用2.0风格，并且作为奖励，我们的程序更加清晰：</p>
+<blockquote>
+<div><p>from sqlalchemy import column
+from sqlalchemy import create_engine
+from sqlalchemy import select
+from sqlalchemy import table
+from sqlalchemy import text</p>
+<p>engine = create_engine(“sqlite://”)</p>
+<p># 不要依赖自动提交的DML和DDL
+with engine.begin() as connection:</p>
+<blockquote>
+<div><p># 使用connection.execute()，而不是engine.execute()
+# 使用text()构造执行文本SQL
+connection.execute(text(“CREATE TABLE foo (id integer)”))
+connection.execute(text(“INSERT INTO foo (id) VALUES (1)”))</p>
+</div></blockquote>
+<p>foo = table(“foo”, column(“id”))</p>
+<dl class="simple">
+<dt>with engine.connect() as connection:</dt><dd><p># 使用connection.execute()，而不是engine.execute()
+# 现在select()可以接受位置表达式的列/表达式
+result = connection.execute(select(foo.c.id))</p>
+</dd>
+</dl>
+<p>print(result.fetchall())</p>
+</div></blockquote>
+<p>“2.0退化模式”的目标是，当一个程序在打开“2.0退化模式”的情况下运行时，不发出 <code class="xref py py-class docutils literal notranslate"><span class="pre">RemovedIn20Warning</span></code> 警告，程序现在已经准备好在SQLAlchemy 2.0中运行。</p>
+</section>
+<section id="id28">
+<h3>迁移到2.0步骤三 - 解决所有RemovedIn20Warnings<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h3>
+<p>可以向代码中迭代开发解决这些警告。 在SQLAlchemy项目本身中，采用以下方法：</p>
+<p>1.在测试套件中启用“SQLALCHEMY_WARN_20=1”环境变量，对于SQLAlchemy而言，这在tox.ini文件中。</p>
+<p>2.在设置测试套件时，建立一系列警告过滤器，以选择特定子集的警告来引发异常或忽略（或記入日志）。每次处理一个警告子组。</p>
+<p>3.当解决应用程序中的每个子类别的警告时，可以将新的警告加入到要解决的“错误”列表中，这些警告被“始终”过滤器捕获。</p>
+<p>4.一旦不再有警告发出，就可以删除过滤器。</p>
+</section>
+<section id="enginefuture">
+<h3>迁移到2.0步骤四 - 在Engine上使用“future”标志<a class="headerlink" href="#enginefuture" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 对象具有更新的事务级API，在SQLAlchemy 2.0中，将不会自动提交数据库API事务，这与SQLAlchemy 1.x中的会自动提交:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span></pre></div>
+</div>
+<p>自动提交</p>
+<p>在 2.0 中，执行数据库插入、更新或删除操作时，不会自动提交：</p>
+<blockquote>
+<div><p># 不会自动提交，只是插入了一条记录到数据库中
+conn.execute(some_table.insert().values(foo=”bar”))</p>
+</div></blockquote>
+<p>同样，这个也不会自动提交：</p>
+<blockquote>
+<div><p>conn = engine.connect()</p>
+<p># 不会自动提交，但是只插入了一条记录到数据库中
+conn.execute(text(“INSERT INTO table (foo) VALUES (‘bar’)”))</p>
+</div></blockquote>
+<p>这里提供一种常见的解决方法，当需要提交的定制化 DML 语句构成时，需要使用“autocommit”
+选项，这个选项将被删除：</p>
+<blockquote>
+<div><p>conn = engine.connect()</p>
+<p># 在 2.0 中不会自动提交
+conn.execute(text(“EXEC my_procedural_thing()”).execution_options(autocommit=True))</p>
+</div></blockquote>
+<p>2.0迁移</p>
+<p>此操作既适用于 1.x 风格，也适用于 2.0 风格执行，最好使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code>
+方法或 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code> 上下文管理器。</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with engine.begin() as conn:</dt><dd><p>conn.execute(some_table.insert().values(foo=”bar”))
+conn.execute(some_other_table.insert().values(bat=”hoho”))</p>
+</dd>
+<dt>with engine.connect() as conn:</dt><dd><dl class="simple">
+<dt>with conn.begin():</dt><dd><p>conn.execute(some_table.insert().values(foo=”bar”))
+conn.execute(some_other_table.insert().values(bat=”hoho”))</p>
+</dd>
+</dl>
+</dd>
+<dt>with engine.begin() as conn:</dt><dd><p>conn.execute(text(“EXEC my_procedural_thing()”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>与 <span class="xref std std-term">2.0 风格`一起使用 :paramref:`_sa.create_engine.future</span> 标记时，”commit as you go” 风格也可以使用，因为
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 包含了自动开始处理的 <strong>autobegin</strong> 行为，当一条语句在未明确调用:meth:<cite>_engine.Connection.begin</cite>
+的情况下首次被调用时，这个特性就会生效：</p>
+<blockquote>
+<div><dl>
+<dt>with engine.connect() as conn:</dt><dd><p>conn.execute(some_table.insert().values(foo=”bar”))
+conn.execute(some_other_table.insert().values(bat=”hoho”))</p>
+<p>conn.commit()</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>启用 <a class="reference internal" href="#migration-20-deprecations-mode"><span class="std std-ref">2.0 deprecations mode</span></a> 后，在使用”autocommit”特性时将发出警告，指出需要注意哪些地方需要注明显式事务。</p>
+<p>讨论</p>
+<p>SQLAlchemy 最初的几个版本与 Python DBAPI(<span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0249/"><strong>PEP 249</strong></a>) 的精神不符，因为它试图隐藏 <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0249/"><strong>PEP 249</strong></a> 强调的“隐式开始”和“显式提交”事务的问题。
+十五年后，我们发现这是一个错误，因为 SQLAlchemy 的许多试图“隐藏”事务存在的模式构成了一个更复杂的 API，工作方式不一致，对于那些新接触关系数据库和 ACID 事务的用户来说非常混乱。 SQLAlchemy 2.0 将消除所有自动提交事务的尝试，使用模式将始终要求用户以某种方式划分事务的“开始”和“结束”，就像 Python 中读写文件一样，有一个“开始”和“结束”的过程。</p>
+<p>对于纯文本语句的自动提交，实际上有一个正则表达式来分析每个语句，以检测自动提交！并不奇怪，这个正则表达式不断失败，无法适应各种暗示“写入”到数据库中的语句和存储过程，导致我们一直困惑于某些语句在数据库中产生结果，而其他语句则没有结果。通过防止用户了解事务概念，我们得到了很多与此相关的错误报告，因为用户不理解，无论是否某个层级正在自动提交，数据库始终使用事务。</p>
+<p>SQLAlchemy 2.0 将要求在每个级别的所有数据库操作中显式地指定如何使用事务。对于大多数 Core 使用案例，推荐使用的模式是：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with engine.begin() as conn:</dt><dd><p>conn.execute(some_table.insert().values(foo=”bar”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>对于“commit as you go 或者回滚”用法，它类似于如何使用 ORM 级 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，这个 “future” 版本的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>，这是从使用的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 返回的一个，engine 是使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.future</span></code> 标志创建的。这个版本包括新的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code> 和 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code> 方法，它们基于当第一次执行语句时自动开始的事务进行操作：</p>
+<blockquote>
+<div><p># 1.4 / 2.0 代码</p>
+<p>from sqlalchemy import create_engine</p>
+<p>engine = create_engine(…, future=True)</p>
+<dl>
+<dt>with engine.connect() as conn:</dt><dd><p>conn.execute(some_table.insert().values(foo=”bar”))
+conn.commit()</p>
+<p>conn.execute(text(“some other SQL”))
+conn.rollback()</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>需要注意的是，<code class="docutils literal notranslate"><span class="pre">engine.connect()</span></code> 方法将返回一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>，它具有 <strong>autobegin</strong> 特性，这意味着
+<code class="docutils literal notranslate"><span class="pre">begin()</span></code> 事件在第一次使用 execute 方法时被调用（请注意，Python DBAPI 中没有实际的 “BEGIN”）。”autobegin” 是 SQLAlchemy 1.4
+的新模式，它被 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 以及 ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象同时支持；
+autobegin 允许在对象第一次被获取时显示调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code> 方法，以适应需要划分事务的方案，但如果不调用该方法，则会在对象的第一次操作时隐式执行。</p>
+<p>去掉 “autocommit” 与去掉 “connectionless” 执行、”bound metadata”</p>
+<p><strong>概述</strong></p>
+<p>将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 与 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 对象关联起来，使“connectionless”执行模式得到了解决，这种模式可以使用一系列所谓的“connectionless” 执行模式，现在被取消。使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">execute</span></code> 方法执行语句时， <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 来处理连接资源， <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData.create_all" title="sqlalchemy.schema.MetaData.create_all"><code class="xref py py-class docutils literal notranslate"><span class="pre">create_all</span></code></a> 操作始终使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 获取连接。现在使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>，以开启事务块。</p>
+<p><strong>迁移至 2.0</strong></p>
+<p>只能使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 或 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 对象来执行数据库表的创建与映射，执行语句时只有 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 对象有 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> 方法。与编辑 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 或签入/签出交互的方式相比，代码用法会更加明确。</p>
+<blockquote>
+<div><p>from sqlalchemy import MetaData</p>
+<p>metadata_obj = MetaData()</p>
+<p># engine 级 operation:</p>
+<p># 创建表
+metadata_obj.create_all(engine)</p>
+<p># 反射所有表结构
+metadata_obj.reflect(engine)</p>
+<p># 反射单个表结构
+t = Table(“t”, metadata_obj, autoload_with=engine)</p>
+<p># connection 级 operation:</p>
+<dl>
+<dt>with engine.connect() as connection:</dt><dd><p># 创建表，需要显式的 begin() 和/或 commit()
+with connection.begin():</p>
+<blockquote>
+<div><p>metadata_obj.create_all(connection)</p>
+</div></blockquote>
+<p># 反射所有表结构
+metadata_obj.reflect(connection)</p>
+<p># 反射单个表结构
+t = Table(“t”, metadata_obj, autoload_with=connection)</p>
+<p># 执行 SQL 语句
+result = connection.execute(t.select())</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<ul class="simple">
+<li><p>此更改会移除 <code class="xref py py-class docutils literal notranslate"><span class="pre">execute</span></code> 方法的 “connectionless” 执行模式。</p></li>
+<li><p>执行方法更改为 “generative” 风格。</p></li>
+<li><p>“bound metadata” 现在已无用武之地。</p></li>
+<li><p>数据库表和映射关系现在只能使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 创建，不能使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>。</p></li>
+</ul>
+<p>废弃 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code>、执行选项更加突出</p>
+<p><strong>概述</strong></p>
+<p>在 SQLAlchemy 2.0 中，传递给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.engine.Connection()</span></code> execute 方法的参数模式得到极大的简化，除了 table 外的参数构造不再存在：</p>
+<blockquote>
+<div><p># 不再支持直接插入
+stmt = insert(table, values={“x”: 10, “y”: 15}, inline=True)</p>
+<p># 不再支持直接插入
+stmt = insert(table, values={“x”: 10, “y”: 15}, returning=[table.c.x])</p>
+<p># 不再支持 table.delete(table.c.x &gt; 15)
+stmt = table.delete(table.c.x &gt; 15)</p>
+<p># 不再支持
+stmt = table.update(table.c.x &lt; 15, preserve_parameter_order=True).values(</p>
+<blockquote>
+<div><p>[(table.c.y, 20), (table.c.x, table.c.y + 10)]</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p><strong>迁移至 2.0</strong></p>
+<p>下面的示例说明了这里面的例子应该如何移植：</p>
+<blockquote>
+<div><p># 使用 generative 方法
+stmt = insert(table).values(x=10, y=15).inline()</p>
+<p># 使用 generative 方法，字典仍然 OK
+stmt = insert(table).values({“x”: 10, “y”: 15}).returning(table.c.x)</p>
+<p># 使用 generative 方法
+stmt = table.delete().where(table.c.x &gt; 15)</p>
+<p># 使用 generative 方法，ordered_values() 代替 preserve_parameter_order
+stmt = (</p>
+<blockquote>
+<div><p>table.update()
+.where(</p>
+<blockquote>
+<div><p>table.c.x &lt; 15,</p>
+</div></blockquote>
+<p>)
+.ordered_values((table.c.y, 20), (table.c.x, table.c.y + 10))</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>与 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 一样，SQLAlchemy 已经发展出了一种行为惯例，即构造元素列表的传递方式，建构元素应该使用位置传递方式。最终，SQLAlchemy 2.0将解决 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造的问题，因为历史遗留的调用方式中的 “WHERE” 子句是通过位置传递的。</p>
+<p><strong>变动包括</strong></p>
+<ul class="simple">
+<li><p>删除了插入、更新或删除 DML 的非 table 参数构造函数。</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code> 不再允许使用 <a href="#id29"><span class="problematic" id="id30">*</span></a>args 和 <a href="#id31"><span class="problematic" id="id32">**</span></a>kwargs。这些参数已经被移除，为选项传递留下了容量。</p></li>
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 现在已暴露为一种 generative 写作模式，就像大多数 ORM 查询一样。只允许使用字典来传递构造参数。</p></li>
+</ul>
+<p>结果行像命名元组一样</p>
+<p><strong>概述</strong></p>
+<p>一个新的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 类被与支持 “future” 模式的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code>，<code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 和 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 关联的结果对象一般返回，<code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 的行为像命名元组一样，以“future”模式使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.engine.Engine()</span></code> 或 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>，但在 1.x版本中，默认的是返回 SQL 中变量名称为 key，这个变化是不兼容的。</p>
+<p><strong>迁移至 2.0</strong></p>
+<p>如果需要从结果行中获取某个键,应该使用``row.keys()`。但这是一个异常情况，因为结果行通常是由已知的列组成的。</p>
+<p><strong>讨论</strong></p>
+<p>SQLAlchemy 1.4 引入了全新的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 实现，它是由
+<a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 在选择行时返回的，这个类行为类似于命名元组。然而，它还提供先前的“映射”行为，方法是提供一个特别的属性 row._mapping，这个属性可以产生一个 Python 映射，以便可以使用这样的 keyed 访问方式 row[“some_column”]。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code> 还支持通过实体或属性进行访问，例如：<code class="docutils literal notranslate"><span class="pre">row.some_column</span></code>。
+例如，在数据库中的应用架构中，已知存在一组列。仅在非常罕见的情况下，结果行被用于测试是否存在某个键。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">change_4710_core</span>
+更多了解请到官方文档去查看
+../../orm/extensions/declarative/bases.rst#sqlalchemy.ext.declarative.api.Base</p>
+</div>
+<p>declarative_base() 成为第一类 API</p>
+<p><strong>概述</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative</span></code>
+功能模块的大部分，除了一些例外，被移动到 <code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm</span></code> 导入混合类型等用法。</p>
+<p><strong>迁移到 2.0</strong></p>
+<p>更改导入：</p>
+<blockquote>
+<div><p>from sqlalchemy.ext import declarative_base, declared_attr</p>
+</div></blockquote>
+<p>为：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import declarative_base, declared_attr</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>在多年的流行之后，<code class="docutils literal notranslate"><span class="pre">sqlalchemy.ext.declarative</span></code> 模块现在已整合到 <code class="docutils literal notranslate"><span class="pre">sqlalchemy.orm</span></code> 命名空间中，但除了声明扩展类以外其他的东西都不影响。更改的详细信息在 1.4 迁移指南上有说明。
+声明式、经典映射、数据类、attrs等。</p>
+<p><a class="reference internal" href="migration_14.html#change-5508"><span class="std std-ref">声明式现在与ORM集成并具有新功能</span></a></p>
+<p>声明式的核心元素现在将原来的 standalone 函数”mapper()”移至后台，由更高级别的 API 调用。“mapper()”方法被移植到了 _orm.registry.map_imperatively，该方法是由 _orm.registry 对象生成的。</p>
+<p>2.0的迁移
+与经典映射一起工作的代码应该从以下格式进行调整：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import mapper</p>
+<p>mapper(SomeClass, some_table, properties={“related”: relationship(SomeRelatedClass)})</p>
+</div></blockquote>
+<p>工作方式调整为以中央 _orm.registry 对象为核心：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import registry</p>
+<p>mapper_reg = registry()</p>
+<dl class="simple">
+<dt>mapper_reg.map_imperatively(</dt><dd><p>SomeClass, some_table, properties={“related”: relationship(SomeRelatedClass)}</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>上述 _orm.registry 对象也是声明式映射的来源，现在经典映射也可以使用该注册表，包括对 _orm.relationship 进行基于字符串的配置。</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import registry</p>
+<p>mapper_reg = registry()</p>
+<p>Base = mapper_reg.generate_base()</p>
+<dl>
+<dt>class SomeRelatedClass(Base):</dt><dd><p>__tablename__ = “related”</p>
+<p># …</p>
+</dd>
+<dt>mapper_reg.map_imperatively(</dt><dd><p>SomeClass,
+some_table,
+properties={</p>
+<blockquote>
+<div><dl class="simple">
+<dt>“related”: relationship(</dt><dd><p>“SomeRelatedClass”,
+primaryjoin=”SomeRelatedClass.related_id == SomeClass.id”,</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>},</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>该经典映射设计的主要理念在于将 _schema.Table 的设置与类别分开，而声明式一直以来都可以使用这种风格。</p>
+<p>此外，为了消除基类要求，增加了一种一类别装饰器形式。作为其他一些增强功能，支持 Python 数据类，这种数据类可以使用声明式装饰器和经典映射形式。</p>
+<p>有关所有新的声明式和经典映射、数据类、attrs等的统一文档，请参见 : ref: <cite>orm_mapping_classes_toplevel</cite>。</p>
+</section>
+</section>
+<section id="orm2-0">
+<span id="migration-20-query-usage"></span><h2>ORM使用2.0迁移<a class="headerlink" href="#orm2-0" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy 2.0中最显著的可见变化是使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 结合 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 运行 ORM 查询，而不是使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code>。正如其他讨论所提到的，实际上没有计划彻底删除 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code> API 本身，因为现在它是以新的API内部实现为基础，因此它会保留为遗留API，可以自由地使用两个API。</p>
+<p>下表提供了一般呼叫形式的介绍以及链入对每种技术呈现的文档的链接。嵌入性节部分中的个别迁移说明可能包含这里未总结的其他说明。</p>
+<div class="sliding-table docutils container">
+<table class="docutils align-default" id="id92">
+<caption><span class="caption-text">** ORM查询模式概述**</span><a class="headerlink" href="#id92" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="xref std std-term">1.x式</span> 格式</p></th>
+<th class="head"><p><span class="xref std std-term">2.0式</span> 格式</p></th>
+<th class="head"><p>参见</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#migration-20-get-to-session"><span class="std std-ref">ORM 查询 - get() 方法移至 Session</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<span class="c1"># 或者</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#migration-20-unify-select"><span class="std std-ref">ORM查询与核心选择器统一</span></a></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalars()</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;some user&quot;</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">one</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;some user&quot;</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">scalar_one</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#migration-20-unify-select"><span class="std std-ref">ORM查询与核心选择器统一</span></a></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one()</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;some user&quot;</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">first</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;some user&quot;</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#migration-20-unify-select"><span class="std std-ref">ORM查询与核心选择器统一</span></a></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.first()</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
+  <span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">options</span><span class="p">(</span>
+    <span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#joinedload-not-uniqued"><span class="std std-ref">ORM行默认情况下不具有唯一性</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">join</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">filter</span><span class="p">(</span>
+    <span class="n">Address</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;e@sa.us&quot;</span>
+  <span class="p">)</span><span class="o">.</span>\
+  <span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">join</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">where</span><span class="p">(</span>
+    <span class="n">Address</span><span class="o">.</span><span class="n">email</span> <span class="o">==</span> <span class="s2">&quot;e@sa.us&quot;</span>
+  <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="#migration-20-unify-select"><span class="std std-ref">ORM查询与核心选择器统一</span></a></p>
+<p><span class="xref std std-ref">orm_queryguide_joins</span></p>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">from_statement</span><span class="p">(</span>
+    <span class="n">text</span><span class="p">(</span><span class="s2">&quot;select * from users&quot;</span><span class="p">)</span>
+  <span class="p">)</span><span class="o">.</span>\
+  <span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>
+  <span class="n">from_statement</span><span class="p">(</span>
+    <span class="n">text</span><span class="p">(</span><span class="s2">&quot;select * from users&quot;</span><span class="p">)</span>
+  <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><span class="xref std std-ref">orm_queryguide_selecting_text</span></p></td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">options</span><span class="p">(</span>
+    <span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+  <span class="p">)</span><span class="o">.</span>\
+  <span class="n">populate_existing</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">options</span><span class="p">(</span>
+    <span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>
+  <span class="p">)</span>
+  <span class="o">.</span><span class="n">execution_options</span><span class="p">(</span>
+      <span class="n">populate_existing</span><span class="o">=</span><span class="kc">True</span>
+  <span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="../orm/queryguide/api.html#orm-queryguide-execution-options"><span class="std std-ref">ORM执行选项</span></a></p>
+<p><a class="reference internal" href="../orm/queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">现有数据充填</span></a></p>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span><span class="o">.</span>\
+  <span class="n">update</span><span class="p">(</span>
+    <span class="p">{</span><span class="s2">&quot;fullname&quot;</span><span class="p">:</span> <span class="s2">&quot;Foo Bar&quot;</span><span class="p">},</span>
+    <span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;evaluate&quot;</span>
+  <span class="p">)</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+  <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;foo&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Foo Bar&quot;</span><span class="p">)</span>
+  <span class="o">.</span><span class="n">execution_options</span><span class="p">(</span>
+    <span class="n">synchronize_session</span><span class="o">=</span><span class="s2">&quot;evaluate&quot;</span>
+  <span class="p">)</span>
+<span class="p">)</span></pre></div>
+</div>
+</td>
+<td><p><a class="reference internal" href="../orm/queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span></pre></div>
+</div>
+</td>
+<td><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">())</span><span class="o">.</span>
+  <span class="n">select_from</span><span class="p">(</span><span class="n">User</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># 或者</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
+  <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+<span class="p">)</span></pre></div>
+</div>
+</td>
+<td><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalar()</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<section id="orm">
+<span id="migration-20-unify-select"></span><h3>ORM查询与核心选择器统一<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h3>
+<p><strong>概要</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象（以及 <code class="xref py py-class docutils literal notranslate"><span class="pre">BakedQuery</span></code> 和 <a class="reference internal" href="../orm/extensions/horizontal_shard.html#sqlalchemy.ext.horizontal_shard.ShardedQuery" title="sqlalchemy.ext.horizontal_shard.ShardedQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">ShardedQuery</span></code></a> 扩展）现在是遗留对象，被直接使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构造的结合 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法取代。从 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 中返回的结果以 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象形式统一进行返回，这些结果以对象列表、元组或标量 ORM 对象的形式返回，这些对象具有与 Core 执行相同的接口。</p>
+<p>应使用映射属性来区分ORM对象和关系字符串中的多个属性，例如，不在支持:meth:<cite>_query.Query.join</cite> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 上使用属性名称构成的字符串例子将被删除。</p>
+<p>永远不要将对象从一个位置传递到另一个位置。需要从一个位置到另一个位置的是对象的唯一标识符，例如它的主键值等。</p>
+<p><strong>迁移到2.0</strong></p>
+<blockquote>
+<div><p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 的大部分应用现在可以使用 Core 的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 对象来实现，使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 运行 SQL 语句。例如，在 <span class="xref std std-term">1.x式</span> 中，跨表查询可能像下面这样：</p>
+<blockquote>
+<div><p>session.query(User).join(“addresses”)</p>
+</div></blockquote>
+</div></blockquote>
+<p>在 <span class="xref std std-term">2.0式</span> 编写合法代码时，使用以下方式：</p>
+<blockquote>
+<div><p>select(User).join(User.addresses)</p>
+</div></blockquote>
+<p>查询可以像下面这样执行：</p>
+<blockquote>
+<div><p>session.execute(select(User).join(User.addresses))</p>
+</div></blockquote>
+<p>因为结果都是 <code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code> 对象，因此可以使用和 :meth:` _orm.Session.query` 相同的方法执行查询，但是使用执行器  :meth: ` _orm.Session.execute` 集成 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.select()</span></code></a>， 它具有不同的方法，例如 scalars(), unique() 等。有关 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 的完整说明，请参见 <a class="reference internal" href="../orm/queryguide.html"><span class="doc">&lt;no title&gt;</span></a>。</p>
+<p>以下是迁移 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 的示例：</p>
+<blockquote>
+<div><p># SQLAlchemy 1.4 / 2.0 兼容
+stmt = select(User).join(User.addresses)
+result = session.execute(stmt)</p>
+<p># 或
+session.execute(select(User).join(User.addresses)).scalars().all()</p>
+<p># 使用唯一性 modifier
+session.execute(select(User).options(joinedload(User.addresses))).unique().all()</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 的重叠是 SQLAlchemy 最大的不协调的地方之一。这个问题产生的原因是由于逐步增加导致两个关键 API 发生分歧。</p>
+<p>在 SQLAlchemy 的前几个版本中， <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象甚至并不存在。最初的想法是 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 构建本身可以选择行，而不是类需要使用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>，创建核心风格的条件。 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 几个月/几年内部产生了一些被接受的新功能，而成为一个新的“可构建性”的查询对象最初称为``SelectResults``。类似 “where()” 方法的概念，在 SQLAlchemy 中以前是不存在的， <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 仅使用一次-at-once 构造方式，在 <span class="xref std std-ref">migration_20_5284</span> 中现在已经被弃用。</p>
+<p>随着新方法的出现， <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象向 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-class docutils literal notranslate"><span class="pre">select</span></code></a> 对象添加了很多新的方法，包括选择单个列、同时选择多个实体，从 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象构建子查询等等，这个目标就是 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 应该拥有 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-class docutils literal notranslate"><span class="pre">select</span></code></a> 的全部功能，可以构成完整的SELECT语句，无需使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 外显。同时， <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 已经发展出了”generative”方法，例如 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a>。</p>
+<p>现代 SQLAlchemy 已经实现了这个目标，两个对象现在完全重叠。统一的主要挑战在于 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 对象需要始终 <strong>完全脱离 ORM</strong>。为了实现这一点，大部分 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 的逻辑已经从 SQL 编译阶段移动到了 SQL 编译阶段，其中 ORM 特定的编译器插件接收 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 构造，并解释它的内容，以ORM样式的查询表示，然后转移到内核级别编译器，以创建 SQL 字符串。随着新的SQL编译缓存系统的出现，大部分的 ORM 逻辑也被缓存。</p>
+</section>
+<section id="orm-get-session">
+<span id="migration-20-get-to-session"></span><h3>ORM 查询 - get() 方法移至 Session<a class="headerlink" href="#orm-get-session" title="Permalink to this heading">¶</a></h3>
+<p><strong>概要</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.get" title="sqlalchemy.orm.Query.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.get()</span></code></a> 方法现在为遗留目的而保留，但主要接口现在是 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> 方法：</p>
+<blockquote>
+<div><p>#老用法
+user_obj = session.query(User).get(5)</p>
+</div></blockquote>
+<p><strong>迁移到 2.0</strong></p>
+<p>在 1.4 / 2.0 中， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象添加了新的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> 方法：</p>
+<blockquote>
+<div><p># 1.4 / 2.0 版本交叉兼容使用
+user_obj = session.get(User, 5)</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.get" title="sqlalchemy.orm.Query.get"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.get()</span></code></a> 方法定义了与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的特殊交互方式，而且可能甚至不需要发出查询，更适合它是 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的一部分，类似于其他”identity”方法，例如 <code class="xref py py-class docutils literal notranslate"><span class="pre">refresh</span></code> 和 <code class="xref py py-class docutils literal notranslate"><span class="pre">merge</span></code>。</p>
+</section>
+<section id="orm-joining-loading-on-relationships">
+<span id="migration-20-orm-query-join-strings"></span><h3>ORM 查询 - Joining / loading on relationships 使用属性，而不是字符串<a class="headerlink" href="#orm-joining-loading-on-relationships" title="Permalink to this heading">¶</a></h3>
+<p><strong>概要</strong></p>
+<p>不再支持将字符串属性或实际类别属性混合使用，这涉及到诸如 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a> 这样的模式以及选项，例如 <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>。</p>
+<blockquote>
+<div><p>#删除字符串使用
+q = session.query(User).join(“addresses”)</p>
+<p>#删除字符串使用
+q = session.query(User).options(joinedload(“addresses”))</p>
+<p>#删除字符串使用
+q = session.query(Address).filter(with_parent(u1, “addresses”))</p>
+</div></blockquote>
+<p><strong>迁移到 2.0</strong></p>
+<p>现代 SQLAlchemy 1.x 版本支持推荐的技术，即使用映射属性：</p>
+<blockquote>
+<div><p>#与所有现代SQLAlchemy版本兼容的代码
+q = session.query(User).join(User.addresses)</p>
+<p>q = session.query(User).options(joinedload(User.addresses))</p>
+<p>q = session.query(Address).filter(with_parent(u1, User.addresses))</p>
+</div></blockquote>
+<p>相同的技术也适用于 <span class="xref std std-term">2.0式</span> 的用法：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import joinedload</p>
+<p>session.query(User).join(User.addresses)</p>
+<p>session.query(Address).filter(with_parent(u1, User.addresses))</p>
+</div></blockquote>
+<p>因此，所述 ORM 查询统一与 Core 的:模块:<cite>_sql.select</cite>，并允许 ORM 属性映射的属性同时充当列名和列对象。区分 ORM 对象和关系字符串中的多个属性所需的技术变成了使用属性本身，这一要求已经从该库中删除了在 1.xx 使用字符串属性的做法。</p>
+<p>…参考文档</p>
+</section>
+<section id="orm-join-aliased-true-from-joinpoint">
+<span id="migration-20-query-join-options"></span><h3>ORM 查询 - join(…，aliased=True)，from_joinpoint已去除<a class="headerlink" href="#orm-join-aliased-true-from-joinpoint" title="Permalink to this heading">¶</a></h3>
+<p><strong>概要</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-class docutils literal notranslate"><span class="pre">join</span></code></a> 上的 <code class="docutils literal notranslate"><span class="pre">aliased=True</span></code> 选项已删除，同时也删除了 <code class="docutils literal notranslate"><span class="pre">from_joinpoint</span></code> 标志：</p>
+<blockquote>
+<div><p>#不再支持
+q = (</p>
+<blockquote>
+<div><p>session.query(Node)
+.join(“children”, aliased=True)
+.filter(Node.name == “some sub child”)
+.join(“children”, from_joinpoint=True, aliased=True)
+.filter(Node.name == “some sub sub child”)</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p><strong>迁移到 2.0</strong></p>
+<p>现在需要使用显式别名：</p>
+<blockquote>
+<div><p>n1 = aliased(Node)
+n2 = aliased(Node)</p>
+<dl class="simple">
+<dt>q = (</dt><dd><p>select(Node)
+.join(Node.children.of_type(n1))
+.where(n1.name == “some sub child”)
+.join(n1.children.of_type(n2))
+.where(n2.name == “some sub child”)</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a> 上的 <code class="docutils literal notranslate"><span class="pre">aliased=True</span></code> 选项是极少被使用的一个选项, 基于代码搜索， 可以发现实际的使用率非常非常低。由于 <code class="docutils literal notranslate"><span class="pre">aliased=True</span></code> 如果需要变更过滤器条件，内部的复杂度非常高，将在 2.0 中消失。</p>
+<p>大多数用户并不熟悉此标志，但它允许沿连接自动为元素添加别名，然后将筛选条件的自动别名扩展为实际结果。早期的用例是协助长串联自我参照连接，但是，筛选条件的自动适应非常复杂，几乎从未在现实世界的应用程序中使用。另外，该模式还存在问题，例如如果需要在链接链中的每个链接处添加过滤器条件，则该模式将必须使用 <code class="docutils literal notranslate"><span class="pre">from_joinpoint</span></code> 标志， 。 SQLAlchemy 的开发人员绝对没有在真实世界的应用程序中找到过此参数的任何用法。</p>
+<p><code class="docutils literal notranslate"><span class="pre">aliased=True</span></code> 和 <code class="docutils literal notranslate"><span class="pre">from_joinpoint</span></code> 参数是在 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象还没有可用于关注关系属性的功能（如 <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>）以及 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 结构本身不存在早期开发期间开发的。在 SQLAlchemy 1.4 中，<a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 结构已经被增强，可以针对任何任意可选择项发出 ORM 查询，也可以多次对相同的子查询使用它，且纽结较多，可以被用于 <span class="xref std std-term">1.x式</span> 的 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>，在上述示例中，由于最后一个查询需要从多个表查询，因此需要创建两个单独的 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 结构， <span class="xref std std-term">2.0式</span> 的情况下也可以使用相同的形式。
+…
+.. _migration_20_query_distinct:</p>
+</section>
+<section id="distinct">
+<h3>使用DISTINCT选项选择其他列，但仅选择实体<a class="headerlink" href="#distinct" title="Permalink to this heading">¶</a></h3>
+<p>当前 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 得到 distinct 使用时，在 ORDER BY 中自动添加列。以下查询将从所有 User 的列中选择，还选择“address.email_address”，但仅返回 User 对象:</p>
+<blockquote>
+<div><p># 1.xx 代码</p>
+<dl class="simple">
+<dt>result = (</dt><dd><p>session.query(User)
+.join(User.addresses)
+.distinct()
+.order_by(Address.email_address)
+.all()</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>在 2.0 中，”email_address” 列将不会自动添加到列子句中，因此上面的查询将失败，因为当使用 DISTINCT 时，关系数据库不允许对 “address.email_address” 进行排序，如果它没有在列子句中。</p>
+<p><strong>迁移到 2.0</strong></p>
+<p>在 2.0 中，必须明确添加该列。为了只返回主要实体对象而不返回附加列，请使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.columns()</span></code> 方法：</p>
+<blockquote>
+<div><p>#1.4 /2.0代码</p>
+<dl class="simple">
+<dt>stmt = (</dt><dd><p>select(User, Address.email_address)
+.join(User.addresses)
+.distinct()
+.order_by(Address.email_address)</p>
+</dd>
+</dl>
+<p>)</p>
+<p>result = session.execute(stmt).columns(User).all()</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>这种情况是 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 的有限灵活性导致必须添加隐式的“神奇”行为;“email_address”列隐式添加到列子句中，然后其他的过滤条件逻辑从实际结果中省略该列。</p>
+<p>新方法简化了交互并使正在进行的事情明确化，同时仍然可以实现原始用例而不会出现任何不便。</p>
+</section>
+<section id="from-self">
+<span id="migration-20-query-from-self"></span><h3>选择子查询自身作为查询，例如”from_self()”<a class="headerlink" href="#from-self" title="Permalink to this heading">¶</a></h3>
+<p>现在已删除 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.from_self()</span></code> 方法：</p>
+<blockquote>
+<div><p># from_self 被删除
+q = (</p>
+<blockquote>
+<div><p>session.query(User, Address.email_address)
+.join(User.addresses)
+.from_self(User)
+.order_by(Address.email_address)</p>
+</div></blockquote>
+<p>)</p>
+</div></blockquote>
+<p><strong>迁移到 2.0</strong></p>
+<p>现在使用 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 结构可以用于在查询任意可选择项的实体时发出 ORM 查询。对它进行了增强，使其可以充分满足多次使用相同子查询以进行不同实体的查询的需要。这可以在 <span class="xref std std-term">1.x式</span> 中使用 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>:</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import aliased</p>
+<p>subq = session.query(User, Address.email_address).join(User.addresses).subquery()</p>
+<p>ua = aliased(User, subq)</p>
+<p>aa = aliased(Address, subq)</p>
+<p>q = session.query(ua, aa).order_by(aa.email_address)</p>
+</div></blockquote>
+<p>可在 <span class="xref std std-term">2.0式</span> 中使用：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import aliased</p>
+<p>subq = select(User, Address.email_address).join(User.addresses).subquery()</p>
+<p>ua = aliased(User, subq)</p>
+<p>aa = aliased(Address, subq)</p>
+<p>stmt = select(ua, aa).order_by(aa.email_address)</p>
+<p>result = session.execute(stmt)</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.from_self()</span></code> 是一个非常复杂的方法，很少使用。该函数的目的是将 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 转换为子查询，然后返回一个新的 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象，该对象从该子查询中进行 SELECT。
+因为 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.from_self()</span></code> 包含了大量的内置隐式翻译函数，则进入所产生的 SQL，尽管它允许使用较为简洁的方式来执行某种类型的查询，但此方法真正的现实使用也是不频繁的，因为它并不是一个易于理解的方法。</p>
+<p>新方法使用 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 结构，所以 ORM 的调用不再需要猜测哪些实体和列应该被适当修改，以何种方式进行适应; 在上面的示例中， “ua”和 “aa”对象均为 <code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code> 实例，它们为内部提供了一个明确的标记，以标明子查询应该被称为以及对于此查询的给定组件正在考虑哪个实体列或关系。</p>
+<p>SQLAlchemy 1.4 还具有改进的标记样式，不再需要在标签中包含表名才能区分不同表中的相同列名的使用。在上述示例中，即使我们的 “User”和 “Address” 实体具有重叠的列名，我们也可以在不必指定任何特定标签的情况下选择两个实体：</p>
+<blockquote>
+<div><p>#1.4 /2.0代码</p>
+<p>subq = select(User, Address).join(User.addresses).subquery()</p>
+<p>ua = aliased(User, subq)
+aa = aliased(Address, subq)</p>
+<p>stmt = select(ua, aa).order_by(aa.email_address)
+result = session.execute(stmt)</p>
+</div></blockquote>
+<p>上述查询将区分 “User” 的 “id”列和 “Address” 的 “id”列``Address``，其中``Address.id``渲染并跟踪为``id_1``：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_id</span><span class="p">,</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">id_1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_id_1</span><span class="p">,</span>
+<span class="w">       </span><span class="n">anon_1</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_user_id</span><span class="p">,</span>
+<span class="w">       </span><span class="n">anon_1</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1_email_address</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">  </span><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id_1</span><span class="p">,</span>
+<span class="w">  </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">email_address</span>
+<span class="w">  </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">email_address</span></pre></div>
+</div>
+<p><a href="#id33"><span class="problematic" id="id34">:ticket:`5221`</span></a></p>
+</section>
+<section id="selectable-query-select-entity-from">
+<h3>从备选selectable选择实体; Query.select_entity_from()<a class="headerlink" href="#selectable-query-select-entity-from" title="Permalink to this heading">¶</a></h3>
+<p><strong>简介</strong></p>
+<p>:meth:<a href="#id35"><span class="problematic" id="id36">`</span></a>_orm.Query.select_entity_from`在2.0中将被删除:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subquery</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">subquery</span><span class="p">()</span>
+
+<span class="n">user</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">select_entity_from</span><span class="p">(</span><span class="n">subquery</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
+</div>
+<p><strong>2.0迁移</strong></p>
+<p>如在:ref:<cite>migration_20_query_from_self`中所述，:func:`_orm.aliased`对象提供了一个单一的地方，可以实现“从子查询选择实体”的操作。
+使用:term:`1.x style</cite>：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import aliased</p>
+<p>subquery = session.query(User).filter(User.name.like(“%somename%”)).subquery()</p>
+<p>ua = aliased(User, subquery)</p>
+<p>user = session.query(ua).order_by(ua.id).first()</p>
+</div></blockquote>
+<p>使用:term:<cite>2.0 style</cite>：</p>
+<blockquote>
+<div><p>from sqlalchemy.orm import aliased</p>
+<p>subquery = select(User).where(User.name.like(“%somename%”)).subquery()</p>
+<p>ua = aliased(User, subquery)</p>
+<p># 需要注意的是，如果需要的话，不会自动提供LIMIT 1
+user = session.execute(select(ua).order_by(ua.id).limit(1)).scalars().first()</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>这里的要点基本与在:ref:<a href="#id37"><span class="problematic" id="id38">`</span></a>migration_20_query_from_self`中讨论的相同。
+:meth:<a href="#id39"><span class="problematic" id="id40">`</span></a>_orm.Query.select_from_entity`方法是指令查询从另一个可选择的实体加载一个特定ORM映射的实体的行，这要求ORM在稍后在查询中使用该实体时对其进行自动别名，例如 在“WHERE”或“ORDER BY”中。这个极其复杂的功能在这种情况下很少使用，就像:meth:<a href="#id41"><span class="problematic" id="id42">`</span></a>_orm.Query.from_self`的情况一样，使用显式的:func:<a href="#id43"><span class="problematic" id="id44">`</span></a>_orm.aliased`对象更容易跟随，无论从用户的角度还是从SQLAlchemy ORM的内部如何处理它的角度。</p>
+</section>
+<section id="joinedload-not-uniqued">
+<span id="id45"></span><h3>ORM行默认情况下不具有唯一性<a class="headerlink" href="#joinedload-not-uniqued" title="Permalink to this heading">¶</a></h3>
+<p><strong>简介</strong></p>
+<p>不再自动“唯一”的ORM行由``session.execute(stmt)``返回。这通常是一个受欢迎的变化，除了在使用“连接式急切加载”加载程序策略与集合的情况下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 在旧API中，许多行都有相同的User主键，但是</span>
+<span class="c1"># 只有一个主键返回一个User</span>
+<span class="n">users</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span>
+
+<span class="c1"># 在新API中，唯一的优化可能不会自动地</span>
+<span class="c1"># 启用</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)))</span>
+
+<span class="c1"># 这实际上会引发错误，让用户知道应该应用唯一性</span>
+<span class="c1"># rows</span>
+<span class="n">rows</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<p><strong>2.0迁移</strong></p>
+<p>在使用集合的连接加载时，需要调用:meth:<a href="#id46"><span class="problematic" id="id47">`</span></a>_engine.Result.unique`方法。ORM实际上已经设置了默认的行处理程序，如果不执行此操作，它将引发错误，以确保联接急加载集合不返回重复行，同时仍然保持显式性：：</p>
+<blockquote>
+<div><p># 1.4 / 2.0代码</p>
+<p>stmt = select(User).options(joinedload(User.addresses))</p>
+<p># 由于集合的joinedload(),语句将引发唯一()，在所有其他情况下，不需要使用unique()。通过显式声明unique()，解决了查询到的对象数量/行数与“选择计算”的数量之间的混淆
+rows = session.execute(stmt).unique().all()</p>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>这种情况有点不寻常，因为SQLAlchemy要求调用一个它完全能够自动执行的方法。要调用该方法的原因是为了确保开发人员“选择”使用:meth:<a href="#id48"><span class="problematic" id="id49">`</span></a>_engine.Result.unique`方法，使得直接对行进行计数不冲突与实际结果集中的记录数，这是多年来用户混淆的长期来源和错误报告。默认情况下不会在任何其他情况下自动执行唯一性，这将提高性能，并在自动唯一性导致混淆的情况下提高清晰度。</p>
+<p>就像在大多数情况下强烈建议使用:func:<a href="#id50"><span class="problematic" id="id51">`</span></a>_orm.selectinload`策略一样，在使用连接加载集合的情况下需要调用:meth:<a href="#id52"><span class="problematic" id="id53">`</span></a>_engine.Result.unique`方法，在 2.0中引入了以集合为导向的即时加载程序，这比:func:<a href="#id54"><span class="problematic" id="id55">`</span></a>_orm.joinedload`在大多数方面都要优越，并应予以优先考虑。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">change_7123</span></p>
+<p><a class="reference internal" href="../orm/large_collections.html#write-only-relationship"><span class="std std-ref">只写关系</span></a></p>
+</div>
+</section>
+<section id="id56">
+<h3>“动态”关系加载器被“只写”取代<a class="headerlink" href="#id56" title="Permalink to this heading">¶</a></h3>
+<p>🈚:ref:<a href="#id57"><span class="problematic" id="id58">`</span></a>dynamic_relationship`所述的“动态”关系加载程序使用的是:meth:<a href="#id59"><span class="problematic" id="id60">`</span></a>_query.Query`对象，在2.0中已经过时。 “动态”关系对协程的支持不直接兼容，此外，它不再实现防止迭代大型集合的原始目的，因为它具有几个隐式执行迭代的行为。</p>
+<p>引入了称为“lazy=”write_only“” 的新的加载器策略，该新的策略通过:class:<a href="#id61"><span class="problematic" id="id62">`</span></a>_orm.WriteOnlyCollection`集合类提供了一个非常严格的“无隐式迭代”API，此外还与2.0样式语句执行集成，支持异步操作以及与新的:ref:<a href="#id63"><span class="problematic" id="id64">`</span></a>ORM-enabled Bulk DML &lt;change_8360&gt;`特性集成。</p>
+<p>同时，“lazy=”dynamic“”仍然在2.0版中得到**完全支持**；在完全运行于2.0系列的应用程序上之前，可以推迟迁移此特定模式。</p>
+<p><strong>迁移到2.0</strong></p>
+<p>新的“写入”加载器策略仅在SQLAlchemy 2.0中提供，不是1.4的一部分。同时，“lazy=”dynamic“”加载器策略在2.0版中仍然得到完全支持，甚至包括新的pep-484和注释化映射支持。</p>
+<p>因此，从“dynamic”进行迁移的最佳策略是**等待应用程序完全运行于2.0版**，然后直接从:class:<cite>.AppenderQuery`(动态模式所使用的集合类型)迁移到:class:</cite>.WriteOnlyCollection`(“write_only”策略所使用的集合类型)。</p>
+<p>但是，在1.4中，也可以使用一些技术以更具“2.0”风格使用“lazy=”dynamic“”。
+有两种方法可以实现特定关系的2.0样式查询：</p>
+<p>1.在现有的“lazy=”dynamic“”关系上使用:attr:<a href="#id65"><span class="problematic" id="id66">`</span></a>_orm.Query.statement`属性。我们可以使用:meth:<a href="#id67"><span class="problematic" id="id68">`</span></a>_orm.Session.scalars`等方法直接使用动态加载程序，如下所示：</p>
+<dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>posts = relationship(Post, lazy=”dynamic”)</p>
+</dd>
+</dl>
+<p>jack = session.get(User, 5)</p>
+<p># 过滤Jack的博客文章
+posts = session.scalars(jack.posts.statement.where(Post.headline == “this is a post”))</p>
+<p>2.使用:func:<a href="#id69"><span class="problematic" id="id70">`</span></a>_orm.with_parent`函数，在直接构造:func:<a href="#id71"><span class="problematic" id="id72">`</span></a>_sql.select`构造的情况下：</p>
+<p>from sqlalchemy.orm import with_parent</p>
+<p>jack = session.get(User, 5)</p>
+<dl class="simple">
+<dt>posts = session.scalars(</dt><dd><p>select(Post)
+.where(with_parent(jack, User.posts))
+.where(Post.headline == “this is a post”)</p>
+</dd>
+</dl>
+<p>)</p>
+<p><strong>讨论</strong></p>
+<p>最初的想法是:func:<a href="#id73"><span class="problematic" id="id74">`</span></a>_orm.with_parent`函数应该就足够了，但是继续使用关系本身的特殊属性仍然很吸引人，并且没有理由一个2.0风格的构造不能在这里运行。</p>
+<p>新的“只写”加载程序策略提供了一种新的集合类型，该类型不支持隐式迭代或项目访问。集合的内容是通过调用它的``.select()``方法来读取的以帮助构建合适的SELECT语句。该集合还包括``.insert()``, <code class="docutils literal notranslate"><span class="pre">.update()</span></code>, <code class="docutils literal notranslate"><span class="pre">.delete()``方法，可用于发出用于集合中的项目的批量DML语句。与“dynamic”功能类似，还有</span></code>.add()``, <code class="docutils literal notranslate"><span class="pre">.add_all()``和</span></code>.remove()``方法，它们使用工作单元过程为添加或删除的单个成员排队。新功能的介绍方式为:ref:<cite>change_7123</cite>。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">change_7123</span></p>
+<p><a class="reference internal" href="../orm/large_collections.html#write-only-relationship"><span class="std std-ref">只写关系</span></a></p>
+</div>
+</section>
+<section id="session">
+<span id="migration-20-session-autocommit"></span><h3>移除Session的自动提交模式; 增加自动开始支持<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h3>
+<p>:class:<a href="#id75"><span class="problematic" id="id76">`</span></a>_orm.Session`不再支持“自动提交”模式，也就是这种模式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">autocommit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 没有开始事务，但会发出SQL语句，将不再支持</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Class</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+
+
+<span class="c1"># 会在Session闪存中产生begin并自动提交，将不再支持</span>
+<span class="n">sess</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre></div>
+</div>
+<p><strong>2.0迁移</strong></p>
+<p>使用:class:<cite>_orm.Session`的一个主要原因是使:meth:`_orm.Session.begin`方法可用，以便框架集成和事件钩子可以控制此事件。在1.4中，:class:`_orm.Session`现在特征：ref:_5074</cite>，：meth:<a href="#id77"><span class="problematic" id="id78">`</span></a>_orm.Session.begin`方法可能现已调用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="n">sess</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>  <span class="c1"># 显式开始；如果未调用，将自动开始</span>
+<span class="c1"># 当需要数据库访问时</span>
+
+<span class="n">sess</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+<span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p><strong>讨论</strong></p>
+<p>“自动提交”模式是SQLAlchemy第一个版本的一个遗留下来的东西。这个标志大部分保留下来，主要是为了允许显式使用:meth:<cite>_orm.Session.begin</cite>，这现在由1.4解决了，以及允许使用“子事务”的使用，这也在2.0中删除了。</p>
+</section>
+<section id="migration-20-session-subtransaction">
+<span id="id79"></span><h3>删除Session“子事务”行为<a class="headerlink" href="#migration-20-session-subtransaction" title="Permalink to this heading">¶</a></h3>
+<p>“子事务”模式经常与自动提交模式一起使用，也已在1.4中过时。此模式允许在已经开始事务的情况下，对:meth:<a href="#id80"><span class="problematic" id="id81">`</span></a>_orm.Session.begin`方法进行调用，从而产生一个称为“子事务”的构造，该构造本质上是一个阻止:meth:<a href="#id82"><span class="problematic" id="id83">`</span></a>_orm.Session.commit`方法实际提交的块。</p>
+<p><strong>2.0迁移</strong></p>
+<p>为了提供对使用此模式的应用程序的向后兼容性，可以使用以下上下文管理器，或基于装饰器的类似实现：</p>
+<blockquote>
+<div><p>import contextlib</p>
+<p>&#64;contextlib.contextmanager
+def transaction(session):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>if not session.in_transaction():</dt><dd><dl class="simple">
+<dt>with session.begin():</dt><dd><p>yield</p>
+</dd>
+</dl>
+</dd>
+<dt>else:</dt><dd><p>yield</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p>上述上下文管理器可以像“子事务”标志一样使用，例如下面的示例所示：</p>
+<blockquote>
+<div><p># method_a开始一个事务并调用method_b
+def method_a(session):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with transaction(session):</dt><dd><p>method_b(session)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p># method_b也开始一个事务，但是当
+#从method_a调用时参与正在进行的事务。
+def method_b(session):</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with transaction(session):</dt><dd><p>session.add(SomeObject(“bat”, “lala”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>Session = sessionmaker(engine)</p>
+<p># 创建一个Session并调用method_a
+with Session() as session:</p>
+<blockquote>
+<div><p>method_a(session)</p>
+</div></blockquote>
+</div></blockquote>
+<p>为了与首选的成语习惯相比较，将begin块放在最外层。这消除了各个函数或方法必须关注事务分界的细节的需要：：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>def method_a(session):</dt><dd><p>method_b(session)</p>
+</dd>
+<dt>def method_b(session):</dt><dd><p>session.add(SomeObject(“bat”, “lala”))</p>
+</dd>
+</dl>
+<p>Session = sessionmaker(engine)</p>
+<p># 创建一个Session并调用method_a
+with Session() as session:</p>
+<blockquote>
+<div><dl class="simple">
+<dt>with session.begin():</dt><dd><p>method_a(session)</p>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p><strong>讨论</strong></p>
+<p>这种模式在实际应用程序中被证明是困惑的，并且最好的做法是确保单个开头/提交对最高级别的数据库操作进行了执行。</p>
+</section>
+</section>
+<section id="id84">
+<h2>2.0迁移 - ORM扩展和配方更改<a class="headerlink" href="#id84" title="Permalink to this heading">¶</a></h2>
+<section id="dogpileapi">
+<h3>Dogpile缓存配方和水平切分使用新的会话API<a class="headerlink" href="#dogpileapi" title="Permalink to this heading">¶</a></h3>
+<p>随着:类:<a href="#id85"><span class="problematic" id="id86">`</span></a>_orm.Query`对象成为遗留API，这两个配方现在依赖于对:class:<a href="#id87"><span class="problematic" id="id88">`</span></a>_orm.SessionEvents.do_orm_execute`钩子方法的调用。参见:ref:<a href="#id89"><span class="problematic" id="id90">`</span></a>do_orm_execute_re_executing`中的示例。</p>
+</section>
+<section id="id91">
+<h3>烘焙查询扩展被内置缓存替换<a class="headerlink" href="#id91" title="Permalink to this heading">¶</a></h3>
+<p>烘焙查询扩展已被内置缓存系统替代，并且ORM内部不再使用它。</p>
+<p>有关新缓存系统的全面背景信息，请参见:ref:<cite>sql_caching</cite>。</p>
+</section>
+</section>
+<section id="asyncio">
+<h2>Asyncio支持<a class="headerlink" href="#asyncio" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy 1.4包括Core和ORM的协程支持。
+新API专门利用上述“future”模式。有关详情，参见:ref:<cite>change_3414</cite>。</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="index.html" title="previous chapter">变更和迁移</a>
+        Next:
+        <a href="whatsnew_20.html" title="next chapter">SQLAlchemy 2.0 有什么新特性？</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:30:55
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

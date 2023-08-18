@@ -1,0 +1,1066 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    关系模式基础知识
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="关系配置" href="relationships.html" />
+        <link rel="next" title="邻接列表关系" href="self_referential.html" />
+        <link rel="prev" title="关系配置" href="relationships.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
+<li class="selected"><span class="link-container"><strong>关系模式基础知识</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#vs">声明式 vs. 命令式形式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#relationship-patterns-o2m">一对多</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#relationship-patterns-o2m-collection">对一使用集合、列表或其他集合类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">为一对多配置删除行为</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#relationship-patterns-m2o">多对一</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#relationship-patterns-nullable-m2o">可空的多对一</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#relationships-one-to-one">一对一</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#setting-uselist-false-for-non-annotated-configurations">Setting uselist=False for non-annotated configurations</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#relationships-many-to-many">多对多</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id9">设置双向多对多关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#relationships-many-to-many-deletion">从多对多表中删除行</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#association-pattern">关联对象</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#association-pattern-w-m2m">将关联对象与多对多访问模式结合使用</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#orm-declarative-relationship-eval">关系参数的延迟评估</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id14">在声明完成后向映射类添加关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#secondary">在多对多中使用延迟评估的 “secondary” 参数</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="self_referential.html">邻接列表关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="relationships.html" title="previous chapter">关系配置</a></li>
+                <li><b>Next:</b>
+                <a href="self_referential.html" title="next chapter">邻接列表关系</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="relationships.html" title="关系配置">关系配置</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#relationship-patterns">关系模式基础知识</a><ul>
+<li><a class="reference internal" href="#vs">声明式 vs. 命令式形式</a></li>
+<li><a class="reference internal" href="#relationship-patterns-o2m">一对多</a><ul>
+<li><a class="reference internal" href="#relationship-patterns-o2m-collection">对一使用集合、列表或其他集合类型</a></li>
+<li><a class="reference internal" href="#id4">为一对多配置删除行为</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relationship-patterns-m2o">多对一</a><ul>
+<li><a class="reference internal" href="#relationship-patterns-nullable-m2o">可空的多对一</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relationships-one-to-one">一对一</a><ul>
+<li><a class="reference internal" href="#setting-uselist-false-for-non-annotated-configurations">Setting uselist=False for non-annotated configurations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#relationships-many-to-many">多对多</a><ul>
+<li><a class="reference internal" href="#id9">设置双向多对多关系</a></li>
+<li><a class="reference internal" href="#relationships-many-to-many-deletion">从多对多表中删除行</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#association-pattern">关联对象</a><ul>
+<li><a class="reference internal" href="#association-pattern-w-m2m">将关联对象与多对多访问模式结合使用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#orm-declarative-relationship-eval">关系参数的延迟评估</a><ul>
+<li><a class="reference internal" href="#id14">在声明完成后向映射类添加关系</a></li>
+<li><a class="reference internal" href="#secondary">在多对多中使用延迟评估的 “secondary” 参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-basic_relationships" >
+        
+<section id="relationship-patterns">
+<span id="id1"></span><h1>关系模式基础知识<a class="headerlink" href="#relationship-patterns" title="Permalink to this heading">¶</a></h1>
+<p>本节将快速讲解基本的关系模式，使用 <a class="reference internal" href="declarative_styles.html#orm-explicit-declarative-base"><span class="std std-ref">Declarative</span></a> 样式映射，这些映射基于 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解类型。</p>
+<p>以下是每个部分的设置:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<section id="vs">
+<h2>声明式 vs. 命令式形式<a class="headerlink" href="#vs" title="Permalink to this heading">¶</a></h2>
+<p>随着 SQLAlchemy 的演化，不同的 ORM 配置样式已经出现过。在本节的示例代码以及其他使用 <a class="reference internal" href="declarative_styles.html#orm-explicit-declarative-base"><span class="std std-ref">Declarative</span></a> 映射并带有 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解的代码中，对应的非注解形式应该使用所需的类或字符串类名作为传递给 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的第一个参数。下面的示例显示了本文档中使用的形式，这是一个完全使用 <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a> 注释的 Declarative 示例，其中 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 结构也通过从 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解中派生目标类和集合类型来推导，这是 SQLAlchemy Declarative 映射的最新形式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent_table.id&quot;</span><span class="p">))</span>
+    <span class="n">parent</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>相比之下，使用不带注解的 Declarative 映射是映射的“经典”形式，其中 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 要求直接传递所有参数，如下面的示例所示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child_table&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent_table.id&quot;</span><span class="p">))</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>最后，使用 <a class="reference internal" href="mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>，这是 SQLAlchemy 的 Declarative 映射之前的原始映射形式（尽管它仍然是少数用户中的首选），以上面的配置为例子，其形式如下所示:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Parent</span><span class="p">,</span>
+    <span class="n">parent_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)},</span>
+<span class="p">)</span>
+
+<span class="n">registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Child</span><span class="p">,</span>
+    <span class="n">child_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parent&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)},</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>还可以通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code> 参数指定非注解映射的默认集合类型为 <code class="docutils literal notranslate"><span class="pre">list</span></code>。若要在不使用注解的情况下使用 <code class="docutils literal notranslate"><span class="pre">set</span></code> 或其他集合，需要使用该参数指定。</p>
+</section>
+<section id="relationship-patterns-o2m">
+<span id="id2"></span><h2>一对多<a class="headerlink" href="#relationship-patterns-o2m" title="Permalink to this heading">¶</a></h2>
+<p>一对多关系在子表上放置一个外键，引用父表。然后，在父表上使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 指定该关系，引用一个由子项表示的项目集合:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parent_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent_table.id&quot;</span><span class="p">))</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>在一对多关系中建立双向关系（其中“反向”方向是多对一），要指定一个额外的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 并使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 参数连接两个关系，分别使用每个关系的属性名称作为 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 值即可：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[List[“Child”]] = relationship(back_populates=”parent”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parent_id: Mapped[int] = mapped_column(ForeignKey(“parent_table.id”))
+parent: Mapped[“Parent”] = relationship(back_populates=”children”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">Child</span></code> 将得到一个具有多对一语义的 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 属性。</p>
+<section id="relationship-patterns-o2m-collection">
+<span id="id3"></span><h3>对一使用集合、列表或其他集合类型<a class="headerlink" href="#relationship-patterns-o2m-collection" title="Permalink to this heading">¶</a></h3>
+<p>使用带注解的 Declarative 映射，可以从 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 容器类型中使用的集合类型推断出用于 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的集合类型。下面的示例可以使用 <code class="docutils literal notranslate"><span class="pre">set</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">list</span></code>，因为 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合可以使用 <code class="docutils literal notranslate"><span class="pre">Mapped[Set[&quot;Child&quot;]]</span></code>：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[Set[“Child”]] = relationship(back_populates=”parent”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>而在不使用注解的 Declarative 形式中包括命令式映射时，Python 类可通过使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code> 参数传递以指定要用作集合的类型。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a> - 包含有关集合配置的进一步细节，包括一些将 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 映射到字典的技术。</p>
+</div>
+</section>
+<section id="id4">
+<h3>为一对多配置删除行为<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<p>通常情况下，当删除其所属的“Parent”时，所有“Child”对象都应该被删除。要配置此行为，使用在 <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a> 中描述的“delete”级联选项。另一个选项是，当从其父对象中取消关联时，也可以自行删除“Child”对象。此行为在 <span class="xref std std-ref">cascade_delete_orphan</span> 中描述。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a></p>
+<p><a class="reference internal" href="cascades.html#passive-deletes"><span class="std std-ref">使用 ORM 关系的外键 ON DELETE 级联</span></a></p>
+<p><span class="xref std std-ref">cascade_delete_orphan</span></p>
+</div>
+</section>
+</section>
+<section id="relationship-patterns-m2o">
+<span id="id5"></span><h2>多对一<a class="headerlink" href="#relationship-patterns-m2o" title="Permalink to this heading">¶</a></h2>
+<p>多对一在父表中放置一个外键，引用子表。在父表上声明 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，其中将创建一个新的标量保持属性:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">child_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;child_table.id&quot;</span><span class="p">))</span>
+    <span class="n">child</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>以上示例显示了一个多对一关系，假设是非空行为；下一部分 <a class="reference internal" href="#relationship-patterns-nullable-m2o"><span class="std std-ref">可空的多对一</span></a> 将说明一个可空版本。</p>
+<p>通过添加第二个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 并在两个关系中使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 参数即可实现双向关系，使用每个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的属性名称作为 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 上另一个的值：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+child_id: Mapped[int] = mapped_column(ForeignKey(“child_table.id”))
+child: Mapped[“Child”] = relationship(back_populates=”parents”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parents: Mapped[List[“Parent”]] = relationship(back_populates=”child”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<section id="relationship-patterns-nullable-m2o">
+<span id="id6"></span><h3>可空的多对一<a class="headerlink" href="#relationship-patterns-nullable-m2o" title="Permalink to this heading">¶</a></h3>
+<p>在上面的示例中，<code class="docutils literal notranslate"><span class="pre">Parent.child</span></code> 关系的类型不是允许 <code class="docutils literal notranslate"><span class="pre">None</span></code>；这来自于 <code class="docutils literal notranslate"><span class="pre">Parent.child_id</span></code> 本身不是可空的，因为它使用了 <code class="docutils literal notranslate"><span class="pre">Mapped[int]</span></code> 类型。如果希望``Parent.child`` 成为 <strong>可空的</strong> 多对一，我们可以将 <code class="docutils literal notranslate"><span class="pre">Parent.child_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Parent.child</span></code> 都设置为 <code class="docutils literal notranslate"><span class="pre">Optional[]</span></code>，在这种情况下，配置将如下所示：</p>
+<blockquote>
+<div><p>from typing import Optional</p>
+<dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+child_id: Mapped[Optional[int]] = mapped_column(ForeignKey(“child_table.id”))
+child: Mapped[Optional[“Child”]] = relationship(back_populates=”parents”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parents: Mapped[List[“Parent”]] = relationship(back_populates=”child”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>以上，<code class="docutils literal notranslate"><span class="pre">Parent.child_id</span></code> 的列将在 DDL 中创建为允许 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 值。在使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 和显式类型声明时，指定 <code class="docutils literal notranslate"><span class="pre">child_id:</span> <span class="pre">Mapped[Optional[int]]</span></code> 等价于在 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 上设置 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.nullable" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.nullable</span></code></a> 为 <code class="docutils literal notranslate"><span class="pre">True</span></code>，而``child_id: Mapped[int]`` 等价于将其设置为``False``。请参阅 <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-nullability"><span class="std std-ref">mapped_column() 会将数据类型和可为 Null 的行从 Mapped 注释中派生出来</span></a> 以了解此行为的背景。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>如果使用的是 Python 3.10 或更高版本，使用 <code class="docutils literal notranslate"><span class="pre">|</span> <span class="pre">None</span></code> 指示可选类型的 <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0604/"><strong>PEP 604</strong></a> 语法更方便，这样在与 <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0563/"><strong>PEP 563</strong></a> 延迟注释评估相结合时，就不需要使用字符串引用类型：</p>
+<blockquote>
+<div><p>from __future__ import annotations</p>
+<dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+child_id: Mapped[int | None] = mapped_column(ForeignKey(“child_table.id”))
+child: Mapped[Child | None] = relationship(back_populates=”parents”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parents: Mapped[List[Parent]] = relationship(back_populates=”child”)</p>
+</dd>
+</dl>
+</div></blockquote>
+</div>
+</section>
+</section>
+<section id="relationships-one-to-one">
+<span id="id7"></span><h2>一对一<a class="headerlink" href="#relationships-one-to-one" title="Permalink to this heading">¶</a></h2>
+<p>从外键的角度来看，一对一本质上是一个 <a class="reference internal" href="#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a> 关系，但是表明在任何时候只有一行引用特定父行的情况下。使用带注解的映射 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>，使用非集合类型，在关系两端上同时使用即可实现“一对一”约定。非注解映射需要显式使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.uselist</span></code> 参数设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code>，如下面的示例所示：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+child: Mapped[“Child”] = relationship(back_populates=”parent”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parent_id: Mapped[int] = mapped_column(ForeignKey(“parent_table.id”))
+parent: Mapped[“Parent”] = relationship(back_populates=”child”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>以上，在加载 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象时，<code class="docutils literal notranslate"><span class="pre">Parent.child</span></code> 属性将指向单个 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象而不是集合。如果将 <code class="docutils literal notranslate"><span class="pre">Parent.child</span></code> 的值替换为一个新的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象，则 ORM 的工作单元过程将使用新值替换以前的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 行，并在默认情况下将先前的 <code class="docutils literal notranslate"><span class="pre">child.parent_id</span></code> 列设置为 NULL，除非设置了指定的 <span class="xref std std-ref">cascade</span> 行为。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>如前所述，ORM 将“一对一”模式视为约定，当它在 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象上加载 <code class="docutils literal notranslate"><span class="pre">Parent.child</span></code> 属性时，假定仅会返回一行。如果返回多行，ORM 将发出警告。</p>
+<p>然而，上述关系的 <code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> 仍然保持为“多对一”，并且 ORM 本身没有内在机制来防止在持久化期间针对同一``Parent`` 创建多个``Child`` 对象。相反，可以在实际数据库架构中使用 <span class="xref std std-ref">唯一约束</span> 等技术来强制执行此安排，在 <code class="docutils literal notranslate"><span class="pre">Child.parent_id</span></code> 列上设置唯一约束将确保只有一个 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 行可以引用特定的 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 行。</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0: </span><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 结构可以从给定的 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解导出 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.uselist</span></code> 参数的有效值。</p>
+</div>
+<section id="setting-uselist-false-for-non-annotated-configurations">
+<h3>Setting uselist=False for non-annotated configurations<a class="headerlink" href="#setting-uselist-false-for-non-annotated-configurations" title="Permalink to this heading">¶</a></h3>
+<p>在不使用 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解的情况下，使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 自动生成的一对一模式可以使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.uselist</span></code> 参数设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 实现，如以下非注解 Declarative 示例所示：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+child = relationship(“Child”, uselist=False, back_populates=”parent”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child_table”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+parent_id = mapped_column(ForeignKey(“parent_table.id”))
+parent = relationship(“Parent”, back_populates=”child”)</p>
+</dd>
+</dl>
+</div></blockquote>
+</section>
+</section>
+<section id="relationships-many-to-many">
+<span id="id8"></span><h2>多对多<a class="headerlink" href="#relationships-many-to-many" title="Permalink to this heading">¶</a></h2>
+<p>多对多在两个类之间添加一个关联表。关联表几乎总是使用 Core <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象或其他 Core 可选项，例如 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Join" title="sqlalchemy.sql.expression.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code></a> 对象，使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数指示。通常，<a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 使用与 declarative 基类相关联的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 对象，以便 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 指令可以找到将其与之链接的远程表:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="c1"># note for a Core table, we use the sqlalchemy.Column construct,</span>
+<span class="c1"># not sqlalchemy.orm.mapped_column</span>
+<span class="n">association_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
+    <span class="s2">&quot;association_table&quot;</span><span class="p">,</span>
+    <span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;left_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;left_table.id&quot;</span><span class="p">)),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;right_id&quot;</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;right_table.id&quot;</span><span class="p">)),</span>
+<span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;left_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Child</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">secondary</span><span class="o">=</span><span class="n">association_table</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;right_table&quot;</span>
+
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>上述的“关联表”具有建立引用父对象和子对象的外键约束。通常情况下，每个“关联表”的 <code class="docutils literal notranslate"><span class="pre">association.left_id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">association.right_id</span></code> 的数据类型都是从所引用表的数据类型推断而来的，因此可以省略。同时也建议为引用两个实体表的列进行定义：这可以通过将其定义在构成一个 <strong>唯一约束</strong> 或通常作为 <strong>主键约束</strong> 来实现；这将确保在应用程序端出现问题时，该table中不会复制的行。</p>
+</div>
+<section id="id9">
+<h3>设置双向多对多关系<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>对于双向关系，每个关系都包含一个集合。使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 指定并连接到映射对象、主键属性或同义词时，可以为每个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 指定常见的关联表：</p>
+<blockquote>
+<div><p>from __future__ import annotations</p>
+<p>from sqlalchemy import Column
+from sqlalchemy import Table
+from sqlalchemy import ForeignKey
+from sqlalchemy import Integer
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import relationship</p>
+<dl class="simple">
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>association_table = Table(</dt><dd><p>“association_table”,
+Base.metadata,
+Column(“left_id”, ForeignKey(“left_table.id”), primary_key=True),
+Column(“right_id”, ForeignKey(“right_table.id”), primary_key=True),</p>
+</dd>
+</dl>
+<p>)</p>
+<dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[List[Child]] = relationship(</p>
+<blockquote>
+<div><p>secondary=association_table, back_populates=”parents”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+parents: Mapped[List[Parent]] = relationship(</p>
+<blockquote>
+<div><p>secondary=association_table, back_populates=”children”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>后面的文章 <a class="reference internal" href="#relationship-patterns-o2m-collection"><span class="std std-ref">对一使用集合、列表或其他集合类型</span></a> 说明如何为多对多配置与 <a class="reference internal" href="#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a> 相同的集合类型。在使用 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注解的映射中，可以通过 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 泛型类中使用的集合类型来指示集合：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[Set[“Child”]] = relationship(secondary=association_table)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在不使用注解的形式中，包括使用命令式映射的形式时，Python 类可通过使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code> 参数传递来指定要用作集合的类。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a> - 包含有关集合配置的更多细节，包括一些将 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 映射到字典的技术。</p>
+</div>
+</section>
+<section id="relationships-many-to-many-deletion">
+<span id="id10"></span><h3>从多对多表中删除行<a class="headerlink" href="#relationships-many-to-many-deletion" title="Permalink to this heading">¶</a></h3>
+<p>与 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数配合使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 时特有的一项行为是，自动将 INSERT 和 DELETE 语句应用于 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>，因为对象被添加或从集合中删除。<strong>不需要手动从此表中删除</strong>。从集合中删除记录将导致在 flush 时删除行：</p>
+<blockquote>
+<div><p># row will be deleted from the “secondary” table
+# automatically
+myparent.children.remove(somechild)</p>
+</div></blockquote>
+<p>经常出现的一个问题是，当将子对象直接交给 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 时，“secondary”表中的行应如何删除。</p>
+<p>有以下几种情况：</p>
+<ul class="simple">
+<li><p>如果有一个从“Parent”到“Child”的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，但是没有相应的逆关系将特定的“child”链接到每个“Parent”，SQLAlchemy 将不会意识到当删除此特定“Child”对象时，它需要维护将其与“Parent”相关联的“secondary”表。将不会删除“secondary”表中的任何行。</p></li>
+<li><p>如果存在将特定“Child”链接到每个“Parent”的关系，假设它称为 <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code>，SQLAlchemy 默认会加载 <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code> 集合以查找所有 “Parent” 对象，并从“secondary”表中删除每行，建立此链接。请注意，此关系不需要是双向的；SQLAlchemy 严格查看与被删除的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象相关的每个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>。</p></li>
+<li><p>更高效的选择是使用 ON DELETE CASCADE 指令与数据库使用的外键。假设数据库支持此功能，那么当删除“child”引用行时，数据库本身可以自动删除“secondary”表中的行。在这种情况下，可以使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上指示 SQLAlchemy 放弃主动加载 <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code> 集合。有关此功能的更多详细信息，请参见 <a class="reference internal" href="cascades.html#passive-deletes"><span class="std std-ref">使用 ORM 关系的外键 ON DELETE 级联</span></a>。</p></li>
+</ul>
+<p>请再次注意，这些行为仅与 ：paramref:<cite>_orm.relationship.secondary</cite> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 使用关联表有关。如果处理显式映射且当前不存在于相关 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 中的关联表，则可能会使用级联规则来自动删除根据相关实体的删除进行反应的实体 -有关此功能的更多信息请参见 <span class="xref std std-ref">unitofwork_cascades</span>。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="cascades.html#cascade-delete-many-to-many"><span class="std std-ref">使用 delete 级联与多对多关系</span></a></p>
+<p><a class="reference internal" href="cascades.html#passive-deletes-many-to-many"><span class="std std-ref">使用外键 ON DELETE 与多对多关系</span></a></p>
+</div>
+</section>
+</section>
+<section id="association-pattern">
+<span id="id11"></span><h2>关联对象<a class="headerlink" href="#association-pattern" title="Permalink to this heading">¶</a></h2>
+<p>关联对象模式是多对多的变种：当关联表包含与父表和子表（或左表和右表）的外键之外的附加列时，最理想的情况是将它们映射到自己的 ORM 映射类。此映射类映射到了会在使用多对多模式时注意到的注解参数 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 中的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>。</p>
+<p>在关联对象模式中，不使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数；而是将一个类直接映射到关联表。然后，通过一对多将父边与映射的关联类链接起来，再通过多对一将映射的关联类与子边链接起来，以形成一个单向的关联对象从父到关联到子的关系。对于双向关系，可以使用四个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 来将映射的关联类连接到父和两个方向的子。</p>
+<p>下面的示例说明了一个名为 <code class="docutils literal notranslate"><span class="pre">Association</span></code> 的新类，其映射到名为``association`` 的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>；该表现在包括一个称为“extra_data”的字符串值，该值存储与``Parent`` 和``Child`` 之间的每个关联一起使用的数据。将`Table`映射到显式类后，Parent 到Child的微不足道访问可明确使用``Association``：</p>
+<blockquote>
+<div><p>from typing import Optional</p>
+<p>from sqlalchemy import ForeignKey
+from sqlalchemy import Integer
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import relationship</p>
+<dl>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class Association(Base):</dt><dd><p>__tablename__ = “association_table”
+left_id: Mapped[int] = mapped_column(ForeignKey(“left_table.id”), primary_key=True)
+right_id: Mapped[int] = mapped_column(</p>
+<blockquote>
+<div><p>ForeignKey(“right_table.id”), primary_key=True</p>
+</div></blockquote>
+<p>)
+extra_data: Mapped[Optional[str]]
+child: Mapped[“Child”] = relationship()</p>
+</dd>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”
+id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[List[“Association”]] = relationship()</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right_table”
+id: Mapped[int] = mapped_column(primary_key=True)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>为了说明双向关系，添加了两个更多的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，并使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 将它们链接到现有的关系上:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
+
+
+<span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">Association</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;association_table&quot;</span>
+    <span class="n">left_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;left_table.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">right_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span>
+        <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;right_table.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">extra_data</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span>
+    <span class="n">child</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;Child&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parents&quot;</span><span class="p">)</span>
+    <span class="n">parent</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;Parent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;left_table&quot;</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">children</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Association&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;right_table&quot;</span>
+    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parents</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Association&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;child&quot;</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>在其直接形式下使用关联对象模式需要在将子对象附加到父对象之前将其与关联实例相关联；同样，从父到子的访问可以通过关联对象进行：</p>
+<blockquote>
+<div><p># create parent, append a child via association
+p = Parent()
+a = Association(extra_data=”some data”)
+a.child = Child()
+p.children.append(a)</p>
+<p># iterate through child objects via association, including association
+# attributes
+for assoc in p.children:</p>
+<blockquote>
+<div><p>print(assoc.extra_data)
+print(assoc.child)</p>
+</div></blockquote>
+</div></blockquote>
+<p>要将关联对象模式扩展到可选的直接访问 <code class="docutils literal notranslate"><span class="pre">Association</span></code> 对象，SQLAlchemy 提供了 <span class="xref std std-ref">associationproxy_toplevel</span> 扩展。该扩展允许配置仅使用一次访问即可访问两次“跳跃”，一次从关联对象到关联对象，一次到目标属性。.. seealso:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">ref</span><span class="p">:</span><span class="err">`</span><span class="n">associationproxy_toplevel</span><span class="err">`</span> <span class="o">-</span> <span class="n">允许在父子之间直接使用</span><span class="err">“</span><span class="n">多对多</span><span class="err">”</span><span class="n">风格</span><span class="err">，</span>
+<span class="n">以便进行三种类的关联对象映射</span><span class="err">。</span></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>避免将关联对象模式与 <a class="reference internal" href="#relationships-many-to-many"><span class="std std-ref">many-to-many</span></a> 直接结合使用，
+因为这会在不经过特殊步骤的情况下产生可能读取和写入数据的不一致状况；
+通常使用 <span class="xref std std-ref">association proxy</span> 提供更简洁的访问。
+关于通过这种组合引入的注意事项的更详细背景，请参见下一节 <a class="reference internal" href="#association-pattern-w-m2m"><span class="std std-ref">将关联对象与多对多访问模式结合使用</span></a>。</p>
+</div>
+<section id="association-pattern-w-m2m">
+<span id="id12"></span><h3>将关联对象与多对多访问模式结合使用<a class="headerlink" href="#association-pattern-w-m2m" title="Permalink to this heading">¶</a></h3>
+<p>如前一节所述，关联对象模式不能自动与对同一表/列进行多对多模式的使用相集成。
+由此可以得出，读操作可能返回冲突数据，写操作也可能尝试写入相互冲突的更改，
+从而导致完整性错误或意外的插入或删除。</p>
+<p>为了说明，下面的示例配置了一个双向多对多关系，它将 <cite>Parent</cite> 和 <cite>Child</cite> 之间连接到 <cite>Parent.children</cite>
+和 <cite>Child.parents</cite>，同时也配置了一个关联对象关系，连接到 <cite>Parent.child_associations -&gt; Association.child</cite>
+和 <cite>Child.parent_associations -&gt; Association.parent</cite>：：</p>
+<blockquote>
+<div><p>from typing import Optional</p>
+<p>from sqlalchemy import ForeignKey
+from sqlalchemy import Integer
+from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import relationship</p>
+<dl>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class Association(Base):</dt><dd><p>__tablename__ = “association_table”</p>
+<p>left_id: Mapped[int] = mapped_column(ForeignKey(“left_table.id”), primary_key=True)
+right_id: Mapped[int] = mapped_column(</p>
+<blockquote>
+<div><p>ForeignKey(“right_table.id”), primary_key=True</p>
+</div></blockquote>
+<p>)
+extra_data: Mapped[Optional[str]]</p>
+<p># 关联 Association -&gt; Child
+child: Mapped[“Child”] = relationship(back_populates=”parent_associations”)</p>
+<p># 关联 Association -&gt; Parent
+parent: Mapped[“Parent”] = relationship(back_populates=”child_associations”)</p>
+</dd>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)</p>
+<p># 与 Child 的多对多关系，绕过 <cite>Association</cite> 类
+children: Mapped[List[“Child”]] = relationship(</p>
+<blockquote>
+<div><p>secondary=”association_table”, back_populates=”parents”</p>
+</div></blockquote>
+<p>)</p>
+<p># 关联 Parent -&gt; Association -&gt; Child
+child_associations: Mapped[List[“Association”]] = relationship(</p>
+<blockquote>
+<div><p>back_populates=”parent”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)</p>
+<p># 与 Parent 的多对多关系，绕过 <cite>Association</cite> 类
+parents: Mapped[List[“Parent”]] = relationship(</p>
+<blockquote>
+<div><p>secondary=”association_table”, back_populates=”children”</p>
+</div></blockquote>
+<p>)</p>
+<p># 关联 Child -&gt; Association -&gt; Parent
+parent_associations: Mapped[List[“Association”]] = relationship(</p>
+<blockquote>
+<div><p>back_populates=”child”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>使用此 ORM 模型进行更改时，对`Parent.children`的更改不会与`Parent.child_associations`或
+<cite>Child.parent_associations`在 Python 中的更改进行协调；
+虽然这些所有关系在其自身上仍将继续正常地运行，但在另一个关系进行更新之前，不会在一个关系中显示出其他关系的更改。
+正常情况下，这将在:meth:</cite>.Session.commit`之后自动触发 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的过期。</p>
+<p>此外，如果进行相互冲突的更改，
+例如添加一个新的 <cite>Association</cite> 对象，同时将同一关联的 <cite>Child</cite> 添加到 <cite>Parent.children</cite> 中，该过程将引发完整性错误，例如下面的示例所示：</p>
+<blockquote>
+<div><p>p1 = Parent()
+c1 = Child()
+p1.children.append(c1)</p>
+<p># 多余的，将在 Association 中引发重复的 INSERT
+p1.child_associations.append(Association(child=c1))</p>
+</div></blockquote>
+<p>将 <cite>Child</cite> 直接附加到 <cite>Parent.children</cite> 还意味着在不指定任何关联值的情况下在“association”表中创建行，
+这会为其值接收 <cite>NULL</cite>。</p>
+<p>如果你知道自己在做什么，使用像上面的映射就没什么问题；
+在罕见情况下，使用 “关联对象” 模式可能会带来很多好处，
+这种情况下使用多对多关系的原因可能更为重要，这是因为沿单个多对多关系加载关系更容易，
+它还可以稍微优化 SQL 语句中使用“secondary”表的方式，与如何使用两个不同的关联到显式关联类相比。
+但至少建议对“secondary”关系应用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code> 参数，
+以避免发生冲突的更改，同时还防止写入任何附加的关联列中的 <cite>NULL</cite>，如下所示：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)</p>
+<p># 与 Child 的多对多关系，绕过 <cite>Association</cite> 类
+children: Mapped[List[“Child”]] = relationship(</p>
+<blockquote>
+<div><p>secondary=”association_table”, back_populates=”parents”, viewonly=True</p>
+</div></blockquote>
+<p>)</p>
+<p># 关联 Parent -&gt; Association -&gt; Child
+child_associations: Mapped[List[“Association”]] = relationship(</p>
+<blockquote>
+<div><p>back_populates=”parent”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)</p>
+<p># 与 Parent 的多对多关系，绕过 <cite>Association</cite> 类
+parents: Mapped[List[“Parent”]] = relationship(</p>
+<blockquote>
+<div><p>secondary=”association_table”, back_populates=”children”, viewonly=True</p>
+</div></blockquote>
+<p>)</p>
+<p># 关联 Child -&gt; Association -&gt; Parent
+parent_associations: Mapped[List[“Association”]] = relationship(</p>
+<blockquote>
+<div><p>back_populates=”child”</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>以上映射不会将任何更改写入数据库中的 <cite>Parent.children</cite> 或 <cite>Child.parents</cite>，从而避免冲突的写入。
+但是，在读取 <cite>Parent.children</cite> 或 <cite>Child.parents`时，并不一定与从 `Parent.child_associations</cite> 或
+<cite>Child.parent_associations`中读取的数据匹配，如果正在与在同一个事务或:class:</cite>.Session`中更改这些集合，则这些集合将不匹配。
+如果关联对象关系的使用不太频繁，并且仔细组织了针对访问多对多集合的代码以避免过时读取
+(在极端情况下，在当前事务中直接使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code> 直接刷新集合)，
+则该模式可能是可行的。</p>
+<p>替代以上模式的一个流行选择是，将直接的多对多关系 <cite>Parent.children</cite> 和 <cite>Child.parents</cite> 替换为将透明地代理通过 <cite>Association</cite> 类，
+同时从 ORM 的角度保持一切一致的扩展。该扩展称为 <span class="xref std std-ref">Association Proxy</span>。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">associationproxy_toplevel</span> - 允许在父子之间直接使用“多对多”风格，
+以便进行三种类的关联对象映射。</p>
+</div>
+</section>
+</section>
+<section id="orm-declarative-relationship-eval">
+<span id="id13"></span><h2>关系参数的延迟评估<a class="headerlink" href="#orm-declarative-relationship-eval" title="Permalink to this heading">¶</a></h2>
+<p>上一节中大多数示例说明了如何使用其目标类的字符串名称来引用各种 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造，而不是类本身，
+例如，使用 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 时，会生成仅作为字符串存在的正向引用比如说：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p># …</p>
+<p>children: Mapped[List[“Child”]] = relationship(back_populates=”parent”)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p># …</p>
+<p>parent: Mapped[“Parent”] = relationship(back_populates=”children”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>同样，使用未注释的表单，例如未注释的 Declarative 或 Imperative 映射， <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造也支持直接字符串名称的传递:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Parent</span><span class="p">,</span>
+    <span class="n">parent_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Child&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;parent&quot;</span><span class="p">)},</span>
+<span class="p">)</span>
+
+<span class="n">registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Child</span><span class="p">,</span>
+    <span class="n">child_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;parent&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Parent&quot;</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;children&quot;</span><span class="p">)},</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>这些字符串名称会在映射解析阶段中被解析为类，该阶段通常在定义所有映射之后触发，并且通常由映射本身的第一个使用触发。
+<code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 对象是存储这些名称并将其解析为所指向的映射类的容器。</p>
+<p>除了 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的主要类参数之外，还可以指定取决于未定义类上存在的列的其他参数，
+这些列通常也可以指定为 Python 函数或更常见的是字符串。对于除主参数外的大多数参数，字符串输入将被 <strong>作为 Python 表达式使用 Python 内置的 eval() 函数来计算</strong>，因为它们旨在接收完整的 SQL 表达式。</p>
+<p>参数也应被设计为不接收不可信用户输入。 <cite>eval()</cite> 对不受信任的用户输入不是**安全的**。</p>
+<p>在此评估中使用的全名词空间包括为此声明基础中的所有映射类，以及 <cite>sqlalchemy</cite> 包的内容，包括表达式函数，例如 <cite>func()</cite> 等：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p># …</p>
+<dl class="simple">
+<dt>children: Mapped[List[“Child”]] = relationship(</dt><dd><p>order_by=”desc(Child.email_address)”,
+primaryjoin=”Parent.id == Child.parent_id”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>如果同一名称的类存在于多个模块中，则可以在任何这些字符串表达式中将字符串类名指定为模块限定路径。</p>
+<p>例如，为了区分 <cite>myapp.model1.Child</cite> 和 <cite>myapp.model2.Child</cite>，我们可以指定 <cite>model1.Child</cite> 或 <cite>model2.Child</cite>：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p># …</p>
+<dl class="simple">
+<dt>children: Mapped[List[“Child”]] = relationship(</dt><dd><p>“model1.Child”,
+order_by=”desc(model1.Child.email_address)”,
+primaryjoin=”Parent.id == model1.Child.parent_id”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在上面的示例中，可以直接传递类位置字符串到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.argument</span></code> 中，从而将给定的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象通过名称解析为 Python 表达式。</p>
+<p>下面是一个仅导入类型的例子，其中将结合运行时指定的目标类搜索 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 来搜索包含在此内的正确名称：</p>
+<blockquote>
+<div><p>import typing</p>
+<dl>
+<dt>if typing.TYPE_CHECKING:</dt><dd><p>from myapp.mymodel import Child</p>
+</dd>
+<dt>class Parent(Base):</dt><dd><p># …</p>
+<dl class="simple">
+<dt>children: Mapped[List[“Child”]] = relationship(</dt><dd><p>“myapp.mymodel.Child”,
+order_by=”desc(myapp.mymodel.Child.email_address)”,
+primaryjoin=”myapp.mymodel.Parent.id == myapp.mymodel.Child.parent_id”,</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>任何在这些函数/ lambda 或字符串之一中作为参数传递的参数，如果有多个同名的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象，则会被解释为它们所指向的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合中的标识符名称。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如上所述，传递给 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的上述参数是使用 eval()评估为 Python 代码表达式的。
+<strong>不要向这些参数传递不受信任的输入。</strong></p>
+</div>
+<section id="id14">
+<h3>在声明完成后向映射类添加关系<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<p>要注意的是，只要声明完整的映射模型，就可以在任何时候添加映射到声明性基础中的 <a class="reference internal" href="internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>，
+并且注释表单中注释的形式不受支持。如果想在 <cite>Address</cite> 类可用后，实现此 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，我们还可以在之后应用它：</p>
+<p># 首先，在 Child 还没有被创建的模块 A 中，
+# 我们创建一个 Parent 类，它对 Child 一无所知</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class Parent(Base):</dt><dd><p>…</p>
+</dd>
+</dl>
+<p># … 然后，将模块 B 导入模块 A 之后：</p>
+<dl class="simple">
+<dt>class Child(Base):</dt><dd><p>…</p>
+</dd>
+</dl>
+<p>from module_a import Parent</p>
+<p># 将 User.addresses 关系作为类变量分配。
+# 声明性基类将拦截此操作并映射关系。
+Parent.children = relationship(Child, primaryjoin=Child.parent_id == Parent.id)</p>
+</div></blockquote>
+<p>与 ORM 映射的列一样，在声明完成后，可以在任何时候向映射类添加映射属性；
+因此，相关的类必须在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造中直接指定为类本身、类的字符串名称或可返回到目标类的引用的可调用函数。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>如前所述，在已映射的类中分配映射属性仅在使用“声明性基础类”时才能正确地运作，
+这意味着用户定义的 <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code> 子类或通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>
+或者 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.generate_base()</span></code> 返回的动态生成的 class。
+此“基”类包括实现了特殊 <code class="docutils literal notranslate"><span class="pre">__setattr__()</span></code> 方法的 Python 元类，该方法截取了这些操作。</p>
+<p>如果使用诸如 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code> 或像 <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code> 的命令式函数之类的函数映射来映射类，
+则运行时分配映射属性到已映射的类就**不会**正常工作。</p>
+</div>
+</section>
+<section id="secondary">
+<span id="orm-declarative-relationship-secondary-eval"></span><h3>在多对多中使用延迟评估的 “secondary” 参数<a class="headerlink" href="#secondary" title="Permalink to this heading">¶</a></h3>
+<p>多对多关系使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数，该参数通常指示引用通常未映射的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象或其他 Core 可选择对象。
+此处支持使用可调用的 lambda 或字符串名称的延迟评估，其中字符串解析的 Python 表达式会将标识符名称链接到同名 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象，
+这些对象存在于由当前 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 指向的相同的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合中。</p>
+<p>对于在 <a class="reference internal" href="#relationships-many-to-many"><span class="std std-ref">多对多</span></a> 中给出的示例，如果我们假设“association_table” <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象在比映射类本身晚定义的时间点上将会定义，
+我们可以使用 lambda 表示 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[List[“Child”]] = relationship(</p>
+<blockquote>
+<div><p>“Child”, secondary=lambda: association_table</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>或使用名称定位同一 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象，名称为 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
+<p>id: Mapped[int] = mapped_column(primary_key=True)
+children: Mapped[List[“Child”]] = relationship(secondary=”association_table”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>当作为字符串传递时， <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数是使用 Python 的 <cite>eval()</cite> 函数计算的，
+即时通常是表的名称。 <strong>不要将不可信用户输入传递给此字符串</strong>。</p>
+</div>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="relationships.html" title="previous chapter">关系配置</a>
+        Next:
+        <a href="self_referential.html" title="next chapter">邻接列表关系</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:09
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

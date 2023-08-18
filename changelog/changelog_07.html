@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    &lt;no title&gt;
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="变更和迁移" href="index.html" />
+        <link rel="next" title="0.6 更新日志" href="changelog_06.html" />
+        <link rel="prev" title="0.8 更新日志" href="changelog_08.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="变更和迁移">变更和迁移</a>
+        </h3>
+
+        <ul class="simple">
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="changelog_08.html" title="previous chapter">0.8 更新日志</a></li>
+                <li><b>Next:</b>
+                <a href="changelog_06.html" title="next chapter">0.6 更新日志</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="变更和迁移">变更和迁移</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul class="simple">
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar changelog-changelog_07" >
+        
+<p>0.7版本更新说明</p>
+<p>    :tags：orm，bug
+    :tickets: 2425</p>
+<p>  修复了一个错误，即带有“literal”的primaryjoin条件将
+  在一些深度嵌套的表达式上编译时引发错误的问题
+  还需要呈现相同的绑定参数名称超过一次。</p>
+<p>    :tags：orm，功能
+    :tickets：</p>
+<p>  添加了“no_autoflush”上下文
+  管理器到Session，与：一起使用：
+  将暂时禁用自动刷新。</p>
+<p>    :tags：orm，功能
+    :tickets: 1859</p>
+<p>  在Query中添加了cte（）方法，
+  从核心（参见下文）调用公共表达式支持。</p>
+<p>    :tags：orm，bug
+    :tickets: 2403</p>
+<p>  删除了做多元映射时检查行数的内容
+  针对映射对象。如果ON DELETE
+  CASCADE存在于两行之间，我们不能
+  从DBAPI中获取精确的行数;
+  在任何情况下大多数DBAPI都不支持该计数，
+  MySQLdb是值得注意的情况，因为它是。</p>
+<p>    :tags：orm，bug
+    :tickets: 2409</p>
+<p>  修复了一个错误，即使用的对象
+  attribute_mapped_collection或
+  column_mapped_collection无法
+  腌制。</p>
+<p>    :tags：orm，bug
+    :tickets: 2406</p>
+<p>  修复了一个错误，即MappedCollection
+  如果仅在使用了自定义子类中使用，则无法获取适当的集合
+  &#64; collection.internally_instrumented。</p>
+<p>    :tags：orm，bug
+    :tickets: 2419</p>
+<p>  修复了一个错误，即SQL调整机制
+  在涉及嵌套的情况下会失败
+  继承，joinedload（），limit（）和一个
+  在列子句中推导函数中有一个衍生函数。</p>
+<p>    :tags：orm，bug
+    :tickets: 2417</p>
+<p>  修复了CascadeOptions的repr（）以
+  包括refresh-expire。还改写了
+  CascadeOptions是&lt;frozenset&gt;。</p>
+<p>    :tags：orm，功能
+    :tickets: 2400</p>
+<p>  添加了通过查询表限定列名的功能
+  使用query（sometable）。filter_by（colname = value）。</p>
+<p>    :tags：orm，bug
+    :tickets:</p>
+<p>  将“声明式反射”示例改进为支持单表继承，
+  多次调用prepare（），表
+  在替代模式下存在，
+  仅建立子集类型的情况。</p>
+<p>    :tags：orm，bug
+    :tickets: 2390</p>
+<p>  将外部事务期间应用的测试比例缩小到
+  NULL PK内部的UPDATE的行数范围内只是实际的
+  如果真的有 UPDATE 进行。</p>
+<p>    :tags：orm，bug
+    :tickets: 2352</p>
+<p>  修复了错误，其中如果方法名称
+  与列名冲突，则在映射器上尝试检查__get __（）方法
+  方法对象上会引发TypeError。</p>
+<p>    :tags：bug，sql
+    :tickets: 2427</p>
+<p>  修复了使用C扩展时core中的内存泄漏
+  当使用特定类型的结果获取时发生，
+  特别是当orm查询计数()
+  被叫。</p>
+<p>    :tags：bug，sql
+    :tickets: 2398</p>
+<p>  修复了在行上基于属性的错误
+  会在非C版本中引发AttributeError，
+  在C版本中引发NoSuchColumnError。现在
+  在这两种情况下都会引发AttributeError。</p>
+<p>    :tags：feature，sql
+    :tickets: 1859</p>
+<p>  添加了对SQL标准的支持
+  公共表达式（CTE），允许
+  选择对象作为CTE源（DML
+  尚未受支持）。这是通过
+  选择任何select（）构造 cte（）方法。</p>
+<p>    :tags：bug，sql
+    :tickets: 2392</p>
+<p>  支持使用Column的.key
+  作为结果集行的字符串标识符。 .key目前
+  被列标记为“备选”，并被该列的名称取代
+  其常规名称具有该键值。为下一个主要版本
+  SQLAlchemy，我们可以翻转此优先级
+  所以。键拥有优先权，但这个
+  尚未决定。</p>
+<p>    :tags：bug，sql
+    :tickets: 2413</p>
+<p>  在insert（）或update（）构造的values（）子句中
+  列不存在时会发出警告。
+  会在0.8中移动到例外情况。</p>
+<p>    :tags：bug，sql
+    :tickets: 2396</p>
+<p>  对SELECT语句中的列进行标记的更改
+  声明允许“截断”标签，即标签名称
+  在Python中生成的名称超过
+  最大标识符长度（请注意，这是
+  通过使用label_length创建_engine（）配置），
+  将在子查询内正确引用，以及使用其原始
+  在Python名称中呈现的$result$行中。</p>
+<p>    :tags：bug，sql
+    :tickets: 2402</p>
+<p>  在reflected表的情况下，修复了新的“autoload_replace”标志中的错误
+  如果反映该表的主键约束将无法保留。</p>
+<p>    :tags：bug，sql
+    :tickets: 2380</p>
+<p>  当不能将参数解释为列或表达式时，索引将引发
+  传递的参数。没有列时警告
+  全部创建的索引。</p>
+<p>    :tags：engine，功能
+    :tickets: 2407</p>
+<p>  添加了“no_parameters = True”执行
+  选项用于连接。如果没有参数
+  出现，在cursor.execute（statement）中传递该语句
+  从而调用DBAPI的行为，当没有参数时
+  在某些情况下，在字符串中不能解释%符号。
+  这仅在此选项中发生，而不是
+  只有如果参数列表为空，否则
+  这将产生SQL表达式的不一致行为
+  通常转义百分号（且在编译时无法判断参数是否存在
+  在某些情况下）。</p>
+<p>    :tags：engine，bug
+    :tickets:</p>
+<p>  向MockConnection（即用于）添加execution_options（）调用
+  strategy =“mock”），它充当经过传递
+  参数的通道。</p>
+<p>    :tags：engine，功能
+    :tickets: 2378</p>
+<p>  在create_engine中添加了pool_reset_on_return参数
+  允许控制
+  “连接返回”行为。还添加了一个新参数’rollback’，’commit’，None
+  到pool.reset_on_return以允许更多的控制
+  连接返回活动。</p>
+<p>    :tags：engine，功能
+    :tickets:</p>
+<p>  添加了一些不错的上下文管理器
+  Engine，Connection</p>
+<p>      with engine.begin() as conn:
+         # &lt;用conn在事务中工作&gt;
+         …</p>
+<p>  并且:</p>
+<p>      with engine.connect() as conn:
+         # &lt;用conn工作&gt;
+         …</p>
+<p>  在完成后关闭连接，
+  在engine.begin()上错误提交或回滚
+  时。</p>
+<p>    :tags：sqlite，bug
+    :tickets: 2432</p>
+<p>  修复了C扩展错误，在返回整数作为Numeric值时不会应用参数格式;
+  这主要影响SQLite，它不会
+  维护数字比例设置。</p>
+<p>    :tags：mssql，功能
+    :tickets: 2430</p>
+<p>  增加了对MSSQL INSERT的支持，
+  UPDATE和DELETE表提示，使用
+  新的with_hint（）方法在UpdateBase上。</p>
+<p>    :tags：feature，mysql
+    :tickets: 2386</p>
+<p>  通过将mysql_using参数添加到Index和PrimaryKeyConstraint中，为MySQL索引和
+  支持主键约束类型（即USING），由Diana Clarke提供。</p>
+<p>    :tags：feature，mysql
+    :tickets: 2394</p>
+<p>  为所有MySQL方言添加了“isolation_level”
+  参数的支持。谢谢
+  Mu_mind提供的补丁。</p>
+<p>    :tags：oracle，功能
+    :tickets: 2399</p>
+<p>  增加了一个新的create_engine（）标志
+  coerce_to_decimal = False，停用精度
+  通过将所有数字值都转换为
+  十进制的处理，会产生很多开销。</p>
+<p>    :tags：oracle，bug
+    :tickets: 2401</p>
+<p>  为LONG添加了缺少的编译支持</p>
+<p>    :tags：oracle，bug
+    :tickets: 2435</p>
+<p>  将’LEVEL’添加到保留列表中
+  用于Oracle。</p>
+<p>    :tags：examples，bug
+    :tickets:</p>
+<p>  在Beaker示例中的_params_from_query（）函数进行了更改
+  ，从完全编译的语句中提取bindparams，
+  作为获取包括子查询在内的所有内容的快速手段
+  列子句等。版本：0.7.3
+发布日期：2011年10月16日</p>
+<p>变化：
+- joined和subquery加载现在会遍历已经存在的相关对象和集合，以查找在整个定义的急切加载的范围内没有填充的所有属性。
+- 修复了当在 ‘columns-only’ 的情况下使用mapper.polymorphic_on 时出现的错误。
+- 修复了将column_property（）应用于subquery时+joinedload + LIMIT +按column_property()排序会导致SQL出现问题的问题。
+- ORM现在具有一个经过改进的可替换遍历，可将selectables更改为针对某些内容的别名（即子句适应），其中包括对与joined table结构的多重嵌套any（）/has（）结构的修复。很抱歉，这段文字没有提及任何修改。.. deprecated:: 0.7.0</p>
+<blockquote>
+<div><p>The following changes have been deprecated as of version 0.7.0:</p>
+<ul class="simple">
+<li><p>ScopedSession.mapper is removed.</p></li>
+<li><p>Query.join(), Query.outerjoin(), eagerload(), eagerload_all(), and others no longer allow lists of attributes as arguments (i.e. option([x, y, z]) form).</p></li>
+</ul>
+</div></blockquote>
+<p>The following changes have been made in version 0.7.0b2:</p>
+<p>The following changes have been made in version 0.7.0b1:</p>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="changelog_08.html" title="previous chapter">0.8 更新日志</a>
+        Next:
+        <a href="changelog_06.html" title="next chapter">0.6 更新日志</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:30:52
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

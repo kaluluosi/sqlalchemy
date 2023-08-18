@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    引擎配置
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="引擎和连接使用" href="engines_connections.html" />
+        <link rel="next" title="使用Engine和Connection" href="connections.html" />
+        <link rel="prev" title="引擎和连接使用" href="engines_connections.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span><ul>
+<li class="selected"><span class="link-container"><strong>引擎配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#database">支持的Database</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#database-urls">Database URLs</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id29">转义密码中的特殊字符，例如&#64;字符</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id32">动态生成身份验证令牌</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id37">隐藏参数</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="connections.html">使用Engine和Connection</a></span></li>
+<li><span class="link-container"><a class="reference external" href="pooling.html">连接池</a></span></li>
+<li><span class="link-container"><a class="reference external" href="events.html">核心事件</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="engines_connections.html" title="previous chapter">引擎和连接使用</a></li>
+                <li><b>Next:</b>
+                <a href="connections.html" title="next chapter">使用Engine和Connection</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="engines_connections.html" title="引擎和连接使用">引擎和连接使用</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#engines-toplevel">引擎配置</a><ul>
+<li><a class="reference internal" href="#database">支持的Database</a></li>
+<li><a class="reference internal" href="#database-urls">Database URLs</a><ul>
+<li><a class="reference internal" href="#id29">转义密码中的特殊字符，例如&#64;字符</a><ul>
+<li><a class="reference internal" href="#id32">动态生成身份验证令牌</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id37">隐藏参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar core-engines" >
+        
+<section id="engines-toplevel">
+<span id="id1"></span><h1>引擎配置<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine`是任何SQLAlchemy应用程序的起点。</span>
+<span class="pre">它是通过连接池和一个:class:</span></code>.Dialect`向SQLAlchemy应用程序提供实际数据库及其:term:<a href="#id2"><span class="problematic" id="id3">`</span></a>DBAPI`的“home base”，
+这个:Dialect映射了如何与特定类型的数据库 / DBAPI组合进行通信。</p>
+<p>总体结构可以如下图所示：</p>
+<img alt="../_images/sqla_engine_arch.png" src="../_images/sqla_engine_arch.png" />
+<p>如上图，<code class="xref py py-class docutils literal notranslate"><span class="pre">Engine`引用了一个:class:</span></code>.Dialect`和一个:class:<cite>_pool.Pool</cite>，
+两者一起解释DBAPI的模块函数以及数据库的行为。</p>
+<p>创建引擎只需要发出一个调用，<code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost:5432/mydatabase&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>上面的引擎创建了一个针对PostgreSQL的:class:<a href="#id4"><span class="problematic" id="id5">`</span></a>.Dialect`对象，
+以及一个:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_pool.Pool`对象，该对象在首次接收到连接请求时将在``localhost:5432``建立DBAPI连接。
+请注意，:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_engine.Engine`及其底层:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_pool.Pool`直到调用:meth:<a href="#id12"><span class="problematic" id="id13">`</span></a>_engine.Engine.connect`方法，
+或调用依赖于此方法的操作，例如:meth:<a href="#id14"><span class="problematic" id="id15">`</span></a>_engine.Engine.execute`才建立第一个实际的DBAPI连接。
+通过这种方式，:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_engine.Engine`和:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_pool.Pool`可以被认为具有惰性初始化行为。</p>
+<p>创建后的:class:<cite>_engine.Engine`可以直接用于与数据库进行交互，
+也可以传递给:class:</cite>.Session`对象以与ORM一起使用。本节讲述配置:class:<cite>_engine.Engine`的详细信息。
+下一节，:ref:`connections_toplevel</cite>，将详细介绍:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_engine.Engine`和类似的使用API，通常用于非ORM应用程序。</p>
+<section id="database">
+<span id="supported-dbapis"></span><h2>支持的Database<a class="headerlink" href="#database" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy包括许多:class:<a href="#id22"><span class="problematic" id="id23">`</span></a>.Dialect`的实现，适用于各种后端。其中大多数常见数据库的方言包含在SQLAlchemy中；
+少数其他数据库需要安装单独的方言。</p>
+<p>有关各种后端的详细信息，请参见:ref:<a href="#id24"><span class="problematic" id="id25">`</span></a>dialect_toplevel`部分。</p>
+</section>
+<section id="database-urls">
+<span id="id26"></span><h2>Database URLs<a class="headerlink" href="#database-urls" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id27"><span class="problematic" id="id28">:func:`_sa.create_engine`函数基于URL生成:class:`_engine.Engine`对象。URL的格式通常遵循 `RFC-1738 &lt;https://www.ietf.org/rfc/rfc1738.txt&gt;`_</span></a>，其中
+下划线，而不是破折号或句点，在“scheme”部分中被接受。
+URL通常包括用户名，密码，主机名，数据库名称字段，以及用于附加配置的可选关键字参数。
+在某些情况下，可以接受文件路径，而在其他情况下，“数据源名称”取代了“主机” 和“数据库”部分。
+数据库URL的典型格式为：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>dialect+driver://username:password@host:port/database</pre></div>
+</div>
+<p>方言名称包括SQLAlchemy方言的标识名称，例如``sqlite``，<code class="docutils literal notranslate"><span class="pre">mysql</span></code>，<code class="docutils literal notranslate"><span class="pre">postgresql</span></code>，<code class="docutils literal notranslate"><span class="pre">oracle``或``mssql</span></code>。
+驱动程序名称是DBAPI的名称，用所有小写字母连接到一起。如果未指定，则默认情况下将导入一个“地图”DBAPI，如果可用，则此默认设置通常是可以得到它的后端的最广泛的驱动程序。</p>
+<section id="id29">
+<h3>转义密码中的特殊字符，例如&#64;字符<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
+<p>当构造完整的URL字符串以传递给:func:<a href="#id30"><span class="problematic" id="id31">`</span></a>_sa.create_engine`时，
+<strong>需要对特殊字符（例如在用户和密码中使用的字符）进行URL编码才能正确解析。</strong>.
+<strong>这包括&#64;符号。</strong></p>
+<p>以下是包含密码“<a class="reference external" href="mailto:kx&#37;&#52;&#48;jj5/g">kx<span>&#64;</span>jj5/g</a>”的URL的示例，
+其中“at”符号和斜线字符分别表示为“％40”和“％2F”：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>postgresql+pg8000://dbuser:kx%40jj5%2Fg@pghost10/appdb</pre></div>
+</div>
+<p>可以使用`urllib.parse &lt;<a class="reference external" href="https://docs.python.org/3/library/urllib.parse.html">https://docs.python.org/3/library/urllib.parse.html</a>&gt;`_生成上述密码的编码：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">urllib.parse</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">quote_plus</span><span class="p">(</span><span class="s2">&quot;kx@jj5/g&quot;</span><span class="p">)</span>
+<span class="go">&#39;kx%40jj5%2Fg&#39;</span></pre></div>
+</div>
+<p>然后可以将URL作为字符串传递给:func:<cite>_sa.create_engine</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+pg8000://dbuser:kx%40jj5</span><span class="si">%2F</span><span class="s2">g@pghost10/appdb&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>作为生成完整的URL字符串的替代方法，
+传递给:func:<cite>_sa.create_engine`的对象可以是:class:</cite>.URL`实例，
+它绕过了解析阶段，并可以直接容纳未转义的字符串。
+见下一节的示例</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span>修复了主机名和数据库名称中的``&#64;``标记符的支持。 由于此修复的副作用，
+必须转义密码中的``&#64;``号。</p>
+</div>
+<section id="id32">
+<h4>动态生成身份验证令牌<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h4>
+<p>:meth:<a href="#id33"><span class="problematic" id="id34">`</span></a>.DialectEvents.do_connect`还是动态插入身份验证令牌
+可能会在整个:class:<a href="#id35"><span class="problematic" id="id36">`</span></a>_engine.Engine`的使用寿命内发生更改。
+例如，如果令牌由``get_authentication_token()``生成并在``token``参数中传递给DBAPI，则可以通过以下方式实现：</p>
+<blockquote>
+<div><p>from sqlalchemy import event</p>
+<p>engine = create_engine(“postgresql+psycopg2://user:pass&#64;hostname/dbname”)</p>
+<p>&#64;event.listens_for(engine, “do_connect”)
+def provide_token(dialect, conn_rec, cargs, cparams):</p>
+<blockquote>
+<div><p>cparams[“token”] = get_authentication_token()</p>
+</div></blockquote>
+</div></blockquote>
+</section>
+</section>
+<section id="id37">
+<h3>隐藏参数<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h3>
+<p>:class:<a href="#id38"><span class="problematic" id="id39">`</span></a>_engine.Engine`发出的日志还指示了该语句的一些SQL参数摘录。
+为了保护隐私，防止这些参数被记录下来，启用:paramref:<a href="#id40"><span class="problematic" id="id41">`</span></a>_sa.create_engine.hide_parameters`标志:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hide_parameters</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">&gt;&gt;&gt;</span> <span class="k">with</span> <span class="n">e</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span></pre></div>
+</div>
+<p>…     conn.execute(text(“select :some_private_name”), {“some_private_name”: “pii”})
+2020-10-24 12:48:32,808 INFO sqlalchemy.engine.Engine select ?
+2020-10-24 12:48:32,808 INFO sqlalchemy.engine.Engine [由于hide_parameters=True而隐藏的SQL参数]</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="engines_connections.html" title="previous chapter">引擎和连接使用</a>
+        Next:
+        <a href="connections.html" title="next chapter">使用Engine和Connection</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:30:58
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

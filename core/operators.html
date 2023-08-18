@@ -1,0 +1,784 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    运算符参考
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQL语句和表达式API" href="expression_api.html" />
+        <link rel="next" title="SELECT和相关结构" href="selectable.html" />
+        <link rel="prev" title="列元素和表达式" href="sqlelement.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="expression_api.html">SQL语句和表达式API</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="sqlelement.html">列元素和表达式</a></span></li>
+<li class="selected"><span class="link-container"><strong>运算符参考</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id28">比较运算符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#in">IN比较</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id47">空IN表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id50">元组IN表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id55">子查询中的IN</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id62">恒等比较</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id79">字符串比较</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id88">字符串包含</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id95">字符串匹配</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id106">算术运算符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id131">位运算符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id152">使用连接和否定</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id161">取消</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id164">结合运算符</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="selectable.html">SELECT和相关结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dml.html">插入、更新、删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="functions.html">SQL和通用函数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="compiler.html">自定义 SQL 构造和编译扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="serializer.html">表达式序列化扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="foundation.html">SQL表达式语言基础构造</a></span></li>
+<li><span class="link-container"><a class="reference external" href="visitors.html">访问者和遍历工具</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="schema.html">Schema定义语言</a></span></li>
+<li><span class="link-container"><a class="reference external" href="types.html">SQL数据库类型对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="engines_connections.html">引擎和连接使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="api_basics.html">核心API基础知识</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="sqlelement.html" title="previous chapter">列元素和表达式</a></li>
+                <li><b>Next:</b>
+                <a href="selectable.html" title="next chapter">SELECT和相关结构</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy核心模块">SQLAlchemy核心模块</a></li>
+                    <ul><li><a href="expression_api.html" title="SQL语句和表达式API">SQL语句和表达式API</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">运算符参考</a><ul>
+<li><a class="reference internal" href="#id28">比较运算符</a></li>
+<li><a class="reference internal" href="#in">IN比较</a><ul>
+<li><a class="reference internal" href="#id47">空IN表达式</a></li>
+<li><a class="reference internal" href="#id50">元组IN表达式</a></li>
+<li><a class="reference internal" href="#id55">子查询中的IN</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id62">恒等比较</a></li>
+<li><a class="reference internal" href="#id79">字符串比较</a></li>
+<li><a class="reference internal" href="#id88">字符串包含</a></li>
+<li><a class="reference internal" href="#id95">字符串匹配</a></li>
+<li><a class="reference internal" href="#id106">算术运算符</a></li>
+<li><a class="reference internal" href="#id131">位运算符</a></li>
+<li><a class="reference internal" href="#id152">使用连接和否定</a></li>
+<li><a class="reference internal" href="#id161">取消</a></li>
+<li><a class="reference internal" href="#id164">结合运算符</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar core-operators" >
+        
+<section id="id1">
+<h1>运算符参考<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>本节详细介绍了可用于构造SQL表达式的运算符。</p>
+<p>这些方法是基于:class：<a href="#id2"><span class="problematic" id="id3">`</span></a>_sql.Operators`和:class：<a href="#id4"><span class="problematic" id="id5">`</span></a>_sql.ColumnOperators`基类呈现的。然后可以在子类上使用这些类，包括：</p>
+<p><a href="#id6"><span class="problematic" id="id7">*</span></a>：class：<a href="#id8"><span class="problematic" id="id9">`</span></a>_schema.Column`对象</p>
+<p><a href="#id10"><span class="problematic" id="id11">*</span></a>更一般地来说，是所有Core SQL Expression语言列级别表达式的根：class：<a href="#id12"><span class="problematic" id="id13">`</span></a>_sql.ColumnElement`对象</p>
+<p><a href="#id14"><span class="problematic" id="id15">*</span></a>：class：<a href="#id16"><span class="problematic" id="id17">`</span></a>_orm.InstrumentedAttribute`对象，这是ORM级别映射的属性。</p>
+<p>首先，在教程部分中介绍了运算符，包括：</p>
+<p><a href="#id18"><span class="problematic" id="id19">*</span></a>：doc：<cite>/ tutorial / index</cite>-统一的：术语：<a href="#id20"><span class="problematic" id="id21">`</span></a>2.0样式`教程</p>
+<p><a href="#id22"><span class="problematic" id="id23">*</span></a>：doc：<cite>/ orm / tutorial</cite>-ORM：术语：<a href="#id24"><span class="problematic" id="id25">`</span></a>1.x样式`教程</p>
+<p><a href="#id26"><span class="problematic" id="id27">*</span></a>：doc：<cite>/ core / tutorial</cite>-Core教程中：术语：<cite>1.x样式</cite></p>
+<section id="id28">
+<h2>比较运算符<a class="headerlink" href="#id28" title="Permalink to this heading">¶</a></h2>
+<p>适用于许多数据类型，包括数字，字符串，日期和许多其他类型的基本比较：</p>
+<p><a href="#id29"><span class="problematic" id="id30">*</span></a>：meth：<cite>_sql.ColumnOperators.__eq__`（Python“</cite> ==`”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="o">==</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x =：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id31"><span class="problematic" id="id32">*</span></a>：meth：<cite>_sql.ColumnOperators.__ne__`（Python“</cite>！= <a href="#id33"><span class="problematic" id="id34">`</span></a>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）！</span><span class="o">=</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x！=：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id35"><span class="problematic" id="id36">*</span></a>：meth：<cite>_sql.ColumnOperators.__gt__`（Python“</cite>&gt;`”运算符）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="o">&gt;</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x&gt;：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id37"><span class="problematic" id="id38">*</span></a>：meth：<cite>_sql.ColumnOperators.__lt__`（Python“`&lt;</cite>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="o">&lt;</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x&lt;：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id39"><span class="problematic" id="id40">*</span></a>：meth：<cite>_sql.ColumnOperators.__ge__`（Python“</cite>&gt; =`”运算符）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="o">&gt;=</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x&gt; =：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id41"><span class="problematic" id="id42">*</span></a>：meth：<cite>_sql.ColumnOperators.__le__`（Python“`&lt;=</cite>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="o">&lt;=</span><span class="mi">5</span><span class="err">）</span>
+<span class="go">{printsql}x &lt;=：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id43"><span class="problematic" id="id44">*</span></a>：meth：<cite>_sql.ColumnOperators.between</cite>：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">between</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="go">{printsql} x BETWEEN :x_1 AND :x_2</span></pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="in">
+<h2>IN比较<a class="headerlink" href="#in" title="Permalink to this heading">¶</a></h2>
+<p>SQL IN运算符是SQLAlchemy中的一个主题。由于IN运算符通常针对一组固定值使用，因此SQLAlchemy的绑定参数强制使用两个步骤形成的中间SQL编译字符串，以将其形成为绑定参数的最终列表。换句话说，“它只是工作”。</p>
+<p>针对一组值的IN最常见的方法是将其作为列表传递给：meth：<a href="#id45"><span class="problematic" id="id46">`</span></a>_sql.ColumnOperators.in_`方法:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="k">IN</span><span class="err">（</span><span class="n">__</span><span class="p">[</span><span class="n">POSTCOMPILE_x_1</span><span class="p">]</span><span class="n">__</span><span class="err">）</span>
+</div></pre></div>
+</div>
+<p>特殊绑定形式“__[POSTCOMPILE __”在执行时转换为单个参数，如下所示：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<span class="go">{execsql}SELECT user_account.id</span>
+<span class="go">FROM user_account</span>
+<span class="go">WHERE user_account.id IN（？，？，？）</span>
+<span class="go">[...]（1,2,3）{stop}</span></pre></div>
+</div>
+<section id="id47">
+<h3>空IN表达式<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h3>
+<p>对于空IN表达式，SQLAlchemy通过呈现后端特定的子查询来产生数学上有效的结果，该子查询不返回任何行。换句话说，“它只是工作”:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">in_</span><span class="p">([]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="err">（</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">FROM</span><span class="err">（</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="err">）</span><span class="k">WHERE</span><span class="w"> </span><span class="mi">1</span><span class="err">！</span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="err">）</span>
+<span class="p">[...]</span><span class="err">（）</span>
+</div></pre></div>
+</div>
+<p>上述“空集”子查询是正确的并且也以IN运算符的形式呈现，该运算符保持不变。</p>
+<p>没有</p>
+<p>“NOT IN”可通过：meth：<a href="#id48"><span class="problematic" id="id49">`</span></a>_sql.ColumnOperators.not_in`运算符获得:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">not_in</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<div class='show_sql_print'><span class="err">（</span><span class="n">x</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="err">（</span><span class="n">__</span><span class="p">[</span><span class="n">POSTCOMPILE_x_1</span><span class="p">]</span><span class="n">__</span><span class="err">））</span>
+</div></pre></div>
+</div>
+<p>这通常更易于将操作员取反与“~”操作员一起使用:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="err">（〜</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="n">in_</span><span class="err">（【</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="err">】））</span>
+<div class='show_sql_print'><span class="err">（</span><span class="n">x</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="err">（</span><span class="n">__</span><span class="p">[</span><span class="n">POSTCOMPILE_x_1</span><span class="p">]</span><span class="n">__</span><span class="err">））</span>
+</div></pre></div>
+</div>
+</section>
+<section id="id50">
+<h3>元组IN表达式<a class="headerlink" href="#id50" title="Permalink to this heading">¶</a></h3>
+<p>将元组与元组进行比较是常见的IN用例，因为在将行与一组潜在复合主键值匹配时特别适用。：func：<a href="#id51"><span class="problematic" id="id52">`</span></a>_sql.tuple_`构造提供了元组比较的基本构建块。然后，：meth：<a href="#id53"><span class="problematic" id="id54">`</span></a>_sql.Tuple.in_`运算符接收元组列表:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">tuple_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="n">tuple_</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expr</span> <span class="o">=</span> <span class="n">tup</span><span class="o">.</span><span class="n">in_</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">expr</span><span class="p">)</span>
+<div class='show_sql_print'><span class="err">（</span><span class="n">x</span><span class="err">，</span><span class="n">y</span><span class="err">）</span><span class="k">IN</span><span class="err">（</span><span class="n">__</span><span class="p">[</span><span class="n">POSTCOMPILE_param_1</span><span class="p">]</span><span class="n">__</span><span class="err">）</span>
+</div></pre></div>
+</div>
+<p>为了说明呈现的参数：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tup</span> <span class="o">=</span> <span class="n">tuple_</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">Address</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tup</span><span class="o">.</span><span class="n">in_</span><span class="p">([(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">{execsql}SELECT user_account.name</span>
+<span class="go">FROM user_account JOIN address ON user_account.id = address.user_id</span>
+<span class="go">WHERE（user_account.id，address.id）IN（VALUES（？，？），（？，？））</span>
+<span class="go">[...]（1,1,2,2）{stop}</span>
+<span class="go">[( &#39;spongebob&#39; ，)（&#39;sandy&#39;，）]</span></pre></div>
+</div>
+</section>
+<section id="id55">
+<h3>子查询中的IN<a class="headerlink" href="#id55" title="Permalink to this heading">¶</a></h3>
+<p>最后，：meth：<a href="#id56"><span class="problematic" id="id57">`</span></a>_sql.ColumnOperators.in_`和：meth：<a href="#id58"><span class="problematic" id="id59">`</span></a>_sql.ColumnOperators.not_in`运算符可以使用子查询。该形式提供了一个：class：<a href="#id60"><span class="problematic" id="id61">`</span></a>_sql.Select`构造，直接传递，无需显式转换为命名子查询：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)))</span>
+<span class="go">{printsql}x IN（SELECT user_account.id</span>
+<span class="go">FROM user_account）</span></pre></div>
+</div>
+<p>元组按预期工作：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">tuple_</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">select</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">address_table</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}（x，y）IN（SELECT user_account.id，address.id</span>
+<span class="go">FROM user_account JOIN address ON user_account.id = address.user_id）</span></pre></div>
+</div>
+</section>
+</section>
+<section id="id62">
+<h2>恒等比较<a class="headerlink" href="#id62" title="Permalink to this heading">¶</a></h2>
+<p>这些运算符涉及测试特殊SQL值，例如“<cite>NULL</cite>”，某些数据库支持的布尔常量，例如“true”或“false”：</p>
+<p><a href="#id63"><span class="problematic" id="id64">*</span></a>：meth：<cite>_sql.ColumnOperators.is_</cite>：</p>
+<blockquote>
+<div><p>此运算符将为“x IS y”提供完全的SQL，通常表示为“&lt;expr&gt; IS NULL”。 可以使用常规Python“None”轻松获取“NULL”常量：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<span class="go">{printsql}x IS NULL</span></pre></div>
+</div>
+<p>SQL NULL也可以明确地使用：func：<a href="#id65"><span class="problematic" id="id66">`</span></a>_sql.null`构造（如果需要）获得:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">null</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_</span><span class="p">(</span><span class="n">null</span><span class="p">()))</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span>
+</div></pre></div>
+</div>
+<p>如果在动态值使用，通常不需要显式使用：meth：<cite>_sql.ColumnOperators.is_</cite>，特别是在使用值的情况下，将自动调用它：meth：<a href="#id67"><span class="problematic" id="id68">`</span></a>_sql.ColumnOperators.__eq__`重载运算符，即« ==`和“None”或：func：<a href="#id69"><span class="problematic" id="id70">`</span></a>_sql.null`值。 因此，在大多数情况下，不需要使用：meth：<a href="#id71"><span class="problematic" id="id72">`</span></a>_sql.ColumnOperators.is_`显式使用，特别是当使用动态值时，具有以下语法标记：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">a</span><span class="p">)</span>
+<span class="go">{printsql}x IS NULL</span></pre></div>
+</div>
+<p>请注意，Python“is”操作员**未重载**。即使Python提供了挂钩以重载诸如“==”和“！=”之类的运算符，但它没有提供任何重新定义“is”的方法。</p>
+</div></blockquote>
+<p><a href="#id73"><span class="problematic" id="id74">*</span></a>：meth：<cite>_sql.ColumnOperators.is_not</cite>：</p>
+<blockquote>
+<div><p>类似于：meth：<cite>_sql.ColumnOperators.is_</cite>，生成“IS NOT”:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_not</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+</div></pre></div>
+</div>
+<p>同样相当于“！= None”：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="go">{printsql}x IS NOT NULL</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id75"><span class="problematic" id="id76">*</span></a>：meth：<cite>_sql.ColumnOperators.is_distinct_from</cite>：</p>
+<blockquote>
+<div><p>产生SQL IS DISTINCT FROM:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">is_distinct_from</span><span class="p">(</span><span class="s2">&quot;some value&quot;</span><span class="p">))</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="k">FROM</span><span class="err">：</span><span class="n">x_1</span>
+</div></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id77"><span class="problematic" id="id78">*</span></a>：meth：<cite>_sql.ColumnOperators.isnot_distinct_from</cite>：</p>
+<blockquote>
+<div><p>产生SQL IS NOT DISTINCT FROM:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">isnot_distinct_from</span><span class="p">(</span><span class="s2">&quot;some value&quot;</span><span class="p">))</span>
+<div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="k">FROM</span><span class="err">：</span><span class="n">x_1</span>
+</div></pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="id79">
+<h2>字符串比较<a class="headerlink" href="#id79" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id80"><span class="problematic" id="id81">*</span></a>：meth：<cite>_sql.ColumnOperators.like</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).like(&quot;word&quot;))</span>
+<span class="go">  {printsql}x LIKE：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id82"><span class="problematic" id="id83">*</span></a>：meth：<cite>_sql.ColumnOperators.ilike</cite>：</p>
+<blockquote>
+<div><p>不区分大小写的LIKE使用通用后端上的SQL“lower（）”函数。 在PostgreSQL后端上，它将使用“ILIKE”:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">lower</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="k">lower</span><span class="p">(:</span><span class="n">x_1</span><span class="p">)</span>
+</div></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id84"><span class="problematic" id="id85">*</span></a>：meth：<cite>_sql.ColumnOperators.notlike</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).notlike(&quot;word&quot;))</span>
+<span class="go">  {printsql}x NOT LIKE：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id86"><span class="problematic" id="id87">*</span></a>：meth：<cite>_sql.ColumnOperators.notilike</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).notilike(&quot;word&quot;))</span>
+<span class="go">  {printsql}lower(x) NOT LIKE lower(:x_1)</span>
+
+<span class="go">..</span></pre></div>
+</div>
+</section>
+<section id="id88">
+<h2>字符串包含<a class="headerlink" href="#id88" title="Permalink to this heading">¶</a></h2>
+<p>字符串包含运算符基本上是由一个LIKE和串联运算符组成的组合，该运算符在大多数后端上是“||”或有时是类似于“concat（）”的函数：</p>
+<p><a href="#id89"><span class="problematic" id="id90">*</span></a>：meth：<cite>_sql.ColumnOperators.startswith</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).startswith(&quot;word&quot;))</span>
+<span class="go">  {printsql}x LIKE：x_1 ||&#39;％&#39;</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id91"><span class="problematic" id="id92">*</span></a>：meth：<cite>_sql.ColumnOperators.endswith</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).endswith(&quot;word&quot;))</span>
+<span class="go">  {printsql}x LIKE&#39;％&#39;||：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id93"><span class="problematic" id="id94">*</span></a>：meth：<cite>_sql.ColumnOperators.contains</cite>:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).contains(&quot;word&quot;))</span>
+<span class="go">  {printsql}x LIKE&#39;％&#39;||：x_1 ||&#39;％&#39;</span>
+
+<span class="go">..</span></pre></div>
+</div>
+</section>
+<section id="id95">
+<h2>字符串匹配<a class="headerlink" href="#id95" title="Permalink to this heading">¶</a></h2>
+<p>匹配操作符始终是特定于后端的，可能在不同的数据库上提供不同的行为和结果：</p>
+<p><a href="#id96"><span class="problematic" id="id97">*</span></a>：meth：<cite>_sql.ColumnOperators.match</cite>：</p>
+<blockquote>
+<div><p>这是一个特定于方言的运算符，如果基础数据库可用，它将使用MATCH功能：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">))</span>
+<span class="go">{printsql}x 匹配：x_1</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id98"><span class="problematic" id="id99">*</span></a>：meth：<cite>_sql.ColumnOperators.regexp_match</cite>：</p>
+<blockquote>
+<div><p>此运算符是特定于方言的。我们可以在PostgreSQL方言中的示例中说明它：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">regexp_match</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">{printsql}x ~％（x_1）s</span></pre></div>
+</div>
+<p>或者MySQL：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">mysql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">regexp_match</span><span class="p">(</span><span class="s2">&quot;word&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">{printsql}x REGEXP％s</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id100"><span class="problematic" id="id101">*</span></a>：meth：<cite>_sql.ColumnOperators.regexp_replace</cite>：</p>
+<blockquote>
+<div><p>补充:meth：<cite>_sql.ColumnOperators.regexp_match</cite>，这将针对支持它的后端产生相当于REGEXP REPLACE的效果：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">regexp_replace</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">{printsql}REGEXP_REPLACE(x, %(x_1)s, %(x_2)s)</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id102"><span class="problematic" id="id103">*</span></a>：meth：<cite>_sql.ColumnOperators.collate</cite>：</p>
+<blockquote>
+<div><p>提供表示在表达式时间利用特定排序规则的COLLATE SQL运算符：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collate</span><span class="p">(</span><span class="s2">&quot;latin1_german2_ci&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;Müller&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}(x COLLATE latin1_german2_ci) = %s</span></pre></div>
+</div>
+<p>要对文字值使用COLLATE，请使用：func：<a href="#id104"><span class="problematic" id="id105">`</span></a>_sql.literal`构造：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">literal</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="n">literal</span><span class="p">(</span><span class="s2">&quot;Müller&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">collate</span><span class="p">(</span><span class="s2">&quot;latin1_german2_ci&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}(%s COLLATE latin1_german2_ci) = x</span></pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="id106">
+<h2>算术运算符<a class="headerlink" href="#id106" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id107"><span class="problematic" id="id108">*</span></a>：meth：<cite>_sql.ColumnOperators.__add__</cite>，：meth：<cite>_sql.ColumnOperators.__radd__`（Python“</cite> +`”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x + :x_1{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">+</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="go">{printsql}:x_1 + x{stop}</span></pre></div>
+</div>
+<p>（。）</p>
+</div></blockquote>
+<p> 请注意，当表达式的数据类型为：class：<cite>_types.String`或类似类型时，：meth：`_sql.ColumnOperators.__add__`运算符将生成：ref：`字符串`concatenation &lt;queryguide_operators_concat_op&gt;</cite>。</p>
+<p><a href="#id109"><span class="problematic" id="id110">*</span></a>：meth：<cite>_sql.ColumnOperators.__sub__</cite>，：meth：<cite>_sql.ColumnOperators.__rsub__`（Python“</cite>-<a href="#id111"><span class="problematic" id="id112">`</span></a>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x - ：x_1{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">-</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="go">{printsql}:x_1 - x{stop}</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id113"><span class="problematic" id="id114">*</span></a>：meth：<cite>_sql.ColumnOperators.__mul__</cite>，：meth：<cite>_sql.ColumnOperators.__rmul__`（Python“</cite> <a href="#id115"><span class="problematic" id="id116">*</span></a><a href="#id117"><span class="problematic" id="id118">`</span></a>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x * ：x_1{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="go">{printsql}:x_1 * x{stop}</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id119"><span class="problematic" id="id120">*</span></a>：meth：<cite>_sql.ColumnOperators.__truediv__</cite>，：meth：<cite>_sql.ColumnOperators.__rtruediv__`（Python“</cite>/<a href="#id121"><span class="problematic" id="id122">`</span></a>”运算符）.
+  这是Python“truediv”运算符，将确保整数真除法发生：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">/</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x / CAST（：x_1 AS NUMERIC）{stop}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">/</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
+<span class="go">{printsql}：x_1 / CAST（x AS NUMERIC）{stop}</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>Python“/”运算符现在确保执行整数真除法</p>
+</div>
+</div></blockquote>
+<p><a href="#id123"><span class="problematic" id="id124">*</span></a>：meth：<cite>_sql.ColumnOperators.__floordiv__</cite>，：meth：<cite>_sql.ColumnOperators.__rfloordiv__`（Python“</cite>//<a href="#id125"><span class="problematic" id="id126">`</span></a>”操作员）。
+  这是Python“floordiv”运算符，将确保进行地板除法。
+  对于默认后端以及后端例如PostgreSQL，默认情况下SQL“/”运算符通常以这种方式与整数值交互：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x / ：x_1{stop}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">//</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>
+<span class="go">{printsql}：x_1 / x{stop}</span></pre></div>
+</div>
+<p> 对于不使用地板除法的后端或与数字值一起使用时，使用FLOOR（）函数以确保进行地板除法：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="mf">5.5</span><span class="p">)</span>
+<span class="go">{printsql}FLOOR（x / ：x_1）{stop}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span> <span class="o">//</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Numeric</span><span class="p">))</span>
+<span class="go">{printsql}FLOOR（：x_1 / x）{stop}</span></pre></div>
+</div>
+<p> .. versionadded :: 2.0 支持FLOOR除法</p>
+<p>  ..</p>
+<p><a href="#id127"><span class="problematic" id="id128">*</span></a>：meth：<cite>_sql.ColumnOperators.__mod__</cite>，：meth：<cite>_sql.ColumnOperators.__rmod__`（Python“</cite>％<a href="#id129"><span class="problematic" id="id130">`</span></a>”操作员）：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">%</span><span class="mi">5</span><span class="p">)</span>
+<span class="go">{printsql}x％：x_1{stop}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="mi">5</span><span class="err">％</span><span class="n">column</span><span class="err">（“</span><span class="n">x</span><span class="err">”）</span><span class="p">)</span>
+<span class="go">{printsql}：x_1％x{stop}</span></pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="id131">
+<h2>位运算符<a class="headerlink" href="#id131" title="Permalink to this heading">¶</a></h2>
+<p>位运算符函数提供了在不同后端上对二进制运算符的统一访问，这些运算符预计在兼容值上运行，例如整数和位字符串（例如，PostgreSQL：class：<a href="#id132"><span class="problematic" id="id133">`</span></a>_postgresql.BIT`等）。 请注意，这些**不 <a href="#id134"><span class="problematic" id="id135">**</span></a>是一般布尔运算符。</p>
+<p> .. versionadded :: 2.0.2添加了用于位运算的专用运算符。</p>
+<p><a href="#id136"><span class="problematic" id="id137">*</span></a>：meth：<cite>_sql.ColumnOperators.bitwise_not</cite>，：func：<cite>_sql.bitwise_not</cite>。 可用作列级方法，产生反向位运算符来针对父对象：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bitwise_not</span><span class="p">())</span>
+<span class="go">~ x</span></pre></div>
+</div>
+<p>  这个运算符也可用作列表达方式级别的方法，将位运算符应用于单个列表达式：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">bitwise_not</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">bitwise_not</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)))</span>
+<span class="go">~ x</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id138"><span class="problematic" id="id139">*</span></a>：meth：<a href="#id140"><span class="problematic" id="id141">`</span></a>_sql.ColumnOperators.bitwise_and`产生按位与运算符:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).bitwise_and(5))</span>
+<span class="go">  x&amp;：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id142"><span class="problematic" id="id143">*</span></a>：meth：<a href="#id144"><span class="problematic" id="id145">`</span></a>_sql.ColumnOperators.bitwise_or`产生按位或运算符:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).bitwise_or(5))</span>
+<span class="go">  x | ：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+<p><a href="#id146"><span class="problematic" id="id147">*</span></a>：meth：<a href="#id148"><span class="problematic" id="id149">`</span></a>_sql.ColumnOperators.bitwise_xor`产生按位异或运算符:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="go">x ^ ：x_1</span></pre></div>
+</div>
+<p>  对于PostgreSQL方言，＃用于表示按位异或; 使用这些后端之一时会自动发出：</p>
+<blockquote>
+<div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">bitwise_xor</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<span class="go">x＃％（x_1）s</span></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id150"><span class="problematic" id="id151">*</span></a>：meth：<cite>_sql.ColumnOperators.bitwise_rshift</cite>，：meth：<cite>_sql.ColumnOperators.bitwise_lshift</cite>
+  产生按位移动运算符:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).bitwise_rshift(5))</span>
+<span class="go">  x &gt;&gt;：x_1</span>
+<span class="go">  &gt;&gt;&gt; print(column(&quot;x&quot;).bitwise_lshift(5))</span>
+<span class="go">  x &lt;&lt;：x_1</span>
+
+<span class="go">..</span></pre></div>
+</div>
+</section>
+<section id="id152">
+<h2>使用连接和否定<a class="headerlink" href="#id152" title="Permalink to this heading">¶</a></h2>
+<p>最常见的连词“AND”最常见的方法是使用：meth：<cite>_sql.Select.where`方法，以及类似的方法，例如：meth：`_sql.Update.where`和：meth：`_sql.Delete.where</cite>，可以重复使用它。：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">FROM address, user_account</span>
+<span class="go">WHERE user_account.name =：name_1 AND address.user_id = user_account.id</span></pre></div>
+</div>
+<p>：meth：<cite>_sql.Select.where</cite>，：func：<a href="#id153"><span class="problematic" id="id154">`</span></a>_sql.Update.where`和：meth：<a href="#id155"><span class="problematic" id="id156">`</span></a>_sql.Delete.where`还接受多个表达式具有相同的效果：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">FROM address, user_account</span>
+<span class="go">WHERE user_account.name =：name_1 AND address.user_id = user_account.id</span></pre></div>
+</div>
+<p>“AND”连词以及其合作伙伴“OR”都可以直接使用：func：<a href="#id157"><span class="problematic" id="id158">`</span></a>_sql.and_`和：func：<a href="#id159"><span class="problematic" id="id160">`</span></a>_sql.or_`函数使用：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">and_</span><span class="p">,</span> <span class="n">or_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">and_</span><span class="p">(</span>
+<span class="gp">... </span>            <span class="n">or_</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;sandy&quot;</span><span class="p">),</span>
+<span class="gp">... </span>            <span class="n">address_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span> <span class="o">==</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="p">)</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="go">{printsql}SELECT address.email_address</span>
+<span class="go">FROM address, user_account</span>
+<span class="go">WHERE (user_account.name =：name_1 OR user_account.name =：name_2）</span>
+<span class="go">并且地址.user_id = user_account.id</span></pre></div>
+</div>
+</section>
+<section id="id161">
+<h2>取消<a class="headerlink" href="#id161" title="Permalink to this heading">¶</a></h2>
+<p>使用：func：<a href="#id162"><span class="problematic" id="id163">`</span></a>_sql.not_`函数可以进行否定。 这通常将布尔表达式中的运算符反转：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">not_</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">not_</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">{printsql}x！=：x_1</span></pre></div>
+</div>
+<p>根据需要还可能应用关键字，例如“NOT”:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Boolean</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">not_</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Boolean</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="n">x</span>
+</div></pre></div>
+</div>
+</section>
+<section id="id164">
+<h2>结合运算符<a class="headerlink" href="#id164" title="Permalink to this heading">¶</a></h2>
+<p>以上连接函数：func：<cite>_sql.and_</cite>，：func：<cite>_sql.or_</cite>，
+：func：<a href="#id165"><span class="problematic" id="id166">`</span></a>_sql.not_`也作为重载Python运算符可用：</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Python“＆”，“|”和“〜”运算符在语言中具有高优先级；因此，对于自身包含表达式的操作数，通常必须应用圆括号，如下面的示例中所示。</p>
+</div>
+<p><a href="#id167"><span class="problematic" id="id168">*</span></a>：meth：<cite>_sql.Operators.__and__`（Python“</cite>＆<a href="#id169"><span class="problematic" id="id170">`</span></a>”操作员）：</p>
+<blockquote>
+<div><p>Python二进制“＆”运算符被重载为与：func：<a href="#id171"><span class="problematic" id="id172">`</span></a>_sql.and_`相同的行为（请注意两个操作数周围的括号）:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">((</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">))</span>
+<div class='show_sql_print'><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="err">：</span><span class="n">x_1和y</span><span class="w"> </span><span class="o">=</span><span class="err">：</span><span class="n">y_1</span>
+</div></pre></div>
+</div>
+</div></blockquote>
+<p><a href="#id173"><span class="problematic" id="id174">*</span></a>：meth：<cite>_sql.Operators.__or__`（Python“`|</cite>”运算符）：Python的二元操作符``|``被重载为与 <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code class="xref py py-func docutils literal notranslate"><span class="pre">or_()</span></code></a> 的行为相同（注意两个操作数周围的括号）：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">((</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">10</span><span class="p">))</span>
+<span class="go">{printsql}x = :x_1 OR y = :y_1</span></pre></div>
+</div>
+<ul>
+<li><p><a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Operators.__invert__" title="sqlalchemy.sql.expression.Operators.__invert__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.__invert__()</span></code></a> （Python “<code class="docutils literal notranslate"><span class="pre">~</span></code>” 操作符）：</p>
+<blockquote>
+<div><p>Python的二元操作符``~``被重载为与 <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.not_" title="sqlalchemy.sql.expression.not_"><code class="xref py py-func docutils literal notranslate"><span class="pre">not_()</span></code></a> 的行为相同，它将翻转现有的操作符，或将``NOT``关键字应用于整个表达式：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span>
+<span class="go">{printsql}x != :x_1{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Boolean</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="o">~</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">Boolean</span><span class="p">))</span>
+<span class="go">{printsql}NOT x{stop}</span></pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="sqlelement.html" title="previous chapter">列元素和表达式</a>
+        Next:
+        <a href="selectable.html" title="next chapter">SELECT和相关结构</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:01
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

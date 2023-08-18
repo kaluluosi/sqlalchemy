@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    ORM快速入门
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="ORM映射类配置" href="mapper_config.html" />
+        <link rel="prev" title="SQLAlchemy ORM" href="index.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li class="selected"><span class="link-container"><strong>ORM快速入门</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id11">声明模型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id30">创建引擎</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#create-table-ddl">发出CREATE TABLE DDL</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id45">创建对象并进行持久化</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id62">简单选择</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#joinselect">带有JOIN的SELECT</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id83">进行更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id88">一些删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id109">深入了解上述概念</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="index.html" title="previous chapter">SQLAlchemy ORM</a></li>
+                <li><b>Next:</b>
+                <a href="mapper_config.html" title="next chapter">ORM映射类配置</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#orm">ORM快速入门</a><ul>
+<li><a class="reference internal" href="#id11">声明模型</a></li>
+<li><a class="reference internal" href="#id30">创建引擎</a></li>
+<li><a class="reference internal" href="#create-table-ddl">发出CREATE TABLE DDL</a></li>
+<li><a class="reference internal" href="#id45">创建对象并进行持久化</a></li>
+<li><a class="reference internal" href="#id62">简单选择</a></li>
+<li><a class="reference internal" href="#joinselect">带有JOIN的SELECT</a></li>
+<li><a class="reference internal" href="#id83">进行更改</a></li>
+<li><a class="reference internal" href="#id88">一些删除</a></li>
+<li><a class="reference internal" href="#id109">深入了解上述概念</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-quickstart" >
+        
+<section id="orm">
+<span id="orm-quickstart"></span><h1>ORM快速入门<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<p>对于想要快速了解基本ORM使用的新用户，这里是在:ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>unified_tutorial`中使用的映射和示例的缩略形式。此处的代码可以在干净的命令行上完全运行。</p>
+<p>由于本节中的描述是有意**非常简短**的，请转到完整的:ref:<a href="#id3"><span class="problematic" id="id4">`</span></a>unified_tutorial`以获取更详细的各个概念的说明。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>ORM快速入门已更新，以使用包括:func:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.mapped_column`在内的新构造update，以适应最新的:pep:<a href="#id7"><span class="problematic" id="id8">`</span></a>484`感知特性。有关迁移信息，请参见:ref:<a href="#id9"><span class="problematic" id="id10">`</span></a>whatsnew_20_orm_declarative_typing`部分。</p>
+</div>
+<section id="id11">
+<h2>声明模型<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h2>
+<p>在这里，我们定义将形成我们将从数据库查询的结构的模块级别构造。 这个结构，称为:ref:<cite>Declarative Mapping &lt;orm_declarative_mapping&gt;</cite>，同时定义了一个Python对象模型以及描述存在于特定数据库中实际SQL表的:term:<cite>database metadata</cite>：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">String</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapped_column</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">pass</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user_account&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">name</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="n">fullname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">addresses</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="s2">&quot;Address&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+<span class="gp">... </span>        <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;User(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, fullname=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="si">!r}</span><span class="s2">)&quot;</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">email_address</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">user_id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user_account.id&quot;</span><span class="p">))</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="n">user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">str</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Address(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="si">!r}</span><span class="s2">, email_address=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">email_address</span><span class="si">!r}</span><span class="s2">)&quot;</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>映射从一个基类开始，上面称为“Base”，并通过对:class:<a href="#id12"><span class="problematic" id="id13">`</span></a>_orm.Declarativebase`类进行简单的子类化来创建。</p>
+<p>然后通过制作``Base``的子类来创建单个映射类。映射类通常是指特定的单个数据库表，其名称由使用``__tablename__``类级别属性来指示。</p>
+<p>接下来，通过添加属性来声明组成表格的列，这些属性包括称为:class:<cite>_orm.Mapped`的特殊类型注释。每个属性的名称对应于将成为数据库表的列。每个列的数据类型首先是从与每个:class:`_orm.Mapped`注释关联的Python数据类型中取出。``INTEGER``对应于``int`</cite>，<code class="docutils literal notranslate"><span class="pre">VARCHAR``对应于``str</span></code>，等等。可选型修饰符的空值衍生自其是否使用``Optional[]``类型修饰符。可以使用右侧:func:<a href="#id14"><span class="problematic" id="id15">`</span></a>_orm.mapped_column`指令中的SQLAlchemy类型对象指定更具体的类型信息，例如上面在``User.name``列中使用的:String数据类型。Python类型和SQL类型之间的关联可以使用:ref:<a href="#id16"><span class="problematic" id="id17">`</span></a>type annotation map&lt;orm_declarative_mapped_column_type_map&gt;`进行自定义。</p>
+<p>所有基于列的属性都需要至少声明一个列作为主键，通常可以在应在主键上使用:paramref:<a href="#id18"><span class="problematic" id="id19">`</span></a>_schema.Column.primary_key`参数上的：func:<a href="#id20"><span class="problematic" id="id21">`</span></a>_orm.mapped_column`对象。在上面的示例中，“User.id”和“Address.id”列被标记为主键。</p>
+<p>综合考虑，将字符串表名称和列声明列表的组合称为SQLAlchemy中的：term:<cite>table metadata</cite>。使用Core和ORM方法设置表元数据在:ref:<a href="#id22"><span class="problematic" id="id23">`</span></a>tutorial_working_with_metadata`中介绍。以上映射是指：ref:<a href="#id24"><span class="problematic" id="id25">`</span></a>带注释的声明表&lt;orm_declarative_mapped_column&gt;`配置的示例。</p>
+<p>其他类型的:class:<cite>_orm.Mapped`也可用，最常见的为上面指定的:func:`_orm.relationship`构造。与基于列的属性不同，:func:`_orm.relationship`表示两个ORM类之间的链接。在上面的示例中，``User.addresses``将``User``链接到``Address`</cite>，<code class="docutils literal notranslate"><span class="pre">Address.user``将``Address``链接到``User</span></code>。:func:<a href="#id26"><span class="problematic" id="id27">`</span></a>_orm.relationship`构造在:ref:<a href="#id28"><span class="problematic" id="id29">`</span></a>tutorial_orm_related_objects`中介绍。</p>
+<p>最后，上面的示例类包括一个``__repr __（）``方法，这不是必需的，但对于调试很有用。可以使用自动生成方法，例如通过dataclasses，创建带有映射类。关于dataclass映射的更多内容请参见:ref:<cite>orm_declarative_native_dataclasses</cite>。</p>
+</section>
+<section id="id30">
+<h2>创建引擎<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h2>
+<p>:class:<a href="#id31"><span class="problematic" id="id32">`</span></a>_engine.Engine`是一个**工厂**，它可以为我们创建新的数据库连接，还可以在:ref:<a href="#id33"><span class="problematic" id="id34">`</span></a>Connection Pool&lt;pooling_toplevel&gt;`内持有连接以快速重用。为了方便起见，我们通常使用一个只针对记忆的:ref:<a href="#id35"><span class="problematic" id="id36">`</span></a>SQLite&lt;sqlite_toplevel&gt;`数据库：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>参数``echo=True``表示将SQL发出到连接中记录在标准输出中。</p>
+</div>
+<p>有关:class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_engine.Engine`的完整介绍从:ref:<a href="#id39"><span class="problematic" id="id40">`</span></a>tutorial_engine`开始。</p>
+</section>
+<section id="create-table-ddl">
+<h2>发出CREATE TABLE DDL<a class="headerlink" href="#create-table-ddl" title="Permalink to this heading">¶</a></h2>
+<p>使用我们的表元数据和引擎，我们可以使用称为:meth:<a href="#id41"><span class="problematic" id="id42">`</span></a>_schema.MetaData.create_all`的方法在我们目标SQLite数据库中一次生成模式：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Base</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">create_all</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;user_account&quot;</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_</span><span class="p">...</span><span class="n">info</span><span class="p">(</span><span class="ss">&quot;address&quot;</span><span class="p">)</span>
+<span class="p">...</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">fullname</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="p">...</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">email_address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="n">user_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+<span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+<span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="p">...</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>上面的Python代码发生了很多事情。在:ref:<a href="#id43"><span class="problematic" id="id44">`</span></a>tutorial_working_with_metadata`中，讨论了有关表元数据的所有文章。</p>
+</section>
+<section id="id45">
+<h2>创建对象并进行持久化<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h2>
+<p>我们现在已准备好将数据插入数据库。我们可以通过创建``User``和``Address``类的实例来实现这一点这个过程已经通过自动化通过声明映射过程的``__init__（）``方法建立。然后，我们通过一个称为：ref:<a href="#id46"><span class="problematic" id="id47">`</span></a>Session &lt;tutorial_executing_orm_session&gt;`的对象将它们传递到数据库中，该对象使用:class:<a href="#id48"><span class="problematic" id="id49">`</span></a>_engine.Engine`与数据库进行交互。这里使用:meth:<a href="#id50"><span class="problematic" id="id51">`</span></a>_orm.Session.add_all`方法一次添加多个对象，使用:meth:<a href="#id52"><span class="problematic" id="id53">`</span></a>_orm.Session.commit`方法将提交任何待处理的更改到数据库中并将当前数据库事务提交，在使用:class:<a href="#id54"><span class="problematic" id="id55">`</span></a>_orm.Session`的情况下，这始终是在进行中的：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     spongebob = User(</span>
+<span class="go">...         name=&quot;spongebob&quot;,</span>
+<span class="go">...         fullname=&quot;Spongebob Squarepants&quot;,</span>
+<span class="go">...         addresses=[Address(email_address=&quot;spongebob@sqlalchemy.org&quot;)],</span>
+<span class="go">...     )</span>
+<span class="go">...     sandy = User(</span>
+<span class="go">...         name=&quot;sandy&quot;,</span>
+<span class="go">...         fullname=&quot;Sandy Cheeks&quot;,</span>
+<span class="go">...         addresses=[</span>
+<span class="go">...             Address(email_address=&quot;sandy@sqlalchemy.org&quot;),</span>
+<span class="go">...             Address(email_address=&quot;sandy@squirrelpower.org&quot;),</span>
+<span class="go">...         ],</span>
+<span class="go">...     )</span>
+<span class="go">...     patrick = User(name=&quot;patrick&quot;, fullname=&quot;Patrick Star&quot;)</span>
+<span class="go">...</span>
+<span class="go">...     session.add_all([spongebob, sandy, patrick])</span>
+<span class="go">...</span>
+<span class="go">...     session.commit()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Spongebob Squarepants&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Sandy Cheeks&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Patrick Star&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob@sqlalchemy.org&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy@sqlalchemy.org&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy@squirrelpower.org&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>建议采用以上样式的:class:<cite>_orm.Session</cite> ，也就是使用python中的“with：”语句。:class:<a href="#id56"><span class="problematic" id="id57">`</span></a>_orm.Session`对象表示活动数据库资源，因此在一系列操作完成后关闭它是非常好的。在下一节中，我们将保持 :class:<a href="#id58"><span class="problematic" id="id59">`</span></a>_orm.Session`的打开形式，仅用于说明目的。</p>
+</div>
+<p>有关创建:class:<cite>_orm.Session`的基础知识请参见:ref:`tutorial_executing_orm_session</cite>，有关更多信息请参见:ref:<cite>session_basics</cite>。</p>
+<p>然后，在:ref:<a href="#id60"><span class="problematic" id="id61">`</span></a>tutorial_inserting_orm`中介绍了一些基本的持久性操作变体。</p>
+</section>
+<section id="id62">
+<h2>简单选择<a class="headerlink" href="#id62" title="Permalink to this heading">¶</a></h2>
+<p>拥有数据库中的一些行后，这里是发出SELECT语句以加载一些对象的最简单形式。要创建SELECT语句，我们使用:func:<a href="#id63"><span class="problematic" id="id64">`</span></a>_sql.select`函数创建一个新的:class:<a href="#id65"><span class="problematic" id="id66">`</span></a>_sql.Select`对象，然后使用:class:<a href="#id67"><span class="problematic" id="id68">`</span></a>_orm.Session`调用它。在ORM对象查询时，通常有用的方法是:meth:<a href="#id69"><span class="problematic" id="id70">`</span></a>_orm.Session.scalars`方法，该方法将返回一个:class:<a href="#id71"><span class="problematic" id="id72">`</span></a>_result.ScalarResult`对象，该对象将迭代我们选择的ORM对象：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="s2">&quot;spongebob&quot;</span><span class="p">,</span> <span class="s2">&quot;sandy&quot;</span><span class="p">]))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
+<span class="go">...     print(user)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;spongebob&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy&#39;</span><span class="p">)</span>
+</div><span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span>
+<span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)</span></pre></div>
+</div>
+<p>上面的查询还使用了:meth:<a href="#id73"><span class="problematic" id="id74">`</span></a>_sql.Select.where`方法添加WHERE条件，还使用了所有SQLAlchemy类似列的构造的:meth:<a href="#id75"><span class="problematic" id="id76">`</span></a>_sql.ColumnOperators.in_`方法来使用SQL IN运算符。</p>
+<p>有关如何选择对象和单个列的详细信息，请参见:ref:<cite>tutorial_selecting_orm_entities</cite>。</p>
+</section>
+<section id="joinselect">
+<h2>带有JOIN的SELECT<a class="headerlink" href="#joinselect" title="Permalink to this heading">¶</a></h2>
+<p>查询多个表通常非常常见，在SQL中JOIN关键字是主要的方式。:class:<a href="#id77"><span class="problematic" id="id78">`</span></a>_sql.Select`构造使用:meth:<a href="#id79"><span class="problematic" id="id80">`</span></a>_sql.Select.join`方法创建连接：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(Address)</span>
+<span class="go">...     .join(Address.user)</span>
+<span class="go">...     .where(User.name == &quot;sandy&quot;)</span>
+<span class="go">...     .where(Address.email_address == &quot;sandy@sqlalchemy.org&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sandy_address</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;sandy@sqlalchemy.org&#39;</span><span class="p">)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy_address</span>
+<span class="go">Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)</span></pre></div>
+</div>
+<p>上面的查询说明了自动连接多个WHERE条件，以及如何使用类似列的SQLAlchemy对象创建“相等”比较，这使用重写的Python方法:meth:<a href="#id81"><span class="problematic" id="id82">`</span></a>_sql.ColumnOperators.__eq__`来生成SQL准则对象。</p>
+<p>有关上述概念的更多背景信息，请参见:ref:<cite>tutorial_select_where_clause`和 :ref:`tutorial_select_join</cite>。</p>
+</section>
+<section id="id83">
+<h2>进行更改<a class="headerlink" href="#id83" title="Permalink to this heading">¶</a></h2>
+<p>:class:<a href="#id84"><span class="problematic" id="id85">`</span></a>_orm.Session`对象与我们的ORM映射类``User``和``Address``结合使用，自动跟踪对对象所做的更改，这将导致将来:class:<a href="#id86"><span class="problematic" id="id87">`</span></a>_orm.Session`flush时发出SQL语句。下面，我们更改与”sandy”关联的一个电子邮件地址，并在发出SELECT以检索”patrick”的行后向”patrick”添加一个新的电子邮件地址：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">patrick</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_fullname</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">patrick</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;patrickstar@sqlalchemy.org&quot;</span><span class="p">))</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy_address</span><span class="o">.</span><span class="n">email_address</span> <span class="o">=</span> <span class="s2">&quot;sandy_cheeks@sqlalchemy.org&quot;</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">email_address</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sandy_cheeks@sqlalchemy.org&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="p">(</span><span class="n">email_address</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrickstar@sqlalchemy.org&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>请注意，当我们访问``patrick.addresses``时，会发出一个SELECT。这称为:term:<cite>lazy load</cite>。:ref:` tutorial_orm_loader_strategies`介绍了使用更多或更少SQL访问相关项目的不同方法。</p>
+<p>有关ORM数据操作的详细介绍始于:ref:<cite>tutorial_orm_data_manipulation</cite>。</p>
+</section>
+<section id="id88">
+<h2>一些删除<a class="headerlink" href="#id88" title="Permalink to this heading">¶</a></h2>
+<p>总有一天，所有事情都会结束，就像数据库中的某些行一样——这里是两种不同类型的删除的快速演示，这两种不同类型的删除都基于特定的用例。</p>
+<p>首先，我们将从”sandy”用户中删除一个``Address``对象。当:class:<a href="#id89"><span class="problematic" id="id90">`</span></a>_orm.Session`下一次flush时，这将导致行被删除。此行为是我们在配置中称为：term:<a href="#id91"><span class="problematic" id="id92">`</span></a>delete cascade`的行为。我们可以通过主键使用:meth:<a href="#id93"><span class="problematic" id="id94">`</span></a>_orm.Session.get`获得” sandy “对象，然后使用该对象：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_fullname</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+</div><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">sandy_address</span><span class="p">)</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+</div></pre></div>
+</div>
+<p>上面的SELECT是：term:<cite>lazy load</cite> 运行，以便可以加载”sandy.addresses”集合，以便我们可以删除”sandy_address”成员。有其他方法可以处理此过程，这些方法不会发出太多SQL。</p>
+<p>我们可以选择发出要更改的DELETE SQL（而不提交事务），使用:meth:<a href="#id95"><span class="problematic" id="id96">`</span></a>_orm.Session.flush`方法：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+</div></pre></div>
+</div>
+<p>接下来，我们将完全删除“patrick”用户。对于唯一的顶级对象的删除本身，我们使用:meth:<a href="#id97"><span class="problematic" id="id98">`</span></a>_orm.Session.delete`方法；此方法实际上不执行删除，而是在下一次刷新时设置待删除的对象。此操作也将根据我们配置的级联选项:term:<a href="#id99"><span class="problematic" id="id100">`</span></a>cascade`到相关对象，此处是关联对象”Address”：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">patrick</span><span class="p">)</span>
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_fullname</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email_address</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+</div></pre></div>
+</div>
+<p>在:meth:<cite>_orm.Session.delete`方法本身中，在本例中发出了两个SELECT语句，即使没有发出DELETE，这可能看起来令人惊讶。这是因为当方法执行检查对象时，事情不顺利。“patrick”对象是:term:`expired</cite>，这在最后一次调用:meth:<a href="#id101"><span class="problematic" id="id102">`</span></a>_orm.Session.commit`时发生，发出的SQL是从新交易中重新加载行。这种过期是可选的，通常情况下，我们将会将其关闭，以适用范围比较差的情况。</p>
+<p>为了说明即将删除的行，这是提交的提交：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>在:ref:<a href="#id103"><span class="problematic" id="id104">`</span></a>tutorial_orm_deleting`中讨论了ORM删除。在:ref:<a href="#id105"><span class="problematic" id="id106">`</span></a>session_expiring`中介绍对象过期，:ref:<a href="#id107"><span class="problematic" id="id108">`</span></a>unitofwork_cascades`中讨论级联。</p>
+</section>
+<section id="id109">
+<h2>深入了解上述概念<a class="headerlink" href="#id109" title="Permalink to this heading">¶</a></h2>
+<p>对于新用户，上面的部分很可能是一个快速的旅行。每个步骤中都有很多重要的概念没有涵盖。如果要对上述真正发生的情况有扎实的工作知识，则建议详细阅读:ref:<cite>unified_tutorial</cite>。祝你好运！</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="index.html" title="previous chapter">SQLAlchemy ORM</a>
+        Next:
+        <a href="mapper_config.html" title="next chapter">ORM映射类配置</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:18
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

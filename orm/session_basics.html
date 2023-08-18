@@ -1,0 +1,848 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    会话基础知识
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="使用Session" href="session.html" />
+        <link rel="next" title="状态管理" href="session_state_management.html" />
+        <link rel="prev" title="使用Session" href="session.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span><ul>
+<li class="selected"><span class="link-container"><strong>会话基础知识</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#session">会话（Session）会做些什么？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-basics">使用会话的基础知识</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#session-getting">打开和关闭会话</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-begin-commit-rollback-block">编写起始 / 提交 / 回滚块</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sessionmaker">使用sessionmaker</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-querying-20">查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-adding">添加新对象或现有对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-deleting">删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-flushing">刷新</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-get">按主键检索</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-expiring">过期/刷新</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#where-update-delete">带任意 WHERE 子句的 UPDATE 和 DELETE</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-autobegin">自动开始</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#autobegin">禁用 Autobegin 以防止隐式事务</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#session-committing">提交</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-rollback">回滚</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-closing">关闭</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#session-faq">会话常见问题</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id40">我什么时候创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-faq-whentocreate">何时构造 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，何时提交，何时关闭？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id44"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是缓存吗？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id45">如何在特定对象中获取 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-asyncio-asyncsession"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是线程安全的吗？<code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code> 在并发任务中共享安全吗？</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="session_state_management.html">状态管理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="cascades.html">级联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_transaction.html">事务和连接管理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">附加的持久化技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="session.html" title="previous chapter">使用Session</a></li>
+                <li><b>Next:</b>
+                <a href="session_state_management.html" title="next chapter">状态管理</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="session.html" title="使用Session">使用Session</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">会话基础知识</a><ul>
+<li><a class="reference internal" href="#session">会话（Session）会做些什么？</a></li>
+<li><a class="reference internal" href="#session-basics">使用会话的基础知识</a><ul>
+<li><a class="reference internal" href="#session-getting">打开和关闭会话</a></li>
+<li><a class="reference internal" href="#session-begin-commit-rollback-block">编写起始 / 提交 / 回滚块</a></li>
+<li><a class="reference internal" href="#sessionmaker">使用sessionmaker</a></li>
+<li><a class="reference internal" href="#session-querying-20">查询</a></li>
+<li><a class="reference internal" href="#session-adding">添加新对象或现有对象</a></li>
+<li><a class="reference internal" href="#session-deleting">删除</a></li>
+<li><a class="reference internal" href="#session-flushing">刷新</a></li>
+<li><a class="reference internal" href="#session-get">按主键检索</a></li>
+<li><a class="reference internal" href="#session-expiring">过期/刷新</a></li>
+<li><a class="reference internal" href="#where-update-delete">带任意 WHERE 子句的 UPDATE 和 DELETE</a></li>
+<li><a class="reference internal" href="#session-autobegin">自动开始</a><ul>
+<li><a class="reference internal" href="#autobegin">禁用 Autobegin 以防止隐式事务</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#session-committing">提交</a></li>
+<li><a class="reference internal" href="#session-rollback">回滚</a></li>
+<li><a class="reference internal" href="#session-closing">关闭</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#session-faq">会话常见问题</a><ul>
+<li><a class="reference internal" href="#id40">我什么时候创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>？</a></li>
+<li><a class="reference internal" href="#session-faq-whentocreate">何时构造 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，何时提交，何时关闭？</a></li>
+<li><a class="reference internal" href="#id44"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是缓存吗？</a></li>
+<li><a class="reference internal" href="#id45">如何在特定对象中获取 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>？</a></li>
+<li><a class="reference internal" href="#session-asyncio-asyncsession"><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是线程安全的吗？<code class="xref py py-class docutils literal notranslate"><span class="pre">_asyncio.AsyncSession</span></code> 在并发任务中共享安全吗？</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-session_basics" >
+        
+<section id="id1">
+<h1>会话基础知识<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<section id="session">
+<h2>会话（Session）会做些什么？<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h2>
+<p>从最普遍的角度来看，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 与数据库建立会话，并在其生命周期中为您加载或关联的所有对象提供“保管区域”。提供了一个接口，SELECT和其他查询将通过它返回和修改ORM映射的对象。ORM对象本身在:class:<cite>.Session</cite>, 一种称为 <span class="xref std std-term">identity map</span> 的结构中维护，它维护每个对象的唯一副本，其中“唯一”指“只有具有特定主键的一个对象”。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 开始时通常处于大多数情况下无状态的形式。 一旦发出查询或将其他对象与其保存，它会从与:class:<cite>.Session</cite> 关联的:class:<cite>_engine.Engine</cite> 中请求连接资源，然后在该连接上建立一个事务。这个事务一直有效，直到:class:<cite>.Session</cite> 被要求提交或回滚事务。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session`维护的ORM对象称为</span> <span class="pre">:term:`instrumented</span></code>，这意味着在Python程序中修改属性或集合时，会生成一个更改事件，该事件由 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 记录。在将要查询数据库或将要提交事务时，:class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_orm.Session`首先将所有待处理的更改刷新到数据库中，这称为 :term:<a href="#id4"><span class="problematic" id="id5">`</span></a>unit of work`模式。</p>
+<p>在使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，将其维护的ORM映射对象视为与本地事务相关的数据库行的 <strong>代理对象</strong>。 为了保持对象上的状态与实际在数据库中的状态相匹配，需要考虑各种事件，以便将其重新访问数据库以保持同步。 可以将对象“分离”到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 并继续使用它们，尽管这种做法有其警告。通常，当您再次使用这些对象时，您将使用另一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 将分离的对象重新关联，以便它们可以恢复其表示数据库状态的正常任务。</p>
+</section>
+<section id="session-basics">
+<span id="id6"></span><h2>使用会话的基础知识<a class="headerlink" href="#session-basics" title="Permalink to this heading">¶</a></h2>
+<p>这里介绍了最基本的:class:<a href="#id7"><span class="problematic" id="id8">`</span></a>.Session`使用模式。</p>
+<section id="session-getting">
+<span id="id9"></span><h3>打开和关闭会话<a class="headerlink" href="#session-getting" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 可以独立构建或使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 类。它通常会一开始传递一个单一的:class:<cite>_engine.Engine</cite>，作为连接资源的源。一个典型的用法可能是:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="c1"># 引擎，会与该Session用于连接</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/&quot;</span><span class="p">)</span>
+
+<span class="c1"># 创建会话并添加对象</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>上面，使用与特定数据库URL关联的:class:<cite>_engine.Engine</cite> 实例化了 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>。然后，在使用Python上下文管理器（即 <code class="docutils literal notranslate"><span class="pre">with:</span></code> 语句）时，会自动在该块结束时关闭该实例；这与调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法相同。</p>
+<p>调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 是可选的，只有当我们使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 执行新数据以将其持久化到数据库中时才需要调用该方法。如果我们只发出SELECT调用，并且不需要编写任何更改，则对 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 的调用将是不必要的。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>请注意，在调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 之后，无论是显式调用还是使用上下文管理器，与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`关联的所有对象都会</span> <span class="pre">:term:`过期</span></code>，这意味着它们的内容已被删除以在下一个事务中重新加载。如果这些对象是 <span class="xref std std-term">分离`的，则除非使用 :paramref:</span>.Session.expire_on_commit` 参数禁用此行为，否则它们将无效，直到使用新的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 重新关联它们。有关更多详细信息，请参阅 <a class="reference internal" href="#session-committing"><span class="std std-ref">提交</span></a>。</p>
+</div>
+</section>
+<section id="session-begin-commit-rollback-block">
+<span id="id10"></span><h3>编写起始 / 提交 / 回滚块<a class="headerlink" href="#session-begin-commit-rollback-block" title="Permalink to this heading">¶</a></h3>
+<p>我们还可以将:meth:<cite>_orm.Session.commit</cite> 调用和事务的整体“框架”包含在上下文管理器内，以便在将数据提交到数据库时执行回滚操作。”框架”指的是如果所有操作都成功，则将调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 方法，但如果引发任何异常，则将调用 :meth:<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.Session.rollback`方法，以便立即回滚事务，然后向外传播异常。在Python中，最根本的表达方式是使用“try: / except: / else:”块，例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上下文管理器的详细版本将执行</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
+        <span class="k">raise</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p>上面示例中详细说明的操作序列可以通过使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>
+方法返回的 <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code> 对象更简洁地实现，该对象为相同序列提供了上下文管理器接口:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建会话并添加对象</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+        <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="c1"># inner context calls session.commit(), if there were no exceptions</span>
+<span class="c1"># outer context calls session.close()</span></pre></div>
+</div>
+<p>更简洁的是，可以将两个上下文结合使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建会话并添加对象</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">,</span> <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">():</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+<span class="c1"># inner context calls session.commit(), if there were no exceptions</span>
+<span class="c1"># outer context calls session.close()</span></pre></div>
+</div>
+</section>
+<section id="sessionmaker">
+<h3>使用sessionmaker<a class="headerlink" href="#sessionmaker" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 的目的是为具有固定配置的:class:<cite>_orm.Session`对象提供工厂。由于一个应用程序通常会在模块范围内拥有一个:class:`_engine.Engine`对象，因此:class:`_orm.sessionmaker</cite> 可以为此引擎提供:class:<cite>_orm.Session</cite> 对象的工厂:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="c1"># 引擎，会与该Session用于连接</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/&quot;</span><span class="p">)</span>
+
+<span class="c1"># 一个sessionmaker()，</span>
+<span class="c1"># 也在与引擎相同的作用域</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># 现在我们可以构造一个Session()，</span>
+<span class="c1"># 无需每次传递engine</span>
+<span class="k">with</span> <span class="n">Session</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="c1"># 关闭会话</span></pre></div>
+</div>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 一样，在模块级别或全局范围内进行工厂设置，因此它还有自己的:meth:<cite>_orm.sessionmaker.begin`方法，
+类似于 :meth:`_engine.Engine.begin</cite>，它返回一个:class:<a href="#id13"><span class="problematic" id="id14">`</span></a>_orm.Session`对象，并同时保留一对
+begin/commit/rollback块:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="c1"># 引擎，会与该Session用于连接</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/&quot;</span><span class="p">)</span>
+
+<span class="c1"># 一个sessionmaker()，</span>
+<span class="c1"># 也在与引擎相同的作用域</span>
+<span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
+
+<span class="c1"># 我们现在可以构造一个Session()，</span>
+<span class="c1"># 包括begin()/commit()/rollback()</span>
+<span class="k">with</span> <span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">some_other_object</span><span class="p">)</span>
+<span class="c1"># 提交事务，关闭会话</span></pre></div>
+</div>
+<p>在上面示例中，当上面的“with:”块结束时，:class:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.Session`将会进行提交，并关闭:class:<a href="#id17"><span class="problematic" id="id18">`</span></a>_orm.Session`实例。</p>
+<p>写应用程序时，<code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 工厂应与通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 创建的:class:<cite>_engine.Engine</cite> 对象的范围相同，该对象通常在模块级别或全局范围内。由于这些对象都是工厂，因此可以同时由任意数量的函数和线程使用。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code></p>
+</div>
+</section>
+<section id="session-querying-20">
+<span id="id19"></span><h3>查询<a class="headerlink" href="#session-querying-20" title="Permalink to this heading">¶</a></h3>
+<p>查询的主要方法是使用 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 构建来创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarResult</span></code>。</p>
+<p>有关SQLAlchemy ORM查询的完整指南，可在 :ref:<a href="#id20"><span class="problematic" id="id21">`</span></a>queryguide_toplevel`中找到。以下是一些简短的示例:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="c1"># 查询“User”对象</span>
+    <span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ed&quot;</span><span class="p">)</span>
+
+    <span class="c1"># “User”对象列表</span>
+    <span class="n">user_obj</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+    <span class="c1"># 查询特定列</span>
+    <span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">fullname</span><span class="p">)</span>
+
+    <span class="c1"># Row对象列表</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">statement</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2.0: </span>2.0式查询现在是标准。有关从1.x系列迁移的信息，请参见 <a class="reference internal" href="../changelog/migration_20.html#migration-20-query-usage"><span class="std std-ref">ORM使用2.0迁移</span></a>。</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">queryguide_toplevel</span></p>
+</div>
+</section>
+<section id="session-adding">
+<span id="id22"></span><h3>添加新对象或现有对象<a class="headerlink" href="#session-adding" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code> 用于将实例放置在: class :<a href="#id23"><span class="problematic" id="id24">`</span></a>中。Session。对于 :term:<a href="#id25"><span class="problematic" id="id26">`</span></a>transient`（即全新）实例，这将导致在下一个刷新时对这些实例进行INSERT。对于 :term:<a href="#id27"><span class="problematic" id="id28">`</span></a>persistent`（即由此会话加载的）实例，它们已经存在并且不需要被添加。可以使用此方法将 :term:<a href="#id29"><span class="problematic" id="id30">`</span></a>detached`（即已从会话中删除的）实例重新关联到会话中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user1</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;user1&quot;</span><span class="p">)</span>
+<span class="n">user2</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;user2&quot;</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user2</span><span class="p">)</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>  <span class="c1"># 将更改写入数据库</span></pre></div>
+</div>
+<p>要一次将项目列表添加到会话中，请使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span><span class="n">item1</span><span class="p">,</span> <span class="n">item2</span><span class="p">,</span> <span class="n">item3</span><span class="p">])</span></pre></div>
+</div>
+<p>向 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code> 操作 <em>级联</em> 到 “save-update” 级联级别。有关详细信息，请参见 <span class="xref std std-ref">unitofwork_cascades</span> 部分。</p>
+</section>
+<section id="session-deleting">
+<span id="id31"></span><h3>删除<a class="headerlink" href="#session-deleting" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 方法将实例放置在会话的“待删除对象”列表中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 标记将要删除的两个对象</span>
+<span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">obj1</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">obj2</span><span class="p">)</span>
+
+<span class="c1"># 提交（或刷新）</span>
+<span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 操作标记要删除的对象，将为每个受影响的主键发出DELETE语句。在待删除的对象被刷新之前，这些对象在 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code> 集合中存在。在DELETE之后，它们会从 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中清除，一旦提交了事务，它将永久存在。</p>
+<p>与删除对象相关的各种重要行为，特别是如何处理到其他对象和集合的 关系。有关如何处理此项工作的更多信息，请参见 <span class="xref std std-ref">unitofwork_cascades</span> 部分，但一般规则如下：</p>
+<ul class="simple">
+<li><p>使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 指令将映射对象与已删除对象相关联的行默认情况下**不会**被删除。如果那些对象有一个指向要删除的行的外键约束，那么这些列将设置为NULL。如果这些列是不可为空的，则会导致约束违规。</p></li>
+<li><p>要将“SET NULL”更改为删除相关对象的行，请在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上使用 <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a> 级联。</p></li>
+<li><p>通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数链接为“many-to-many”的表的行，在引用对象被删除时**将被删除**。</p></li>
+<li><p>当相关对象包含指向正在删除的对象的外键约束，并且这些对象所属的相关集合未加载到内存中时，工作单元将发出一个SELECT以获取所有相关行，以使其主键值可以用于在这些相关行上发出UPDATE或DELETE语句。通过这种方式，ORM将在无需进一步指令的情况下执行ON DELETE CASCADE 的功能，即使在核心 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> 对象上进行了配置。</p></li>
+<li><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 可用于调整此行为并更自然地依赖于“ON DELETE CASCADE”；当设置为True时，此SELECT操作将不再进行，但是本地存在的行仍将被显式设置为SET NULL或DELETE。将 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 设置为字符串 <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> 将禁用 <strong>所有</strong> 相关对象update/delete。</p></li>
+<li><p>当删除标记为删除的对象时，不会自动将其从引用它的集合或对象的集合中删除。当过期 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，这些集合可以重载，以便对象不再存在。但是，与其使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 删除这些对象，还可以将对象从其集合中删除，然后使用 <span class="xref std std-ref">cascade_delete_orphan</span>，以使它作为集合删除的次要影响而被删除。有关详细信息，请参阅 <a class="reference internal" href="cascades.html#session-deleting-from-collections"><span class="std std-ref">删除-删除从集合和标量关系引用的对象</span></a>。</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a> - 描述“删除级联”，其中将标记与引导对象相关的相关对象进行删除当引导对象被删除时。</p>
+<p><span class="xref std std-ref">cascade_delete_orphan</span> - 描述“删除孤儿级联”，其中将标记与引导对象相关的相关对象进行删除当它们与引导对象的关系被解除时</p>
+<p><a class="reference internal" href="cascades.html#session-deleting-from-collections"><span class="std std-ref">删除-删除从集合和标量关系引用的对象</span></a> - 关于在内存中刷新关系的重要背景信息</p>
+</div>
+</section>
+<section id="session-flushing">
+<span id="id32"></span><h3>刷新<a class="headerlink" href="#session-flushing" title="Permalink to this heading">¶</a></h3>
+<p>当使用其默认配置的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，刷新步骤几乎总是自动完成的。具体来说，它在发出任何单个SQL语句之前以及在 <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 或 <span class="xref std std-term">2.0 风格</span> 的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 调用等操作中自动刷新. 在 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 调用之前的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code> 调用之前，它也在其中发生。当使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code> 时发出SAVEPOINT时，也会发生刷新。</p>
+<p>可以随时使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code> 方法强制进行 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 刷新:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre></div>
+</div>
+<p>仅结果的刷新称为 <strong>自动刷新</strong>。在进行ORM启用的SQL构造（例如引用ORM实体和/或ORM映射属性的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> 对象）的方法包括，<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 等执行SQL的方法以及在:meth:<cite>_orm.Session.commit</cite> 调用之前的方法 。在需要数据库连接的操作之后，也会自动引发自动刷新，例如在 <span class="xref std std-term">persistent</span> 对象上修改属性。</p>
+<p>可以通过构造传递 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autoflush</span></code> 参数为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 或 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 来禁用自动刷新。通过使用此参数，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 将要求要先显式调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>， 才能使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，在构建时，并在调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>、 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 或 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法之后，该 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 不会自动开始任何新事务，并在未首先调用:meth:<cite>_orm.Session.begin</cite> 的情况下尝试使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">begin</span></code> 而不是使用自动设置。</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0: </span>新增 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code>，允许禁用“autobegin”行为</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../faq/sessions.html#faq-session-rollback"><span class="std std-ref">此Session的事务由于刷新期间之前的异常而被回滚了。 。 （或类似的）</span></a> - 更多关于在刷新失败时为何必须调用:meth:<cite>_orm.Session.rollback</cite> 的背景信息</p>
+</div>
+</section>
+<section id="session-get">
+<span id="id33"></span><h3>按主键检索<a class="headerlink" href="#session-get" title="Permalink to this heading">¶</a></h3>
+<p>由于 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 使用 <span class="xref std std-term">identity map</span> 指向当前由主键标识的内存对象，因此， <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> 方法提供了一种按主键查找对象的方法，首先查找当前的identity map，然后查询数据库以获取不存在的值。例如，要查找主键标识为 <code class="docutils literal notranslate"><span class="pre">(5,)</span></code> 的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 实体:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">my_user</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span></pre></div>
+</div>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> 还包括调用表单，用于传递组合主键值，可以将它们作为元组或字典传递，以及允许特定的加载程序和执行选项的其他参数。请参见 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> 以获取完整的参数列表。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code></p>
+</div>
+</section>
+<section id="session-expiring">
+<span id="id34"></span><h3>过期/刷新<a class="headerlink" href="#session-expiring" title="Permalink to this heading">¶</a></h3>
+<p>在使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，重要的考虑因素之一是如何处理从数据库加载的状态的问题，以使其保持与当前事务的状态同步。 SQLAlchemy ORM 基于 <span class="xref std std-term">identity map</span> 概念，因此，当从SQL查询中“加载”对象时，会维护对应于特定数据库标识的唯一Python对象实例。这意味着，如果我们发出两个单独的查询，每个查询都针对相同的行并获得映射对象，则这两个查询将返回相同的Python对象:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">))</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="ow">is</span> <span class="n">u2</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>由此衍生的，当ORM从查询获得行时，它将**跳过**对其属性的填充。这里的设计假设是假定事务是完全隔离的，然后在事务不隔离的程度上，应用程序可以根据需要采取措施刷新来自事务的对象。<a class="reference internal" href="../faq/sessions.html#faq-session-identity"><span class="std std-ref">重载数据到我的Session中，但是它没有看到我在其他地方提交的更改</span></a> 中的FAQ条目详细讨论了这个概念。</p>
+<p>当ORM映射对象加载到内存中时，有三种常规方法可以使用当前事务中的新数据刷新其内容：</p>
+<ul>
+<li><p><strong>expire() 方法</strong> - <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code> 方法将选择或所有属性的内容擦除，因此当它们下一次访问时，将从数据库加载它们，例如使用 <span class="xref std std-term">lazy loading</span> 模式:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>
+<span class="n">u1</span><span class="o">.</span><span class="n">some_attribute</span>  <span class="c1"># &lt;-- 从事务中延迟加载</span></pre></div>
+</div>
+</li>
+<li><p><strong>refresh() 方法</strong> - 与此密切相关的是 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code> 方法，它做了 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code> 方法所做的一切，但还会立即发出一个或多个SQL查询，以实际刷新对象的内容：</p>
+<blockquote>
+<div><p>session.refresh(u1)  # &lt;– 发出SQL查询
+u1.some_attribute  # &lt;– 从事务中刷新</p>
+</div></blockquote>
+</li>
+<li><p><strong>populate_existing() 方法或执行选项</strong> — 现在这是一个执行选项，记录在 <a class="reference internal" href="queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">现有数据充填</span></a> 中；在旧版本中，它可以在 <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象上找到，作为 <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.populate_existing" title="sqlalchemy.orm.Query.populate_existing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.populate_existing()</span></code></a> 方法。以任一形式表示，此操作指示应返回查询的对象应从其在数据库中的内容中不受条件地重新填充:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">u2</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+    <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">populate_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span></pre></div>
+</div>
+</li>
+</ul>
+<p>关于刷新/过期概念的进一步讨论可以在 <span class="xref std std-ref">session_expire</span> 中找到。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">session_expire</span></p>
+<p><a class="reference internal" href="../faq/sessions.html#faq-session-identity"><span class="std std-ref">重载数据到我的Session中，但是它没有看到我在其他地方提交的更改</span></a></p>
+</div>
+</section>
+<section id="where-update-delete">
+<h3>带任意 WHERE 子句的 UPDATE 和 DELETE<a class="headerlink" href="#where-update-delete" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy 2.0 包括增强的功能，用于发出几个支持ORM的INSERT、UPDATE和DELETE语句。请参见:doc:<cite>queryguide/dml</cite> 文档。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="queryguide/dml.html"><span class="doc">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a></p>
+<p><span class="xref std std-ref">orm_queryguide_update_delete_where</span></p>
+</div>
+</section>
+<section id="session-autobegin">
+<span id="id35"></span><h3>自动开始<a class="headerlink" href="#session-autobegin" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象具有称为 <strong>autobegin</strong> 的行为。这表示 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 在内部将自己视为在执行关于对象状态更改的内部状态或需要数据库连接的操作时处于“事务”状态。</p>
+<p>当首次构建 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，没有事务状态。当调用方法比如 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code> 或 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>，或类似情况下发生会对数据库产生连接请求的操作时，关于接下来的逻辑，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 内部将自动开始意味着会话直接处于“事务”状态。</p>
+<p>可以通过访问 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.in_transaction()</span></code> 方法来检查 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是否通过“autobegin” 步骤进行了处理，该方法返回 <code class="docutils literal notranslate"><span class="pre">True</span></code> 或 <code class="docutils literal notranslate"><span class="pre">False</span></code>，以指示“autobegin” 步骤是否已进行。虽然通常不需要，但 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get_transaction()</span></code> 方法将返回表示此事务状态的实际 <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code> 对象。</p>
+<p>也可以通过调用服务 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code> 显式地启动 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的事务状态。当调用此方法时，无条件地将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 放入“transactional”状态。 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code> 方法可以使用如 <a class="reference internal" href="#session-begin-commit-rollback-block"><span class="std std-ref">编写起始 / 提交 / 回滚块</span></a> 中描述的上下文管理器。</p>
+<section id="autobegin">
+<span id="session-autobegin-disable"></span><h4>禁用 Autobegin 以防止隐式事务<a class="headerlink" href="#autobegin" title="Permalink to this heading">¶</a></h4>
+<p>“autobegin”行为可以使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code> 设定为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 来禁用。通过使用此参数，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 将要求必须显式调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>， 才能在构建时，及在调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>, 或者 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法之后使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，否则，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 无法自动解决新事务，并在不使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin`的情况下尝试使用</span> <span class="pre">:class:()</span></code>.Session` 时，将引发错误:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">autobegin</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>  <span class="c1"># &lt;-- 需要，否则无法在下一个调用上引发InvalidRequestError</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;u1&quot;</span><span class="p">))</span>
+    <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+    <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>  <span class="c1"># &lt;-- 需要，否则无法在下一个调用上引发InvalidRequestError</span>
+
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;u1&quot;</span><span class="p">))</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 2.0: </span>新增 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code>，允许禁用“autobegin”行为</p>
+</div>
+</section>
+</section>
+<section id="session-committing">
+<span id="id36"></span><h3>提交<a class="headerlink" href="#session-committing" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 用于提交当前的事务。它的核心是指示在事务提交之前发出 <code class="docutils literal notranslate"><span class="pre">COMMIT</span></code> 的 语句。</p>
+<p>所有当前存在事务的数据库连接；就 <span class="xref std std-term">DBAPI</span> 来说，这意味着会在每个 DBAPI 连接上调用 <code class="docutils literal notranslate"><span class="pre">connection.commit()</span></code> 方法。</p>
+<p>当 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中没有任何事务（表示自上次调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 以来没有在此 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 上调用任何操作）时，该方法会开始和提交一个仅内部使用的“逻辑”事务（如果未检测到挂起的 flush 更改，则通常不会影响数据库，但仍将调用事件处理程序和对象过期规则）。</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 操作在发出 COMMIT 之前无条件执行 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>。如果未检测到挂起的更改，则不会向数据库发出任何 SQL。此行为不可配置，并且不受 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autoflush</span></code> 参数的影响。</p>
+<p>在那之后，<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 将提交实际的数据库事务（如果存在）。</p>
+<p>最后，由于事务关闭，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中的所有对象都会过期。这是为了让实例在下次访问时（通过属性访问或者通过 SELECT 结果中存在时）接收到最新的状态。您可以通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code> 标志来控制此行为，当此行为不希望时，可以将其设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#session-autobegin"><span class="std std-ref">自动开始</span></a></p>
+</div>
+</section>
+<section id="session-rollback">
+<span id="id37"></span><h3>回滚<a class="headerlink" href="#session-rollback" title="Permalink to this heading">¶</a></h3>
+<p>如果当前存在事务，则 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> 回滚该事务。当不存在事务时，该方法会默默地通过。</p>
+<p>对于默认配置的会话，负责回滚的 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> 操作，在经由 <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a> 或由显式调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code> 方法开始事务后， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的回滚状态如下：</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>开始回滚所有事务并返回到连接池中，除非 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 直接绑定到 Connection，此时会继续维护该连接（但是依然被回滚）。</p></li>
+<li><p>生命周期内添加到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 等待处理的对象进入 <span class="xref std std-term">expired</span> 状态，对应着其 INSERT 语句被回滚。它们的属性状态保持不变。</p></li>
+<li><p>生命周期内标记为 <span class="xref std std-term">deleted</span> 的对象进入 <span class="xref std std-term">persistent</span> 状态，对应着其 DELETE 语句被回滚。请注意，如果这些对象首先在事务进行时处于 <span class="xref std std-term">pending</span> 状态，那么该操作优先级更高。</p></li>
+<li><p>所有未过期的对象都会过期——这与 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code> 设置无关。</p></li>
+</ul>
+</div></blockquote>
+<p>了解这些状态后，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 可以在发生回滚后安全地继续使用。</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 现在具有延迟“begin”行为，如 <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a> 中所述。如果未开始事务，则诸如 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 和 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> 之类的方法不起作用。在 1.4 之前，由于在非自动提交模式下，事务始终存在，因此不会观察到此行为。</p>
+</div>
+<p>当 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code> 失败时，通常是由于主键、外键或“非空”约束违规等原因，将自动发出 ROLLBACK（当前不可能在部分失败后继续刷新）。但此时 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 进入一种称为“非活动”的状态，调用方必须始终显式调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> 方法，以便 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 可以重新回到可用状态（也可以简单地关闭和丢弃）。有关详细讨论，请参见 <a class="reference internal" href="../faq/sessions.html#faq-session-rollback"><span class="std std-ref">此Session的事务由于刷新期间之前的异常而被回滚了。 。 （或类似的）</span></a> 中的 FAQ 条目。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#session-autobegin"><span class="std std-ref">自动开始</span></a></p>
+</div>
+</section>
+<section id="session-closing">
+<span id="id38"></span><h3>关闭<a class="headerlink" href="#session-closing" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法会发出 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code> 方法，该方法会从会话中删除所有 ORM 映射的对象，并将事务/连接资源从绑定的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 对象释放。当将连接返回到连接池时，也会回滚事务状态。</p>
+<p>当关闭 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，它基本上处于首次构造时的状态，并且**可以再次使用**。在这个意义上，<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法更像一种“重置”到干净状态的方法，而不是“数据库关闭”方法。</p>
+<p>建议在结束时通过调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 来限制 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的范围，特别是如果不使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 或 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> 方法。<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 可以作为上下文管理器使用，以确保在完成操作之后调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span>
+
+<span class="c1"># 自动关闭会话</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象具有延迟“begin”行为，如 <a class="reference internal" href="#session-autobegin"><span class="std std-ref">autobegin</span></a> 中所述。在调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code> 方法之后，不再立即开始新的事务。</p>
+</div>
+</section>
+</section>
+<section id="session-faq">
+<span id="id39"></span><h2>会话常见问题<a class="headerlink" href="#session-faq" title="Permalink to this heading">¶</a></h2>
+<p>到这里，很多用户已经对会话（<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>）产生了疑问。本节介绍
+了最基本的一些问题，当使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，您可能会遇到这些问题。如
+果您遇到了其他问题，请参考 <a class="reference internal" href="../faq/index.html"><span class="doc">真正的 FAQ</span></a>。</p>
+<section id="id40">
+<h3>我什么时候创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>？<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h3>
+<p>只需要在应用程序的全局范围内创建一次。它应该被视为应用程序的配置的一
+部分。如果您的应用程序在一个包中有三个.py 文件，您可以在 <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>
+文件中放置 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 行；从那时起，您的其他模块会说“从 mypa
+ckage 导入 Session”。这样，每个人都只使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session()</span></code>，而该
+会话的配置由该中心点控制。</p>
+<p>如果您的应用程序启动、导入，但不知道将连接到哪个数据库，则可以稍后再
+使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">sessionmaker.configure()</span></code> 将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 绑定到引擎。
+在本节的示例中，我们经常会在实际调用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的行正上方创
+建 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>。但这只是为了举例说明！实际上，<code class="xref py py-class docutils literal notranslate"><span class="pre">sessionm</span>
+<span class="pre">aker</span></code> 将在模块级别的某个地方。随后调用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的进程将
+被放置在数据库对话开始的地方。</p>
+</section>
+<section id="session-faq-whentocreate">
+<span id="id41"></span><h3>何时构造 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，何时提交，何时关闭？<a class="headerlink" href="#session-faq-whentocreate" title="Permalink to this heading">¶</a></h3>
+<aside class="topic">
+<p class="topic-title">tl;dr;</p>
+<ol class="arabic simple">
+<li><p>作为一般规则，将会话的生命周期与访问和/或操作数据库数据的函数和对
+象**分离和外部**。这将极大地有助于实现可预计和一致的交易范围。</p></li>
+<li><p>确保您清楚地知道何时开始和结束事务，并使事务**短暂**，这意味
+着它们在一系列操作的序列末端结束，而不是无限期地保持开放。</p></li>
+</ol>
+</aside>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 通常是在可能需要访问数据库的逻辑操作开始时构造的。</p>
+<p>无论何时使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 与数据库通信，它都会在开始通信时开始数
+据库交易。此交易一直处于进行中，直到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 被回滚、提交或
+关闭。如果 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 再次使用，会话将开始新的事务，前提是前一
+个事务已经结束；因此，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 能够跨多个事务的生命周期，但
+一次只能有一个事务。我们称这两个概念为**交易范围**和**会话范围**。</p>
+<p>通常没有太大难度来确定 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 范围的最佳点，尽管广泛的应用
+程序体系结构可能会引入一些挑战性的情况。</p>
+<p>以下是一些实际情况：</p>
+<p>1. Web 应用程序。在这种情况下，最好使用 Web 框架提供的 SQLAlchemy 集
+成。否则，基本模式是在 Web 请求开始时创建 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，在执行
+POST、PUT 或 DELETE 的 Web 请求结束时调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> 方法，然
+后在请求结束时关闭会话。通常也建议将 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code>
+设置为 False，以便在视图层中从 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 返回的对象再次被访问时，
+如果事务已提交，则无需发出新 SQL 查询刷新对象。</p>
+<ol class="arabic simple" start="2">
+<li><p>后台守护进程。在这种情况下，每个子进程应该创建一个本地的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，
+这样就可以在处理子进程的“作业”的生命周期内使用该 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，然后在完成“作业”时将其关闭。</p></li>
+<li><p>对于命令行脚本，应用程序应创建一个单独的全局 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，
+该会话在程序开始工作时建立，并在程序完成任务时立即提交。</p></li>
+</ol>
+<p>4. 对于由 GUI 接口驱动的应用程序，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的范围可能应该在用户生成
+的事件范围内，例如按钮推送。或者，会话范围可能对应着显式用户交互，例如用户“打开”
+一系列记录，然后“保存”它们。</p>
+<p>作为一般规则，应将会话的生命周期与访问和/或操作数据库数据的函数和对象分
+离和外部。这是一个基本的关注点分离，使得数据特定操作不依赖于它们访问和
+操作该数据的上下文。</p>
+<p>例如：<strong>不要这么做</strong>：</p>
+<blockquote>
+<div><p>### 这是**错误**的方式 ###</p>
+<dl>
+<dt>class ThingOne:</dt><dd><dl>
+<dt>def go(self):</dt><dd><p>session = Session()
+try:</p>
+<blockquote>
+<div><p>session.execute(update(FooBar).values(x=5))
+session.commit()</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except:</dt><dd><p>session.rollback()
+raise</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>class ThingTwo:</dt><dd><dl>
+<dt>def go(self):</dt><dd><p>session = Session()
+try:</p>
+<blockquote>
+<div><p>session.execute(update(Widget).values(q=18))
+session.commit()</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except:</dt><dd><p>session.rollback()
+raise</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>def run_my_program():</dt><dd><p>ThingOne().go()
+ThingTwo().go()</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>将会话（和通常的交易）的生命周期**分离**，<a href="#id42"><span class="problematic" id="id43">**</span></a>外部**于特定数据访问和操
+作函数：</p>
+<blockquote>
+<div><p>### 这是**更好的**（但不是唯一的）方式 ###</p>
+<dl class="simple">
+<dt>class ThingOne:</dt><dd><dl class="simple">
+<dt>def go(self, session):</dt><dd><p>session.execute(update(FooBar).values(x=5))</p>
+</dd>
+</dl>
+</dd>
+<dt>class ThingTwo:</dt><dd><dl class="simple">
+<dt>def go(self, session):</dt><dd><p>session.execute(update(Widget).values(q=18))</p>
+</dd>
+</dl>
+</dd>
+<dt>def run_my_program():</dt><dd><dl class="simple">
+<dt>with Session() as session:</dt><dd><dl class="simple">
+<dt>with session.begin():</dt><dd><p>ThingOne().go(session)
+ThingTwo().go(session)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 可以作为上下文管理器使用，无需使用外部帮助函数。</p>
+</div>
+</section>
+<section id="id44">
+<h3><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是缓存吗？<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h3>
+<p>是，也不是。它在某种程度上被用作缓存，因为它实现了 <span class="xref std std-term">identity map</span>
+模式，并将对象按其主键键入。但是，它不会对任何查询进行缓存。这意味着，
+如果您说 <code class="docutils literal notranslate"><span class="pre">session.scalars(select(Foo).filter_by(name='bar'))</span></code>，即使 <code class="docutils literal notranslate"><span class="pre">Foo(n</span>
+<span class="pre">ame='bar')</span></code> 现在位于身份映射中，会话也不知道其中的内容。它需要向数据库发出
+SQL 语句，返回行后，当它看到该行中的主键时，它才能查看本地身份映射并了解
+对象已经存在。只有当您说 <code class="docutils literal notranslate"><span class="pre">query.get({some</span> <span class="pre">primary</span> <span class="pre">key})</span></code>，<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 才不必发出查询。</p>
+<p>此外，默认情况下， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 使用弱引用存储对象实例。这也使得使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 作为缓存的目的无效。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的设计并不是作为一个每个人都可以查看的全局对象。这更
+类似于第 2 层高速缓存的工作方式（Second Level Cache）。SQLAlchemy 使
+用 <a class="reference external" href="https://dogpilecache.readthedocs.io/">dogpile.cache</a> 来实现第二个级别的
+高速缓存模式。请参见 <a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile缓存</span></a> 示例。</p>
+</section>
+<section id="id45">
+<h3>如何在特定对象中获取 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>？<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h3>
+<p>使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.object_session()</span></code> 类方法即可，在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 上可用：</p>
+<blockquote>
+<div><p>session = Session.object_session(someobject)</p>
+</div></blockquote>
+<p>新的 <span class="xref std std-ref">核心检查-toplevel</span> 系统也可以使用：</p>
+<blockquote>
+<div><p>from sqlalchemy import inspect</p>
+<p>session = inspect(someobject).session</p>
+</div></blockquote>
+</section>
+<section id="session-asyncio-asyncsession">
+<span id="session-faq-threadsafe"></span><h3><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是线程安全的吗？<a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 在并发任务中共享安全吗？<a class="headerlink" href="#session-asyncio-asyncsession" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 是一个**可变、有状态**的对象，表示一个**单个数据库事务**。因此，
+：class:<cite>.Session</cite> 实例**不能在并发线程或 asyncio 任务之间共享，而不经过仔细的同
+步处理**。 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 旨在以**非并发**方式使用，即一个特定的：class:<cite>.Sessio
+n</cite> 实例应在同一时间只在一个线程或任务中使用。</p>
+<p>使用 SQLAlchemy 的 <a class="reference internal" href="extensions/asyncio.html"><span class="std std-ref">asyncio</span></a> 扩展的 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 对
+象，这个对象只是一个代理 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，相同的规则也适用，因此不能
+安全地将单个 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 实例用于多个 asyncio 任务。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 或者 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 实例代表一个单个的
+逻辑数据库事务，每次使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 发出命令时，都会有一个对应的状态
+为“被绑定”的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code>，用于与该对象绑定的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code> 或
+<a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncEngine" title="sqlalchemy.ext.asyncio.AsyncEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncEngine</span></code></a>。要注意的是，这些对象都支持绑定到多个引擎，但是在事务的
+作用域内仍然只有一个连接在使用。</p>
+<p>在事务内的数据库连接也是一个具有状态的对象，旨在以非并发顺序进行操作。命
+令将按顺序在连接上发出，并由数据库服务器按照它们发出的顺序处理。随着 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>
+在此连接上发出命令并接收结果， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 本身正在转换其内部状态，以反映此
+连接上的命令和数据状态；这些状态包括是否已经开始、提交或回滚事务，是否存在 SAVEPOINT 以及
+将单独的数据库行状态与本地 ORM 映射对象的状态进行了精细同步。</p>
+<p>在为并发设计数据库应用程序时，合适的模型是每个并发任务/线程都使用自己的
+数据库事务。这就是通常讨论数据库并发问题的原因。在传统的关系型数据库系
+统中，不存在单个数据库事务同时接收和处理多个命令的情况。</p>
+<p>因此，SQLAlchemy 的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 和 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 的并
+发模型是 <strong>线程范围的每个会话，asyncio 的 :class:`_asyncio.AsyncSession` 应该为每个任
+务单独维护</strong>。在使用多个线程或 asyncio 任务的应用程序中，每个线程均应具有
+自己的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>，每个 asyncio 任务均应具有自己的 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 。</p>
+<p>最好通过在下面的 Python 函数顶层内使用 <span class="xref std std-ref">standard context manager pattern
+&lt;session_getting&gt;`（即 ``with`</span> 关键字）来保证这种使用方式在局部范围内
+维护 ：class:<cite>_orm.Session</cite> 或 <a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a> 生命周期。</p>
+<p>对于从不想将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象传递给需要它的特定功能和方法的应用程序
+中受益的“全局” <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的应用程序，<a class="reference internal" href="contextual.html#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a>
+方法可以提供“线程本地” <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象；请参见</p>
+<blockquote>
+<div><p><a class="reference internal" href="contextual.html#unitofwork-contextual"><span class="std std-ref">上下文/线程本地会话</span></a> 部分。</p>
+</div></blockquote>
+<p>在 asyncio 上下文中，<a class="reference internal" href="extensions/asyncio.html#sqlalchemy.ext.asyncio.async_scoped_session" title="sqlalchemy.ext.asyncio.async_scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">async_scoped_session</span></code></a>
+对象是 <a class="reference internal" href="contextual.html#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> 的 asyncio 版本，但配置更具挑战性，因
+为它需要一个自定义“上下文”函数来生成。</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="session.html" title="previous chapter">使用Session</a>
+        Next:
+        <a href="session_state_management.html" title="next chapter">状态管理</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:31:19
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+
