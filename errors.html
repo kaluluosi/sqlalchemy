@@ -162,7 +162,7 @@
 <li><span class="link-container"><a class="reference external" href="#relationship-delete-orphan">在关系&lt;relationship&gt;中“delete-orphan”级联通常仅在一对多关系的“一”侧上配置，而不是多对一或多对多关系的“多”侧。</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#instance-attribute-instance">实例&lt; instance &gt; 已经通过其&lt;attribute&gt;属性与实例&lt;instance&gt;相关联，只允许一个父项。</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#x-q-p-s-y">关系 X 将 Q 列复制到 P 列，这与关系(s)：“Y”冲突。</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#orm-session-orm-session-expunge-all-persistent">由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  已关闭或以其他方式调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code>  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-session-meth-orm-session-expunge-all-persistent">由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  已关闭或以其他方式调用了  :meth:` _orm.Session.expunge_all`  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#error-zlpr">引用声明性表格表单的类型注释不能解释</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#cls-python">将 &lt;cls&gt; 转换为数据类时发生 Python 数据类错误</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm">使用按主键的 ORM 按行批量更新需要记录包含主键值的记录</a></span></li>
@@ -258,7 +258,7 @@
 <li><a class="reference internal" href="#relationship-delete-orphan">在关系&lt;relationship&gt;中“delete-orphan”级联通常仅在一对多关系的“一”侧上配置，而不是多对一或多对多关系的“多”侧。</a></li>
 <li><a class="reference internal" href="#instance-attribute-instance">实例&lt; instance &gt; 已经通过其&lt;attribute&gt;属性与实例&lt;instance&gt;相关联，只允许一个父项。</a></li>
 <li><a class="reference internal" href="#x-q-p-s-y">关系 X 将 Q 列复制到 P 列，这与关系(s)：“Y”冲突。</a></li>
-<li><a class="reference internal" href="#orm-session-orm-session-expunge-all-persistent">由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">_orm.Session</span></code>  已关闭或以其他方式调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">_orm.Session.expunge_all()</span></code>  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。</a></li>
+<li><a class="reference internal" href="#orm-session-meth-orm-session-expunge-all-persistent">由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">_orm.Session</span></code>  已关闭或以其他方式调用了  :meth:` _orm.Session.expunge_all`  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。</a></li>
 <li><a class="reference internal" href="#error-zlpr">引用声明性表格表单的类型注释不能解释</a></li>
 <li><a class="reference internal" href="#cls-python">将 &lt;cls&gt; 转换为数据类时发生 Python 数据类错误</a></li>
 <li><a class="reference internal" href="#orm">使用按主键的 ORM 按行批量更新需要记录包含主键值的记录</a></li>
@@ -294,7 +294,7 @@
 <span id="id1"></span><h1>错误消息<a class="headerlink" href="#errors" title="Permalink to this heading">¶</a></h1>
 <p>本节列出 SQLAlchemy 引发的常见错误消息和警告的描述和背景。</p>
 <p>SQLAlchemy 通常在 SQLAlchemy 特定的异常中引发错误。
-有关这些类的详细信息，请参见   <a class="reference internal" href="core/exceptions.html"><span class="std std-ref">核心异常</span></a>  和   <span class="xref std std-ref">orm_exceptions_toplevel</span> 。</p>
+有关这些类的详细信息，请参见   <a class="reference internal" href="core/exceptions.html"><span class="std std-ref">核心异常</span></a>  和   :ref:` orm_exceptions_toplevel` 。</p>
 <p>SQLAlchemy 错误大致可分为两类：<strong>编程时错误**和**运行时错误</strong>。
 编程时错误是由于使用不正确的参数调用函数或方法或来自无法解决的其他配置导向的方法而引发的。
 编程时错误通常是即时的和确定性的。相反，运行时错误表示程序在相应地以任意方式运行时发生的错误，
@@ -326,7 +326,7 @@
 <p>上面，   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  将允许任意时间内最多有 <strong>30 个连接</strong>，这不包括已从引擎中分离或失效的连接。如果到达新连接的请求，
 并且已有 30 个连接正在应用程序的其他部分中使用，则连接池将在固定的时间内阻塞，然后超时并引发此错误消息。</p>
 <p>为了允许同时使用更多的连接，池可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_size</span></code>
-和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.max_overflow</span></code>  参数调整，作为   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>
+和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.max_overflow</span></code>  参数调整，作为   :func:` _sa.create_engine`
 函数传递。等待连接可用的超时是通过配置  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_timeout</span></code>  参数来配置的。</p>
 </li>
 <li><p>通过将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.max_overflow</span></code>  设置为-1，可以配置池具有无限溢出。在此设置下，
@@ -449,11 +449,11 @@
 <span id="error-cprf"></span><span id="id3"></span><h3>对象不会生成缓存键，性能影响<a class="headerlink" href="#caching-caveats" title="Permalink to this heading">¶</a></h3>
 <p>SQLAlchemy 版本 1.4 包括一个   <a class="reference internal" href="core/connections.html#sql-caching"><span class="std std-ref">SQL 编译缓存设施</span></a> ，其会使 Core 和 ORM SQL 构造缓存其字符串形式，
 以及用于从语句获取结果的其他结构信息，允许相对昂贵的字符串编译过程在下次使用另一构造时跳过。该系统依赖于所有 SQL 构造
-（例如   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  和   <a class="reference internal" href="core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a>  对象）实现用于生成完全表示它们的状态的**缓存键**，
+（例如   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，  :func:` _sql.select`  和   <a class="reference internal" href="core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a>  对象）实现用于生成完全表示它们的状态的**缓存键**，
 到了这个程度影响 SQL 编译过程。</p>
-<p>如果警告涉及广泛使用的对象，例如   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象，并且显示它们影响了大多数 SQL 构造（使用   <a class="reference internal" href="core/connections.html#sql-caching-logging"><span class="std std-ref">使用日志记录估计缓存性能</span></a>
+<p>如果警告涉及广泛使用的对象，例如   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象，并且显示它们影响了大多数 SQL 构造（使用   :ref:` sql_caching_logging`
 中描述的估计技术），以便缓存通常对于应用程序是未启用的，这将对性能产生负面影响，并且在某些情况下，甚至可能有效地产生了**性能下降**，
-与之前的 SQLAlchemy 版本相比。   <a class="reference internal" href="faq/performance.html#faq-new-caching"><span class="std std-ref">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</span></a>  在   <a class="reference internal" href="faq/index.html"><span class="std std-ref">常见问题解答</span></a>  部分中介绍了此问题的详细信息。</p>
+与之前的 SQLAlchemy 版本相比。   <a class="reference internal" href="faq/performance.html#faq-new-caching"><span class="std std-ref">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</span></a>  在   :ref:` faq_toplevel`  部分中介绍了此问题的详细信息。</p>
 <p>如果对于某个特殊的后端，具体作用域的建议，例如在 PostgreSQL 中的 <a class="reference external" href="postgresql_insert_on_conflict">“insert on conflict”</a> 构造。
 建议使用合理的方法生成缓存键，因此针对特定后端的构造可以缓存它们的 SQL 表示形式。</p>
 <section id="id4">
@@ -473,21 +473,21 @@
 <h4>用于缓存的断言属性<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
 <p>警告基于以下标准发出。有关更多详细信息，请参见   <a class="reference internal" href="faq/performance.html#faq-new-caching"><span class="std std-ref">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</span></a> 。</p>
 <ul>
-<li><p><a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> （即我们传递给   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  的 URL 的第一部分指定的模块，例如 <cite>postgresql+psycopg2://</cite>）必须表明它已经得到验证并测试，以支持安全缓存。这由  <a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>  属性设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 时指示。当使用第三方方言时，请与方言的维护人员咨询，以便他们可以遵循   <a class="reference internal" href="core/connections.html#engine-thirdparty-caching"><span class="std std-ref">步骤，确保可以启用缓存</span></a>  在其方言中，并发布新版本。</p></li>
-<li><p>这些类型是从   <a class="reference internal" href="core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a>  或   <a class="reference internal" href="core/custom_types.html#sqlalchemy.types.UserDefinedType" title="sqlalchemy.types.UserDefinedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a>  继承的第三方或用户定义类型必须在其定义中包括  <a class="reference internal" href="core/type_api.html#sqlalchemy.types.ExternalType.cache_ok" title="sqlalchemy.types.ExternalType.cache_ok"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ExternalType.cache_ok</span></code></a>
+<li><p><a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> （即我们传递给   :func:` _sa.create_engine`  的 URL 的第一部分指定的模块，例如 <cite>postgresql+psycopg2://</cite>）必须表明它已经得到验证并测试，以支持安全缓存。这由  <a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>  属性设置为 ` <cite>True`</cite> 时指示。当使用第三方方言时，请与方言的维护人员咨询，以便他们可以遵循   <a class="reference internal" href="core/connections.html#engine-thirdparty-caching"><span class="std std-ref">步骤，确保可以启用缓存</span></a>  在其方言中，并发布新版本。</p></li>
+<li><p>这些类型是从   <a class="reference internal" href="core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a>  或   :class:` .UserDefinedType`  继承的第三方或用户定义类型必须在其定义中包括  <a class="reference internal" href="core/type_api.html#sqlalchemy.types.ExternalType.cache_ok" title="sqlalchemy.types.ExternalType.cache_ok"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ExternalType.cache_ok</span></code></a>
 属性，其中包括对所有派生子类都简要描述的该属性定义。如前所述，如果这些数据类型从第三方库导入，则请与该库的维护者商议，以便他们可以提供所需更改以及
 发布新版本。</p></li>
 <li><p>第三方或用户定义的 SQL 构造，这些构造为某个特定的后端构造专用，例如   <span class="xref std std-ref">pragma_foreign_keys</span> ，均需要使用某些 SQL 编译器类。
-不适用于默认的   <code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code> ，也包括复杂的子类，以及为   <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span>  进行设计的对象，应按照需要包括</p>
+不适用于默认的   <code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code> ，也包括复杂的子类，以及为   :ref:` sqlalchemy.ext.compiler_toplevel`  进行设计的对象，应按照需要包括</p>
 <blockquote>
-<div><p><a class="reference internal" href="core/foundation.html#sqlalchemy.sql.traversals.HasCacheKey.inherit_cache" title="sqlalchemy.sql.traversals.HasCacheKey.inherit_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">HasCacheKey.inherit_cache</span></code></a>  属性，并根据构造设计将其设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 或 <code class="docutils literal notranslate"><span class="pre">False</span></code>，按照   <a class="reference internal" href="core/compiler.html#compilerext-caching"><span class="std std-ref">Enabling Caching Support for Custom Constructs</span></a>  中的指南描述。</p>
+<div><p><a class="reference internal" href="core/foundation.html#sqlalchemy.sql.traversals.HasCacheKey.inherit_cache" title="sqlalchemy.sql.traversals.HasCacheKey.inherit_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">HasCacheKey.inherit_cache</span></code></a>  属性，并根据构造设计将其设置为 ` <cite>True`</cite> 或 <code class="docutils literal notranslate"><span class="pre">False</span></code>，按照   <a class="reference internal" href="core/compiler.html#compilerext-caching"><span class="std std-ref">Enabling Caching Support for Custom Constructs</span></a>  中的指南描述。</p>
 </div></blockquote>
 </li>
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="core/connections.html#sql-caching-logging"><span class="std std-ref">使用日志记录估计缓存性能</span></a>  - 可观察缓存行为和效率的背景</p>
-<p><a class="reference internal" href="faq/performance.html#faq-new-caching"><span class="std std-ref">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</span></a>  - 在   <a class="reference internal" href="faq/index.html"><span class="std std-ref">常见问题解答</span></a>  部分中</p>
+<p><a class="reference internal" href="faq/performance.html#faq-new-caching"><span class="std std-ref">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</span></a>  - 在   :ref:` faq_toplevel`  部分中</p>
 </div>
 </section>
 </section>
@@ -497,7 +497,7 @@
 在这种情况下，将命名   <a class="reference internal" href="core/internals.html#sqlalchemy.sql.compiler.StrSQLCompiler" title="sqlalchemy.sql.compiler.StrSQLCompiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StrSQLCompiler</span></code></a>  类。
 在较少见的情况下，它也可能会发生在某个特定类型的数据库后端上使用错误类型的 SQL 表达式时；在这些情况下，将命名其他类型的 SQL 编译器类，
 例如``SQLCompiler`` 或 <code class="docutils literal notranslate"><span class="pre">sqlalchemy.dialects.postgresql.PGCompiler</span></code>。以下是针对字符串化用例更具体的指导方针，但也描述了一般背景。</p>
-<p>通常，可以直接对 Core SQL 构造或 ORM   <a class="reference internal" href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象进行字符串化，例如使用 <code class="docutils literal notranslate"><span class="pre">print（）</span></code>：</p>
+<p>通常，可以直接对 Core SQL 构造或 ORM   <a class="reference internal" href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象进行字符串化，例如使用 ` <cite>print（）`</cite>：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
 <div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">x_1</span>
@@ -522,14 +522,14 @@ Compiler &lt;sqlalchemy.sql.compiler.StrSQLCompiler object at 0x7f04fc17e320&gt;
 can’t render element of type
 &lt;class ‘sqlalchemy.dialects.postgresql.dml.OnConflictDoNothing’&gt;</p>
 </div></blockquote>
-<p>为了字符串化特定于特定后端的构造，必须使用  <a class="reference internal" href="core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>  方法，传递   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  或   <a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>  对象，
+<p>为了字符串化特定于特定后端的构造，必须使用  <a class="reference internal" href="core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>  方法，传递   :class:` _engine.Engine`  或   <a class="reference internal" href="core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>  对象，
 这将调用正确的编译器。 下面我们使用一个 PostgreSQL 方言：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">insert_stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
 <div class='show_sql_print'><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">my_table</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">CONFLICT</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">DO</span><span class="w"> </span><span class="k">NOTHING</span>
 </div></pre></div>
 </div>
-<p>对于 ORM   <a class="reference internal" href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象，可以使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Query.statement</span></code>  访问语句:</p>
+<p>对于 ORM   <a class="reference internal" href="orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象，可以使用  :attr:` ~.orm.query.Query.statement`  访问语句:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">statement</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="n">statement</span>
 <span class="n">print</span><span class="p">(</span><span class="n">statement</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span></pre></div>
 </div>
@@ -541,7 +541,7 @@ can’t render element of type
 </section>
 <section id="typeerror-operator-columnproperty-something">
 <h3>TypeError：“&lt;operator&gt;”不支持实例之间的’ColumnProperty’和 &lt;something&gt;<a class="headerlink" href="#typeerror-operator-columnproperty-something" title="Permalink to this heading">¶</a></h3>
-<p>在上下文中使用一个   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  或   <a class="reference internal" href="orm/queryguide/columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  对象尝试使用 SQL 表达式时，
+<p>在上下文中使用一个   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  或   :func:` .deferred`  对象尝试使用 SQL 表达式时，
 通常在声明中发生，如下所示：</p>
 <blockquote>
 <div><dl>
@@ -555,15 +555,11 @@ cprop = deferred(Column(Integer))</p>
 <p>上面的“ cprop”属性用于未映射之前，但该“ cprop”属性不是   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ,
 它是   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a> ，这是一个中间对象，因此不具有</p>
 <blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">class<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>_schema.Column</cite> 对象或   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a>  对象的全部功能，一旦完成声明过程，后者将映射到“ Bar”类。</p>
-</dd>
-</dl>
+<div><p><a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象或   :class:` .InstrumentedAttribute`  对象的全部功能，一旦完成声明过程，后者将映射到“ Bar”类。</p>
 </div></blockquote>
-<p>虽然   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a>  有一个 <code class="docutils literal notranslate"><span class="pre">__clause_element__()</span></code> 方法，它允许它在某些面向列的上下文中工作，
+<p>虽然   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty" title="sqlalchemy.orm.ColumnProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnProperty</span></code></a>  有一个 ` <cite>__clause_element__()`</cite> 方法，它允许它在某些面向列的上下文中工作，
 但在上面的示例中，它不能在开放式比较上下文中工作，例如将比较与数字“ 5”作为 SQL 表达式而不是常规 Python 比较。</p>
-<p>解决方案是直接访问   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，使用  <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.ColumnProperty.expression" title="sqlalchemy.orm.ColumnProperty.expression"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColumnProperty.expression</span></code></a> ：</p>
+<p>解决方案是直接访问   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，使用  :attr:` .ColumnProperty.expression` ：</p>
 <blockquote>
 <div><dl>
 <dt>class Bar(Base):</dt><dd><p>__tablename__ = “bar”</p>
@@ -649,7 +645,7 @@ stmt = select(t)</p>
 </dd>
 </dl>
 <p>基于   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  创建的，但目标是映射
-到该类或   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造的   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 或其他
+到该类或   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造的   :class:` _schema.Table` 或其他
 核心选择。</p>
 <p>例如：</p>
 <blockquote>
@@ -663,7 +659,7 @@ stmt = select(t)</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>上面的模式还允许选择可选的可选项，例如核心   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Join" title="sqlalchemy.sql.expression.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code></a>  或   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Alias" title="sqlalchemy.sql.expression.Alias"><code class="xref py py-class docutils literal notranslate"><span class="pre">Alias</span></code></a>  对象，
+<p>上面的模式还允许选择可选的可选项，例如核心   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Join" title="sqlalchemy.sql.expression.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code></a>  或   :class:` _sql.Alias`  对象，
 但在这种情况下没有自动适应此元素的适配器，这意味着访问核心元素时需要直接引用。</p>
 <blockquote>
 <div><p>a1 = Address.__table__.alias()</p>
@@ -676,7 +672,7 @@ stmt = select(t)</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>规定一个链接目标的正确方法是使用映射类本身或   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-class docutils literal notranslate"><span class="pre">aliased</span></code></a>  对象，对于后一种情况，则使用  <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  修改器设置一个别名：</p>
+<p>规定一个链接目标的正确方法是使用映射类本身或   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-class docutils literal notranslate"><span class="pre">aliased</span></code></a>  对象，对于后一种情况，则使用  :meth:` _orm.PropComparator.of_type`  修改器设置一个别名：</p>
 <blockquote>
 <div><p># normal join to relationship entity
 q = s.query(User).join(User.addresses).filter(Address.email_address == “<a class="reference external" href="mailto:ed&#37;&#52;&#48;foo&#46;com">ed<span>&#64;</span>foo<span>&#46;</span>com</a>”)</p>
@@ -707,7 +703,7 @@ q = (</p>
 </section>
 <section id="error-xaj2">
 <span id="id10"></span><h3>由于重叠的表，自动为别名生成别名<a class="headerlink" href="#error-xaj2" title="Permalink to this heading">¶</a></h3>
-<p>使用  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  方法或遗留的  <a class="reference internal" href="orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a>  方法进行查询时，
+<p>使用  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  方法或遗留的  :meth:` _orm.Query.join`  方法进行查询时，
 生成此警告通常是关于使用多态继承的表，导致。问题在于，当两个继承模型中的其中之一更改时，两个表的修改可能同时发生。</p>
 <p>例如，考虑下面的多态继承映射：</p>
 <blockquote>
@@ -748,7 +744,7 @@ id = Column(Integer, ForeignKey(“employee.id”), primary_key=True)</p>
 <span class="go">ON manager_1.id = employee.manager_id</span></pre></div>
 </div>
 <p>上面的 SQL 使用”employee”表作为“Employee”实体中查询的 FROM，然后连接到右嵌套 JOIN“employee AS employee_1 JOIN manager AS manager_1”，其中“employee”表再次被声明，但作为匿名别名“employee_1”。这是警告信息所指的“自动生成别名”。</p>
-<p>当SQLAlchemy从每个ORM行中适配一个Employee和Manager对象时，ORM必须将基于employee_1和manager_1的行调整为未别名的Manager类的行。此处理在内部较为复杂，不符合所有API功能，特别是尝试使用包含_eager等负载时，这些API功能在比这里更深层次的查询中。由于此模式不可靠且涉及难以预见和遵循的隐式决策制定，因此会发出警告，该模式可被视为遗留功能。因此，应显式使用   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造。在继承并使用其他基于 join 的映射的情况下，通常最好增加使用  <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased.params.flat" title="sqlalchemy.orm.aliased"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">aliased.flat</span></code></a>  参数的设置，该参数允许将两个或更多表的 JOIN 通过将表单独用作别名而而不是内嵌 JOIN 来进行别名：</p>
+<p>当SQLAlchemy从每个ORM行中适配一个Employee和Manager对象时，ORM必须将基于employee_1和manager_1的行调整为未别名的Manager类的行。此处理在内部较为复杂，不符合所有API功能，特别是尝试使用包含_eager等负载时，这些API功能在比这里更深层次的查询中。由于此模式不可靠且涉及难以预见和遵循的隐式决策制定，因此会发出警告，该模式可被视为遗留功能。因此，应显式使用   <a class="reference internal" href="orm/queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造。在继承并使用其他基于 join 的映射的情况下，通常最好增加使用  :paramref:` _orm.aliased.flat`  参数的设置，该参数允许将两个或更多表的 JOIN 通过将表单独用作别名而而不是内嵌 JOIN 来进行别名：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import aliased
 manager_alias = aliased(Manager, flat=True)
@@ -775,12 +771,8 @@ print(stmt)</p>
 </section>
 <section id="flush">
 <span id="error-bhk3"></span><h3>一个事务已经回滚了，原因是在 flush 过程中遇到了上一个异常<a class="headerlink" href="#flush" title="Permalink to this heading">¶</a></h3>
-<dl class="field-list simple">
-<dt class="field-odd">类<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>Session</cite> 内的 flush 过程在遇到错误时将回滚数据库事务以维护内部一致性。但是，一旦发生这种情况，该会话的事务现在处于“非活动”状态，并且必须由调用应用程序显式回滚以及它会提交某些修改。</p>
-</dd>
-</dl>
-<p>这是ORM使用中经常遇到的错误，通常适用于在ORM的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  操作中尚未正确地安排其“框架”的应用程序。更多细节在   <a class="reference internal" href="faq/sessions.html#faq-session-rollback"><span class="std std-ref">“This Session’s transaction has been rolled back due to a previous exception during flush.” (或类似消息)</span></a>  中进行了描述。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 内的 flush 过程在遇到错误时将回滚数据库事务以维护内部一致性。但是，一旦发生这种情况，该会话的事务现在处于“非活动”状态，并且必须由调用应用程序显式回滚以及它会提交某些修改。</p>
+<p>这是ORM使用中经常遇到的错误，通常适用于在ORM的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  操作中尚未正确地安排其“框架”的应用程序。更多细节在   :ref:` faq_session_rollback`  中进行了描述。</p>
 </section>
 <section id="relationship-delete-orphan">
 <span id="error-bbf0"></span><h3>在关系&lt;relationship&gt;中“delete-orphan”级联通常仅在一对多关系的“一”侧上配置，而不是多对一或多对多关系的“多”侧。<a class="headerlink" href="#relationship-delete-orphan" title="Permalink to this heading">¶</a></h3>
@@ -884,7 +876,7 @@ cascade=”all, delete-orphan”,</p>
 <span id="error-qzyx"></span><h3>关系 X 将 Q 列复制到 P 列，这与关系(s)：“Y”冲突。<a class="headerlink" href="#x-q-p-s-y" title="Permalink to this heading">¶</a></h3>
 <p>此警告涉及到当两个或多个关系都将写入到相同的列上时，在ORM没有手段协调这些关系。
 具体情况而定，解决方案可能是两个关系需要使用参数  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  相互连接，
-或者其中一个或多个  <span class="xref std std-term">single-table</span>  继承映射没有正确进行配置，可以使用继承条件（inherit condition）级联来解决此问题。等等…应该使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code>  来配置关系，以防止冲突写入，或者有时意图完全并且应该配置  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code>  来消除每个警告的影响。</p>
+或者其中一个或多个  <span class="xref std std-term">single-table</span>  继承映射没有正确进行配置，可以使用继承条件（inherit condition）级联来解决此问题。等等…应该使用  :paramref:` _orm.relationship.viewonly`  来配置关系，以防止冲突写入，或者有时意图完全并且应该配置  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code>  来消除每个警告的影响。</p>
 <p>对于通常缺少  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  的示例，请考虑下面的映射类:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
@@ -916,7 +908,7 @@ parent = relationship(“Parent”, back_populates=”children”)</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>对于需要更自定义的关系，其中“overlap”情况可能是有意的，并且不能被解决，则可以通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code>  参数指定名称，其中警告不应发生作用。这通常发生在针对相同基础表的两个或多个关系的情况下，这些表包括限制每种情况下的相关项的自定义  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code>  条件的情况:</p>
+<p>对于需要更自定义的关系，其中“overlap”情况可能是有意的，并且不能被解决，则可以通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.overlaps</span></code>  参数指定名称，其中警告不应发生作用。这通常发生在针对相同基础表的两个或多个关系的情况下，这些表包括限制每种情况下的相关项的自定义  :paramref:` _orm.relationship.primaryjoin`  条件的情况:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -942,12 +934,12 @@ parent = relationship(“Parent”, back_populates=”children”)</p>
 </div>
 <p>在上述代码中，ORM 将知道 <code class="docutils literal notranslate"><span class="pre">Parent.c1</span></code>、<code class="docutils literal notranslate"><span class="pre">Parent.c2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> 之间的重叠是有意的。</p>
 </section>
-<section id="orm-session-orm-session-expunge-all-persistent">
-<span id="error-lkrp"></span><h3>由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  已关闭或以其他方式调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code>  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。<a class="headerlink" href="#orm-session-orm-session-expunge-all-persistent" title="Permalink to this heading">¶</a></h3>
+<section id="orm-session-meth-orm-session-expunge-all-persistent">
+<span id="error-lkrp"></span><h3>由于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  已关闭或以其他方式调用了  :meth:` _orm.Session.expunge_all`  方法，因此无法将对象转换为“persistent”状态，因此该标识映射不再有效。<a class="headerlink" href="#orm-session-meth-orm-session-expunge-all-persistent" title="Permalink to this heading">¶</a></h3>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.26.</span></p>
 </div>
-<p>此消息是为了适应在关闭或以其他方式调用其  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code>  方法的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  之后仍会迭代会生成 ORM 对象的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象的情况而添加的。当   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  一次性删除所有对象时，该  <span class="xref std std-term">identity map</span>  内部使用的  <span class="xref std std-term">identity map</span>  将被更换为新的，原始的部分会被丢弃。未使用的和未缓冲的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象将在内部保留对该现已丢弃的标识映射的引用。因此，当消耗   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象时，将产生对象，这些对象不能与该   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关联。这是设计的排列，因为通常不建议在创建它的事务上下文之外迭代未缓冲的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象:</p>
+<p>此消息是为了适应在关闭或以其他方式调用其  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code>  方法的   :class:` _orm.Session`  之后仍会迭代会生成 ORM 对象的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象的情况而添加的。当   :class:` _orm.Session`  一次性删除所有对象时，该  <span class="xref std std-term">identity map</span>  内部使用的  :term:` identity map`  将被更换为新的，原始的部分会被丢弃。未使用的和未缓冲的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象将在内部保留对该现已丢弃的标识映射的引用。因此，当消耗   :class:` _result.Result`  对象时，将产生对象，这些对象不能与该   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关联。这是设计的排列，因为通常不建议在创建它的事务上下文之外迭代未缓冲的   :class:` _result.Result`  对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上下文管理器创建新的 Session</span>
 <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session_obj</span><span class="p">:</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">7</span><span class="p">))</span>
@@ -959,8 +951,8 @@ parent = relationship(“Parent”, back_populates=”children”)</p>
 <span class="c1"># Session 相关联，因此会引发此错误。</span>
 <span class="n">user</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
 </div>
-<p>在上述情况下，通常不会发生使用 <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> ORM 扩展，因为当   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a>  返回类似于同步样式的   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  时，结果已在执行该语句时预先缓冲。这是为了允许在不需要额外的 <code class="docutils literal notranslate"><span class="pre">await</span></code> 调用的情况下调用二次贪婪加载器。</p>
-<p>要在使用常规的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中使用上面所述的结果预取方式模拟情况，可以使用 <code class="docutils literal notranslate"><span class="pre">prebuffer_rows</span></code> 执行选项，如下所示:</p>
+<p>在上述情况下，通常不会发生使用 <code class="docutils literal notranslate"><span class="pre">asyncio</span></code> ORM 扩展，因为当   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncSession" title="sqlalchemy.ext.asyncio.AsyncSession"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncSession</span></code></a>  返回类似于同步样式的   :class:` _result.Result`  时，结果已在执行该语句时预先缓冲。这是为了允许在不需要额外的 <code class="docutils literal notranslate"><span class="pre">await</span></code> 调用的情况下调用二次贪婪加载器。</p>
+<p>要在使用常规的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中使用上面所述的结果预取方式模拟情况，可以使用 ` <cite>prebuffer_rows`</cite> 执行选项，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 上下文管理器创建新的 Session</span>
 <span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session_obj</span><span class="p">:</span>
     <span class="c1"># 外部结果预取所有对象</span>
@@ -978,11 +970,11 @@ parent = relationship(“Parent”, back_populates=”children”)</p>
 <span class="k">assert</span> <span class="n">inspect</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">detached</span>
 <span class="k">assert</span> <span class="n">inspect</span><span class="p">(</span><span class="n">user</span><span class="p">)</span><span class="o">.</span><span class="n">session</span> <span class="ow">is</span> <span class="kc">None</span></pre></div>
 </div>
-<p>在上述代码中，所选的 ORM 对象完全在 <code class="docutils literal notranslate"><span class="pre">session_obj</span></code> 块内生成，与 <code class="docutils literal notranslate"><span class="pre">session_obj</span></code> 相关联，并在   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象中缓冲以进行迭代。在块外部，<code class="docutils literal notranslate"><span class="pre">session_obj</span></code> 被关闭并且摆脱了这些 ORM 对象。迭代   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象将提供这些 ORM 对象，但是由于它们的起始   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  已将它们删除，因此它们将以  <span class="xref std std-term">分离</span>  状态传递。</p>
+<p>在上述代码中，所选的 ORM 对象完全在 <code class="docutils literal notranslate"><span class="pre">session_obj</span></code> 块内生成，与 <code class="docutils literal notranslate"><span class="pre">session_obj</span></code> 相关联，并在   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象中缓冲以进行迭代。在块外部，` <cite>session_obj`</cite> 被关闭并且摆脱了这些 ORM 对象。迭代   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象将提供这些 ORM 对象，但是由于它们的起始   :class:` _orm.Session`  已将它们删除，因此它们将以  <span class="xref std std-term">分离</span>  状态传递。</p>
 </section>
 <section id="error-zlpr">
 <span id="id11"></span><h3>引用声明性表格表单的类型注释不能解释<a class="headerlink" href="#error-zlpr" title="Permalink to this heading">¶</a></h3>
-<p>SQLAlchemy 2.0 引入了一种新的   <a class="reference internal" href="orm/declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">Annotated Declarative Table</span></a>  声明性系统，该系统通过在类定义中派生使用  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  注释来注释 ORM 映射属性信息。此形式的要求是所有 ORM 注释必须使用名为   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的通用容器才能被正确注释。使用显式  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  类型注释的旧版 SQLAlchemy 映射，例如使用   <a class="reference internal" href="orm/extensions/mypy.html"><span class="std std-ref">legacy Mypy 扩展</span></a>  为类型支持的那些映射，可能包括不包括使用不包括此通用程序的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的指令。</p>
+<p>SQLAlchemy 2.0 引入了一种新的   <a class="reference internal" href="orm/declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">Annotated Declarative Table</span></a>  声明性系统，该系统通过在类定义中派生使用  :pep:` 484`  注释来注释 ORM 映射属性信息。此形式的要求是所有 ORM 注释必须使用名为   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的通用容器才能被正确注释。使用显式  :pep:` 484`  类型注释的旧版 SQLAlchemy 映射，例如使用   <a class="reference internal" href="orm/extensions/mypy.html"><span class="std std-ref">legacy Mypy 扩展</span></a>  为类型支持的那些映射，可能包括不包括使用不包括此通用程序的   :func:` _orm.relationship`  的指令。</p>
 <p>要解决此问题，可以在类被完全迁移到 2.0 语法之前，将这些类标记为具有 <code class="docutils literal notranslate"><span class="pre">__allow_unmapped__</span></code> 布尔属性。有关示例，请参见   <span class="xref std std-ref">migration_20_step_six</span>  中的迁移说明.</p>
 </section>
 <section id="cls-python">
@@ -1030,7 +1022,7 @@ MappedAsDataclass.</pre></div>
     <span class="n">create_user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">()</span>
     <span class="n">update_user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">int</span><span class="p">]]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>Python 的  <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0681/"><strong>PEP 681</strong></a>  规范不包括在不是数据类的数据类超类上声明的属性。根据 Python 数据类的行为，类似地，这些字段将被忽略，例如，如以下示例所示:</p>
+<p>Python 的  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0681/"><strong>PEP 681</strong></a>  规范不包括在不是数据类的数据类超类上声明的属性。根据 Python 数据类的行为，类似地，这些字段将被忽略，例如，如以下示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">field</span>
 <span class="kn">import</span> <span class="nn">inspect</span>
@@ -1051,7 +1043,7 @@ MappedAsDataclass.</pre></div>
     <span class="n">email</span><span class="p">:</span> <span class="n">str</span></pre><div class="code-annotations-key"></div></div>
 </div>
 <p>上述 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类将不在其构造函数中包含 <code class="docutils literal notranslate"><span class="pre">create_user</span></code>，也不会尝试将 <code class="docutils literal notranslate"><span class="pre">update_user</span></code> 解释为数据类属性。这是因为 <code class="docutils literal notranslate"><span class="pre">Mixin</span></code> 不是数据类。</p>
-<p>SQLAlchemy 2.0 系列中的数据类特性不正确解决此行为；反过来，数据类混合和具有 SQLAlchemy 映射属性的超类被视为最终的数据类配置的一部分。但是，Pyright 和 Mypy 等类型检查器不会将这些字段视为数据类构造函数的一部分，因为它们根据  <span class="target" id="index-3"></span><a class="pep reference external" href="https://peps.python.org/pep-0681/"><strong>PEP 681</strong></a>  要求应该被忽略。因此，由于其存在是模棱两可的，从 SQLAlchemy 2.1 开始，使用数据类继承 SQLAlchemy 映射属性时，必须将 mixin 类本身成为数据类。</p>
+<p>SQLAlchemy 2.0 系列中的数据类特性不正确解决此行为；反过来，数据类混合和具有 SQLAlchemy 映射属性的超类被视为最终的数据类配置的一部分。但是，Pyright 和 Mypy 等类型检查器不会将这些字段视为数据类构造函数的一部分，因为它们根据  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0681/"><strong>PEP 681</strong></a>  要求应该被忽略。因此，由于其存在是模棱两可的，从 SQLAlchemy 2.1 开始，使用数据类继承 SQLAlchemy 映射属性时，必须将 mixin 类本身成为数据类。</p>
 </section>
 <section id="orm">
 <span id="error-bupq"></span><h3>使用按主键的 ORM 按行批量更新需要记录包含主键值的记录<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h3>
@@ -1074,7 +1066,7 @@ MappedAsDataclass.</pre></div>
 <span class="gp">... </span>    <span class="p">],</span>
 <span class="gp">... </span><span class="p">)</span></pre></div>
 </div>
-<p>要在没有提供每行主键值的情况下调用 UPDATE 语句，可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  方法，以获取当前   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，然后使用该方法执行:</p>
+<p>要在没有提供每行主键值的情况下调用 UPDATE 语句，可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  方法，以获取当前   :class:` _engine.Connection` ，然后使用该方法执行:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">connection</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">update</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">bindparam</span><span class="p">(</span><span class="s2">&quot;u_name&quot;</span><span class="p">)),</span>
 <span class="gp">... </span>    <span class="p">[</span>
@@ -1094,12 +1086,12 @@ MappedAsDataclass.</pre></div>
 </section>
 <section id="missinggreenlet">
 <span id="error-xd2s"></span><h3>MissingGreenlet<a class="headerlink" href="#missinggreenlet" title="Permalink to this heading">¶</a></h3>
-<p>在未预期的位置启动异步  <span class="xref std std-term">DBAPI</span>  时，会发生此错误，通常是在某个 I/O 中尝试时，使用不直接提供使用 <code class="docutils literal notranslate"><span class="pre">await</span></code> 关键字的调用模式。在使用 ORM 时，这几乎始终是由于使用了  <span class="xref std std-term">lazy loading</span>  所引起的，而在 asyncio 中，则需要额外的步骤和/或备选装入器模式才能使用成功。</p>
+<p>在未预期的位置启动异步  <span class="xref std std-term">DBAPI</span>  时，会发生此错误，通常是在某个 I/O 中尝试时，使用不直接提供使用 ` <cite>await`</cite> 关键字的调用模式。在使用 ORM 时，这几乎始终是由于使用了  <span class="xref std std-term">lazy loading</span>  所引起的，而在 asyncio 中，则需要额外的步骤和/或备选装入器模式才能使用成功。</p>
 </section>
 <section id="no-inspection-available">
 <span id="error-xd3s"></span><h3>No Inspection Available<a class="headerlink" href="#no-inspection-available" title="Permalink to this heading">¶</a></h3>
-<p>在   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncConnection" title="sqlalchemy.ext.asyncio.AsyncConnection"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncConnection</span></code></a>  或   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncEngine" title="sqlalchemy.ext.asyncio.AsyncEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncEngine</span></code></a>  对象上直接使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数目前不受支持，因为还没有名称为   <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code>  的可等待对象。因此，可以通过以下方式获得引用：</p>
-<p>使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数，以便它引用   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncConnection.sync_connection" title="sqlalchemy.ext.asyncio.AsyncConnection.sync_connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">sync_connection</span></code></a>  属性的底层对象；然后使用   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncConnection.run_sync" title="sqlalchemy.ext.asyncio.AsyncConnection.run_sync"><code class="xref py py-class docutils literal notranslate"><span class="pre">run_sync</span></code></a>  方法，以及执行所需操作的自定义函数来使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code> ：</p>
+<p>在   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncConnection" title="sqlalchemy.ext.asyncio.AsyncConnection"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncConnection</span></code></a>  或   :class:` _asyncio.AsyncEngine`  对象上直接使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数目前不受支持，因为还没有名称为   :class:` _reflection.Inspector`  的可等待对象。因此，可以通过以下方式获得引用：</p>
+<p>使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数，以便它引用   :class:` _asyncio.AsyncConnection.sync_connection`  属性的底层对象；然后使用   <a class="reference internal" href="orm/extensions/asyncio.html#sqlalchemy.ext.asyncio.AsyncConnection.run_sync" title="sqlalchemy.ext.asyncio.AsyncConnection.run_sync"><code class="xref py py-class docutils literal notranslate"><span class="pre">run_sync</span></code></a>  方法，以及执行所需操作的自定义函数来使用   :class:` _engine.Inspector` ：</p>
 <blockquote>
 <div><dl>
 <dt>async def async_main():</dt><dd><dl>
@@ -1129,11 +1121,11 @@ MappedAsDataclass.</pre></div>
 <section id="sqlalchemy-2-0">
 <span id="error-b8d9"></span><h3>在 SQLAlchemy 2.0 中，&lt;某些函数&gt; 将不再&lt;某些行为&gt;<a class="headerlink" href="#sqlalchemy-2-0" title="Permalink to this heading">¶</a></h3>
 <p>SQLAlchemy 2.0 对 Core 和 ORM 组件的众多关键用法模式进行了重大变化。2.0 发布的目标是在 SQLAlchemy 自从早期开始的一些最基本的假设中进行轻微的调整，并提供一个新的简化使用模型，这个模型希望显著更加极简主义，并且在 Core 和 ORM 组件之间更加一致，也更加具有可操作性。</p>
-<p>在   <a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>  中引入的 SQLAlchemy 2.0 项目包括综合未来兼容性的系统，该系统集成到 SQLAlchemy 1.4 系列中，这样应用程序就有了一个明确、明显的增量升级路径，以使其成为完全 2.0 兼容。  <code class="xref py py-class docutils literal notranslate"><span class="pre">RemovedIn20Warning</span></code>  弃用警告是该系统的基础，提供有关现有代码库中需要修改的行为的指导。在   <a class="reference internal" href="changelog/migration_14.html#deprecation-20-mode"><span class="std std-ref">SQLAlchemy 2.0 退化模式</span></a>  中可以找到如何启用此警告的概述。</p>
+<p>在   <a class="reference internal" href="changelog/migration_20.html"><span class="std std-ref">SQLAlchemy 2.0 - 主要迁移指南</span></a>  中引入的 SQLAlchemy 2.0 项目包括综合未来兼容性的系统，该系统集成到 SQLAlchemy 1.4 系列中，这样应用程序就有了一个明确、明显的增量升级路径，以使其成为完全 2.0 兼容。  :class:` .exc.RemovedIn20Warning`  弃用警告是该系统的基础，提供有关现有代码库中需要修改的行为的指导。在   <a class="reference internal" href="changelog/migration_14.html#deprecation-20-mode"><span class="std std-ref">SQLAlchemy 2.0 退化模式</span></a>  中可以找到如何启用此警告的概述。</p>
 </section>
 <section id="error-s9r1">
 <span id="id15"></span><h3>此连接处于非活动事务中。请在继续之前执行回滚（）。<a class="headerlink" href="#error-s9r1" title="Permalink to this heading">¶</a></h3>
-<p>此错误的条件是在 SQLAlchemy 1.4 之后添加的，并且不适用于 SQLAlchemy 2.0。该错误是指在使用  <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  等方法将   <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  放入事务中，然后在该范围内的事务中创建了另一个“标记”事务；然后使用  <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction.rollback" title="sqlalchemy.engine.Transaction.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.rollback()</span></code></a>  或  <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction.close" title="sqlalchemy.engine.Transaction.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.close()</span></code></a>  回滚或关闭了内部事务，但外部事务仍处于“非活动”状态，并且必须回滚。</p>
+<p>此错误的条件是在 SQLAlchemy 1.4 之后添加的，并且不适用于 SQLAlchemy 2.0。该错误是指在使用  <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  等方法将   :class:` _engine.Connection`  放入事务中，然后在该范围内的事务中创建了另一个“标记”事务；然后使用  <a class="reference internal" href="core/connections.html#sqlalchemy.engine.Transaction.rollback" title="sqlalchemy.engine.Transaction.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.rollback()</span></code></a>  或  :meth:` .Transaction.close`  回滚或关闭了内部事务，但外部事务仍处于“非活动”状态，并且必须回滚。</p>
 <p>该模式类似于：</p>
 <blockquote>
 <div><p>engine = create_engine(…)</p>
@@ -1175,7 +1167,7 @@ connection.execute(text(“select 1”))</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:52
+    Documentation last generated: 2023/8/18 18:58:52
 
     </div>
 </div>

@@ -219,13 +219,9 @@
         
 <section id="relationship-configure-joins">
 <span id="id1"></span><h1>配置关系联接<a class="headerlink" href="#relationship-configure-joins" title="Permalink to this heading">¶</a></h1>
-<dl class="field-list simple">
-<dt class="field-odd">function<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>_orm.relationship</cite> 通常通过检查两个表之间的外键关系来创建一个联接，以确定应该比较哪些列，但需要定制的情况有多种。</p>
-</dd>
-</dl>
+<p><a href="#id2"><span class="problematic" id="id3">:function:`_orm.relationship`</span></a> 通常通过检查两个表之间的外键关系来创建一个联接，以确定应该比较哪些列，但需要定制的情况有多种。</p>
 <section id="relationship-foreign-keys">
-<span id="id2"></span><h2>处理多个连接路径<a class="headerlink" href="#relationship-foreign-keys" title="Permalink to this heading">¶</a></h2>
+<span id="id4"></span><h2>处理多个连接路径<a class="headerlink" href="#relationship-foreign-keys" title="Permalink to this heading">¶</a></h2>
 <p>处理两个表之间有多个外键路径的情况是最常见的问题之一。</p>
 <p>考虑一个包含两个外键指向“地址”类的“客户”类:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Column</span>
@@ -265,8 +261,8 @@ paths linking the tables.  Specify the &#39;foreign_keys&#39; argument,
 providing a list of those columns which should be
 counted as containing a foreign key reference to the parent table.</pre></div>
 </div>
-<p>上面的消息很长。  <a href="#id3"><span class="problematic" id="id4">:function:`_orm.relationship`</span></a>  可以返回很多可能的消息，它们都可以检测出一系列常见的配置问题；大多数消息都会提示需要的附加配置来解决歧义或其他缺少信息的问题。</p>
-<p>在这种情况下，消息要求我们针对每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  ，通过指示每个外键列被视为哪个column,来限定   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，适当的方法如下:</p>
+<p>上面的消息很长。  <a href="#id5"><span class="problematic" id="id6">:function:`_orm.relationship`</span></a>  可以返回很多可能的消息，它们都可以检测出一系列常见的配置问题；大多数消息都会提示需要的附加配置来解决歧义或其他缺少信息的问题。</p>
+<p>在这种情况下，消息要求我们针对每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  ，通过指示每个外键列被视为哪个column,来限定   :func:` _orm.relationship` ，适当的方法如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;customer&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -288,13 +284,13 @@ counted as containing a foreign key reference to the parent table.</pre></div>
 </div></blockquote>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>作为 Python 可评估的字符串进行传递时，  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.foreign_keys</span></code>  参数使用 Python 的 eval() 函数进行解释。<strong>不要将不受信任的输入传递给此字符串</strong>。有关   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  参数的声明性评估的详细信息，请参阅   <a class="reference internal" href="extensions/declarative/relationships.html#declarative-relationship-eval"><span class="std std-ref">关系参数的评估</span></a> 。</p>
+<p>作为 Python 可评估的字符串进行传递时，  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.foreign_keys</span></code>  参数使用 Python 的 eval() 函数进行解释。<strong>不要将不受信任的输入传递给此字符串</strong>。有关   :func:` _orm.relationship`  参数的声明性评估的详细信息，请参阅   <a class="reference internal" href="extensions/declarative/relationships.html#declarative-relationship-eval"><span class="std std-ref">关系参数的评估</span></a> 。</p>
 </div>
 </section>
 <section id="relationship-primaryjoin">
-<span id="id5"></span><h2>指定替代连接条件<a class="headerlink" href="#relationship-primaryjoin" title="Permalink to this heading">¶</a></h2>
+<span id="id7"></span><h2>指定替代连接条件<a class="headerlink" href="#relationship-primaryjoin" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a href="#id6"><span class="problematic" id="id7">:function:`_orm.relationship`</span></a>   在构建连接时的默认行为是将一个表的主键列的值与另一表上引用外键的列的值相等。我们可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code>  参数来更改此条件，以便让其等于任何我们想要的条件。如果使用“secondary”表，情况如下。</p>
+<div><p><a href="#id8"><span class="problematic" id="id9">:function:`_orm.relationship`</span></a>   在构建连接时的默认行为是将一个表的主键列的值与另一表上引用外键的列的值相等。我们可以使用  :paramref:` _orm.relationship.primaryjoin`  参数来更改此条件，以便让其等于任何我们想要的条件。如果使用“secondary”表，情况如下。</p>
 </div></blockquote>
 <p>在下面的示例中，使用“User”类以及一个存储街道地址的“Address”类，创建了一个“boston_addresses”关系，该关系仅会装载“Boston”城市的那些“Address”对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">Column</span>
@@ -326,7 +322,7 @@ counted as containing a foreign key reference to the parent table.</pre></div>
     <span class="n">state</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
     <span class="n">zip</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>在上面的字符串 SQL 表达式中，我们使用   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a>  连接词语来建立两个不同的谓词的连接条件 - 将“User.id”和“Address.user_id”列相互连接起来，以及限制“Address”中的行仅为“city=’Boston’”时。当使用 Declarative 时，基本 SQL 函数如   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a>  自动可用于字符串   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  参数的计算名称空间。以声明式样式直接引用名为“a”，“b”，“c”，“d”的表。从“A”到“D”的查询如下所示:</p>
+<p>在上面的字符串 SQL 表达式中，我们使用   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a>  连接词语来建立两个不同的谓词的连接条件 - 将“User.id”和“Address.user_id”列相互连接起来，以及限制“Address”中的行仅为“city=’Boston’”时。当使用 Declarative 时，基本 SQL 函数如   :func:` .and_`  自动可用于字符串   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  参数的计算名称空间。以声明式样式直接引用名为“a”，“b”，“c”，“d”的表。从“A”到“D”的查询如下所示:</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">d</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 
 <div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_b_id</span>
@@ -336,7 +332,7 @@ counted as containing a foreign key reference to the parent table.</pre></div>
 <span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c_1</span><span class="p">.</span><span class="n">a_id</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b_1</span><span class="p">.</span><span class="n">d_id</span>
 </div></pre></div>
 </div>
-<p>在上面的示例中，我们利用能够将多个表放入“辅助”容器中的机制，以便我们可以在跨多个表连接的同时仍然为  :func:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.relationship`保持“简单性”，因为左右双方只有“一个”表；复杂性在中间保持即可。</p>
+<p>在上面的示例中，我们利用能够将多个表放入“辅助”容器中的机制，以便我们可以在跨多个表连接的同时仍然为  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 保持“简单性”，因为左右双方只有“一个”表；复杂性在中间保持即可。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>类似上面的关系通常被标记为“viewonly=True”，应视为只读。虽然有时候可以使类似于上面的关系可写，但这通常是复杂且容易出错的。</p>
@@ -345,9 +341,9 @@ counted as containing a foreign key reference to the parent table.</pre></div>
 <section id="relationship-aliased-class">
 <span id="relationship-non-primary-mapper"></span><span id="id10"></span><h2>与别名类的关系<a class="headerlink" href="#relationship-aliased-class" title="Permalink to this heading">¶</a></h2>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.3: </span><a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a>  的目标，取代了先前使用非主映射的方法，该方法有限制，例如它们不能像已映射实体一样继承子关系以及它们需要针对备选可选项进行复杂的配置。本节中的示例现已更新为使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a> 。</p>
+<p><span class="versionmodified added">New in version 1.3: </span><a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a>  的目标，取代了先前使用非主映射的方法，该方法有限制，例如它们不能像已映射实体一样继承子关系以及它们需要针对备选可选项进行复杂的配置。本节中的示例现已更新为使用   :class:` .AliasedClass` 。</p>
 </div>
-<p>在前一节中，我们演示了一种将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  用于将其他表放入连接条件中的技术。 有一种复杂的连接情况，甚至使用此技术也不足;当我们试图从“A”到“B”连接，并在其中使用任意数量的“C”，“D”等，但是“A”和“B”之间也有直接连接条件。在这种情况下，从“A”到“B”的连接可能很难仅使用复杂的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code>  条件来表达，因为中间表可能需要特殊处理，并且还不能用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  对象来表示，因为“A-&gt;secondary-&gt;B”模式不支持“A”和“B”之间的任何引用。当出现这种 <strong>极端高级</strong> 情况时，我们可以创建第二个映射作为关系的目标。这是我们使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a>  来创建到包含我们需要的所有附加表的类的映射的地方。为了将此映射作为我们类的“备选”映射生成，我们使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  函数以产生新的构造，然后针对对象使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，就像它是一个普通的映射类一样。</p>
+<p>在前一节中，我们演示了一种将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  用于将其他表放入连接条件中的技术。 有一种复杂的连接情况，甚至使用此技术也不足;当我们试图从“A”到“B”连接，并在其中使用任意数量的“C”，“D”等，但是“A”和“B”之间也有直接连接条件。在这种情况下，从“A”到“B”的连接可能很难仅使用复杂的  :paramref:` _orm.relationship.primaryjoin`  条件来表达，因为中间表可能需要特殊处理，并且还不能用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  对象来表示，因为“A-&gt;secondary-&gt;B”模式不支持“A”和“B”之间的任何引用。当出现这种 <strong>极端高级</strong> 情况时，我们可以创建第二个映射作为关系的目标。这是我们使用   :class:` .AliasedClass`  来创建到包含我们需要的所有附加表的类的映射的地方。为了将此映射作为我们类的“备选”映射生成，我们使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  函数以产生新的构造，然后针对对象使用   :func:` _orm.relationship` ，就像它是一个普通的映射类一样。</p>
 <p>下面说明了   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，它具有从“A”到“B”的简单连接，但是主连接条件增加了两个附加实体“C”和“D”，这些实体在同一时间必须具有与“A和B”中的行相对应的行:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">基类</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
@@ -431,7 +427,7 @@ counted as containing a foreign key reference to the parent table.</pre></div>
 </section>
 <section id="relationship-to-window-function">
 <span id="id12"></span><h2>使用窗口函数的行限制关系<a class="headerlink" href="#relationship-to-window-function" title="Permalink to this heading">¶</a></h2>
-<p>其他有趣的用例，以便让关系连接到任何形式的专门的SELECT时，是使用Python列表达式的标志  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code> ，它将其建立为只读属性（刷新时将忽略写入集合的数据）。但是，在极端情况下，考虑与   <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  结合使用常规Python属性，如下所示:</p>
+<p>其他有趣的用例，以便让关系连接到任何形式的专门的SELECT时，是使用Python列表达式的标志  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code> ，它将其建立为只读属性（刷新时将忽略写入集合的数据）。但是，在极端情况下，考虑与   :class:` _query.Query`  结合使用常规Python属性，如下所示:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">基类</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -466,7 +462,7 @@ counted as containing a foreign key reference to the parent table.</pre></div>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:59:01
 
     </div>
 </div>

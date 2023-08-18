@@ -134,8 +134,8 @@
 <li><span class="link-container"><a class="reference external" href="columns.html">列加载选项</a></span></li>
 <li class="selected"><span class="link-container"><strong>关系加载技术</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#id6">关系加载类型的概述</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id9">使用加载器选项加载关系</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id10">加载器选项添加筛选条件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">使用加载器选项加载关系</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id8">加载器选项添加筛选条件</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#lazy-loading">惰性加载</a></span></li>
@@ -226,8 +226,8 @@
             <ul>
 <li><a class="reference internal" href="#id1">关系加载技术</a><ul>
 <li><a class="reference internal" href="#id6">关系加载类型的概述</a></li>
-<li><a class="reference internal" href="#id9">使用加载器选项加载关系</a><ul>
-<li><a class="reference internal" href="#id10">加载器选项添加筛选条件</a></li>
+<li><a class="reference internal" href="#id7">使用加载器选项加载关系</a><ul>
+<li><a class="reference internal" href="#id8">加载器选项添加筛选条件</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#lazy-loading">惰性加载</a></li>
@@ -287,7 +287,7 @@
 </div>
 <dl class="simple">
 <dt>SQLAlchemy 中的一个重要组成部分是在查询相关对象时提供了广泛的控制方式。所谓“相关对象”是指在映射器上使用</dt><dd><p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  配置的集合或标量关联。可以在映射器构造时使用
-<code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  函数中的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code></p>
+<code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  函数中的  :paramref:` _orm.relationship.lazy`</p>
 </dd>
 </dl>
 <p>参数，或使用   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构造函数的 <strong>ORM loader 选项</strong> 来配置此行为。</p>
@@ -303,7 +303,7 @@
 <li><p><strong>惰性加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='select'</span></code> 或   <code class="xref py py-func docutils literal notranslate"><span class="pre">lazyload()</span></code>  选项获得，这种加载方式在属性访问时会发出一个 SELECT
 语句，以每次惰性加载单个对象的相关引用。　惰性加载是所有不另外明确指示</p>
 <blockquote>
-<div><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  选项的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造函数的 <strong>默认加载方式</strong>。有关惰性加载的详细信息</p>
+<div><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  选项的   :func:` _orm.relationship`  构造函数的 <strong>默认加载方式</strong>。有关惰性加载的详细信息</p>
 </div></blockquote>
 <p>请参见   <a class="reference internal" href="#lazy-loading"><span class="std std-ref">惰性加载</span></a> 。</p>
 </li>
@@ -318,20 +318,20 @@
 <li><p><strong>子查询加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='subquery'</span></code> 或   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  选项获得，此加载方式发出第二个 SELECT 语句，
 该语句在子查询中将原始查询重新表述，然后将该子查询连接到要加载的相关表以一次加载所有相关集合 / 标量引用的成员。有关子
 查询急切加载的详细信息，请参见   <a class="reference internal" href="#subquery-eager-loading"><span class="std std-ref">子查询急加载</span></a> 。</p></li>
-<li><p><strong>只写加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='write_only'</span></code> 或通过使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">WriteOnlyMapped</span></code>  注释来注释   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Relationship" title="sqlalchemy.orm.Relationship"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relationship</span></code></a>
+<li><p><strong>只写加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='write_only'</span></code> 或通过使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">WriteOnlyMapped</span></code>  注释来注释   :class:` _orm.Relationship`
 对象的左侧获得。该仅限集合加载方式生成一种替代的属性标记，从不隐式从数据库加载记录，而仅允许  <code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.add()</span></code> ,</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.add_all()</span></code>  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.remove()</span></code>  方法。通过调用使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.select()</span></code></p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.add_all()</span></code>  和  :meth:` .WriteOnlyCollection.remove`  方法。通过调用使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">WriteOnlyCollection.select()</span></code></p>
 </div></blockquote>
 <p>方法构造的 SELECT 语句来查询集合。有关只写加载的讨论，请参见   <a class="reference internal" href="../large_collections.html#write-only-relationship"><span class="std std-ref">只写关系</span></a> 。</p>
 </li>
-<li><p><strong>动态加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='dynamic'</span></code> 或通过使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicMapped</span></code>  注释来注释   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Relationship" title="sqlalchemy.orm.Relationship"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relationship</span></code></a>
+<li><p><strong>动态加载</strong> - 可通过 <code class="docutils literal notranslate"><span class="pre">lazy='dynamic'</span></code> 或通过使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">DynamicMapped</span></code>  注释来注释   :class:` _orm.Relationship`
 对象的左侧。这是一个遗留的仅限集合加载方式。配置映射时的加载策略</p></li>
 </ul>
 <hr class="docutils" />
 <p>可以在映射时配置特定关系的加载策略，使其在加载特定映射类型对象时发挥作用，
 即在没有任何修改的查询级别选项的情况下。这是通过将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>
-参数传递给   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  来配置的。该参数的常用值包括``select``、
+参数传递给   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  来配置的。该参数的常用值包括` <cite>select`</cite>、
 <code class="docutils literal notranslate"><span class="pre">selectin</span></code> 和 <code class="docutils literal notranslate"><span class="pre">joined</span></code>。</p>
 <p>下面的示例示例了   <a class="reference internal" href="../basic_relationships.html#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a>  中的关系实例，该示例配置了
 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 关系，在发出针对 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象的 SELECT 语句时使用</p>
@@ -361,17 +361,17 @@ parent_id: Mapped[int] = mapped_column(ForeignKey(“parent.id”))</p>
 <p>在上述示例中，每当加载 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象集合时，每个 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象都将使用
 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 加载器策略填充其 <code class="docutils literal notranslate"><span class="pre">children</span></code> 集合。</p>
 <blockquote>
-<div><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>   参数的默认值为``”select”<a href="#id7"><span class="problematic" id="id8">``</span></a>，即实现
+<div><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>   参数的默认值为` <cite>“select”`</cite>，即实现
 <a class="reference internal" href="#lazy-loading"><span class="std std-ref">惰性加载</span></a> 。</p>
 </div></blockquote>
 </section>
-<section id="id9">
-<h2>使用加载器选项加载关系<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h2>
+<section id="id7">
+<h2>使用加载器选项加载关系<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>另一种可能更常见的配置加载策略的方法是对特定属性在每个查询中使用</dt><dd><p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.options" title="sqlalchemy.sql.expression.Select.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.options()</span></code></a>   方法进行设置。使用加载器选项可以非常详细地控制</p>
 </dd>
 </dl>
-<p>关系加载，最常用的选项包括   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 、  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>
+<p>关系加载，最常用的选项包括   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 、  :func:` _orm.selectinload`
 和   <code class="xref py py-func docutils literal notranslate"><span class="pre">lazyload()</span></code> 。这些选项接受指向应针对的特定类/属性的绑定属性类引用。</p>
 <p>下面的示例集中介绍：</p>
 <blockquote>
@@ -402,8 +402,8 @@ from sqlalchemy.orm import lazyload</p>
 <p>在上述示例中，查询将返回未加载 <code class="docutils literal notranslate"><span class="pre">children</span></code> 集合的 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象。
 当首次访问某个特定 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象的 <code class="docutils literal notranslate"><span class="pre">children</span></code> 集合时，将延迟加载相关对象，
 但对于 <code class="docutils literal notranslate"><span class="pre">children</span></code> 的每个成员都将同时应用快速的 <code class="docutils literal notranslate"><span class="pre">subelements</span></code> 加载。</p>
-<section id="id10">
-<h3>加载器选项添加筛选条件<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<section id="id8">
+<h3>加载器选项添加筛选条件<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
 <p>用于指示加载器选项的关系属性具有向创建的 join 的 ON 子句中添加附加筛选条件或
 涉及 WHERE 条件的能力，这取决于加载器策略。这可以通过使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.and_()</span></code>
 方法来实现，传递一个选项，以便仅限于给定的过滤条件在加载结果时生效：</p>
@@ -451,12 +451,12 @@ from sqlalchemy.orm import joinedload</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>应用于对象的惰性加载集合的加载器选项是特定对象实例的**”粘性”<a href="#id11"><span class="problematic" id="id12">**</span></a>，这意味着它们将持续存在于该特定对象加载的集合中，只要它在内存中存在。
+<p>应用于对象的惰性加载集合的加载器选项是特定对象实例的**”粘性”<a href="#id9"><span class="problematic" id="id10">**</span></a>，这意味着它们将持续存在于该特定对象加载的集合中，只要它在内存中存在。
 例如，给定上面的例子：</p>
 <blockquote>
 <div><p>stmt = select(Parent).options(lazyload(Parent.children).subqueryload(Child.subelements))</p>
 </div></blockquote>
-<p>如果通过上述查询加载的特定 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象的 <code class="docutils literal notranslate"><span class="pre">children</span></code> 集合过期了（例如当事务被提交或回滚时，或使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code>  时），当再次访问 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合以重新加载时， <code class="docutils literal notranslate"><span class="pre">Child.subelements</span></code> 集合将再次使用子查询急加载。即使从指定了不同的一组选项的后续查询中访问了上述 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象，情况也是如此。要在不清除对象并重新加载的情况下更改现有对象上的选项，必须同时使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  执行选项显式地设置它们：</p>
+<p>如果通过上述查询加载的特定 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象的 <code class="docutils literal notranslate"><span class="pre">children</span></code> 集合过期了（例如当事务被提交或回滚时，或使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code>  时），当再次访问 ` <cite>Parent.children`</cite> 集合以重新加载时， <code class="docutils literal notranslate"><span class="pre">Child.subelements</span></code> 集合将再次使用子查询急加载。即使从指定了不同的一组选项的后续查询中访问了上述 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象，情况也是如此。要在不清除对象并重新加载的情况下更改现有对象上的选项，必须同时使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  执行选项显式地设置它们：</p>
 <blockquote>
 <div><p># 更改已加载的 Parent 对象上的选项
 stmt = (</p>
@@ -468,13 +468,13 @@ stmt = (</p>
 </div></blockquote>
 <p>)</p>
 </div></blockquote>
-<p>如果加载的对象完全从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中清除，例如由于垃圾收集或使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code> ，则“粘性”选项也会消失，如果重新加载，则新创建的对象将使用新选项。</p>
+<p>如果加载的对象完全从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中清除，例如由于垃圾收集或使用  :meth:` .Session.expunge_all` ，则“粘性”选项也会消失，如果重新加载，则新创建的对象将使用新选项。</p>
 <p>未来 SQLAlchemy 的版本可能会添加更多操作已加载对象上的加载器选项的替代方法。</p>
 </div>
 </section>
 </section>
 <section id="lazy-loading">
-<span id="id13"></span><h2>惰性加载<a class="headerlink" href="#lazy-loading" title="Permalink to this heading">¶</a></h2>
+<span id="id11"></span><h2>惰性加载<a class="headerlink" href="#lazy-loading" title="Permalink to this heading">¶</a></h2>
 <p>默认情况下，所有对象之间的关系都是**惰性加载**的。与   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  相关联的标量或集合属性包含一个触发器，
 该触发器首次访问属性时触发。此触发器通常在访问点发出 SQL 调用，以加载相关对象或对象：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">spongebob</span><span class="o">.</span><span class="n">addresses</span>
@@ -505,14 +505,14 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 在 SQLAlchemy 中，解决 N+1 问题的常规方法是使用其功能非常强大的急加载系统。但是，急加载需要事先通过   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>
 指定要加载的属性。对于可能访问其他未极速加载的属性的代码，不希望进行惰性加载的问题，可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  策略解决；
 这个加载器策略将惰性加载的行为替换为引发信息型错误：从上面的查询中加载的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象将不会加载 <code class="docutils literal notranslate"><span class="pre">.addresses</span></code> 集合； 如果稍后的某些代码尝试访问此属性，则会引发 ORM 异常。</p>
-<p>可以使用所谓的“通配符”指示符与   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  一起使用，以指示所有关系都应使用此策略。例如，要设置仅将一个属性设置为及早加载，而将其余所有属性都设置为 <code class="docutils literal notranslate"><span class="pre">raise</span></code>：</p>
+<p>可以使用所谓的“通配符”指示符与   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  一起使用，以指示所有关系都应使用此策略。例如，要设置仅将一个属性设置为及早加载，而将其余所有属性都设置为 ` <cite>raise`</cite>：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">joinedload</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">raiseload</span>
 
 <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">),</span> <span class="n">raiseload</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span></pre></div>
 </div>
-<p>上述通配符将适用于**所有**不仅在 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 上的关系，而且也适用于 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象上的所有关系。要为仅 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 对象设置   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code> ，请使用   <a class="reference internal" href="#sqlalchemy.orm.Load" title="sqlalchemy.orm.Load"><code class="xref py py-class docutils literal notranslate"><span class="pre">Load</span></code></a>  带有完整路径的指定：</p>
+<p>上述通配符将适用于**所有**不仅在 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 上的关系，而且也适用于 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象上的所有关系。要为仅 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 对象设置   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code> ，请使用   :class:` _orm.Load`  带有完整路径的指定：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">joinedload</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Load</span>
@@ -522,11 +522,11 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <p>反之，要将提高设置为仅用于 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Order</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">)</span><span class="o">.</span><span class="n">raiseload</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span>
 
-<span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">raiseload</span><span class="err">`</span>  <span class="n">选项仅适用于关系属性</span><span class="err">。</span><span class="n">对于定向列属性</span><span class="err">，</span>  <span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">defer</span><span class="err">`</span>  <span class="n">选项支持工作相同的</span>  <span class="p">:</span><span class="n">paramref</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">orm</span><span class="o">.</span><span class="n">defer</span><span class="o">.</span><span class="n">raiseload</span><span class="err">`</span>  <span class="n">选项</span><span class="err">。</span></pre></div>
+<span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">raiseload</span><span class="err">`</span>  <span class="n">选项仅适用于关系属性</span><span class="err">。</span><span class="n">对于定向列属性</span><span class="err">，</span>  <span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="err">`</span> <span class="o">.</span><span class="n">defer</span><span class="err">`</span>  <span class="n">选项支持工作相同的</span>  <span class="p">:</span><span class="n">paramref</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">orm</span><span class="o">.</span><span class="n">defer</span><span class="o">.</span><span class="n">raiseload</span><span class="err">`</span>  <span class="n">选项</span><span class="err">。</span></pre></div>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>“raiseload” 策略 <strong>不适用</strong> 在  <span class="xref std std-term">unit of work</span>  刷新过程中。这意味着如果  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  过程需要加载集合以完成其工作，则会在绕过任何   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  指令的情况下执行此操作。</p>
+<p>“raiseload” 策略 <strong>不适用</strong> 在  <span class="xref std std-term">unit of work</span>  刷新过程中。这意味着如果  :meth:` _orm.Session.flush`  过程需要加载集合以完成其工作，则会在绕过任何   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  指令的情况下执行此操作。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -535,7 +535,7 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 </div>
 </section>
 <section id="joined-eager-loading">
-<span id="id14"></span><h2>连接的及早加载<a class="headerlink" href="#joined-eager-loading" title="Permalink to this heading">¶</a></h2>
+<span id="id12"></span><h2>连接的及早加载<a class="headerlink" href="#joined-eager-loading" title="Permalink to this heading">¶</a></h2>
 <p>连接的及早加载是 SQLAlchemy ORM 中包含的最旧式的及早加载样式。它的工作原理是将连接 (默认情况下为 LEFT OUTER join) 连接到发出的 SELECT 语句，并将目标标量/集合从与父项相同的结果集中填充。</p>
 <p>在映射级别，它看起来像是这样的：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
@@ -565,7 +565,7 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>当引用到 one-to-many 或者 many-to-many 集合时，并且使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  时，必须应用  <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.unique" title="sqlalchemy.engine.Result.unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.unique()</span></code></a>  方法到返回结果上，它会通过主键将传入的行进行唯一化，否则就会由 join 进行相应的放大。如果不这样做，ORM 就会引发错误。</p>
+<p>当引用到 one-to-many 或者 many-to-many 集合时，并且使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  时，必须应用  :meth:` _result.Result.unique`  方法到返回结果上，它会通过主键将传入的行进行唯一化，否则就会由 join 进行相应的放大。如果不这样做，ORM 就会引发错误。</p>
 </div>
 <p>在现代 SQLAlchemy 中，这不是自动的，因为它会改变结果集的行为，返回少于语句中返回的 ORM 对象数量的结果行数。因此，SQLAlchemy 使得使用  <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Result.unique" title="sqlalchemy.engine.Result.unique"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.unique()</span></code></a>  显式，所以在主键上进行唯一处理的对象被返回。</p>
 <p>默认发出的 JOIN 是 LEFT OUTER JOIN，以允许不引用相关行的前导对象。对于保证具有元素的属性，例如 many-to-one 引用到引用外键不为 NULL 的相关对象的引用，可以通过使用内部 join 使查询更有效率；在映射级别通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.innerjoin</span></code>  标志实现：</p>
@@ -587,9 +587,9 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">joinedload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">orders</span><span class="p">,</span> <span class="n">Order</span><span class="o">.</span><span class="n">items</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">exec</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span><span class="o">..</span> <span class="n">tip</span><span class="p">::</span> <span class="n">如果在发出SELECT语句时使用了数据库行锁定技术</span><span class="err">，</span><span class="n">这意味着</span>  <span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="n">_sql</span><span class="o">.</span><span class="n">Select</span><span class="o">.</span><span class="n">with_for_update</span><span class="err">`</span>  <span class="n">方法正在用于发出SELECT</span><span class="o">..</span><span class="n">FOR</span> <span class="n">UPDATE</span><span class="err">，</span><span class="n">则取决于使用的后端的行为</span><span class="err">，</span><span class="n">连接表也可能被锁定</span><span class="err">。</span><span class="n">不建议同时使用连接式预加载和SELECT</span><span class="o">..</span><span class="n">FOR</span> <span class="n">UPDATE</span><span class="err">，</span><span class="n">因为这个原因</span><span class="err">。</span></pre></div>
 </div>
-<p id="zen-of-eager-loading">由于连接预加载似乎与使用  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  方法具有许多相似之处，因此经常产生混淆，不清楚何时以及如何使用它。关键在于理解以下区别：  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  用于更改查询的结果，而 :func:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.joinedload`则极力**不要**更改查询结果，而是隐藏渲染连接的效果，只允许相关对象存在。</p>
-<p>后代策略背后的哲学是，任何一组加载方案都可以应用于特定查询，并且*结果不会改变*——只有发出SQL语句以完全加载相关对象和集合所需的数量发生了变化。特定查询可能是使用所有惰性加载。在上下文中使用它之后，可能发现特定属性或集合始终被访问，更改这些内容的加载程序策略将更有效。该策略可以在不对查询进行其他修改的情况下更改，结果将保持相同，但会发出更少的SQL语句。理论上（实际上基本上是如此），您可以对 :class:<a href="#id17"><span class="problematic" id="id18">`</span></a>_sql.Select`执行的所有操作都不能使其根据加载程序策略的变化而加载不同的主要或相关对象集。</p>
-<p>特别是，为了不以任何方式影响返回的实体行，  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> <cite>users``到``addresses``的左外连接，但是添加到``Address.email_address`</cite> 的``ORDER BY``是无效的-<a href="#id19"><span class="problematic" id="id20">``</span></a>Address``实体没有在查询中命名：</p>
+<p id="zen-of-eager-loading">由于连接预加载似乎与使用  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  方法具有许多相似之处，因此经常产生混淆，不清楚何时以及如何使用它。关键在于理解以下区别：  :meth:` _sql.Select.join`  用于更改查询的结果，而 <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 则极力**不要**更改查询结果，而是隐藏渲染连接的效果，只允许相关对象存在。</p>
+<p>后代策略背后的哲学是，任何一组加载方案都可以应用于特定查询，并且*结果不会改变*——只有发出SQL语句以完全加载相关对象和集合所需的数量发生了变化。特定查询可能是使用所有惰性加载。在上下文中使用它之后，可能发现特定属性或集合始终被访问，更改这些内容的加载程序策略将更有效。该策略可以在不对查询进行其他修改的情况下更改，结果将保持相同，但会发出更少的SQL语句。理论上（实际上基本上是如此），您可以对 <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 执行的所有操作都不能使其根据加载程序策略的变化而加载不同的主要或相关对象集。</p>
+<p>特别是，为了不以任何方式影响返回的实体行，  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ` users``到``addresses``的左外连接，但是添加到``Address.email_address`` 的``ORDER BY``是无效的-<a href="#id13"><span class="problematic" id="id14">``</span></a>Address``实体没有在查询中命名：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">joinedload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -636,7 +636,7 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <span class="p">[</span><span class="s1">&#39;spongebob&#39;</span><span class="p">]</span>
 </div></pre></div>
 </div>
-<p>上面的语句当然不同于以前的语句，因为``addresses``的列根本没有包含在结果中。我们可以再次添加  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，使得有两个连接——一个是我们正在其中排序的连接，另一个是匿名使用的连接，以加载``User.addresses``集合的内容：</p>
+<p>上面的语句当然不同于以前的语句，因为``addresses``的列根本没有包含在结果中。我们可以再次添加  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，使得有两个连接——一个是我们正在其中排序的连接，另一个是匿名使用的连接，以加载` <a href="#id15"><span class="problematic" id="id16">`</span></a>User.addresses``集合的内容：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(User)</span>
 <span class="go">...     .join(User.addresses)</span>
@@ -651,7 +651,7 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <span class="w">    </span><span class="n">addresses_1</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">addresses_1_user_id</span><span class="p">,</span>
 <span class="w">    </span><span class="n">users</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_id</span><span class="p">,</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_name</span><span class="p">,</span>
 <span class="w">    </span><span class="n">users</span><span class="p">.</span><span class="n">fullname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_fullname</span><span class="p">,</span>
-<span class="w">    </span><span class="n">users</span><span class="p">.</span><span class="n">nickname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_nickname上面我们看到了我们使用</span><span class="w">  </span><span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="o">`</span><span class="n">_sql</span><span class="p">.</span><span class="k">Select</span><span class="p">.</span><span class="k">join</span><span class="o">`</span><span class="w">  </span><span class="err">是为了提供我们想在后续查询条件中使用的</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">子句，而我们使用</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="n">_orm</span><span class="p">.</span><span class="n">joinedload</span><span class="o">`</span><span class="w">  </span><span class="err">只关心加在每个</span><span class="w"> </span><span class="o">``</span><span class="k">User</span><span class="o">``</span><span class="w"> </span><span class="err">对象的</span><span class="w"> </span><span class="o">``</span><span class="k">User</span><span class="p">.</span><span class="n">addresses</span><span class="o">``</span><span class="w"> </span><span class="err">集合上的加载。在这种情况下，这两个</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">看起来可能是冗余的——它们就是冗余的。如果我们想要仅使用一个</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">用于集合加载以及排序，我们可以使用</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">contains_eager</span><span class="o">`</span><span class="w">  </span><span class="err">选项，在下面的</span><span class="w">   </span><span class="p">:</span><span class="k">ref</span><span class="p">:</span><span class="o">`</span><span class="n">contains_eager</span><span class="o">`</span><span class="w">  </span><span class="err">中进行了描述。但是为了看到</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="n">joinedload</span><span class="o">`</span><span class="w">  </span><span class="err">做了什么，考虑我们是否在过滤特定的</span><span class="w"> </span><span class="o">``</span><span class="n">Address</span><span class="o">``</span><span class="err">：</span>
+<span class="w">    </span><span class="n">users</span><span class="p">.</span><span class="n">nickname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">users_nickname上面我们看到了我们使用</span><span class="w">  </span><span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="o">`</span><span class="n">_sql</span><span class="p">.</span><span class="k">Select</span><span class="p">.</span><span class="k">join</span><span class="o">`</span><span class="w">  </span><span class="err">是为了提供我们想在后续查询条件中使用的</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">子句，而我们使用</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="w"> </span><span class="n">_orm</span><span class="p">.</span><span class="n">joinedload</span><span class="o">`</span><span class="w">  </span><span class="err">只关心加在每个</span><span class="w"> </span><span class="o">``</span><span class="k">User</span><span class="o">``</span><span class="w"> </span><span class="err">对象的</span><span class="w"> </span><span class="o">``</span><span class="k">User</span><span class="p">.</span><span class="n">addresses</span><span class="o">``</span><span class="w"> </span><span class="err">集合上的加载。在这种情况下，这两个</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">看起来可能是冗余的——它们就是冗余的。如果我们想要仅使用一个</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="err">用于集合加载以及排序，我们可以使用</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">contains_eager</span><span class="o">`</span><span class="w">  </span><span class="err">选项，在下面的</span><span class="w">   </span><span class="p">:</span><span class="k">ref</span><span class="p">:</span><span class="o">`</span><span class="w"> </span><span class="n">contains_eager</span><span class="o">`</span><span class="w">  </span><span class="err">中进行了描述。但是为了看到</span><span class="w">   </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="n">joinedload</span><span class="o">`</span><span class="w">  </span><span class="err">做了什么，考虑我们是否在过滤特定的</span><span class="w"> </span><span class="o">`</span><span class="w"> </span><span class="o">`</span><span class="n">Address</span><span class="o">``</span><span class="err">：</span>
 </div></pre></div>
 </div>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -678,7 +678,7 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 </div></pre></div>
 </div>
 <p>上面，我们可以看到这两个 JOIN 所起的作用有很大的不同。其中一个JOIN将精确匹配一行，即 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 的联接，其中 <code class="docutils literal notranslate"><span class="pre">Address.email_address</span> <span class="pre">==</span> <span class="pre">'someaddress&#64;foo.com'</span></code>。另一个左外部 JOIN 将匹配 <em>所有</em> 与 <code class="docutils literal notranslate"><span class="pre">User</span></code> 相关的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 行，并且仅用于填充 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象中返回的 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 集合。</p>
-<p>通过将   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  的使用方式更改为另一种加载样式，我们可以完全独立于用于检索所需 <code class="docutils literal notranslate"><span class="pre">User</span></code> 行的 SQL 更改如何加载集合。下面我们将   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  改为   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> ：</p>
+<p>通过将   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  的使用方式更改为另一种加载样式，我们可以完全独立于用于检索所需 ` <cite>User`</cite> 行的 SQL 更改如何加载集合。下面我们将   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  改为   :func:` .selectinload` ：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(User)</span>
 <span class="go">...     .join(User.addresses)</span>
@@ -705,13 +705,13 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <p>在使用连接的 eager 加载时，如果查询包含影响到连接外部返回的行的修改器，例如使用 DISTINCT、LIMIT、OFFSET 或等效的修改器时，完成的语句首先包装在一个子查询中，并将专门用于连接的 eager 加载应用于子查询。SQLAlchemy 的连接的 eager 加载走出了不一般的距离，甚至还走了十英里之远，以确保它绝不会影响查询的最终结果，仅影响加载集合和相关对象的方式，无论查询的格式如何。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">contains_eager</span> ——使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code></p>
+<p><span class="xref std std-ref">contains_eager</span> ——使用   :func:` .contains_eager`</p>
 </div>
 </section>
 <section id="in">
 <span id="selectin-eager-loading"></span><h2>选择 IN 的加载<a class="headerlink" href="#in" title="Permalink to this heading">¶</a></h2>
 <p>在大多数情况下，选择 IN 的加载是最简单和高效的急切地加载对象集合的方法。唯一不能使用 selectin 急切加载的情形是，当模型使用复合主键，并且后端数据库不支持包含元组的 IN 时，目前包括 SQL Server。</p>
-<p>使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  的 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 参数，或使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  加载器选项，提供了“选择 IN”急切加载。这种加载方式发出一个 SELECT，该 SELECT 引用父对象的主键值，或者在一对多关系的情况下，引用子对象的主键值，内部包含 IN 子句，以便加载相关联的对象：</p>
+<p>使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  的 ` <cite>“selectin”`</cite> 参数，或使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  加载器选项，提供了“选择 IN”急切加载。这种加载方式发出一个 SELECT，该 SELECT 引用父对象的主键值，或者在一对多关系的情况下，引用子对象的主键值，内部包含 IN 子句，以便加载相关联的对象：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -769,14 +769,14 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 </ul>
 </section>
 <section id="subquery-eager-loading">
-<span id="id21"></span><h2>子查询急加载<a class="headerlink" href="#subquery-eager-loading" title="Permalink to this heading">¶</a></h2>
+<span id="id17"></span><h2>子查询急加载<a class="headerlink" href="#subquery-eager-loading" title="Permalink to this heading">¶</a></h2>
 <div class="admonition legacy">
 <p class="admonition-title">Legacy Feature</p>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  急加载器在大多数情况下都是遗留的，已被   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  策略代替，后者具有更简单的设计，更灵活的功能，例如   <a class="reference internal" href="api.html#orm-queryguide-yield-per"><span class="std std-ref">分批</span></a>  和在大多数情况下发出更高效的 SQL 语句。由于   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  依赖于重新解释原始 SELECT 语句，因此当给定非常复杂的源查询时，它可能无法有效地工作。</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  急加载器在大多数情况下都是遗留的，已被   :func:` _orm.selectinload`  策略代替，后者具有更简单的设计，更灵活的功能，例如   <a class="reference internal" href="api.html#orm-queryguide-yield-per"><span class="std std-ref">分批</span></a>  和在大多数情况下发出更高效的 SQL 语句。由于   :func:` _orm.subqueryload`  依赖于重新解释原始 SELECT 语句，因此当给定非常复杂的源查询时，它可能无法有效地工作。</p>
 <p>对于具有复合主键的对象的急加载集合，特定情况下   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  仍可能有用，特别是在仍然不支持“元组 IN”语法的 Microsoft SQL Server 后端的情况下。</p>
 </div>
 <p>子查询加载的操作与 selectin 急加载类似，不过所发出的 SELECT 语句是从原始语句派生出来的，并且具有比 selectin 急加载更复杂的查询结构。</p>
-<p>子查询急加载是使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  的 <code class="docutils literal notranslate"><span class="pre">&quot;subquery&quot;</span></code> 参数或使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  加载器选项来提供的。</p>
+<p>子查询急加载是使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  的 ` <cite>“subquery”`</cite> 参数或使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  加载器选项来提供的。</p>
 <p>子查询急加载的操作是为了对要加载的每个关系发出第二个 SELECT 语句，一次跨所有结果对象。该 SELECT 语句引用原始 SELECT 语句，在一个子查询中包装起来，以便我们检索返回的主对象的相同主键列表，然后将其链接到所有要加载的集合成员的总和：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">subqueryload</span>
@@ -809,36 +809,36 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <li><p>“子查询”加载策略所发出的 SELECT 语句与原始的 SELECT 语句不同，因此对于较大的结果集，这可能意味着大幅增加的总 SQL 执行时间和大量的网络数据流量。</p></li>
 <li><p>在使用“子查询”加载程序时，无法使用   <a class="reference internal" href="api.html#orm-queryguide-yield-per"><span class="std std-ref">挂起加载</span></a> ，因为在这个过程中我们必须立即将所有集合加载到内存中才能继续进行。</p></li>
 <li><p>因为 SELECT 语句通过“包装”原始查询派生，所以在使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code>  加载时更改原始查询多少，也就是 SELECT 列表，仅会反映于加载的对象集合之上，而不是原始查询中的满足条件的行数。</p></li>
-<li><p>同样地，由于此特定的 SELECT 语句实际上是在另一个内部查询中执行的，因此无法使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">options()</span></code>  中的大多数 ORM 上下文选项，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">with_for_update()</span></code>  或   <code class="xref py py-func docutils literal notranslate"><span class="pre">add_columns()</span></code> 。何种类型的加载方法？</p></li>
+<li><p>同样地，由于此特定的 SELECT 语句实际上是在另一个内部查询中执行的，因此无法使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">options()</span></code>  中的大多数 ORM 上下文选项，例如   :func:` .with_for_update`  或   <code class="xref py py-func docutils literal notranslate"><span class="pre">add_columns()</span></code> 。何种类型的加载方法？</p></li>
 </ul>
 <p>选择何种类型的加载方法通常取决于优化SQL执行次数、发射的SQL的复杂性和获取的数据量之间的平衡。</p>
 <p>对于“one-to-many”和“many-to-many collection”类型</p>
 <blockquote>
-<div><p>:func:<a href="#id22"><span class="problematic" id="id23">`</span></a>_orm.selectinload`是一般最好的加载策略。它会产生一个额外的SELECT，使用尽可能少的表，使原始声明毫不受影响，并且在任何种类的源查询中都是最灵活的。它的唯一主要限制是当使用一个带有组合主键的表并且使用的后端不支持“tuple IN”时，目前包括SQL Server和旧版SQLite；所有其他包括的后端都支持它。</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 是一般最好的加载策略。它会产生一个额外的SELECT，使用尽可能少的表，使原始声明毫不受影响，并且在任何种类的源查询中都是最灵活的。它的唯一主要限制是当使用一个带有组合主键的表并且使用的后端不支持“tuple IN”时，目前包括SQL Server和旧版SQLite；所有其他包括的后端都支持它。</p>
 </div></blockquote>
 <p>对于“many-to-one”类型</p>
 <blockquote>
 <div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  获取对象，如果相关对象已存在，则不会发出任何SQL。</p>
 </div></blockquote>
 <p>多态贪婪加载</p>
-<p>支持根据每个贪婪加载基础规范的多态选项。请参阅   <a class="reference internal" href="inheritance.html#eagerloading-polymorphic-subtypes"><span class="std std-ref">多态子类型的急加载</span></a>  部分，其中包含使用   <a class="reference internal" href="inheritance.html#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  函数的  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  方法示例。</p>
+<p>支持根据每个贪婪加载基础规范的多态选项。请参阅   <a class="reference internal" href="inheritance.html#eagerloading-polymorphic-subtypes"><span class="std std-ref">多态子类型的急加载</span></a>  部分，其中包含使用   :func:` _orm.with_polymorphic`  函数的  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  方法示例。</p>
 <p>通配符加载策略</p>
-<p>每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code> ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">lazyload()</span></code> ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">noload()</span></code>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  默认加载方式，影响所有   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的映射的属性，如果在语句中没有另外指定。通过将字符串 <code class="docutils literal notranslate"><span class="pre">'*'</span></code> 作为这些选项中任何一个的参数进行传递即可使用此功能:</p>
+<p>每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，  :func:` .subqueryload` ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">lazyload()</span></code> ，  :func:` .selectinload` ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">noload()</span></code>  和   :func:` .raiseload`  默认加载方式，影响所有   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的映射的属性，如果在语句中没有另外指定。通过将字符串 ` <cite>‘*’`</cite> 作为这些选项中任何一个的参数进行传递即可使用此功能:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">lazyload</span>
 
 <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">lazyload</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">))</span></pre></div>
 </div>
-<p>在上述示例中， <code class="docutils literal notranslate"><span class="pre">lazyload('*')</span></code> 选项将取代该查询中所有   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造的 <code class="docutils literal notranslate"><span class="pre">lazy</span></code> 设置，但不包括使用 <code class="docutils literal notranslate"><span class="pre">lazy='write_only'</span></code> 或 <code class="docutils literal notranslate"><span class="pre">lazy='dynamic'</span></code> 的关系。如果一些关系指定了``lazy=’joined’`` 或 <code class="docutils literal notranslate"><span class="pre">lazy='selectin'</span></code>，例如，使用 <code class="docutils literal notranslate"><span class="pre">lazyload('*')</span></code> 将单方面导致所有这些关系使用 <code class="docutils literal notranslate"><span class="pre">'select'</span></code> 加载，例如在访问每个属性时发出SELECT语句.</p>
-<p>该选项不会取代查询中声明的加载程序选项，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  等。下面的查询仍将使用joined加载来处理“widget”关系:</p>
+<p>在上述示例中， <code class="docutils literal notranslate"><span class="pre">lazyload('*')</span></code> 选项将取代该查询中所有   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造的 ` <cite>lazy`</cite> 设置，但不包括使用 <code class="docutils literal notranslate"><span class="pre">lazy='write_only'</span></code> 或 <code class="docutils literal notranslate"><span class="pre">lazy='dynamic'</span></code> 的关系。如果一些关系指定了``lazy=’joined’`` 或 <code class="docutils literal notranslate"><span class="pre">lazy='selectin'</span></code>，例如，使用 <code class="docutils literal notranslate"><span class="pre">lazyload('*')</span></code> 将单方面导致所有这些关系使用 <code class="docutils literal notranslate"><span class="pre">'select'</span></code> 加载，例如在访问每个属性时发出SELECT语句.</p>
+<p>该选项不会取代查询中声明的加载程序选项，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ，  :func:` .selectinload`  等。下面的查询仍将使用joined加载来处理“widget”关系:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">lazyload</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">joinedload</span>
 
 <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">lazyload</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">),</span> <span class="n">joinedload</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">widget</span><span class="p">))</span></pre></div>
 </div>
-<p>在上述声明   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  的指令中，无论   <code class="xref py py-func docutils literal notranslate"><span class="pre">lazyload()</span></code> <cite>选项位于该指令之前还是之后，都将执行.如果传入了多个包含 `</cite>”*”`` 的选项，则最后一个选项将生效。</p>
-<p id="orm-queryguide-relationship-per-entity-wildcard">通配符加载策略的一个变种是能够在每个实体上设置策略。例如，如果查询“User”和“Address”，可以指示“Address”上的所有关系都使用惰性加载，同时让“User”的加载策略保持不变，方法是先应用   <a class="reference internal" href="#sqlalchemy.orm.Load" title="sqlalchemy.orm.Load"><code class="xref py py-class docutils literal notranslate"><span class="pre">Load</span></code></a>  对象，然后将 <code class="docutils literal notranslate"><span class="pre">*</span></code> 指定为链式选项:</p>
+<p>在上述声明   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  的指令中，无论   :func:` .lazyload` <cite>选项位于该指令之前还是之后，都将执行.如果传入了多个包含 `</cite>”*”`` 的选项，则最后一个选项将生效。</p>
+<p id="orm-queryguide-relationship-per-entity-wildcard">通配符加载策略的一个变种是能够在每个实体上设置策略。例如，如果查询“User”和“Address”，可以指示“Address”上的所有关系都使用惰性加载，同时让“User”的加载策略保持不变，方法是先应用   <a class="reference internal" href="#sqlalchemy.orm.Load" title="sqlalchemy.orm.Load"><code class="xref py py-class docutils literal notranslate"><span class="pre">Load</span></code></a>  对象，然后将 ` <cite>*`</cite> 指定为链式选项:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Load</span>
 
@@ -852,12 +852,12 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 </div></blockquote>
 <p>已加载对象的标量引用。通常情况下，查询已包含表示特定集合或标量引用的必要连接，并且连接加入了要求加入的集合/引用，但已加入的加载特性是冗余的。
 然而你仍希望填充集合/引用。</p>
-<p>为此，SQLAlchemy 提供了   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code>  选项。使用方法与   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  选项相同，除了它默认假定   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  对象会显式包含适当的联接，通常使用像  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  这样的方法。下面，我们在 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 之间指定了一个连接，并进一步将其作为急加载 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 的基础来建立：：</p>
+<p>为此，SQLAlchemy 提供了   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code>  选项。使用方法与   :func:` _orm.joinedload()`  选项相同，除了它默认假定   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  对象会显式包含适当的联接，通常使用像  :meth:` _sql.Select.join`  这样的方法。下面，我们在 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 之间指定了一个连接，并进一步将其作为急加载 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 的基础来建立：：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import contains_eager</p>
 <p>stmt = select(User).join(User.addresses).options(contains_eager(User.addresses))</p>
 </div></blockquote>
-<p>如果语句的“急”部分是“别名化”的，则路径应该使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  指定，允许传递特定   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  建构：：</p>
+<p>如果语句的“急”部分是“别名化”的，则路径应该使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  指定，允许传递特定   :func:` _orm.aliased`  建构：：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="c1"># 使用一个 Address 实体的别名</span>
 <span class="n">adalias</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span>
 
@@ -883,13 +883,13 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <span class="k">ON</span><span class="w"> </span><span class="n">users</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">email_addresses_1</span><span class="p">.</span><span class="n">user_id</span>
 </div></pre></div>
 </div>
-<p>作为参数传递给  :func: <cite>.contains_eager</cite> 的路径需要是从起始实体开始的完整路径。例如，如果我们正在加载 <code class="docutils literal notranslate"><span class="pre">Users-&gt;orders-&gt;Order-&gt;items-&gt;Item</span></code>，则选项应该这样使用：：</p>
+<p>作为参数传递给  <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code> 的路径需要是从起始实体开始的完整路径。例如，如果我们正在加载 ` <cite>Users-&gt;orders-&gt;Order-&gt;items-&gt;Item`</cite>，则选项应该这样使用：：</p>
 <blockquote>
 <div><p>stmt = select(User).options(contains_eager(User.orders).contains_eager(Order.items))</p>
 </div></blockquote>
 <p>使用 contains_eager() 加载自定义过滤的集合结果
 —————————————————— ———-</p>
-<p>当我们使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code>  时，<em>我们*自己构造将用于填充集合的 SQL。因此，自然地我们可以选择通过加载一小部分元素来 **修改*</em> 集合的目标值，通过编写 SQL 来过滤连接的数据，并将其路由到   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code> 。同时使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  来确保任何已加载的集合被覆盖：：</p>
+<p>当我们使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code>  时，<em>我们*自己构造将用于填充集合的 SQL。因此，自然地我们可以选择通过加载一小部分元素来 **修改*</em> 集合的目标值，通过编写 SQL 来过滤连接的数据，并将其路由到   :func:` _orm.contains_eager` 。同时使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  来确保任何已加载的集合被覆盖：：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>stmt = (</dt><dd><p>select(User)
@@ -906,10 +906,10 @@ stmt = select(User).options(lazyload(User.addresses))</p>
 <p class="admonition-title">Tip</p>
 <p>在所有情况下，SQLAlchemy ORM 都不会覆盖已加载的属性和集合，除非告诉它这样做。</p>
 </div>
-<p>当一个`.ORM`查询正在使用`identity map`时，通常情况下该查询返回的对象实际上已经存在并且已经在内存中加载。因此，在使用`_orm.contains_eager`以另一种方式填充集合时，通常最好使用如上所示的`orm_queryguide_populate_existing`。这样，一个已经加载的集合将用新数据刷新。<a href="#id24"><span class="problematic" id="id25">`</span></a>populate_existing`选项将重置已经存在的**所有**属性，包括挂起的更改，因此在使用它之前请确保所有数据已被清除。使用`_orm.Session`及其默认行为`autoflush`就足够了。</p>
+<p>当一个`.ORM`查询正在使用`identity map`时，通常情况下该查询返回的对象实际上已经存在并且已经在内存中加载。因此，在使用`_orm.contains_eager`以另一种方式填充集合时，通常最好使用如上所示的`orm_queryguide_populate_existing`。这样，一个已经加载的集合将用新数据刷新。<a href="#id18"><span class="problematic" id="id19">`</span></a>populate_existing`选项将重置已经存在的**所有**属性，包括挂起的更改，因此在使用它之前请确保所有数据已被清除。使用`_orm.Session`及其默认行为`autoflush`就足够了。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>我们使用`_orm.contains_eager`加载的自定义集合不是“固定不变的”；也就是说，下一次加载该集合时，它将以其通常的默认内容加载。如果对象过期，该集合可能会被重新加载，这发生在使用: meth:<cite>.Session.commit</cite>，: meth:<cite>.Session.rollback`方法（假定默认会话设置），或使用`meth</cite>：<cite>.Session.expire_all`或`meth</cite>：<a href="#id26"><span class="problematic" id="id27">`</span></a>.Session.expire`方法时。</p>
+<p>我们使用`_orm.contains_eager`加载的自定义集合不是“固定不变的”；也就是说，下一次加载该集合时，它将以其通常的默认内容加载。如果对象过期，该集合可能会被重新加载，这发生在使用: meth:<cite>.Session.commit</cite>，: meth:<cite>.Session.rollback`方法（假定默认会话设置），或使用`meth</cite>：<cite>.Session.expire_all`或`meth</cite>：<a href="#id20"><span class="problematic" id="id21">`</span></a>.Session.expire`方法时。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -1259,7 +1259,7 @@ lazy loaders as well as attribute load / refresh operations.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:01
+    Documentation last generated: 2023/8/18 18:59:03
 
     </div>
 </div>

@@ -225,8 +225,8 @@
 <p>SQLAlchemy包括一个事件API，该API发布了对SQLAlchemy核心和ORM内部的广泛挂钩。</p>
 <section id="id2">
 <h2>事件注册<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>通过一个单一的API点注册事件，即   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数，或者使用装饰器   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a> 。这些函数接受目标参数，一个用于标识要拦截的事件字符串标识符，以及一个用户定义的监听函数。这两个函数的其他位置和关键字参数可能会被特定类型事件所支持，这些事件可能会为给定的事件函数指定备选接口，或者根据给定的目标提供有关次要事件目标的说明。</p>
-<p>事件的名称和对应的监听者函数的参数签名是从一个绑定到标记类的规范方法中推导出来的，这个规范方法在文档中有详细的描述。例如，对于  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  的文档说明了事件名称是 <code class="docutils literal notranslate"><span class="pre">&quot;connect&quot;</span></code>，并且用户定义的监听函数应该接收两个位置参数:</p>
+<p>通过一个单一的API点注册事件，即   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数，或者使用装饰器   :func:` .listens_for` 。这些函数接受目标参数，一个用于标识要拦截的事件字符串标识符，以及一个用户定义的监听函数。这两个函数的其他位置和关键字参数可能会被特定类型事件所支持，这些事件可能会为给定的事件函数指定备选接口，或者根据给定的目标提供有关次要事件目标的说明。</p>
+<p>事件的名称和对应的监听者函数的参数签名是从一个绑定到标记类的规范方法中推导出来的，这个规范方法在文档中有详细的描述。例如，对于  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  的文档说明了事件名称是 ` <cite>“connect”`</cite>，并且用户定义的监听函数应该接收两个位置参数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.event</span> <span class="kn">import</span> <span class="n">listen</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.pool</span> <span class="kn">import</span> <span class="n">Pool</span>
 
@@ -249,7 +249,7 @@
 </section>
 <section id="event-named-argument-styles">
 <span id="id3"></span><h2>命名参数样式<a class="headerlink" href="#event-named-argument-styles" title="Permalink to this heading">¶</a></h2>
-<p>有一些参数样式的变体可以被监听函数接受。以  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  为例，此函数文档中有关于接受 <code class="docutils literal notranslate"><span class="pre">dbapi_connection</span></code> 和 <code class="docutils literal notranslate"><span class="pre">connection_record</span></code> 参数的描述。我们可以通过建立一个接受 <code class="docutils literal notranslate"><span class="pre">**keyword</span></code> 参数的监听者函数，通过在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  或   <a class="reference internal" href="#sqlalchemy.event.listens_for" title="sqlalchemy.event.listens_for"><code class="xref py py-func docutils literal notranslate"><span class="pre">listens_for()</span></code></a>  中传递 <code class="docutils literal notranslate"><span class="pre">named=True</span></code>，来按名称接收这些参数值。</p>
+<p>有一些参数样式的变体可以被监听函数接受。以  <a class="reference internal" href="events.html#sqlalchemy.events.PoolEvents.connect" title="sqlalchemy.events.PoolEvents.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PoolEvents.connect()</span></code></a>  为例，此函数文档中有关于接受 ` <cite>dbapi_connection`</cite> 和 <code class="docutils literal notranslate"><span class="pre">connection_record</span></code> 参数的描述。我们可以通过建立一个接受 <code class="docutils literal notranslate"><span class="pre">**keyword</span></code> 参数的监听者函数，通过在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  或   :func:` .listens_for`  中传递 <code class="docutils literal notranslate"><span class="pre">named=True</span></code>，来按名称接收这些参数值。</p>
 <blockquote>
 <div><p>from sqlalchemy.event import listens_for
 from sqlalchemy.pool import Pool</p>
@@ -275,7 +275,7 @@ def my_on_connect(<a href="#id4"><span class="problematic" id="id5">**</span></a
 <section id="id6">
 <h2>目标<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数对于目标非常灵活。 它通常接受类、这些类的实例以及相关的类或对象，从中可以派生出适当的目标。例如，上述提到的 <code class="docutils literal notranslate"><span class="pre">&quot;connect&quot;</span></code> 事件接受   <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  类和对象，以及   <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a>  类和对象：</p>
+<div><p><a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  函数对于目标非常灵活。 它通常接受类、这些类的实例以及相关的类或对象，从中可以派生出适当的目标。例如，上述提到的 ` <cite>“connect”`</cite> 事件接受   <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  类和对象，以及   :class:` _pool.Pool`  类和对象：</p>
 <blockquote>
 <div><p>from sqlalchemy.event import listen
 from sqlalchemy.pool import Pool, QueuePool
@@ -301,7 +301,7 @@ listen(my_engine, “connect”, my_on_connect)</p>
 </section>
 <section id="event-modifiers">
 <span id="id7"></span><h2>修改器<a class="headerlink" href="#event-modifiers" title="Permalink to this heading">¶</a></h2>
-<p>一些监听器允许在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  中传递修改器。这些修饰符有时会为监听器提供备用的调用签名。例如，在ORM事件中，一些事件监听器可以有一个返回值，该返回值可以修改后续处理。默认情况下，没有任何监听器需要返回值，但是通过传递 <code class="docutils literal notranslate"><span class="pre">retval=True</span></code>，可以支持此值返回:</p>
+<p>一些监听器允许在   <a class="reference internal" href="#sqlalchemy.event.listen" title="sqlalchemy.event.listen"><code class="xref py py-func docutils literal notranslate"><span class="pre">listen()</span></code></a>  中传递修改器。这些修饰符有时会为监听器提供备用的调用签名。例如，在ORM事件中，一些事件监听器可以有一个返回值，该返回值可以修改后续处理。默认情况下，没有任何监听器需要返回值，但是通过传递 ` <cite>retval=True`</cite>，可以支持此值返回:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">validate_phone</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">oldvalue</span><span class="p">,</span> <span class="n">initiator</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Strip非数字字符从电话号码中&quot;&quot;&quot;</span>
 
@@ -529,7 +529,7 @@ from inside of a single listener.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:46
+    Documentation last generated: 2023/8/18 18:58:42
 
     </div>
 </div>

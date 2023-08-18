@@ -135,7 +135,7 @@
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.validates"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#id5">在核心级别使用自定义数据类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">在核心级别使用自定义数据类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#hybrids">使用描述符和混合（Hybrids）</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#id0"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></span></li>
 </ul>
@@ -211,7 +211,7 @@
 <li><a class="reference internal" href="#sqlalchemy.orm.validates"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5">在核心级别使用自定义数据类型</a></li>
+<li><a class="reference internal" href="#id3">在核心级别使用自定义数据类型</a></li>
 <li><a class="reference internal" href="#hybrids">使用描述符和混合（Hybrids）</a><ul>
 <li><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">validates()</span></code></a></li>
 </ul>
@@ -236,7 +236,7 @@
         
 <section id="mapping-attributes-toplevel">
 <span id="id1"></span><h1>更改属性行为<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
-<p>本节将讨论修改ORM映射属性的特性和技术，包括使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 、  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  和其他方法映射的属性。</p>
+<p>本节将讨论修改ORM映射属性的特性和技术，包括使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 、  :func:` _orm.relationship`  和其他方法映射的属性。</p>
 <section id="simple-validators">
 <span id="id2"></span><h2>简单的验证器<a class="headerlink" href="#simple-validators" title="Permalink to this heading">¶</a></h2>
 <p>将”验证”过程添加到属性的快捷方式是使用   <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器。属性验证器可以引发异常，停止改变属性的值的处理，或者可以将给定值更改为不同的值。像所有属性扩展一样，验证器仅由正常的用户代码调用；在ORM填充对象时不会发出。</p>
@@ -270,7 +270,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;failed simple email validation&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">address</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>默认情况下，验证函数不会在集合删除事件中发出，因为通常的期望是被丢弃的值不需要经过验证。 但是，通过将``include_removes=True``指定给装饰器， :func:<a href="#id3"><span class="problematic" id="id4">`</span></a>.validates`支持接收这些事件。当设置了此标志时，在删除操作上验证函数必须接收一个附加的布尔参数，如果为True则表示操作是删除操作:</p>
+<p>默认情况下，验证函数不会在集合删除事件中发出，因为通常的期望是被丢弃的值不需要经过验证。 但是，通过将``include_removes=True``指定给装饰器， <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a> 支持接收这些事件。当设置了此标志时，在删除操作上验证函数必须接收一个附加的布尔参数，如果为True则表示操作是删除操作:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">validates</span>
 
 
@@ -305,7 +305,7 @@
 </div>
 <p>上面，如果我们像``some_address.user = some_user``那样给``Address.user``赋值，
 将不会产生``validate_address()``函数，即使向``some_user.addresses``添加一个append事件，事件是由反向引用引起的。</p>
-<p>请注意：  <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器是建立在属性事件基础之上的一种便捷函数。需要更多地控制属性更改行为的应用程序可以利用这个系统在   <a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents" title="sqlalchemy.orm.AttributeEvents"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeEvents</span></code></a>  中描述。</p>
+<p>请注意：  <a class="reference internal" href="#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器是建立在属性事件基础之上的一种便捷函数。需要更多地控制属性更改行为的应用程序可以利用这个系统在   :class:` ~.AttributeEvents`  中描述。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -362,9 +362,9 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
 </dd></dl>
 
 </section>
-<section id="id5">
-<h2>在核心级别使用自定义数据类型<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
-<p>在不使用ORM的情况下，可以通过使用应用到映射   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据的自定义数据类型以适合转换Python和数据库中表示的数据的方式来影响列的值。这在某种编码/解码样式的情况下更加常见，因为数据在传递到数据库和从数据库返回时都会进行转换。有关更多信息，请参阅Core文档中的   <a class="reference internal" href="../core/custom_types.html#types-typedecorator"><span class="std std-ref">增强现有类型</span></a> 。</p>
+<section id="id3">
+<h2>在核心级别使用自定义数据类型<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>在不使用ORM的情况下，可以通过使用应用到映射   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据的自定义数据类型以适合转换Python和数据库中表示的数据的方式来影响列的值。这在某种编码/解码样式的情况下更加常见，因为数据在传递到数据库和从数据库返回时都会进行转换。有关更多信息，请参阅Core文档中的   :ref:` types_typedecorator` 。</p>
 </section>
 <section id="hybrids">
 <span id="mapper-hybrids"></span><h2>使用描述符和混合（Hybrids）<a class="headerlink" href="#hybrids" title="Permalink to this heading">¶</a></h2>
@@ -386,7 +386,7 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
     <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>上面的方法是有效的，但我们还可以添加更多内容。虽然我们的``EmailAddress``对象将通过``email``描述符将值传递到``_email``映射的属性中，但类级别的``EmailAddress.email``属性没有使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  可用的常规表达式语义。为了提供这些语义，我们改为使用  <a class="reference internal" href="extensions/hybrid.html#module-sqlalchemy.ext.hybrid" title="sqlalchemy.ext.hybrid"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hybrid</span></code></a>  扩展，如下所示:</p>
+<p>上面的方法是有效的，但我们还可以添加更多内容。虽然我们的``EmailAddress``对象将通过``email``描述符将值传递到``_email``映射的属性中，但类级别的``EmailAddress.email``属性没有使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  可用的常规表达式语义。为了提供这些语义，我们改为使用  :mod:` ~sqlalchemy.ext.hybrid`  扩展，如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.ext.hybrid</span> <span class="kn">import</span> <span class="n">hybrid_property</span>
 
 
@@ -405,7 +405,7 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
     <span class="k">def</span> <span class="nf">email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">email</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_email</span> <span class="o">=</span> <span class="n">email</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>除了为我们有一个``EmailAddress``实例提供getter/setter行为外，<a href="#id6"><span class="problematic" id="id7">``</span></a>.email``属性还在类级别时提供SQL表达式直接使用，也就是从``EmailAddress``类直接使用:</p>
+<p>除了为我们有一个``EmailAddress``实例提供getter/setter行为外，<a href="#id4"><span class="problematic" id="id5">``</span></a>.email``属性还在类级别时提供SQL表达式直接使用，也就是从``EmailAddress``类直接使用:</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 
@@ -461,7 +461,7 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;address&#39;</span><span class="p">)</span>
 </div></pre></div>
 </div>
-<p>在更复杂的情况下，使用   <a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">hybrid attribute</span></a>  功能更好，因为它更倾向于Python描述符。严格来说，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> .hybrid_property` 所能做到的所有事情，因为它也支持自定义SQL功能的注入，但是混合属性在更复杂的情况下更容易使用。</p>
+<p>在更复杂的情况下，使用   <a class="reference internal" href="#mapper-hybrids"><span class="std std-ref">hybrid attribute</span></a>  功能更好，因为它更倾向于Python描述符。严格来说，  :func:` .synonym` .hybrid_property` 所能做到的所有事情，因为它也支持自定义SQL功能的注入，但是混合属性在更复杂的情况下更容易使用。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -533,7 +533,7 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
 
     <span class="n">status</span> <span class="o">=</span> <span class="n">synonym</span><span class="p">(</span><span class="s2">&quot;job_status&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>上述类 <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> 有两个属性，<code class="docutils literal notranslate"><span class="pre">.job_status</span></code> 和 <a href="#id8"><span class="problematic" id="id9">``</span></a>.status <a href="#id10"><span class="problematic" id="id11">``</span></a>，在表达式级别上表现为一个属性:</p>
+<p>上述类 <code class="docutils literal notranslate"><span class="pre">MyClass</span></code> 有两个属性，<code class="docutils literal notranslate"><span class="pre">.job_status</span></code> 和 <a href="#id6"><span class="problematic" id="id7">``</span></a>.status <a href="#id8"><span class="problematic" id="id9">``</span></a>，在表达式级别上表现为一个属性:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">job_status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
 <div class='show_sql_print'><span class="n">my_table</span><span class="p">.</span><span class="n">job_status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">job_status_1</span>
 </div><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;some_status&quot;</span><span class="p">)</span>
@@ -549,8 +549,8 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <span class="gp">&gt;&gt;&gt; </span><span class="n">m1</span><span class="o">.</span><span class="n">status</span><span class="p">,</span> <span class="n">m1</span><span class="o">.</span><span class="n">job_status</span>
 <span class="go">(&#39;y&#39;, &#39;y&#39;)</span></pre></div>
 </div>
-<p>对于任何通过   <a class="reference internal" href="internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>  子类进行了映射的属性，包括映射的列和关系，除了同义词本身， :func:<a href="#id12"><span class="problematic" id="id13">`</span></a>.synonym`也可以用于任何映射属性。</p>
-<p>除了简单反映之外，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> 。我们可以为我们的``status``同义词提供一个``&#64;property``描述符:</p>
+<p>对于任何通过   <a class="reference internal" href="internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>  子类进行了映射的属性，包括映射的列和关系，除了同义词本身， :func:` .synonym`也可以用于任何映射属性。</p>
+<p>除了简单反映之外，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a> 。我们可以为我们的` <a href="#id10"><span class="problematic" id="id11">`</span></a>status``同义词提供一个``&#64;property``描述符:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyClass</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;my_table&quot;</span>
 
@@ -578,7 +578,7 @@ of <code class="docutils literal notranslate"><span class="pre">True</span></cod
     <span class="k">def</span> <span class="nf">job_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="s2">&quot;Status: &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>虽然   <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>  对于简单的反映是有用的，但是使用混合属性特性更好地处理使用描述符增强属性行为的用例，后者更适用于Python描述符。严格来说，  <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>  可以做到   <a class="reference internal" href="extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property" title="sqlalchemy.ext.hybrid.hybrid_property"><code class="xref py py-class docutils literal notranslate"><span class="pre">hybrid_property</span></code></a>  所能做到的一切，因为它还支持自定义SQL功能的注入，不过需要在更复杂情况下使用混合。</p>
+<p>虽然   <a class="reference internal" href="#sqlalchemy.orm.synonym" title="sqlalchemy.orm.synonym"><code class="xref py py-func docutils literal notranslate"><span class="pre">synonym()</span></code></a>  对于简单的反映是有用的，但是使用混合属性特性更好地处理使用描述符增强属性行为的用例，后者更适用于Python描述符。严格来说，  :func:` .synonym`  可以做到   <a class="reference internal" href="extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property" title="sqlalchemy.ext.hybrid.hybrid_property"><code class="xref py py-class docutils literal notranslate"><span class="pre">hybrid_property</span></code></a>  所能做到的一切，因为它还支持自定义SQL功能的注入，不过需要在更复杂情况下使用混合。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -696,9 +696,9 @@ than can be achieved with synonyms.</p>
 
 </section>
 <section id="custom-comparators">
-<span id="id14"></span><h2>运算符自定义<a class="headerlink" href="#custom-comparators" title="Permalink to this heading">¶</a></h2>
+<span id="id12"></span><h2>运算符自定义<a class="headerlink" href="#custom-comparators" title="Permalink to this heading">¶</a></h2>
 <p>SQLAlchemy ORM和Core表达式语言使用的“运算符”是完全可定制的。例如，比较表达式``User.name == ‘ed’`` 使用一个内置的Python运算符：<code class="docutils literal notranslate"><span class="pre">operator.eq</span></code>-实际上SQLAlchemy将这样的运算符关联的SQL结构可以被修改。也可以将新操作与列表达式关联。作用于列表达式的操作最直接地在类型级别重新定义 - 请参阅   <span class="xref std std-ref">types_operators</span>  部分的说明。</p>
-<p>由   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code> ,   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  和   <a class="reference internal" href="composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  等ORM级函数也提供操作重定义，在每个函数中将   <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>  子类传递给 <code class="docutils literal notranslate"><span class="pre">comparator_factory</span></code> 参数。这个级别上的操作符自定义功能使用很少。 在   <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>  的文档中概述了操作符在此级别上的自定义。</p>
+<p>由   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code> ,   :func:` _orm.relationship`  和   <a class="reference internal" href="composites.html#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  等ORM级函数也提供操作重定义，在每个函数中将   :class:` .PropComparator`  子类传递给 <code class="docutils literal notranslate"><span class="pre">comparator_factory</span></code> 参数。这个级别上的操作符自定义功能使用很少。 在   <a class="reference internal" href="internals.html#sqlalchemy.orm.PropComparator" title="sqlalchemy.orm.PropComparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">PropComparator</span></code></a>  的文档中概述了操作符在此级别上的自定义。</p>
 </section>
 </section>
 
@@ -720,7 +720,7 @@ than can be achieved with synonyms.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:59:01
 
     </div>
 </div>

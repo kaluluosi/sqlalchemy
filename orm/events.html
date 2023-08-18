@@ -407,14 +407,14 @@
 <section id="orm">
 <span id="orm-event-toplevel"></span><h1>ORM 事件<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
 <p>ORM 包括一系列可供订阅的钩子。</p>
-<p>关于最常用的 ORM 事件的介绍，请参见章节   <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件追踪查询、对象和会话更改</span></a> 。一般的事件系统在章节   <a class="reference internal" href="../core/event.html"><span class="std std-ref">事件</span></a>  中介绍，关于连接和低级语句执行等非 ORM 事件在章节   <a class="reference internal" href="../core/events.html"><span class="std std-ref">Core事件</span></a>  中描述。</p>
+<p>关于最常用的 ORM 事件的介绍，请参见章节   <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件追踪查询、对象和会话更改</span></a> 。一般的事件系统在章节   :ref:` event_toplevel`  中介绍，关于连接和低级语句执行等非 ORM 事件在章节   <a class="reference internal" href="../core/events.html"><span class="std std-ref">Core事件</span></a>  中描述。</p>
 <section id="id1">
 <h2>会话事件<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>最基本的事件钩子可在 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象级别获得。可以截获的操作包括：</p>
 <ul class="simple">
 <li><p><strong>持久性操作</strong> - ORM 冲刷将更改发送到数据库的过程可以使用在冲刷的不同部分发出的事件进行扩展，以增强或修改发送到数据库的数据或允许其他事情在持久性发生时发生。有关持久性事件的详细信息，请参阅章节   <a class="reference internal" href="session_events.html#session-persistence-events"><span class="std std-ref">持久化事件</span></a> 。</p></li>
 <li><p><strong>对象生命周期事件</strong> - 当对象添加到会话中、持久化或从会话中删除时发出的钩子。有关这些的详细信息，请参见章节   <a class="reference internal" href="session_events.html#session-lifecycle-events"><span class="std std-ref">对象生命周期事件</span></a> 。</p></li>
-<li><p><strong>执行事件</strong> - 在  <span class="xref std std-term">2.0 style</span>  执行模型的一部分中，对于针对 ORM 实体发出的所有 SELECT 语句以及冲刷过程之外的批量 UPDATE 和 DELETE 语句，可以使用  <a class="reference internal" href="#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  方法从  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法截取操作。有关此事件的详细信息，请参见章节   <a class="reference internal" href="session_events.html#session-execute-events"><span class="std std-ref">执行事件</span></a> 。</p></li>
+<li><p><strong>执行事件</strong> - 在  <span class="xref std std-term">2.0 style</span>  执行模型的一部分中，对于针对 ORM 实体发出的所有 SELECT 语句以及冲刷过程之外的批量 UPDATE 和 DELETE 语句，可以使用  :meth:` _orm.SessionEvents.do_orm_execute`  方法从  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法截取操作。有关此事件的详细信息，请参见章节   :ref:` session_execute_events` 。</p></li>
 </ul>
 <p>请确保阅读   <a class="reference internal" href="session_events.html"><span class="std std-ref">使用事件追踪查询、对象和会话更改</span></a>  章节以获取上下文的内容。</p>
 <table class="longtable docutils align-default">
@@ -1600,10 +1600,10 @@ for this specific transition.  It is invoked typically during the
 </section>
 <section id="id2">
 <h2>映射器事件<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>映射器事件钩子涵盖与单个或多个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象相对应的事物，这些对象是将用户定义的类映射到   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象的中心配置对象。在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  级别发生的事物的类型包括：</p>
+<p>映射器事件钩子涵盖与单个或多个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象相对应的事物，这些对象是将用户定义的类映射到   :class:` _schema.Table`  对象的中心配置对象。在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  级别发生的事物的类型包括：</p>
 <ul class="simple">
-<li><p><strong>每个对象的持久化操作</strong> - 最受欢迎的映射器钩子通常是诸如  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert" title="sqlalchemy.orm.MapperEvents.before_insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_insert()</span></code></a> 、  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_update" title="sqlalchemy.orm.MapperEvents.after_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_update()</span></code></a>   等的工作单元钩子。与在管道过程中发生的较粗粒度会话级事件相比，这些事件在对于每个对象在冲刷过程中发生，虽然对象上的更细粒度的活动更加简单，但   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  功能的可用性有限。</p></li>
-<li><p><strong>映射器配置事件</strong> - 映射器钩子的另一个主要类别是在映射类时发生的事物，以及在映射器完成时，将映射器配置为相互引用的映射器集合时发生的事物。这些事件包括  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.instrument_class" title="sqlalchemy.orm.MapperEvents.instrument_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.instrument_class()</span></code></a> 、  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_mapper_configured" title="sqlalchemy.orm.MapperEvents.before_mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_mapper_configured()</span></code></a>   和  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.mapper_configured" title="sqlalchemy.orm.MapperEvents.mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.mapper_configured()</span></code></a>  在单个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  级别，以及  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.after_configured" title="sqlalchemy.orm.MapperEvents.after_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.after_configured()</span></code></a>  在一组   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象级别。</p></li>
+<li><p><strong>每个对象的持久化操作</strong> - 最受欢迎的映射器钩子通常是诸如  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_insert" title="sqlalchemy.orm.MapperEvents.before_insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_insert()</span></code></a> 、  :meth:` _orm.MapperEvents.after_update`   等的工作单元钩子。与在管道过程中发生的较粗粒度会话级事件相比，这些事件在对于每个对象在冲刷过程中发生，虽然对象上的更细粒度的活动更加简单，但   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  功能的可用性有限。</p></li>
+<li><p><strong>映射器配置事件</strong> - 映射器钩子的另一个主要类别是在映射类时发生的事物，以及在映射器完成时，将映射器配置为相互引用的映射器集合时发生的事物。这些事件包括  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.instrument_class" title="sqlalchemy.orm.MapperEvents.instrument_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.instrument_class()</span></code></a> 、  :meth:` _orm.MapperEvents.before_mapper_configured`   和  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.mapper_configured" title="sqlalchemy.orm.MapperEvents.mapper_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.mapper_configured()</span></code></a>  在单个   :class:` _orm.Mapper`  级别，以及  <a class="reference internal" href="#sqlalchemy.orm.MapperEvents.before_configured" title="sqlalchemy.orm.MapperEvents.before_configured"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MapperEvents.before_configured()</span></code></a>  和  :meth:` _orm.MapperEvents.after_configured`  在一组   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象级别。</p></li>
 </ul>
 <table class="longtable docutils align-default">
 <thead>
@@ -2489,7 +2489,7 @@ of this event.</p></li>
 </section>
 <section id="id3">
 <h2>实例事件<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
-<p>实例事件侧重于 ORM 映射实例的构造，包括在实例化为  <span class="xref std std-term">transient</span>  对象时、从数据库加载并变为  <span class="xref std std-term">persistent</span>  对象时，以及在对象上发生数据库刷新或过期操作时。</p>
+<p>实例事件侧重于 ORM 映射实例的构造，包括在实例化为  <span class="xref std std-term">transient</span>  对象时、从数据库加载并变为  :term:` persistent`  对象时，以及在对象上发生数据库刷新或过期操作时。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -2979,7 +2979,7 @@ dictionary which was pickled.</p></li>
 </section>
 <section id="orm-attribute-events">
 <span id="id4"></span><h2>属性事件<a class="headerlink" href="#orm-attribute-events" title="Permalink to this heading">¶</a></h2>
-<p>属性事件是针对 ORM 映射对象的各个属性发生的事件。这些事件构成了诸如   <a class="reference internal" href="mapped_attributes.html#simple-validators"><span class="std std-ref">custom validation functions</span></a>  和   <span class="xref std std-ref">backref handlers</span>  等的基础。</p>
+<p>属性事件是针对 ORM 映射对象的各个属性发生的事件。这些事件构成了诸如   <a class="reference internal" href="mapped_attributes.html#simple-validators"><span class="std std-ref">custom validation functions</span></a>  和   :ref:` backref handlers &lt;relationships_backref&gt;`  等的基础。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="mapped_attributes.html"><span class="std std-ref">更改属性行为</span></a></p>
@@ -4022,7 +4022,7 @@ is established on a superclass.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:56
+    Documentation last generated: 2023/8/18 18:58:54
 
     </div>
 </div>

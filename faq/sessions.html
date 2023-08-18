@@ -135,13 +135,13 @@
 <li><span class="link-container"><a class="reference external" href="#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">“This Session’s transaction has been rolled back due to a previous exception during flush.” (或类似消息)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#flush-rollback">为什么flush()要发出ROLLBACK？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#rollback-rollback">为什么不滚动本来应该是一个自动的调用ROLLBACK？为什么我必须再次ROLLBACK？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id21">如何创建总是为每个查询添加一定过滤器的查询？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">如何创建总是为每个查询添加一定过滤器的查询？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#faq-query-deduplicating">我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#outer-join">我已经创建了一个映射，使其针对Outer Join，虽然该查询返回行，但没有返回对象。为什么？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#session-delete-myobject">当我调用”Session.delete(myobject)”时，它没有从父集合中删除！</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#init">为什么在加载对象时不调用我的“__init __()”函数？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#ormsql">如何在ORM查询中使用文本SQL？</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id39">我调用“Session.delete(myobject)”，但它没有从父集合中删除！</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">我调用“Session.delete(myobject)”，但它没有从父集合中删除！</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#foo-id7-foonone-id-7foo">为什么我的“foo_id”实例属性设置为“7”，但“foo”属性仍为“None”-它没有加载ID为#7的Foo吗？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#faq-walk-objects">如何遍历与给定对象相关的所有对象？</a></span></li>
 </ul>
@@ -195,13 +195,13 @@
 <li><a class="reference internal" href="#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">“This Session’s transaction has been rolled back due to a previous exception during flush.” (或类似消息)</a></li>
 <li><a class="reference internal" href="#flush-rollback">为什么flush()要发出ROLLBACK？</a></li>
 <li><a class="reference internal" href="#rollback-rollback">为什么不滚动本来应该是一个自动的调用ROLLBACK？为什么我必须再次ROLLBACK？</a></li>
-<li><a class="reference internal" href="#id21">如何创建总是为每个查询添加一定过滤器的查询？</a></li>
+<li><a class="reference internal" href="#id3">如何创建总是为每个查询添加一定过滤器的查询？</a></li>
 <li><a class="reference internal" href="#faq-query-deduplicating">我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？</a></li>
 <li><a class="reference internal" href="#outer-join">我已经创建了一个映射，使其针对Outer Join，虽然该查询返回行，但没有返回对象。为什么？</a></li>
 <li><a class="reference internal" href="#session-delete-myobject">当我调用”Session.delete(myobject)”时，它没有从父集合中删除！</a></li>
 <li><a class="reference internal" href="#init">为什么在加载对象时不调用我的“__init __()”函数？</a></li>
 <li><a class="reference internal" href="#ormsql">如何在ORM查询中使用文本SQL？</a></li>
-<li><a class="reference internal" href="#id39">我调用“Session.delete(myobject)”，但它没有从父集合中删除！</a></li>
+<li><a class="reference internal" href="#id7">我调用“Session.delete(myobject)”，但它没有从父集合中删除！</a></li>
 <li><a class="reference internal" href="#foo-id7-foonone-id-7foo">为什么我的“foo_id”实例属性设置为“7”，但“foo”属性仍为“None”-它没有加载ID为#7的Foo吗？</a></li>
 <li><a class="reference internal" href="#faq-walk-objects">如何遍历与给定对象相关的所有对象？</a></li>
 </ul>
@@ -242,41 +242,41 @@
 因此被认为是异常而不是规范；为了在此例外中工作，提供了几种方法
 允许在持续事务的上下文中重新加载指定的数据。</p>
 <dl class="simple">
-<dt>要了解我们何谓“事务”，当我们谈论时的含义</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，您的 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>.Session`旨在仅在</p>
+<dt>要了解我们何谓“事务”，当我们谈论时的含义</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，您的 :class:` .Session`旨在仅在</p>
 </dd>
 </dl>
 <p>事务内工作。这方面的概述请参见：  <a class="reference internal" href="../orm/session_transaction.html#unitofwork-transaction"><span class="std std-ref">管理事务</span></a> 。</p>
 <p>一旦我们确定了隔离级别，我们认为
 我们的隔离级别设置得低到可以重新选择一行，
-我们应该在我们的 :class:<a href="#id5"><span class="problematic" id="id6">`</span></a>.Session`中看到新数据，我们如何看到它？</p>
+我们应该在我们的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中看到新数据，我们如何看到它？</p>
 <p>从最常见到最不常见的三种方法：</p>
 <ol class="arabic">
 <li><p>我们简单地结束当前事务，并在下一次访问时启动新事务
 使用  <code class="xref py py-class docutils literal notranslate"><span class="pre">commit</span></code>  (请注意
-如果 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`处于深度使用的“自动提交”</span>
-<span class="pre">模式，也将调用</span>&#160; <span class="pre">:meth:</span></code>.Session.begin`  )。大多数应用程序
+如果 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 处于深度使用的“自动提交”
+模式，也将调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>  )。大多数应用程序
 和用例在不需要“查看”其他事务中的数据方面没有任何问题，因为
 他们遵循此模式，这是最佳实践的核心之一：
-<strong>短暂的交易</strong>。请参见 :ref:<a href="#id7"><span class="problematic" id="id8">`</span></a>session_faq_whentocreate`中
+<strong>短暂的交易</strong>。请参见 <a class="reference internal" href="../orm/session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a> 中
 关于此的一些想法。</p></li>
-<li><p>我们告诉我们的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`重新读取它已经读取的行，</span>
-<span class="pre">要么在我们使用</span>&#160; <span class="pre">:meth:</span></code>.Session.expire_all`  查询下一次查询它们时
+<li><p>我们告诉我们的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 重新读取它已经读取的行，
+要么在我们使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code>  查询下一次查询它们时
 或使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  或立即在对象上使用</p>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">refresh</span></code> 。有关此详细信息，请参见  <a class="reference internal" href="../orm/session_state_management.html#session-expire"><span class="std std-ref">刷新/到期</span></a> 。</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">refresh</span></code> 。有关此详细信息，请参见  :ref:` session_expire` 。</p>
 </div></blockquote>
 <p>。</p>
 </li>
 <li><p>我们可以运行整个查询，同时设置它们以确定性地覆盖
 当前正在加载的对象，同时读取行，使用“填充现有”。
-这是在 :ref:<a href="#id9"><span class="problematic" id="id10">`</span></a>orm_queryguide_populate_existing`中描述的执行选项。</p></li>
+这是在 <a class="reference internal" href="../orm/queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a> 中描述的执行选项。</p></li>
 </ol>
 <p>但记住，<strong>如果我们的隔离设置为可重复读或更高级别，则ORM无法看到行中的更改，除非我们启动新事务</strong>。</p>
 </section>
 <section id="this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush">
 <span id="faq-session-rollback"></span><h2>“This Session’s transaction has been rolled back due to a previous exception during flush.” (或类似消息)<a class="headerlink" href="#this-session-s-transaction-has-been-rolled-back-due-to-a-previous-exception-during-flush" title="Permalink to this heading">¶</a></h2>
 <p>这是一个错误，在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  引发异常时发生，
-回滚了事务，但在不显式调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>  的情况下调用了 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>.Session`上的进一步命令。</p>
+回滚了事务，但在不显式调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  或  :meth:` .Session.close`  的情况下调用了 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 上的进一步命令。</p>
 <p>这通常对应于应用程序捕获  <span class="xref std std-ref">.Session.flush</span> .Session.commit` 时
 异常，而不正确地处理异常。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span>
@@ -307,7 +307,7 @@
 <span class="c1"># 继续使用未回滚的session</span>
 <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>使用 :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>.Session`应该符合与此类似的结构：</p>
+<p>使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 应该符合与此类似的结构：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>try:</dt><dd><p># &lt;使用session&gt;
@@ -331,8 +331,8 @@ raise</p>
 包括失败的flushes。也有使用函数装饰器的方法
 或上下文管理器实现类似的结果。采取的方法
 非常取决于正在编写的应用程序的类型。</p>
-<p>有关如何组织 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`使用的详细讨论，</span>
-<span class="pre">请参见</span>&#160; <span class="pre">:ref:`session_faq_whentocreate</span></code> 。</p>
+<p>有关如何组织 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 使用的详细讨论，
+请参见  <a class="reference internal" href="../orm/session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a> 。</p>
 </section>
 <section id="flush-rollback">
 <h2>为什么flush()要发出ROLLBACK？<a class="headerlink" href="#flush-rollback" title="Permalink to this heading">¶</a></h2>
@@ -361,14 +361,14 @@ test=&gt; insert into foo values(2);
 ERROR:  current transaction is aborted, commands ignored until end of transaction block</pre></div>
 </div>
 <p>SQLAlchemy为解决这两个问题提供了“SAVEPOINT”支持，
-通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  。使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  ，您可以构建一个可能会
+通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  。使用  :meth:` .Session.begin_nested`  ，您可以构建一个可能会
 在事务内部失败的操作，然后“回滚”到失败之前的点
 并保持封闭事务。</p>
 </section>
 <section id="rollback-rollback">
 <h2>为什么不滚动本来应该是一个自动的调用ROLLBACK？为什么我必须再次ROLLBACK？<a class="headerlink" href="#rollback-rollback" title="Permalink to this heading">¶</a></h2>
 <p>由  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  引起的回滚不是整个交易块的结束；
-尽管它结束了正在进行的数据库事务，但从 :class:<a href="#id15"><span class="problematic" id="id16">`</span></a>.Session`的角度来看，仍然存在处于非活动状态的事务。</p>
+尽管它结束了正在进行的数据库事务，但从 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的角度来看，仍然存在处于非活动状态的事务。</p>
 <p>有了以下块：</p>
 <blockquote>
 <div><p>sess = Session()  # 开始逻辑事务
@@ -382,42 +382,42 @@ try:</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>上述代码中，在第一次创建  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`中建立逻辑事务。
+<p>上述代码中，在第一次创建  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 中建立逻辑事务。
 这个事务是“逻辑的”，因为它实际上不使用任何数据库
 资源，直到调用SQL语句，此时会启动连接级别和DBAPI级别事务。
 但是，无论是否
 数据库级事务是其状态的一部分，逻辑事务将保持不变，
-直到使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  ，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>  结束为止。</p>
+直到使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  ，  :meth:` .Session.rollback`  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>  结束为止。</p>
 <p>当上述“flush()”失败时，代码仍然在由try/commit/except/rollback块框定的事务内。
 如果“flush()”完全回滚了逻辑事务，那么就意味着，当然到达时我们再次到达
-“except：”块时， :class:<a href="#id17"><span class="problematic" id="id18">`</span></a>.Session`将处于清洁状态，已准备好对所有新事物发出新SQL，
+“except：”块时， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 将处于清洁状态，已准备好对所有新事物发出新SQL，
 并且误传了:meth:.Session.rollback`将被错误地调用。特别地，</p>
 <blockquote>
 <div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session.rollback` 在此时将被错误地调用。</p>
 </div></blockquote>
 <p>与“rollback”在即将发生回滚的地方不同，此时正常情况下应该发生回滚，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>
 相反，拒绝在这个位置（即通常要发生回滚的地方）之前继续进行SQL操作，
-此时，只有显式回滚之后， :class:<a href="#id19"><span class="problematic" id="id20">`</span></a>.Session`才能继续。</p>
-<p>换句话说，期望调用代码将始终调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  <cite>:`或  :meth:</cite>.Session.rollback`  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>
-以对应于当前事务块。 ：meth:<cite>.Session.flush`会将 :class:</cite>.Session`保留在该事务块中，
+此时，只有显式回滚之后， <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 才能继续。</p>
+<p>换句话说，期望调用代码将始终调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  ` :<cite>或  :meth:</cite>.Session.rollback`  或  :meth:` .Session.close`
+以对应于当前事务块。 ：meth:<cite>.Session.flush`会将 :class:</cite>.Session` 保留在该事务块中，
 以便列表计数方法的行为是可预测且一致的。</p>
 </section>
-<section id="id21">
-<h2>如何创建总是为每个查询添加一定过滤器的查询？<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
+<section id="id3">
+<h2>如何创建总是为每个查询添加一定过滤器的查询？<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
 <p>参见`FilteredQuery &lt;<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/FilteredQuery">https://www.sqlalchemy.org/trac/wiki/UsageRecipes/FilteredQuery</a>&gt;`_中的配方。</p>
 </section>
 <section id="faq-query-deduplicating">
-<span id="id22"></span><h2>我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？<a class="headerlink" href="#faq-query-deduplicating" title="Permalink to this heading">¶</a></h2>
+<span id="id4"></span><h2>我的查询返回的对象数与查询计数()告诉我的对象数不相同-为什么？<a class="headerlink" href="#faq-query-deduplicating" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象在要求返回ORM映射对象列表时，将根据主键进行**去重**。换句话说，</p>
 </div></blockquote>
-<p>如果我们例如使用所述“用户”映射：在 :ref:<a href="#id23"><span class="problematic" id="id24">`</span></a>tutorial_orm_table_metadata`中，
+<p>如果我们例如使用所述“用户”映射：在 <a class="reference internal" href="../tutorial/metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a> 中，
 并且我们拥有如下SQL查询：</p>
 <blockquote>
 <div><p>q = session.query(User).outerjoin(User.addresses).filter(User.name == “jack”)</p>
 </div></blockquote>
 <p>上述教程中使用的示例数据中，在具有名称“’jack’”，主键值为5的``users’’行中，在``addresses’’表中有两行。
-如果我们要求上面的查询中返回：meth:<cite>_query.Query.count</cite>，我们将会得到答案为** 2 <a href="#id25"><span class="problematic" id="id26">**</span></a>：</p>
+如果我们要求上面的查询中返回：meth:<cite>_query.Query.count</cite>，我们将会得到答案为** 2 <a href="#id5"><span class="problematic" id="id6">**</span></a>：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="go">2</span></pre></div>
 </div>
@@ -426,14 +426,14 @@ try:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">q</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 <span class="go">[User(id=5, name=&#39;jack&#39;, ...)]</span></pre></div>
 </div>
-<p>这是因为当 :class:<a href="#id27"><span class="problematic" id="id28">`</span></a>_query.Query`对象返回完整的实体时，它会**去重**。不会发生这种情况
+<p>这是因为当 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象返回完整的实体时，它会**去重**。不会发生这种情况
 如果我们改为请求单个返回列:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;&gt;&gt;</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">User</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
  <span class="o">...</span>     <span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;jack&quot;</span>
  <span class="o">...</span> <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
  <span class="p">[(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;jack&#39;</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;jack&#39;</span><span class="p">)]</span>
 
-<span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">_query</span><span class="o">.</span><span class="n">Query</span><span class="err">`</span><span class="n">按照以下两个主要原因进行了去重</span><span class="err">：</span></pre></div>
+<span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="n">_query</span><span class="o">.</span><span class="n">Query</span><span class="err">`</span> <span class="n">按照以下两个主要原因进行了去重</span><span class="err">：</span></pre></div>
 </div>
 <ul>
 <li><p><strong>为了使加入的急切装载正常工作</strong>–   <a class="reference internal" href="../orm/queryguide/relationships.html#joined-eager-loading"><span class="std std-ref">连接的及早加载</span></a>  通过使用相关表之间的连接查询出
@@ -451,11 +451,11 @@ try:</p>
 <div><blockquote>
 <div><p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  返回整个对象时更好地表示要返回的内容。但是</p>
 </div></blockquote>
-<p>:class:<a href="#id29"><span class="problematic" id="id30">`</span></a>_query.Query`的去重问题仍然是有问题的，主要原因是</p>
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 的去重问题仍然是有问题的，主要原因是</p>
 </div></blockquote>
-<p>:meth:<a href="#id31"><span class="problematic" id="id32">`</span></a>_query.Query.count`方法是不一致的，而
+<p><a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.count" title="sqlalchemy.orm.Query.count"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.count()</span></code></a> 方法是不一致的，而
 在最近的版本中使用联接急切的数量超过了针对该行为的使用。由于这一演变持续下去，
-SQLAlchemy可能会更改 :class:<a href="#id33"><span class="problematic" id="id34">`</span></a>_query.Query`的这种行为，这也可能涉及到
+SQLAlchemy可能会更改 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 的这种行为，这也可能涉及到
 新的API，以更直接地控制此行为，并且还可以修改连接急切装载的行为以创建更一致的用法。</p>
 </li>
 </ul>
@@ -463,7 +463,11 @@ SQLAlchemy可能会更改 :class:<a href="#id33"><span class="problematic" id="i
 <section id="outer-join">
 <h2>我已经创建了一个映射，使其针对Outer Join，虽然该查询返回行，但没有返回对象。为什么？<a class="headerlink" href="#outer-join" title="Permalink to this heading">¶</a></h2>
 <p>由Outer Join返回的行可能只包含主键的部分NULL，
-因为主键是两个表的组合。 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> <cite>allow_partial_pks`</cite>。</p>
+因为主键是两个表的组合。 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象忽略了
+没有可接受主键的传入行-
+根据 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 上“allow_partial_pks”
+标志，接受主键取决于值是否具有至少一个非NULL
+值或是否没有NULL值。请参见  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ` allow_partial_pks``。</p>
 </section>
 <section id="session-delete-myobject">
 <h2>当我调用”Session.delete(myobject)”时，它没有从父集合中删除！<a class="headerlink" href="#session-delete-myobject" title="Permalink to this heading">¶</a></h2>
@@ -471,18 +475,18 @@ SQLAlchemy可能会更改 :class:<a href="#id33"><span class="problematic" id="i
 </section>
 <section id="init">
 <h2>为什么在加载对象时不调用我的“__init __()”函数？<a class="headerlink" href="#init" title="Permalink to this heading">¶</a></h2>
-<p>请参见 :ref:<a href="#id35"><span class="problematic" id="id36">`</span></a>mapping_constructors`以了解此行为的说明。</p>
+<p>请参见 <span class="xref std std-ref">mapping_constructors</span> 以了解此行为的说明。</p>
 </section>
 <section id="ormsql">
 <h2>如何在ORM查询中使用文本SQL？<a class="headerlink" href="#ormsql" title="Permalink to this heading">¶</a></h2>
 <p>请参见：</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-selecting-text"><span class="std std-ref">从文本语句获取 ORM 结果</span></a> -使用 :class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_query.Query`进行自定义文本块</p></li>
-<li><p><a class="reference internal" href="../orm/persistence_techniques.html#session-sql-expressions"><span class="std std-ref">在Sessions中使用SQL表达式</span></a> -直接使用文本SQL使用  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。</p></li>
+<li><p><a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-selecting-text"><span class="std std-ref">从文本语句获取 ORM 结果</span></a> -使用 :class:` _query.Query`进行自定义文本块</p></li>
+<li><p><a class="reference internal" href="../orm/persistence_techniques.html#session-sql-expressions"><span class="std std-ref">在Sessions中使用SQL表达式</span></a> -直接使用文本SQL使用  :class:` .Session` 。</p></li>
 </ul>
 </section>
-<section id="id39">
-<h2>我调用“Session.delete(myobject)”，但它没有从父集合中删除！<a class="headerlink" href="#id39" title="Permalink to this heading">¶</a></h2>
+<section id="id7">
+<h2>我调用“Session.delete(myobject)”，但它没有从父集合中删除！<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h2>
 <p>有关此行为的说明，请参见  <span class="xref std std-ref">session_deleting_from_collections</span> 。</p>
 </section>
 <section id="foo-id7-foonone-id-7foo">
@@ -496,7 +500,7 @@ SQLAlchemy可能会更改 :class:<a href="#id33"><span class="problematic" id="i
 </div>
 <p>当然，操纵外键属性是完全合法的。但是，
 将外键属性设置为新值当前不会触发
-与其中涉及的：func:<a href="#id40"><span class="problematic" id="id41">`</span></a>_orm.relationship`有关的“过期”事件。这意味着
+与其中涉及的：func:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.relationship`有关的“过期”事件。这意味着
 对于以下序列：</p>
 <blockquote>
 <div><p>o = session.scalars(select(SomeClass).limit(1)).first()</p>
@@ -533,7 +537,7 @@ Session.expire(o, [“foo”])  # 对象必须是persistent</p>
 <blockquote>
 <div><p>assert o.foo is foo_7  # 延迟加载：o.foo在访问时懒惰加载</p>
 </div></blockquote>
-<p>注意，如果对象不是持久的但出现在 :class:<a href="#id42"><span class="problematic" id="id43">`</span></a>.Session`中，则其称为:term: pending。
+<p>注意，如果对象不是持久的但出现在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中，则其称为:term: pending。
 这意味着该对象的行尚未插入到数据库中。对于这样的对象，设置``foo_id``没有意义
 直到插入该行为止；否则还没有行:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">new_obj</span> <span class="o">=</span> <span class="n">SomeClass</span><span class="p">()</span>
@@ -552,10 +556,10 @@ Session.expire(o, [“foo”])  # 对象必须是persistent</p>
 <aside class="topic">
 <p class="topic-title">针对非持久对象的属性加载</p>
 <p>上述“挂起”行为的一个变异是使用标志
-<a href="#id44"><span class="problematic" id="id45">``</span></a>load_on_pending``在：func:<cite>_orm.relationship`上。当设置此标志时，
+<a href="#id10"><span class="problematic" id="id11">``</span></a>load_on_pending``在：func:<cite>_orm.relationship`上。当设置此标志时，
 懒惰加载器将在INSERT继续之前为“new_obj.foo”发出信号；另外
 一种变种是使用  :meth:</cite>.Session.enable_relationship_loading`  方法，
-它可以将对象“附加”到 :class:<a href="#id46"><span class="problematic" id="id47">`</span></a>.Session`中，以使多对一关系加载为按外键属性方法进行加载，而不管对象是否处于任何特定状态。
+它可以将对象“附加”到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中，以使多对一关系加载为按外键属性方法进行加载，而不管对象是否处于任何特定状态。
 这两种技术都**不建议通用使用**，它们是添
 加上ORM通常的对象状态的特定编程方案遇到的用户特定编程方案。</p>
 </aside>
@@ -564,7 +568,7 @@ Session.expire(o, [“foo”])  # 对象必须是persistent</p>
 关系。</p>
 </section>
 <section id="faq-walk-objects">
-<span id="id48"></span><h2>如何遍历与给定对象相关的所有对象？<a class="headerlink" href="#faq-walk-objects" title="Permalink to this heading">¶</a></h2>
+<span id="id12"></span><h2>如何遍历与给定对象相关的所有对象？<a class="headerlink" href="#faq-walk-objects" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>具有其他对象相关联的对象将对应于</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.relationship()</span></code>  在映射器之间设置。此代码片段将</p>
 </dd>
@@ -646,7 +650,7 @@ id = Column(Integer, primary_key=True)</p>
 <p>人们读完docs中的many-to-many示例后，会发现如果您创建了两次相同的“关键词(Keyword)”，它将在DB中插入两次，这相当麻烦。为解决此问题，我们创建了这个`UniqueObject &lt;<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObject">https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObject</a>&gt;`_ 。</p>
 <p id="faq-post-update-update">为什么“post_update”除了第一个“UPDATE”操作之外，还会发出“UPDATE”操作？</p>
 <p>“Post_update”功能在   <a class="reference internal" href="../orm/relationship_persistence.html#post-update"><span class="std std-ref">自我指向/相互依赖行</span></a>  中记录，它涉及在对特定的关系绑定外键(relationship-bound foreign key)进行更改时，除了通常会对目标行发出的INSERT / UPDATE / DELETE操作之外，还会发出一个UPDATE语句。虽然此UPDATE语句的主要目的是与该行的INSERT或DELETE配对，以便在断开彼此依赖的外键之间自动地进行后置设定或前取消设置，但目前它也作为第二次发出UPDATE语句捆绑在一起，并且在目标行本身受到UPDATE操作的情况下常常是不必要的，并且通常看起来是浪费的。</p>
-<p>但是，尝试删除此“ UPDATE / UPDATE”行为的某些研究表明，需要对工作单元的过程进行重大更改，这不仅涉及到post_update的实现，还涉及到与post_update无关的其他领域，因为在某些情况下，非post_update侧的操作顺序需要反转，这反过来又会影响其他案例，例如正确处理引用主键值的UPDATE（请参阅  <a href="#id49"><span class="problematic" id="id50">:ticket:`1063`</span></a>  中的概念证明）。</p>
+<p>但是，尝试删除此“ UPDATE / UPDATE”行为的某些研究表明，需要对工作单元的过程进行重大更改，这不仅涉及到post_update的实现，还涉及到与post_update无关的其他领域，因为在某些情况下，非post_update侧的操作顺序需要反转，这反过来又会影响其他案例，例如正确处理引用主键值的UPDATE（请参阅  <a href="#id13"><span class="problematic" id="id14">:ticket:`1063`</span></a>  中的概念证明）。</p>
 <p>答案是，“post_update”用于断开两个彼此依赖的外键之间的循环，并且仅在目标表的INSERT / DELETE操作中进行此循环破坏意味着Update语句的顺序需要在其他地方得到宽松，从而导致其他边缘情况的破坏。</p>
 </section>
 </section>
@@ -669,7 +673,7 @@ id = Column(Integer, primary_key=True)</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:53
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

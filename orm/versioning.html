@@ -138,7 +138,7 @@
 <li><span class="link-container"><a class="reference external" href="#id3">简单的版本计数</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#custom-version-counter">自定义版本计数器/类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#server-side-version-counter">服务器端版本计数器</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id10">编程或条件版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">编程或条件版本计数器</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
@@ -200,7 +200,7 @@
 <li><a class="reference internal" href="#id3">简单的版本计数</a></li>
 <li><a class="reference internal" href="#custom-version-counter">自定义版本计数器/类型</a></li>
 <li><a class="reference internal" href="#server-side-version-counter">服务器端版本计数器</a></li>
-<li><a class="reference internal" href="#id10">编程或条件版本计数器</a></li>
+<li><a class="reference internal" href="#id8">编程或条件版本计数器</a></li>
 </ul>
 </li>
 </ul>
@@ -217,11 +217,11 @@
 <section id="mapper-version-counter">
 <span id="id1"></span><h1>配置版本计数器<a class="headerlink" href="#mapper-version-counter" title="Permalink to this heading">¶</a></h1>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  支持管理单个表列的版本 ID (version id column)，它在映射表更新时增加或更新它的值。每次 ORM 发出 <code class="docutils literal notranslate"><span class="pre">UPDATE</span></code> 或 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 命令时，都会检查此值，以确保内存中的值与数据库值匹配。</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  支持管理单个表列的版本 ID (version id column)，它在映射表更新时增加或更新它的值。每次 ORM 发出 ` <cite>UPDATE`</cite> 或 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 命令时，都会检查此值，以确保内存中的值与数据库值匹配。</p>
 </div></blockquote>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>因为版本控制特性依赖于比较对象的**内存中**记录，所以此特性仅适用于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  过程，ORM 将单个内存行刷新到数据库。但是，当对使用  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.update" title="sqlalchemy.orm.Query.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.update()</span></code></a>  或  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.delete" title="sqlalchemy.orm.Query.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.delete()</span></code></a>  方法执行多行更新或删除时，它**不会**生效，因为这些方法仅发出更新或删除语句，但否则不直接访问受影响行的内容。</p>
+<p>因为版本控制特性依赖于比较对象的**内存中**记录，所以此特性仅适用于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  过程，ORM 将单个内存行刷新到数据库。但是，当对使用  :meth:` _query.Query.update`  或  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.delete" title="sqlalchemy.orm.Query.delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.delete()</span></code></a>  方法执行多行更新或删除时，它**不会**生效，因为这些方法仅发出更新或删除语句，但否则不直接访问受影响行的内容。</p>
 </div>
 <p>此特性的目的是检测当两个并行事务在大致相同时间修改同一行时，或者作为防范措施的 “过时” 行的使用，用于可以在不刷新的情况下重新使用从前一个事务获取的数据（例如，如果使用 <code class="docutils literal notranslate"><span class="pre">expire_on_commit=False</span></code> 的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，则可能会重复使用来自以前事务的数据）。</p>
 <aside class="topic">
@@ -299,7 +299,7 @@ xmin = mapped_column(“xmin”, String, system=True, server_default=FetchedValu
 <p>通过以上映射，ORM将依靠``xmin``列自动提供版本ID计数器的新值。</p>
 <aside class="topic">
 <p class="topic-title">创建引用系统列的表格</p>
-<p>在上述方案中，由于``xmin``是PostgreSQL提供的系统列，我们使用``system=True``参数，将其标记为系统提供的列，从``CREATE TABLE``语句中省略。此列的数据类型是一个名为``xid``的内部PostgreSQL类型，它的作用大多像一个字符串，因此我们使用 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_types.String`数据类型。</p>
+<p>在上述方案中，由于``xmin``是PostgreSQL提供的系统列，我们使用``system=True``参数，将其标记为系统提供的列，从``CREATE TABLE``语句中省略。此列的数据类型是一个名为``xid``的内部PostgreSQL类型，它的作用大多像一个字符串，因此我们使用 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String" title="sqlalchemy.types.String"><code class="xref py py-class docutils literal notranslate"><span class="pre">String</span></code></a> 数据类型。</p>
 </aside>
 <p>当ORM发出INSERT或UPDATE时，通常不会主动提取数据库生成的值，而是将这些列保留为“过期”，在下一次访问它们时再提取，除非设置了``eager_defaults``   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  一次性地在INSERT或UPDATE语句中同时进行此提取，否则，如果之后再发出SELECT语句，则仍然存在可能的竞争条件，版本计数器可能在其被提取之前发生变化。</p>
 <p>当目标数据库支持RETURNING时，我们``User``类的INSERT语句如下所示：</p>
@@ -316,8 +316,8 @@ xmin = mapped_column(“xmin”, String, system=True, server_default=FetchedValu
 </div>
 <p>非常强烈建议只在绝对必要且仅在支持:returning的后端上使用服务器端版本计数器，目前支持此功能的后端为PostgreSQL，Oracle，MariaDB 10.5，SQLite 3.35和SQL Server。</p>
 </section>
-<section id="id10">
-<h2>编程或条件版本计数器<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
+<section id="id8">
+<h2>编程或条件版本计数器<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h2>
 <p>当``version_id_generator``设置为``False``时，我们也可以像分配任何其他映射属性一样在对象上以编程方式(并有条件地)设置版本标识符。例如，如果我们使用UUID示例，但将``version_id_generator``设置为``False``，那么我们可以在任意时刻设置版本标识符:</p>
 <blockquote>
 <div><p>import uuid</p>
@@ -353,7 +353,7 @@ session.commit()</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:02
+    Documentation last generated: 2023/8/18 18:59:04
 
     </div>
 </div>

@@ -140,7 +140,7 @@
 <li><span class="link-container"><a class="reference external" href="#id4">简化关联对象</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#proxying-dictionaries">代理字典集合</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#composite-association-proxy">组合关联代理</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id17">使用关联代理进行查询</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">使用关联代理进行查询</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#api">API文档</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.associationproxy.association_proxy"><code class="docutils literal notranslate"><span class="pre">association_proxy()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.ext.associationproxy.AssociationProxy"><code class="docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a></span><ul>
@@ -428,7 +428,7 @@
 <li><a class="reference internal" href="#id4">简化关联对象</a></li>
 <li><a class="reference internal" href="#proxying-dictionaries">代理字典集合</a></li>
 <li><a class="reference internal" href="#composite-association-proxy">组合关联代理</a></li>
-<li><a class="reference internal" href="#id17">使用关联代理进行查询</a></li>
+<li><a class="reference internal" href="#id15">使用关联代理进行查询</a></li>
 <li><a class="reference internal" href="#api">API文档</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy"><code class="docutils literal notranslate"><span class="pre">association_proxy()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.ext.associationproxy.AssociationProxy"><code class="docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a><ul>
@@ -666,7 +666,7 @@
 <p><code class="docutils literal notranslate"><span class="pre">associationproxy</span></code> 用于创建关系中目标属性的读写视图。它实际上是隐藏了两个端点之间的“中间”属性的使用，并可用于从相关对象的集合或标量关系中挑选字段，或者减少使用关联对象模式时的冗长性。通过创造性的应用，关联代理允许构建几乎任何类型的几何体的复杂集合和字典视图，并使用标准的、透明配置的关系模式持久化到数据库中。</p>
 <section id="associationproxy-scalar-collections">
 <span id="id2"></span><h2>简化标量集合<a class="headerlink" href="#associationproxy-scalar-collections" title="Permalink to this heading">¶</a></h2>
-<p>考虑两个类之间的多对多映射，即 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code>。每个 <code class="docutils literal notranslate"><span class="pre">User</span></code> 可以拥有任意数量的 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象，反之亦然（多对多模式在   <a class="reference internal" href="../basic_relationships.html#relationships-many-to-many"><span class="std std-ref">多对多</span></a>  中有描述）。下面的示例以与前面相同的方式说明此模式，只是在 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类中添加了一个名为 <code class="docutils literal notranslate"><span class="pre">User.keywords</span></code> 的附加属性：</p>
+<p>考虑两个类之间的多对多映射，即 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code>。每个 <code class="docutils literal notranslate"><span class="pre">User</span></code> 可以拥有任意数量的 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象，反之亦然（多对多模式在   <a class="reference internal" href="../basic_relationships.html#relationships-many-to-many"><span class="std std-ref">多对多</span></a>  中有描述）。下面的示例以与前面相同的方式说明此模式，只是在 ` <cite>User`</cite> 类中添加了一个名为 <code class="docutils literal notranslate"><span class="pre">User.keywords</span></code> 的附加属性：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span>
@@ -718,7 +718,7 @@
     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;keyword_id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;keyword.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 <span class="p">)</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>在上面的示例中，将   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy" title="sqlalchemy.ext.associationproxy.association_proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">association_proxy()</span></code></a>  应用于 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类，以产生 <code class="docutils literal notranslate"><span class="pre">kw</span></code> 关系的“视图”，该视图显示与每个 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象相关联的 <code class="docutils literal notranslate"><span class="pre">.keyword</span></code> 的字符串值。它还通过透明地创建新的 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象来添加到集合中的字符串。如下所示：</p>
+<p>在上面的示例中，将   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy" title="sqlalchemy.ext.associationproxy.association_proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">association_proxy()</span></code></a>  应用于 ` <cite>User`</cite> 类，以产生 <code class="docutils literal notranslate"><span class="pre">kw</span></code> 关系的“视图”，该视图显示与每个 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象相关联的 <code class="docutils literal notranslate"><span class="pre">.keyword</span></code> 的字符串值。它还通过透明地创建新的 <code class="docutils literal notranslate"><span class="pre">Keyword</span></code> 对象来添加到集合中的字符串。如下所示：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">&quot;jek&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;cheese-inspector&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;snack-ninja&quot;</span><span class="p">)</span>
@@ -733,7 +733,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">([</span><span class="n">keyword</span><span class="o">.</span><span class="n">keyword</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">kw</span><span class="p">])</span>
 <span class="go">[&#39;cheese-inspector&#39;, &#39;snack-ninja&#39;]</span></pre></div>
 </div>
-<p>由   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy" title="sqlalchemy.ext.associationproxy.association_proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">association_proxy()</span></code></a>  函数生成的   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.AssociationProxy" title="sqlalchemy.ext.associationproxy.AssociationProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a>  对象是 <a class="reference external" href="https://docs.python.org/howto/descriptor.html">Python 描述符</a> 的实例，并且不被   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  以任何方式认为是“映射”的。因此，它始终在映射类的类定义中内联指示，而不管使用 Declarative 还是 Imperative 映射。</p>
+<p>由   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy" title="sqlalchemy.ext.associationproxy.association_proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">association_proxy()</span></code></a>  函数生成的   :class:` .AssociationProxy`  对象是 <a class="reference external" href="https://docs.python.org/howto/descriptor.html">Python 描述符</a> 的实例，并且不被   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  以任何方式认为是“映射”的。因此，它始终在映射类的类定义中内联指示，而不管使用 Declarative 还是 Imperative 映射。</p>
 <p>代理通过响应操作在基础映射属性或集合上运行，并且通过代理进行的更改立即在映射属性中显示，反之亦然。基础属性仍然完全可访问。</p>
 <p>第一次访问时，关联代理对目标集合执行内省操作，以便其行为正确对应。例如，将本地代理属性作为集合（通常情况下）或标量引用，并且集合是否的行为类似于 set、list 或 dictionary 等都会考虑在内，以便代理可以像底层集合或属性一样工作。</p>
 <section id="associationproxy-creator">
@@ -758,7 +758,7 @@
 </section>
 <section id="id4">
 <h2>简化关联对象<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
-<p>“关联对象”模式是一种扩展形式的多对多关系模式，如  :ref:<a href="#id5"><span class="problematic" id="id6">`</span></a>association_pattern`所述。关联代理有助于在常规使用过程中避免“关联对象籍”干扰。</p>
+<p>“关联对象”模式是一种扩展形式的多对多关系模式，如  <a class="reference internal" href="../basic_relationships.html#association-pattern"><span class="std std-ref">关联对象</span></a> 所述。关联代理有助于在常规使用过程中避免“关联对象籍”干扰。</p>
 <p>假设上面的“user_keyword”表有额外的列需要显式映射，但在大多数情况下我们不需要直接访问这些属性。下面，我们展示了一种新的映射方法，引入了 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation</span></code> 类，该类映射到前面所述的 <code class="docutils literal notranslate"><span class="pre">user_keyword</span></code> 表。该类增加了一个附加列 <code class="docutils literal notranslate"><span class="pre">special_key</span></code>，我们偶尔需要访问其值，但通常情况下不需要。我们在User类上创建了一个名为 <code class="docutils literal notranslate"><span class="pre">keywords</span></code> 的关联代理，它将从每个 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation</span></code> 上存在的 <code class="docutils literal notranslate"><span class="pre">keyword</span></code> 属性来构建从 <code class="docutils literal notranslate"><span class="pre">User</span></code> 的 <code class="docutils literal notranslate"><span class="pre">user_keyword_associations</span></code> 集合到 <code class="docutils literal notranslate"><span class="pre">.keyword</span></code> 属性之间的桥梁:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
 
@@ -830,7 +830,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
 <span class="go">[Keyword(&#39;new_from_blammo&#39;), Keyword(&#39;its_big&#39;)]</span></pre></div>
 </div>
-<p>这个例子与之前在   <a class="reference internal" href="#associationproxy-scalar-collections"><span class="std std-ref">简化标量集合</span></a> <cite>.keywords.append()`</cite> 操作都等同于:</p>
+<p>这个例子与之前在   <a class="reference internal" href="#associationproxy-scalar-collections"><span class="std std-ref">简化标量集合</span></a> ` .keywords.append()`` 操作都等同于:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="o">.</span><span class="n">user_keyword_associations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">UserKeywordAssociation</span><span class="p">(</span><span class="n">keyword</span><span class="o">=</span><span class="n">Keyword</span><span class="p">(</span><span class="s2">&quot;its_heavy&quot;</span><span class="p">))</span>
 <span class="gp">... </span><span class="p">)</span></pre></div>
@@ -847,8 +847,8 @@
 </div>
 </section>
 <section id="proxying-dictionaries">
-<span id="id7"></span><h2>代理字典集合<a class="headerlink" href="#proxying-dictionaries" title="Permalink to this heading">¶</a></h2>
-<p>关联代理也可以代理字典集合。SQLAlchemy 映射通常使用   <a class="reference internal" href="../collection_api.html#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  集合类型创建字典集合，以及   <a class="reference internal" href="../collection_api.html#dictionary-collections"><span class="std std-ref">自定义基于字典的集合</span></a>  中描述的扩展技术。</p>
+<span id="id5"></span><h2>代理字典集合<a class="headerlink" href="#proxying-dictionaries" title="Permalink to this heading">¶</a></h2>
+<p>关联代理也可以代理字典集合。SQLAlchemy 映射通常使用   <a class="reference internal" href="../collection_api.html#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  集合类型创建字典集合，以及   :ref:` dictionary_collections`  中描述的扩展技术。</p>
 <p>当检测到使用基于字典的集合时，关联代理会调整其行为。当向字典添加新值时，代理将实例化中介对象，通过传递两个参数（键和值）而不是一个参数来创建中介对象。与往常一样，这个创建函数默认为中介类的构造函数，可以使用 <code class="docutils literal notranslate"><span class="pre">creator</span></code> 参数进行自定义。</p>
 <p>下面，我们修改我们的 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation</span></code> 示例，使得 <code class="docutils literal notranslate"><span class="pre">User.user_keyword_associations</span></code> 集合使用字典映射，其中 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation.special_key</span></code> 参数将用作字典的键。我们还将 <code class="docutils literal notranslate"><span class="pre">creator</span></code> 参数应用于 <code class="docutils literal notranslate"><span class="pre">User.keywords</span></code> 代理，以便在向字典添加新元素时正确分配这些值:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
@@ -928,8 +928,8 @@
 </div>
 </section>
 <section id="composite-association-proxy">
-<span id="id8"></span><h2>组合关联代理<a class="headerlink" href="#composite-association-proxy" title="Permalink to this heading">¶</a></h2>
-<p>鉴于我们先前的示例是从关系到标量属性的代理、跨关联对象的代理和代理字典，我们可以将所有三种技术结合在一起，为 <code class="docutils literal notranslate"><span class="pre">User</span></code> 提供仅涉及 <code class="docutils literal notranslate"><span class="pre">special_key</span></code> 的字符串值映射到字符串 <code class="docutils literal notranslate"><span class="pre">keyword</span></code> 的 <a href="#id9"><span class="problematic" id="id10">``</span></a>keywords``字典。<a href="#id11"><span class="problematic" id="id12">``</span></a>Keyword``类全部被隐藏起来了。这是通过在``User``上建立一个关联代理实现的，该代理引用了``UserKeywordAssociation``上存在的关联代理：</p>
+<span id="id6"></span><h2>组合关联代理<a class="headerlink" href="#composite-association-proxy" title="Permalink to this heading">¶</a></h2>
+<p>鉴于我们先前的示例是从关系到标量属性的代理、跨关联对象的代理和代理字典，我们可以将所有三种技术结合在一起，为 <code class="docutils literal notranslate"><span class="pre">User</span></code> 提供仅涉及 <code class="docutils literal notranslate"><span class="pre">special_key</span></code> 的字符串值映射到字符串 <code class="docutils literal notranslate"><span class="pre">keyword</span></code> 的 <a href="#id7"><span class="problematic" id="id8">``</span></a>keywords``字典。<a href="#id9"><span class="problematic" id="id10">``</span></a>Keyword``类全部被隐藏起来了。这是通过在``User``上建立一个关联代理实现的，该代理引用了``UserKeywordAssociation``上存在的关联代理：</p>
 <blockquote>
 <div><p>from __future__ import annotations</p>
 <p>from sqlalchemy import ForeignKey
@@ -991,7 +991,7 @@ keyword: Mapped[str] = mapped_column(String(64))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p><a href="#id13"><span class="problematic" id="id14">``</span></a>User.keywords``现在是一个字符串到字符串的字典，使用关联代理，<a href="#id15"><span class="problematic" id="id16">``</span></a>UserKeywordAssociation``和``Keyword``对象会自动为我们创建和删除。在下面的示例中，我们展示了使用赋值运算符的用法，同样被关联代理适当处理，一次向集合中添加字典值：</p>
+<p><a href="#id11"><span class="problematic" id="id12">``</span></a>User.keywords``现在是一个字符串到字符串的字典，使用关联代理，<a href="#id13"><span class="problematic" id="id14">``</span></a>UserKeywordAssociation``和``Keyword``对象会自动为我们创建和删除。在下面的示例中，我们展示了使用赋值运算符的用法，同样被关联代理适当处理，一次向集合中添加字典值：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sk1&quot;</span><span class="p">:</span> <span class="s2">&quot;kw1&quot;</span><span class="p">,</span> <span class="s2">&quot;sk2&quot;</span><span class="p">:</span> <span class="s2">&quot;kw2&quot;</span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">keywords</span><span class="p">)</span>
@@ -1008,10 +1008,10 @@ keyword: Mapped[str] = mapped_column(String(64))</p>
 </div>
 <p>需要注意的是，上述示例中由于每次字典设置操作都会创建``Keyword``对象，这种方式对于标签场景通常要求``Keyword``对象的字符串名称保持唯一性。针对这种用例，建议使用`UniqueObject &lt;<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObject">https://www.sqlalchemy.org/trac/wiki/UsageRecipes/UniqueObject</a>&gt;`_ 或类似的构造策略，将“先查找，然后创建”策略应用到``Keyword``类的构造函数中，这样如果已经存在给定名称的``Keyword``对象，则返回该对象。</p>
 </section>
-<section id="id17">
-<h2>使用关联代理进行查询<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h2>
+<section id="id15">
+<h2>使用关联代理进行查询<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.ext.associationproxy.AssociationProxy" title="sqlalchemy.ext.associationproxy.AssociationProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a> <cite>EXISTS`</cite> 关键字的过滤功能。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.ext.associationproxy.AssociationProxy" title="sqlalchemy.ext.associationproxy.AssociationProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a> ` EXISTS`` 关键字的过滤功能。</p>
 </div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1049,7 +1049,7 @@ keywords: AssociationProxy[Dict[str, str]] = association_proxy(</p>
 </div></blockquote>
 <hr class="docutils" />
 <p>关联代理是一种属性，通常在ORM模式下使用，它允许操作对象关系型数据库表的两个相关的列。 关联代理具有两个主要属性：它的内容和它的目标。</p>
-<p><a href="#id18"><span class="problematic" id="id19">**</span></a>内容**具有关系输出，因此它可以赋值和使用像Python对象一样。在下面的例子中，我们显示了如何用一个简单的关联代理属性：  <code class="xref py py-attr docutils literal notranslate"><span class="pre">User.keywords</span></code> ：</p>
+<p><a href="#id16"><span class="problematic" id="id17">**</span></a>内容**具有关系输出，因此它可以赋值和使用像Python对象一样。在下面的例子中，我们显示了如何用一个简单的关联代理属性：  <code class="xref py py-attr docutils literal notranslate"><span class="pre">User.keywords</span></code> ：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span><span class="p">,</span> <span class="n">selectinload</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.ext.associationproxy</span> <span class="kn">import</span> <span class="n">association_proxy</span>
 
@@ -1085,7 +1085,7 @@ keywords: AssociationProxy[Dict[str, str]] = association_proxy(</p>
     <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">keyword</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>在这个例子中，在User模型上，我们定义了一个集合，即  property`User.keywords_associtation`， 以及一个关联代理称为  <code class="xref py py-attr docutils literal notranslate"><span class="pre">User.keywords</span></code> 。关联代理是使用   <a class="reference internal" href="#sqlalchemy.ext.associationproxy.association_proxy" title="sqlalchemy.ext.associationproxy.association_proxy"><code class="xref py py-func docutils literal notranslate"><span class="pre">association_proxy()</span></code></a>  从来自 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation</span></code> 的关联列表添加的。关联代理创建一个到 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation.keyword</span></code> 的映射，这是一个字符串栏，它允许像列表属性一样对User的Keyword内容进行读写。 在下面这个示例中，我们可以通过查询公共关键字来搜索用户。</p>
+<p>在这个例子中，在User模型上，我们定义了一个集合，即  property`User.keywords_associtation`， 以及一个关联代理称为  <code class="xref py py-attr docutils literal notranslate"><span class="pre">User.keywords</span></code> 。关联代理是使用   :func:` .association_proxy`  从来自 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation</span></code> 的关联列表添加的。关联代理创建一个到 <code class="docutils literal notranslate"><span class="pre">UserKeywordAssociation.keyword</span></code> 的映射，这是一个字符串栏，它允许像列表属性一样对User的Keyword内容进行读写。 在下面这个示例中，我们可以通过查询公共关键字来搜索用户。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">jek</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;jek&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">jek</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;python&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">jek</span><span class="p">)</span>
@@ -6300,7 +6300,7 @@ attribute.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:57
+    Documentation last generated: 2023/8/18 18:58:57
 
     </div>
 </div>

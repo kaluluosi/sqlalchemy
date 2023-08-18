@@ -143,7 +143,7 @@
 <li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
 <li class="selected"><span class="link-container"><strong>使用事件追踪查询、对象和会话更改</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#session-execute-events">执行事件</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id5">基本查询拦截</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">基本查询拦截</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#where-on">添加全局WHERE/ON条件</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#do-orm-execute-re-executing">重新执行语句</a></span></li>
 </ul>
@@ -153,16 +153,16 @@
 <li><span class="link-container"><a class="reference external" href="#after-flush-postexec"><code class="docutils literal notranslate"><span class="pre">after_flush_postexec()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#mapperflush">Mapper级别的Flush事件</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#session-lifecycle-events">对象生命周期事件</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id19">瞬态</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id20">瞬态到待处理</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id21">待处理到持久</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id22">待处理到瞬态</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#insert-session-rollback">如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  <span class="xref std std-term">待处理</span></a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">瞬态</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">瞬态到待处理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id9">待处理到持久</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id10">待处理到瞬态</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#insert-session-rollback-term">如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  :term:` 待处理`  对象可以回退到  <span class="xref std std-term">瞬态</span></a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#id29">脱离中间状态</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id17">脱离中间状态</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#session-transaction-events">事务事件</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id33">属性更改事件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id21">属性更改事件</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
@@ -218,7 +218,7 @@
             <ul>
 <li><a class="reference internal" href="#session-events-toplevel">使用事件追踪查询、对象和会话更改</a><ul>
 <li><a class="reference internal" href="#session-execute-events">执行事件</a><ul>
-<li><a class="reference internal" href="#id5">基本查询拦截</a></li>
+<li><a class="reference internal" href="#id3">基本查询拦截</a></li>
 <li><a class="reference internal" href="#where-on">添加全局WHERE/ON条件</a></li>
 <li><a class="reference internal" href="#do-orm-execute-re-executing">重新执行语句</a></li>
 </ul>
@@ -228,16 +228,16 @@
 <li><a class="reference internal" href="#after-flush-postexec"><code class="docutils literal notranslate"><span class="pre">after_flush_postexec()</span></code></a></li>
 <li><a class="reference internal" href="#mapperflush">Mapper级别的Flush事件</a></li>
 <li><a class="reference internal" href="#session-lifecycle-events">对象生命周期事件</a><ul>
-<li><a class="reference internal" href="#id19">瞬态</a></li>
-<li><a class="reference internal" href="#id20">瞬态到待处理</a></li>
-<li><a class="reference internal" href="#id21">待处理到持久</a></li>
-<li><a class="reference internal" href="#id22">待处理到瞬态</a></li>
-<li><a class="reference internal" href="#insert-session-rollback">如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  <span class="xref std std-term">待处理</span>  对象可以回退到  <span class="xref std std-term">瞬态</span>  。持续生成实例</a></li>
+<li><a class="reference internal" href="#id7">瞬态</a></li>
+<li><a class="reference internal" href="#id8">瞬态到待处理</a></li>
+<li><a class="reference internal" href="#id9">待处理到持久</a></li>
+<li><a class="reference internal" href="#id10">待处理到瞬态</a></li>
+<li><a class="reference internal" href="#insert-session-rollback-term">如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  :term:` 待处理`  对象可以回退到  <span class="xref std std-term">瞬态</span>  。持续生成实例</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id29">脱离中间状态</a></li>
+<li><a class="reference internal" href="#id17">脱离中间状态</a></li>
 <li><a class="reference internal" href="#session-transaction-events">事务事件</a></li>
-<li><a class="reference internal" href="#id33">属性更改事件</a></li>
+<li><a class="reference internal" href="#id21">属性更改事件</a></li>
 </ul>
 </li>
 </ul>
@@ -257,13 +257,13 @@
 <section id="session-execute-events">
 <span id="id2"></span><h2>执行事件<a class="headerlink" href="#session-execute-events" title="Permalink to this heading">¶</a></h2>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.4: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  事件，还包括  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile_update" title="sqlalchemy.orm.QueryEvents.before_compile_update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile_update()</span></code></a>  和  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile_delete" title="sqlalchemy.orm.QueryEvents.before_compile_delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile_delete()</span></code></a>  。</p>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  方法调用的所有查询，包括  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  事件钩子以及 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.ORMExecuteState`对象来表示事件状态。</p>
+<p><span class="versionmodified added">New in version 1.4: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  事件，还包括  :meth:` _orm.QueryEvents.before_compile_update`  和  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile_delete" title="sqlalchemy.orm.QueryEvents.before_compile_delete"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile_delete()</span></code></a>  。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  方法调用的所有查询，包括  :class:` _orm.Query`  事件钩子以及 <code class="xref py py-class docutils literal notranslate"><span class="pre">ORMExecuteState</span></code> 对象来表示事件状态。</p>
 </div>
-<section id="id5">
-<h3>基本查询拦截<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<section id="id3">
+<h3>基本查询拦截<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  首先对查询的任何拦截非常有用，包括使用  <span class="xref std std-term">1.x风格</span>  的  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  的  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> ，  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  。 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.ORMExecuteState`结构提供访问器，允许修改语句、参数和选项:</p>
+<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  首先对查询的任何拦截非常有用，包括使用  :term:` 1.x风格`  的  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  的  :func:` _sql.select` ，  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  。 :class:` _orm.ORMExecuteState`结构提供访问器，允许修改语句、参数和选项:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
 
 
@@ -281,7 +281,7 @@
             <span class="n">orm_execute_state</span><span class="o">.</span><span class="n">statement</span> <span class="o">=</span> <span class="n">statement</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">MyEntity</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></pre></div>
 </div>
 </div></blockquote>
-<p>上面的示例说明了如何修改SELECT语句。在这个级别上，  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  事件钩子旨在替换之前使用的  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>  事件的使用，对于各种装载器，它没有被一致地触发。此外，  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>  仅适用于  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  ，而不适用于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  的  <span class="xref std std-term">2.0风格</span>  。</p>
+<p>上面的示例说明了如何修改SELECT语句。在这个级别上，  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  事件钩子旨在替换之前使用的  :meth:` _orm.QueryEvents.before_compile`  事件的使用，对于各种装载器，它没有被一致地触发。此外，  <a class="reference internal" href="events.html#sqlalchemy.orm.QueryEvents.before_compile" title="sqlalchemy.orm.QueryEvents.before_compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueryEvents.before_compile()</span></code></a>  仅适用于  :class:` _orm.Query`  ，而不适用于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  的  :term:` 2.0风格`  。</p>
 </section>
 <section id="where-on">
 <span id="do-orm-execute-global-criteria"></span><h3>添加全局WHERE/ON条件<a class="headerlink" href="#where-on" title="Permalink to this heading">¶</a></h3>
@@ -306,8 +306,8 @@ and not orm_execute_state.is_relationship_load</p>
 </dl>
 </div></blockquote>
 </div></blockquote>
-<p>上面的示例向所有SELECT语句添加了一个选项，该选项将限制对``MyEntity``的所有查询，以过滤``public == True``。该条件将应用于立即查询范围内该类的所有加载项。默认情况下， :func:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.with_loader_criteria`选项会自动传播到关系加载程序，这将应用于后续关系加载，包括lazyloads、selectinloads等。</p>
-<p>对于一系列具有公共列结构的类，如果使用了一个  <span class="xref std std-ref">声明性混合类</span> <a href="#id10"><span class="problematic" id="id11">`</span></a>HasTimestamp``的混合类：</p>
+<p>上面的示例向所有SELECT语句添加了一个选项，该选项将限制对``MyEntity``的所有查询，以过滤``public == True``。该条件将应用于立即查询范围内该类的所有加载项。默认情况下， <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a> 选项会自动传播到关系加载程序，这将应用于后续关系加载，包括lazyloads、selectinloads等。</p>
+<p>对于一系列具有公共列结构的类，如果使用了一个  <span class="xref std std-ref">声明性混合类</span> ` HasTimestamp``的混合类：</p>
 <blockquote>
 <div><p>import datetime</p>
 <dl class="simple">
@@ -337,7 +337,7 @@ def _do_orm_execute(orm_execute_state):</p>
 <p>一个月前的日期是：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">one_month_ago</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">months</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></pre></div>
 </div>
-<p>可以使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>  选项限制查询结果中数据的范围，使其仅包括在给定时间范围内的行。例如，要获取所有   <code class="xref py py-class docutils literal notranslate"><span class="pre">HasTimestamp</span></code>  类都具有 <cite>timestamp</cite> 属性的查询，并且该属性小于或等于一个月前的行（以及任何其他在别名列中存在 <cite>HasTimestamp</cite> 的模型），可以使用以下代码：</p>
+<p>可以使用   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>  选项限制查询结果中数据的范围，使其仅包括在给定时间范围内的行。例如，要获取所有   :class:` HasTimestamp`  类都具有 <cite>timestamp</cite> 属性的查询，并且该属性小于或等于一个月前的行（以及任何其他在别名列中存在 <cite>HasTimestamp</cite> 的模型），可以使用以下代码：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">orm_execute_state</span><span class="o">.</span><span class="n">statement</span> <span class="o">=</span> <span class="n">orm_execute_state</span><span class="o">.</span><span class="n">statement</span><span class="o">.</span><span class="n">options</span><span class="p">(</span>
     <span class="n">with_loader_criteria</span><span class="p">(</span>
         <span class="n">HasTimestamp</span><span class="p">,</span>
@@ -348,23 +348,23 @@ def _do_orm_execute(orm_execute_state):</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>在   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>  中使用 lambda 函数的时候其仅 <strong>针对每个唯一的类</strong> 调用一次。自定义函数不应该在此 lambda 函数中调用。 了解“lambda SQL”特性以供高级使用，请参阅   <a class="reference internal" href="../core/connections.html#engine-lambda-caching"><span class="std std-ref">使用Lambda在语句生成中添加显着的速度增益</span></a> 。</p>
+<p>在   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>  中使用 lambda 函数的时候其仅 <strong>针对每个唯一的类</strong> 调用一次。自定义函数不应该在此 lambda 函数中调用。 了解“lambda SQL”特性以供高级使用，请参阅   :ref:` engine_lambda_caching` 。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM 查询事件</span></a>  - 包括使用接受   <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.with_loader_criteria" title="sqlalchemy.orm.with_loader_criteria"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_loader_criteria()</span></code></a>  的完整示例。</p>
+<p><a class="reference internal" href="examples.html#examples-session-orm-events"><span class="std std-ref">ORM 查询事件</span></a>  - 包括使用接受   :func:` ~sqlalchemy.orm.with_loader_criteria`  的完整示例。</p>
 </div>
 </section>
 <section id="do-orm-execute-re-executing">
-<span id="id12"></span><h3>重新执行语句<a class="headerlink" href="#do-orm-execute-re-executing" title="Permalink to this heading">¶</a></h3>
+<span id="id4"></span><h3>重新执行语句<a class="headerlink" href="#do-orm-execute-re-executing" title="Permalink to this heading">¶</a></h3>
 <div class="admonition deepalchemy">
 <p class="admonition-title">Deep Alchemy</p>
 <p>语句重新执行功能涉及到一个稍微复杂的递归顺序，旨在解决将执行SQL语句重新定向到各种非SQL上下文的相当棘手的问题。下面链接的“犬舍缓存”和“水平分片”是使用此功能时的指南。</p>
 <p><code class="xref py py-class docutils literal notranslate"><span class="pre">ORMExecuteState</span></code>  能够控制给定语句的执行；这包括能够完全不调用语句，允许从缓存中返回已检索到的预构建结果集，以及在不同状态下重复调用同一语句的能力，例如针对多个数据库连接调用该语句，然后将结果在内存中合并。这两种高级模式在下面的 SQLAlchemy 示例套件中都有展示。</p>
 </div>
-<p>在  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  事件挂钩内，可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement()</span></code>  方法，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  的新嵌套调用来调用语句，这将预占正在进行的当前执行的后续处理，并返回内部执行返回的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> 。因此，在此嵌套调用中，至此为止激发的事件处理程序均会被跳过。</p>
+<p>在  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  事件挂钩内，可以使用  :meth:` _orm.ORMExecuteState.invoke_statement`  方法，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  的新嵌套调用来调用语句，这将预占正在进行的当前执行的后续处理，并返回内部执行返回的   :class:` _engine.Result` 。因此，在此嵌套调用中，至此为止激发的事件处理程序均会被跳过。</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement()</span></code>   方法返回一个   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象；此对象然后具有将其“冻结”为可缓存格式并“解冻”为新的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象，以及将其数据与其他   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象合并的能力。</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement()</span></code>   方法返回一个   :class:` _engine.Result`  对象；此对象然后具有将其“冻结”为可缓存格式并“解冻”为新的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象，以及将其数据与其他   :class:` _engine.Result`  对象合并的能力。</p>
 </div></blockquote>
 <p>例如，使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  实现缓存：</p>
 <p>从 sqlalchemy.orm 中导入 loading:</p>
@@ -408,10 +408,10 @@ def _do_orm_execute(orm_execute_state):</p>
 <p>)</p>
 <p>result = session.execute(stmt)</p>
 </div></blockquote>
-<p>以上，自定义执行选项作为参数传递给  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.execution_options" title="sqlalchemy.sql.expression.Select.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.execution_options()</span></code></a>  以建立“缓存键”，该缓存键然后会被  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  回调拦截。此缓存键将匹配可能存在于缓存中的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></a>  对象，并在存在时重新使用，将 ORM 结果组合在一起。</p>
+<p>以上，自定义执行选项作为参数传递给  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.execution_options" title="sqlalchemy.sql.expression.Select.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.execution_options()</span></code></a>  以建立“缓存键”，该缓存键然后会被  :meth:` _orm.SessionEvents.do_orm_execute`  回调拦截。此缓存键将匹配可能存在于缓存中的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.FrozenResult" title="sqlalchemy.engine.FrozenResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">FrozenResult</span></code></a>  对象，并在存在时重新使用，将 ORM 结果组合在一起。</p>
 <p>在   <a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile 缓存</span></a>  的完整示例中实现了上述示例。</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement()</span></code>   方法也可以多次调用，同时通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement.bind_arguments</span></code>  参数传递不同的信息，使   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  每次使用不同的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  对象。这将每次返回一个不同的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象；这些结果可以使用  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.merge" title="sqlalchemy.engine.Result.merge"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.merge()</span></code></a>  方法合并。这是由   <span class="xref std std-ref">horizontal_sharding_toplevel</span>  扩展采用的技术；请查阅源代码以熟悉。</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ORMExecuteState.invoke_statement()</span></code>   方法也可以多次调用，同时通过  :paramref:` _orm.ORMExecuteState.invoke_statement.bind_arguments`  参数传递不同的信息，使   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  每次使用不同的   :class:` _engine.Engine`  对象。这将每次返回一个不同的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象；这些结果可以使用  :meth:` _engine.Result.merge`  方法合并。这是由   <span class="xref std std-ref">horizontal_sharding_toplevel</span>  扩展采用的技术；请查阅源代码以熟悉。</p>
 </div></blockquote>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -421,34 +421,34 @@ def _do_orm_execute(orm_execute_state):</p>
 </section>
 </section>
 <section id="session-persistence-events">
-<span id="id13"></span><h2>持久化事件<a class="headerlink" href="#session-persistence-events" title="Permalink to this heading">¶</a></h2>
+<span id="id5"></span><h2>持久化事件<a class="headerlink" href="#session-persistence-events" title="Permalink to this heading">¶</a></h2>
 <p>“持久化”事件可能是最广泛使用的一系列事件，对应   <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">flush 过程</span></a> 。冲洗是在该过程中做出有关待处理对象的决策，并以 INSERT，UPDATE 和 DELETE 语句的形式发出的地方。</p>
 <p><code class="docutils literal notranslate"><span class="pre">before_flush()</span></code>
 ^^^^^^^^^^^^^^^^^^  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>
 ———————————–</p>
 <blockquote>
-<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  是应用程序在执行flush时需要确保进行额外数据持久化更改的最常用事件。使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a></p>
+<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  是应用程序在执行flush时需要确保进行额外数据持久化更改的最常用事件。使用  :meth:` .SessionEvents.before_flush`</p>
 </div></blockquote>
 <p>操作对象以验证它们的状态，并在持久化之前构建额外的对象和引用。在此事件中，<strong>可以安全地操作Session的状态</strong>。也就是说，
 可以将新对象连接到Session，可以删除对象，并且可以自由更改对象上的单个属性。这些更改在事件完成后会被纳入到flush过程中。</p>
-<p>典型的  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  挂钩将扫描集合:attr: <cite>.Session.new</cite>，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>
+<p>典型的  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  挂钩将扫描集合:attr:` .Session.new`，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>  和  :attr:` .Session.deleted`
 以查找要发生的更改的对象。</p>
-<p>有关  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  的示例，请参见：ref:` examples_versioned_history`和 :ref:` examples_versioned_rows`等示例。</p>
+<p>有关  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  的示例，请参见：ref:` examples_versioned_history` 和 :ref:` examples_versioned_rows` 等示例。</p>
 </section>
 <section id="after-flush">
 <h2><code class="docutils literal notranslate"><span class="pre">after_flush()</span></code><a class="headerlink" href="#after-flush" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush" title="sqlalchemy.orm.SessionEvents.after_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush()</span></code></a>  是在SQL发出flush流程之后被调用，但在刷新的对象状态发生更改之前被调用。也就是说，</p>
 </div></blockquote>
-<p>仍然可以检查  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>  ，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>   collections，
-以查看刚刚刷新的内容，还可以使用历史记录跟踪功能（例如由 <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeState`提供的功能），</span>
-<span class="pre">以查看刚刚持久化的更改。在</span>&#160; <span class="pre">:meth:</span></code>.SessionEvents.after_flush`  事件中，可以根据所观察到的更改向数据库发出其他SQL。</p>
+<p>仍然可以检查  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>  ，  :attr:` .Session.dirty`  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>   collections，
+以查看刚刚刷新的内容，还可以使用历史记录跟踪功能（例如由 <a class="reference internal" href="internals.html#sqlalchemy.orm.AttributeState" title="sqlalchemy.orm.AttributeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeState</span></code></a> 提供的功能），
+以查看刚刚持久化的更改。在  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush" title="sqlalchemy.orm.SessionEvents.after_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush()</span></code></a>  事件中，可以根据所观察到的更改向数据库发出其他SQL。</p>
 </section>
 <section id="after-flush-postexec">
 <h2><code class="docutils literal notranslate"><span class="pre">after_flush_postexec()</span></code><a class="headerlink" href="#after-flush-postexec" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush_postexec" title="sqlalchemy.orm.SessionEvents.after_flush_postexec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush_postexec()</span></code></a>  在  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush" title="sqlalchemy.orm.SessionEvents.after_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush()</span></code></a>  之后不久被调用，但在已经修改对象状态以反映刚执行的flush操作之后被调用。
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>  ，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>  集合在此处通常为空。</p>
+<div><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush_postexec" title="sqlalchemy.orm.SessionEvents.after_flush_postexec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush_postexec()</span></code></a>  在  :meth:` .SessionEvents.after_flush`  之后不久被调用，但在已经修改对象状态以反映刚执行的flush操作之后被调用。
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>  ，  :attr:` .Session.dirty`  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>  集合在此处通常为空。</p>
 </div></blockquote>
 <p>使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_flush_postexec" title="sqlalchemy.orm.SessionEvents.after_flush_postexec"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_flush_postexec()</span></code></a>  检查标识映射以获取已完成对象并可能发出其他SQL。在此挂钩中，有能力在对象上进行新的更改，
 这意味着**Session**将再次进入“dirty”状态;如果在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  上下文中检测到新变化，则此处会引发flush**again**，
@@ -471,12 +471,12 @@ def _do_orm_execute(orm_execute_state):</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>重要的是要注意，这些事件仅适用于  <a class="reference internal" href="session_basics.html#session-flushing"><span class="std std-ref">session flush operation</span></a> ，而不适用于ORM级别的INSERT/UPDATE/DELETE功能，
-描述在  <a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> 。要拦截ORM级别的DML，请使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.do_orm_execute" title="sqlalchemy.orm.SessionEvents.do_orm_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.do_orm_execute()</span></code></a>  事件。</p>
+描述在  <a class="reference internal" href="queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a> 。要拦截ORM级别的DML，请使用  :meth:` _orm.SessionEvents.do_orm_execute`  事件。</p>
 </div>
-<p>每个事件都传递了  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，映射的对象本身以及正在使用其发出INSERT，UPDATE或DELETE语句的  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 。这些事件的吸引力很明显，
+<p>每个事件都传递了  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，映射的对象本身以及正在使用其发出INSERT，UPDATE或DELETE语句的  :class:` _engine.Connection` 。这些事件的吸引力很明显，
 如果应用程序想要将某些活动与插入特定类型的对象同时进行，那么此钩子非常具体;与  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_flush" title="sqlalchemy.orm.SessionEvents.before_flush"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_flush()</span></code></a>  事件不同，
 无需通过  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>  集合搜索目标。但是，这些事件被调用时已经决定了代表要发出的每个INSERT，UPDATE，DELETE语句的flush计划，
-并且在此阶段无法进行任何更改。因此，可能对给定对象的仅限于对象行的本地属性进行更改。对于任何其他更改对象或其他对象都不会进行更改。影响 :class:<a href="#id14"><span class="problematic" id="id15">`</span></a>.Session`状态的操作，将无法正常运行。</p>
+并且在此阶段无法进行任何更改。因此，可能对给定对象的仅限于对象行的本地属性进行更改。对于任何其他更改对象或其他对象都不会进行更改。影响 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 状态的操作，将无法正常运行。</p>
 <p>以下映射器级别持久性事件不支持以下操作：</p>
 <ul class="simple">
 <li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code></p></li>
@@ -484,13 +484,13 @@ def _do_orm_execute(orm_execute_state):</p>
 <li><p>映射的集合附加、添加、移除、删除、丢弃等操作。</p></li>
 <li><p>映射的关系属性设置/删除事件，即：<code class="docutils literal notranslate"><span class="pre">someobject.related</span> <span class="pre">=</span> <span class="pre">someotherobject</span></code>。</p></li>
 </ul>
-<p>之所以需要传递  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，是因为鼓励**简单的SQL操作直接在此执行**，直接在 :class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_engine.Connection`上执行，比如在日志表中插入额外的行或者递增计数器。</p>
+<p>之所以需要传递  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，是因为鼓励**简单的SQL操作直接在此执行**，直接在 :class:` _engine.Connection`上执行，比如在日志表中插入额外的行或者递增计数器。</p>
 <p>还有许多每个对象单独执行的操作，它们根本不需要在刷新事件中处理。最常见的替代方法是在对象的 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法中与一个对象一起建立附加状态，例如创建预关联与新对象关联的其他对象。使用如   <a class="reference internal" href="mapped_attributes.html#simple-validators"><span class="std std-ref">简单的验证器</span></a>  中所述的验证器是另一种方法；这些函数可以拦截属性变化，并响应属性变化在目标对象上建立附加状态更改。使用这两种方法时，对象在到达刷新步骤之前就处于正确状态。</p>
 </section>
 <section id="session-lifecycle-events">
-<span id="id18"></span><h2>对象生命周期事件<a class="headerlink" href="#session-lifecycle-events" title="Permalink to this heading">¶</a></h2>
+<span id="id6"></span><h2>对象生命周期事件<a class="headerlink" href="#session-lifecycle-events" title="Permalink to this heading">¶</a></h2>
 <p>另一种使用事件的用例是跟踪对象的生命周期。它指的是在   <a class="reference internal" href="session_state_management.html#session-object-states"><span class="std std-ref">对象状态简介</span></a>  中首次引入的状态。</p>
-<p>所有上述状态均可以完全使用事件跟踪。每个事件都表示明确的状态转换，意味着起始状态和目标状态均作为跟踪的一部分。除了初始瞬态事件外，所有事件都是与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`对象关联：</p>
+<p>所有上述状态均可以完全使用事件跟踪。每个事件都表示明确的状态转换，意味着起始状态和目标状态均作为跟踪的一部分。除了初始瞬态事件外，所有事件都是与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 对象关联：</p>
 <blockquote>
 <div><p>from sqlalchemy import event
 from sqlalchemy.orm import Session</p>
@@ -501,7 +501,7 @@ def object_is_pending(session, obj):</p>
 <div><p>print(“新的待处理对象: %s” % obj)</p>
 </div></blockquote>
 </div></blockquote>
-<p>或者与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker`一起关联，后者可能是最有用的形式：</p>
+<p>或者与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker` 一起关联，后者可能是最有用的形式：</p>
 <blockquote>
 <div><p>from sqlalchemy import event
 from sqlalchemy.orm import sessionmaker</p>
@@ -523,9 +523,9 @@ def detect_all_persistent(session, instance):</p>
 <div><p>print(“对象现在是持久的: %s” % instance)</p>
 </div></blockquote>
 </div></blockquote>
-<section id="id19">
-<h3>瞬态<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h3>
-<p>所有映射的对象在构建时首先以  <span class="xref std std-term">瞬态</span>  形式开始。在此状态下，对象是独立的，没有与任何  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`，但是如果需要拦截创建任何瞬态对象，最好使用  <a class="reference internal" href="events.html#sqlalchemy.orm.InstanceEvents.init" title="sqlalchemy.orm.InstanceEvents.init"><code class="xref py py-meth docutils literal notranslate"><span class="pre">InstanceEvents.init()</span></code></a>   方法，例如，要拦截特定声明基础的所有新对象：</p>
+<section id="id7">
+<h3>瞬态<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<p>所有映射的对象在构建时首先以  <span class="xref std std-term">瞬态</span>  形式开始。在此状态下，对象是独立的，没有与任何  :class:` .Session` .Session`，但是如果需要拦截创建任何瞬态对象，最好使用  <a class="reference internal" href="events.html#sqlalchemy.orm.InstanceEvents.init" title="sqlalchemy.orm.InstanceEvents.init"><code class="xref py py-meth docutils literal notranslate"><span class="pre">InstanceEvents.init()</span></code></a>   方法，例如，要拦截特定声明基础的所有新对象：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import event</p>
@@ -540,35 +540,35 @@ def intercept_init(instance, args, kwargs):</p>
 </div></blockquote>
 </div></blockquote>
 </section>
-<section id="id20">
-<h3>瞬态到待处理<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h3>
-<p>当通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>   或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>  方法首次将瞬态对象与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  。某个对象也可以通过显式添加的引用对象的   <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">“级联”</span></a>  作为  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的一部分。可以使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.transient_to_pending" title="sqlalchemy.orm.SessionEvents.transient_to_pending"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.transient_to_pending()</span></code></a>  事件来检测瞬态到待处理的转换：</p>
+<section id="id8">
+<h3>瞬态到待处理<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<p>当通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>   或  :meth:` .Session.add_all`  方法首次将瞬态对象与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  。某个对象也可以通过显式添加的引用对象的   :ref:` “级联” &lt;unitofwork_cascades&gt;`  作为  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的一部分。可以使用  :meth:` .SessionEvents.transient_to_pending`  事件来检测瞬态到待处理的转换：</p>
 <blockquote>
 <div><p>&#64;event.listens_for(sessionmaker, “transient_to_pending”)
-def intercept_transient_to_pending(session, <a href="#id34"><span class="problematic" id="id35">object_</span></a>):</p>
+def intercept_transient_to_pending(session, <a href="#id22"><span class="problematic" id="id23">object_</span></a>):</p>
 <blockquote>
-<div><p>print(“瞬态到待处理: %s” % <a href="#id36"><span class="problematic" id="id37">object_</span></a>)</p>
+<div><p>print(“瞬态到待处理: %s” % <a href="#id24"><span class="problematic" id="id25">object_</span></a>)</p>
 </div></blockquote>
 </div></blockquote>
 </section>
-<section id="id21">
-<h3>待处理到持久<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h3>
-<p>当刷新进行并且实例的INSERT语句执行时，  <span class="xref std std-term">待处理</span>  对象变为  <span class="xref std std-term">持久</span> 。该对象现在具有标识键。使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.pending_to_persistent" title="sqlalchemy.orm.SessionEvents.pending_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.pending_to_persistent()</span></code></a>  事件来跟踪待处理到持久的转换：</p>
+<section id="id9">
+<h3>待处理到持久<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<p>当刷新进行并且实例的INSERT语句执行时，  <span class="xref std std-term">待处理</span>  对象变为  :term:` 持久` 。该对象现在具有标识键。使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.pending_to_persistent" title="sqlalchemy.orm.SessionEvents.pending_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.pending_to_persistent()</span></code></a>  事件来跟踪待处理到持久的转换：</p>
 <blockquote>
 <div><p>&#64;event.listens_for(sessionmaker, “pending_to_persistent”)
-def intercept_pending_to_persistent(session, <a href="#id38"><span class="problematic" id="id39">object_</span></a>):</p>
+def intercept_pending_to_persistent(session, <a href="#id26"><span class="problematic" id="id27">object_</span></a>):</p>
 <blockquote>
-<div><p>print(“待处理到持久: %s” % <a href="#id40"><span class="problematic" id="id41">object_</span></a>)</p>
+<div><p>print(“待处理到持久: %s” % <a href="#id28"><span class="problematic" id="id29">object_</span></a>)</p>
 </div></blockquote>
 </div></blockquote>
 </section>
-<section id="id22">
-<h3>待处理到瞬态<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h3>
+<section id="id10">
+<h3>待处理到瞬态<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
 </section>
-<section id="insert-session-rollback">
-<h3>如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  <span class="xref std std-term">待处理</span>  对象可以回退到  <span class="xref std std-term">瞬态</span>  。持续生成实例<a class="headerlink" href="#insert-session-rollback" title="Permalink to this heading">¶</a></h3>
+<section id="insert-session-rollback-term">
+<h3>如果在等待处理对象的任何INSERT语句执行之前调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   方法，则  :term:` 待处理`  对象可以回退到  <span class="xref std std-term">瞬态</span>  。持续生成实例<a class="headerlink" href="#insert-session-rollback-term" title="Permalink to this heading">¶</a></h3>
 <p>如果一个对象被删除，则它的状态将从持久状态转换为删除状态。对象的状态可以通过调用``Session.delete``方法来改变，但该对象直到``Session``刷新之后才会被标记为“被删除”。</p>
-<p>从删除状态向持久状态转变是通过执行：meth：<a href="#id23"><span class="problematic" id="id24">``</span></a>Session.flush``或在刷新之前调用：meth：<a href="#id25"><span class="problematic" id="id26">``</span></a>Session.expunge``方法从而将该对象从会话中删除。使用：meth：<a href="#id27"><span class="problematic" id="id28">``</span></a>SessionEvents.deleted_to_persistent``事件将已删除到持久转换跟踪:</p>
+<p>从删除状态向持久状态转变是通过执行：meth：<a href="#id11"><span class="problematic" id="id12">``</span></a>Session.flush``或在刷新之前调用：meth：<a href="#id13"><span class="problematic" id="id14">``</span></a>Session.expunge``方法从而将该对象从会话中删除。使用：meth：<a href="#id15"><span class="problematic" id="id16">``</span></a>SessionEvents.deleted_to_persistent``事件将已删除到持久转换跟踪:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">sessionmaker</span><span class="p">,</span> <span class="s2">&quot;deleted_to_persistent&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">intercept_deleted_to_persistent</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">object_</span><span class="p">):</span>
     <span class="n">print</span><span class="p">(</span><span class="s2">&quot;object was re-inserted from DELETEd, now back in persistent state: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">object_</span><span class="p">)</span></pre></div>
@@ -579,13 +579,13 @@ def intercept_pending_to_persistent(session, <a href="#id38"><span class="proble
 </div>
 </section>
 </section>
-<section id="id29">
-<h2>脱离中间状态<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h2>
+<section id="id17">
+<h2>脱离中间状态<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h2>
 <p>在很多情况下，保持对象状态的完整性要求追踪对象状态的中间转换。例如，跟踪从删除状态返回到持久状态的情况非常重要，因为这会在过程中自动更新数据库。</p>
 <p>在每种情况下，迁移都可能是任意的；然而，在特定的情况下，跟踪可能是有意义的。例如，在审计或历史记录方案中，记录对象状态的变化可以是有益的。</p>
 <p>除了直接追踪到回调函数和事件之外，还可以通过增加一个对象上的属性来跟踪。如果然后需要调整迁移，这样做时常有用的。</p>
 <p id="special-tracker-attribute">追踪器属性的示例是将特定状态标记为``deleted``或``modified``，或跟踪对象已经被修改了几次（使用``_modification_token``或类似）。</p>
-<p>一个常见的做法是使用一个名为``_sa_instance_state``的类状态属性。<a href="#id30"><span class="problematic" id="id31">``</span></a>_sa_instance_state``是一个带有许多锅炉板属性的内部状态对象，每当转换到下一个状态时，它都会被更新。</p>
+<p>一个常见的做法是使用一个名为``_sa_instance_state``的类状态属性。<a href="#id18"><span class="problematic" id="id19">``</span></a>_sa_instance_state``是一个带有许多锅炉板属性的内部状态对象，每当转换到下一个状态时，它都会被更新。</p>
 <p>例如，下面的示例为对象添加了一个名为``was_deleted``的属性，它当对象是删除状态时为``True``，否则为``False``。使用mapper级``set_committed_value``方法设置属性的默认状态，并使用``synthesized``事件覆盖属性。这在 ad-hoc 跨两次刷新跟踪该对象创建/删除的方案中很有用 :</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">Session</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm.attributes</span> <span class="kn">import</span> <span class="p">(</span>
@@ -673,16 +673,16 @@ def intercept_pending_to_persistent(session, <a href="#id38"><span class="proble
     <span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
 <p>如果“synthesized”事件被发射（简单地调用“instance.state_instance”将发射此事件），则从 mapper.configured 事件使用的CustomInstanceState类中创建的CustomInstanceState的实例将被分配给实例的“state_instance”属性。</p>
-<p>此属性和标准实例状态是一样的或更好的，因为它允许使用特定于实例的方式覆盖标准行为。如果初始迁移被建模为使用标准的ORM事件，而默认行为不符合某些要求，则使用此模式可以很容易地调整当前的代码路径（暂时使用内部API）被  <span class="xref std std-term">deleted</span>  的对象可以在使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  方法进行回滚的事务中恢复到  <span class="xref std std-term">persistent</span>  状态。使用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.deleted_to_persistent" title="sqlalchemy.orm.SessionEvents.deleted_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.deleted_to_persistent()</span></code></a>  事件跟踪返回到持久状态的已删除对象:</p>
+<p>此属性和标准实例状态是一样的或更好的，因为它允许使用特定于实例的方式覆盖标准行为。如果初始迁移被建模为使用标准的ORM事件，而默认行为不符合某些要求，则使用此模式可以很容易地调整当前的代码路径（暂时使用内部API）被  <span class="xref std std-term">deleted</span>  的对象可以在使用  :meth:` .Session.rollback`  方法进行回滚的事务中恢复到  <span class="xref std std-term">persistent</span>  状态。使用  :meth:` .SessionEvents.deleted_to_persistent`  事件跟踪返回到持久状态的已删除对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">sessionmaker</span><span class="p">,</span> <span class="s2">&quot;deleted_to_persistent&quot;</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">intercept_deleted_to_persistent</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="n">object_</span><span class="p">):</span>
     <span class="n">print</span><span class="p">(</span><span class="s2">&quot;deleted to persistent: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">object_</span><span class="p">)</span></pre></div>
 </div>
 </section>
 <section id="session-transaction-events">
-<span id="id32"></span><h2>事务事件<a class="headerlink" href="#session-transaction-events" title="Permalink to this heading">¶</a></h2>
+<span id="id20"></span><h2>事务事件<a class="headerlink" href="#session-transaction-events" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
-<dt>事务事件允许应用程序在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  级别上的事务边界发生时以及在</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  更改   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象的事务状态时得到通知。</p>
+<dt>事务事件允许应用程序在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  级别上的事务边界发生时以及在</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  更改   :class:` _engine.Connection`  对象的事务状态时得到通知。</p>
 </dd>
 </dl>
 <ul>
@@ -699,9 +699,9 @@ def intercept_pending_to_persistent(session, <a href="#id38"><span class="proble
 跟踪逻辑“子事务”以及“嵌套”（例如 SAVEPOINT）事务。</p>
 </div></blockquote>
 <ul class="simple">
-<li><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_commit" title="sqlalchemy.orm.SessionEvents.before_commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_commit()</span></code></a> ,  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_commit" title="sqlalchemy.orm.SessionEvents.after_commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_commit()</span></code></a> ,
+<li><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.before_commit" title="sqlalchemy.orm.SessionEvents.before_commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.before_commit()</span></code></a> ,  :meth:` .SessionEvents.after_commit` ,
 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_begin" title="sqlalchemy.orm.SessionEvents.after_begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_begin()</span></code></a> ,
-<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_rollback" title="sqlalchemy.orm.SessionEvents.after_rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_rollback()</span></code></a> ,  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_soft_rollback" title="sqlalchemy.orm.SessionEvents.after_soft_rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_soft_rollback()</span></code></a>  -</p></li>
+<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_rollback" title="sqlalchemy.orm.SessionEvents.after_rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_rollback()</span></code></a> ,  :meth:` .SessionEvents.after_soft_rollback`  -</p></li>
 </ul>
 <blockquote>
 <div><p>这些事件允许从数据库连接的角度跟踪事务事件。特别是  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_begin" title="sqlalchemy.orm.SessionEvents.after_begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_begin()</span></code></a>
@@ -709,10 +709,10 @@ def intercept_pending_to_persistent(session, <a href="#id38"><span class="proble
 分别发出此事件。之后的回滚和提交事件是指 DBAPI 连接本身接收到回滚或提交指令的时间。</p>
 </div></blockquote>
 </section>
-<section id="id33">
-<h2>属性更改事件<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h2>
+<section id="id21">
+<h2>属性更改事件<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
-<dt>属性更改事件允许在对象上特定属性被修改时进行拦截。这些事件包括  <a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents.set" title="sqlalchemy.orm.AttributeEvents.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.set()</span></code></a> 、</dt><dd><p><a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents.append" title="sqlalchemy.orm.AttributeEvents.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.append()</span></code></a>   和  <a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents.remove" title="sqlalchemy.orm.AttributeEvents.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.remove()</span></code></a> 。这些事件非常有用，</p>
+<dt>属性更改事件允许在对象上特定属性被修改时进行拦截。这些事件包括  <a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents.set" title="sqlalchemy.orm.AttributeEvents.set"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.set()</span></code></a> 、</dt><dd><p><a class="reference internal" href="events.html#sqlalchemy.orm.AttributeEvents.append" title="sqlalchemy.orm.AttributeEvents.append"><code class="xref py py-meth docutils literal notranslate"><span class="pre">AttributeEvents.append()</span></code></a>   和  :meth:` .AttributeEvents.remove` 。这些事件非常有用，</p>
 </dd>
 </dl>
 <p>特别是对于每个对象的验证操作；然而，使用一个“验证器”钩子通常更方便，
@@ -739,7 +739,7 @@ def intercept_pending_to_persistent(session, <a href="#id38"><span class="proble
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:02
+    Documentation last generated: 2023/8/18 18:59:03
 
     </div>
 </div>

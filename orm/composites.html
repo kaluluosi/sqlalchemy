@@ -230,7 +230,7 @@
 <span id="id1"></span><h1>复合列类型<a class="headerlink" href="#mapper-composite" title="Permalink to this heading">¶</a></h1>
 <p>一组列可以与一个用户定义的数据类型相关联，现代用法通常是一个 Python <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclass</a>。ORM
 提供了一个单一的属性来表示使用您提供的类的一组列。</p>
-<p>一个简单的例子表示   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>  列对的 <code class="docutils literal notranslate"><span class="pre">Point</span></code> 对象，使用属性 <code class="docutils literal notranslate"><span class="pre">.x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.y</span></code>。
+<p>一个简单的例子表示   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a>  列对的 ` <cite>Point`</cite> 对象，使用属性 <code class="docutils literal notranslate"><span class="pre">.x</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.y</span></code>。
 使用一个 dataclass，这些属性使用相应的 <code class="docutils literal notranslate"><span class="pre">int</span></code> Python 类型进行定义:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
 
@@ -254,10 +254,10 @@ from the composite class.</p>
 使用   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造映射列。</p>
 <p>下面示例说明了最现代的形式   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> ，如
 与完全使用的   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">Annotated Declarative Table</span></a>  配置。
-每个构成列的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造传递到   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> ，
+每个构成列的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造传递到   :func:` _orm.composite` ，
 指示要生成的列的零个或多个方面，在本例中为名称；</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造从 dataclass 直接派生列类型（在本例中为 <code class="docutils literal notranslate"><span class="pre">int</span></code>，对应于   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a> ）:</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造从 dataclass 直接派生列类型（在本例中为 ` <cite>int`</cite>，对应于   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Integer" title="sqlalchemy.types.Integer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Integer</span></code></a> ）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span><span class="p">,</span> <span class="n">Mapped</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">composite</span><span class="p">,</span> <span class="n">mapped_column</span>
 
@@ -314,10 +314,10 @@ from the composite class.</p>
 </li>
 <li><p><strong>选择其他 Point 对象作为列</strong></p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  将允许 <code class="docutils literal notranslate"><span class="pre">Vertex.start</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Vertex.end</span></code></p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  将允许 ` <cite>Vertex.start`</cite> 和 <code class="docutils literal notranslate"><span class="pre">Vertex.end</span></code></p>
 </div></blockquote>
 <dl class="simple">
-<dt>行为像单个 SQL 表达式一样，在使用 ORM 的情况下尽可能多地使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  （包括旧版</dt><dd><p><a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象）来选择 <code class="docutils literal notranslate"><span class="pre">Point</span></code> 对象：</p>
+<dt>行为像单个 SQL 表达式一样，在使用 ORM 的情况下尽可能多地使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  （包括旧版</dt><dd><p><a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象）来选择 ` <cite>Point`</cite> 对象：</p>
 </dd>
 </dl>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Vertex</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
@@ -376,13 +376,13 @@ to the already-present support for <code class="docutils literal notranslate"><s
 <section id="orm-composite-other-forms">
 <span id="id3"></span><h2>其他复合形式的映射<a class="headerlink" href="#orm-composite-other-forms" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造，一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，或者现有映射的字符串名称等相关列。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造可以使用   :func:` _orm.mapped_column`  构造，一个   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，或者现有映射的字符串名称等相关列。</p>
 </div></blockquote>
 <p>下面的示例说明了与主要部分相同的等效映射形式。</p>
 <ul>
 <li><p>直接映射列，然后将其传递给复合</p>
 <dl class="simple">
-<dt>在这里，我们将现有的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  实例传递给</dt><dd><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造，如下例所示，其中还会传递 <code class="docutils literal notranslate"><span class="pre">Point</span></code> 类，作为   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a></p>
+<dt>在这里，我们将现有的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  实例传递给</dt><dd><p><a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a>  构造，如下例所示，其中还会传递 ` <cite>Point`</cite> 类，作为   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a></p>
 </dd>
 </dl>
 <p>的第一个参数:</p>
@@ -423,7 +423,7 @@ to the already-present support for <code class="docutils literal notranslate"><s
 </div>
 </li>
 <li><p>命令式映射和命令式表</p>
-<p>当使用   <a class="reference internal" href="declarative_tables.html#orm-imperative-table-configuration"><span class="std std-ref">imperative table</span></a>  或完全   <a class="reference internal" href="mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">imperative</span></a>  映射时，我们可以直接访问   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象。
+<p>当使用   <a class="reference internal" href="declarative_tables.html#orm-imperative-table-configuration"><span class="std std-ref">imperative table</span></a>  或完全   :ref:` imperative &lt;orm_imperative_mapping&gt;`  映射时，我们可以直接访问   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象。
 这些也可以传递给   <a class="reference internal" href="#sqlalchemy.orm.composite" title="sqlalchemy.orm.composite"><code class="xref py py-func docutils literal notranslate"><span class="pre">composite()</span></code></a> ，如下面的命令示例所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
     <span class="n">Vertex</span><span class="p">,</span>
@@ -710,7 +710,7 @@ should be marked as keyword-only when generating the <code class="docutils liter
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:55
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

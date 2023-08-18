@@ -135,20 +135,20 @@
 <li><span class="link-container"><a class="reference external" href="#unitofwork-transaction">管理事务</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#savepoint">使用 SAVEPOINT</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm-session-vs-engine">会话级和引擎级事务控制</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id6">随时提交</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id7">只开始一次</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id8">嵌套事务</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">随时提交</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id5">只开始一次</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">嵌套事务</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#session-explicit-begin">显式开始</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#two-phase-commit">启用双阶段提交（two-phase commit）机制</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#dbapi-autocommit">设置事务隔离级别 / DBAPI_AUTOCOMMIT</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sessionmaker-engine-wide">为Sessionmaker / Engine Wide设置隔离</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id32">为单独的会话设置隔离</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id35">为独立事务设置隔离</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id12">为单独的会话设置隔离</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id13">为独立事务设置隔离</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#id38">使用事件跟踪事务状态</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id14">使用事件跟踪事务状态</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#session-external-transaction">加入外部事务的会话（例如用于测试套件）</a></span></li>
@@ -219,20 +219,20 @@
 <li><a class="reference internal" href="#unitofwork-transaction">管理事务</a><ul>
 <li><a class="reference internal" href="#savepoint">使用 SAVEPOINT</a></li>
 <li><a class="reference internal" href="#orm-session-vs-engine">会话级和引擎级事务控制</a><ul>
-<li><a class="reference internal" href="#id6">随时提交</a></li>
-<li><a class="reference internal" href="#id7">只开始一次</a></li>
-<li><a class="reference internal" href="#id8">嵌套事务</a></li>
+<li><a class="reference internal" href="#id4">随时提交</a></li>
+<li><a class="reference internal" href="#id5">只开始一次</a></li>
+<li><a class="reference internal" href="#id6">嵌套事务</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#session-explicit-begin">显式开始</a></li>
 <li><a class="reference internal" href="#two-phase-commit">启用双阶段提交（two-phase commit）机制</a></li>
 <li><a class="reference internal" href="#dbapi-autocommit">设置事务隔离级别 / DBAPI_AUTOCOMMIT</a><ul>
 <li><a class="reference internal" href="#sessionmaker-engine-wide">为Sessionmaker / Engine Wide设置隔离</a></li>
-<li><a class="reference internal" href="#id32">为单独的会话设置隔离</a></li>
-<li><a class="reference internal" href="#id35">为独立事务设置隔离</a></li>
+<li><a class="reference internal" href="#id12">为单独的会话设置隔离</a></li>
+<li><a class="reference internal" href="#id13">为独立事务设置隔离</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id38">使用事件跟踪事务状态</a></li>
+<li><a class="reference internal" href="#id14">使用事件跟踪事务状态</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#session-external-transaction">加入外部事务的会话（例如用于测试套件）</a></li>
@@ -255,9 +255,9 @@
 <span id="id2"></span><h2>管理事务<a class="headerlink" href="#unitofwork-transaction" title="Permalink to this heading">¶</a></h2>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4: </span>会话事务管理已经得到了修订，使其更加清晰和易于使用。特别是，现在支持“自动开始”操作，这意味着可以控制事务开始的时间，而不需要使用传统的“自动提交”模式。</p>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  在任何时候跟踪单个“虚拟”事务的状态，使用一个名为   <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  的对象。然后，该对象利用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象绑定到的底层   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  或引擎，在需要时使用   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象开始实际的连接级事务。</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  在任何时候跟踪单个“虚拟”事务的状态，使用一个名为   :class:` _orm.SessionTransaction`  的对象。然后，该对象利用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象绑定到的底层   :class:` _engine.Engine`  或引擎，在需要时使用   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象开始实际的连接级事务。</p>
 </div>
-<p>这个“虚拟”事务将在需要时自动创建，或者可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>  方法启动。尽可能地支持 Python 上下文管理器用于创建   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象以及维护   <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  的范围。</p>
+<p>这个“虚拟”事务将在需要时自动创建，或者可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>  方法启动。尽可能地支持 Python 上下文管理器用于创建   :class:` _orm.Session`  对象以及维护   <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  的范围。</p>
 <p>下面假设我们从一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  开始：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import Session</p>
@@ -274,7 +274,7 @@ session.add(some_other_object())</p>
 </div></blockquote>
 <p>在上述上下文中，假设没有引发异常，则任何待处理的对象都将刷新到数据库中，并且数据库事务将提交。如果在上面的块中引发了异常，则将回滚事务。在两种情况下，上述   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  在退出块之后准备好用于后续事务。</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>   方法是可选的，还可以使用逐个提交的方法来使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，其中它会根据需要自动开始事务；这些只需要提交或回滚：</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>   方法是可选的，还可以使用逐个提交的方法来使用   :class:` _orm.Session` ，其中它会根据需要自动开始事务；这些只需要提交或回滚：</p>
 <blockquote>
 <div><p>session = Session(engine)</p>
 <p>session.add(some_object())
@@ -288,7 +288,7 @@ session.commit()  # 提交</p>
 session.flush()  # 刷新 still_another_object
 session.rollback()  # 回滚 still_another_object</p>
 </div></blockquote>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  本身具有  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>  方法。如果在尚未提交或回滚的事务内开始了   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，则该方法将取消该事务（即回滚），并且还将清除   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象状态中包含的所有对象。如果以这种方式使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，即不能保证调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> （例如不在上下文管理器或类似的工具中），则可使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">close</span></code>  方法释放所有资源：</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  本身具有  :meth:` _orm.Session.close`  方法。如果在尚未提交或回滚的事务内开始了   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，则该方法将取消该事务（即回滚），并且还将清除   :class:` _orm.Session`  对象状态中包含的所有对象。如果以这种方式使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，即不能保证调用  :meth:` _orm.Session.commit`  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> （例如不在上下文管理器或类似的工具中），则可使用   :class:` _orm.Session.close`  方法释放所有资源：</p>
 <blockquote>
 <div><p># 取消 (rollback) 所有事务，释放所有对象
 # (包括那些未提交的)，释放所有数据库连接到它们的
@@ -296,7 +296,7 @@ session.rollback()  # 回滚 still_another_object</p>
 session.close()</p>
 </div></blockquote>
 </div></blockquote>
-<p>最后，会话构造 / 关闭过程本身也可以通过上下文管理器运行。这是确保   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象使用范围在固定块中作用域的最佳方式。首先通过   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  构造函数进行说明：</p>
+<p>最后，会话构造 / 关闭过程本身也可以通过上下文管理器运行。这是确保   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象使用范围在固定块中作用域的最佳方式。首先通过   :class:` _orm.Session`  构造函数进行说明：</p>
 <blockquote>
 <div><dl>
 <dt>with Session(engine) as session:</dt><dd><p>session.add(some_object())
@@ -324,7 +324,7 @@ session.flush()  # 刷新 still_another_object</p>
 </dl>
 <p># 关闭 Session</p>
 </div></blockquote>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  本身包括一个  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sessionmaker.begin()</span></code>  方法，允许同时执行两个操作：</p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  本身包括一个  :meth:` _orm.sessionmaker.begin`  方法，允许同时执行两个操作：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>with Session.begin() as session:</dt><dd><p>session.add(some_object)</p>
@@ -347,7 +347,7 @@ nested.rollback()  # 回滚 u3，保留 u1 和 u2</p>
 </dl>
 <p># 提交 u1 和 u2</p>
 </div></blockquote>
-<p>每次调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  时，都会在当前数据库事务的范围内（如果尚未启动则开始）向数据库发出新的“BEGIN SAVEPOINT”命令，并返回一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  类型的对象，该对象表示对此 SAVEPOINT 的句柄。当开始一个新的范围嵌套  <code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionTransaction.commit()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionTransaction.rollback()</span></code>  在上下文器内部或直接调用这些方法时，在 SAVEPOINT 句柄范围内开始的真正的传统事务将被提交或回滚，直到达到顶层范围的真正结束为止。在这个对象上调用``.commit()``方法时，会向数据库发出“RELEASE SAVEPOINT”的命令，而如果调用``.rollback()``方法，则会发出“ROLLBACK TO SAVEPOINT”的命令。包含的数据库事务仍在进行中。</p>
+<p>每次调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  时，都会在当前数据库事务的范围内（如果尚未启动则开始）向数据库发出新的“BEGIN SAVEPOINT”命令，并返回一个   :class:` _orm.SessionTransaction`  类型的对象，该对象表示对此 SAVEPOINT 的句柄。当开始一个新的范围嵌套  <code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionTransaction.commit()</span></code>  或  :meth:` _orm.SessionTransaction.rollback`  在上下文器内部或直接调用这些方法时，在 SAVEPOINT 句柄范围内开始的真正的传统事务将被提交或回滚，直到达到顶层范围的真正结束为止。在这个对象上调用``.commit()``方法时，会向数据库发出“RELEASE SAVEPOINT”的命令，而如果调用``.rollback()``方法，则会发出“ROLLBACK TO SAVEPOINT”的命令。包含的数据库事务仍在进行中。</p>
 <blockquote>
 <div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  通常用作上下文管理器，在其中可以捕获特定的每个实例错误，结合针对该事务状态的回滚来使用，而不会回滚整个事务，例如下面的示例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">records</span><span class="p">:</span>
@@ -359,8 +359,8 @@ nested.rollback()  # 回滚 u3，保留 u1 和 u2</p>
 <span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
 </div>
 </div></blockquote>
-<p>当由  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  产生的上下文管理器完成时，它会“提交”保存点，其中包括刷新所有挂起状态的常规行为。当发生错误时，则会回滚保存点，并将更改的对象的本地   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  状态过期。</p>
-<p>对于 PostgreSQL 和捕获 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>.IntegrityError`的异常以检测重复行的情况，此模式非常理想。在 PostgreSQL 中，当引发此类错误时，通常会中止整个事务，但使用 SAVEPOINT 时，外部事务得以维持。在下面的示例中，将一组数据持久保存到数据库中，并跳过偶尔出现的“重复主键”记录，而不回滚整个操作：</p>
+<p>当由  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  产生的上下文管理器完成时，它会“提交”保存点，其中包括刷新所有挂起状态的常规行为。当发生错误时，则会回滚保存点，并将更改的对象的本地   :class:` _orm.Session`  状态过期。</p>
+<p>对于 PostgreSQL 和捕获 <a class="reference internal" href="../core/exceptions.html#sqlalchemy.exc.IntegrityError" title="sqlalchemy.exc.IntegrityError"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntegrityError</span></code></a> 的异常以检测重复行的情况，此模式非常理想。在 PostgreSQL 中，当引发此类错误时，通常会中止整个事务，但使用 SAVEPOINT 时，外部事务得以维持。在下面的示例中，将一组数据持久保存到数据库中，并跳过偶尔出现的“重复主键”记录，而不回滚整个操作：</p>
 <blockquote>
 <div><p>from sqlalchemy import exc</p>
 <dl class="simple">
@@ -380,7 +380,7 @@ session.add(obj)</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>当调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  时，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  首先将当前所有挂起状态刷新到数据库中；这不受  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autoflush</span></code>  参数值的影响，该参数通常可以用于禁用自动刷新。这种行为的理由是，在嵌套事务发生回滚时，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  可以使范围内创建的任何内存状态过期，同时确保当刷新这些过期对象时，开始 SAVEPOINT 之前的对象图的状态将可从数据库重新加载。</p>
+<p>当调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  时，  :class:` _orm.Session`  首先将当前所有挂起状态刷新到数据库中；这不受  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autoflush</span></code>  参数值的影响，该参数通常可以用于禁用自动刷新。这种行为的理由是，在嵌套事务发生回滚时，  :class:` _orm.Session`  可以使范围内创建的任何内存状态过期，同时确保当刷新这些过期对象时，开始 SAVEPOINT 之前的对象图的状态将可从数据库重新加载。</p>
 <p>在现代版本的 SQLAlchemy 中，当由  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  发起的 SAVEPOINT 被回滚时，与 SAVEPOINT 创建后进行修改的内存中对象状态过期，但自 SAVEPOINT 开始后未被修改的其他对象状态将保持不变。这样，就可以使后续操作继续利用未受影响的数据，而无需将其从数据库中刷新。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -388,8 +388,8 @@ session.add(obj)</p>
 </div>
 </section>
 <section id="orm-session-vs-engine">
-<span id="id5"></span><h3>会话级和引擎级事务控制<a class="headerlink" href="#orm-session-vs-engine" title="Permalink to this heading">¶</a></h3>
-<p>Core 中的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  和 ORM 中的   <code class="xref py py-class docutils literal notranslate"><span class="pre">_session.Session</span></code>  具有等效的事务语义，分别在  <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  vs.   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  和   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  vs.   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  的级别上。以下部分详细说明了这些情况的各个方面，基于以下方案：</p>
+<span id="id3"></span><h3>会话级和引擎级事务控制<a class="headerlink" href="#orm-session-vs-engine" title="Permalink to this heading">¶</a></h3>
+<p>Core 中的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  和 ORM 中的   :class:` _session.Session`  具有等效的事务语义，分别在  <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  vs.   :class:` _engine.Engine`  和   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  vs.   :class:` _engine.Connection`  的级别上。以下部分详细说明了这些情况的各个方面，基于以下方案：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>ORM                                           Core
 -----------------------------------------     -----------------------------------
 sessionmaker                                  Engine
@@ -400,10 +400,10 @@ with some_sessionmaker() as session:          with some_engine.connect() as conn
 with some_sessionmaker.begin() as session:    with some_engine.begin() as conn:
 with some_session.begin_nested() as sp:       with some_connection.begin_nested() as sp:</pre></div>
 </div>
-<section id="id6">
-<h4>随时提交<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
+<section id="id4">
+<h4>随时提交<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h4>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  都具有  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  和  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>  方法。使用 SQLAlchemy 2.0 样式的操作，这些方法在所有情况下都会影响最外层的事务。对于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，假定  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autobegin</span></code>  的默认值为 <code class="docutils literal notranslate"><span class="pre">True</span></code>。</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和   :class:` _engine.Connection`  都具有  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  和  :meth:` _engine.Connection.rollback`  方法。使用 SQLAlchemy 2.0 样式的操作，这些方法在所有情况下都会影响最外层的事务。对于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，假定  :paramref:` _orm.Session.autobegin`  的默认值为 <code class="docutils literal notranslate"><span class="pre">True</span></code>。</p>
 <p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://user:pass@host/dbname&quot;</span><span class="p">)</span>
 
@@ -433,10 +433,10 @@ with some_session.begin_nested() as sp:       with some_connection.begin_nested(
 </div>
 </div></blockquote>
 </section>
-<section id="id7">
-<h4>只开始一次<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h4>
+<section id="id5">
+<h4>只开始一次<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h4>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  方法，该方法将实例化SQL执行对象（分别是  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ），然后返回一个上下文管理器以维护此对象的事务上下文(commit/rollback)。</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  方法，该方法将实例化SQL执行对象（分别是  :class:` _orm.Session` ），然后返回一个上下文管理器以维护此对象的事务上下文(commit/rollback)。</p>
 </div></blockquote>
 <p>Engine:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://user:pass@host/dbname&quot;</span><span class="p">)</span>
@@ -466,11 +466,11 @@ with some_session.begin_nested() as sp:       with some_connection.begin_nested(
 <span class="c1"># 自动提交并关闭连接</span></pre></div>
 </div>
 </section>
-<section id="id8">
-<h4>嵌套事务<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h4>
-<p>在使用SAVEPOINT时，需通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  或  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.begin_nested" title="sqlalchemy.engine.Connection.begin_nested"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin_nested()</span></code></a>  方法。
+<section id="id6">
+<h4>嵌套事务<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
+<p>在使用SAVEPOINT时，需通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin_nested()</span></code>  或  :meth:` _engine.Connection.begin_nested`  方法。
 返回的事务对象用于提交或回滚SAVEPOINT。
-调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  或  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  方法始终会提交最外层的事务。这是Sqlalchemy 2.0 的特定行为，与之前版本（1.x）相反。</p>
+调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  或  :meth:` _engine.Connection.commit`  方法始终会提交最外层的事务。这是Sqlalchemy 2.0 的特定行为，与之前版本（1.x）相反。</p>
 <p>Engine:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://user:pass@host/dbname&quot;</span><span class="p">)</span>
 
@@ -505,9 +505,9 @@ with some_session.begin_nested() as sp:       with some_connection.begin_nested(
 </section>
 </section>
 <section id="session-explicit-begin">
-<span id="id9"></span><h3>显式开始<a class="headerlink" href="#session-explicit-begin" title="Permalink to this heading">¶</a></h3>
+<span id="id7"></span><h3>显式开始<a class="headerlink" href="#session-explicit-begin" title="Permalink to this heading">¶</a></h3>
 <dl>
-<dt>默认情况下，当ORM Session 执行操作时，会自动创建  <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  时完成。而在一些框架集成的场景中，需要手动控制”开始”操作的时机。为了满足这个需求，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  使用”autobegin”策略。</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>  方法可以在没有已开始的事务的情况下，直接对 :class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_orm.Session`进行调用。例如:</p>
+<dt>默认情况下，当ORM Session 执行操作时，会自动创建  <code class="xref py py-class docutils literal notranslate"><span class="pre">SessionTransaction</span></code>  时完成。而在一些框架集成的场景中，需要手动控制”开始”操作的时机。为了满足这个需求，  :class:` _orm.Session`  使用”autobegin”策略。</dt><dd><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>  方法可以在没有已开始的事务的情况下，直接对 :class:` _orm.Session`进行调用。例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 <span class="n">session</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
@@ -535,7 +535,7 @@ with some_session.begin_nested() as sp:       with some_connection.begin_nested(
 <span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="n">_orm</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">begin</span><span class="err">`</span>  <span class="n">方法和Session的</span><span class="s2">&quot;autobegin&quot;</span><span class="n">过程使用相同的步骤来开始事务</span><span class="err">。</span></pre></div>
 </div>
 <p>这包括当执行时调用  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.after_transaction_create" title="sqlalchemy.orm.SessionEvents.after_transaction_create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.after_transaction_create()</span></code></a>  事件。
-在框架中使用此钩子，可以将其自身的事务处理过程与ORM :class:<a href="#id12"><span class="problematic" id="id13">`</span></a>_orm.Session`集成。</p>
+在框架中使用此钩子，可以将其自身的事务处理过程与ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 集成。</p>
 </section>
 <section id="two-phase-commit">
 <span id="session-twophase"></span><h3>启用双阶段提交（two-phase commit）机制<a class="headerlink" href="#two-phase-commit" title="Permalink to this heading">¶</a></h3>
@@ -562,14 +562,14 @@ with some_session.begin_nested() as sp:       with some_connection.begin_nested(
 <p>大多数 DBAPI 都支持配置事务隔离级别。可能需要了解更多关于DBAPI 隔离级别的相关知识后使用。传统上有四个等级：”READ UNCOMMITTED”，”READ COMMITTED”, “REPEATABLE READ”和”SERIALIZABLE”。这些通常在一个DBAPI连接在开始新事务之前应用，注意大多数DBAPI在第一次发出SQL语句时会隐式开始这个事务。</p>
 <p>支持隔离级别的DBAPI通常也支持真正的”自动提交”概念，这意味着DBAPI连接本身将被放置在非事务性的自动提交模式下。这通常意味着发出”BEGIN”到数据库的典型DBAPI行为不再发生，但它也可能包括其他指令。在使用此模式时，<strong>DBAPI在任何情况下都不使用事务</strong>。SQLAlchemy像``.begin()``, <code class="docutils literal notranslate"><span class="pre">.commit()``和</span></code>.rollback()``之类的方法会被静默地跳过。</p>
 <p>SQLAlchemy的方言支持在每个  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  级别的标志。</p>
-<p>在使用ORM :class:<a href="#id14"><span class="problematic" id="id15">`</span></a>~sqlalchemy.orm.session.Session`时，它充当引擎和连接的*facade*，但不直接暴露事务隔离。因此，为了影响事务隔离级别，我们需要根据情况对 :class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_engine.Engine`或 :class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_engine.Connection`采取行动。</p>
+<p>在使用ORM <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 时，它充当引擎和连接的*facade*，但不直接暴露事务隔离。因此，为了影响事务隔离级别，我们需要根据情况对 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 或 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 采取行动。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a>  - 请务必查看isolation levels如何在SQLAlchemy  :class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_engine.Connection`对象级别工作。</p>
+<p><a class="reference internal" href="../core/connections.html#dbapi-autocommit"><span class="std std-ref">设置事务隔离级别，包括 DBAPI 自动提交</span></a>  - 请务必查看isolation levels如何在SQLAlchemy  :class:` _engine.Connection`对象级别工作。</p>
 </div>
 <section id="sessionmaker-engine-wide">
 <span id="session-transaction-isolation-enginewide"></span><h4>为Sessionmaker / Engine Wide设置隔离<a class="headerlink" href="#sessionmaker-engine-wide" title="Permalink to this heading">¶</a></h4>
-<p>要全局设置特定的隔离级别，第一种技术是：可以构造针对所有情况具有特定隔离级别的  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，然后将其用作 :class:<a href="#id22"><span class="problematic" id="id23">`</span></a>_orm.Session`和/或 :class:<a href="#id24"><span class="problematic" id="id25">`</span></a>_orm.sessionmaker`的连接源：</p>
+<p>要全局设置特定的隔离级别，第一种技术是：可以构造针对所有情况具有特定隔离级别的  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，然后将其用作 :class:` _orm.Session`和/或 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 的连接源：</p>
 <blockquote>
 <div><p>from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker</p>
@@ -581,7 +581,7 @@ isolation_level=”REPEATABLE READ”,</p>
 <p>)</p>
 <p>Session = sessionmaker(eng)</p>
 </div></blockquote>
-<p>另一个选项是，如果有两个具有不同隔离级别的引擎，可以使用  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>  方法，它将生成原始 :class:<a href="#id26"><span class="problematic" id="id27">`</span></a>_engine.Engine`的浅拷贝，该引擎与主引擎共享相同的连接池。当操作将被分为“事务”和“自动提交”操作时，这通常是更可取的：</p>
+<p>另一个选项是，如果有两个具有不同隔离级别的引擎，可以使用  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>  方法，它将生成原始 :class:` _engine.Engine`的浅拷贝，该引擎与主引擎共享相同的连接池。当操作将被分为“事务”和“自动提交”操作时，这通常是更可取的：</p>
 <blockquote>
 <div><p>from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker</p>
@@ -590,8 +590,8 @@ from sqlalchemy.orm import sessionmaker</p>
 <p>transactional_session = sessionmaker(eng)
 autocommit_session = sessionmaker(autocommit_engine)</p>
 </div></blockquote>
-<p>上面， “<code class="docutils literal notranslate"><span class="pre">eng</span></code>” 和 <code class="docutils literal notranslate"><span class="pre">&quot;autocommit_engine&quot;``共享相同的方言和连接池。但是，当从``autocommit_engine``获得连接时，将设置&quot;AUTOCOMMIT&quot;模式。然后，这两个</span>&#160; <span class="pre">:class:`_orm.sessionmaker`</span> <span class="pre">`transactional_session</span></code>”和”<a href="#id28"><span class="problematic" id="id29">`</span></a>autocommit_session”<a href="#id30"><span class="problematic" id="id31">``</span></a>在使用数据库连接时继承这些特性。</p>
-<p>“<code class="docutils literal notranslate"><span class="pre">autocommit_session</span></code>”仍具有事务语义，包括  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  仍然认为它们在”committing”和”rolling back”对象，但事务将被静默地忽略。因此，<strong>通常情况下，但不是严格要求，一个具有AUTOCOMMIT隔离的会话以只读方式使用</strong>，即：</p>
+<p>上面， “<code class="docutils literal notranslate"><span class="pre">eng</span></code>” 和 <code class="docutils literal notranslate"><span class="pre">&quot;autocommit_engine&quot;``共享相同的方言和连接池。但是，当从``autocommit_engine``获得连接时，将设置&quot;AUTOCOMMIT&quot;模式。然后，这两个</span>&#160; <span class="pre">:class:`_orm.sessionmaker`</span> <span class="pre">`</span> <span class="pre">transactional_session</span></code>”和”<a href="#id8"><span class="problematic" id="id9">`</span></a>autocommit_session”<a href="#id10"><span class="problematic" id="id11">``</span></a>在使用数据库连接时继承这些特性。</p>
+<p>“<code class="docutils literal notranslate"><span class="pre">autocommit_session</span></code>”仍具有事务语义，包括  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  和  :meth:` _orm.Session.rollback`  仍然认为它们在”committing”和”rolling back”对象，但事务将被静默地忽略。因此，<strong>通常情况下，但不是严格要求，一个具有AUTOCOMMIT隔离的会话以只读方式使用</strong>，即：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>with autocommit_session() as session:</dt><dd><p>some_objects = session.execute(“&lt;statement&gt;”)
@@ -601,9 +601,9 @@ some_other_objects = session.execute(“&lt;statement&gt;”)</p>
 <p># closes connection</p>
 </div></blockquote>
 </section>
-<section id="id32">
-<h4>为单独的会话设置隔离<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h4>
-<p>当我们创建一个新的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，直接使用构造函数或当我们调用由  <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> .sessionmaker`创建我们的 :class:<a href="#id33"><span class="problematic" id="id34">`</span></a>_orm.Session`并传递设置为自动提交的引擎：</p>
+<section id="id12">
+<h4>为单独的会话设置隔离<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h4>
+<p>当我们创建一个新的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，直接使用构造函数或当我们调用由  :class:` .sessionmaker` .sessionmaker`创建我们的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 并传递设置为自动提交的引擎：</p>
 <blockquote>
 <div><p>plain_engine = create_engine(“postgresql+psycopg2://scott:tiger&#64;localhost/test”)</p>
 <p>autocommit_engine = plain_engine.execution_options(isolation_level=”AUTOCOMMIT”)</p>
@@ -616,7 +616,7 @@ with Session(bind=autocommit_engine) as session:</p>
 …</p>
 </div></blockquote>
 </div></blockquote>
-<p>对于配置有多个绑定的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker`的情况，我们可以重新指定完整的”binds”参数，或者如果我们只想替换特定的绑定，我们可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_mapper()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_table()</span></code>  方法：</p>
+<p>对于配置有多个绑定的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker` 的情况，我们可以重新指定完整的”binds”参数，或者如果我们只想替换特定的绑定，我们可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.bind_mapper()</span></code>  或  :meth:` .Session.bind_table`  方法：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>with Session() as session:</dt><dd><p>session.bind_mapper(User, autocommit_engine)</p>
@@ -624,10 +624,10 @@ with Session(bind=autocommit_engine) as session:</p>
 </dl>
 </div></blockquote>
 </section>
-<section id="id35">
-<h4>为独立事务设置隔离<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h4>
-<p>关于隔离级别的一个关键警告是，不能在已经有事务的 :class:<a href="#id36"><span class="problematic" id="id37">`</span></a>_engine.Connection`上安全地修改设置。开始。在进行的事务中，数据库无法更改隔离级别，某些DBAPI和SQLAlchemy方言在这个领域存在不一致的行为。</p>
-<p>因此最好使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，它可以提前绑定到具有所需隔离级别的引擎上。然而，可以通过在事务开始时使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  方法来影响每个连接的隔离级别:</p>
+<section id="id13">
+<h4>为独立事务设置隔离<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h4>
+<p>关于隔离级别的一个关键警告是，不能在已经有事务的 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 上安全地修改设置。开始。在进行的事务中，数据库无法更改隔离级别，某些DBAPI和SQLAlchemy方言在这个领域存在不一致的行为。</p>
+<p>因此最好使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，它可以提前绑定到具有所需隔离级别的引擎上。然而，可以通过在事务开始时使用  :meth:` _orm.Session.connection`  方法来影响每个连接的隔离级别:</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import Session</p>
 <p># 假设会话刚刚被构建
@@ -640,9 +640,9 @@ sess.connection(execution_options={“isolation_level”: “SERIALIZABLE”})</
 sess.commit()</p>
 <p># 在上面的 commit() 之后，可以开始新的事务，该事务将继续以先前的默认隔离级别进行，除非再次设置。</p>
 </div></blockquote>
-<p>上面，我们首先使用构造函数或者一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  来生成一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。然后，通过调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  来明确设置开始数据库级事务，该方法提供了执行选项，这些选项将在开始数据库级事务之前传递给连接。事务以所选隔离级别进行。当事务完成时，将在连接上重置隔离级别以恢复默认设置，然后再返回连接池。</p>
+<p>上面，我们首先使用构造函数或者一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code>  来生成一个   :class:` .Session` 。然后，通过调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  来明确设置开始数据库级事务，该方法提供了执行选项，这些选项将在开始数据库级事务之前传递给连接。事务以所选隔离级别进行。当事务完成时，将在连接上重置隔离级别以恢复默认设置，然后再返回连接池。</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>   方法也可用于开始   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  级别事务。在该调用之后使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  可用于设置每个连接的事务隔离级别:</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.begin()</span></code>   方法也可用于开始   :class:` _orm.Session`  级别事务。在该调用之后使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.connection()</span></code>  可用于设置每个连接的事务隔离级别:</p>
 <blockquote>
 <div><p>sess = Session(bind=engine)</p>
 <dl>
@@ -657,18 +657,18 @@ sess.connection(execution_options={“isolation_level”: “SERIALIZABLE”})</
 </div></blockquote>
 </section>
 </section>
-<section id="id38">
-<h3>使用事件跟踪事务状态<a class="headerlink" href="#id38" title="Permalink to this heading">¶</a></h3>
+<section id="id14">
+<h3>使用事件跟踪事务状态<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
 <p>请参见部分   <a class="reference internal" href="session_events.html#session-transaction-events"><span class="std std-ref">事务事件</span></a> ，了解可用的用于会话事务状态更改的事件挂钩的概述。</p>
 </section>
 </section>
 <section id="session-external-transaction">
-<span id="id39"></span><h2>加入外部事务的会话（例如用于测试套件）<a class="headerlink" href="#session-external-transaction" title="Permalink to this heading">¶</a></h2>
-<p>如果正在使用已处于事务状态（即已建立   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a> ）的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，则可以通过将   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  绑定到该   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，使   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  参与其中在此事务中。这样做的常见原因是测试套件，允许 ORM 代码自由地使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，包括调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  的能力，在此之后，整个数据库交互将被回滚。</p>
+<span id="id15"></span><h2>加入外部事务的会话（例如用于测试套件）<a class="headerlink" href="#session-external-transaction" title="Permalink to this heading">¶</a></h2>
+<p>如果正在使用已处于事务状态（即已建立   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a> ）的   :class:` _engine.Connection` ，则可以通过将   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  绑定到该   :class:` _engine.Connection` ，使   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  参与其中在此事务中。这样做的常见原因是测试套件，允许 ORM 代码自由地使用   :class:` .Session` ，包括调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  的能力，在此之后，整个数据库交互将被回滚。</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.0: </span>“加入外部事务” 的方法在 2.0 中得到了新的改进。不再需要 “重置” 嵌套事务的事件处理程序。</p>
 </div>
-<p>该方法的工作方式是在事务内部建立一个   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  并可选择一个 SAVEPOINT，然后将其传递给   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  作为 “bind”；通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.join_transaction_mode</span></code>  参数传递设置为 <code class="docutils literal notranslate"><span class="pre">&quot;create_savepoint&quot;</span></code>，指示应该创建新的 SAVEPOINT，以实现   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的 BEGIN/COMMIT/ROLLBACK，这将使外部事务保持在传递它时的相同状态。</p>
+<p>该方法的工作方式是在事务内部建立一个   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  并可选择一个 SAVEPOINT，然后将其传递给   :class:` _orm.Session`  作为 “bind”；通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.join_transaction_mode</span></code>  参数传递设置为 ` <cite>“create_savepoint”`</cite>，指示应该创建新的 SAVEPOINT，以实现   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的 BEGIN/COMMIT/ROLLBACK，这将使外部事务保持在传递它时的相同状态。</p>
 <p>当测试结束时，将回滚外部事务，以便撤消整个测试期间的任何数据更改:</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import sessionmaker
@@ -734,7 +734,7 @@ self.connection.close()</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:02
+    Documentation last generated: 2023/8/18 18:59:04
 
     </div>
 </div>

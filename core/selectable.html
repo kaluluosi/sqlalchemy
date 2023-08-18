@@ -899,7 +899,7 @@
         
 <section id="id1">
 <h1>选择和相关结构<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>“selectable”这个术语指代所有代表数据库行的对象。在SQLAlchemy中，这些对象从   <a class="reference internal" href="#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  继承，其中最显著的是   <a class="reference internal" href="#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> ，表示 SQL SELECT 语句。   <a class="reference internal" href="#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  的一个子集是   <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> ，表示可以在   <a class="reference internal" href="#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  语句的 FROM 子句中的对象。   <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a>  的一个显著特征是  <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause.c" title="sqlalchemy.sql.expression.FromClause.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FromClause.c</span></code></a>  属性，它是 FROM 子句中包含的所有列的名称空间（这些元素本身是   <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a>  子类）。</p>
+<p>“selectable”这个术语指代所有代表数据库行的对象。在SQLAlchemy中，这些对象从   <a class="reference internal" href="#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  继承，其中最显著的是   :class:` _expression.Select` ，表示 SQL SELECT 语句。   <a class="reference internal" href="#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  的一个子集是   :class:` _expression.FromClause` ，表示可以在   <a class="reference internal" href="#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  语句的 FROM 子句中的对象。   :class:` _expression.FromClause`  的一个显著特征是  <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause.c" title="sqlalchemy.sql.expression.FromClause.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FromClause.c</span></code></a>  属性，它是 FROM 子句中包含的所有列的名称空间（这些元素本身是   :class:` _expression.ColumnElement`  子类）。</p>
 <section id="selectable-foundational-constructors">
 <span id="id2"></span><h2>可选择的基础构造器<a class="headerlink" href="#selectable-foundational-constructors" title="Permalink to this heading">¶</a></h2>
 <p>顶级“FROM子句”和“SELECT”构造器。</p>
@@ -1168,7 +1168,7 @@ parameters.</p></li>
 </section>
 <section id="fromclause-modifier-constructors">
 <span id="id3"></span><h2>可选择的修饰符构造器<a class="headerlink" href="#fromclause-modifier-constructors" title="Permalink to this heading">¶</a></h2>
-<p>此处列出的函数通常作为   <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  元素的方法更常见，例如，   <a class="reference internal" href="#sqlalchemy.sql.expression.alias" title="sqlalchemy.sql.expression.alias"><code class="xref py py-func docutils literal notranslate"><span class="pre">alias()</span></code></a>  函数通常通过  <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause.alias" title="sqlalchemy.sql.expression.FromClause.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FromClause.alias()</span></code></a>  方法调用。</p>
+<p>此处列出的函数通常作为   <a class="reference internal" href="#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a>  和   :class:` _sql.Selectable`  元素的方法更常见，例如，   <a class="reference internal" href="#sqlalchemy.sql.expression.alias" title="sqlalchemy.sql.expression.alias"><code class="xref py py-func docutils literal notranslate"><span class="pre">alias()</span></code></a>  函数通常通过  :meth:` _sql.FromClause.alias`  方法调用。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -1371,7 +1371,7 @@ REPEATABLE sub-clause is also rendered.</p></li>
 </section>
 <section id="selectable">
 <h2>Selectable类文档<a class="headerlink" href="#selectable" title="Permalink to this heading">¶</a></h2>
-<p>这里的类是使用   <a class="reference internal" href="#selectable-foundational-constructors"><span class="std std-ref">可选择的基础构造器</span></a>  和   <a class="reference internal" href="#fromclause-modifier-constructors"><span class="std std-ref">可选择的修饰符构造器</span></a>  中列出的构造器生成的。</p>
+<p>这里的类是使用   <a class="reference internal" href="#selectable-foundational-constructors"><span class="std std-ref">可选择的基础构造器</span></a>  和   :ref:` fromclause_modifier_constructors`  中列出的构造器生成的。</p>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -9190,7 +9190,7 @@ less intrusive approach to disambiguation of same-named column expressions.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:48
+    Documentation last generated: 2023/8/18 18:58:48
 
     </div>
 </div>

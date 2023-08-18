@@ -250,14 +250,14 @@ bar = Column(String, primary_key=True)</p>
 <section id="id3">
 <h2>如何获取给定映射类的所有列，关系，映射属性等的列表？<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
 <p>所有这些信息都可以从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象中获得。</p>
-<p>要获取特定映射类的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，请在其上调用   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数:</p>
+<p>要获取特定映射类的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，请在其上调用   :func:` _sa.inspect`  函数:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
 
 <span class="n">mapper</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">MyClass</span><span class="p">)</span></pre></div>
 </div>
 <p>从那里，可以通过属性访问有关类的所有信息，例如：</p>
 <ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.attrs</span></code>  - 所有映射属性的名称空间。属性本身是   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.MapperProperty" title="sqlalchemy.orm.MapperProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapperProperty</span></code></a>  的实例，如果适用，</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.attrs</span></code>  - 所有映射属性的名称空间。属性本身是   :class:` .MapperProperty`  的实例，如果适用，</p></li>
 </ul>
 <blockquote>
 <div><p>它们包含可导致映射的 SQL 表达式或列的其他属性。</p>
@@ -265,18 +265,18 @@ bar = Column(String, primary_key=True)</p>
 <ul class="simple">
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.column_attrs</span></code>  - 映射属性名称空间</p></li>
 </ul>
-<p>涵盖列和SQL 表达式属性。您可能希望使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  直接获取   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象。</p>
+<p>涵盖列和SQL 表达式属性。您可能希望使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  直接获取   :class:` _schema.Column`  对象。</p>
 <ul class="simple">
 <li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.relationships</span></code>  - 所有关系属性的名称空间。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.all_orm_descriptors</span></code>  - 所有映射属性的名称空间，以及使用诸如   <a class="reference internal" href="../orm/extensions/hybrid.html#sqlalchemy.ext.hybrid.hybrid_property" title="sqlalchemy.ext.hybrid.hybrid_property"><code class="xref py py-class docutils literal notranslate"><span class="pre">hybrid_property</span></code></a> 、</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.all_orm_descriptors</span></code>  - 所有映射属性的名称空间，以及使用诸如   :class:` .hybrid_property` 、</p></li>
 </ul>
 <blockquote>
 <div><p><a class="reference internal" href="../orm/extensions/associationproxy.html#sqlalchemy.ext.associationproxy.AssociationProxy" title="sqlalchemy.ext.associationproxy.AssociationProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy</span></code></a>  等系统定义的用户定义属性。</p>
 </div></blockquote>
 <ul class="simple">
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  - 用于映射的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象和其他命名 SQL 表达式的名称空间。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code>  - 此映射器所映射到的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  或其他可选择项。</p></li>
-<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code>  - 与此映射器“本地”的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ;</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.columns</span></code>  - 用于映射的   :class:` _schema.Column`  对象和其他命名 SQL 表达式的名称空间。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code>  - 此映射器所映射到的   :class:` _schema.Table`  或其他可选择项。</p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code>  - 与此映射器“本地”的   :class:` _schema.Table` ;</p></li>
 </ul>
 <blockquote>
 <div><p>在使用继承将映射器映射到复合可选择项的情况下，这与  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.mapped_table</span></code>  不同。</p>
@@ -492,7 +492,7 @@ bar_id = Column(…)
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:52
+    Documentation last generated: 2023/8/18 18:58:52
 
     </div>
 </div>

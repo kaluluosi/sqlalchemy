@@ -134,7 +134,7 @@
 <li class="selected"><span class="link-container"><strong>列加载选项</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#orm-queryguide-column-deferral">使用列延迟选择要加载的列</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#load-only">使用“load_only()”减少加载列</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id17">与多个实体一起使用“load_only()”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id11">与多个实体一起使用“load_only()”</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm-queryguide-load-only-related">在相关对象和集合上使用 <code class="docutils literal notranslate"><span class="pre">load_only()</span></code></a></span></li>
 </ul>
 </li>
@@ -146,7 +146,7 @@
 <li><span class="link-container"><a class="reference external" href="#deferred-sql">使用 <code class="docutils literal notranslate"><span class="pre">deferred()</span></code> 用于命令式映射，映射 SQL 表达式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#undefer">使用 <code class="docutils literal notranslate"><span class="pre">undefer()</span></code> 来“急切”加载延迟列</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm-queryguide-deferred-group">按组加载待决列</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id29">使用通配符undefer</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id17">使用通配符undefer</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#mapper-level-raiseload">配置默认的 mapper-level “raiseload” 行为</a></span></li>
 </ul>
 </li>
@@ -223,7 +223,7 @@
 <li><a class="reference internal" href="#loading-columns">列加载选项</a><ul>
 <li><a class="reference internal" href="#orm-queryguide-column-deferral">使用列延迟选择要加载的列</a><ul>
 <li><a class="reference internal" href="#load-only">使用“load_only()”减少加载列</a><ul>
-<li><a class="reference internal" href="#id17">与多个实体一起使用“load_only()”</a></li>
+<li><a class="reference internal" href="#id11">与多个实体一起使用“load_only()”</a></li>
 <li><a class="reference internal" href="#orm-queryguide-load-only-related">在相关对象和集合上使用 <code class="docutils literal notranslate"><span class="pre">load_only()</span></code></a></li>
 </ul>
 </li>
@@ -235,7 +235,7 @@
 <li><a class="reference internal" href="#deferred-sql">使用 <code class="docutils literal notranslate"><span class="pre">deferred()</span></code> 用于命令式映射，映射 SQL 表达式</a></li>
 <li><a class="reference internal" href="#undefer">使用 <code class="docutils literal notranslate"><span class="pre">undefer()</span></code> 来“急切”加载延迟列</a></li>
 <li><a class="reference internal" href="#orm-queryguide-deferred-group">按组加载待决列</a></li>
-<li><a class="reference internal" href="#id29">使用通配符undefer</a></li>
+<li><a class="reference internal" href="#id17">使用通配符undefer</a></li>
 <li><a class="reference internal" href="#mapper-level-raiseload">配置默认的 mapper-level “raiseload” 行为</a></li>
 </ul>
 </li>
@@ -293,13 +293,13 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <p>本节中的大多数示例都说明**ORM加载器选项**。这些
 是传递给  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.options" title="sqlalchemy.sql.expression.Select.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.options()</span></code></a>  方法的小构造</p>
 <blockquote>
-<div><p>:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_sql.Select`对象，它们然后由ORM消耗</p>
+<div><p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象，它们然后由ORM消耗</p>
 </div></blockquote>
 <p>当对象编译为SQL字符串时。</p>
 <section id="load-only">
 <span id="orm-queryguide-load-only"></span><h3>使用“load_only()”减少加载列<a class="headerlink" href="#load-only" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p>:func:<a href="#id7"><span class="problematic" id="id8">`</span></a>_orm.load_only`加载器选项是载入对象时使用的最快的选项</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a> 加载器选项是载入对象时使用的最快的选项</p>
 </div></blockquote>
 <p>已知仅访问少量列。此选项接受可变数量的类绑定属性
 对象，指示应加载哪些映射为列的属性，其中
@@ -340,25 +340,25 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">WHERE book.id = ?</span>
 <span class="go">[...] (1,)</span></pre></div>
 </div>
-<p>无论其附加状态如何，惰性负载始终使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`发出来完成</span>
-<span class="pre">对象处于</span>&#160; <span class="pre">:term:`persistent</span></code>  状态。如果对象是  <span class="xref std std-term">detached</span>
-从任何 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>_orm.Session`中，该操作将失败，引发异常。</p>
+<p>无论其附加状态如何，惰性负载始终使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 发出来完成
+对象处于  <span class="xref std std-term">persistent</span>  状态。如果对象是  :term:` detached`
+从任何 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中，该操作将失败，引发异常。</p>
 <p>作为访问时的懒惰加载的替代方法，还可以配置延迟处理的列在访问时引发
-一个信息丰富的异常，无论其附加状态如何。当使用：func:<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.load_only`时
-可以使用：paramref:<a href="#id13"><span class="problematic" id="id14">`</span></a>_orm.load_only.raiseload`参数进行指示。
-有关背景和示例，请参见第：ref:<a href="#id15"><span class="problematic" id="id16">`</span></a>orm_queryguide_deferred_raiseload`节。</p>
+一个信息丰富的异常，无论其附加状态如何。当使用：func:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.load_only`时
+可以使用：paramref:<a href="#id7"><span class="problematic" id="id8">`</span></a>_orm.load_only.raiseload`参数进行指示。
+有关背景和示例，请参见第：ref:<a href="#id9"><span class="problematic" id="id10">`</span></a>orm_queryguide_deferred_raiseload`节。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>如其他地方所述，使用时无法使用懒加载
 <a class="reference internal" href="../extensions/asyncio.html"><span class="std std-ref">异步 I/O (asyncio)</span></a> 。</p>
 </div>
-<section id="id17">
-<h4>与多个实体一起使用“load_only()”<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h4>
+<section id="id11">
+<h4>与多个实体一起使用“load_only()”<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h4>
 <blockquote>
-<div><p>:func:<a href="#id18"><span class="problematic" id="id19">`</span></a>_orm.load_only`仅限于其属性列表中引用的单个实体</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a> 仅限于其属性列表中引用的单个实体</p>
 </div></blockquote>
 <dl class="simple">
-<dt>（当前不允许传递跨越多个实体的属性列表）。在下面的示例中，选择的内容</dt><dd><p>:func:<a href="#id20"><span class="problematic" id="id21">`</span></a>_orm.load_only`选项仅适用于“Book”实体。另一方面，“User”</p>
+<dt>（当前不允许传递跨越多个实体的属性列表）。在下面的示例中，选择的内容</dt><dd><p><a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a> 选项仅适用于“Book”实体。另一方面，“User”</p>
 </dd>
 </dl>
 <p>选择的实体不受影响；在生成的SELECT中，所有for“user_account”的列都存在，
@@ -381,8 +381,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div>
 </section>
 <section id="orm-queryguide-load-only-related">
-<span id="id22"></span><h4>在相关对象和集合上使用 <code class="docutils literal notranslate"><span class="pre">load_only()</span></code><a class="headerlink" href="#orm-queryguide-load-only-related" title="Permalink to this heading">¶</a></h4>
-<p>当使用   <span class="xref std std-ref">relationship loaders</span>  在控制相关对象的加载时，任何关系载入器的  <a class="reference internal" href="relationships.html#sqlalchemy.orm.Load.load_only" title="sqlalchemy.orm.Load.load_only"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.load_only()</span></code></a>  方法都可以用于在子实体上应用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  规则。在下面的示例中，我们使用了   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  来加载每个 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象上的相关 <code class="docutils literal notranslate"><span class="pre">books</span></code> 集合。通过在生成的选项对象上应用  <a class="reference internal" href="relationships.html#sqlalchemy.orm.Load.load_only" title="sqlalchemy.orm.Load.load_only"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.load_only()</span></code></a> ，当为关系加载对象时，生成的 SELECT 将仅参考 <code class="docutils literal notranslate"><span class="pre">title</span></code> 列，除了主键列：</p>
+<span id="id12"></span><h4>在相关对象和集合上使用 <code class="docutils literal notranslate"><span class="pre">load_only()</span></code><a class="headerlink" href="#orm-queryguide-load-only-related" title="Permalink to this heading">¶</a></h4>
+<p>当使用   <span class="xref std std-ref">relationship loaders</span>  在控制相关对象的加载时，任何关系载入器的  :meth:` .Load.load_only`  方法都可以用于在子实体上应用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  规则。在下面的示例中，我们使用了   :func:` _orm.selectinload`  来加载每个 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象上的相关 <code class="docutils literal notranslate"><span class="pre">books</span></code> 集合。通过在生成的选项对象上应用  <a class="reference internal" href="relationships.html#sqlalchemy.orm.Load.load_only" title="sqlalchemy.orm.Load.load_only"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Load.load_only()</span></code></a> ，当为关系加载对象时，生成的 SELECT 将仅参考 ` <cite>title`</cite> 列，除了主键列：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">selectinload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">books</span><span class="p">)</span><span class="o">.</span><span class="n">load_only</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
@@ -397,7 +397,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">{stop}Spongebob Squarepants   [&#39;100 Years of Krabby Patties&#39;, &#39;Sea Catch 22&#39;, &#39;The Sea Grapes of Wrath&#39;]</span>
 <span class="go">Sandy Cheeks   [&#39;A Nut Like No Other&#39;, &#39;Geodesic Domes: A Retrospective&#39;, &#39;Rocketry for Squirrels&#39;]</span></pre></div>
 </div>
-<p>可以同时应用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  到子实体上，而不需要为关系本身指定加载样式。如果我们不想改变 <code class="docutils literal notranslate"><span class="pre">User.books</span></code> 的默认加载方式，但仍要对 <code class="docutils literal notranslate"><span class="pre">Book</span></code> 应用 load only 规则，我们将使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">defaultload()</span></code>  选项进行链接，在这种情况下，将保留关系的默认加载样式 “lazy”，并将自定义的   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  规则应用于为每个 <code class="docutils literal notranslate"><span class="pre">User.books</span></code> 集合发出的 SELECT 语句：</p>
+<p>可以同时应用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  到子实体上，而不需要为关系本身指定加载样式。如果我们不想改变 ` <cite>User.books`</cite> 的默认加载方式，但仍要对 <code class="docutils literal notranslate"><span class="pre">Book</span></code> 应用 load only 规则，我们将使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">defaultload()</span></code>  选项进行链接，在这种情况下，将保留关系的默认加载样式 “lazy”，并将自定义的   :func:` _orm.load_only`  规则应用于为每个 <code class="docutils literal notranslate"><span class="pre">User.books</span></code> 集合发出的 SELECT 语句：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">defaultload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">defaultload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">books</span><span class="p">)</span><span class="o">.</span><span class="n">load_only</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">):</span>
@@ -421,7 +421,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <section id="defer">
 <span id="orm-queryguide-defer"></span><h3>使用 <code class="docutils literal notranslate"><span class="pre">defer()</span></code> 省略特定列<a class="headerlink" href="#defer" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  载入选项是   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  的更细粒度的替代方法，它允许将单个特定的列标记为 “不加载”。在下面的示例中，   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  直接应用于 <code class="docutils literal notranslate"><span class="pre">.cover_photo</span></code> 列，留下了所有其他列的行为不变：</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  载入选项是   :func:` _orm.load_only`  的更细粒度的替代方法，它允许将单个特定的列标记为 “不加载”。在下面的示例中，   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  直接应用于 ` <cite>.cover_photo`</cite> 列，留下了所有其他列的行为不变：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">defer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Book</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">owner_id</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">defer</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">cover_photo</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">books</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -436,7 +436,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">Rocketry for Squirrels: yet another summary</span></pre></div>
 </div>
 </div></blockquote>
-<p>与   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  一样，默认情况下未加载的列将在使用  <span class="xref std std-term">lazy loading</span>  时加载自己：</p>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  一样，默认情况下未加载的列将在使用  :term:` lazy loading`  时加载自己：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">img_data</span> <span class="o">=</span> <span class="n">books</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">cover_photo</span>
 <span class="go">{execsql}SELECT book.cover_photo AS book_cover_photo</span>
 <span class="go">FROM book</span>
@@ -444,14 +444,14 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">[...] (4,)</span></pre></div>
 </div>
 <p>可以在一个语句中使用多个   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  选项，以便将多个列标记为延迟加载。</p>
-<p>与   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  一样，  <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  选项会延迟加载的列还可以使用“raiseload”属性在访问时引发异常，而不是惰性加载。在下面的章节“:ref：<cite>orm_queryguide_deferred_raiseload</cite>”中给出了示例。</p>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  一样，  :func:` _orm.defer`  选项会延迟加载的列还可以使用“raiseload”属性在访问时引发异常，而不是惰性加载。在下面的章节“:ref：<cite>orm_queryguide_deferred_raiseload</cite>”中给出了示例。</p>
 <blockquote>
 <div></div></blockquote>
 </section>
 <section id="raiseload">
 <span id="orm-queryguide-deferred-raiseload"></span><h3>使用raiseload防止延迟列加载<a class="headerlink" href="#raiseload" title="Permalink to this heading">¶</a></h3>
-<p>在使用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  或   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  加载选项时，将对象上标记为deferred的属性具有默认行为何时首次访问，当前事务内将发出SELECT语句以加载它们的值。通常需要防止这种负载发生，而是在访问属性时引发异常，表示不期望为此列查询数据库。一个典型的场景是加载全部已知所需的列的对象以使操作继续进行，然后将它们传递到视图层中。在视图层内发出的任何其他SQL操作都应该被捕获，以便可以调整启动时的加载操作以适应该附加数据，而不是产生额外的惰性加载。</p>
-<p>对于此用例，   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  选项包括一个 boolean 参数  <a href="#id23"><span class="problematic" id="id24">:parg:`~_orm.defer.raiseload`</span></a>  ，当设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 时，将导致受影响的属性在访问时引发异常。在下面的示例中，将取消该:deferred列`.cover_photo`上的属性访问权限:</p>
+<p>在使用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  或   :func:` _orm.defer`  加载选项时，将对象上标记为deferred的属性具有默认行为何时首次访问，当前事务内将发出SELECT语句以加载它们的值。通常需要防止这种负载发生，而是在访问属性时引发异常，表示不期望为此列查询数据库。一个典型的场景是加载全部已知所需的列的对象以使操作继续进行，然后将它们传递到视图层中。在视图层内发出的任何其他SQL操作都应该被捕获，以便可以调整启动时的加载操作以适应该附加数据，而不是产生额外的惰性加载。</p>
+<p>对于此用例，   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  和   :func:` _orm.load_only`  选项包括一个 boolean 参数  <a href="#id13"><span class="problematic" id="id14">:parg:`~_orm.defer.raiseload`</span></a>  ，当设置为 ` <cite>True`</cite> 时，将导致受影响的属性在访问时引发异常。在下面的示例中，将取消该:deferred列`.cover_photo`上的属性访问权限:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
 <span class="go">...     select(Book).options(defer(Book.cover_photo, raiseload=True)).where(Book.id == 4)</span>
 <span class="go">... )</span>
@@ -464,7 +464,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">...</span>
 <span class="go">sqlalchemy.exc.InvalidRequestError: &#39;Book.cover_photo&#39; is not available due to raiseload=True</span></pre></div>
 </div>
-<p>当使用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  指定一组特定的未延迟的列时， <code class="docutils literal notranslate"><span class="pre">raiseload</span></code> 行为可能适用于剩余列，使用  <a class="reference internal" href="#sqlalchemy.orm.load_only.params.raiseload" title="sqlalchemy.orm.load_only"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">load_only.raiseload</span></code></a>  参数，该参数将应用于所有  <span class="xref std std-term">deferred attribute</span></p>
+<p>当使用   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  指定一组特定的未延迟的列时， ` <cite>raiseload`</cite> 行为可能适用于剩余列，使用  <a class="reference internal" href="#sqlalchemy.orm.load_only.params.raiseload" title="sqlalchemy.orm.load_only"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">load_only.raiseload</span></code></a>  参数，该参数将应用于所有  :term:` deferred attribute`</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">expunge_all</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
 <span class="go">...     select(Book).options(load_only(Book.title, raiseload=True)).where(Book.id == 5)</span>
@@ -480,7 +480,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>目前尚不能在一个语句中混合   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  选项，这些选项引用相同的实体以更改某些属性的 <code class="docutils literal notranslate"><span class="pre">raiseload</span></code> 行为；当前，这样做会产生属性的未定义加载行为。</p>
+<p>目前尚不能在一个语句中混合   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  和   :func:` _orm.defer`  选项，这些选项引用相同的实体以更改某些属性的 <code class="docutils literal notranslate"><span class="pre">raiseload</span></code> 行为；当前，这样做会产生属性的未定义加载行为。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -489,8 +489,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </section>
 </section>
 <section id="orm-queryguide-deferred-declarative">
-<span id="id25"></span><h2>配置映射的列缓期<a class="headerlink" href="#orm-queryguide-deferred-declarative" title="Permalink to this heading">¶</a></h2>
-<p>对于默认情况下不应在每个查询中无条件加载的列，可以将   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  功能作为映射列的默认行为。为了配置，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred</span></code>  参数。下面的示例说明了适用于 <code class="docutils literal notranslate"><span class="pre">Book</span></code> 的映射，将默认列延迟应用于 <code class="docutils literal notranslate"><span class="pre">summary</span></code> 和 <code class="docutils literal notranslate"><span class="pre">cover_photo</span></code> 列：</p>
+<span id="id15"></span><h2>配置映射的列缓期<a class="headerlink" href="#orm-queryguide-deferred-declarative" title="Permalink to this heading">¶</a></h2>
+<p>对于默认情况下不应在每个查询中无条件加载的列，可以将   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  功能作为映射列的默认行为。为了配置，使用   :func:` _orm.mapped_column`  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred</span></code>  参数。下面的示例说明了适用于 ` <cite>Book`</cite> 的映射，将默认列延迟应用于 <code class="docutils literal notranslate"><span class="pre">summary</span></code> 和 <code class="docutils literal notranslate"><span class="pre">cover_photo</span></code> 列：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;book&quot;</span>
 <span class="gp">... </span>    <span class="n">id</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -516,11 +516,11 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">WHERE book.id = ?</span>
 <span class="go">[...] (2,)</span></pre></div>
 </div>
-<p>与   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  加载器选项一样，映射器级别的延迟也包括一个 <code class="docutils literal notranslate"><span class="pre">raiseload</span></code> 选项。当没有其他选项时，由于行为发生，而不是延迟加载。这允许映射在某些列默认情况下不加载，而且不会在语句中使用显式指令的情况下懒惰地加载。请参阅   <a class="reference internal" href="#orm-queryguide-mapper-deferred-raiseload"><span class="std std-ref">配置默认的 mapper-level “raiseload” 行为</span></a>  部分，了解如何配置和使用此行为。</p>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a>  和   :func:` _orm.load_only`  加载器选项一样，映射器级别的延迟也包括一个 <code class="docutils literal notranslate"><span class="pre">raiseload</span></code> 选项。当没有其他选项时，由于行为发生，而不是延迟加载。这允许映射在某些列默认情况下不加载，而且不会在语句中使用显式指令的情况下懒惰地加载。请参阅   <a class="reference internal" href="#orm-queryguide-mapper-deferred-raiseload"><span class="std std-ref">配置默认的 mapper-level “raiseload” 行为</span></a>  部分，了解如何配置和使用此行为。</p>
 <section id="deferred-sql">
 <span id="orm-queryguide-deferred-imperative"></span><h3>使用 <code class="docutils literal notranslate"><span class="pre">deferred()</span></code> 用于命令式映射，映射 SQL 表达式<a class="headerlink" href="#deferred-sql" title="Permalink to this heading">¶</a></h3>
-<p>在引入   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造之前，   <a class="reference internal" href="#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  函数是早期的、更通用的“延迟列”映射指令。</p>
-<p>当配置 ORM 映射器时，可以使用   <a class="reference internal" href="#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  ，并接受任意 SQL 表达式或   <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象作为参数。因此，当使用非声明性   <a class="reference internal" href="../mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">imperative mappings</span></a>  时，它适用于传递到  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">map_imperatively.properties</span></code>  字典中：</p>
+<p>在引入   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造之前，   :func:` _orm.deferred`  函数是早期的、更通用的“延迟列”映射指令。</p>
+<p>当配置 ORM 映射器时，可以使用   <a class="reference internal" href="#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  ，并接受任意 SQL 表达式或   :class:` _schema.Column`  对象作为参数。因此，当使用非声明性   <a class="reference internal" href="../mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">imperative mappings</span></a>  时，它适用于传递到  :paramref:` _orm.registry.map_imperatively.properties`  字典中：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Blob</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
@@ -555,7 +555,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
     <span class="p">},</span>
 <span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>当映射的 SQL 表达式应该延迟加载时，   <a class="reference internal" href="#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  也可以用于替代   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  ：</p>
+<p>当映射的 SQL 表达式应该延迟加载时，   <a class="reference internal" href="#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  也可以用于替代   :func:` _orm.column_property`  ：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">deferred</span>
 
 
@@ -569,13 +569,13 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../mapped_sql_expr.html#mapper-column-property-sql-expressions"><span class="std std-ref">使用column_property</span></a> - 参见   <a class="reference internal" href="../mapped_sql_expr.html#mapper-sql-expressions"><span class="std std-ref">将SQL表达式映射为属性</span></a>  部分</p>
-<p><span class="xref std std-ref">orm_imperative_table_column_options</span> - 参见   <a class="reference internal" href="../declarative_tables.html"><span class="std std-ref">使用Declarative配置Table</span></a>  部分</p>
+<p><a class="reference internal" href="../mapped_sql_expr.html#mapper-column-property-sql-expressions"><span class="std std-ref">使用column_property</span></a> - 参见   :ref:` mapper_sql_expressions`  部分</p>
+<p><span class="xref std std-ref">orm_imperative_table_column_options</span> - 参见   :ref:` orm_declarative_table_config_toplevel`  部分</p>
 </div>
 </section>
 <section id="undefer">
 <h3>使用 <code class="docutils literal notranslate"><span class="pre">undefer()</span></code> 来“急切”加载延迟列<a class="headerlink" href="#undefer" title="Permalink to this heading">¶</a></h3>
-<p>默认情况下，如果某些列的映射已经被延迟，   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  选项将会导致任何一列被快速地加载，即与映射的所有其他列一起提前加载。例如，我们可以将   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  应用于以前映射中标记为延迟的 <code class="docutils literal notranslate"><span class="pre">Book.summary</span></code> 列：</p>
+<p>默认情况下，如果某些列的映射已经被延迟，   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  选项将会导致任何一列被快速地加载，即与映射的所有其他列一起提前加载。例如，我们可以将   :func:` _orm.undefer`  应用于以前映射中标记为延迟的 <code class="docutils literal notranslate"><span class="pre">Book.summary</span></code> 列：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">undefer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Book</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">undefer</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">summary</span><span class="p">)))</span>
 <span class="go">{execsql}SELECT book.id, book.owner_id, book.title, book.summary</span>
@@ -589,7 +589,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div>
 </section>
 <section id="orm-queryguide-deferred-group">
-<span id="id26"></span><h3>按组加载待决列<a class="headerlink" href="#orm-queryguide-deferred-group" title="Permalink to this heading">¶</a></h3>
+<span id="id16"></span><h3>按组加载待决列<a class="headerlink" href="#orm-queryguide-deferred-group" title="Permalink to this heading">¶</a></h3>
 <p>通常情况下，当映射了延迟属性时，在访问一个对象上的属性时，将仅加载该列，而不加载其他列，即使映射中具有其他标记为延迟的列。通常情况下，“延迟”属性是与一组属性共同加载的。在公共情况下，  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred_group</span></code>  参数可以使用，它接受一个任意的字符串，用于定义一组共同的要不加载的列 ：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;book&quot;</span>
@@ -619,7 +619,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">[...] (2,)</span></pre></div>
 </div>
 <p>使用 <code class="docutils literal notranslate"><span class="pre">undefer_group()</span></code> 按组取消加载延迟列
-=============================================如果在之前的章节中使用了  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred_group</span></code>  对延迟加载的列进行了配置，可以使用 :func:<a href="#id27"><span class="problematic" id="id28">`</span></a>_orm.undefer_group`选项一次指定整个组加载方式为立即加载，需要传递组的字符串名称:</p>
+=============================================如果在之前的章节中使用了  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred_group</span></code>  对延迟加载的列进行了配置，可以使用 :func:` _orm.undefer_group`选项一次指定整个组加载方式为立即加载，需要传递组的字符串名称:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">undefer_group</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
 <span class="go">...     select(Book).where(Book.id == 2).options(undefer_group(&quot;book_attrs&quot;))</span>
@@ -634,8 +634,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">img_data</span><span class="p">,</span> <span class="n">summary</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="n">cover_photo</span><span class="p">,</span> <span class="n">book</span><span class="o">.</span><span class="n">summary</span></pre></div>
 </div>
 </section>
-<section id="id29">
-<h3>使用通配符undefer<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
+<section id="id17">
+<h3>使用通配符undefer<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
 <p>ORM加载器的大多数选项都接受通配符表达式，用 “*” 表示，它表示将选项应用于所有相关属性。如果映射具有一系列延迟加载的列，则可以通过使用通配符一次性未定义所有这些列来引用它们，而无需使用组名:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Book</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Book</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">undefer</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)))</span>
 <div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="n">owner_id</span><span class="p">,</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="n">summary</span><span class="p">,</span><span class="w"> </span><span class="n">book</span><span class="p">.</span><span class="n">cover_photo</span>
@@ -647,8 +647,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </section>
 <section id="mapper-level-raiseload">
 <span id="orm-queryguide-mapper-deferred-raiseload"></span><h3>配置默认的 mapper-level “raiseload” 行为<a class="headerlink" href="#mapper-level-raiseload" title="Permalink to this heading">¶</a></h3>
-<p>首先介绍的   <a class="reference internal" href="#orm-queryguide-deferred-raiseload"><span class="std std-ref">使用raiseload防止延迟列加载</span></a>  “raiseload” 行为也可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred_raiseload</span></code>  参数作为默认的映射级别实现。
-使用此参数时，受影响的列将始终在访问时抛出异常，除非在查询时专门使用   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  或   <a class="reference internal" href="#sqlalchemy.orm.load_only" title="sqlalchemy.orm.load_only"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_only()</span></code></a>  取消延迟加载:</p>
+<p>首先介绍的   <a class="reference internal" href="#orm-queryguide-deferred-raiseload"><span class="std std-ref">使用raiseload防止延迟列加载</span></a>  “raiseload” 行为也可以使用   :func:` _orm.mapped_column`  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapped_column.deferred_raiseload</span></code>  参数作为默认的映射级别实现。
+使用此参数时，受影响的列将始终在访问时抛出异常，除非在查询时专门使用   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  或   :func:` _orm.load_only`  取消延迟加载:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Book</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="go">...     __tablename__ = &quot;book&quot;</span>
 <span class="go">...     id: Mapped[int] = mapped_column(primary_key=True)</span>
@@ -673,7 +673,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">...</span>
 <span class="go">sqlalchemy.exc.InvalidRequestError: &#39;Book.summary&#39; is not available due to raiseload=True</span></pre></div>
 </div>
-<p>只有通过在查询时重写其行为，通常使用   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  或   <a class="reference internal" href="#sqlalchemy.orm.undefer_group" title="sqlalchemy.orm.undefer_group"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer_group()</span></code></a> ，
+<p>只有通过在查询时重写其行为，通常使用   <a class="reference internal" href="#sqlalchemy.orm.undefer" title="sqlalchemy.orm.undefer"><code class="xref py py-func docutils literal notranslate"><span class="pre">undefer()</span></code></a>  或   :func:` _orm.undefer_group` ，
 或者不常规使用   <a class="reference internal" href="#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a> ，才能加载这些属性。
 下面的示例将 <code class="docutils literal notranslate"><span class="pre">undefer('*')</span></code> 应用于取消延迟加载所有属性，并使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  刷新已加载的对象的加载选项:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">book</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
@@ -694,7 +694,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <section id="sql">
 <span id="orm-queryguide-with-expression"></span><h2>将任意SQL表达式加载到对象上<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
-<dt>如   <a class="reference internal" href="select.html#orm-queryguide-select-columns"><span class="std std-ref">选择ORM实体和属性</span></a>  和其他地方所述，</dt><dd><p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造可以用于在结果集中加载任意的 SQL 表达式。例如，如果我们想要发出一个查询来加载 <cite>User</cite> 对象，同时也包括每个 <cite>User</cite> 拥有的书籍数量的计数，我们可以使用 <cite>func.count(Book.id)</cite> 向一个包含 Join 到 <cite>Book</cite> 的查询中添加一个”count”列，以及一个根据拥有者 id 分组的 GROUP BY。这将产生   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a>  对象，每个对象包含两个条目，一个是 <cite>User</cite>，另一个是 <cite>func.count(Book.id)</cite>。</p>
+<dt>如   <a class="reference internal" href="select.html#orm-queryguide-select-columns"><span class="std std-ref">选择ORM实体和属性</span></a>  和其他地方所述，</dt><dd><p><a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造可以用于在结果集中加载任意的 SQL 表达式。例如，如果我们想要发出一个查询来加载 ` User` 对象，同时也包括每个 <cite>User</cite> 拥有的书籍数量的计数，我们可以使用 <cite>func.count(Book.id)</cite> 向一个包含 Join 到 <cite>Book</cite> 的查询中添加一个”count”列，以及一个根据拥有者 id 分组的 GROUP BY。这将产生   <a class="reference internal" href="../../core/connections.html#sqlalchemy.engine.Row" title="sqlalchemy.engine.Row"><code class="xref py py-class docutils literal notranslate"><span class="pre">Row</span></code></a>  对象，每个对象包含两个条目，一个是 ` User`，另一个是 <cite>func.count(Book.id)</cite>。</p>
 </dd>
 </dl>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
@@ -709,8 +709,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div><span class="go">Username: spongebob  Number of books: 3</span>
 <span class="go">Username: sandy  Number of books: 3</span></pre></div>
 </div>
-<p>在上面的例子中，<cite>User</cite> 实体和”book count” SQL 表达式是分别返回的。但是，一个流行的用例是生成一个查询，它将仅返回 <cite>User</cite> 对象，这些对象可以被迭代，例如使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code> ，其中 <cite>func.count(Book.id)</cite> SQL 表达式将被 <a href="#id30"><span class="problematic" id="id31">*</span></a>动态*地应用到每个 <cite>User</cite> 实体上。最终结果将类似于将任意的 SQL 表达式映射到类中，但 SQL 表达式可以在查询时被修改。对于这种用例，SQLAlchemy 提供了   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  加载选项，当与映射器级别的   <a class="reference internal" href="#sqlalchemy.orm.query_expression" title="sqlalchemy.orm.query_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">query_expression()</span></code></a>  指令结合使用时，可以产生这个结果。</p>
-<p>要应用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  到查询，映射类必须预先使用   <a class="reference internal" href="#sqlalchemy.orm.query_expression" title="sqlalchemy.orm.query_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">query_expression()</span></code></a>  指令配置一个 ORM 映射属性；该指令将产生一个适合接收查询时 SQL 表达式的映射类属性。下面我们在 <cite>User</cite> 中添加一个新属性 <cite>User.book_count</cite>。这个 ORM 映射属性是只读的，没有默认值；在已经加载的实例上访问它通常会产生 <cite>None</cite>。</p>
+<p>在上面的例子中，<cite>User</cite> 实体和”book count” SQL 表达式是分别返回的。但是，一个流行的用例是生成一个查询，它将仅返回 <cite>User</cite> 对象，这些对象可以被迭代，例如使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code> ，其中 ` func.count(Book.id)` SQL 表达式将被 <a href="#id18"><span class="problematic" id="id19">*</span></a>动态*地应用到每个 <cite>User</cite> 实体上。最终结果将类似于将任意的 SQL 表达式映射到类中，但 SQL 表达式可以在查询时被修改。对于这种用例，SQLAlchemy 提供了   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  加载选项，当与映射器级别的   :func:` _orm.query_expression`  指令结合使用时，可以产生这个结果。</p>
+<p>要应用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  到查询，映射类必须预先使用   :func:` _orm.query_expression`  指令配置一个 ORM 映射属性；该指令将产生一个适合接收查询时 SQL 表达式的映射类属性。下面我们在 <cite>User</cite> 中添加一个新属性 <cite>User.book_count</cite>。这个 ORM 映射属性是只读的，没有默认值；在已经加载的实例上访问它通常会产生 <cite>None</cite>。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">query_expression</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="go">...     __tablename__ = &quot;user_account&quot;</span>
@@ -722,7 +722,7 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="go">...     def __repr__(self) -&gt; str:</span>
 <span class="go">...         return f&quot;User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})&quot;</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>使用 <code class="docutils literal notranslate"><span class="pre">User.book_count</span></code> 属性配置我们的映射后，我们可以使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  加载器选项将自定义 SQL 表达式应用于每个加载的 <cite>User</cite> 对象中:</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">User.book_count</span></code> 属性配置我们的映射后，我们可以使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  加载器选项将自定义 SQL 表达式应用于每个加载的 ` User` 对象中:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">with_expression</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(User)</span>
@@ -740,10 +740,10 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </div><span class="go">Username: spongebob  Number of books: 3</span>
 <span class="go">Username: sandy  Number of books: 3</span></pre></div>
 </div>
-<p>上面，我们将我们的 <cite>func.count(Book.id)</cite> 表达式从   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造的 columns 参数中移到   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  加载器选项中。ORM 然后将其视为一个特殊的列加载选项，它在运行时动态应用到语句中。</p>
+<p>上面，我们将我们的 <cite>func.count(Book.id)</cite> 表达式从   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造的 columns 参数中移到   :func:` _orm.with_expression`  加载器选项中。ORM 然后将其视为一个特殊的列加载选项，它在运行时动态应用到语句中。</p>
 <p>注意：</p>
 <ul>
-<li><p>对于没有使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  来填充这个属性的对象，对象实例上的属性值将为 <cite>None</cite>，除非映射中  <a class="reference internal" href="#sqlalchemy.orm.query_expression.params.default_expr" title="sqlalchemy.orm.query_expression"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">query_expression.default_expr</span></code></a>  参数被设置为默认的 SQL 表达式。*   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  的值 <strong>不会填充已经加载的对象</strong>，除非使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a> 。下面的示例不起作用，因为 <code class="docutils literal notranslate"><span class="pre">A</span></code> 对象已经加载：</p>
+<li><p>对于没有使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  来填充这个属性的对象，对象实例上的属性值将为 ` None`，除非映射中  <a class="reference internal" href="#sqlalchemy.orm.query_expression.params.default_expr" title="sqlalchemy.orm.query_expression"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">query_expression.default_expr</span></code></a>  参数被设置为默认的 SQL 表达式。*   :func:` _orm.with_expression`  的值 <strong>不会填充已经加载的对象</strong>，除非使用   <a class="reference internal" href="api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a> 。下面的示例不起作用，因为 ` <cite>A`</cite> 对象已经加载：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 加载第一个 A</span>
 <span class="n">obj</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">id</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 
@@ -758,8 +758,8 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 <span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
 </div>
 </li>
-<li><p>当对象过期时，无法保存此 SQL 表达式，无论是通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  还是通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  的 expire_on_commit 行为。一旦对象过期，SQL 表达式及其值将不再与属性关联，随后的访问将返回 <code class="docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
-<li><p><a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  作为对象加载选项，仅在查询的 <strong>最外层部分</strong> 作用，并且仅针对针对完整实体的查询，而不是针对任意列选择、子查询或复合语句（如 UNION） 的查询。参见下一节   <a class="reference internal" href="#orm-queryguide-with-expression-unions"><span class="std std-ref">在 UNION 和其他子查询中使用 with_expression()</span></a> ，了解示例。</p></li>
+<li><p>当对象过期时，无法保存此 SQL 表达式，无论是通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  还是通过  :meth:` .Session.commit`  的 expire_on_commit 行为。一旦对象过期，SQL 表达式及其值将不再与属性关联，随后的访问将返回 <code class="docutils literal notranslate"><span class="pre">None</span></code>。</p></li>
+<li><p><a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  作为对象加载选项，仅在查询的 <strong>最外层部分</strong> 作用，并且仅针对针对完整实体的查询，而不是针对任意列选择、子查询或复合语句（如 UNION） 的查询。参见下一节   :ref:` orm_queryguide_with_expression_unions` ，了解示例。</p></li>
 <li><p>映射属性无法应用于查询的其他部分，例如 WHERE 子句、ORDER BY 子句，并利用临时表达式；也就是说，以下代码不起作用：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 无法在查询的其他地方引用 A.expr 表达式</span>
 <span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -783,12 +783,12 @@ SELECT语句。 一般的理由是性能，在表具有很少使用的列的情�
 </ul>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  选项是一种特殊选项，用于在查询时动态应用 SQL 表达式到映射类。对于在映射器上配置的普通固定 SQL 表达式，请参见   <a class="reference internal" href="../mapped_sql_expr.html#mapper-sql-expressions"><span class="std std-ref">将SQL表达式映射为属性</span></a>  部分。</p>
+<p><a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  选项是一种特殊选项，用于在查询时动态应用 SQL 表达式到映射类。对于在映射器上配置的普通固定 SQL 表达式，请参见   :ref:` mapper_sql_expressions`  部分。</p>
 </div>
 <section id="union-with-expression">
 <span id="orm-queryguide-with-expression-unions"></span><h3>在 UNION 和其他子查询中使用 <code class="docutils literal notranslate"><span class="pre">with_expression()</span></code><a class="headerlink" href="#union-with-expression" title="Permalink to this heading">¶</a></h3>
-<p>为了在子查询中使用任意 SQL 表达式，应使用添加表达式的常规 Core 样式方法。要将子查询派生的表达式组合到 ORM 实体的   <a class="reference internal" href="#sqlalchemy.orm.query_expression" title="sqlalchemy.orm.query_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">query_expression()</span></code></a>  属性上，需要在 ORM 对象加载的顶层使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a> ，引用子查询中的 SQL 表达式。</p>
-<p>在下面的示例中，使用两个带有附加 SQL 表达式标记为“expr”的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造针对 ORM 实体 <code class="docutils literal notranslate"><span class="pre">A</span></code> 进行操作，并使用   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.union_all" title="sqlalchemy.sql.expression.union_all"><code class="xref py py-func docutils literal notranslate"><span class="pre">union_all()</span></code></a>  进行组合。然后，在最高层次上，使用   <a class="reference internal" href="select.html#orm-queryguide-unions"><span class="std std-ref">从UNIONs和其他集合操作中选择实体</span></a>  中描述的查询方法从此 UNION 中 SELECT 了 <code class="docutils literal notranslate"><span class="pre">A</span></code> 实体。在新加载的 <code class="docutils literal notranslate"><span class="pre">A</span></code> 实例上添加选项来使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  提取此 SQL 表达式:</p>
+<p>为了在子查询中使用任意 SQL 表达式，应使用添加表达式的常规 Core 样式方法。要将子查询派生的表达式组合到 ORM 实体的   <a class="reference internal" href="#sqlalchemy.orm.query_expression" title="sqlalchemy.orm.query_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">query_expression()</span></code></a>  属性上，需要在 ORM 对象加载的顶层使用   :func:` _orm.with_expression` ，引用子查询中的 SQL 表达式。</p>
+<p>在下面的示例中，使用两个带有附加 SQL 表达式标记为“expr”的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造针对 ORM 实体 ` <cite>A`</cite> 进行操作，并使用   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.union_all" title="sqlalchemy.sql.expression.union_all"><code class="xref py py-func docutils literal notranslate"><span class="pre">union_all()</span></code></a>  进行组合。然后，在最高层次上，使用   :ref:` orm_queryguide_unions`  中描述的查询方法从此 UNION 中 SELECT 了 <code class="docutils literal notranslate"><span class="pre">A</span></code> 实体。在新加载的 <code class="docutils literal notranslate"><span class="pre">A</span></code> 实例上添加选项来使用   <a class="reference internal" href="#sqlalchemy.orm.with_expression" title="sqlalchemy.orm.with_expression"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_expression()</span></code></a>  提取此 SQL 表达式:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">union_all</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s1</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(User, func.count(Book.id).label(&quot;book_count&quot;))</span>
@@ -1150,7 +1150,7 @@ examples</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:01
+    Documentation last generated: 2023/8/18 18:59:02
 
     </div>
 </div>

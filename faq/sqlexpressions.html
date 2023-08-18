@@ -129,14 +129,14 @@
 <li><span class="link-container"><a class="reference external" href="metadata_schema.html">元数据/模式</a></span></li>
 <li class="selected"><span class="link-container"><strong>SQL表达式</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有内联的绑定参数？</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id4">特定数据库的字符串呈现</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id13">内联绑定参数呈现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">特定数据库的字符串呈现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">内联绑定参数呈现</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#postcompile">将 “POSTCOMPILE” 参数呈现为绑定参数</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#faq-sql-expression-percent-signs">为什么字符串化SQL语句时百分号会被双倍？</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#op">我正在使用 op() 生成自定义操作符，但是我的括号没有正确显示</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id29">为什么括号规则是这样的？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">为什么括号规则是这样的？</a></span></li>
 </ul>
 </li>
 </ul>
@@ -190,14 +190,14 @@
             <ul>
 <li><a class="reference internal" href="#sql">SQL表达式</a><ul>
 <li><a class="reference internal" href="#faq-sql-expression-string">如何将SQL表达式呈现为字符串，可能带有内联的绑定参数？</a><ul>
-<li><a class="reference internal" href="#id4">特定数据库的字符串呈现</a></li>
-<li><a class="reference internal" href="#id13">内联绑定参数呈现</a></li>
+<li><a class="reference internal" href="#id2">特定数据库的字符串呈现</a></li>
+<li><a class="reference internal" href="#id3">内联绑定参数呈现</a></li>
 <li><a class="reference internal" href="#postcompile">将 “POSTCOMPILE” 参数呈现为绑定参数</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#faq-sql-expression-percent-signs">为什么字符串化SQL语句时百分号会被双倍？</a></li>
 <li><a class="reference internal" href="#op">我正在使用 op() 生成自定义操作符，但是我的括号没有正确显示</a><ul>
-<li><a class="reference internal" href="#id29">为什么括号规则是这样的？</a></li>
+<li><a class="reference internal" href="#id15">为什么括号规则是这样的？</a></li>
 </ul>
 </li>
 </ul>
@@ -217,9 +217,9 @@
 <h1>SQL表达式<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h1>
 <section id="faq-sql-expression-string">
 <span id="id1"></span><h2>如何将SQL表达式呈现为字符串，可能带有内联的绑定参数？<a class="headerlink" href="#faq-sql-expression-string" title="Permalink to this heading">¶</a></h2>
-<p>在大多数简单情况下，将SQLAlchemy核心语句对象或ORM的“stringification”  <code class="xref py py-class docutils literal notranslate"><span class="pre">Query`对象或</span>
-<span class="pre">表达式片段和其他任何表达式片段呈现为字符串的方法是非常简单的，只需使用``str()``内置函数即可，</span>
-<span class="pre">例如当使用它与</span> <span class="pre">``print`</span></code> 函数（请注意，如果不显示调用 <cite>str()</cite>，Python的`print`函数也会自动调用它）：</p>
+<p>在大多数简单情况下，将SQLAlchemy核心语句对象或ORM的“stringification”  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 对象或
+表达式片段和其他任何表达式片段呈现为字符串的方法是非常简单的，只需使用``str()``内置函数即可，
+例如当使用它与 <code class="docutils literal notranslate"><span class="pre">print</span></code> 函数（请注意，如果不显示调用 <cite>str()</cite>，Python的`print`函数也会自动调用它）：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;my_table&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">statement</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
@@ -228,22 +228,22 @@
 <span class="k">FROM</span><span class="w"> </span><span class="n">my_table</span>
 </div></pre></div>
 </div>
-<p>对于ORM的  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，  :func:<a href="#id2"><span class="problematic" id="id3">`</span></a>_expression.insert`等）
+<p>对于ORM的  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，  :func:` _expression.insert`等）
 以及任何表达式片段，都可以调用``str()``内置函数或等效函数：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">column</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;some value&quot;</span><span class="p">)</span>
 <div class='show_sql_print'><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">x_1</span>
 </div></pre></div>
 </div>
-<section id="id4">
-<h3>特定数据库的字符串呈现<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<section id="id2">
+<h3>特定数据库的字符串呈现<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>当要将要呈现为字符串的语句包含具有特定于数据库的字符串格式的元素时，
 或者当包含元素仅在某一种类型的数据库中才可用时，就会产生问题。
 在这些情况下，我们可能会得到一个字符串化的语句，该语句不符合我们目标的数据库的正确语法，
-或者该操作可能会引发  :class:<a href="#id5"><span class="problematic" id="id6">`</span></a>.UnsupportedCompilationError`异常。在这些情况下，我们需要使用</p>
+或者该操作可能会引发  <a class="reference internal" href="../core/exceptions.html#sqlalchemy.exc.UnsupportedCompilationError" title="sqlalchemy.exc.UnsupportedCompilationError"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnsupportedCompilationError</span></code></a> 异常。在这些情况下，我们需要使用</p>
 <blockquote>
 <div><p><a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>  方法将语句字符串化，同时传递一个代表目标数据库的
-<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect`对象。例如，如果我们有一个MySQL数据库引擎，</p>
+<a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect` 对象。例如，如果我们有一个MySQL数据库引擎，</p>
 </div></blockquote>
 <p>我们可以使用以下方法将语句字符串化为MySQL方言:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
@@ -251,36 +251,36 @@
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;mysql+pymysql://scott:tiger@localhost/test&quot;</span><span class="p">)</span>
 <span class="n">print</span><span class="p">(</span><span class="n">statement</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">engine</span><span class="p">))</span></pre></div>
 </div>
-<p>可以直接使用 :class:<a href="#id7"><span class="problematic" id="id8">`</span></a>.Dialect`对象，如下例所示，我们使用PostgreSQL方言:</p>
+<p>可以直接使用 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> 对象，如下例所示，我们使用PostgreSQL方言:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">postgresql</span>
 
 <span class="n">print</span><span class="p">(</span><span class="n">statement</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">postgresql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span></pre></div>
 </div>
 <p>请注意，任何方言都可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  本身来组装，
-使用虚拟URL，然后访问 :attr:<a href="#id9"><span class="problematic" id="id10">`</span></a>_engine.Engine.dialect`属性，例如，
+使用虚拟URL，然后访问 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Engine.dialect</span></code> 属性，例如，
 如果我们想要一个psycopg2的方言对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://&quot;</span><span class="p">)</span>
 <span class="n">psycopg2_dialect</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">dialect</span></pre></div>
 </div>
-<p>当给定ORM的  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，要访问  <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement.compile" title="sqlalchemy.sql.expression.ClauseElement.compile"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ClauseElement.compile()</span></code></a>
-方法，我们只需要首先访问 :attr:<a href="#id11"><span class="problematic" id="id12">`</span></a>~.orm.query.Query.statement`访问器：</p>
+<p>当给定ORM的  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.query.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> ，要访问  :meth:` _expression.ClauseElement.compile`
+方法，我们只需要首先访问 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Query.statement</span></code> 访问器：</p>
 <blockquote>
 <div><p>statement = query.statement
 print(statement.compile(someengine))</p>
 </div></blockquote>
 </section>
-<section id="id13">
-<h3>内联绑定参数呈现<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h3>
+<section id="id3">
+<h3>内联绑定参数呈现<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p><a href="#id14"><span class="problematic" id="id15">**</span></a>决不要**在不可信的输入（例如来自Web表单或其他用户输入应用程序的字符串内容）中使用这些技术。</p>
+<p><a href="#id4"><span class="problematic" id="id5">**</span></a>决不要**在不可信的输入（例如来自Web表单或其他用户输入应用程序的字符串内容）中使用这些技术。</p>
 </div>
 <p>SQLAlchemy的将Python值转换为直接SQL字符串值的工具对来自不可信输入的数据 <strong>不安全且不验证传递的数据类型</strong>。在与关系数据库
 编程调用非DDL SQL语句时，始终使用绑定参数。</p>
-<p>上面的形式将呈现SQL语句传递给Python :term:<a href="#id16"><span class="problematic" id="id17">`</span></a>DBAPI`时，包括未呈现内联的绑定参数。
+<p>上面的形式将呈现SQL语句传递给Python <span class="xref std std-term">DBAPI</span> 时，包括未呈现内联的绑定参数。
 SQLAlchemy通常不会将绑定参数字符串化，这由Python DBAPI适当处理，更不用说绕过绑定参数可能是现代Web应用程序中最常被利用的安全漏洞。
 在检查DDL发射的情况下，SQLAlchemy具有以下所述的这种字符串化功能的有限能力。为了访问此功能，可以使用传递给``compile_kwargs``的
-<a href="#id18"><span class="problematic" id="id19">``</span></a>literal_binds``标志：</p>
+<a href="#id6"><span class="problematic" id="id7">``</span></a>literal_binds``标志：</p>
 <blockquote>
 <div><p>from sqlalchemy.sql import table, column, select</p>
 <p>t = table(“t”, column(“x”))</p>
@@ -326,9 +326,9 @@ data = Column(UUID)</p>
 </div></blockquote>
 <p>在上面的模型和语句中，将列与单个UUID值进行比较，包含内联值的SQL语句呈现选项包括：</p>
 <ul>
-<li><p>一些DBAPI（例如psycopg2）支持像 <a href="#id30"><span class="problematic" id="id31">`mogrify()&lt;https://www.psycopg.org/docs/cursor.html#cursor.mogrify&gt;`_</span></a> 这样的辅助函数，
+<li><p>一些DBAPI（例如psycopg2）支持像 <a href="#id16"><span class="problematic" id="id17">`mogrify()&lt;https://www.psycopg.org/docs/cursor.html#cursor.mogrify&gt;`_</span></a> 这样的辅助函数，
 提供了在它们的文字网格填充中使用的字面量渲染功能。要使用此类功能，请渲染SQL字符串而不使用
-<code class="docutils literal notranslate"><span class="pre">literal_binds</span></code>，并通过 :attr:<a href="#id20"><span class="problematic" id="id21">`</span></a>.SQLCompiler.params`访问参数本身:</p>
+<code class="docutils literal notranslate"><span class="pre">literal_binds</span></code>，并通过 <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.params" title="sqlalchemy.sql.compiler.SQLCompiler.params"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.params</span></code></a> 访问参数本身:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">e</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost/test&quot;</span><span class="p">)</span>
 
 <span class="k">with</span> <span class="n">e</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
@@ -341,8 +341,8 @@ data = Column(UUID)</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="ss">&quot;SELECT a.id, a.data \nFROM a \nWHERE a.data = &#39;a511b0fc-76da-4c47-a4b4-716a8189b7ac&#39;::uuid&quot;</span></pre></div>
 </div>
 </li>
-<li><p>Render the  <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.params" title="sqlalchemy.sql.compiler.SQLCompiler.params"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.params</span></code></a>  直接插入语句中，使用目标DBAPI的与`paramstyle &lt;<a class="reference external" href="https://www.python.org/dev/peps/pep-0249/#paramstyle">https://www.python.org/dev/peps/pep-0249/#paramstyle</a>&gt;`_相对应的
-样式。例如，psycopg2 DBAPI使用命名的 <code class="docutils literal notranslate"><span class="pre">pyformat</span></code> 样式。<a href="#id22"><span class="problematic" id="id23">``</span></a>render_postcompile``的含义将在下一部分中讨论。<strong>警告**此时**不安全，不要使用不可信、无限制的输入</strong>：</p>
+<li><p>Render the  <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.params" title="sqlalchemy.sql.compiler.SQLCompiler.params"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.params</span></code></a>  直接插入语句中，使用目标DBAPI的与` paramstyle &lt;<a class="reference external" href="https://www.python.org/dev/peps/pep-0249/#paramstyle">https://www.python.org/dev/peps/pep-0249/#paramstyle</a>&gt;`_相对应的
+样式。例如，psycopg2 DBAPI使用命名的 <code class="docutils literal notranslate"><span class="pre">pyformat</span></code> 样式。<a href="#id8"><span class="problematic" id="id9">``</span></a>render_postcompile``的含义将在下一部分中讨论。<strong>警告**此时**不安全，不要使用不可信、无限制的输入</strong>：</p>
 <blockquote>
 <div><p>e = create_engine(“postgresql+psycopg2://”)</p>
 <p># Will use pyformat style, i.e. %(paramname)s for param.
@@ -354,7 +354,7 @@ compiled = stmt.compile(e, compile_kwargs={“render_postcompile”: True})</p>
 <span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">9</span><span class="n">eec1209</span><span class="o">-</span><span class="mi">50</span><span class="n">b4</span><span class="o">-</span><span class="mi">4253</span><span class="o">-</span><span class="n">b74b</span><span class="o">-</span><span class="n">f82461ed80c1</span></pre></div>
 </div>
-<p>另一个例子是使用qmark之类的位置参数样式，我们可以通过还使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.lineterminator</span></code>  、  <code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.positional</span></code>  ，以便组合渲染线上参数到一个字符串（线上参数是  <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.positiontup" title="sqlalchemy.sql.compiler.SQLCompiler.positiontup"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.positiontup</span></code></a>  集合， 处理时默认是呈现为未绑定参数，这样它们在生成的SQL字符串中将不会得到引用）。示例适用于使用SQLite的情况：</p>
+<p>另一个例子是使用qmark之类的位置参数样式，我们可以通过还使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.lineterminator</span></code>  、  :attr:` .SQLCompiler.positional`  ，以便组合渲染线上参数到一个字符串（线上参数是  <a class="reference internal" href="../core/internals.html#sqlalchemy.sql.compiler.SQLCompiler.positiontup" title="sqlalchemy.sql.compiler.SQLCompiler.positiontup"><code class="xref py py-attr docutils literal notranslate"><span class="pre">SQLCompiler.positiontup</span></code></a>  集合， 处理时默认是呈现为未绑定参数，这样它们在生成的SQL字符串中将不会得到引用）。示例适用于使用SQLite的情况：</p>
 <blockquote>
 <div><p>import re</p>
 <p>e = create_engine(“sqlite+pysqlite://”)</p>
@@ -370,16 +370,16 @@ params = (repr(compiled.params[name]) for name in compiled.positiontup)</p>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="k">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UUID</span><span class="p">(</span><span class="s1">&#39;1bd70375-db17-4d8c-94f1-fc2ef3aada26&#39;</span><span class="p">)</span></pre></div>
 </div>
 </li>
-<li><p>使用   <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span>  扩展在具有自定义计算时呈现   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.BindParameter" title="sqlalchemy.sql.expression.BindParameter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BindParameter</span></code></a>  对象的方式在用户定义的标志存在时，来自编译器的自定义方式。该标志通过类似于其他标志的编译器_kwargs字典发送：</p>
+<li><p>使用   <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span>  扩展在具有自定义计算时呈现   :class:` _sql.BindParameter`  对象的方式在用户定义的标志存在时，来自编译器的自定义方式。该标志通过类似于其他标志的编译器_kwargs字典发送：</p>
 <blockquote>
 <div><p>from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.sql.expression import BindParameter</p>
 <p>&#64;compiles(BindParameter)
-def _render_literal_bindparam(element, compiler, use_my_literal_recipe=False, <a href="#id24"><span class="problematic" id="id25">**</span></a>kw):</p>
+def _render_literal_bindparam(element, compiler, use_my_literal_recipe=False, <a href="#id10"><span class="problematic" id="id11">**</span></a>kw):</p>
 <blockquote>
 <div><dl class="simple">
 <dt>if not use_my_literal_recipe:</dt><dd><p># 使用正常的bindparam处理
-return compiler.visit_bindparam(element, <a href="#id26"><span class="problematic" id="id27">**</span></a>kw)</p>
+return compiler.visit_bindparam(element, <a href="#id12"><span class="problematic" id="id13">**</span></a>kw)</p>
 </dd>
 </dl>
 <p># 如果在compiler_kwargs中传递了use_my_literal_recipe，将值直接渲染出来
@@ -398,7 +398,7 @@ print(stmt.compile(e, compile_kwargs={“use_my_literal_recipe”: True}))</p>
 </div>
 </div></blockquote>
 <ul>
-<li><p>对于内建到模型或语句中的类型特定字符串化，可以使用   <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a>  类提供  <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator.process_literal_param" title="sqlalchemy.types.TypeDecorator.process_literal_param"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeDecorator.process_literal_param()</span></code></a>  方法自定义任何数据类型的字符串化方式。</p>
+<li><p>对于内建到模型或语句中的类型特定字符串化，可以使用   <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a>  类提供  :meth:` .TypeDecorator.process_literal_param`  方法自定义任何数据类型的字符串化方式。</p>
 <p>示例数据类型需要在模型中显式使用，或者在语句中使用   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.type_coerce" title="sqlalchemy.sql.expression.type_coerce"><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code></a>  本地模拟，例如：</p>
 <blockquote>
 <div><p>from sqlalchemy import type_coerce</p>
@@ -434,7 +434,7 @@ print(stmt.compile(e, compile_kwargs={“use_my_literal_recipe”: True}))</p>
 <span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
 
-<span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">SQLCompiler</span><span class="p">.</span><span class="n">params</span><span class="o">`</span><span class="w">   </span><span class="err">和</span><span class="w">  </span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">SQLCompiler</span><span class="p">.</span><span class="n">positiontup</span><span class="o">`</span><span class="w">  </span><span class="err">也可以与</span><span class="w"> </span><span class="o">``</span><span class="n">render_postcompile</span><span class="o">``</span><span class="err">兼容，因此在这里呈现内联绑定参数的先前配方，就以同样的方式起作用，例如在</span><span class="n">SQLite的位置形式</span><span class="err">：</span>
+<span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">SQLCompiler</span><span class="p">.</span><span class="n">params</span><span class="o">`</span><span class="w">   </span><span class="err">和</span><span class="w">  </span><span class="p">:</span><span class="n">attr</span><span class="p">:</span><span class="o">`</span><span class="w"> </span><span class="p">.</span><span class="n">SQLCompiler</span><span class="p">.</span><span class="n">positiontup</span><span class="o">`</span><span class="w">  </span><span class="err">也可以与</span><span class="w"> </span><span class="o">``</span><span class="n">render_postcompile</span><span class="o">``</span><span class="err">兼容，因此在这里呈现内联绑定参数的先前配方，就以同样的方式起作用，例如在</span><span class="n">SQLite的位置形式</span><span class="err">：</span>
 </div></pre></div>
 </div>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">,</span> <span class="n">u3</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">(),</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
@@ -463,7 +463,7 @@ print(stmt.compile(e, compile_kwargs={“use_my_literal_recipe”: True}))</p>
 </section>
 </section>
 <section id="faq-sql-expression-percent-signs">
-<span id="id28"></span><h2>为什么字符串化SQL语句时百分号会被双倍？<a class="headerlink" href="#faq-sql-expression-percent-signs" title="Permalink to this heading">¶</a></h2>
+<span id="id14"></span><h2>为什么字符串化SQL语句时百分号会被双倍？<a class="headerlink" href="#faq-sql-expression-percent-signs" title="Permalink to this heading">¶</a></h2>
 <p>许多DBAPI实现使用 <code class="docutils literal notranslate"><span class="pre">pyformat</span></code> 或 <code class="docutils literal notranslate"><span class="pre">format</span></code> <a class="reference external" href="https://www.python.org/dev/peps/pep-0249/#paramstyle">paramstyle</a> ，这些实现必然涉及到其语法中的百分号。
 大多数在工作中使用此功能的DBAPI期望在使用有其他含义的百分号时将百分号加倍（即转义），例如：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">num</span><span class="w"> </span><span class="o">%%</span><span class="w"> </span><span class="n">modulus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span></pre></div>
@@ -525,8 +525,8 @@ SQLAlchemy当前使用任何操作符中的最高数字为15：</p>
 <div class='show_sql_print'><span class="p">(</span><span class="n">q1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">q2</span><span class="p">)</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">p</span>
 </div></pre></div>
 </div>
-<section id="id29">
-<h3>为什么括号规则是这样的？<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
+<section id="id15">
+<h3>为什么括号规则是这样的？<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h3>
 <p>许多数据库在存在过多括号或括号位于不寻常的位置时都会失败，
 因此 SQLAlchemy 不基于分组生成括号，它使用运算符优先级和如果运算符已知是可结合的，
 也会生成最少量的括号。 否则，在表达式如下的情况下，留给数据库的表达式将会更易混淆或者至少会影响可读性：</p>
@@ -580,7 +580,7 @@ SQLAlchemy当前使用任何操作符中的最高数字为15：</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:53
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

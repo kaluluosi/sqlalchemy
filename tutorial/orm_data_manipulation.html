@@ -132,16 +132,16 @@
 <li><span class="link-container"><a class="reference external" href="#orm-unit-of-work">使用ORM Unit of Work模式插入行</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#id1">类的实例表示行</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#id2">向会话中添加对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id7">刷新</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id12">自动生成的主键属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id5">刷新</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">自动生成的主键属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#identity-map">通过主键从Identity Map获取对象</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id19">提交</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">提交</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-orm-updating">使用工作单元模式更新ORM对象</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-orm-deleting">使用工作单元模式删除ORM对象</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-orm-bulk">批量处理：插入，更新和删除多行</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id25">回滚</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id11">回滚</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-orm-closing">关闭会话</a></span></li>
 </ul>
 </li>
@@ -194,16 +194,16 @@
 <li><a class="reference internal" href="#orm-unit-of-work">使用ORM Unit of Work模式插入行</a><ul>
 <li><a class="reference internal" href="#id1">类的实例表示行</a></li>
 <li><a class="reference internal" href="#id2">向会话中添加对象</a></li>
-<li><a class="reference internal" href="#id7">刷新</a></li>
-<li><a class="reference internal" href="#id12">自动生成的主键属性</a></li>
+<li><a class="reference internal" href="#id5">刷新</a></li>
+<li><a class="reference internal" href="#id6">自动生成的主键属性</a></li>
 <li><a class="reference internal" href="#identity-map">通过主键从Identity Map获取对象</a></li>
-<li><a class="reference internal" href="#id19">提交</a></li>
+<li><a class="reference internal" href="#id7">提交</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#tutorial-orm-updating">使用工作单元模式更新ORM对象</a></li>
 <li><a class="reference internal" href="#tutorial-orm-deleting">使用工作单元模式删除ORM对象</a></li>
 <li><a class="reference internal" href="#tutorial-orm-bulk">批量处理：插入，更新和删除多行</a></li>
-<li><a class="reference internal" href="#id25">回滚</a></li>
+<li><a class="reference internal" href="#id11">回滚</a></li>
 <li><a class="reference internal" href="#tutorial-orm-closing">关闭会话</a></li>
 </ul>
 </li>
@@ -220,54 +220,54 @@
         
 <section class="orm-header" id="orm">
 <span id="tutorial-orm-data-manipulation"></span><h1>使用ORM操作数据<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>前一节   <a class="reference internal" href="data.html#tutorial-working-with-data"><span class="std std-ref">使用数据</span></a>  集中介绍了核心层的SQL表达式语言, 以便提供跨重要SQL语句构造的连续性。本节将构建ORM的生命周期，并介绍它如何与这些构造交互。</p>
+<p>前一节    <a class="reference internal" href="data.html#tutorial-working-with-data"><span class="std std-ref">使用数据</span></a>   集中介绍了核心层的SQL表达式语言, 以便提供跨重要SQL语句构造的连续性。本节将构建ORM的生命周期，并介绍它如何与这些构造交互。</p>
 <p><strong>前提章节</strong> - ORM中心的章节建立在本文档的两个ORM中心章节的基础上:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="dbapi_transactions.html#tutorial-executing-orm-session"><span class="std std-ref">使用 ORM Session 执行</span></a>  - 介绍如何创建ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象</p></li>
-<li><p><a class="reference internal" href="metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a>  - 在这里我们设置了ORM映射的“User”和“Address”实体</p></li>
-<li><p><span class="xref std std-ref">tutorial_selecting_orm_entities</span>  - 介绍如何对命名为 “User” 的实体运行 SELECT 语句的几个示例</p></li>
+<li><p><a class="reference internal" href="dbapi_transactions.html#tutorial-executing-orm-session"><span class="std std-ref">使用 ORM Session 执行</span></a>   - 介绍如何创建ORM    :class:` _orm.Session`   对象</p></li>
+<li><p><a class="reference internal" href="metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a>   - 在这里我们设置了ORM映射的“User”和“Address”实体</p></li>
+<li><p><span class="xref std std-ref">tutorial_selecting_orm_entities</span>   - 介绍如何对命名为 “User” 的实体运行 SELECT 语句的几个示例</p></li>
 </ul>
 <section id="orm-unit-of-work">
 <span id="tutorial-inserting-orm"></span><h2>使用ORM Unit of Work模式插入行<a class="headerlink" href="#orm-unit-of-work" title="Permalink to this heading">¶</a></h2>
-<p>当使用ORM时， :class: <cite>_orm.Session</cite> 对象负责构造  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  构造并在ongoing transaction中发射它作为INSERT语句。我们告诉  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  这样做的方式是通过**添加**对象条目到其中;   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  确保这些新条目在需要时被发射到数据库中，使用称为**flush**的进程将其保存到数据库中。   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  使用的用于持久化对象的整个过程称为  <span class="xref std std-term">unit of work</span>   模式。</p>
+<p>当使用ORM时，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象负责构造   :class:` _sql.Insert`   构造并在ongoing transaction中发射它作为INSERT语句。我们告诉   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   这样做的方式是通过**添加**对象条目到其中;    :class:` _orm.Session`   确保这些新条目在需要时被发射到数据库中，使用称为**flush**的进程将其保存到数据库中。    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   使用的用于持久化对象的整个过程称为   :term:` unit of work`    模式。</p>
 <section id="id1">
 <h3>类的实例表示行<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
-<p>在前面的示例中，我们使用Python字典发射INSERT语句来指示要添加的数据，ORM中直接使用自定义Python类，回到   <a class="reference internal" href="metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a> 。在类级别，”User” 和 “Address” 类用作定义相应数据表应该是什么样子的地方。这些类还用作可扩展数据对象，我们使用它们在事务处理中创建和操作行。下面，我们将创建两个 “User” 对象，每个User对象表示可能的要插入的数据库行：：</p>
+<p>在前面的示例中，我们使用Python字典发射INSERT语句来指示要添加的数据，ORM中直接使用自定义Python类，回到    <a class="reference internal" href="metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a>  。在类级别，”User” 和 “Address” 类用作定义相应数据表应该是什么样子的地方。这些类还用作可扩展数据对象，我们使用它们在事务处理中创建和操作行。下面，我们将创建两个 “User” 对象，每个User对象表示可能的要插入的数据库行：：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">squidward</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;squidward&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Squidward Tentacles&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">krabs</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ehkrabs&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Eugene H. Krabs&quot;</span><span class="p">)</span></pre></div>
 </div>
 <p>我们能够使用映射的列名作为构造函数中的关键字参数构造这些对象。这是可能的，因为 “User”类包括了由ORM映射提供的自动生成的“__init __（）”构造函数，以便我们可以使用构造函数中的列名称作为键来创建每个对象。</p>
-<p>与我们在  :class: <cite>_sql.Insert</cite> 的常数示例中所做的类似，我们没有包括主键（假设未包括“id”列的条目），因为我们想使用数据库的自动递增主键功能，SQLite在这种情况下，ORM也与之集成。上面这些对象的”id”属性的值，如果我们查看它，会显示为”None”：：</p>
+<p>与我们在   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  的常数示例中所做的类似，我们没有包括主键（假设未包括“id”列的条目），因为我们想使用数据库的自动递增主键功能，SQLite在这种情况下，ORM也与之集成。上面这些对象的”id”属性的值，如果我们查看它，会显示为”None”：：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">squidward</span>
 <span class="go">User(id=None, name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;)</span></pre></div>
 </div>
 <p>“None”值是由SQLAlchemy提供的，表明该属性目前没有值。SQLAlchemy映射的属性总是返回Python值，如果在处理尚未被赋值的新对象时它们缺失，则不会引发“AttributeError”异常。</p>
-<p>目前，上面的两个对象处于称为  <span class="xref std std-term">transient</span>  的状态 - 它们未与任何数据库状态关联，并且尚未与 : :class: <cite>_orm.Session</cite> 对象相关联，该对象可以为它们生成INSERT语句。</p>
+<p>目前，上面的两个对象处于称为   <span class="xref std std-term">transient</span>   的状态 - 它们未与任何数据库状态关联，并且尚未与 :  :class:` _orm.Session`  对象相关联，该对象可以为它们生成INSERT语句。</p>
 </section>
 <section id="id2">
 <h3>向会话中添加对象<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
-<p>为了一步步说明添加过程，我们将创建一个  :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.Session`对象，而不使用上下文管理器（因此我们必须稍后关闭它！）：：</p>
+<p>为了一步步说明添加过程，我们将创建一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象，而不使用上下文管理器（因此我们必须稍后关闭它！）：：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span></pre></div>
 </div>
-<p>然后，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>  方法将对象添加到   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  状态，尚未插入：：</p>
+<p>然后，使用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>   方法将对象添加到    :class:` _orm.Session`   状态，尚未插入：：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">squidward</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">krabs</span><span class="p">)</span></pre></div>
 </div>
-<p>当我们有未决的对象时，我们可以查看  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  ：：</p>
+<p>当我们有未决的对象时，我们可以查看   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   ：：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">new</span>
 <span class="go">IdentitySet([User(id=None, name=&#39;squidward&#39;, fullname=&#39;Squidward Tentacles&#39;), User(id=None, name=&#39;ehkrabs&#39;, fullname=&#39;Eugene H. Krabs&#39;)])</span></pre></div>
 </div>
-<p>上述视图使用称为:class`.IdentitySet`的集合本质上，是一个使用Python内置的``id（）``函数在所有情况下（即使用Python <a href="#id5"><span class="problematic" id="id6">``</span></a>hash（）``函数）以对象标识哈希的Python集合。</p>
+<p>上述视图使用称为:class`.IdentitySet`的集合本质上，是一个使用Python内置的``id（）``函数在所有情况下（即使用Python <a href="#id3"><span class="problematic" id="id4">``</span></a>hash（）``函数）以对象标识哈希的Python集合。</p>
 </section>
-<section id="id7">
-<h3>刷新<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<section id="id5">
+<h3>刷新<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p>:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.Session`使用一种称为：term：<a href="#id10"><span class="problematic" id="id11">`</span></a>工作单元`的模式。</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 使用一种称为：term：` 工作单元`的模式。</p>
 </div></blockquote>
 <p>这通常意味着它一次累计一个更改，但实际上不会将它们实际发送到数据库，直到需要。
 这使它能够根据给定的挂起更改集合在事务中发出SQL DML时做出更好的决策。
 当它向数据库发出SQL以推出当前更改集时，该过程称为**flush**。</p>
-<p>我们可以通过调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  方法手动说明刷新过程：</p>
+<p>我们可以通过调用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>   方法手动说明刷新过程：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">fullname</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">id</span>
@@ -276,72 +276,73 @@
 <span class="p">[</span><span class="n">insertmanyvalues</span><span class="w"> </span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="p">(</span><span class="n">ordered</span><span class="p">;</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="k">not</span><span class="w"> </span><span class="n">supported</span><span class="p">)]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;ehkrabs&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Eugene H. Krabs&#39;</span><span class="p">)</span>
 </div></pre></div>
 </div>
-<p>在上面的例子中，我们观察到首先调用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  发出SQL，所以它创建了一个新的事务并发出了适当的INSERT语句
-两个对象。直到我们调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code> ,  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code> , or</p>
+<p>在上面的例子中，我们观察到首先调用    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   发出SQL，所以它创建了一个新的事务并发出了适当的INSERT语句
+两个对象。直到我们调用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  ,   :meth:` _orm.Session.rollback`  , or</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>  方法关闭该事务，该事务现在**仍处于打开状态**。</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.close()</span></code>   方法关闭该事务，该事务现在**仍处于打开状态**。</p>
 </div></blockquote>
-<p>虽然  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  可以用于手动推出待处理的更改到当前事务，但通常是不必要的，
-因为   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  具有称为**autoflush**的行为，我们稍后将对其进行说明。
-每当调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>   时，它也会推出更改。</p>
+<p>虽然   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>   可以用于手动推出待处理的更改到当前事务，但通常是不必要的，
+因为    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   具有称为**autoflush**的行为，我们稍后将对其进行说明。
+每当调用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>    时，它也会推出更改。</p>
 </section>
-<section id="id12">
-<h3>自动生成的主键属性<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
-<p>一旦插入了行，我们创建的两个Python对象处于一种称为：term:<a href="#id13"><span class="problematic" id="id14">`</span></a>persistent`状态，其中它们与添加或加载它们的 :class:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.Session`对象相关联，并且具有许多后面将介绍的其他行为。</p>
-<p>插入发生的另一个影响是ORM已检索了每个新对象的新主键标识符。“内部”通常使用相同的 :attr:<a href="#id17"><span class="problematic" id="id18">`</span></a>_engine.CursorResult.inserted_primary_key`访问器。
+<section id="id6">
+<h3>自动生成的主键属性<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>一旦插入了行，我们创建的两个Python对象处于一种称为：term:<cite>persistent`状态，其中它们与添加或加载它们的  :class:`_orm.Session</cite> 对象相关联，并且具有许多后面将介绍的其他行为。</p>
+<p>插入发生的另一个影响是ORM已检索了每个新对象的新主键标识符。“内部”通常使用相同的  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a> 访问器。
 现在，“Squidward”和“Krabs”对象已将这些新的主键标识符与它们相关联，我们可以通过访问“id”属性来查看它们:</p>
 <p>    &gt;&gt;&gt; squidward.id
     4
     &gt;&gt;&gt; krabs.id
     5</p>
 <p>如果使用autoincrement之类的功能（其他示例包括PostgreSQL IDENTITY或SERIAL，使用序列等），
-则 <code class="xref py py-attr docutils literal notranslate"><span class="pre">postgresql_psycopg2</span></code> ，也可以同时INSERT多行，同时仍能检索主键值。</p>
+则  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a> 特性通常要求每个INSERT以一行的形式发出。
+如果我们预先为主键提供了值，则ORM将能够更好地优化该操作。某些数据库后端，例如   <a class="reference internal" href="../dialects/postgresql.html#postgresql-psycopg2"><span class="std std-ref">psycopg2</span></a>  ，也可以同时INSERT多行，同时仍能检索主键值。</p>
 </section>
 <section id="identity-map">
 <h3>通过主键从Identity Map获取对象<a class="headerlink" href="#identity-map" title="Permalink to this heading">¶</a></h3>
-<p>对象的主键标识对于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  非常重要，因为对象现在使用称为：term:<cite>identity map`的功能与此标识符在内存中链接起来将其关联。
-identity map 是一个内存存储器，将所有当前加载到内存中的对象与它们的主键标识链接起来。我们可以通过使用  :meth:`_orm.Session.get</cite>  方法检索上述对象之一，并在本地存在时从identity map返回条目，否则会发出SELECT:</p>
+<p>对象的主键标识对于    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   非常重要，因为对象现在使用称为：term:` identity map`的功能与此标识符在内存中链接起来将其关联。
+identity map 是一个内存存储器，将所有当前加载到内存中的对象与它们的主键标识链接起来。我们可以通过使用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code>   方法检索上述对象之一，并在本地存在时从identity map返回条目，否则会发出SELECT:</p>
 <p>    &gt;&gt;&gt; some_squidward = session.get(User, 4)
     &gt;&gt;&gt; some_squidward
     User(id=4, name=’squidward’, fullname=’Squidward Tentacles’)</p>
-<p>关于identity map 的重要事项是，它在一个特定的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`对象的范围内维护特定Python对象的唯一实例，对应于特定的数据库标识。</span>
-<span class="pre">我们可以观察到，``some_squidward`</span></code> 引用前面的 <code class="docutils literal notranslate"><span class="pre">squidward</span></code> 同一个对象:</p>
+<p>关于identity map 的重要事项是，它在一个特定的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象的范围内维护特定Python对象的唯一实例，对应于特定的数据库标识。
+我们可以观察到，<code class="docutils literal notranslate"><span class="pre">some_squidward</span></code> 引用前面的 <code class="docutils literal notranslate"><span class="pre">squidward</span></code> 同一个对象:</p>
 <p>    &gt;&gt;&gt; some_squidward is squidward
     True</p>
 <p>identity map是一个关键功能，允许在事务中操作复杂的对象集而不会发生不同步的情况。</p>
 </section>
-<section id="id19">
-<h3>提交<a class="headerlink" href="#id19" title="Permalink to this heading">¶</a></h3>
+<section id="id7">
+<h3>提交<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p>:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_orm.Session`还有很多要说的内容，我们将进一步讨论。现在我们将提交事务，以便在查看更多ORM行为和特征之前可以建立有关如何SELECT行的知识:.. sourcecode :: pycon+sql</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 还有很多要说的内容，我们将进一步讨论。现在我们将提交事务，以便在查看更多ORM行为和特征之前可以建立有关如何SELECT行的知识:.. sourcecode :: pycon+sql</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 <span class="go">COMMIT</span></pre></div>
 </div>
 </div></blockquote>
-<p>上述操作将提交正在进行的事务。我们处理的对象仍会被附加在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session`上，</span>
-<span class="pre">它们的状态将保持不变，直到关闭</span>&#160;&#160; <span class="pre">:class:</span></code>.Session`
-（在   <a class="reference internal" href="#tutorial-orm-closing"><span class="std std-ref">关闭会话</span></a>  中介绍）。</p>
+<p>上述操作将提交正在进行的事务。我们处理的对象仍会被附加在  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 上，
+它们的状态将保持不变，直到关闭    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>
+（在    <a class="reference internal" href="#tutorial-orm-closing"><span class="std std-ref">关闭会话</span></a>   中介绍）。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <dl class="simple">
-<dt>重要的一点是我们刚才处理的对象上的属性已经过期，即下次访问它们的任何属性时，</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  会启动一个新的事务并重新加载它们的状态。这个选项有时对性能</p>
+<dt>重要的一点是我们刚才处理的对象上的属性已经过期，即下次访问它们的任何属性时，</dt><dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   会启动一个新的事务并重新加载它们的状态。这个选项有时对性能</p>
 </dd>
 </dl>
-<p>有问题，或者如果希望在关闭   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  后使用对象（即处于  <span class="xref std std-term">detached</span>  状态），
-它们将没有任何状态，并且没有   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  与其一起加载该状态，从而导致“detached instance”错误。
-可以使用名为  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code>  的参数来控制行为。更多信息请查看   <a class="reference internal" href="#tutorial-orm-closing"><span class="std std-ref">关闭会话</span></a> 。</p>
+<p>有问题，或者如果希望在关闭    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   后使用对象（即处于   :term:` detached`   状态），
+它们将没有任何状态，并且没有    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   与其一起加载该状态，从而导致“detached instance”错误。
+可以使用名为   <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.expire_on_commit</span></code>   的参数来控制行为。更多信息请查看    :ref:` tutorial_orm_closing`  。</p>
 </div>
 </section>
 </section>
 <section id="tutorial-orm-updating">
-<span id="id22"></span><h2>使用工作单元模式更新ORM对象<a class="headerlink" href="#tutorial-orm-updating" title="Permalink to this heading">¶</a></h2>
-<p>在前面的章节   <a class="reference internal" href="data_update.html#tutorial-core-update-delete"><span class="std std-ref">使用UPDATE和DELETE语句</span></a>  中，我们介绍了  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  构造，它表示SQL UPDATE语句。
-当使用ORM时，这个构造有两种用法。 主要的方式是它自动作为   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  使用的</p>
+<span id="id8"></span><h2>使用工作单元模式更新ORM对象<a class="headerlink" href="#tutorial-orm-updating" title="Permalink to this heading">¶</a></h2>
+<p>在前面的章节    <a class="reference internal" href="data_update.html#tutorial-core-update-delete"><span class="std std-ref">使用UPDATE和DELETE语句</span></a>   中，我们介绍了   :class:` _sql.Update`   构造，它表示SQL UPDATE语句。
+当使用ORM时，这个构造有两种用法。 主要的方式是它自动作为    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   使用的</p>
 <blockquote>
-<div><p><span class="xref std std-term">unit of work</span>   过程的一部分发出，其中对具有更改的单个对象基于每个主键基础发出一个UPDATE语句。</p>
+<div><p><span class="xref std std-term">unit of work</span>    过程的一部分发出，其中对具有更改的单个对象基于每个主键基础发出一个UPDATE语句。</p>
 </div></blockquote>
-<p>假设我们将用户名为 <code class="docutils literal notranslate"><span class="pre">sandy</span></code> 的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象加载到事务中（还展示了  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.filter_by" title="sqlalchemy.sql.expression.Select.filter_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.filter_by()</span></code></a>  方法
-以及  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.scalar_one" title="sqlalchemy.engine.Result.scalar_one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one()</span></code></a>  方法）：</p>
+<p>假设我们将用户名为 <code class="docutils literal notranslate"><span class="pre">sandy</span></code> 的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象加载到事务中（还展示了   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.filter_by" title="sqlalchemy.sql.expression.Select.filter_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.filter_by()</span></code></a>   方法
+以及   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result.scalar_one" title="sqlalchemy.engine.Result.scalar_one"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.scalar_one()</span></code></a>   方法）：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;sandy&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">scalar_one</span><span class="p">()</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span>
@@ -355,14 +356,14 @@ identity map 是一个内存存储器，将所有当前加载到内存中的对�
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span>
 <span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)</span></pre></div>
 </div>
-<p>如果更改此对象的属性，则  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  将跟踪此更改：</p>
+<p>如果更改此对象的属性，则   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   将跟踪此更改：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span><span class="o">.</span><span class="n">fullname</span> <span class="o">=</span> <span class="s2">&quot;Sandy Squirrel&quot;</span></pre></div>
 </div>
-<p>表示对象出现在集合  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>  中，表示对象已经是“dirty”：</p>
+<p>表示对象出现在集合   <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>   中，表示对象已经是“dirty”：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">dirty</span>
 <span class="go">True</span></pre></div>
 </div>
-<p>当   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  次次发出flush时，将发出UPDATE以将此值更新到数据库中。
+<p>当    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   次次发出flush时，将发出UPDATE以将此值更新到数据库中。
 如前所述，我们在emit any SELECT之前自动刷新，
 使用称为**autoflush** 的行为。我们可以直接查询此行的 <code class="docutils literal notranslate"><span class="pre">User.fullname</span></code> 列，
 我们会得到更新后的值：</p>
@@ -386,17 +387,17 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 但首先，我们将进行更多数据更改。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/session_basics.html#session-flushing"><span class="std std-ref">刷新</span></a>  - 详细介绍了flush过程以及有关  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.autoflush</span></code>  设置的信息。</p>
+<p><a class="reference internal" href="../orm/session_basics.html#session-flushing"><span class="std std-ref">刷新</span></a>   - 详细介绍了flush过程以及有关   :paramref:` _orm.Session.autoflush`   设置的信息。</p>
 </div>
 </section>
 <section id="tutorial-orm-deleting">
-<span id="id23"></span><h2>使用工作单元模式删除ORM对象<a class="headerlink" href="#tutorial-orm-deleting" title="Permalink to this heading">¶</a></h2>
-<p>为了完成基本的持久化操作，可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  方法将单个ORM对象标记为
-在  <span class="xref std std-term">unit of work</span>  过程中删除。 我们让从数据库中加载``patrick``：</p>
+<span id="id9"></span><h2>使用工作单元模式删除ORM对象<a class="headerlink" href="#tutorial-orm-deleting" title="Permalink to this heading">¶</a></h2>
+<p>为了完成基本的持久化操作，可以使用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>   方法将单个ORM对象标记为
+在   <span class="xref std std-term">unit of work</span>   过程中删除。 我们让从数据库中加载` <cite>patrick`</cite>：</p>
 <p>如果我们像其他操作那样将``patrick``标记为删除，还没有什么事情发生，直到刷新为止:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">patrick</span><span class="p">)</span></pre></div>
 </div>
-<p>当前 ORM 的行为是 <code class="docutils literal notranslate"><span class="pre">patrick</span></code> 仍然在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中，直到刷新为止，如前所述，如果我们发送一个查询：</p>
+<p>当前 ORM 的行为是 <code class="docutils literal notranslate"><span class="pre">patrick</span></code> 仍然在    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   中，直到刷新为止，如前所述，如果我们发送一个查询：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
 <div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_id</span><span class="p">,</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_email_address</span><span class="p">,</span>
 <span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">address_user_id</span>
@@ -411,32 +412,32 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;patrick&#39;</span><span class="p">,)</span>
 </div></pre></div>
 </div>
-<p>上面的SELECT之前是一条DELETE，表示要删除 <code class="docutils literal notranslate"><span class="pre">patrick</span></code>，ORM 会查找与该行存在关联的 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表中的行；这个行为被称为  <span class="xref std std-term">级联</span> ，可以通过允许数据库自动处理 <code class="docutils literal notranslate"><span class="pre">address</span></code> 中的相关行来更高效地实现；  <a class="reference internal" href="../orm/cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>  部分对此进行了详细的说明。</p>
+<p>上面的SELECT之前是一条DELETE，表示要删除 <code class="docutils literal notranslate"><span class="pre">patrick</span></code>，ORM 会查找与该行存在关联的 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表中的行；这个行为被称为   <span class="xref std std-term">级联</span>  ，可以通过允许数据库自动处理 ` <cite>address`</cite> 中的相关行来更高效地实现；   <a class="reference internal" href="../orm/cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>   部分对此进行了详细的说明。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>  - 描述了如何调整  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  的行为以处理其他表中的相关行。</p>
+<p><a class="reference internal" href="../orm/cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>   - 描述了如何调整   :meth:` _orm.Session.delete`   的行为以处理其他表中的相关行。</p>
 </div>
-<p>除此以外，即将被删除的 <code class="docutils literal notranslate"><span class="pre">patrick</span></code> 对象实例不再被认为是在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中持久化的，这可以通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.Session()</span></code>  中的包含检查来证明：</p>
+<p>除此以外，即将被删除的 <code class="docutils literal notranslate"><span class="pre">patrick</span></code> 对象实例不再被认为是在    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   中持久化的，这可以通过   :meth:` _orm.Session`   中的包含检查来证明：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">patrick</span> <span class="ow">in</span> <span class="n">session</span>
 <span class="go">False</span></pre></div>
 </div>
 <p>然而，与我们对 <code class="docutils literal notranslate"><span class="pre">sandy</span></code> 对象所做的更新一样，在正在进行的事务中进行的每个更改都是局部的，如果不提交，它们将不会变得永久。当前我们更感兴趣的是回滚事务，在下一节中我们将介绍它。</p>
 </section>
 <section id="tutorial-orm-bulk">
-<span id="id24"></span><h2>批量处理：插入，更新和删除多行<a class="headerlink" href="#tutorial-orm-bulk" title="Permalink to this heading">¶</a></h2>
-<p>本节中讨论的  <span class="xref std std-term">工作单元</span>  技术旨在将  <span class="xref std std-term">dml</span> （INSERT/UPDATE/DELETE 语句）与 Python 对象机制集成，通常涉及复杂的相互关联的对象图。一旦通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>   将对象添加到   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中，作为增加属性值或修改属性值的结果，工作单元进程会自动透明地发出 INSERT/UPDATE/DELETE。</p>
-<p>然而，ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  也可以处理允许本身发出 INSERT、UPDATE 和 DELETE 语句的命令，而不是传递任何经过ORM持久化的对象。通过传递要插入、更新、合并或 WHERE 条件的列表，以便一次性调用可匹配多行的的 UPDATE 或 DELETE 语句，在无需构建和操作映射对象的情况下，可以影响多行。当必须在不需要构建和操作映射对象的情况下影响大量行时，这种用法特别重要。</p>
-<p>ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 、  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> ，它们的使用方式与在 SQLAlchemy Core中使用方式相似，与   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  不同的仅是其构造、执行和结果处理与 ORM 完全集成。</p>
-<p>有关使用这些功能的背景和示例，请参见   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的   <a class="reference internal" href="../orm/queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>  章节。</p>
+<span id="id10"></span><h2>批量处理：插入，更新和删除多行<a class="headerlink" href="#tutorial-orm-bulk" title="Permalink to this heading">¶</a></h2>
+<p>本节中讨论的   <span class="xref std std-term">工作单元</span>   技术旨在将   :term:` dml`  （INSERT/UPDATE/DELETE 语句）与 Python 对象机制集成，通常涉及复杂的相互关联的对象图。一旦通过   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>    将对象添加到    :class:` .Session`   中，作为增加属性值或修改属性值的结果，工作单元进程会自动透明地发出 INSERT/UPDATE/DELETE。</p>
+<p>然而，ORM    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   也可以处理允许本身发出 INSERT、UPDATE 和 DELETE 语句的命令，而不是传递任何经过ORM持久化的对象。通过传递要插入、更新、合并或 WHERE 条件的列表，以便一次性调用可匹配多行的的 UPDATE 或 DELETE 语句，在无需构建和操作映射对象的情况下，可以影响多行。当必须在不需要构建和操作映射对象的情况下影响大量行时，这种用法特别重要。</p>
+<p>ORM    <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  、   :func:` _dml.update`   和    <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>  ，它们的使用方式与在 SQLAlchemy Core中使用方式相似，与    :class:` _engine.Connection`   不同的仅是其构造、执行和结果处理与 ORM 完全集成。</p>
+<p>有关使用这些功能的背景和示例，请参见    <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>   中的    :ref:` orm_expression_update_delete`   章节。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>  - in the   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a></p>
+<p><a class="reference internal" href="../orm/queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>   - in the    :ref:` queryguide_toplevel`</p>
 </div>
 </section>
-<section id="id25">
-<h2>回滚<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h2>
+<section id="id11">
+<h2>回滚<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  有一个  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  方法，在 SQL 连接上发出一个 ROLLBACK。但是，它也会影响当前与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关联的对象（在我们以前的示例中是 Python 对象 <code class="docutils literal notranslate"><span class="pre">sandy</span></code>）。虽然我们已经更改了 <code class="docutils literal notranslate"><span class="pre">.fullname</span></code> 的 <code class="docutils literal notranslate"><span class="pre">sandy</span></code> 对象，但是我们希望撤消此更改。调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  将不仅回滚事务，而且将**过期**与该   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关联的所有对象，这将导致它们在下次访问时自动刷新。使用名为“  <span class="xref std std-term">懒加载</span>  ”的进程：</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   有一个   :meth:` _orm.Session.rollback`   方法，在 SQL 连接上发出一个 ROLLBACK。但是，它也会影响当前与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   相关联的对象（在我们以前的示例中是 Python 对象 ` <cite>sandy`</cite>）。虽然我们已经更改了 <code class="docutils literal notranslate"><span class="pre">.fullname</span></code> 的 <code class="docutils literal notranslate"><span class="pre">sandy</span></code> 对象，但是我们希望撤消此更改。调用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   将不仅回滚事务，而且将**过期**与该    :class:` _orm.Session`   相关联的所有对象，这将导致它们在下次访问时自动刷新。使用名为“   <span class="xref std std-term">懒加载</span>   ”的进程：</p>
 </div></blockquote>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">rollback</span><span class="p">()</span>
 <span class="go">ROLLBACK</span></pre></div>
@@ -445,7 +446,7 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span><span class="o">.</span><span class="vm">__dict__</span>
 <span class="go">{&#39;_sa_instance_state&#39;: &lt;sqlalchemy.orm.state.InstanceState object at 0x...&gt;}</span></pre></div>
 </div>
-<p>这是“  <span class="xref std std-term">过期</span>  ”状态；再次访问属性将自动开始新事务，并使用当前数据库行刷新“sandy”：</p>
+<p>这是“   <span class="xref std std-term">过期</span>   ”状态；再次访问属性将自动开始新事务，并使用当前数据库行刷新“sandy”：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span><span class="o">.</span><span class="n">fullname</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_name</span><span class="p">,</span>
@@ -474,25 +475,25 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 </div>
 </section>
 <section id="tutorial-orm-closing">
-<span id="id26"></span><h2>关闭会话<a class="headerlink" href="#tutorial-orm-closing" title="Permalink to this heading">¶</a></h2>
-<p>在上面的部分中，我们在Python上下文管理器之外使用了  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> <cite>with``语句。没关系，然而，如果我们按照这种方式做事情，最好在完成时明确地关闭  :class:`_orm.Session</cite> ：</p>
+<span id="id12"></span><h2>关闭会话<a class="headerlink" href="#tutorial-orm-closing" title="Permalink to this heading">¶</a></h2>
+<p>在上面的部分中，我们在Python上下文管理器之外使用了   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  ` with``语句。没关系，然而，如果我们按照这种方式做事情，最好在完成时明确地关闭   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  ：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <div class='show_sql'><span class="k">ROLLBACK</span>
 </div></pre></div>
 </div>
-<p>关闭  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，这也是使用它在上下文管理器中时发生的事情，会完成以下几件事情：</p>
+<p>关闭   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  ，这也是使用它在上下文管理器中时发生的事情，会完成以下几件事情：</p>
 <ul>
-<li><p>它：term:<a href="#id27"><span class="problematic" id="id28">`</span></a>释放`所有连接资源，并取消任何正在进行的事务（例如，回滚）。</p>
-<p>这意味着当我们使用会话执行某些只读任务然后关闭它时，我们不需要显式调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  来确保回滚事务；连接池会处理此事。</p>
+<li><p>它：term:<a href="#id13"><span class="problematic" id="id14">`</span></a>释放`所有连接资源，并取消任何正在进行的事务（例如，回滚）。</p>
+<p>这意味着当我们使用会话执行某些只读任务然后关闭它时，我们不需要显式调用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>   来确保回滚事务；连接池会处理此事。</p>
 </li>
-<li><p>它**删除**所有 :class:<a href="#id29"><span class="problematic" id="id30">`</span></a>_orm.Session`中的对象。</p>
-<p>这意味着我们为此  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> <cite>sandy`</cite>，<code class="docutils literal notranslate"><span class="pre">patrick``和``squidward</span></code>，现在处于一种称为“  <span class="xref std std-term">分离</span>  ”的状态。特别是，我们将注意到仍处于  <span class="xref std std-term">过期</span>  状态的对象，例如由于调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  ，现在是无法使用的，因为它们不包含当前行的状态，并且不再与任何数据库事务相关联以进行刷新:</p>
+<li><p>它**删除**所有  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中的对象。</p>
+<p>这意味着我们为此   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  ` sandy``，<code class="docutils literal notranslate"><span class="pre">patrick``和``squidward</span></code>，现在处于一种称为“   <span class="xref std std-term">分离</span>    ”的状态。特别是，我们将注意到仍处于   :term:` 过期`   状态的对象，例如由于调用了   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>   ，现在是无法使用的，因为它们不包含当前行的状态，并且不再与任何数据库事务相关联以进行刷新:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">squidward</span><span class="o">.</span><span class="n">name</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="w">  </span><span class="c">...</span>
 <span class="gr">sqlalchemy.orm.exc.DetachedInstanceError</span>: <span class="n">Instance &lt;User at 0x...&gt; is not bound to a Session; attribute refresh operation cannot proceed</span></pre></div>
 </div>
-<p>可以使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>  方法将分离的对象重新关联到相同或新的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，这将重新建立它们与它们特定数据库行的关系：</p>
+<p>可以使用   <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>   方法将分离的对象重新关联到相同或新的   :class:` _orm.Session`  ，这将重新建立它们与它们特定数据库行的关系：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">squidward</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">squidward</span><span class="o">.</span><span class="n">name</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
@@ -504,7 +505,7 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>如果可能，尽量避免使用分离状态的对象。当关闭  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  标志设置为“False”。</p>
+<p>如果可能，尽量避免使用分离状态的对象。当关闭   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>   标志设置为“False”。</p>
 </div>
 </li>
 </ul>
@@ -529,7 +530,7 @@ Python对象 <code class="docutils literal notranslate"><span class="pre">sandy<
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:03
+    Documentation last generated: 2023/8/18 18:59:04
 
     </div>
 </div>

@@ -141,10 +141,10 @@
 <li><span class="link-container"><a class="reference external" href="persistence_techniques.html#session">分区策略（例如 Session 上的多个数据库后端）</a></span></li>
 <li><span class="link-container"><a class="reference external" href="persistence_techniques.html#bulk-operations">批量操作</a></span></li>
 <li class="selected"><span class="link-container"><strong>上下文/线程本地会话</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id10">隐式方法访问</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">隐式方法访问</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#unitofwork-contextual-threadlocal">线程本地范围</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#web">在Web应用程序中使用线程本地范围</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id30">使用自定义创建的作用域</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id12">使用自定义创建的作用域</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#api">上下文化会话 API</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.scoped_session"><code class="docutils literal notranslate"><span class="pre">scoped_session</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.scoped_session.__call__"><code class="docutils literal notranslate"><span class="pre">scoped_session.__call__()</span></code></a></span></li>
@@ -259,10 +259,10 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#id1">上下文/线程本地会话</a><ul>
-<li><a class="reference internal" href="#id10">隐式方法访问</a></li>
+<li><a class="reference internal" href="#id4">隐式方法访问</a></li>
 <li><a class="reference internal" href="#unitofwork-contextual-threadlocal">线程本地范围</a></li>
 <li><a class="reference internal" href="#web">在Web应用程序中使用线程本地范围</a></li>
-<li><a class="reference internal" href="#id30">使用自定义创建的作用域</a></li>
+<li><a class="reference internal" href="#id12">使用自定义创建的作用域</a></li>
 <li><a class="reference internal" href="#api">上下文化会话 API</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.scoped_session"><code class="docutils literal notranslate"><span class="pre">scoped_session</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.scoped_session.__call__"><code class="docutils literal notranslate"><span class="pre">scoped_session.__call__()</span></code></a></li>
@@ -337,52 +337,52 @@
         
 <section id="id1">
 <h1>上下文/线程本地会话<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>回想一下，在  <a class="reference internal" href="session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a> .Session`的范围与Web请求的范围联系起来的实践。大多数现代Web框架都包括集成工具，以便可以自动管理 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>.Session`的范围，应使用这些工具，因为它们是可用的。</p>
-<p>SQLAlchemy包括自己的帮助对象，它有助于建立用户定义的 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>.Session`范围。第三方集成系统也使用它来帮助构建其集成方案。</p>
-<p>该对象是  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`对象的**注册表**。如果您不熟悉注册表模式，可以在`企业架构模式中找到很好的介绍&lt;<a class="reference external" href="https://martinfowler.com/eaaCatalog/registry.html">https://martinfowler.com/eaaCatalog/registry.html</a>&gt;`_。</p>
+<p>回想一下，在  <a class="reference internal" href="session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a> .Session` 的范围与Web请求的范围联系起来的实践。大多数现代Web框架都包括集成工具，以便可以自动管理 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的范围，应使用这些工具，因为它们是可用的。</p>
+<p>SQLAlchemy包括自己的帮助对象，它有助于建立用户定义的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 范围。第三方集成系统也使用它来帮助构建其集成方案。</p>
+<p>该对象是  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 对象的**注册表**。如果您不熟悉注册表模式，可以在`企业架构模式中找到很好的介绍&lt;<a class="reference external" href="https://martinfowler.com/eaaCatalog/registry.html">https://martinfowler.com/eaaCatalog/registry.html</a>&gt;`_。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> <cite>threading.local（）`</cite></p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> ` threading.local（）``</p>
 </div></blockquote>
-<p>以跟踪  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和   <a class="reference internal" href="#session-lifespan"><span class="std std-ref">在Web应用程序中使用线程本地范围</span></a>  以更充分地了解使用``threading.local（）``来跟踪 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.Session`对象的含义，并在使用传统线程之外的应用服务器时考虑更明确的范围。</p>
+<p>以跟踪  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和   :ref:` session_lifespan`  以更充分地了解使用``threading.local（）``来跟踪 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 对象的含义，并在使用传统线程之外的应用服务器时考虑更明确的范围。</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p><strong>很多SQLAlchemy应用程序都使用  :class:`.scoped_session` .Session`管理问题的**一种方法</strong>。 如果您不熟悉SQLAlchemy的话，特别是如果“线程本地变量”的术语对您来说似乎很奇怪，我们建议您如果可能，首先熟悉现成的集成系统，如`Flask-SQLAlchemy &lt;<a class="reference external" href="https://pypi.org/project/Flask-SQLAlchemy/">https://pypi.org/project/Flask-SQLAlchemy/</a>&gt;`_或`zope.sqlalchemy &lt;<a class="reference external" href="https://pypi.org/project/zope.sqlalchemy">https://pypi.org/project/zope.sqlalchemy</a>&gt;`_。</p>
+<p><strong>很多SQLAlchemy应用程序都使用  :class:`.scoped_session` .Session` 管理问题的**一种方法</strong>。 如果您不熟悉SQLAlchemy的话，特别是如果“线程本地变量”的术语对您来说似乎很奇怪，我们建议您如果可能，首先熟悉现成的集成系统，如`Flask-SQLAlchemy &lt;<a class="reference external" href="https://pypi.org/project/Flask-SQLAlchemy/">https://pypi.org/project/Flask-SQLAlchemy/</a>&gt;`_或`zope.sqlalchemy &lt;<a class="reference external" href="https://pypi.org/project/zope.sqlalchemy">https://pypi.org/project/zope.sqlalchemy</a>&gt;`_。</p>
 </div>
-<p>通过调用  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session`对象可以创建一个作用域。一个工厂就是当调用时产生一个新对象的东西，在  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker`。下面我们举例说明这种用法:</p>
+<p>通过调用  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session` 对象可以创建一个作用域。一个工厂就是当调用时产生一个新对象的东西，在  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .sessionmaker` 。下面我们举例说明这种用法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">scoped_session</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session_factory</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">(</span><span class="n">bind</span><span class="o">=</span><span class="n">some_engine</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">session_factory</span><span class="p">)</span></pre></div>
 </div>
-<p>我们创建的  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .sessionmaker`:</p>
+<p>我们创建的  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .sessionmaker`</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span></pre></div>
 </div>
-<p>上面，<a href="#id8"><span class="problematic" id="id9">``</span></a>some_session``是  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`也在我们创建的  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`:</p>
+<p>上面，<a href="#id2"><span class="problematic" id="id3">``</span></a>some_session``是  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 也在我们创建的  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">some_other_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">some_session</span> <span class="ow">is</span> <span class="n">some_other_session</span>
 <span class="go">True</span></pre></div>
 </div>
-<p>该模式允许应用程序的不同部分调用全局  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> ，以便这些区域可以共享相同的会话，而无需显式传递它。我们在注册表中建立的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session.remove`</p>
+<p>该模式允许应用程序的不同部分调用全局  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> ，以便这些区域可以共享相同的会话，而无需显式传递它。我们在注册表中建立的  :class:` .Session` .scoped_session.remove`</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="o">&gt;&gt;&gt;</span> <span class="n">Session</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 
-<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">scoped_session</span><span class="o">.</span><span class="n">remove</span><span class="err">`</span>  <span class="n">方法首先在当前</span>  <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">close</span><span class="err">`</span> <span class="err">，</span><span class="n">这将导致首先释放任何连接</span><span class="o">/</span><span class="n">事务性资源所拥有的</span>  <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="err">`</span><span class="n">本身</span><span class="err">。</span><span class="n">这里的</span><span class="err">“</span><span class="n">释放</span><span class="err">”</span><span class="n">意味着连接返回到它们的连接池</span><span class="err">，</span><span class="n">任何事务状态都被回滚</span><span class="err">，</span><span class="n">最终使用底层DBAPI连接的</span><span class="err">``</span><span class="n">rollback</span><span class="err">（）``</span><span class="n">方法</span><span class="err">。</span></pre></div>
+<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">scoped_session</span><span class="o">.</span><span class="n">remove</span><span class="err">`</span>  <span class="n">方法首先在当前</span>  <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">close</span><span class="err">`</span> <span class="err">，</span><span class="n">这将导致首先释放任何连接</span><span class="o">/</span><span class="n">事务性资源所拥有的</span>  <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="err">`</span> <span class="n">本身</span><span class="err">。</span><span class="n">这里的</span><span class="err">“</span><span class="n">释放</span><span class="err">”</span><span class="n">意味着连接返回到它们的连接池</span><span class="err">，</span><span class="n">任何事务状态都被回滚</span><span class="err">，</span><span class="n">最终使用底层DBAPI连接的</span><span class="err">``</span><span class="n">rollback</span><span class="err">（）``</span><span class="n">方法</span><span class="err">。</span></pre></div>
 </div>
-<p>现在，  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`。如下所示，这不是我们之前的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ：</p>
+<p>现在，  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 。如下所示，这不是我们之前的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">new_session</span> <span class="ow">is</span> <span class="n">some_session</span>
 <span class="go">False</span></pre></div>
 </div>
 <p>上述一系列步骤简要说明了注册表模式的思想。有了这个基本想法，我们可以讨论一些关于这个模式如何进行的细节。</p>
-<section id="id10">
-<h2>隐式方法访问<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
+<section id="id4">
+<h2>隐式方法访问<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`。为了提供对这个  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session`还包括**代理行为**，这意味着注册表本身可以像直接处理 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>.Session`一样对待；</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 。为了提供对这个  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session` 还包括**代理行为**，这意味着注册表本身可以像直接处理 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 一样对待；</p>
 </div></blockquote>
-<p>当在这个对象上调用方法时，它们被**代理**到注册表维护的基础 :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>.Session`上:</p>
+<p>当在这个对象上调用方法时，它们被**代理**到注册表维护的基础 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 上:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Session</span> <span class="o">=</span> <span class="n">scoped_session</span><span class="p">(</span><span class="n">some_factory</span><span class="p">)</span>
 
 <span class="c1"># equivalent to:</span>
@@ -392,18 +392,18 @@
 <span class="c1">#</span>
 <span class="n">print</span><span class="p">(</span><span class="n">Session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">MyClass</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">())</span></pre></div>
 </div>
-<p>上面的代码完成了与通过调用注册表获取当前  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，然后使用该 :class:<a href="#id15"><span class="problematic" id="id16">`</span></a>.Session`相同的任务。</p>
+<p>上面的代码完成了与通过调用注册表获取当前  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，然后使用该 :class:` .Session`相同的任务。</p>
 </section>
 <section id="unitofwork-contextual-threadlocal">
-<span id="id17"></span><h2>线程本地范围<a class="headerlink" href="#unitofwork-contextual-threadlocal" title="Permalink to this heading">¶</a></h2>
-<p>熟悉多线程编程的用户将注意到，表示任何内容为全局变量通常是一个坏主意，因为它意味着全局对象将被许多线程同时访问。  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`对象，建议采用某些处理方式，以确保多个调用不会在多个线程中实际获得相同的会话句柄。我们称之为**线程本地存储**，这意味着使用一个特殊的对象来维护每个应用程序线程的一个不同的对象。Python通过`threading.local（）&lt;<a class="reference external" href="https://docs.python.org/library/threading.html#threading.local">https://docs.python.org/library/threading.html#threading.local</a>&gt;`_构建提供了这个功能。在默认情况下，  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`针对调用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`实例。</p>
-<p>使用这种技术， :class:<a href="#id18"><span class="problematic" id="id19">`</span></a>.scoped_session`提供了一种快速且相对简单（如果熟悉线程本地存储，则为熟悉）的方法，在调用多个线程的应用程序中提供单个全局对象。</p>
-<p>无论何时都可以使用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session.remove" title="sqlalchemy.orm.scoped_session.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scoped_session.remove()</span></code></a>  方法，如果有的话，将删除与线程关联的当前  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。然而，<a href="#id20"><span class="problematic" id="id21">``</span></a>threading.local()``对象的一个优点是，如果应用程序线程本身结束，那么该线程的”存储”也将进行垃圾回收。因此，可以安全地使用线程本地范围与生成和拆卸线程的应用程序，而无需调用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session.remove" title="sqlalchemy.orm.scoped_session.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scoped_session.remove()</span></code></a>  。但是，事务本身的范围，即通过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  或：meth:<a href="#id22"><span class="problematic" id="id23">`</span></a>.Session.rollback`结束它们的范围，通常仍然必须在适当的时间显式地安排，除非应用程序实际上将线程的寿命周期联系到事务的寿命周期。</p>
+<span id="id5"></span><h2>线程本地范围<a class="headerlink" href="#unitofwork-contextual-threadlocal" title="Permalink to this heading">¶</a></h2>
+<p>熟悉多线程编程的用户将注意到，表示任何内容为全局变量通常是一个坏主意，因为它意味着全局对象将被许多线程同时访问。  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 对象，建议采用某些处理方式，以确保多个调用不会在多个线程中实际获得相同的会话句柄。我们称之为**线程本地存储**，这意味着使用一个特殊的对象来维护每个应用程序线程的一个不同的对象。Python通过`threading.local（）&lt;<a class="reference external" href="https://docs.python.org/library/threading.html#threading.local">https://docs.python.org/library/threading.html#threading.local</a>&gt;`_构建提供了这个功能。在默认情况下，  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 针对调用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 实例。</p>
+<p>使用这种技术， <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> 提供了一种快速且相对简单（如果熟悉线程本地存储，则为熟悉）的方法，在调用多个线程的应用程序中提供单个全局对象。</p>
+<p>无论何时都可以使用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session.remove" title="sqlalchemy.orm.scoped_session.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scoped_session.remove()</span></code></a>  方法，如果有的话，将删除与线程关联的当前  :class:` .Session` 。然而，<a href="#id6"><span class="problematic" id="id7">``</span></a>threading.local()``对象的一个优点是，如果应用程序线程本身结束，那么该线程的”存储”也将进行垃圾回收。因此，可以安全地使用线程本地范围与生成和拆卸线程的应用程序，而无需调用  <a class="reference internal" href="#sqlalchemy.orm.scoped_session.remove" title="sqlalchemy.orm.scoped_session.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scoped_session.remove()</span></code></a>  。但是，事务本身的范围，即通过  :meth:` .Session.commit`  或：meth:<a href="#id8"><span class="problematic" id="id9">`</span></a>.Session.rollback`结束它们的范围，通常仍然必须在适当的时间显式地安排，除非应用程序实际上将线程的寿命周期联系到事务的寿命周期。</p>
 </section>
 <section id="web">
 <span id="session-lifespan"></span><h2>在Web应用程序中使用线程本地范围<a class="headerlink" href="#web" title="Permalink to this heading">¶</a></h2>
-<p>如   <a class="reference internal" href="session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a>  部分所述，Web应用程序建立在**Web请求**的概念之上，并将  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`集成到Web应用程序中通常意味着将 :class:<a href="#id24"><span class="problematic" id="id25">`</span></a>.Session`与正在运行该线程的Web请求相关联。事实证明，大多数Python Web框架（Twisted和Tornado等突出的例外）都以一种简单的方式使用线程，以便特定的Web请求接收、处理并在单个*工作线程*的范围内完成。请求结束时，工作线程被释放到工作池中，其中它可用于处理另一个请求。</p>
-<p>Web请求和线程之间的这种简单对应关系意味着，将  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`在Web请求开始后创建并在Web请求结束之前被删除。因此，将  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`与Web应用程序的一个快速方式是一个常见的实践。下面的时序图说明了这个流程：</p>
+<p>如   <a class="reference internal" href="session_basics.html#session-faq-whentocreate"><span class="std std-ref">何时构建   Session ，何时提交，何时关闭？</span></a>  部分所述，Web应用程序建立在**Web请求**的概念之上，并将  :class:` .Session` .Session`集成到Web应用程序中通常意味着将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 与正在运行该线程的Web请求相关联。事实证明，大多数Python Web框架（Twisted和Tornado等突出的例外）都以一种简单的方式使用线程，以便特定的Web请求接收、处理并在单个*工作线程*的范围内完成。请求结束时，工作线程被释放到工作池中，其中它可用于处理另一个请求。</p>
+<p>Web请求和线程之间的这种简单对应关系意味着，将  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 在Web请求开始后创建并在Web请求结束之前被删除。因此，将  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 与Web应用程序的一个快速方式是一个常见的实践。下面的时序图说明了这个流程：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Web Server          Web Framework        SQLAlchemy ORM Code
 --------------      --------------       ------------------------------
 startup        -&gt;   Web framework        # Session registry is established
@@ -435,20 +435,20 @@ web request    -&gt;   web request     -&gt;   # The registry is *optionally*
 outgoing web    &lt;-
 response</pre></div>
 </div>
-<p>使用上述流程，将 :class:<a href="#id26"><span class="problematic" id="id27">`</span></a>.Session`与Web应用程序整合的过程具有以下两个要求：</p>
+<p>使用上述流程，将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 与Web应用程序整合的过程具有以下两个要求：</p>
 <ol class="arabic simple">
-<li><p>在Web应用程序首次启动时创建单个：class:<a href="#id28"><span class="problematic" id="id29">`</span></a>.scoped_session`注册表，确保此对象可以被应用程序的其余部分访问。</p></li>
+<li><p>在Web应用程序首次启动时创建单个：class:<a href="#id10"><span class="problematic" id="id11">`</span></a>.scoped_session`注册表，确保此对象可以被应用程序的其余部分访问。</p></li>
 <li><p>确保  <a class="reference internal" href="#sqlalchemy.orm.scoped_session.remove" title="sqlalchemy.orm.scoped_session.remove"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scoped_session.remove()</span></code></a>  在Web请求结束时被调用，通常通过与Web框架的事件系统集成来建立”on_request_end”事件。</p></li>
 </ol>
-<p>如前所述，以上模式是**集成  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session`。</p>
-<p>特别是，虽然使用线程本地范围可能很方便，但最好将  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session`的使用与直接基于请求的作用域或任何类型的作用域相结合。</p>
+<p>如前所述，以上模式是**集成  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session` 。</p>
+<p>特别是，虽然使用线程本地范围可能很方便，但最好将  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .scoped_session` 的使用与直接基于请求的作用域或任何类型的作用域相结合。</p>
 </section>
-<section id="id30">
-<h2>使用自定义创建的作用域<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h2>
+<section id="id12">
+<h2>使用自定义创建的作用域<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`的许多选项之一。可以根据任何现有的获取”正在处理的当前对象”的系统定义自定义作用域。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 的许多选项之一。可以根据任何现有的获取”正在处理的当前对象”的系统定义自定义作用域。</p>
 </div></blockquote>
-<p>假设一个Web框架定义了一个库函数“get_current_request()”。使用此框架构建的应用程序可以随时调用此函数，结果将是表示当前处理的某种类型的”Request”对象。如果”Request”对象是可散列的，那么可以很容易地将此函数与  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`与请求相关联。下面我们将这个与Web框架提供的假设事件标记组合起来，该假设事件标记允许在请求结束时调用代码:</p>
+<p>假设一个Web框架定义了一个库函数“get_current_request()”。使用此框架构建的应用程序可以随时调用此函数，结果将是表示当前处理的某种类型的”Request”对象。如果”Request”对象是可散列的，那么可以很容易地将此函数与  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 与请求相关联。下面我们将这个与Web框架提供的假设事件标记组合起来，该假设事件标记允许在请求结束时调用代码:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">my_web_framework</span> <span class="kn">import</span> <span class="n">get_current_request</span><span class="p">,</span> <span class="n">on_request_end</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">scoped_session</span><span class="p">,</span> <span class="n">sessionmaker</span>
 
@@ -458,7 +458,7 @@ response</pre></div>
 <span class="k">def</span> <span class="nf">remove_session</span><span class="p">(</span><span class="n">req</span><span class="p">):</span>
     <span class="n">Session</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span></pre></div>
 </div>
-<p>上面，我们通常地实例化了：class:<cite>.scoped_session</cite>，只不过我们将请求返回的函数作为”scopefunc”传递。这通过指示  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session`时使用。在本例中，特别重要的是确保实现可靠的“remove”系统，因为这个字典并不自我管理。</p>
+<p>上面，我们通常地实例化了：class:<cite>.scoped_session</cite>，只不过我们将请求返回的函数作为”scopefunc”传递。这通过指示  <a class="reference internal" href="#sqlalchemy.orm.scoped_session" title="sqlalchemy.orm.scoped_session"><code class="xref py py-class docutils literal notranslate"><span class="pre">scoped_session</span></code></a> .Session` 时使用。在本例中，特别重要的是确保实现可靠的“remove”系统，因为这个字典并不自我管理。</p>
 </section>
 <section id="api">
 <h2>上下文化会话 API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h2>
@@ -1963,7 +1963,7 @@ variable for storage.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:55
+    Documentation last generated: 2023/8/18 18:58:54
 
     </div>
 </div>

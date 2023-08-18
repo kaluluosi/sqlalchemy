@@ -132,7 +132,7 @@
 <li><span class="link-container"><a class="reference external" href="data_insert.html#returning">使用 RETURNING 检查插入结果</a></span></li>
 <li><span class="link-container"><a class="reference external" href="data_insert.html#tutorial-insert-from-select">插入…从选择操作</a></span></li>
 <li><span class="link-container"><a class="reference external" href="data_select.html">使用SELECT语句</a></span></li>
-<li><span class="link-container"><a class="reference external" href="data_select.html#orm-orm-aliased-user-address-sql-fromclause-sql-alias-orm-aliased-sql-select-schema-table-scalar-and-correlated-subqueries">在ORM中，  <code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code> <cite>User`</cite></a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html#orm-orm-aliased-user-address-sql-fromclause-class-sql-alias-orm-aliased-class-sql-select-schema-table-scalar-and-correlated-subqueries">在ORM中，  <code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code> ` User`` 或 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类)与代表行源的任何  <code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code>  的   :class:` _sql.Alias`  相关联。下面的示例说明如何使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code> ，生成的   :class:` _sql.Select`  构造最终导出与同一映射   <code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code>  相关的行。Scalar and Correlated Subqueries</a></span></li>
 <li class="selected"><span class="link-container"><strong>使用UPDATE和DELETE语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#update-sql">update() SQL 表达式结构</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#tutorial-correlated-updates">关联更新</a></span></li>
@@ -144,7 +144,7 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-update-delete-rowcount">从UPDATE、DELETE中获取受影响的行数</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id69">更新，删除的更多信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id55">更新，删除的更多信息</a></span></li>
 </ul>
 </li>
 </ul>
@@ -208,7 +208,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#tutorial-update-delete-rowcount">从UPDATE、DELETE中获取受影响的行数</a></li>
-<li><a class="reference internal" href="#id69">更新，删除的更多信息</a></li>
+<li><a class="reference internal" href="#id55">更新，删除的更多信息</a></li>
 </ul>
 </li>
 </ul>
@@ -224,17 +224,17 @@
         
 <section class="core-header orm-addin" id="updatedelete">
 <span id="tutorial-core-update-delete"></span><h1>使用UPDATE和DELETE语句<a class="headerlink" href="#updatedelete" title="Permalink to this heading">¶</a></h1>
-<p>到目前为止，我们已经涵盖了   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  ，以使我们能够将一些数据传输到我们的数据库中，并花费了大量时间在   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  上，它处理了用于从数据库检索数据的广泛使用模式。本节将介绍 `  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  and   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  ，这些结构用于修改现有行以及删除现有行。本节将从核心中心的角度介绍这些结构。</p>
+<p>到目前为止，我们已经涵盖了   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  ，以使我们能够将一些数据传输到我们的数据库中，并花费了大量时间在   :class:` _sql.Select`  上，它处理了用于从数据库检索数据的广泛使用模式。本节将介绍 `  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  and   :class:` _sql.Delete`  ，这些结构用于修改现有行以及删除现有行。本节将从核心中心的角度介绍这些结构。</p>
 <div class="orm-header docutils container">
-<p><strong>ORM阅读器</strong> - 正如在   <a class="reference internal" href="data_insert.html#tutorial-core-insert"><span class="std std-ref">使用 INSERT 语句</span></a>  中提到的那样，当使用ORM时，   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  操作通常作为   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象的一部分在  <span class="xref std std-term">unit of work</span>  过程中内部调用。</p>
-<p>但是，与   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  不同，   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  结构也可以直接与ORM一起使用，使用称为“ORM启用的更新和删除”的模式；因此，熟悉这些结构对ORM使用很有用。两种使用样式都在   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-updating"><span class="std std-ref">使用工作单元模式更新ORM对象</span></a>  和   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-deleting"><span class="std std-ref">使用工作单元模式删除ORM对象</span></a>  中讨论。</p>
+<p><strong>ORM阅读器</strong> - 正如在   <a class="reference internal" href="data_insert.html#tutorial-core-insert"><span class="std std-ref">使用 INSERT 语句</span></a>  中提到的那样，当使用ORM时，   :class:` _sql.Update`  操作通常作为   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象的一部分在  :term:` unit of work`  过程中内部调用。</p>
+<p>但是，与   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  不同，   :class:` _sql.Update`  和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  结构也可以直接与ORM一起使用，使用称为“ORM启用的更新和删除”的模式；因此，熟悉这些结构对ORM使用很有用。两种使用样式都在   :ref:` tutorial_orm_updating`  和   <a class="reference internal" href="orm_data_manipulation.html#tutorial-orm-deleting"><span class="std std-ref">使用工作单元模式删除ORM对象</span></a>  中讨论。</p>
 </div>
 <section id="update-sql">
 <span id="tutorial-core-update"></span><h2>update() SQL 表达式结构<a class="headerlink" href="#update-sql" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  函数生成   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  的一个新实例，表示SQL中的UPDATE语句，这将更新表中的现有数据。</p>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  函数生成   :class:` _sql.Update`  的一个新实例，表示SQL中的UPDATE语句，这将更新表中的现有数据。</p>
 </div></blockquote>
-<p>与   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  结构一样，有一个“传统”形式的   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> ，每次只对单个表发出UPDATE，不返回任何行。但是，一些后端支持可能同时修改多个表的UPDATE语句，并且UPDATE语句还支持RETURNING，以便返回匹配行中包含的列在结果集中。</p>
+<p>与   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a>  结构一样，有一个“传统”形式的   :func:` _sql.update` ，每次只对单个表发出UPDATE，不返回任何行。但是，一些后端支持可能同时修改多个表的UPDATE语句，并且UPDATE语句还支持RETURNING，以便返回匹配行中包含的列在结果集中。</p>
 <p>一个基本的UPDATE语句如下所示:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; from sqlalchemy import update</span>
 <span class="go">  &gt;&gt;&gt; stmt = (</span>
@@ -245,7 +245,7 @@
 <span class="go">  &gt;&gt;&gt; print(stmt)</span>
 <span class="go">  {printsql}UPDATE user_account SET fullname=:fullname WHERE user_account.name = :name_1</span>
 
-<span class="go">:meth:`_sql.Update.values`   方法控制UPDATE语句的 SET 元素的内容。这是   :class:`_sql.Insert`  构造的相同方法。通常可以使用列名称作为关键字参数传递参数。</span></pre></div>
+<span class="go">:meth:`_sql.Update.values`   方法控制UPDATE语句的 SET 元素的内容。这是   :class:` _sql.Insert`  构造的相同方法。通常可以使用列名称作为关键字参数传递参数。</span></pre></div>
 </div>
 <p>UPDATE支持UPDATE的所有主要SQL格式，包括对表达式的更新，我们可以使用   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  表达式。</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;用户名：&quot;</span> <span class="o">+</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -313,8 +313,8 @@ update_stmt = (</p>
 # UPDATE user_account SET fullname=:fullname FROM address
 # WHERE user_account.id = address.user_id AND address.email_address = :email_address_1
 <a href="#id6"><span class="problematic" id="id7">``</span></a><a href="#id8"><span class="problematic" id="id9">`</span></a></p>
-<p>还有一种MySQL的特定语法，可以更新多个表格。这要求在VALUES子句中引用 :class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_schema.Table`对象以引用其他表格：</p>
-<p><a href="#id12"><span class="problematic" id="id13">``</span></a><a href="#id14"><span class="problematic" id="id15">`</span></a>python
+<p>还有一种MySQL的特定语法，可以更新多个表格。这要求在VALUES子句中引用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象以引用其他表格：</p>
+<p><a href="#id10"><span class="problematic" id="id11">``</span></a><a href="#id12"><span class="problematic" id="id13">`</span></a>python
 update_stmt = (</p>
 <blockquote>
 <div><blockquote>
@@ -340,12 +340,12 @@ print(update_stmt.compile(dialect=mysql.dialect()))</p>
 # UPDATE user_account, address
 # SET address.email_address=%s, user_account.fullname=%s
 # WHERE user_account.id = address.user_id AND address.email_address = %s
-<a href="#id16"><span class="problematic" id="id17">``</span></a><a href="#id18"><span class="problematic" id="id19">`</span></a></p>
+<a href="#id14"><span class="problematic" id="id15">``</span></a><a href="#id16"><span class="problematic" id="id17">`</span></a></p>
 </section>
 <section id="tutorial-parameter-ordered-updates">
-<span id="id20"></span><h3>参数和顺序更新<a class="headerlink" href="#tutorial-parameter-ordered-updates" title="Permalink to this heading">¶</a></h3>
-<p>另一个仅MySQL的行为是，UPDATE的SET子句中的参数顺序实际上影响了每个表达式的计算。对于这种用例，  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.ordered_values()</span></code></a>  方法接受一个元组序列，以便可以控制此顺序 <a class="footnote-reference brackets" href="#id30" id="id21" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>：</p>
-<p><a href="#id22"><span class="problematic" id="id23">``</span></a><a href="#id24"><span class="problematic" id="id25">`</span></a>python
+<span id="id18"></span><h3>参数和顺序更新<a class="headerlink" href="#tutorial-parameter-ordered-updates" title="Permalink to this heading">¶</a></h3>
+<p>另一个仅MySQL的行为是，UPDATE的SET子句中的参数顺序实际上影响了每个表达式的计算。对于这种用例，  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.ordered_values()</span></code></a>  方法接受一个元组序列，以便可以控制此顺序 <a class="footnote-reference brackets" href="#id28" id="id19" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>：</p>
+<p><a href="#id20"><span class="problematic" id="id21">``</span></a><a href="#id22"><span class="problematic" id="id23">`</span></a>python
 update_stmt = update(some_table).ordered_values(</p>
 <blockquote>
 <div><blockquote>
@@ -356,10 +356,10 @@ update_stmt = update(some_table).ordered_values(</p>
 <p>print(update_stmt)</p>
 <p># 打印结果：
 # UPDATE some_table SET y=:y, x=(some_table.y + :y_1)
-<a href="#id26"><span class="problematic" id="id27">``</span></a><a href="#id28"><span class="problematic" id="id29">`</span></a></p>
+<a href="#id24"><span class="problematic" id="id25">``</span></a><a href="#id26"><span class="problematic" id="id27">`</span></a></p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id30" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">2</a><span class="fn-bracket">]</span></span>
+<aside class="footnote brackets" id="id28" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">2</a><span class="fn-bracket">]</span></span>
 <p>虽然Python3.7之后的版本已经保证了字典是按插入顺序排序的（见&lt;<a class="reference external" href="https://mail.python.org/pipermail/python-dev/2017-December/151283.html">https://mail.python.org/pipermail/python-dev/2017-December/151283.html</a>&gt;），但是使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.ordered_values()</span></code></a>  方法仍提供了一种额外的清晰表达的措施，当必须明确指定MySQL UPDATE语句的SET子句的顺序时。</p>
 </aside>
 </aside>
@@ -368,20 +368,20 @@ update_stmt = update(some_table).ordered_values(</p>
 <section id="delete-sql">
 <span id="tutorial-deletes"></span><h2>delete() SQL表达式构建<a class="headerlink" href="#delete-sql" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p>:func:<a href="#id31"><span class="problematic" id="id32">`</span></a>_sql.delete`函数生成一个新的 :class:<a href="#id33"><span class="problematic" id="id34">`</span></a>_sql.Delete`实例，该实例表示DELETE SQL语句，可以从表格中删除行。</p>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> 函数生成一个新的 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> 实例，该实例表示DELETE SQL语句，可以从表格中删除行。</p>
 </div></blockquote>
-<p>从API的角度来看， :func:<a href="#id35"><span class="problematic" id="id36">`</span></a>_sql.delete`语句与 :func:<a href="#id37"><span class="problematic" id="id38">`</span></a>_sql.update`语句非常相似，传统上不返回任何行，但允许在某些数据库后端上使用RETURNING变体。</p>
-<p><a href="#id39"><span class="problematic" id="id40">``</span></a><a href="#id41"><span class="problematic" id="id42">`</span></a>python
+<p>从API的角度来看， <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a> 语句与 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> 语句非常相似，传统上不返回任何行，但允许在某些数据库后端上使用RETURNING变体。</p>
+<p><a href="#id29"><span class="problematic" id="id30">``</span></a><a href="#id31"><span class="problematic" id="id32">`</span></a>python
 from sqlalchemy import delete
 stmt = delete(user_table).where(user_table.c.name == “patrick”)
 print(stmt)</p>
 <p># 打印结果
 # DELETE FROM user_account WHERE user_account.name = :name_1
-<a href="#id43"><span class="problematic" id="id44">``</span></a><a href="#id45"><span class="problematic" id="id46">`</span></a></p>
+<a href="#id33"><span class="problematic" id="id34">``</span></a><a href="#id35"><span class="problematic" id="id36">`</span></a></p>
 <section id="tutorial-multi-table-deletes">
-<span id="id47"></span><h3>多表删除<a class="headerlink" href="#tutorial-multi-table-deletes" title="Permalink to this heading">¶</a></h3>
-<p>与 :class:<a href="#id48"><span class="problematic" id="id49">`</span></a>_sql.Update`一样， :class:<a href="#id50"><span class="problematic" id="id51">`</span></a>_sql.Delete`也支持在WHERE子句中使用相关子查询以及后端特定的多表语法，如MySQL中的“DELETE FROM..USING”。</p>
-<p><a href="#id52"><span class="problematic" id="id53">``</span></a><a href="#id54"><span class="problematic" id="id55">`</span></a>python
+<span id="id37"></span><h3>多表删除<a class="headerlink" href="#tutorial-multi-table-deletes" title="Permalink to this heading">¶</a></h3>
+<p>与 <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 一样， <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a> 也支持在WHERE子句中使用相关子查询以及后端特定的多表语法，如MySQL中的“DELETE FROM..USING”。</p>
+<p><a href="#id38"><span class="problematic" id="id39">``</span></a><a href="#id40"><span class="problematic" id="id41">`</span></a>python
 delete_stmt = (</p>
 <blockquote>
 <div><blockquote>
@@ -396,15 +396,15 @@ print(delete_stmt.compile(dialect=mysql.dialect()))</p>
 <p># 打印结果:
 # DELETE FROM user_account USING user_account, address
 # WHERE user_account.id = address.user_id AND address.email_address = %s
-<a href="#id56"><span class="problematic" id="id57">``</span></a><a href="#id58"><span class="problematic" id="id59">`</span></a></p>
+<a href="#id42"><span class="problematic" id="id43">``</span></a><a href="#id44"><span class="problematic" id="id45">`</span></a></p>
 </section>
 </section>
 <section id="tutorial-update-delete-rowcount">
-<span id="id60"></span><h2>从UPDATE、DELETE中获取受影响的行数<a class="headerlink" href="#tutorial-update-delete-rowcount" title="Permalink to this heading">¶</a></h2>
+<span id="id46"></span><h2>从UPDATE、DELETE中获取受影响的行数<a class="headerlink" href="#tutorial-update-delete-rowcount" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  。根据下面提到的注意点，此值可从  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.rowcount</span></code></a>  属性中获取：</p>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  。根据下面提到的注意点，此值可从  :attr:` _engine.CursorResult.rowcount`  属性中获取：</p>
 </div></blockquote>
-<p><a href="#id61"><span class="problematic" id="id62">``</span></a><a href="#id63"><span class="problematic" id="id64">`</span></a>python
+<p><a href="#id47"><span class="problematic" id="id48">``</span></a><a href="#id49"><span class="problematic" id="id50">`</span></a>python
 with engine.begin() as conn:</p>
 <blockquote>
 <div><dl class="simple">
@@ -418,11 +418,11 @@ print(result.rowcount)</p>
 </div></blockquote>
 <p># 打印结果：
 # 1
-<a href="#id65"><span class="problematic" id="id66">``</span></a><a href="#id67"><span class="problematic" id="id68">`</span></a></p>
+<a href="#id51"><span class="problematic" id="id52">``</span></a><a href="#id53"><span class="problematic" id="id54">`</span></a></p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <blockquote>
-<div><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>  方法调用语句时，会返回此子类的实例。使用ORM时，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法为所有INSERT、UPDATE和DELETE语句返回此类型的对象。</p>
+<div><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>  方法调用语句时，会返回此子类的实例。使用ORM时，  :meth:` _orm.Session.execute`  方法为所有INSERT、UPDATE和DELETE语句返回此类型的对象。</p>
 </div></blockquote>
 <p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.rowcount" title="sqlalchemy.engine.CursorResult.rowcount"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.rowcount</span></code></a>  的事实：</p>
 </div>
@@ -432,10 +432,10 @@ print(result.rowcount)</p>
 </ul>
 <hr class="docutils" />
 <dl class="simple">
-<dt>和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  一样,   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a>  和</dt><dd><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  也支持返回结果集的 RETURNING 子句。</p>
+<dt>和   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a>  一样,   :class:` _sql.Update`  和</dt><dd><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a>  也支持返回结果集的 RETURNING 子句。</p>
 </dd>
 </dl>
-<p>可以使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.returning" title="sqlalchemy.sql.expression.Update.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.returning()</span></code></a>  和  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete.returning" title="sqlalchemy.sql.expression.Delete.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Delete.returning()</span></code></a>  方法添加 RETURNING 子句。
+<p>可以使用  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.returning" title="sqlalchemy.sql.expression.Update.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.returning()</span></code></a>  和  :meth:` _sql.Delete.returning`  方法添加 RETURNING 子句。
 当在一个支持 RETURNING 的后端中使用这些方法时，匹配 WHERE 条件的
 所有列将被返回到   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象中，并可以作为可以迭代的行返回:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -460,8 +460,8 @@ print(result.rowcount)</p>
 </div></pre></div>
 </div>
 </section>
-<section id="id69">
-<h2>更新，删除的更多信息<a class="headerlink" href="#id69" title="Permalink to this heading">¶</a></h2>
+<section id="id55">
+<h2>更新，删除的更多信息<a class="headerlink" href="#id55" title="Permalink to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -483,7 +483,7 @@ print(result.rowcount)</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:03
+    Documentation last generated: 2023/8/18 18:59:04
 
     </div>
 </div>

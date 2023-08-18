@@ -132,14 +132,14 @@
 <li class="selected"><span class="link-container"><strong>性能</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#x">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sql">第一步-打开SQL记录并确认是否正在工作的缓存</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id6">第二步-确定什么结构阻止了启用缓存</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id13">第三步-为给定对象启用缓存和/或寻求替代方案</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">第二步-确定什么结构阻止了启用缓存</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">第三步-为给定对象启用缓存和/或寻求替代方案</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy">如何为SQLAlchemy提供动态性能分析？</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id18">查询分析</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">查询分析</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#faq-code-profiling">代码分析</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id24">执行缓慢</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">执行缓慢</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#core">结果获取缓慢-Core</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm">由ORM提取缓慢结果</a></span></li>
 </ul>
@@ -195,14 +195,14 @@
 <li><a class="reference internal" href="#faq-performance">性能</a><ul>
 <li><a class="reference internal" href="#x">为什么在升级到1.4和/或2.x之后，我的应用程序变得很慢？</a><ul>
 <li><a class="reference internal" href="#sql">第一步-打开SQL记录并确认是否正在工作的缓存</a></li>
-<li><a class="reference internal" href="#id6">第二步-确定什么结构阻止了启用缓存</a></li>
-<li><a class="reference internal" href="#id13">第三步-为给定对象启用缓存和/或寻求替代方案</a></li>
+<li><a class="reference internal" href="#id2">第二步-确定什么结构阻止了启用缓存</a></li>
+<li><a class="reference internal" href="#id3">第三步-为给定对象启用缓存和/或寻求替代方案</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sqlalchemy">如何为SQLAlchemy提供动态性能分析？</a><ul>
-<li><a class="reference internal" href="#id18">查询分析</a></li>
+<li><a class="reference internal" href="#id6">查询分析</a></li>
 <li><a class="reference internal" href="#faq-code-profiling">代码分析</a></li>
-<li><a class="reference internal" href="#id24">执行缓慢</a></li>
+<li><a class="reference internal" href="#id8">执行缓慢</a></li>
 <li><a class="reference internal" href="#core">结果获取缓慢-Core</a></li>
 <li><a class="reference internal" href="#orm">由ORM提取缓慢结果</a></li>
 </ul>
@@ -234,7 +234,7 @@
 依赖于所有SQL构造的可实现的功能，包括
 对象，例如  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ,</p>
 <blockquote>
-<div><p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> ，和 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_types.TypeEngine`对象，以生成一个</p>
+<div><p><a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> ，和 :class:` _types.TypeEngine`对象，以生成一个</p>
 </div></blockquote>
 <p><strong>缓存密钥</strong>，它完全表示它们的状态，以影响它们的程度
 SQL编译过程。</p>
@@ -255,7 +255,7 @@ SQLAlchemy 1.3转换SQL构造为字符串的时间要更短
 <section id="sql">
 <h3>第一步-打开SQL记录并确认是否正在工作的缓存<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>在这里，我们要使用在</dt><dd><p>:ref:<a href="#id4"><span class="problematic" id="id5">`</span></a>引擎日志记录&lt;sql_caching_logging&gt;`中介绍的技术，查找具有该语句的语句</p>
+<dt>在这里，我们要使用在</dt><dd><p><a class="reference internal" href="../core/connections.html#sql-caching-logging"><span class="std std-ref">引擎日志记录</span></a> 中介绍的技术，查找具有该语句的语句</p>
 </dd>
 </dl>
 <p>“[no key]”标识符或者甚至是“[dialect does not support caching]”。
@@ -269,12 +269,13 @@ SQLAlchemy 1.3转换SQL构造为字符串的时间要更短
 <p><a class="reference internal" href="../core/connections.html#sql-caching-logging"><span class="std std-ref">使用日志记录估计缓存性能</span></a></p>
 </div>
 </section>
-<section id="id6">
-<h3>第二步-确定什么结构阻止了启用缓存<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<section id="id2">
+<h3>第二步-确定什么结构阻止了启用缓存<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>假设语句没有被缓存，则应发出警告
-应用程序的日志（仅限SQLAlchemy 1.4.28及以上版本）指示方言， :class:<a href="#id7"><span class="problematic" id="id8">`</span></a>.TypeEngine`对象以及不是SQL
+应用程序的日志（仅限SQLAlchemy 1.4.28及以上版本）指示方言， <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a> 对象以及不是SQL
 不参与缓存的构造。</p>
-<p>对于像那些从 <code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code> ，警告将如下所示：</p>
+<p>对于像那些从 <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 扩展的自定义类型而言，
+和  <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.UserDefinedType" title="sqlalchemy.types.UserDefinedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a> ，警告将如下所示：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.ext.SAWarning: MyType will not produce a cache key because the
 &quot;cache_ok&quot; attribute is not set to True. This can have significant
 performance implications including some performance degradations in
@@ -283,7 +284,7 @@ type object&#39;s state is safe to use in a cache key, or False to disable this
 warning.</pre></div>
 </div>
 <p>对于自定义和第三方SQL元素，例如使用
-在 :ref:<a href="#id9"><span class="problematic" id="id10">`</span></a>sqlalchemy.ext.compiler_toplevel`中描述的技术，这些警告将如下所示：</p>
+在 <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span> 中描述的技术，这些警告将如下所示：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.exc.SAWarning: Class MyClass will not make use of SQL
 compilation caching as it does not set the &#39;inherit_cache&#39; attribute to
 ``True``. This can have significant performance implications including some
@@ -292,7 +293,7 @@ this attribute to True if this object can make use of the cache key
 generated by the superclass. Alternatively, this attribute may be set to
 False which will disable this warning.</pre></div>
 </div>
-<p>对于使用 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>.Dialect`类层次结构的自定义和第三方方言，警告将如下所示：</p>
+<p>对于使用 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> 类层次结构的自定义和第三方方言，警告将如下所示：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.exc.SAWarning: Dialect database:driver will not make use of SQL
 compilation caching as it does not set the &#39;supports_statement_cache&#39;
 attribute to ``True``. This can have significant performance implications
@@ -303,13 +304,13 @@ support. Alternatively, this attribute may be set to False which will
 disable this warning.</pre></div>
 </div>
 </section>
-<section id="id13">
-<h3>第三步-为给定对象启用缓存和/或寻求替代方案<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h3>
+<section id="id3">
+<h3>第三步-为给定对象启用缓存和/或寻求替代方案<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <p>缓解缓存不足的步骤包括：</p>
 <dl>
-<dt><a href="#id14"><span class="problematic" id="id15">*</span></a>检查并设置  <code class="xref py py-class docutils literal notranslate"><span class="pre">cache_ok</span></code> ，</dt><dd><blockquote>
+<dt><a href="#id4"><span class="problematic" id="id5">*</span></a>检查并设置  <code class="xref py py-class docutils literal notranslate"><span class="pre">cache_ok</span></code> ，</dt><dd><blockquote>
 <div><dl>
-<dt>:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_types.UserDefinedType`扩展，以及这些类型的子类，例如</dt><dd><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> 。此设置只需在自定义类型不包括影响其如何呈现SQL的任何附加状态属性时使用:</p>
+<dt><a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.UserDefinedType" title="sqlalchemy.types.UserDefinedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a> 扩展，以及这些类型的子类，例如</dt><dd><p><a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> 。此设置只需在自定义类型不包括影响其如何呈现SQL的任何附加状态属性时使用:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyCustomType</span><span class="p">(</span><span class="n">TypeDecorator</span><span class="p">):</span>
     <span class="n">cache_ok</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">impl</span> <span class="o">=</span> <span class="n">String</span></pre><div class="code-non-annotations-key"></div></div>
@@ -341,12 +342,12 @@ disable this warning.</pre></div>
 <p>方方言的背景和示例。</p>
 </div>
 </li>
-<li><p>21自定义SQL类，包括使用 <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel`创建的所有DQL / DML构造，
-以及  :class:`_schema.Column</span> .HasCacheKey.inherit_cache` 属性
+<li><p>21自定义SQL类，包括使用 <span class="xref std std-ref">sqlalchemy.ext.compiler_toplevel</span> 创建的所有DQL / DML构造，
+以及  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .HasCacheKey.inherit_cache` 属性
 可以用于没有包含任何的显式子类特定状态信息的微不足道的子类。影响SQL编译。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../core/compiler.html#compilerext-caching"><span class="std std-ref">Enabling Caching Support for Custom Constructs</span></a>  - 应用  <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.traversals.HasCacheKey.inherit_cache" title="sqlalchemy.sql.traversals.HasCacheKey.inherit_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">HasCacheKey.inherit_cache</span></code></a>  属性的指南。</p>
+<p><a class="reference internal" href="../core/compiler.html#compilerext-caching"><span class="std std-ref">Enabling Caching Support for Custom Constructs</span></a>  - 应用  :attr:` .HasCacheKey.inherit_cache`  属性的指南。</p>
 </div>
 </li>
 </ul>
@@ -361,10 +362,10 @@ disable this warning.</pre></div>
 <span id="faq-how-to-profile"></span><h2>如何为SQLAlchemy提供动态性能分析？<a class="headerlink" href="#sqlalchemy" title="Permalink to this heading">¶</a></h2>
 <p>查找性能问题通常包括两种策略。一
 是查询分析, 另一个是代码分析。</p>
-<section id="id18">
-<h3>查询分析<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
+<section id="id6">
+<h3>查询分析<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
 <p>有时仅仅是普通的SQL记录（通过python的日志模块启用
-或通过 :func:<a href="#id19"><span class="problematic" id="id20">`</span></a>_sa.create_engine`的echo=True参数）可以给一个
+或通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 的echo=True参数）可以给一个
 对花费的时间有一个概念。例如，如果您记录了某些东西
 在SQL操作之后，您会在您的中看到这样的东西
 日志：</p>
@@ -377,7 +378,7 @@ disable this warning.</pre></div>
 <p>记录SQL也将说明是否正在发出几十个/几百个查询
 可以更好地组织成远少于查询的查询。使用SQLAlchemy ORM时，提供了“热加载”
 功能，用于部分（  <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code> )或完全
-(  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ,   <code class="xref py py-func docutils literal notranslate"><span class="pre">subqueryload()</span></code> )
+(  <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> ,   :func:` .subqueryload()` )
 自动化此操作，但是在
 ORM“热加载”通常意味着使用连接，以便可以一次加载多个结果集
 在添加更多深度（即“r + r * r2 + r * r2 * r3”…）时，而不是增加查询的数量</p>
@@ -409,11 +410,11 @@ logger.debug(“Total Time: %f”, total)</p>
 <dt>在上面的示例中，我们使用  <a class="reference internal" href="../core/events.html#sqlalchemy.events.ConnectionEvents.before_cursor_execute" title="sqlalchemy.events.ConnectionEvents.before_cursor_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ConnectionEvents.before_cursor_execute()</span></code></a>  和</dt><dd><p><a class="reference internal" href="../core/events.html#sqlalchemy.events.ConnectionEvents.after_cursor_execute" title="sqlalchemy.events.ConnectionEvents.after_cursor_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ConnectionEvents.after_cursor_execute()</span></code></a>  事件，以在语句执行时建立拦截点。</p>
 </dd>
 </dl>
-<p>我们使用 :class:<a href="#id21"><span class="problematic" id="id22">`</span></a>._ConnectionRecord.info`字典在连接上附加一个定时器；
+<p>我们使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">info</span></code> 字典在连接上附加一个定时器；
 我们在这里使用一个堆栈，因为游标执行事件可能会嵌套。</p>
 </section>
 <section id="faq-code-profiling">
-<span id="id23"></span><h3>代码分析<a class="headerlink" href="#faq-code-profiling" title="Permalink to this heading">¶</a></h3>
+<span id="id7"></span><h3>代码分析<a class="headerlink" href="#faq-code-profiling" title="Permalink to this heading">¶</a></h3>
 <p>如果logging显示单个查询需要太长时间，您将
 需要一个内部将时间花费在处理查询的数据库内的细分
 它可以提供有关花费多长时间在数据库中，发送结果，正在处理的信息
@@ -473,8 +474,8 @@ ncalls  tottime  percall  cumtime  percall filename:lineno(function)
 <p>在上面的示例中，我们可以看到“instance()”SQLAlchemy函数被调用了222次
 （递归，外部调用时21次），所有调用加起来总共需要0.011秒。</p>
 </section>
-<section id="id24">
-<h3>执行缓慢<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
+<section id="id8">
+<h3>执行缓慢<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
 <p>这些调用的细节可以告诉我们时间花费在哪里。
 例如，如果您看到时间花费在“cursor.execute()”中，
 例如，对DBAPI：</p>
@@ -497,7 +498,7 @@ SHOW PLAN等。</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>2    0.300    0.600    0.300    0.600 {method &#39;fetchall&#39; of &#39;sqlite3.Cursor&#39; objects}</pre></div>
 </div>
 <p>即使结果看似没有很多行，但行数意外地多，可能是笛卡尔积的结果-当多个查询集合在一起时，
-在没有适当连接表的情况下。如果使用SQLAlchemy Core或ORM查询时使用了错误的 :class:<a href="#id25"><span class="problematic" id="id26">`</span></a>_schema.Column`对象，
+在没有适当连接表的情况下。如果使用SQLAlchemy Core或ORM查询时使用了错误的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象，
 这可能很容易出现此行为，这将拉出预期之外的额外FROM子句。</p>
 <p>另一方面，在DBAPI级别快速调用“fetchAll()”，但是然后在SQLAlchemy的
 调用类  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.CursorResult.fetchall" title="sqlalchemy.engine.CursorResult.fetchall"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.fetchall()</span></code></a>  时变慢，
@@ -544,7 +545,7 @@ SHOW PLAN等。</p>
 <div><p>select(User)</p>
 </div></blockquote>
 </li>
-<li><p>使用 :class:<a href="#id27"><span class="problematic" id="id28">`</span></a>.Bundle`对象组织基于列的结果：</p>
+<li><p>使用 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.Bundle" title="sqlalchemy.orm.Bundle"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bundle</span></code></a> 对象组织基于列的结果：</p>
 <blockquote>
 <div><p>u_b = Bundle(“user”, User.id, User.name)
 a_b = Bundle(“address”, Address.id, Address.email)</p>
@@ -572,7 +573,7 @@ a_b = Bundle(“address”, Address.id, Address.email)</p>
 <section id="orm400-000">
 <h2>我正在使用ORM插入400,000行，但速度非常慢！<a class="headerlink" href="#orm400-000" title="Permalink to this heading">¶</a></h2>
 <p>ORM插入的性质已更改，因为包括大多数内置驱动程序都使用了带有  <a class="reference internal" href="../core/connections.html#engine-insertmanyvalues"><span class="std std-ref">官方API的RETURNING</span></a>
-支持的插入manyvalue为SQLAlchemy 2.0。有关详细信息，请参见 :ref:<a href="#id29"><span class="problematic" id="id30">`</span></a>change_6047`部分。</p>
+支持的插入manyvalue为SQLAlchemy 2.0。有关详细信息，请参见 <span class="xref std std-ref">change_6047</span> 部分。</p>
 <p>总体而言，除了MySQL的SQLAlchemy内置驱动程序外，现在应该
 提供非常快的ORM批量插入性能。</p>
 <p>第三方驱动程序还可以选择使用新的批量基础设施，前提是它们的后端支持所需的语法。
@@ -599,7 +600,7 @@ SQLAlchemy开发人员将鼓励第三方方言的用户，以便他们可以为�
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:53
+    Documentation last generated: 2023/8/18 18:58:52
 
     </div>
 </div>

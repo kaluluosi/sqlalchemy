@@ -162,21 +162,21 @@
 </li>
 <li><span class="link-container"><a class="reference external" href="#typedecorator">TypeDecorator配方</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#unicode">强制编码字符串为Unicode</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id14">保留数字</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">保留数字</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#utc">存储时区感知时间戳为时区感知的UTC</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#guid">跨数据库的GUID类型</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#python-uuid-uuid-orm">链接Python ``uuid.UUID``到ORM映射自定义类型</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#marshal-json-strings">Marshal JSON Strings</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id23">添加可变性</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id24">比较运算</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id11">添加可变性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id12">比较运算</a></span></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#sqlbind-result">应用SQL级别的Bind/Result处理</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id31">创建新类型</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id15">创建新类型</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.UserDefinedType"><code class="docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.UserDefinedType.cache_ok"><code class="docutils literal notranslate"><span class="pre">UserDefinedType.cache_ok</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.types.UserDefinedType.coerce_compared_value"><code class="docutils literal notranslate"><span class="pre">UserDefinedType.coerce_compared_value()</span></code></a></span></li>
@@ -272,21 +272,21 @@
 </li>
 <li><a class="reference internal" href="#typedecorator">TypeDecorator配方</a><ul>
 <li><a class="reference internal" href="#unicode">强制编码字符串为Unicode</a></li>
-<li><a class="reference internal" href="#id14">保留数字</a></li>
+<li><a class="reference internal" href="#id4">保留数字</a></li>
 <li><a class="reference internal" href="#utc">存储时区感知时间戳为时区感知的UTC</a></li>
 <li><a class="reference internal" href="#guid">跨数据库的GUID类型</a><ul>
 <li><a class="reference internal" href="#python-uuid-uuid-orm">链接Python ``uuid.UUID``到ORM映射自定义类型</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#marshal-json-strings">Marshal JSON Strings</a><ul>
-<li><a class="reference internal" href="#id23">添加可变性</a></li>
-<li><a class="reference internal" href="#id24">比较运算</a></li>
+<li><a class="reference internal" href="#id11">添加可变性</a></li>
+<li><a class="reference internal" href="#id12">比较运算</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sqlbind-result">应用SQL级别的Bind/Result处理</a></li>
-<li><a class="reference internal" href="#id31">创建新类型</a><ul>
+<li><a class="reference internal" href="#id15">创建新类型</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.types.UserDefinedType"><code class="docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.types.UserDefinedType.cache_ok"><code class="docutils literal notranslate"><span class="pre">UserDefinedType.cache_ok</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.types.UserDefinedType.coerce_compared_value"><code class="docutils literal notranslate"><span class="pre">UserDefinedType.coerce_compared_value()</span></code></a></li>
@@ -324,18 +324,18 @@
     <span class="k">return</span> <span class="s2">&quot;BLOB&quot;</span></pre></div>
 </div>
 <p>上面的代码允许使用  <a class="reference internal" href="type_basics.html#sqlalchemy.types.BINARY" title="sqlalchemy.types.BINARY"><code class="xref py py-class docutils literal notranslate"><span class="pre">BINARY</span></code></a> ，该类型将在除SQLite外的所有后端中产生字符串”BINARY”，在SQLite的情况下，它将生成字符串”BLOB”。</p>
-<p>查看 :ref:<a href="#id3"><span class="problematic" id="id4">`</span></a>类型编译扩展`关于更多例子的细节。</p>
+<p>查看 <span class="xref std std-ref">类型编译扩展</span> 关于更多例子的细节。</p>
 </section>
 <section id="types-typedecorator">
-<span id="id5"></span><h2>增强现有类型<a class="headerlink" href="#types-typedecorator" title="Permalink to this heading">¶</a></h2>
+<span id="id3"></span><h2>增强现有类型<a class="headerlink" href="#types-typedecorator" title="Permalink to this heading">¶</a></h2>
 <p>：class:<cite>.TypeDecorator`允许创建自定义类型，为现有类型添加绑定参数和结果处理行为。当需要在Python中进行额外的  :term:`marshalling</cite>  时，就会使用它，以及从数据库中。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>.TypeDecorator`的bind和结果处理是**附加**于托管的类型的处理，这个处理是根据DBAPI基础上来的。虽然可以通过直接子类化替换给定类型的处理，但实际上从不需要以这种方式，SQLAlchemy不再支持这种公共用例。</p>
+<p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 的bind和结果处理是**附加**于托管的类型的处理，这个处理是根据DBAPI基础上来的。虽然可以通过直接子类化替换给定类型的处理，但实际上从不需要以这种方式，SQLAlchemy不再支持这种公共用例。</p>
 </div>
 <aside class="topic">
 <p class="topic-title">ORM提示</p>
-<p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> .validates`装饰器。这种技术可能更适用于当业务情况需要规范化数据时，而不是与数据类型一样通用。</p>
+<p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> .validates` 装饰器。这种技术可能更适用于当业务情况需要规范化数据时，而不是与数据类型一样通用。</p>
 </aside>
 <table class="longtable docutils align-default">
 <thead>
@@ -987,13 +987,13 @@ Behavior can be customized here by overriding
 </section>
 <section id="typedecorator">
 <h2>TypeDecorator配方<a class="headerlink" href="#typedecorator" title="Permalink to this heading">¶</a></h2>
-<p>以下是一些关键的 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>.TypeDecorator`配方。</p>
+<p>以下是一些关键的 <a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 配方。</p>
 <section id="unicode">
 <span id="coerce-to-unicode"></span><h3>强制编码字符串为Unicode<a class="headerlink" href="#unicode" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> <a href="#id10"><span class="problematic" id="id11">`</span></a>unicode``对象，这意味着在Python2中，如果使用Python的字符串对象，那么将抛出异常。它所执行的编码/解码函数只是为了适应所使用的DBAPI所需要的格式，是主要的私有实现细节。</p>
+<div><p><a class="reference internal" href="type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> ` unicode``对象，这意味着在Python2中，如果使用Python的字符串对象，那么将抛出异常。它所执行的编码/解码函数只是为了适应所使用的DBAPI所需要的格式，是主要的私有实现细节。</p>
 </div></blockquote>
-<p>这可以通过使用 :class:<a href="#id12"><span class="problematic" id="id13">`</span></a>.TypeDecorator`来实现，需要时进行必要的强制类型转换:</p>
+<p>这可以通过使用 <a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 来实现，需要时进行必要的强制类型转换:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">TypeDecorator</span><span class="p">,</span> <span class="n">Unicode</span>
 
 
@@ -1008,8 +1008,8 @@ Behavior can be customized here by overriding
         <span class="k">return</span> <span class="n">value</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
 </section>
-<section id="id14">
-<h3>保留数字<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<section id="id4">
+<h3>保留数字<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>某些数据库连接器（例如SQL Server）如果传递带有太多小数位的Decimal，则会报错。这里有一个将Decimal四舍五入的配方:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">TypeDecorator</span><span class="p">,</span> <span class="n">Numeric</span>
 <span class="kn">from</span> <span class="nn">decimal</span> <span class="kn">import</span> <span class="n">Decimal</span>
@@ -1033,7 +1033,7 @@ Behavior can be customized here by overriding
 </section>
 <section id="utc">
 <h3>存储时区感知时间戳为时区感知的UTC<a class="headerlink" href="#utc" title="Permalink to this heading">¶</a></h3>
-<p>Relational数据库中的时间戳应始终以与时区无关的方式存储。对于大多数数据库，这意味着需要先将时间戳设置为UTC时区，然后存储它的时区为无时区（即，没有任何时区与之相关），UTC被假定为“隐式”时区。另外，也有特定于数据库的类型，如PostgreSQL的“TIMESTAMP WITH TIMEZONE”，通常是首选的，因为它们具有更丰富的功能。如果不能使用时间智能数据库类型，或者不喜欢该项功能，那么可以使用  <a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> <a href="#id15"><span class="problematic" id="id16">`</span></a>datetime.timezone.utc``时区被用于归一化和反归一化:</p>
+<p>Relational数据库中的时间戳应始终以与时区无关的方式存储。对于大多数数据库，这意味着需要先将时间戳设置为UTC时区，然后存储它的时区为无时区（即，没有任何时区与之相关），UTC被假定为“隐式”时区。另外，也有特定于数据库的类型，如PostgreSQL的“TIMESTAMP WITH TIMEZONE”，通常是首选的，因为它们具有更丰富的功能。如果不能使用时间智能数据库类型，或者不喜欢该项功能，那么可以使用  <a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> ` datetime.timezone.utc``时区被用于归一化和反归一化:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 
 
@@ -1100,13 +1100,13 @@ Behavior can be customized here by overriding
             <span class="k">return</span> <span class="n">value</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
 <section id="python-uuid-uuid-orm">
-<h4>链接Python <a href="#id17"><span class="problematic" id="id18">``</span></a>uuid.UUID``到ORM映射自定义类型<a class="headerlink" href="#python-uuid-uuid-orm" title="Permalink to this heading">¶</a></h4>
+<h4>链接Python <a href="#id5"><span class="problematic" id="id6">``</span></a>uuid.UUID``到ORM映射自定义类型<a class="headerlink" href="#python-uuid-uuid-orm" title="Permalink to this heading">¶</a></h4>
 <p>在使用  <a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">装饰式ORM</span></a>
 映射时，上面定义的自定义``GUID``类型可能会与
-Python <a href="#id19"><span class="problematic" id="id20">``</span></a>uuid.UUID``数据类型相关联，并将其自动用于
+Python <a href="#id7"><span class="problematic" id="id8">``</span></a>uuid.UUID``数据类型相关联，并将其自动用于
 的资源将在ORM映射到的列相关联该对象，则可以将其添加到</p>
 <blockquote>
-<div><p><a href="#id21"><span class="problematic" id="id22">:type:`_orm.DeclarativeBase`</span></a>  类上通常定义的  <a class="reference internal" href="../orm/declarative_tables.html#orm-declarative-mapped-column-type-map"><span class="std std-ref">类型注释映射</span></a> ：</p>
+<div><p><a href="#id9"><span class="problematic" id="id10">:type:`_orm.DeclarativeBase`</span></a>  类上通常定义的  :ref:` 类型注释映射 &lt;orm_declarative_mapped_column_type_map&gt;` ：</p>
 <blockquote>
 <div><p>import uuid
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
@@ -1159,8 +1159,8 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
             <span class="n">value</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<section id="id23">
-<h4>添加可变性<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h4>
+<section id="id11">
+<h4>添加可变性<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h4>
 <p>ORM默认情况下不会检测这种类型的任何“可变性”，也就是说，不会检测任何值的就地更改并使其刷新。如果没有进一步的步骤，您需要替换每个父对象上的现有值以检测更改::  obj.json_value[“key”] = “value”  # ORM不会检测  obj.json_value = {“key”: “value”}  # ORM会检测</p>
 <p>上面的限制最好使用``sqlalchemy.ext.mutable``扩展实现可变性。 对于以字典为导向的JSON结构，我们可以将其应用为：</p>
 <blockquote>
@@ -1176,13 +1176,13 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
 <p><a class="reference internal" href="../orm/extensions/mutable.html"><span class="std std-ref">变化追踪</span></a></p>
 </div>
 </section>
-<section id="id24">
-<h4>比较运算<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h4>
+<section id="id12">
+<h4>比较运算<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h4>
 <blockquote>
 <div><blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> <cite>JSONEncodedDict``的类型，我们需要在使用此运算符之前使用 :func:</cite>.cast`或</p>
+<div><p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> ` JSONEncodedDict``的类型，我们需要在使用此运算符之前使用 <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.cast" title="sqlalchemy.sql.expression.cast"><code class="xref py py-func docutils literal notranslate"><span class="pre">cast()</span></code></a> 或</p>
 </div></blockquote>
-<p>:func:<a href="#id25"><span class="problematic" id="id26">`</span></a>type_coerce`来将列转换为文本形式。:</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">type_coerce()</span></code> 来将列转换为文本形式。:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">type_coerce</span><span class="p">,</span> <span class="n">String</span>
 
   <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">my_table</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">type_coerce</span><span class="p">(</span><span class="n">my_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">json_data</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2">oo%&quot;</span><span class="p">))</span>
@@ -1222,8 +1222,8 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
 </section>
 <section id="sqlbind-result">
 <span id="types-sql-value-processing"></span><h2>应用SQL级别的Bind/Result处理<a class="headerlink" href="#sqlbind-result" title="Permalink to this heading">¶</a></h2>
-<p>如在 :ref:<a href="#id27"><span class="problematic" id="id28">`</span></a>types_typedecorator`一节中所述，当将参数发送到语句时和从数据库加载结果行时，SQLAlchemy允许调用Python函数以应用转换。还可以定义SQL级别的转换。这样做的原因是在关系数据库中包含了一系列特定于应用程序和持久性格式之间转换的功能而只存在于数据库服务器中。</p>
-<p>任何: class: ‘TypeEngine’，: class :。’UserDefinedType’或 : class:<cite>.TypeDecorator`子类均可包括  :meth:</cite>.TypeEngine.bind_expression`   和 / 或  <a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine.column_expression" title="sqlalchemy.types.TypeEngine.column_expression"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TypeEngine.column_expression()</span></code></a>   的实现，如果定义为返回非“None”值，则应返回: class:<cite>_expression.ColumnElement ` 为将注入到SQL语句中，包围绑定参数或列表达式的表达式格式。例如，要构建一个“Geometry”类型，该类型将对所有传出值应用PostGIS函数“ST_GeomFromText”，并对所有传入数据应用函数“ST_AsText”，我们可以创建一个  :class:</cite>.UserDefinedType` ~.sqlalchemy.sql.expression.func` 结合使用:</p>
+<p>如在 <a class="reference internal" href="#types-typedecorator"><span class="std std-ref">增强现有类型</span></a> 一节中所述，当将参数发送到语句时和从数据库加载结果行时，SQLAlchemy允许调用Python函数以应用转换。还可以定义SQL级别的转换。这样做的原因是在关系数据库中包含了一系列特定于应用程序和持久性格式之间转换的功能而只存在于数据库服务器中。</p>
+<p>任何: class: ‘TypeEngine’，: class :。’UserDefinedType’或 : class:<cite>.TypeDecorator`子类均可包括  :meth:</cite>.TypeEngine.bind_expression`   和 / 或  :meth:` .TypeEngine.column_expression`   的实现，如果定义为返回非“None”值，则应返回: class:<cite>_expression.ColumnElement ` 为将注入到SQL语句中，包围绑定参数或列表达式的表达式格式。例如，要构建一个“Geometry”类型，该类型将对所有传出值应用PostGIS函数“ST_GeomFromText”，并对所有传入数据应用函数“ST_AsText”，我们可以创建一个  :class:</cite>.UserDefinedType` ~.sqlalchemy.sql.expression.func` 结合使用:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">UserDefinedType</span>
 
@@ -1238,7 +1238,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
     <span class="k">def</span> <span class="nf">column_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">func</span><span class="o">.</span><span class="n">ST_AsText</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">type_</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>我们可以将“Geometry”类型应用于:schema:Table元数据中，并在:func :<a href="#id29"><span class="problematic" id="id30">`</span></a>_expression.select`中使用它:</p>
+<p>我们可以将“Geometry”类型应用于:schema:Table元数据中，并在:func :<a href="#id13"><span class="problematic" id="id14">`</span></a>_expression.select`中使用它:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">geometry</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;geometry&quot;</span><span class="p">,</span>
     <span class="n">metadata</span><span class="p">,</span>
@@ -1257,7 +1257,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
 <span class="k">FROM</span><span class="w"> </span><span class="n">geometry</span>
 <span class="k">WHERE</span><span class="w"> </span><span class="n">geometry</span><span class="p">.</span><span class="n">geom_data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ST_GeomFromText</span><span class="p">(:</span><span class="n">geom_data_2</span><span class="p">)</span></pre></div>
 </div>
-<p>通过  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Operators.op" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code></a>   中使用自定义SQL进行比较操作,参数  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Operators.op.params.is_comparison" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Operators.op.is_comparison</span></code></a>  标志应设置为“True”:</p>
+<p>通过  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.Operators.op" title="sqlalchemy.sql.expression.Operators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.op()</span></code></a>   中使用自定义SQL进行比较操作,参数  :paramref:` .Operators.op.is_comparison`  标志应设置为“True”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyInt</span><span class="p">(</span><span class="n">Integer</span><span class="p">):</span>
     <span class="k">class</span> <span class="nc">comparator_factory</span><span class="p">(</span><span class="n">Integer</span><span class="o">.</span><span class="n">Comparator</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">is_frobnozzled</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -1269,10 +1269,10 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column</p>
 <p><a class="reference internal" href="type_api.html#sqlalchemy.types.TypeEngine.comparator_factory" title="sqlalchemy.types.TypeEngine.comparator_factory"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TypeEngine.comparator_factory</span></code></a></p>
 </div>
 </section>
-<section id="id31">
-<h2>创建新类型<a class="headerlink" href="#id31" title="Permalink to this heading">¶</a></h2>
+<section id="id15">
+<h2>创建新类型<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.types.UserDefinedType" title="sqlalchemy.types.UserDefinedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a> .TypeDecorator`。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.types.UserDefinedType" title="sqlalchemy.types.UserDefinedType"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedType</span></code></a> .TypeDecorator` 。</p>
 </div></blockquote>
 <table class="longtable docutils align-default">
 <thead>
@@ -1507,17 +1507,17 @@ them if necessary to ensure <code class="docutils literal notranslate"><span cla
 
 </section>
 <section id="custom-and-decorated-types-reflection">
-<span id="id32"></span><h2>处理自定义类型和反射<a class="headerlink" href="#custom-and-decorated-types-reflection" title="Permalink to this heading">¶</a></h2>
+<span id="id16"></span><h2>处理自定义类型和反射<a class="headerlink" href="#custom-and-decorated-types-reflection" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
-<dt>请注意，具有附加Python行为的数据库类型，包括基于</dt><dd><p>:class:<a href="#id33"><span class="problematic" id="id34">`</span></a>.TypeDecorator`和其他用户定义的数据类型的类型，</p>
+<dt>请注意，具有附加Python行为的数据库类型，包括基于</dt><dd><p><a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> 和其他用户定义的数据类型的类型，</p>
 </dd>
 </dl>
 <p>在数据库模式中没有任何表现形式。当使用数据库时
-在描述 <span class="xref std std-ref">metadata_reflection`处的功能时，SQLAlchemy使用一个固定的映射，
+在描述 <span class="xref std std-ref">metadata_reflection</span> 处的功能时，SQLAlchemy使用一个固定的映射，
 其将由数据库服务器报告的数据类型信息与SQLAlchemy数据类型对象相关联。
 例如，如果我们在PostgreSQL模式中查看特定数据库列的定义，我们可能会收回字符串“VARCHAR”。
-SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHAR”与SQLAlchemy  :class:</span>.VARCHAR` ”这样的语句时，  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .VARCHAR`。</p>
-<p>这的含义是，如果表对象使用无法直接对应于数据库本机类型名称的类型对象，那么如果我们使用反映创建一个新的  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  _schema.MetaData`集合中的此数据库表，不能包含此数据类型。例如：：</p>
+SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHAR”与SQLAlchemy  <a class="reference internal" href="type_basics.html#sqlalchemy.types.VARCHAR" title="sqlalchemy.types.VARCHAR"><code class="xref py py-class docutils literal notranslate"><span class="pre">VARCHAR</span></code></a> ”这样的语句时，  :class:` _schema.Column` .VARCHAR`。</p>
+<p>这的含义是，如果表对象使用无法直接对应于数据库本机类型名称的类型对象，那么如果我们使用反映创建一个新的  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  _schema.MetaData` 集合中的此数据库表，不能包含此数据类型。例如：：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="p">(</span>
 <span class="go">...     Table,</span>
 <span class="go">...     Column,</span>
@@ -1539,12 +1539,12 @@ SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHA
 <span class="p">)</span>
 </div></pre></div>
 </div>
-<p>上面，我们使用了  <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> ，它是一个  <a class="reference internal" href="#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> ，它基于  <a class="reference internal" href="type_basics.html#sqlalchemy.types.LargeBinary" title="sqlalchemy.types.LargeBinary"><code class="xref py py-class docutils literal notranslate"><span class="pre">LargeBinary</span></code></a> .PickleType`。</p>
+<p>上面，我们使用了  <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> ，它是一个  :class:` .TypeDecorator` ，它基于  <a class="reference internal" href="type_basics.html#sqlalchemy.types.LargeBinary" title="sqlalchemy.types.LargeBinary"><code class="xref py py-class docutils literal notranslate"><span class="pre">LargeBinary</span></code></a> .PickleType` 。</p>
 <p>如果我们查看“my_table.c.data.type”的类型，因为这是由我们直接创建的Python对象，它是：class:<cite>.PickleType</cite>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">type</span>
 <span class="go">PickleType()</span></pre></div>
 </div>
-<p>但是，如果我们使用反射创建另一个  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .PickleType`的使用不会反映在我们创建的SQLite数据库中。相反，我们得到了  <a class="reference internal" href="type_basics.html#sqlalchemy.types.BLOB" title="sqlalchemy.types.BLOB"><code class="xref py py-class docutils literal notranslate"><span class="pre">BLOB</span></code></a> ：</p>
+<p>但是，如果我们使用反射创建另一个  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .PickleType` 的使用不会反映在我们创建的SQLite数据库中。相反，我们得到了  <a class="reference internal" href="type_basics.html#sqlalchemy.types.BLOB" title="sqlalchemy.types.BLOB"><code class="xref py py-class docutils literal notranslate"><span class="pre">BLOB</span></code></a> ：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_two</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_reflected_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s2">&quot;my_table&quot;</span><span class="p">,</span> <span class="n">metadata_two</span><span class="p">,</span> <span class="n">autoload_with</span><span class="o">=</span><span class="n">engine</span><span class="p">)</span>
 <div class='show_sql'><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="n">PRAGMA</span><span class="w"> </span><span class="n">main</span><span class="p">.</span><span class="n">table_info</span><span class="p">(</span><span class="ss">&quot;my_table&quot;</span><span class="p">)</span>
@@ -1552,8 +1552,8 @@ SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHA
 <span class="n">DEBUG</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">base</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="n">Col</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;cid&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;type&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;notnull&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;dflt_value&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;pk&#39;</span><span class="p">)</span>
 </div></pre></div>
 </div>
-<p>通常，当一个应用程序使用自定义类型定义了显式的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据时，就不需要使用表反射，因为所需的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据已经存在。然而，对于应用程序或它们的组合需要使用既包括自定义的 Python 层次结构数据类型，又设置其   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象为从数据库反射的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象，仍需要展示自定义数据类型的额外 Python 行为的情况，需要采取额外措施。</p>
-<p>最直接的方法是覆盖特定的列，如   <span class="xref std std-ref">reflection_overriding_columns</span>  中所述。在这种技术中，我们使用反射与显式   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象相结合，对于那些我们想要使用自定义或装饰数据类型的列，我们使用他们来覆盖反射的对象：</p>
+<p>通常，当一个应用程序使用自定义类型定义了显式的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  元数据时，就不需要使用表反射，因为所需的   :class:` _schema.Table`  元数据已经存在。然而，对于应用程序或它们的组合需要使用既包括自定义的 Python 层次结构数据类型，又设置其   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象为从数据库反射的   :class:` _schema.Table`  对象，仍需要展示自定义数据类型的额外 Python 行为的情况，需要采取额外措施。</p>
+<p>最直接的方法是覆盖特定的列，如   <span class="xref std std-ref">reflection_overriding_columns</span>  中所述。在这种技术中，我们使用反射与显式   :class:` _schema.Column`  对象相结合，对于那些我们想要使用自定义或装饰数据类型的列，我们使用他们来覆盖反射的对象：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_three</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">my_reflected_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;my_table&quot;</span><span class="p">,</span>
@@ -1562,11 +1562,11 @@ SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHA
 <span class="gp">... </span>    <span class="n">autoload_with</span><span class="o">=</span><span class="n">engine</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">)</span></pre></div>
 </div>
-<p>上述的 <cite>my_reflected_table</cite> 对象是反射的，会从 SQLite 数据库中加载 “id” 列的定义。但是对于 “data” 列，我们已经用包含我们想要的 Python 数据类型   <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a>  的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  显式定义来覆盖了反射的对象。反射过程将保持此   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象不变：</p>
+<p>上述的 <cite>my_reflected_table</cite> 对象是反射的，会从 SQLite 数据库中加载 “id” 列的定义。但是对于 “data” 列，我们已经用包含我们想要的 Python 数据类型   <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a>  的   :class:` _schema.Column`  显式定义来覆盖了反射的对象。反射过程将保持此   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象不变：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_reflected_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">type</span>
 <span class="go">PickleType()</span></pre></div>
 </div>
-<p>从数据库本地类型对象转换为自定义数据类型的更复杂的方法是使用  <a class="reference internal" href="events.html#sqlalchemy.events.DDLEvents.column_reflect" title="sqlalchemy.events.DDLEvents.column_reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DDLEvents.column_reflect()</span></code></a>  事件处理程序。如果我们知道我们希望所有的   <a class="reference internal" href="type_basics.html#sqlalchemy.types.BLOB" title="sqlalchemy.types.BLOB"><code class="xref py py-class docutils literal notranslate"><span class="pre">BLOB</span></code></a>  数据类型实际上都是   <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> ，我们可以设置一条规则:</p>
+<p>从数据库本地类型对象转换为自定义数据类型的更复杂的方法是使用  <a class="reference internal" href="events.html#sqlalchemy.events.DDLEvents.column_reflect" title="sqlalchemy.events.DDLEvents.column_reflect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DDLEvents.column_reflect()</span></code></a>  事件处理程序。如果我们知道我们希望所有的   :class:` .BLOB`  数据类型实际上都是   <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a> ，我们可以设置一条规则:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">BLOB</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">PickleType</span>
@@ -1578,7 +1578,7 @@ SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHA
     <span class="k">if</span> <span class="n">isinstance</span><span class="p">(</span><span class="n">column_info</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">BLOB</span><span class="p">):</span>
         <span class="n">column_info</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PickleType</span><span class="p">()</span></pre></div>
 </div>
-<p>在反射任何包含   <a class="reference internal" href="type_basics.html#sqlalchemy.types.BLOB" title="sqlalchemy.types.BLOB"><code class="xref py py-class docutils literal notranslate"><span class="pre">BLOB</span></code></a>  数据类型列的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  时，如果在应用程序中调用了上述代码 <em>之前</em> （同时注意在应用程序中仅调用 <strong>一次</strong>，因为这是一个全局规则），所得到的数据类型将在   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象中以   <a class="reference internal" href="type_basics.html#sqlalchemy.types.PickleType" title="sqlalchemy.types.PickleType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleType</span></code></a>  存储。</p>
+<p>在反射任何包含   <a class="reference internal" href="type_basics.html#sqlalchemy.types.BLOB" title="sqlalchemy.types.BLOB"><code class="xref py py-class docutils literal notranslate"><span class="pre">BLOB</span></code></a>  数据类型列的   :class:` _schema.Table`  时，如果在应用程序中调用了上述代码 <em>之前</em> （同时注意在应用程序中仅调用 <strong>一次</strong>，因为这是一个全局规则），所得到的数据类型将在   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象中以   :class:` .PickleType`  存储。</p>
 <p>在实践中，上述基于事件的方法可能有附加规则，以便仅影响那些数据类型很重要的列，例如表名和可能的列名的查找表，或其他启发式规则，以便准确确定哪些列应该使用 Python 数据类型来建立。</p>
 </section>
 </section>
@@ -1601,7 +1601,7 @@ SQLAlchemy的PostgreSQL方言具有硬编码映射，将字符串名称“VARCHA
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:44
+    Documentation last generated: 2023/8/18 18:58:41
 
     </div>
 </div>

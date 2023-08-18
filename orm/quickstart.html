@@ -129,11 +129,11 @@
 <li><span class="link-container"><a class="reference external" href="#id4">创建引擎</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#create-table-ddl">发出CREATE TABLE DDL</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#id7">创建对象并持久化</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id10">简单选择</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">简单选择</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#selectjoin">SELECT与JOIN</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id11">进行更改</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id12">一些删除</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id13">深入学习上述概念</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id9">进行更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id10">一些删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id11">深入学习上述概念</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
@@ -191,11 +191,11 @@
 <li><a class="reference internal" href="#id4">创建引擎</a></li>
 <li><a class="reference internal" href="#create-table-ddl">发出CREATE TABLE DDL</a></li>
 <li><a class="reference internal" href="#id7">创建对象并持久化</a></li>
-<li><a class="reference internal" href="#id10">简单选择</a></li>
+<li><a class="reference internal" href="#id8">简单选择</a></li>
 <li><a class="reference internal" href="#selectjoin">SELECT与JOIN</a></li>
-<li><a class="reference internal" href="#id11">进行更改</a></li>
-<li><a class="reference internal" href="#id12">一些删除</a></li>
-<li><a class="reference internal" href="#id13">深入学习上述概念</a></li>
+<li><a class="reference internal" href="#id9">进行更改</a></li>
+<li><a class="reference internal" href="#id10">一些删除</a></li>
+<li><a class="reference internal" href="#id11">深入学习上述概念</a></li>
 </ul>
 </li>
 </ul>
@@ -214,11 +214,11 @@
 <p>对于想要快速了解ORM基本使用情况的新用户来说，这里简化了在   <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  中使用的映射和示例。这里的代码可以从干净的命令行完全运行。</p>
 <p>因为本节中的说明故意非常简短，请前往全面的   <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  以获得更详细的介绍。</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span>ORM Quickstart已更新为最新版本的  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  感知特性，使用了包括    内的新构造。请参阅  <a class="reference internal" href="../changelog/whatsnew_20.html#whatsnew-20-orm-declarative-typing"><span class="std std-ref">ORM Declarative Models</span></a> 章节以获取迁移信息。</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span>ORM Quickstart已更新为最新版本的  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  感知特性，使用了包括    内的新构造。请参阅  :ref:` whatsnew_20_orm_declarative_typing` 章节以获取迁移信息。</p>
 </div>
 <section id="id1">
 <h2>声明模型<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>在这里，我们定义将形成我们将从数据库中查询的结构的模块级别构造。这种结构称为   <a class="reference internal" href="mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">Declarative Mapping</span></a> ，一次定义了Python对象模型以及描述实际存在或将存在于特定数据库中的  <span class="xref std std-term">数据库元数据</span>  的实际SQL表：</p>
+<p>在这里，我们定义将形成我们将从数据库中查询的结构的模块级别构造。这种结构称为   <a class="reference internal" href="mapping_styles.html#orm-declarative-mapping"><span class="std std-ref">Declarative Mapping</span></a> ，一次定义了Python对象模型以及描述实际存在或将存在于特定数据库中的  :term:` 数据库元数据`  的实际SQL表：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">ForeignKey</span>
@@ -259,17 +259,17 @@
 </div>
 <p>映射以一个基类开始，上面称为“Base”，通过对   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  类进行简单子类化创建。</p>
 <p>然后，通过将子类化的方式创建单个映射类实例。映射类通常指代单个数据库表，其名称由使用“__tablename__”类级别属性指示。</p>
-<p>接下来，通过添加属性来声明表中的列。每个属性的名称对应于将成为数据库表一部分的列。每个列的数据类型首先取决于与每个  <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注释关联的Python数据类型；例如，`` INTEGER``为``int``，<a href="#id2"><span class="problematic" id="id3">``</span></a>VARCHAR``为``str``等。可通过右侧   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  指令中调用SQLAlchemy类型对象来指定每个列的更具体的类型信息，例如上面在“User.name”列中使用的:String数据类型。Python类型和SQL类型之间的关联可以使用   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-type-map"><span class="std std-ref">type annotation map</span></a>  进行自定义。</p>
-<p>对于哪些需要更具体的自定义的基于列的属性，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  指令。除了类型信息外，此指令还接受各种参数，该参数指示有关数据库列的特定详细信息，包括服务器默认值和约束信息，例如主键和外键中的成员资格。  <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  指令接受   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  类接受的超集参数，该类由SQLAlchemy Core用于表示数据库列。</p>
-<p>所有ORM映射类都需要将至少一个列声明为主键的一部分，通常通过在那些应该成为键的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  对象上使用  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.primary_key" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.primary_key</span></code></a>  参数来完成。在上面的示例中，“User.id”和 “Address.id”列被标记为主键。</p>
-<p>总之，将字符串表名称和列声明列表组合在一起，称为在SQLAlchemy中的  <span class="xref std std-term">table metadata</span>  。使用Core和ORM方法同时设置表格元数据在   <a class="reference internal" href="../tutorial/metadata.html#tutorial-working-with-metadata"><span class="std std-ref">使用数据库元数据</span></a>  中进行介绍。上述映射是所谓的   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">Annotated Declarative Table</span></a> 配置的例子。</p>
-<p>其他   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的变体可用，其中最常见的是上文提到的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  指令。与基于列的属性相反，  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  指示了两个ORM类之间的链接。在上面的示例中，“User.addresses”链接“User”到“Address”，“Address.user”链接“Address”到“User”。  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  指令在   <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">使用 ORM 相关对象</span></a>  中进行了介绍。</p>
+<p>接下来，通过添加属性来声明表中的列。每个属性的名称对应于将成为数据库表一部分的列。每个列的数据类型首先取决于与每个  <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 注释关联的Python数据类型；例如，` ` INTEGER``为``int``，<a href="#id2"><span class="problematic" id="id3">``</span></a>VARCHAR``为``str``等。可通过右侧   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  指令中调用SQLAlchemy类型对象来指定每个列的更具体的类型信息，例如上面在“User.name”列中使用的:String数据类型。Python类型和SQL类型之间的关联可以使用   :ref:` type annotation map &lt;orm_declarative_mapped_column_type_map&gt;`  进行自定义。</p>
+<p>对于哪些需要更具体的自定义的基于列的属性，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  指令。除了类型信息外，此指令还接受各种参数，该参数指示有关数据库列的特定详细信息，包括服务器默认值和约束信息，例如主键和外键中的成员资格。  :func:` _orm.mapped_column`  指令接受   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  类接受的超集参数，该类由SQLAlchemy Core用于表示数据库列。</p>
+<p>所有ORM映射类都需要将至少一个列声明为主键的一部分，通常通过在那些应该成为键的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  对象上使用  :paramref:` _schema.Column.primary_key`  参数来完成。在上面的示例中，“User.id”和 “Address.id”列被标记为主键。</p>
+<p>总之，将字符串表名称和列声明列表组合在一起，称为在SQLAlchemy中的  <span class="xref std std-term">table metadata</span>  。使用Core和ORM方法同时设置表格元数据在   :ref:` tutorial_working_with_metadata`  中进行介绍。上述映射是所谓的   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column"><span class="std std-ref">Annotated Declarative Table</span></a> 配置的例子。</p>
+<p>其他   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的变体可用，其中最常见的是上文提到的   :func:` _orm.relationship`  指令。与基于列的属性相反，  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  指示了两个ORM类之间的链接。在上面的示例中，“User.addresses”链接“User”到“Address”，“Address.user”链接“Address”到“User”。  :func:` _orm.relationship`  指令在   <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">使用 ORM 相关对象</span></a>  中进行了介绍。</p>
 <p>最后，上述示例类包括一个“__repr __ ()”方法，这个方法并不是必需的，但对于调试很有用。可以使用生成的自动方法（例如__repr __()）使用dataclasses创建映射类。有关dataclass映射的详细信息，请参见：ref：<cite>orm_declarative_native_dataclasses</cite>。</p>
 </section>
 <section id="id4">
 <h2>创建引擎<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  是一个**工厂**，它可以为我们创建新的数据库连接，还可以在  <span class="xref std std-ref">连接池</span>  中维护连接以供快速重用。为了方便起见，我们通常使用  <a class="reference internal" href="../dialects/sqlite.html"><span class="std std-ref">SQLite</span></a>  内存数据库进行学习：</p>
+<div><p><a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  是一个**工厂**，它可以为我们创建新的数据库连接，还可以在  :ref:` 连接池 &lt;pooling_toplevel&gt;`  中维护连接以供快速重用。为了方便起见，我们通常使用  <a class="reference internal" href="../dialects/sqlite.html"><span class="std std-ref">SQLite</span></a>  内存数据库进行学习：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;sqlite://&quot;</span><span class="p">,</span> <span class="n">echo</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre></div>
 </div>
@@ -278,7 +278,7 @@
 <p class="admonition-title">Tip</p>
 <p>参数 <a href="#id5"><span class="problematic" id="id6">``</span></a>echo=True``表示将连接发出的SQL记录到标准输出流中。</p>
 </div>
-<p>完整介绍   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  从   <a class="reference internal" href="../tutorial/engine.html#tutorial-engine"><span class="std std-ref">建立连接 - Engine</span></a> 开始。</p>
+<p>完整介绍   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  从   :ref:` tutorial_engine` 开始。</p>
 </section>
 <section id="create-table-ddl">
 <h2>发出CREATE TABLE DDL<a class="headerlink" href="#create-table-ddl" title="Permalink to this heading">¶</a></h2>
@@ -311,7 +311,7 @@
 </section>
 <section id="id7">
 <h2>创建对象并持久化<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h2>
-<p>我们现在准备在数据库中插入数据。我们通过创建``User``和``Address``类实例来完成这个过程，从而使用了“__init __()”方法，这是通过声明映射过程自动建立的。然后，我们通过使用称为  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的对象将它们传递给数据库，该对象利用  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 与数据库进行交互。  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>  方法用于同时添加多个对象，并且使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  方法将等待提交的更改刷新到数据库中，并随后提交当前的数据库事务，每当使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  时都会进行交互：</p>
+<p>我们现在准备在数据库中插入数据。我们通过创建``User``和``Address``类实例来完成这个过程，从而使用了“__init __()”方法，这是通过声明映射过程自动建立的。然后，我们通过使用称为  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的对象将它们传递给数据库，该对象利用  :class:` _engine.Engine` 与数据库进行交互。  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>  方法用于同时添加多个对象，并且使用  :meth:` _orm.Session.commit`  方法将等待提交的更改刷新到数据库中，并随后提交当前的数据库事务，每当使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  时都会进行交互：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
@@ -351,14 +351,14 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>建议在上述与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关的操作中像上面一样使用上下文管理器样式，即使用Python的``with：<a href="#id8"><span class="problematic" id="id9">``</span></a>语句。  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象表示活动的数据库资源，因此最好确保在完成一系列操作时关闭它。在下一节中，我们将保持   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  打开，只是为了说明目的。</p>
+<p>建议在上述与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  相关的操作中像上面一样使用上下文管理器样式，即使用Python的` <cite>with：``语句。  :class:`_orm.Session</cite>  对象表示活动的数据库资源，因此最好确保在完成一系列操作时关闭它。在下一节中，我们将保持   :class:` _orm.Session`  打开，只是为了说明目的。</p>
 </div>
-<p>创建   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的基础知识在   <a class="reference internal" href="../tutorial/dbapi_transactions.html#tutorial-executing-orm-session"><span class="std std-ref">使用 ORM Session 执行</span></a>  中，更多内容请参见   <a class="reference internal" href="session_basics.html#session-basics"><span class="std std-ref">使用会话的基础</span></a> 。</p>
+<p>创建   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的基础知识在   :ref:` tutorial_executing_orm_session`  中，更多内容请参见   <a class="reference internal" href="session_basics.html#session-basics"><span class="std std-ref">使用会话的基础</span></a> 。</p>
 <p>然后，在   <a class="reference internal" href="../tutorial/orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>  中，介绍了一些基本的插入操作变体。</p>
 </section>
-<section id="id10">
-<h2>简单选择<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
-<p>在数据库中有一些行后，下面是发出简单SELECT语句以加载一些对象的最简单形式。要创建SELECT语句，我们使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  函数创建新的  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象，然后使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  调用该对象。在ORM对象中查询时通常有用的方法是  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.scalars()</span></code>  方法，该方法将返回一个  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.ScalarResult" title="sqlalchemy.engine.ScalarResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarResult</span></code></a> 对象，该对象将遍历我们选择的ORM对象：</p>
+<section id="id8">
+<h2>简单选择<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h2>
+<p>在数据库中有一些行后，下面是发出简单SELECT语句以加载一些对象的最简单形式。要创建SELECT语句，我们使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  函数创建新的  :class:` _sql.Select` 对象，然后使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  调用该对象。在ORM对象中查询时通常有用的方法是  :meth:` _orm.Session.scalars`  方法，该方法将返回一个  <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.ScalarResult" title="sqlalchemy.engine.ScalarResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScalarResult</span></code></a> 对象，该对象将遍历我们选择的ORM对象：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
@@ -375,12 +375,12 @@
 </div><span class="go">User(id=1, name=&#39;spongebob&#39;, fullname=&#39;Spongebob Squarepants&#39;)</span>
 <span class="go">User(id=2, name=&#39;sandy&#39;, fullname=&#39;Sandy Cheeks&#39;)</span></pre></div>
 </div>
-<p>上面的查询还使用了  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a>  方法添加WHERE条件，并且使用了  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.in_" title="sqlalchemy.sql.expression.ColumnOperators.in_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.in_()</span></code></a>  方法，该方法是所有SQLAlchemy类似列的构造的一部分，用于使用SQL IN操作员。</p>
+<p>上面的查询还使用了  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.where" title="sqlalchemy.sql.expression.Select.where"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.where()</span></code></a>  方法添加WHERE条件，并且使用了  :meth:` _sql.ColumnOperators.in_`  方法，该方法是所有SQLAlchemy类似列的构造的一部分，用于使用SQL IN操作员。</p>
 <p>有关如何选择对象和单个列的更多详细信息，请参见   <span class="xref std std-ref">tutorial_selecting_orm_entities</span> 。</p>
 </section>
 <section id="selectjoin">
 <h2>SELECT与JOIN<a class="headerlink" href="#selectjoin" title="Permalink to this heading">¶</a></h2>
-<p>在多个表之间进行查询是非常常见的，对于SQL来说，JOIN关键字是主要方式。   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构造使用  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  方法创建连接：</p>
+<p>在多个表之间进行查询是非常常见的，对于SQL来说，JOIN关键字是主要方式。   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构造使用  :meth:` _sql.Select.join`  方法创建连接：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="go">...     select(Address)</span>
 <span class="go">...     .join(Address.user)</span>
@@ -396,12 +396,12 @@
 <span class="go">Address(id=2, email_address=&#39;sandy@sqlalchemy.org&#39;)</span></pre></div>
 </div>
 <p>上面的查询说明了多个WHERE条件，这些条件会自动使用AND连接，并且说明了如何使用SQLAlchemy类似列的对象创建“等于”比较，该对象使用重写的Python方法  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.__eq__" title="sqlalchemy.sql.expression.ColumnOperators.__eq__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.__eq__()</span></code></a>  生成SQL标准对象。</p>
-<p>有关上述概念更多背景信息请参见：  <a class="reference internal" href="../tutorial/data_select.html#tutorial-select-where-clause"><span class="std std-ref">WHERE 子句</span></a>  和   <a class="reference internal" href="../tutorial/data_select.html#tutorial-select-join"><span class="std std-ref">显式FROM子句和JOIN</span></a> 。</p>
+<p>有关上述概念更多背景信息请参见：  <a class="reference internal" href="../tutorial/data_select.html#tutorial-select-where-clause"><span class="std std-ref">WHERE 子句</span></a>  和   :ref:` tutorial_select_join` 。</p>
 </section>
-<section id="id11">
-<h2>进行更改<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h2>
+<section id="id9">
+<h2>进行更改<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象与我们的ORM映射类 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 一起自动跟踪所做的更改，这些更改会导致在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  下一次刷新时发出SQL语句。接下来，我们将更改与“sandy”关联的一个电子邮件地址，然后为“patrick”添加一个新电子邮件地址，在发出SELECT以检索“patrick”的行之后：</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象与我们的ORM映射类 ` <cite>User`</cite> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 一起自动跟踪所做的更改，这些更改会导致在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  下一次刷新时发出SQL语句。接下来，我们将更改与“sandy”关联的一个电子邮件地址，然后为“patrick”添加一个新电子邮件地址，在发出SELECT以检索“patrick”的行之后：</p>
 </div></blockquote>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">patrick</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
@@ -424,13 +424,13 @@
 <span class="k">COMMIT</span>
 </div></pre></div>
 </div>
-<p>请注意，当我们访问 <code class="docutils literal notranslate"><span class="pre">patrick.addresses</span></code> 时，会发出SELECT语句。这被称为  <span class="xref std std-term">lazy load</span>  。在   <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-loader-strategies"><span class="std std-ref">加载策略</span></a>  中介绍了使用更多或更少的SQL访问相关项的不同方式。</p>
+<p>请注意，当我们访问 <code class="docutils literal notranslate"><span class="pre">patrick.addresses</span></code> 时，会发出SELECT语句。这被称为  <span class="xref std std-term">lazy load</span>  。在   :ref:` tutorial_orm_loader_strategies`  中介绍了使用更多或更少的SQL访问相关项的不同方式。</p>
 <p>有关ORM数据操作的详细演练从：ref：<cite>tutorial_orm_data_manipulation</cite> 开始。</p>
 </section>
-<section id="id12">
-<h2>一些删除<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h2>
+<section id="id10">
+<h2>一些删除<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
 <p>所有事情都必须结束，有些数据库行也是如此-这里是两种不同形式的删除的快速演示，基于具体用例，这两种形式都很重要。</p>
-<p>首先，我们将从“sandy”用户中删除一个“Address”对象。下次   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  刷新时，这将导致行被删除。这是我们所配置的行为，称为   <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">cascade delete</span></a> 。我们可以通过使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> ，使用主键获取“sandy”对象的句柄，然后使用相应对象进行操作：</p>
+<p>首先，我们将从“sandy”用户中删除一个“Address”对象。下次   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  刷新时，这将导致行被删除。这是我们所配置的行为，称为   :ref:` cascade delete &lt;cascade_delete&gt;` 。我们可以通过使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.get()</span></code> ，使用主键获取“sandy”对象的句柄，然后使用相应对象进行操作：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sandy</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
 <span class="k">SELECT</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_name</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_account_fullname</span>
@@ -463,7 +463,7 @@
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
 </div></pre></div>
 </div>
-<p>在这个特定情况下，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  方法发出了两个SELECT语句，即使它没有发出DELETE，这可能看起来令人惊讶。这是因为当方法去检查对象时，结果是发现``patrick``对象已  <span class="xref std std-term">expired</span> （当我们最后调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  时发生的），并且发出的SQL是为了在新事务中重新加载行。这是可选的，通常我们将在适用情况下将其关闭。</p>
+<p>在这个特定情况下，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  方法发出了两个SELECT语句，即使它没有发出DELETE，这可能看起来令人惊讶。这是因为当方法去检查对象时，结果是发现` <cite>patrick``对象已  :term:`expired</cite> （当我们最后调用  :meth:` _orm.Session.commit`  时发生的），并且发出的SQL是为了在新事务中重新加载行。这是可选的，通常我们将在适用情况下将其关闭。</p>
 <p>要说明行正在被删除，请参见提交：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
 <div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
@@ -473,10 +473,10 @@
 <span class="k">COMMIT</span>
 </div></pre></div>
 </div>
-<p>在   <a class="reference internal" href="../tutorial/orm_data_manipulation.html#tutorial-orm-deleting"><span class="std std-ref">使用工作单元模式删除ORM对象</span></a>  中讨论ORM删除。  <a class="reference internal" href="session_basics.html#session-expiring"><span class="std std-ref">过期/刷新</span></a>  中介绍了过期对象的背景信息；级联在   <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">级联操作</span></a>  中进行了详细讨论。</p>
+<p>在   <a class="reference internal" href="../tutorial/orm_data_manipulation.html#tutorial-orm-deleting"><span class="std std-ref">使用工作单元模式删除ORM对象</span></a>  中讨论ORM删除。  :ref:` session_expiring`  中介绍了过期对象的背景信息；级联在   <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">级联操作</span></a>  中进行了详细讨论。</p>
 </section>
-<section id="id13">
-<h2>深入学习上述概念<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h2>
+<section id="id11">
+<h2>深入学习上述概念<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h2>
 <p>对于新用户来说，上述各个部分可能是一个快速浏览。每个步骤中都有许多重要的概念没有涉及。建议通读   <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> ，以获得扎实的工作知识，了解上述内容的真正情况。祝你好运！</p>
 </section>
 </section>
@@ -499,7 +499,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:02
+    Documentation last generated: 2023/8/18 18:59:03
 
     </div>
 </div>

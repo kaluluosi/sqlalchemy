@@ -195,22 +195,22 @@
 <span id="schema-toplevel"></span><h1>模式定义语言 (Schema Definition Language)<a class="headerlink" href="#schema-definition-language" title="Permalink to this heading">¶</a></h1>
 <p>这一节具体涉及SQLAlchemy <strong>模式元数据</strong>，即一套描述和检查数据库模式的全面系统。</p>
 <p>SQLAlchemy的查询和对象映射操作的核心受到*数据库元数据*的支持，这些元数据由描述表和其他模式级对象的Python对象组成。这些对象是发出CREATE和DROP语句(称为*DDL*)、构造SQL查询以及表达有关已存在于数据库中的结构信息的三种主要类型操作的核心。</p>
-<p>数据库的元数据可以通过明确命名各种组件及其属性来表示，使用构造如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 、  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 、   <a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  和   <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>  的语句。它也可以通过SQLAlchemy使用一种称为*反射*的过程生成，即您从一个单一对象开始，如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，为其分配名称，然后指示SQLAlchemy从特定引擎源中加载与该名称相关的所有其他信息。</p>
+<p>数据库的元数据可以通过明确命名各种组件及其属性来表示，使用构造如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 、  :class:` ~sqlalchemy.schema.Column` 、   <a class="reference internal" href="constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  和   :class:` ~sqlalchemy.schema.Sequence`  的语句。它也可以通过SQLAlchemy使用一种称为*反射*的过程生成，即您从一个单一对象开始，如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，为其分配名称，然后指示SQLAlchemy从特定引擎源中加载与该名称相关的所有其他信息。</p>
 <p>SQLAlchemy的数据库元数据构造的一个关键特点是，它们被设计成以*申明式*样式使用，这与真正的DDL非常相似。因此，它们对于那些具有创建真正的模式生成脚本的背景的人来说是最直观的。</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="metadata.html">使用MetaData描述数据库</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html#metadata-tables-and-columns">访问表和列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#id20">创建和删除数据库表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#id2">创建和删除数据库表</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html#migrations">通过Migrations修改数据库对象</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html#schema-table-schema-name">指定模式名称</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-metadata-schema-name">使用MetaData指定默认模式名称</a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-dynamic-naming-convention">应用动态模式命名约定</a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#schema-set-default-connections">为新连接设置默认模式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="metadata.html#id43">模式和反射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="metadata.html#id13">模式和反射</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="metadata.html#id44">特定于后端的选项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="metadata.html#id14">特定于后端的选项</a></li>
 <li class="toctree-l2"><a class="reference internal" href="metadata.html#metadata-api">列，表，MetaData API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.sqlalchemy.schema.BLANK_SCHEMA"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.schema.BLANK_SCHEMA</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="metadata.html#sqlalchemy.schema.sqlalchemy.schema.RETAIN_SCHEMA"><code class="docutils literal notranslate"><span class="pre">sqlalchemy.schema.RETAIN_SCHEMA</span></code></a></li>
@@ -235,7 +235,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="defaults.html">列INSERT/UPDATE默认值</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id5">标量默认值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id1">标量默认值</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#python-executed-functions">Python-Executed Functions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="defaults.html#context-default-functions">上下文敏感的默认函数</a></li>
 </ul>
@@ -244,9 +244,9 @@
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#defaults-sequences">定义序列</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#ddl">基于服务器调用DDL显式默认表达式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#triggered-columns">标记隐式生成的值、时间戳和触发列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id45">定义序列</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id53">基于服务器调用DDL显式默认表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="defaults.html#id59">标记隐式生成的值、时间戳和触发列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id23">定义序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id29">基于服务器调用DDL显式默认表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="defaults.html#id35">标记隐式生成的值、时间戳和触发列</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-as">计算列 (GENERATED ALWAYS AS)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#generated-always-by-default-as-identity">标识列 (GENERATED {ALWAYS | BY DEFAULT} AS IDENTITY)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="defaults.html#api">默认对象API</a><ul>
@@ -268,13 +268,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="constraints.html#schema-unique-constraint">唯一约束</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constraints.html#id12">检查约束</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constraints.html#id15">主键约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id4">检查约束</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id5">主键约束</a></li>
 <li class="toctree-l2"><a class="reference internal" href="constraints.html#declarative-orm">使用Declarative ORM扩展时设置约束</a></li>
 <li class="toctree-l2"><a class="reference internal" href="constraints.html#constraint-naming-conventions">配置约束命名约定</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="constraints.html#constraint-default-naming-convention">默认命名约定</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id48">长名称的截断</a></li>
-<li class="toctree-l3"><a class="reference internal" href="constraints.html#id49">为命名约定创建自定义标记</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#id16">长名称的截断</a></li>
+<li class="toctree-l3"><a class="reference internal" href="constraints.html#id17">为命名约定创建自定义标记</a></li>
 <li class="toctree-l3"><a class="reference internal" href="constraints.html#naming-check-constraints">命名检查约束</a></li>
 </ul>
 </li>
@@ -294,18 +294,18 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="constraints.html#schema-indexes">索引</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constraints.html#id57">函数式索引</a></li>
-<li class="toctree-l2"><a class="reference internal" href="constraints.html#id58">索引 API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id23">函数式索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constraints.html#id24">索引 API</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="constraints.html#sqlalchemy.schema.Index"><code class="docutils literal notranslate"><span class="pre">Index</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ddl.html">自定义 DDL</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id7">用户自定义 DDL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id8">控制 DDL 序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id1">用户自定义 DDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id2">控制 DDL 序列</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ddl.html#ddlelement">使用内置 DDLElement 类</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ddl.html#id9">控制约束和索引的 DDL 生成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ddl.html#id5">控制约束和索引的 DDL 生成</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ddl.html#ddl-api">DDL 表达式构造 API</a></li>
 </ul>
 </li>
@@ -331,7 +331,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:47
+    Documentation last generated: 2023/8/18 18:58:45
 
     </div>
 </div>

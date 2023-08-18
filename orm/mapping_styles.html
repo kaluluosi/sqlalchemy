@@ -133,10 +133,10 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#orm-mapper-configuration-overview">映射类的基本组件</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id61">被映射的类</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id64">表或其他来自句子对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id13">被映射的类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id14">表或其他来自句子对象</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#orm-mapping-properties">属性字典</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id100">其他映射器配置参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">其他映射器配置参数</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#orm-mapped-class-behavior">映射类的行为</a></span><ul>
@@ -220,10 +220,10 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#orm-mapper-configuration-overview">映射类的基本组件</a><ul>
-<li><a class="reference internal" href="#id61">被映射的类</a></li>
-<li><a class="reference internal" href="#id64">表或其他来自句子对象</a></li>
+<li><a class="reference internal" href="#id13">被映射的类</a></li>
+<li><a class="reference internal" href="#id14">表或其他来自句子对象</a></li>
 <li><a class="reference internal" href="#orm-mapping-properties">属性字典</a></li>
-<li><a class="reference internal" href="#id100">其他映射器配置参数</a></li>
+<li><a class="reference internal" href="#id16">其他映射器配置参数</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#orm-mapped-class-behavior">映射类的行为</a><ul>
@@ -251,20 +251,21 @@
 <section id="orm">
 <span id="orm-mapping-classes-toplevel"></span><h1>ORM映射类概述<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
 <p>ORM类映射配置的概述。</p>
-<p>对于刚接触SQLAlchemy ORM和/或Python的读者，建议浏览  <a class="reference internal" href="quickstart.html#orm-quickstart"><span class="std std-ref">ORM快速入门</span></a> ，最好先学习  <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> ，其中首先介绍ORM配置在  <a class="reference internal" href="../tutorial/metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a> 。</p>
+<p>对于刚接触SQLAlchemy ORM和/或Python的读者，建议浏览  <a class="reference internal" href="quickstart.html#orm-quickstart"><span class="std std-ref">ORM快速入门</span></a> ，最好先学习  :ref:` unified_tutorial` ，其中首先介绍ORM配置在  <a class="reference internal" href="../tutorial/metadata.html#tutorial-orm-table-metadata"><span class="std std-ref">使用 ORM 声明形式定义表元数据</span></a> 。</p>
 <section id="orm-mapping-styles">
 <span id="id1"></span><h2>ORM映射风格<a class="headerlink" href="#orm-mapping-styles" title="Permalink to this heading">¶</a></h2>
 <p>SQLAlchemy具有两种不同的映射器配置样式，然后为它们设置了更多的子选项：这些映射器样式的可变性在于适应开发者的各种偏好，包括用户定义类与如何映射到关系模式表和列的抽象程度、使用的类层次结构类型，包括是否存在自定义元类方案，是否存在其他类控制方法，如Python dataclasses_在同时使用等。</p>
 <p>在现代SQLAlchemy中，这些样式的区别基本上是表面的；当使用特定的SQLAlchemy配置样式来表达映射类的意图时，映射类的内部映射过程在大多数情况下是基本相同的，最终结果始终是配置了  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  ，以包括与关系操作相关的行为，包括在类以及该类的实例级别上执行的操作。由于在所有情况下过程基本上都是相同的，因此从不同风格映射的类始终是完全可互操作的。
-当使用类型检查器（例如mypy）时，可以使用协议 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_orm.MappedClassProtocol`来指示映射的类。</p>
+当使用类型检查器（例如mypy）时，可以使用协议 <code class="xref py py-class docutils literal notranslate"><span class="pre">MappedClassProtocol</span></code> 来指示映射的类。</p>
 <p>原始的映射API通常称为“古典”样式，而映射的更自动化的样式则称为“声明式”样式。SQLAlchemy现在将这两种映射样式称为**命令式映射**和**声明式映射**。</p>
-<p>无论使用哪种映射样式，在SQLAlchemy 1.4中的全部ORM映射都源自一个名为 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>_orm.registry`的单个对象，该对象是映射类的注册表。使用此注册表，可以作为一组确定的映射器配置对一组映射器配置进行最终确定，并且具有特定注册表内的类可以在配置过程中以名称相互引用。</p>
+<p>无论使用哪种映射样式，在SQLAlchemy 1.4中的全部ORM映射都源自一个名为 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 的单个对象，该对象是映射类的注册表。使用此注册表，可以作为一组确定的映射器配置对一组映射器配置进行最终确定，并且具有特定注册表内的类可以在配置过程中以名称相互引用。</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 1.4: </span>声明式和古典映射现在分别称为“申明式”和“命令式”映射，并且在内部统一，所有这些都源自表示相关映射的集合的 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.registry`构造。</p>
+<p><span class="versionmodified changed">Changed in version 1.4: </span>声明式和古典映射现在分别称为“申明式”和“命令式”映射，并且在内部统一，所有这些都源自表示相关映射的集合的 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 构造。</p>
 </div>
 <section id="orm-declarative-mapping">
-<span id="id8"></span><h3>声明式映射<a class="headerlink" href="#orm-declarative-mapping" title="Permalink to this heading">¶</a></h3>
-<p><a href="#id9"><span class="problematic" id="id10">**</span></a>声明式映射**是在现代SQLAlchemy中构建映射的典型方式。最常见的模式是先使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> ，对所有派生的子类应用声明性映射处理。下面的示例演示了使用说明基础类的示例，其中使用了申明表映射：</p>
+<span id="id2"></span><h3>声明式映射<a class="headerlink" href="#orm-declarative-mapping" title="Permalink to this heading">¶</a></h3>
+<p><a href="#id3"><span class="problematic" id="id4">**</span></a>声明式映射**是在现代SQLAlchemy中构建映射的典型方式。最常见的模式是先使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code> 超类构建基础类。生成的基类，
+当子类从中继承时，将会相对于默认情况下本地的  <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> ，对所有派生的子类应用声明性映射处理。下面的示例演示了使用说明基础类的示例，其中使用了申明表映射：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">ForeignKey</span>
 <span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
 <span class="linenos"> 3</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
@@ -285,34 +286,34 @@
 <span class="linenos">18</span>    <span class="n">fullname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
 <span class="linenos">19</span>    <span class="n">nickname</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">str</span><span class="p">]]</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>上述代码使用 :class:<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.DeclarativeBase`类生成一个新的基础类（在SQLAlchemy的文档中，它通常被引用为“Base”，但可以有任何希望的名称），从中可以派生出新的映射类，“User”是构造出来的新映射类。</p>
+<p>上述代码使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code> 类生成一个新的基础类（在SQLAlchemy的文档中，它通常被引用为“Base”，但可以有任何希望的名称），从中可以派生出新的映射类，“User”是构造出来的新映射类。</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  方法的实现，在不使用插件的情况下与  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  工具集成。有关迁移方案请参见  <a class="reference internal" href="../changelog/whatsnew_20.html#whatsnew-20-orm-declarative-typing"><span class="std std-ref">ORM Declarative Models</span></a> 。</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  方法的实现，在不使用插件的情况下与  :pep:` 484`  工具集成。有关迁移方案请参见  <a class="reference internal" href="../changelog/whatsnew_20.html#whatsnew-20-orm-declarative-typing"><span class="std std-ref">ORM Declarative Models</span></a> 。</p>
 </div>
-<p>基类引用一个 :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>_orm.registry`对象，该对象维护一组相关的映射类，以及维护一组 :class:<a href="#id15"><span class="problematic" id="id16">`</span></a>_schema.Table`对象的 :class:<a href="#id17"><span class="problematic" id="id18">`</span></a>_schema.MetaData`对象，这些对象将映射到这些类。</p>
+<p>基类引用一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 对象，该对象维护一组相关的映射类，以及维护一组 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 对象，这些对象将映射到这些类。</p>
 <p>主要的声明式映射样式在以下各节中进一步详细介绍：</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class"><span class="std std-ref">使用声明式基类</span></a>  - 使用基类的申明式映射。</p></li>
 <li><p><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator"><span class="std std-ref">使用装饰器声明式映射（无声明式基类）</span></a>  - 使用装饰或函数的申明式映射。</p></li>
 </ul>
-<p>在申明映射类的范围内，还有两种如何声明 :class:<a href="#id19"><span class="problematic" id="id20">`</span></a>_schema.Table`元数据的方法。这些包括：</p>
+<p>在申明映射类的范围内，还有两种如何声明 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 元数据的方法。这些包括：</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="declarative_tables.html#orm-declarative-table"><span class="std std-ref">使用 mapped_column() 的Declarative Table</span></a>  - 在映射类内部使用 :func:<a href="#id21"><span class="problematic" id="id22">`</span></a>_orm.mapped_column`指令声明表列（或在遗留形式中，直接使用 :class:<a href="#id23"><span class="problematic" id="id24">`</span></a>_schema.Column`类）。 :func:<a href="#id25"><span class="problematic" id="id26">`</span></a>_orm.mapped_column`指令还可以通过使用 :class:<a href="#id27"><span class="problematic" id="id28">`</span></a>_orm.Mapped`类可选地结合类型注释提供有关映射列的一些详细信息。与“__tablename__”和可选的“__table_args__”类级指示符一起使用，申明式映射处理将构建即将映射的 :class:<a href="#id29"><span class="problematic" id="id30">`</span></a>_schema.Table`对象。</p></li>
-<li><p><a class="reference internal" href="declarative_tables.html#orm-imperative-table-configuration"><span class="std std-ref">具有 Imperative Table 的 Declarative （俗称混合 Declarative）</span></a>  - 与其单独指定表名和属性不同，一个显式构造的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  class:<a href="#id31"><span class="problematic" id="id32">`</span></a>_schema.Table`对象，以及将类映射到现有的核心构造，例如联接和子查询。</p></li>
+<li><p><a class="reference internal" href="declarative_tables.html#orm-declarative-table"><span class="std std-ref">使用 mapped_column() 的Declarative Table</span></a>  - 在映射类内部使用 :func:` _orm.mapped_column`指令声明表列（或在遗留形式中，直接使用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 类）。 <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code> 指令还可以通过使用 <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a> 类可选地结合类型注释提供有关映射列的一些详细信息。与“__tablename__”和可选的“__table_args__”类级指示符一起使用，申明式映射处理将构建即将映射的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象。</p></li>
+<li><p><a class="reference internal" href="declarative_tables.html#orm-imperative-table-configuration"><span class="std std-ref">具有 Imperative Table 的 Declarative （俗称混合 Declarative）</span></a>  - 与其单独指定表名和属性不同，一个显式构造的  :class:` _schema.Table`  class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_schema.Table`对象，以及将类映射到现有的核心构造，例如联接和子查询。</p></li>
 </ul>
-<p>声明式映射的文档在 :ref:<a href="#id33"><span class="problematic" id="id34">`</span></a>declarative_config_toplevel`中继续。</p>
+<p>声明式映射的文档在 <a class="reference internal" href="declarative_mapping.html"><span class="std std-ref">通过声明性方式映射类</span></a> 中继续。</p>
 </section>
 <section id="orm-imperative-mapping">
-<span id="classical-mapping"></span><span id="id35"></span><h3>命令式映射<a class="headerlink" href="#orm-imperative-mapping" title="Permalink to this heading">¶</a></h3>
-<p><a href="#id36"><span class="problematic" id="id37">**</span></a>命令式**或**经典的**映射指的是使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  方法对映射类进行配置的过程，并且目标类不包括任何申明性类属性。</p>
+<span id="classical-mapping"></span><span id="id7"></span><h3>命令式映射<a class="headerlink" href="#orm-imperative-mapping" title="Permalink to this heading">¶</a></h3>
+<p><a href="#id8"><span class="problematic" id="id9">**</span></a>命令式**或**经典的**映射指的是使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  方法对映射类进行配置的过程，并且目标类不包括任何申明性类属性。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>命令式映射形式是映射的较少使用的形式，最早于2006年的SQLAlchemy版本中提供。这本质上是绕过申明式系统提供更“基本”的映射系统的一种方式，不提供诸如  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  支持等现代功能。因此，大多数文档示例都使用申明式表配置，建议新用户从 :ref:<a href="#id38"><span class="problematic" id="id39">`</span></a>Declarative Table &lt;orm_declarative_table_config_toplevel&gt;`配置开始。</p>
+<p>命令式映射形式是映射的较少使用的形式，最早于2006年的SQLAlchemy版本中提供。这本质上是绕过申明式系统提供更“基本”的映射系统的一种方式，不提供诸如  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  支持等现代功能。因此，大多数文档示例都使用申明式表配置，建议新用户从 :ref:` Declarative Table &lt;orm_declarative_table_config_toplevel&gt;`配置开始。</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2.0: </span>现在使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  方法来创建经典的映射。效率较低，阻碍了应用开发的功能，即将删除。he <a href="#id40"><span class="problematic" id="id41">``</span></a>sqlalchemy.orm.mapper()``独立函数已被删除。</p>
+<p><span class="versionmodified changed">Changed in version 2.0: </span>现在使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  方法来创建经典的映射。效率较低，阻碍了应用开发的功能，即将删除。he ` <a href="#id10"><span class="problematic" id="id11">`</span></a>sqlalchemy.orm.mapper()``独立函数已被删除。</p>
 </div>
-<p>在“经典”形式中，表元数据是用  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  方法与“User”类关联，在建立 :class:<a href="#id42"><span class="problematic" id="id43">`</span></a>_orm.registry`实例之后。通常，单个类的映射使用一个共享的 :class:<a href="#id44"><span class="problematic" id="id45">`</span></a>_orm.registry`实例。</p>
+<p>在“经典”形式中，表元数据是用  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  方法与“User”类关联，在建立 :class:` _orm.registry`实例之后。通常，单个类的映射使用一个共享的 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 实例。</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">ForeignKey</span>
 <span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">registry</span>
 <span class="linenos"> 3</span>
@@ -334,7 +335,7 @@
 <span class="linenos">19</span>
 <span class="linenos">20</span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">user_table</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>有关映射属性的信息，例如到其他类的关系，通过属性“properties”字典提供。下面的示例说明了第二个 :class:<a href="#id46"><span class="problematic" id="id47">`</span></a>_schema.Table`对象，映射到名为“Address”的类，然后通过 :func:<a href="#id48"><span class="problematic" id="id49">`</span></a>_orm.relationship`链接到“User”：</p>
+<p>有关映射属性的信息，例如到其他类的关系，通过属性“properties”字典提供。下面的示例说明了第二个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象，映射到名为“Address”的类，然后通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 链接到“User”：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">address</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="linenos"> 2</span>    <span class="s2">&quot;address&quot;</span><span class="p">,</span>
 <span class="linenos"> 3</span>    <span class="n">metadata_obj</span><span class="p">,</span>
@@ -353,46 +354,46 @@
 <span class="linenos">16</span>
 <span class="linenos">17</span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">Address</span><span class="p">,</span> <span class="n">address</span><span class="p">)</span></pre></div>
 </div>
-<p>请注意，使用命令式方法映射的类**完全可互换**与使用申明式方法映射的类。这两种方法最终都会创建相同的配置，由 :class:<a href="#id50"><span class="problematic" id="id51">`</span></a>_schema.Table`类、用户定义的类和与之关联的 :class:<a href="#id52"><span class="problematic" id="id53">`</span></a>_orm.Mapper`对象组成。当我们谈论“ :class:<a href="#id54"><span class="problematic" id="id55">`</span></a>_orm.Mapper`的行为”时，这也适用于使用申明性系统-仍然使用它，只是在幕后使用它。</p>
+<p>请注意，使用命令式方法映射的类**完全可互换**与使用申明式方法映射的类。这两种方法最终都会创建相同的配置，由 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 类、用户定义的类和与之关联的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象组成。当我们谈论“ <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 的行为”时，这也适用于使用申明性系统-仍然使用它，只是在幕后使用它。</p>
 </section>
 </section>
 <section id="orm-mapper-configuration-overview">
-<span id="id56"></span><h2>映射类的基本组件<a class="headerlink" href="#orm-mapper-configuration-overview" title="Permalink to this heading">¶</a></h2>
-<p>所有映射形式都可以通过传递建造参数来配置映射类的映射器，这些参数最终成为通过它的构造函数的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  向命令式映射传递的参数，或者使用申明式系统时，来自映射表列、SQL表达式和关系以及诸如 :ref:<a href="#id57"><span class="problematic" id="id58">`</span></a>__mapper_args__&lt;orm_declarative_mapper_options&gt;`这样的属性的组合。</p>
-<p>有四个 :class:<a href="#id59"><span class="problematic" id="id60">`</span></a>_orm.Mapper`类要求置于映射类中的类的大类配置：</p>
-<section id="id61">
-<h3>被映射的类<a class="headerlink" href="#id61" title="Permalink to this heading">¶</a></h3>
-<p>这是我们在应用程序中构造的类。通常，此类的结构没有限制。当Python类被映射时，每个类只能有**一个**  :class:<a href="#id62"><span class="problematic" id="id63">`</span></a>_orm.Mapper`对象。</p>
+<span id="id12"></span><h2>映射类的基本组件<a class="headerlink" href="#orm-mapper-configuration-overview" title="Permalink to this heading">¶</a></h2>
+<p>所有映射形式都可以通过传递建造参数来配置映射类的映射器，这些参数最终成为通过它的构造函数的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  向命令式映射传递的参数，或者使用申明式系统时，来自映射表列、SQL表达式和关系以及诸如 :ref:` __mapper_args__&lt;orm_declarative_mapper_options&gt;`这样的属性的组合。</p>
+<p>有四个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 类要求置于映射类中的类的大类配置：</p>
+<section id="id13">
+<h3>被映射的类<a class="headerlink" href="#id13" title="Permalink to this heading">¶</a></h3>
+<p>这是我们在应用程序中构造的类。通常，此类的结构没有限制。当Python类被映射时，每个类只能有**一个**  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象。</p>
 <p>当使用  <a class="reference internal" href="#orm-declarative-mapping"><span class="std std-ref">申明映射</span></a>  ）处理。</p>
-<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">命令式映射()</span></code>  样式映射时，类被直接传递为  <code class="xref py py-meth docutils literal notranslate"><span class="pre">map_imperatively.class_()</span></code>  参数。</p>
+<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">命令式映射()</span></code>  样式映射时，类被直接传递为  :meth:` _orm.registry.map_imperatively.class_`  参数。</p>
 </section>
-<section id="id64">
-<h3>表或其他来自句子对象<a class="headerlink" href="#id64" title="Permalink to this heading">¶</a></h3>
-<p>在绝大多数常见情况下，它是 :class:<a href="#id65"><span class="problematic" id="id66">`</span></a>_schema.Table`实例。对于更高级的用例，它也可以引用任何种类的 :class:<a href="#id67"><span class="problematic" id="id68">`</span></a>_sql.FromClause`对象，最常见的备用对象是 :class:<a href="#id69"><span class="problematic" id="id70">`</span></a>_sql.Subquery`和 :class:<a href="#id71"><span class="problematic" id="id72">`</span></a>_schema.Join`对象之一。</p>
-<p>当使用 :ref:<a href="#id73"><span class="problematic" id="id74">`</span></a>申明映射 &lt;orm_declarative_mapping&gt;`映射样式时，该主题表要么由申明系统根据“__tablename__”属性和表示的 :class:<a href="#id75"><span class="problematic" id="id76">`</span></a>_schema.Column`对象生成，要么由“__table__”属性建立。这两种样式的配置在 :ref:<a href="#id77"><span class="problematic" id="id78">`</span></a>orm_declarative_table`和 :ref:<a href="#id79"><span class="problematic" id="id80">`</span></a>orm_imperative_table_configuration`中介绍。</p>
+<section id="id14">
+<h3>表或其他来自句子对象<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<p>在绝大多数常见情况下，它是 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 实例。对于更高级的用例，它也可以引用任何种类的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> 对象，最常见的备用对象是 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Subquery" title="sqlalchemy.sql.expression.Subquery"><code class="xref py py-class docutils literal notranslate"><span class="pre">Subquery</span></code></a> 和 <code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code> 对象之一。</p>
+<p>当使用 <a class="reference internal" href="#orm-declarative-mapping"><span class="std std-ref">申明映射</span></a> 映射样式时，该主题表要么由申明系统根据“__tablename__”属性和表示的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象生成，要么由“__table__”属性建立。这两种样式的配置在 <a class="reference internal" href="declarative_tables.html#orm-declarative-table"><span class="std std-ref">使用 mapped_column() 的Declarative Table</span></a> 和 <a class="reference internal" href="declarative_tables.html#orm-imperative-table-configuration"><span class="std std-ref">具有 Imperative Table 的 Declarative （俗称混合 Declarative）</span></a> 中介绍。</p>
 <p>当使用  <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>  参数直接传递。</p>
-<p>与映射类的“一个映射器每类”要求相对应的是，主题的 :class:<a href="#id81"><span class="problematic" id="id82">`</span></a>_schema.Table`或其他 :class:<a href="#id83"><span class="problematic" id="id84">`</span></a>_sql.FromClause`对象映射可能与任意数量的映射相关。 :class:<a href="#id85"><span class="problematic" id="id86">`</span></a>_orm.Mapper`直接应用于用户定义的类，但不以任何方式修改给定的 :class:<a href="#id87"><span class="problematic" id="id88">`</span></a>_schema.Table`或其他 :class:<a href="#id89"><span class="problematic" id="id90">`</span></a>_sql.FromClause`对象。</p>
+<p>与映射类的“一个映射器每类”要求相对应的是，主题的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 或其他 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> 对象映射可能与任意数量的映射相关。 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 直接应用于用户定义的类，但不以任何方式修改给定的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 或其他 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> 对象。</p>
 </section>
 <section id="orm-mapping-properties">
-<span id="id91"></span><h3>属性字典<a class="headerlink" href="#orm-mapping-properties" title="Permalink to this heading">¶</a></h3>
-<p>这是映射类将关联的所有属性的字典。默认情况下，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 。属性字典还将包含所有其他类型的被配置的 :class:<a href="#id92"><span class="problematic" id="id93">`</span></a>_orm.MapperProperty`对象，最常见的是由 :func:<a href="#id94"><span class="problematic" id="id95">`</span></a>_orm.relationship`构造生成的实例。</p>
-<p>当使用 :ref:<a href="#id96"><span class="problematic" id="id97">`</span></a>申明映射 &lt;orm_declarative_mapping&gt;`映射样式时，属性字典由申明系统生成，通过扫描要映射的类以查找适当的属性。有关此过程的注释，请参见 :ref:<a href="#id98"><span class="problematic" id="id99">`</span></a>orm_declarative_properties`节。</p>
-<p>当使用  <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>  参数传递到  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  中。</p>
+<span id="id15"></span><h3>属性字典<a class="headerlink" href="#orm-mapping-properties" title="Permalink to this heading">¶</a></h3>
+<p>这是映射类将关联的所有属性的字典。默认情况下，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 。属性字典还将包含所有其他类型的被配置的 :class:` _orm.MapperProperty`对象，最常见的是由 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造生成的实例。</p>
+<p>当使用 <a class="reference internal" href="#orm-declarative-mapping"><span class="std std-ref">申明映射</span></a> 映射样式时，属性字典由申明系统生成，通过扫描要映射的类以查找适当的属性。有关此过程的注释，请参见 <a class="reference internal" href="declarative_config.html#orm-declarative-properties"><span class="std std-ref">使用声明式定义映射属性</span></a> 节。</p>
+<p>当使用  <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>  参数传递到  :meth:` _orm.registry.map_imperatively`  中。</p>
 </section>
-<section id="id100">
-<h3>其他映射器配置参数<a class="headerlink" href="#id100" title="Permalink to this heading">¶</a></h3>
+<section id="id16">
+<h3>其他映射器配置参数<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
 <p>当使用  <a class="reference internal" href="#orm-declarative-mapping"><span class="std std-ref">申明映射</span></a> 。</p>
-<p>当使用  <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>  传递关键字参数，它将其传递给 :class:<a href="#id101"><span class="problematic" id="id102">`</span></a>_orm.Mapper`类。</p>
-<p>所接受的全部参数在 :class:<a href="#id103"><span class="problematic" id="id104">`</span></a>_orm.Mapper`中记录。</p>
+<p>当使用  <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a>  传递关键字参数，它将其传递给 :class:` _orm.Mapper`类。</p>
+<p>所接受的全部参数在 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 中记录。</p>
 </section>
 </section>
 <section id="orm-mapped-class-behavior">
-<span id="id105"></span><h2>映射类的行为<a class="headerlink" href="#orm-mapped-class-behavior" title="Permalink to this heading">¶</a></h2>
-<p>使用 :class:<a href="#id106"><span class="problematic" id="id107">`</span></a>_orm.registry`映射类过程中，以下行为是常见的：</p>
+<span id="id17"></span><h2>映射类的行为<a class="headerlink" href="#orm-mapped-class-behavior" title="Permalink to this heading">¶</a></h2>
+<p>使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 映射类过程中，以下行为是常见的：</p>
 <section id="mapped-class-default-constructor">
-<span id="id108"></span><h3>默认构造方法<a class="headerlink" href="#mapped-class-default-constructor" title="Permalink to this heading">¶</a></h3>
+<span id="id18"></span><h3>默认构造方法<a class="headerlink" href="#mapped-class-default-constructor" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p>:class:<a href="#id109"><span class="problematic" id="id110">`</span></a>_orm.registry`对所有映射类应用默认构造方法，即“__init__”方法，如果没有显式自己的“__init__”方法。该方法的行为是提供方便的关键字构造函数，该函数将接受命名的所有属性作为可选关键字参数。例如：</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 对所有映射类应用默认构造方法，即“__init__”方法，如果没有显式自己的“__init__”方法。该方法的行为是提供方便的关键字构造函数，该函数将接受命名的所有属性作为可选关键字参数。例如：</p>
 </div></blockquote>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">DeclarativeBase</span>
 <span class="linenos"> 2</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
@@ -415,10 +416,10 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>:ref:<a href="#id111"><span class="problematic" id="id112">`</span></a>orm_declarative_native_dataclasses`功能提供了一种通过使用Python数据类生成默认的“__init__()”方法的替代方法，并且可以提供高度可配置的构造函数。</p>
+<p><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses"><span class="std std-ref">声明数据类映射</span></a> 功能提供了一种通过使用Python数据类生成默认的“__init__()”方法的替代方法，并且可以提供高度可配置的构造函数。</p>
 </div>
 <p>包括显式“__init__()”方法的类将保持该方法，不会应用默认构造方法。</p>
-<p>要更改使用的默认构造函数，可以提供用户定义的Python可调用对象，该对象将用作默认构造函数  <a href="#id113"><span class="problematic" id="id114">:oaramref:`_orm.registry.constructor`</span></a>  参数。</p>
+<p>要更改使用的默认构造函数，可以提供用户定义的Python可调用对象，该对象将用作默认构造函数  <a href="#id19"><span class="problematic" id="id20">:oaramref:`_orm.registry.constructor`</span></a>  参数。</p>
 <p>命令式映射也适用于此：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">registry</span>
 <span class="linenos"> 2</span>
@@ -438,16 +439,16 @@
 <span class="linenos">16</span>
 <span class="linenos">17</span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">user_table</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>上述类是通过 :ref:<a href="#id115"><span class="problematic" id="id116">`</span></a>orm_imperative_mapping`映射描述的，其特征也是通过 :class:<a href="#id117"><span class="problematic" id="id118">`</span></a>_orm.registry`关联的默认构造方法。</p>
+<p>上述类是通过 <a class="reference internal" href="#orm-imperative-mapping"><span class="std std-ref">命令式映射</span></a> 映射描述的，其特征也是通过 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 关联的默认构造方法。</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4: </span>经典映射现在支持标准的配置级构造函数，当它们经过  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.map_imperatively()</span></code>  映射时。</p>
 </div>
 </section>
 <section id="orm-mapper-inspection">
-<span id="id119"></span><h3>映射类、实例和映射器的运行时内省<a class="headerlink" href="#orm-mapper-inspection" title="Permalink to this heading">¶</a></h3>
-<p>使用 :class:<a href="#id120"><span class="problematic" id="id121">`</span></a>_orm.registry`映射的类还具有一些适用于所有映射的属性：</p>
+<span id="id21"></span><h3>映射类、实例和映射器的运行时内省<a class="headerlink" href="#orm-mapper-inspection" title="Permalink to this heading">¶</a></h3>
+<p>使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code> 映射的类还具有一些适用于所有映射的属性：</p>
 <ul>
-<li><p>“__mapper__”属性将引用与类相关联的 :class:<a href="#id122"><span class="problematic" id="id123">`</span></a>_orm.Mapper`对象:</p>
+<li><p>“__mapper__”属性将引用与类相关联的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">__mapper__</span></pre></div>
 </div>
 <p>当使用  <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a></p>
@@ -456,7 +457,7 @@
 <span class="n">mapper</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">User</span><span class="p">)</span></pre></div>
 </div>
 </li>
-<li><p>“__table__”属性将引用将映射到该类或更通用地引用的 :class:<a href="#id124"><span class="problematic" id="id125">`</span></a>.FromClause`对象的 :class:<a href="#id126"><span class="problematic" id="id127">`</span></a>_schema.Table`对象。</p></li>
+<li><p>“__table__”属性将引用将映射到该类或更通用地引用的 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a> 对象的 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象。</p></li>
 </ul>
 <dl class="field-list">
 <dt class="field-odd">user<span class="colon">:</span></dt>
@@ -465,14 +466,14 @@
 <p>引用：  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.FromClause" title="sqlalchemy.sql.expression.FromClause"><code class="xref py py-class docutils literal notranslate"><span class="pre">FromClause</span></code></a>  属性中的这个对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">local_table</span></pre></div>
 </div>
-<p>当类被映射为单个表继承时，而该类是没有自己的表的子类时，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code>  属性以及“.__table__”属性都将为“None”。要检索实际选定的“selectable”，该选项在查询该类期间可用，它可以通过  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.selectable</span></code>  属性获取:</p>
+<p>当类被映射为单个表继承时，而该类是没有自己的表的子类时，  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Mapper.local_table</span></code>  属性以及“.__table__”属性都将为“None”。要检索实际选定的“selectable”，该选项在查询该类期间可用，它可以通过  :attr:` _orm.Mapper.selectable`  属性获取:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">selectable</span></pre></div>
 </div>
 </dd>
 </dl>
 <section id="orm-mapper-inspection-mapper">
-<span id="id128"></span><h4>映射器对象的内省<a class="headerlink" href="#orm-mapper-inspection-mapper" title="Permalink to this heading">¶</a></h4>
-<p>如之前所述，在任何映射类中，无论使用何种方法， :class:<a href="#id129"><span class="problematic" id="id130">`</span></a>_orm.Mapper`对象都可从中派生，该常见是通过使用 :ref:<a href="#id131"><span class="problematic" id="id132">`</span></a>core_inspection_toplevel`系统针对映射类。使用 :func:<a href="#id133"><span class="problematic" id="id134">`</span></a>_sa.inspect`函数，可以从映射类中获取 :class:<a href="#id135"><span class="problematic" id="id136">`</span></a>_orm.Mapper`对象:</p>
+<span id="id22"></span><h4>映射器对象的内省<a class="headerlink" href="#orm-mapper-inspection-mapper" title="Permalink to this heading">¶</a></h4>
+<p>如之前所述，在任何映射类中，无论使用何种方法， <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象都可从中派生，该常见是通过使用 <span class="xref std std-ref">core_inspection_toplevel</span> 系统针对映射类。使用 <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a> 函数，可以从映射类中获取 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">User</span><span class="p">)</span></pre></div>
 </div>
@@ -506,15 +507,15 @@
 </div>
 </section>
 <section id="orm-mapper-inspection-instancestate">
-<span id="id137"></span><h4>映射实例的内省<a class="headerlink" href="#orm-mapper-inspection-instancestate" title="Permalink to this heading">¶</a></h4>
+<span id="id23"></span><h4>映射实例的内省<a class="headerlink" href="#orm-mapper-inspection-instancestate" title="Permalink to this heading">¶</a></h4>
 <blockquote>
-<div><p><a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a> .InstanceState`，该对象将提供与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> （由映射类使用）以及提供有关实例中单个属性状态信息的详细接口，包括其当前值以及如何将其与其数据库加载值关联。</p>
+<div><p><a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a> .InstanceState` ，该对象将提供与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> （由映射类使用）以及提供有关实例中单个属性状态信息的详细接口，包括其当前值以及如何将其与其数据库加载值关联。</p>
 </div></blockquote>
 <p>给定从数据库中加载的“User”类的实例：</p>
 <blockquote>
 <div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span></pre></div>
 </div>
-<p><a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a> .InstanceState`对象：</p>
+<p><a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a> .InstanceState` 对象：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span>
 <span class="go">&lt;sqlalchemy.orm.state.InstanceState object at 0x7f07e5fec2e0&gt;</span></pre></div>
@@ -524,17 +525,17 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">mapper</span>
 <span class="go">&lt;Mapper at 0x7f07e614ef50; User&gt;</span></pre></div>
 </div>
-<p>“__  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ”，如果有的话，则会将对象返回，该对象被  <span class="xref std std-term">attached</span>  到该对象中：</p>
+<p>“__  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ”，如果有的话，则会将对象返回，该对象被  :term:` attached`  到该对象中：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">session</span>
 <span class="go">&lt;sqlalchemy.orm.session.Session object at 0x7f07e614f160&gt;</span></pre></div>
 </div>
-<p>有关对象的当前 :ref:<a href="#id138"><span class="problematic" id="id139">`</span></a>persistence state &lt;session_object_states&gt;`的信息：</p>
+<p>有关对象的当前 <a class="reference internal" href="session_state_management.html#session-object-states"><span class="std std-ref">persistence state</span></a> 的信息：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">persistent</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">pending</span>
 <span class="go">False</span></pre></div>
 </div>
-<p>属性状态信息，例如未加载或  <span class="xref std std-term">lazy loaded</span>  属性（假设“addresses”是映射类上的 :func:<a href="#id140"><span class="problematic" id="id141">`</span></a>_orm.relationship`到相关类的属性）：</p>
+<p>属性状态信息，例如未加载或  <span class="xref std std-term">lazy loaded</span>  属性（假设“addresses”是映射类上的 :func:` _orm.relationship`到相关类的属性）：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">unloaded</span>
 <span class="go">{&#39;addresses&#39;}</span></pre></div>
 </div>
@@ -560,13 +561,13 @@
 </div></blockquote>
 </div>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id142" role="doc-footnote">
+<aside class="footnote brackets" id="id24" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <p>在Python 2下运行时，Python 2“old style”类是唯一不兼容的类。在Python 2下运行代码时，所有类都必须扩展Python的“object”类。在Python 3下，这通常是固定的。</p>
 </aside>
-<aside class="footnote brackets" id="id143" role="doc-footnote">
+<aside class="footnote brackets" id="id25" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
-<p>存在一种名为“非主映射器”的旧式功能，其中可以将任意数量的 :class:<a href="#id144"><span class="problematic" id="id145">`</span></a>_orm.Mapper`对象与已映射的类相关联，但它们不应用任何“instrumentation”到类。自SQLAlchemy 1.3起，此功能已被弃用。</p>
+<p>存在一种名为“非主映射器”的旧式功能，其中可以将任意数量的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 对象与已映射的类相关联，但它们不应用任何“instrumentation”到类。自SQLAlchemy 1.3起，此功能已被弃用。</p>
 </aside>
 </aside>
 </section>
@@ -592,7 +593,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:59:01
 
     </div>
 </div>

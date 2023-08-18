@@ -204,8 +204,8 @@
 <div class="admonition-sqlalchemy-1-x admonition">
 <p class="admonition-title">对于 SQLAlchemy 1.x 的用户</p>
 <p>在 SQLAlchemy 2.x 系列中，ORM 的 SQL SELECT 语句是使用与 Core 中相同的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造而建造的，
-然后使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法（与用于   <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>
-功能的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  和   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>  构造相同）来调用。但是，旧版的   <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
+然后使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的  :meth:` _orm.Session.execute`  方法（与用于   <a class="reference internal" href="dml.html#orm-expression-update-delete"><span class="std std-ref">ORM-启用的INSERT、UPDATE和DELETE语句</span></a>
+功能的   <a class="reference internal" href="../../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a>  和   :func:` _sql.delete`  构造相同）来调用。但是，旧版的   <a class="reference internal" href="query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>
 对象同时执行这些步骤，作为一个“全能”的对象，它仍然是可用的，以支持在没有必要全面替换所有查询的情况下建立在 1.x
 系列上的应用程序。关于这个对象的参考，可以查看   <a class="reference internal" href="query.html"><span class="std std-ref">Legacy查询API</span></a> 。</p>
 </div>
@@ -225,8 +225,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="select.html#orm-queryguide-joins">连接</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="select.html#orm-queryguide-simple-relationship-join">简单的关系联接</a></li>
-<li class="toctree-l3"><a class="reference internal" href="select.html#id10">级联多个连接</a></li>
-<li class="toctree-l3"><a class="reference internal" href="select.html#id13">连接到目标实体</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id12">级联多个连接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html#id15">连接到目标实体</a></li>
 <li class="toctree-l3"><a class="reference internal" href="select.html#on">使用ON子句连接到目标</a></li>
 <li class="toctree-l3"><a class="reference internal" href="select.html#relationship-on">将 Relationship 与自定义 ON 条件组合</a></li>
 <li class="toctree-l3"><a class="reference internal" href="select.html#relationship">使用 Relationship 在别名目标之间进行连接</a></li>
@@ -247,7 +247,7 @@
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#selectin-polymorphic">使用 selectin_polymorphic()</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id16">在映射器上配置 selectin_polymorphic()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id8">在映射器上配置 selectin_polymorphic()</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#with-polymorphic">使用 with_polymorphic()</a><ul>
@@ -261,7 +261,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#loading-single-inheritance">单继承映射的 SELECT 语句</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id24">提高单继承属性的加载性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id16">提高单继承属性的加载性能</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="inheritance.html#api">继承加载API</a><ul>
@@ -293,7 +293,7 @@
 <li class="toctree-l3"><a class="reference internal" href="columns.html#deferred-sql">使用 <code class="docutils literal notranslate"><span class="pre">deferred()</span></code> 用于命令式映射，映射 SQL 表达式</a></li>
 <li class="toctree-l3"><a class="reference internal" href="columns.html#undefer">使用 <code class="docutils literal notranslate"><span class="pre">undefer()</span></code> 来“急切”加载延迟列</a></li>
 <li class="toctree-l3"><a class="reference internal" href="columns.html#orm-queryguide-deferred-group">按组加载待决列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="columns.html#id29">使用通配符undefer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="columns.html#id17">使用通配符undefer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="columns.html#mapper-level-raiseload">配置默认的 mapper-level “raiseload” 行为</a></li>
 </ul>
 </li>
@@ -315,8 +315,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="relationships.html">关系加载技术</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="relationships.html#id6">关系加载类型的概述</a></li>
-<li class="toctree-l2"><a class="reference internal" href="relationships.html#id9">使用加载器选项加载关系</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="relationships.html#id10">加载器选项添加筛选条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationships.html#id7">使用加载器选项加载关系</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="relationships.html#id8">加载器选项添加筛选条件</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="relationships.html#lazy-loading">惰性加载</a></li>
@@ -369,7 +369,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:01
+    Documentation last generated: 2023/8/18 18:59:02
 
     </div>
 </div>

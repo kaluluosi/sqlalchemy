@@ -207,26 +207,26 @@ SQLAlchemy Version 1.4在所谓的“过渡模式”中（即实现了几乎2.0�
 <p><a class="reference internal" href="orm/queryguide/relationships.html"><span class="doc">关系加载技术</span></a></p>
 </div>
 </dd>
-<dt id="term-ORM">ORM 注释<a class="headerlink" href="#term-ORM" title="Permalink to this term">¶</a></dt><dt id="term-19">注释们<a class="headerlink" href="#term-19" title="Permalink to this term">¶</a></dt><dd><p>短语“ORM注释”指的是SQLAlchemy的一个内部方面，其中一个Core对象(如  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .Select`对象)
+<dt id="term-ORM">ORM 注释<a class="headerlink" href="#term-ORM" title="Permalink to this term">¶</a></dt><dt id="term-19">注释们<a class="headerlink" href="#term-19" title="Permalink to this term">¶</a></dt><dd><p>短语“ORM注释”指的是SQLAlchemy的一个内部方面，其中一个Core对象(如  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，  :class:` .Column` .Select`对象)
 可以携带附加的运行时信息，标记它属于特定ORM映射。该术语不应与需要
 静态类型信息的Python代码源“类型注释”这一常见短语混淆. 大多数SQLAlchemy的
 文档代码示例都是带有“带注释的示例”或“未注释的示例”的小注释。</p>
-<p>当文档中出现”ORM注释”的短语时，它指的是CoreSQL表达式对象，如  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .Select`对象，
+<p>当文档中出现”ORM注释”的短语时，它指的是CoreSQL表达式对象，如  <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ，  :class:` .Column` .Select`对象，
 这些都源于一个或多个ORM映射，并因此在传递给ORM对象的方法（例如  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  ）
-时会有ORM特定的解释和/或行为。例如，当我们从ORM映射构造 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>.Select`对象时，
+时会有ORM特定的解释和/或行为。例如，当我们从ORM映射构造 <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象时，
 如ORM教程&lt;ref&gt;`ORM教程 &lt;tutorial_declaring_mapped_classes&gt;`_所示的“User”类</p>
 <p>例如：</p>
 <blockquote>
 <div><p>“&gt;&gt;&gt; stmt = select(User)</p>
 </div></blockquote>
-<p>上述  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .Table`，
+<p>上述  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .Table` ，
 但没有直接引用“User”类。这是   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  构建仍保持与Core级别的过程兼容的方式
-（注意，   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> <cite>._raw_columns`</cite> 成员是私有的，不应由最终用户代码访问）:</p>
+（注意，   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> ` ._raw_columns`` 成员是私有的，不应由最终用户代码访问）:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span><span class="o">.</span><span class="n">_raw_columns</span>
 <span class="go">[Table(&#39;user_account&#39;MetaData(), Column(&#39;id&#39;, Integer(), ...)]</span></pre></div>
 </div>
-<p>但是，当我们的   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  传递给ORM的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  后，间接与该对象相关的ORM实体用于
-在ORM上下文中解释   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> ，支持多表选择。实际的”ORM注释”可以在另一个私人变量: <code class="docutils literal notranslate"><span class="pre">._annotations</span></code> 中看到:</p>
+<p>但是，当我们的   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  传递给ORM的   :class:` .Session`  后，间接与该对象相关的ORM实体用于
+在ORM上下文中解释   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> ，支持多表选择。实际的”ORM注释”可以在另一个私人变量:` <cite>._annotations`</cite> 中看到:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span><span class="o">.</span><span class="n">_raw_columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_annotations</span>
 <span class="go">immutabledict({</span>
 <span class="go">  &#39;entity_namespace&#39;: &lt;Mapper at 0x7f4dd8098c10; User&gt;,</span>
@@ -242,10 +242,10 @@ SQLAlchemy Version 1.4在所谓的“过渡模式”中（即实现了几乎2.0�
 少数情况下有其他类型的服务器生成的主键值，在  <span class="xref std std-term">table metadata</span>  中可以选择显式配置”insert sentinel”列以优化同时插入多行的INSERT语句。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="core/connections.html#engine-insertmanyvalues-returning-order"><span class="std std-ref">将RETURNING行与参数集相关联</span></a>  - 在   <span class="xref std std-ref">engine_insertmanyvalues</span>  节中</p>
+<p><a class="reference internal" href="core/connections.html#engine-insertmanyvalues-returning-order"><span class="std std-ref">将RETURNING行与参数集相关联</span></a>  - 在   :ref:` engine_insertmanyvalues`  节中</p>
 </div>
 </dd>
-<dt id="term-class-_expression.Select">上述每个方法调用都会返回原始的 :class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_expression.Select`对象的副本，并添加其他的限定词。<a class="headerlink" href="#term-class-_expression.Select" title="Permalink to this term">¶</a></dt><dd></dd>
+<dt id="term-_expression.Select">上述每个方法调用都会返回原始的 <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象的副本，并添加其他的限定词。<a class="headerlink" href="#term-_expression.Select" title="Permalink to this term">¶</a></dt><dd></dd>
 <dt id="term-10">关系<a class="headerlink" href="#term-10" title="Permalink to this term">¶</a></dt><dt id="term-11">关系代数<a class="headerlink" href="#term-11" title="Permalink to this term">¶</a></dt><dd><p>由Edgar F. Codd开发的代数系统，用于建模和查询存储在关系数据库中的数据。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -261,7 +261,7 @@ SQLAlchemy Version 1.4在所谓的“过渡模式”中（即实现了几乎2.0�
 </dd>
 <dt id="term-18">可选择<a class="headerlink" href="#term-18" title="Permalink to this term">¶</a></dt><dd><p>在SQLAlchemy中， “可选择”（selectable）是用于表示一组行的SQL构造的术语。它与“关系”在  <a class="reference internal" href="#term-11"><span class="xref std std-term">关系代数</span></a>  的概念上相似。
 在SQLAlchemy中，当使用SQLAlchemy Core使用时，子类化   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Selectable" title="sqlalchemy.sql.expression.Selectable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selectable</span></code></a>  类的对象被认为是可作为”user-defined”表的 “selectables”。
-最常见的两个结构是   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  和   <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  语句。</p>
+最常见的两个结构是   <a class="reference internal" href="core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  和   :class:` _expression.Select`  语句。</p>
 </dd>
 <dt id="term-7">命令式<a class="headerlink" href="#term-7" title="Permalink to this term">¶</a></dt><dt id="term-8">声明式<a class="headerlink" href="#term-8" title="Permalink to this term">¶</a></dt><dd><p>在SQLAlchemy ORM中，这些术语指将Python类映射到数据库表的两种不同的风格。</p>
 <div class="admonition seealso">
@@ -276,7 +276,7 @@ SQLAlchemy Version 1.4在所谓的“过渡模式”中（即实现了几乎2.0�
 <p><a class="reference external" href="https://zh.wikipedia.org/wiki/%E5%9C%88%E5%A4%8D%E5%BC%8F%E5%A4%8D%E6%9D%82%E5%BA%A6">圈度复杂度 ( 维基百科)</a></p>
 </div>
 </dd>
-<dt id="term-23">增删改查<a class="headerlink" href="#term-23" title="Permalink to this term">¶</a></dt><dt id="term-CRUD">CRUD<a class="headerlink" href="#term-CRUD" title="Permalink to this term">¶</a></dt><dd><p>一个缩写，表示”创建（Create）、更新（Update）、删除（Delete）”。 在SQL中，该术语指的是执行三个广泛认识的操作：<cite>INSERT</cite>、<a href="#id10"><span class="problematic" id="id11">`</span></a>UPDATE`和`DELETE`语句。</p>
+<dt id="term-23">增删改查<a class="headerlink" href="#term-23" title="Permalink to this term">¶</a></dt><dt id="term-CRUD">CRUD<a class="headerlink" href="#term-CRUD" title="Permalink to this term">¶</a></dt><dd><p>一个缩写，表示”创建（Create）、更新（Update）、删除（Delete）”。 在SQL中，该术语指的是执行三个广泛认识的操作：<cite>INSERT</cite>、<a href="#id6"><span class="problematic" id="id7">`</span></a>UPDATE`和`DELETE`语句。</p>
 </dd>
 <dt id="term-3">多个值的插入<a class="headerlink" href="#term-3" title="Permalink to this term">¶</a></dt><dd><p>这是SQLAlchemy特有的功能，允许INSERT语句在单个语句中发出数千个新行，同时允许使用RETURNING或类似语句内联地返回服务器生成的值，以优化性能。
 该功能旨在为选择的后端透明地提供支持，但确实提供了一些配置选项。有关此功能的完整说明，请参见   <span class="xref std std-ref">engine_insertmanyvalues</span>  节。</p>
@@ -323,8 +323,8 @@ SQLAlchemy Version 1.4在所谓的“过渡模式”中（即实现了几乎2.0�
 <dt id="term-32">惰性加载<a class="headerlink" href="#term-32" title="Permalink to this term">¶</a></dt><dt id="term-33">惰性加载们<a class="headerlink" href="#term-33" title="Permalink to this term">¶</a></dt><dt id="term-34">惰性加载过的<a class="headerlink" href="#term-34" title="Permalink to this term">¶</a></dt><dt id="term-35">惰性加载<a class="headerlink" href="#term-35" title="Permalink to this term">¶</a></dt><dd><p>在对象关系映射中，”惰性加载（lazy load）”是指一个属性在一段时间内不包含其数据库端值，通常是在对象最初加载时。而是在首次使用该属性时，会收到“缓存标记”，以便在第一次使用该属性时从数据库加载数据。使用此模式，可以有时减小对象提取中的复杂性和时间，因为与相关表的相关属性不需要立即处理。
 惰性加载是  <a class="reference internal" href="#term-39"><span class="xref std std-term">急切加载</span></a>  的相反方法。</p>
 <p>在SQLAlchemy中，  <a class="reference internal" href="#term-35"><span class="xref std std-term">惰性加载</span></a>  是ORM的一个核心功能，并应用于用户定义类上具有映射属性的属性。 当引用指向数据库列或相关对象的属性且未加载值时，
-ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态下与之关联的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，在当前事务中发出SELECT语句，如果没有进程当中有事务的话,
-将新开一个事务。如果对象处于  <span class="xref std std-term">分离</span>  状态，并且未与任何   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  关联，这被认为是一种错误状态，并将触发有关该状态的确切异常。</p>
+ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态下与之关联的   :class:` _orm.Session` ，在当前事务中发出SELECT语句，如果没有进程当中有事务的话,
+将新开一个事务。如果对象处于  <span class="xref std std-term">分离</span>  状态，并且未与任何   :class:` _orm.Session`  关联，这被认为是一种错误状态，并将触发有关该状态的确切异常。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://martinfowler.com/eaaCatalog/lazyLoad.html">惰性加载（via Martin Fowler）</a></p>
@@ -335,7 +335,7 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 </div></blockquote>
 <p><a class="reference internal" href="orm/queryguide/relationships.html"><span class="doc">关系加载技术</span></a>  - 包括 ORM 相关对象的惰性加载信息</p>
 <blockquote>
-<div><p><a class="reference internal" href="orm/extensions/asyncio.html#asyncio-orm-avoid-lazyloads"><span class="std std-ref">使用 AsyncSession 时避免隐式 IO</span></a>  - 有关在使用   <a class="reference internal" href="orm/extensions/asyncio.html"><span class="std std-ref">异步 I/O (asyncio)</span></a>  扩展时避免惰性加载的提示</p>
+<div><p><a class="reference internal" href="orm/extensions/asyncio.html#asyncio-orm-avoid-lazyloads"><span class="std std-ref">使用 AsyncSession 时避免隐式 IO</span></a>  - 有关在使用   :ref:` asyncio_toplevel`  扩展时避免惰性加载的提示</p>
 </div></blockquote>
 </div></blockquote>
 </div>
@@ -346,7 +346,7 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 当与数据库列或相关联的对象引用的属性被访问时，ORM使用与该属性对应的描述符触发 ORM：  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  和生命周期事件。</p>
 </dd>
 <dt id="term-20">插件<a class="headerlink" href="#term-20" title="Permalink to this term">¶</a></dt><dt id="term-21">插件已启用<a class="headerlink" href="#term-21" title="Permalink to this term">¶</a></dt><dt id="term-22">插件特定<a class="headerlink" href="#term-22" title="Permalink to this term">¶</a></dt><dd><p>“插件已启用”或”插件特定”通常指SQLAlchemy Core中的一个函数或方法，在ORM上下文中使用时将有所不同。</p>
-<p>SQLAlchemy允许Core构造，例如 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_sql.Select`对象，参与“插件”系统，该插件可以注入其他
+<p>SQLAlchemy允许Core构造，例如 <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> 对象，参与“插件”系统，该插件可以注入其他
 没有默认存在的行为和功能。</p>
 <p>具体来说，主要的”插件”是”ORM插件”，它处于构成SQLAlchemy ORM所使用的系统的基础。
 可以使用Core检索到的方法来构建和执行SQL查询，以返回ORM结果。</p>
@@ -361,11 +361,11 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://zh.wikipedia.org/wiki/序列化">数据马歇尔（维基百科）</a></p>
 <blockquote>
-<div><p><a class="reference internal" href="core/custom_types.html#types-typedecorator"><span class="std std-ref">增强现有类型</span></a>  - SQLAlchemy 的   <a class="reference internal" href="core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a>  通常用于数据对象映射，当数据发送到数据库的 INSERT 和 UPDATE 语句时会用到，并在 SELECT 语句中检索（unmarshalling）数据时进行”unmarshalling”</p>
+<div><p><a class="reference internal" href="core/custom_types.html#types-typedecorator"><span class="std std-ref">增强现有类型</span></a>  - SQLAlchemy 的   :class:` .TypeDecorator`  通常用于数据对象映射，当数据发送到数据库的 INSERT 和 UPDATE 语句时会用到，并在 SELECT 语句中检索（unmarshalling）数据时进行”unmarshalling”</p>
 </div></blockquote>
 </div>
 </dd>
-<dt id="term-47">方法链接生成的<a class="headerlink" href="#term-47" title="Permalink to this term">¶</a></dt><dt id="term-SQLAlchemy">“方法链接”，在SQLAlchemy文档中也称为“生成”，是一种面向对象的技术，通过在对象上调用方法构造对象的状态。对象包含任意数量的方法，每个方法返回添加到对象中的新对象（或在某些情况下是相同的对象）。<a class="headerlink" href="#term-SQLAlchemy" title="Permalink to this term">¶</a></dt><dt id="term-SQLAlchemy-_expression.Select-.orm.query.Query-meth-_expression.Select.where-meth-_expression.Select.order_by-WHERE-ORDER-BY">在SQLAlchemy中使用最多的两个对象是  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .orm.query.Query`对象。例如，通过调用：meth:<cite>_expression.Select.where</cite> 和 :meth:<a href="#id14"><span class="problematic" id="id15">`</span></a>_expression.Select.order_by`方法，可以将两个表达式分配给 “WHERE” 子句以及一个 “ORDER BY” 子句::<a class="headerlink" href="#term-SQLAlchemy-_expression.Select-.orm.query.Query-meth-_expression.Select.where-meth-_expression.Select.order_by-WHERE-ORDER-BY" title="Permalink to this term">¶</a></dt><dd><dl class="simple">
+<dt id="term-47">方法链接生成的<a class="headerlink" href="#term-47" title="Permalink to this term">¶</a></dt><dt id="term-SQLAlchemy">“方法链接”，在SQLAlchemy文档中也称为“生成”，是一种面向对象的技术，通过在对象上调用方法构造对象的状态。对象包含任意数量的方法，每个方法返回添加到对象中的新对象（或在某些情况下是相同的对象）。<a class="headerlink" href="#term-SQLAlchemy" title="Permalink to this term">¶</a></dt><dt id="term-SQLAlchemy-_expression.Select-.orm.query.Query-meth-_expression.Select.where-_expression.Select.order_by-WHERE-ORDER-BY">在SQLAlchemy中使用最多的两个对象是  <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .orm.query.Query` 对象。例如，通过调用：meth:<cite>_expression.Select.where</cite> 和 <a class="reference internal" href="core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a> 方法，可以将两个表达式分配给 “WHERE” 子句以及一个 “ORDER BY” 子句::<a class="headerlink" href="#term-SQLAlchemy-_expression.Select-.orm.query.Query-meth-_expression.Select.where-_expression.Select.order_by-WHERE-ORDER-BY" title="Permalink to this term">¶</a></dt><dd><dl class="simple">
 <dt>stmt = (</dt><dd><p>select(user.c.name)
 .where(user.c.id &gt; 5)
 .where(user.c.name.like(“e%”))
@@ -374,14 +374,14 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 </dl>
 <p>)</p>
 </dd>
-<dt id="term-40">映射<a class="headerlink" href="#term-40" title="Permalink to this term">¶</a></dt><dt id="term-41">已映射<a class="headerlink" href="#term-41" title="Permalink to this term">¶</a></dt><dt id="term-42">映射的类<a class="headerlink" href="#term-42" title="Permalink to this term">¶</a></dt><dt id="term-43">ORM 映射类<a class="headerlink" href="#term-43" title="Permalink to this term">¶</a></dt><dd><p>我们在将类与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  类的实例关联时说该类 “已映射”（mapped），这个过程为类与数据库表或其他  <span class="xref std std-term">selectable</span>  构造相关联，以便可以使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象来持久化和加载其实例。</p>
+<dt id="term-40">映射<a class="headerlink" href="#term-40" title="Permalink to this term">¶</a></dt><dt id="term-41">已映射<a class="headerlink" href="#term-41" title="Permalink to this term">¶</a></dt><dt id="term-42">映射的类<a class="headerlink" href="#term-42" title="Permalink to this term">¶</a></dt><dt id="term-43">ORM 映射类<a class="headerlink" href="#term-43" title="Permalink to this term">¶</a></dt><dd><p>我们在将类与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  类的实例关联时说该类 “已映射”（mapped），这个过程为类与数据库表或其他  :term:` selectable`  构造相关联，以便可以使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象来持久化和加载其实例。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="orm/mapping_styles.html"><span class="std std-ref">ORM映射类概述</span></a></p>
 </div>
 </dd>
 <dt id="term-30">标识映射<a class="headerlink" href="#term-30" title="Permalink to this term">¶</a></dt><dd><p>Python对象和其数据库标识之间的映射。标识映射是与ORM  <span class="xref std std-term">session</span>  关联的集合，它将每个数据库对象的单个实例与其标识键关键字配对。
-此模式的优点是，针对特定数据库标识的所有操作都在单个对象实例上透明地完成。在ORM  <span class="xref std std-term">session</span>  与  <span class="xref std std-term">isolated</span>  事务结合使用时，拥有具有特定主键的对象的引用从实际上是代理实际数据库行的套接字的角度来看。</p>
+此模式的优点是，针对特定数据库标识的所有操作都在单个对象实例上透明地完成。在ORM  <span class="xref std std-term">session</span>  与  :term:` isolated`  事务结合使用时，拥有具有特定主键的对象的引用从实际上是代理实际数据库行的套接字的角度来看。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://martinfowler.com/eaaCatalog/identityMap.html">Identity Map (via Martin Fowler)</a></p>
@@ -390,8 +390,8 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 </div></blockquote>
 </div>
 </dd>
-<dt id="term-29">标识键<a class="headerlink" href="#term-29" title="Permalink to this term">¶</a></dt><dd><p>ORM映射对象的关键标识符。标识键与ORM映射对象的主键标识器及其在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的  <span class="xref std std-term">identity map</span>  中的惟一标识相对应。</p>
-<p>在SQLAlchemy中，可以使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  API检查ORM对象的标识键，以返回   <a class="reference internal" href="orm/internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>  跟踪对象，然后查看  <code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.key</span></code>  属性:</p>
+<dt id="term-29">标识键<a class="headerlink" href="#term-29" title="Permalink to this term">¶</a></dt><dd><p>ORM映射对象的关键标识符。标识键与ORM映射对象的主键标识器及其在   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  的  :term:` identity map`  中的惟一标识相对应。</p>
+<p>在SQLAlchemy中，可以使用   <a class="reference internal" href="core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  API检查ORM对象的标识键，以返回   :class:` _orm.InstanceState`  跟踪对象，然后查看  <code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.key</span></code>  属性:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">inspect</span><span class="p">(</span><span class="n">some_object</span><span class="p">)</span><span class="o">.</span><span class="n">key</span>
 <span class="go">(&lt;class &#39;__main__.MyTable&#39;&gt;, (1,), None)</span></pre></div>
@@ -423,7 +423,7 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Prepared_statement">准备执行语句 (via 维基百科)</a> - 维基百科</p>
 <p><a class="reference external" href="https://use-the-index-luke.com/sql/where-clause/bind-parameters">bind parameters (via Index鸟哥)</a> - Index鸟哥</p>
 <blockquote>
-<div><p><a class="reference internal" href="tutorial/dbapi_transactions.html#tutorial-sending-parameters"><span class="std std-ref">发送参数</span></a>  - 在   <a class="reference internal" href="tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  中</p>
+<div><p><a class="reference internal" href="tutorial/dbapi_transactions.html#tutorial-sending-parameters"><span class="std std-ref">发送参数</span></a>  - 在   :ref:` unified_tutorial`  中</p>
 </div></blockquote>
 </div>
 </dd>
@@ -448,7 +448,7 @@ ORM使用当前对象在  <span class="xref std std-term">持久</span>  状态�
 <p>DBAPI
 pep-249</p>
 <blockquote>
-<div><p>DBAPI是“Python数据库API规范”的缩写。这是Python中广泛使用的规范，用于定义所有数据库连接包的常用使用模式。 DBAPI是一个“低级” API，通常是应用程序中用于与数据库通信的最低级系统。SQLAlchemy的  <span class="xref std std-term">dialect</span>  系统是围绕DBAPI的操作构建的，它提供服务于DBAPI的独立方言类，这些类位于特定的数据库引擎之上；例如，  <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  DBAPI/方言组合，而URL“mysql+mysqldb://&#64;localhost/test”则引用了  <a class="reference internal" href="dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb" title="sqlalchemy.dialects.mysql.mysqldb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Python</span></code></a>  DBAPI/方言组合。</p>
+<div><p>DBAPI是“Python数据库API规范”的缩写。这是Python中广泛使用的规范，用于定义所有数据库连接包的常用使用模式。 DBAPI是一个“低级” API，通常是应用程序中用于与数据库通信的最低级系统。SQLAlchemy的  <span class="xref std std-term">dialect</span>  系统是围绕DBAPI的操作构建的，它提供服务于DBAPI的独立方言类，这些类位于特定的数据库引擎之上；例如，  :func:` _sa.create_engine`  DBAPI/方言组合，而URL“mysql+mysqldb://&#64;localhost/test”则引用了  <a class="reference internal" href="dialects/mysql.html#module-sqlalchemy.dialects.mysql.mysqldb" title="sqlalchemy.dialects.mysql.mysqldb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">for</span> <span class="pre">Python</span></code></a>  DBAPI/方言组合。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://www.python.org/dev/peps/pep-0249/">PEP 249-Python Database API Specification v2.0</a></p>
@@ -462,7 +462,7 @@ pep-249</p>
 </div>
 </dd>
 <dt>工作单元</dt><dd><p>一种软件架构，其中一个持久性系统（例如ORM）维护对一系列对象所做的更改列表，并在定期将所有挂起的更改刷新到数据库时执行。</p>
-<p>SQLAlchemy的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  这样的方法添加到 :class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_orm.Session`的对象将参与单位-of-work样式的持久化。</p>
+<p>SQLAlchemy的  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  这样的方法添加到 :class:` _orm.Session`的对象将参与单位-of-work样式的持久化。</p>
 <p>关于单位工作持久化的演练，可以从  <a class="reference internal" href="tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -479,7 +479,7 @@ pep-249</p>
 过期的
 即将过期的</p>
 <blockquote>
-<div><p>在SQLAlchemy ORM中，指的是将数据从  <span class="xref std std-term">persistent</span>  对象或有时  <span class="xref std std-term">detached</span>  对象中擦除的过程，因此，在下次访问对象的属性时，将发出  <span class="xref std std-term">lazy load</span>   SQL查询，以刷新当前正在执行操作的事务中该对象存储的数据。</p>
+<div><p>在SQLAlchemy ORM中，指的是将数据从  <span class="xref std std-term">persistent</span>  对象或有时  :term:` detached`  对象中擦除的过程，因此，在下次访问对象的属性时，将发出  <span class="xref std std-term">lazy load</span>   SQL查询，以刷新当前正在执行操作的事务中该对象存储的数据。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="orm/session_state_management.html#session-expire"><span class="std std-ref">刷新/到期</span></a></p>
@@ -612,7 +612,7 @@ ACID模型</p>
 隔离
 隔离级别</p>
 <blockquote>
-<div><p>:term:<a href="#id20"><span class="problematic" id="id21">`</span></a>ACID`模型的隔离属性确保并发执行的事务结果是如果事务串行执行将得到的结果。每个事务必须在完全隔离的情况下执行，即如果T1和T2并发执行，那么每个事务都应该保持独立。 (来源：维基百科)</p>
+<div><p><span class="xref std std-term">ACID</span> 模型的隔离属性确保并发执行的事务结果是如果事务串行执行将得到的结果。每个事务必须在完全隔离的情况下执行，即如果T1和T2并发执行，那么每个事务都应该保持独立。 (来源：维基百科)</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <blockquote>
@@ -628,13 +628,13 @@ ACID模型</p>
 </div>
 </div></blockquote>
 <dl>
-<dt>可重复读</dt><dd><p>四个数据库  <span class="xref std std-term">隔离级别</span>  之一，可重复读包括所有  <span class="xref std std-term">read committed</span>  隔离的隔离内容，并且还包括任何在事务期间读取的特定行从事务开始后保持不变的“非重复读数据”。这意味着，在事务期间，特定行不会更改，即使多个事务同时尝试更改原始行。(来源：维基百科)</p>
+<dt>可重复读</dt><dd><p>四个数据库  <span class="xref std std-term">隔离级别</span>  之一，可重复读包括所有  :term:` read committed`  隔离的隔离内容，并且还包括任何在事务期间读取的特定行从事务开始后保持不变的“非重复读数据”。这意味着，在事务期间，特定行不会更改，即使多个事务同时尝试更改原始行。(来源：维基百科)</p>
 </dd>
 <dt>读已提交</dt><dd><p>四个数据库  <span class="xref std std-term">隔离级别</span>  之一，read committed提供的功能是：事务不会暴露给尚未提交的并发事务的任何数据，从而防止所谓的“dirty reads”。 但是，在read committed下可以有非重复读数据，这意味着当另一个事务提交更改时，行中的数据可能会更改通读取两次。</p>
 </dd>
 <dt>读未提交</dt><dd><p>四个数据库  <span class="xref std std-term">隔离级别</span>  之一，read uncommitted的功能是：在事务提交之前，对数据库数据所做的更改不会成为永久更改。 然而，在read uncommitted状态下，可能可以在另一个事务的范围内查看未提交的数据；这些称为“dirty reads”。</p>
 </dd>
-<dt>可串行化</dt><dd><p>四种数据库  <span class="xref std std-term">隔离级别</span>  之一，可串行化包括所有  <span class="xref std std-term">repeatable read</span>  隔离中的所有隔离，并且在基于锁定的方法中，通过将行或一系列行锁定在锁定区间内可以保证所谓的“幻影读”不会发生，这意味着在此事务中读取的任何行都将继续存在，不存在的行将保证不能从另一个事务插入。</p>
+<dt>可串行化</dt><dd><p>四种数据库  <span class="xref std std-term">隔离级别</span>  之一，可串行化包括所有  :term:` repeatable read`  隔离中的所有隔离，并且在基于锁定的方法中，通过将行或一系列行锁定在锁定区间内可以保证所谓的“幻影读”不会发生，这意味着在此事务中读取的任何行都将继续存在，不存在的行将保证不能从另一个事务插入。</p>
 <p>可串行化隔离通常依赖于锁定行或行范围来实现此效果，并且可能会增加死锁的机会并降低性能。还存在一些基于非锁定的方案，但是这些方案必然依赖于拒绝事务，如果检测到写入冲突，则拒绝事务。</p>
 </dd>
 <dt>耐久性</dt><dd><p>耐久性是  <span class="xref std std-term">ACID</span>  模型的一个属性，指一旦事务提交，即使在数据库在提交后立即崩溃时，它也将保持提交状态。 例如在关系数据库中，一组SQL语句执行后，结果需要永久储存。（来源：维基百科）</p>
@@ -655,9 +655,9 @@ ACID模型</p>
 <p>许多实现RETURNING或类似结构的有PostgreSQL、SQL Server、Oracle和Firebird。PostgreSQL和Firebird的实现通常非常齐全，而SQL Server和Oracle的实现具有警告。在SQL Server上，该子句称为“OUTPUT INSERTED”（针对INSERT和UPDATE语句）和“OUTPUT DELETED”（针对删除语句），关键警告是限制了触发器与此关键字结合使用。在Oracle上，它被称为“RETURNING INTO”，并且需要将该值放入OUT参数中，这意味着语法不仅笨拙，而且只能一次将其用于一行。</p>
 <p>SQLAlchemy的  <a class="reference internal" href="core/dml.html#sqlalchemy.sql.expression.UpdateBase.returning" title="sqlalchemy.sql.expression.UpdateBase.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.returning()</span></code></a>  提供了在这些后端的RETURNING系统之上提供一层抽象的系统，以提供返回列的一致接口。 ORM还包含许多优化，可在可用时使用RETURNING。</p>
 </dd>
-<dt>一对多</dt><dd><p>一种 :func:<a href="#id22"><span class="problematic" id="id23">`</span></a>~sqlalchemy.orm.relationship`样式，将父映射器的主键链接到相关表中的外键。然后，每个唯一的父对象可以引用零个或多个唯一的相关对象。</p>
+<dt>一对多</dt><dd><p>一种 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 样式，将父映射器的主键链接到相关表中的外键。然后，每个唯一的父对象可以引用零个或多个唯一的相关对象。</p>
 <p>相关对象反过来将具有隐含或显式的  <span class="xref std std-term">多对一</span>  关系到它们的父对象。</p>
-<p>一个一对多架构示例（值得注意的是，它与：term:<a href="#id24"><span class="problematic" id="id25">`</span></a>多对一`架构相同）：</p>
+<p>一个一对多架构示例（值得注意的是，它与：term:<a href="#id10"><span class="problematic" id="id11">`</span></a>多对一`架构相同）：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
@@ -690,9 +690,9 @@ ACID模型</p>
 <p><span class="xref std std-term">backref</span></p>
 </div>
 </dd>
-<dt>多对一</dt><dd><p>一种 :func:<a href="#id26"><span class="problematic" id="id27">`</span></a>~sqlalchemy.orm.relationship`样式，将父映射器中的外键链接到相关表的主键。然后，每个父对象可以引用正好零个或一个相关对象。</p>
+<dt>多对一</dt><dd><p>一种 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 样式，将父映射器中的外键链接到相关表的主键。然后，每个父对象可以引用正好零个或一个相关对象。</p>
 <p>相关对象反过来将对任意数量的引用对象有一个显式或隐含的  <span class="xref std std-term">一对多</span>  关系。</p>
-<p>多对一架构示例（值得注意的是，它与：term:<a href="#id28"><span class="problematic" id="id29">`</span></a>一对多`架构相同）：</p>
+<p>多对一架构示例（值得注意的是，它与：term:<a href="#id12"><span class="problematic" id="id13">`</span></a>一对多`架构相同）：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">department</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
 <span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
@@ -730,7 +730,7 @@ ACID模型</p>
 双向关系</p>
 <blockquote>
 <div><blockquote>
-<div><p><span class="xref std std-term">relationship</span> ~sqlalchemy.orm.relationship`对象相互关联，以便它们在内存中协作响应对任一侧的更改。这两个关系通过使用  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> <a href="#id30"><span class="problematic" id="id31">`</span></a>backref``关键字，以便另一个 :func:<a href="#id32"><span class="problematic" id="id33">`</span></a>~sqlalchemy.orm.relationship`被自动创建。我们可以针对我们在：term:<a href="#id34"><span class="problematic" id="id35">`</span></a>一对多`中使用的示例说明如下：</p>
+<div><p><span class="xref std std-term">relationship</span> ~sqlalchemy.orm.relationship` 对象相互关联，以便它们在内存中协作响应对任一侧的更改。这两个关系通过使用  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ` backref``关键字，以便另一个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 被自动创建。我们可以针对我们在：term:<a href="#id14"><span class="problematic" id="id15">`</span></a>一对多`中使用的示例说明如下：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>class Department(Base):</dt><dd><p>__tablename__ = “department”
@@ -746,7 +746,7 @@ dep_id = Column(Integer, ForeignKey(“department.id”))</p>
 </dl>
 </div></blockquote>
 </div></blockquote>
-<p>可以将backref应用于任何关系，包括：term:<cite>one to many</cite>，  <span class="xref std std-term">many to one</span>  和  <span class="xref std std-term">many to many</span>  。</p>
+<p>可以将backref应用于任何关系，包括：term:<cite>one to many</cite>，  <span class="xref std std-term">many to one</span>  和  :term:` many to many`  。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-term">relationship</span></p>
@@ -756,7 +756,7 @@ dep_id = Column(Integer, ForeignKey(“department.id”))</p>
 </div>
 </div></blockquote>
 <dl>
-<dt>多对多</dt><dd><p>一种 :func:<a href="#id36"><span class="problematic" id="id37">`</span></a>sqlalchemy.orm.relationship`样式，其中通过在中间使用中间表将两个表链接在一起。使用此配置，左侧的任意数量的行可能与右侧的任意数量的行相关，反之亦然。</p>
+<dt>多对多</dt><dd><p>一种 <code class="xref py py-func docutils literal notranslate"><span class="pre">sqlalchemy.orm.relationship()</span></code> 样式，其中通过在中间使用中间表将两个表链接在一起。使用此配置，左侧的任意数量的行可能与右侧的任意数量的行相关，反之亦然。</p>
 <p>看一个将员工与项目相关联的模式：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">employee</span><span class="w"> </span><span class="p">(</span>
 <span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
@@ -776,7 +776,7 @@ dep_id = Column(Integer, ForeignKey(“department.id”))</p>
 <span class="p">)</span></pre></div>
 </div>
 <p>在上述中，“employee_project”表是多对多表，其自然形成由每个相关表的主键组成的复合主键。</p>
-<p>在SQLAlchemy中， :func:<a href="#id38"><span class="problematic" id="id39">`</span></a>sqlalchemy.orm.relationship`函数可以在大多数情况下以大多数透明的方式表示此样式的关系，其中多对多表使用普通的表元数据指定：</p>
+<p>在SQLAlchemy中， <code class="xref py py-func docutils literal notranslate"><span class="pre">sqlalchemy.orm.relationship()</span></code> 函数可以在大多数情况下以大多数透明的方式表示此样式的关系，其中多对多表使用普通的表元数据指定：</p>
 <blockquote>
 <div><dl>
 <dt>class Employee(Base):</dt><dd><p>__tablename__ = “employee”</p>
@@ -824,7 +824,7 @@ name = Column(String(30))</p>
 关系</p>
 <blockquote>
 <div><p>连接两个映射类之间的连接单元，对应于数据库中两个表之间的某种关系。</p>
-<p>使用SQLAlchemy函数  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  、  <span class="xref std std-term">many to one</span>  或  <span class="xref std std-term">many to many</span>  。 通过这种分类，关系构造处理根据当前的链接在数据库中当前链接的情况基于在内存中的对象协作响应对它们进行持久化。</p>
+<p>使用SQLAlchemy函数  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  、  :term:` many to one`  或  <span class="xref std std-term">many to many</span>  。 通过这种分类，关系构造处理根据当前的链接在数据库中当前链接的情况基于在内存中的对象协作响应对它们进行持久化。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">relationship_config_toplevel</span></p>
@@ -872,7 +872,7 @@ constrained</p>
 </div></blockquote>
 <p>candidate key</p>
 <blockquote>
-<div><p>:term:<a href="#id40"><span class="problematic" id="id41">`</span></a>关系代数`术语，指标识行的唯一标识键属性或属性集。 一行可能有多个候选键，
+<div><p><a class="reference internal" href="#term-11"><span class="xref std std-term">关系代数</span></a> 术语，指标识行的唯一标识键属性或属性集。 一行可能有多个候选键，
 每个键都适用于该行的主键。表的主键始终是一个候选键。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -970,7 +970,7 @@ unique key index</p>
 <p>deleted</p>
 <blockquote>
 <div><p>在 Session 中，一个对象可以具有的主要对象状态之一；一个已删除的对象是曾经是persistent并已在 flush 中向数据库发出 DELETE 语句以删除其行的对象。
-一旦会话的事务提交，对象就会移动到  <span class="xref std std-term">detached</span>  状态；或者如果会话的事务被回滚，则删除会被恢复，该对象将返回到  <span class="xref std std-term">persistent</span>  状态。</p>
+一旦会话的事务提交，对象就会移动到  <span class="xref std std-term">detached</span>  状态；或者如果会话的事务被回滚，则删除会被恢复，该对象将返回到  :term:` persistent`  状态。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="orm/session_state_management.html#session-object-states"><span class="std std-ref">对象状态简介</span></a></p>
@@ -1018,7 +1018,7 @@ unique key index</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:53
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

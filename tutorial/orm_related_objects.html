@@ -135,7 +135,7 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#tutorial-loading-relationships">加载关系</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id8">使用关系连接</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">使用关系连接</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#where">关系 WHERE 运算符</a></span></li>
 </ul>
 </li>
@@ -198,7 +198,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#tutorial-loading-relationships">加载关系</a><ul>
-<li><a class="reference internal" href="#id8">使用关系连接</a></li>
+<li><a class="reference internal" href="#id6">使用关系连接</a></li>
 <li><a class="reference internal" href="#where">关系 WHERE 运算符</a></li>
 </ul>
 </li>
@@ -224,8 +224,8 @@
         
 <section class="orm-header" id="orm">
 <span id="tutorial-orm-related-objects"></span><h1>使用 ORM 相关对象<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
-<p>在本节中，我们将介绍 ORM 的另一个重要概念，即 ORM 如何与引用其他对象的映射类交互。在本教程的   <a class="reference internal" href="metadata.html#tutorial-declaring-mapped-classes"><span class="std std-ref">声明映射类</span></a>  部分中，映射类的示例使用了一个叫做   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的构造。此构造定义了两个不同映射类之间或者从映射类到它本身的关联，后者被称为**自引用**关系。</p>
-<p>为了描述   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的基本思想，首先让我们简要回顾映射的形式，省略了   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  映射和其他指令：</p>
+<p>在本节中，我们将介绍 ORM 的另一个重要概念，即 ORM 如何与引用其他对象的映射类交互。在本教程的   <a class="reference internal" href="metadata.html#tutorial-declaring-mapped-classes"><span class="std std-ref">声明映射类</span></a>  部分中，映射类的示例使用了一个叫做   :func:` _orm.relationship`  的构造。此构造定义了两个不同映射类之间或者从映射类到它本身的关联，后者被称为**自引用**关系。</p>
+<p>为了描述   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的基本思想，首先让我们简要回顾映射的形式，省略了   :func:` _orm.mapped_column`  映射和其他指令：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
 
@@ -244,17 +244,17 @@
 
     <span class="n">user</span><span class="p">:</span> <span class="n">Mapped</span><span class="p">[</span><span class="s2">&quot;User&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;addresses&quot;</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
 </div>
-<p>以上， <code class="docutils literal notranslate"><span class="pre">User</span></code> 类现在有一个属性 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code>， <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类有一个属性 <code class="docutils literal notranslate"><span class="pre">Address.user</span></code>。   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造与   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  构造相结合指示类型行为，将用来检测与映射到 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象之间的表格关系。由于代表 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象具有引用 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 表的   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> ，因此   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  可以明确确定从 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类到 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类存在一个一对多关系，即 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 关系。 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 表中的一个特定行可由 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表中的多个行引用。</p>
-<p>所有一对多关系自然对应另一方向的**多对一**关系，在本例中是通过 <code class="docutils literal notranslate"><span class="pre">Address.user</span></code> 标识的一个关系。前面配置在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象上的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  参数，建立了互补对应的两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造，我们将在下一部分看到它的作用。</p>
+<p>以上， <code class="docutils literal notranslate"><span class="pre">User</span></code> 类现在有一个属性 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code>， <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类有一个属性 <code class="docutils literal notranslate"><span class="pre">Address.user</span></code>。   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造与   :class:` _orm.Mapped`  构造相结合指示类型行为，将用来检测与映射到 <code class="docutils literal notranslate"><span class="pre">User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象之间的表格关系。由于代表 ` <cite>address`</cite> 表的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象具有引用 ` <cite>user_account`</cite> 表的   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> ，因此   :func:` _orm.relationship`  可以明确确定从 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类到 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类存在一个一对多关系，即 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 关系。 <code class="docutils literal notranslate"><span class="pre">user_account</span></code> 表中的一个特定行可由 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表中的多个行引用。</p>
+<p>所有一对多关系自然对应另一方向的**多对一**关系，在本例中是通过 <code class="docutils literal notranslate"><span class="pre">Address.user</span></code> 标识的一个关系。前面配置在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象上的  :paramref:` _orm.relationship.back_populates`  参数，建立了互补对应的两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造，我们将在下一部分看到它的作用。</p>
 <section id="id1">
 <h2>保持和加载关系<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>我们可以开始说明   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对对象实例所做的操作。如果我们创建一个新的 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象，我们可以注意到当访问 <code class="docutils literal notranslate"><span class="pre">.addresses</span></code> 元素时，有一个 Python 列表：</p>
+<p>我们可以开始说明   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对对象实例所做的操作。如果我们创建一个新的 ` <cite>User`</cite> 对象，我们可以注意到当访问 <code class="docutils literal notranslate"><span class="pre">.addresses</span></code> 元素时，有一个 Python 列表：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;pkrabs&quot;</span><span class="p">,</span> <span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Pearl Krabs&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span><span class="o">.</span><span class="n">addresses</span>
 <span class="go">[]</span></pre></div>
 </div>
-<p>这个对象是一个特定于 SQLAlchemy 的 Python 版本的 <code class="docutils literal notranslate"><span class="pre">list</span></code>，具有跟踪和响应其更改的能力。即使我们从未将其分配给对象，当我们访问该属性时，该集合也会自动出现。这类似于   <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>  中所观察到的行为，其中指出我们不明确为其分配值的基于列的属性也将自动显示为 <code class="docutils literal notranslate"><span class="pre">None`</span></code>，而不是像 Python 的通常行为一样引发 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>。</p>
-<p>由于 <code class="docutils literal notranslate"><span class="pre">u1</span></code> 对象仍然处于  <span class="xref std std-term">瞬态</span> ，我们从 <code class="docutils literal notranslate"><span class="pre">u1.addresses</span></code> 得到的 <code class="docutils literal notranslate"><span class="pre">list</span></code> 尚未被改变（即添加或扩展），因此它尚未与对象关联，但是随着我们对其进行更改，它将成为 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象状态的一部分。</p>
+<p>这个对象是一个特定于 SQLAlchemy 的 Python 版本的 <code class="docutils literal notranslate"><span class="pre">list</span></code>，具有跟踪和响应其更改的能力。即使我们从未将其分配给对象，当我们访问该属性时，该集合也会自动出现。这类似于   <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>  中所观察到的行为，其中指出我们不明确为其分配值的基于列的属性也将自动显示为 ` <cite>None``</cite>，而不是像 Python 的通常行为一样引发 <code class="docutils literal notranslate"><span class="pre">AttributeError</span></code>。</p>
+<p>由于 <code class="docutils literal notranslate"><span class="pre">u1</span></code> 对象仍然处于  <span class="xref std std-term">瞬态</span> ，我们从 ` <cite>u1.addresses`</cite> 得到的 <code class="docutils literal notranslate"><span class="pre">list</span></code> 尚未被改变（即添加或扩展），因此它尚未与对象关联，但是随着我们对其进行更改，它将成为 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象状态的一部分。</p>
 <p>该集合特定于 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类，这是唯一可能存储在其中的 Python 对象类型。我们可以使用 <code class="docutils literal notranslate"><span class="pre">list.append()</span></code> 方法添加一个 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 对象：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;pearl.krabs@gmail.com&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span></pre></div>
@@ -267,7 +267,7 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span><span class="o">.</span><span class="n">user</span>
 <span class="go">User(id=None, name=&#39;pkrabs&#39;, fullname=&#39;Pearl Krabs&#39;)</span></pre></div>
 </div>
-<p>通过使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  参数配置这些关系，我们确保了彼此之间的同步，这将在下面几节中继续讨论。使用``back_populates``参数，两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  之间可以反向關聯。该参数命名了另一个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，该关系需要进行互补属性赋值 / 列清单变异。这同样适用于另一个方向，即如果我们创建另一个“Address”对象并将其分配给其“Address.user”属性，则该“Address”将成为该“User”对象上的“User.addresses“集合的一部分：</p>
+<p>通过使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  参数配置这些关系，我们确保了彼此之间的同步，这将在下面几节中继续讨论。使用` <cite>back_populates``参数，两个   :func:`_orm.relationship</cite>  之间可以反向關聯。该参数命名了另一个   :func:` _orm.relationship` ，该关系需要进行互补属性赋值 / 列清单变异。这同样适用于另一个方向，即如果我们创建另一个“Address”对象并将其分配给其“Address.user”属性，则该“Address”将成为该“User”对象上的“User.addresses“集合的一部分：</p>
 <p>  &gt;&gt;&gt; a2 = Address（email_address =“<a class="reference external" href="mailto:pearl&#37;&#52;&#48;aol&#46;com">pearl<span>&#64;</span>aol<span>&#46;</span>com</a>”，user = u1）
   &gt;&gt;&gt; u1.addresses
   [Address（id = None，email_address <a class="reference external" href="mailto:='pearl&#46;krabs&#37;&#52;&#48;gmail&#46;com">=’pearl<span>&#46;</span>krabs<span>&#64;</span>gmail<span>&#46;</span>com</a>’），Address（id = None，email_address <a class="reference external" href="mailto:='pearl&#37;&#52;&#48;aol&#46;com">=’pearl<span>&#64;</span>aol<span>&#46;</span>com</a>’）]</p>
@@ -276,8 +276,8 @@
   &gt;&gt;&gt; a2.user = u1</p>
 <section id="tutorial-orm-cascades">
 <span id="id2"></span><h3>将对象级联到会话<a class="headerlink" href="#tutorial-orm-cascades" title="Permalink to this heading">¶</a></h3>
-<p>我们现在有一个“User”和两个“Address”对象，它们在内存中以双向结构相关联，但正如之前在   <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>  中指出的那样，这些对象直到与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象关联之前都是处于  <span class="xref std std-term">transient</span>  状态的。</p>
-<p>我们使用仍在进行的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，并注意到当我们将  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>  方法应用到主要的“User”对象时，相关的“Address”对象也被添加到同一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中：</p>
+<p>我们现在有一个“User”和两个“Address”对象，它们在内存中以双向结构相关联，但正如之前在   <a class="reference internal" href="orm_data_manipulation.html#tutorial-inserting-orm"><span class="std std-ref">使用ORM Unit of Work模式插入行</span></a>  中指出的那样，这些对象直到与   :class:` _orm.Session`  对象关联之前都是处于  <span class="xref std std-term">transient</span>  状态的。</p>
+<p>我们使用仍在进行的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，并注意到当我们将  :meth:` _orm.Session.add`  方法应用到主要的“User”对象时，相关的“Address”对象也被添加到同一个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中：</p>
 <p>  &gt;&gt;&gt; session.add（u1）
   &gt;&gt;&gt; u1 in session
   True
@@ -285,14 +285,14 @@
   True
   &gt;&gt;&gt; a2 in session
   True</p>
-<p>以上行为，其中   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  收到了一个“User”对象，并跟随“User.addresses”关系以查找相关的“Address”对象，称为 <strong>save-update cascade</strong>，并在ORM参考文件的   <a class="reference internal" href="../orm/cascades.html#unitofwork-cascades"><span class="std std-ref">级联操作</span></a>  中详细讨论。</p>
-<p>这三个对象现在处于  <span class="xref std std-term">pending</span>  状态； 这意味着它们已经准备好成为 INSERT 操作的主题，但尚未进行； 这三个对象都没有分配主键，而且“a1”和“a2”对象还具有称为“user_id”的属性，该属性引用具有指向“user_account.id”列的   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>  的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ； 因为这些对象尚未与真正的数据库行相关联，因此这些列也是 <code class="docutils literal notranslate"><span class="pre">None</span></code> ：</p>
+<p>以上行为，其中   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  收到了一个“User”对象，并跟随“User.addresses”关系以查找相关的“Address”对象，称为 <strong>save-update cascade</strong>，并在ORM参考文件的   :ref:` unitofwork_cascades`  中详细讨论。</p>
+<p>这三个对象现在处于  <span class="xref std std-term">pending</span>  状态； 这意味着它们已经准备好成为 INSERT 操作的主题，但尚未进行； 这三个对象都没有分配主键，而且“a1”和“a2”对象还具有称为“user_id”的属性，该属性引用具有指向“user_account.id”列的   :class:` _schema.ForeignKeyConstraint`  的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ； 因为这些对象尚未与真正的数据库行相关联，因此这些列也是 ` <cite>None`</cite> ：</p>
 <p>    &gt;&gt;&gt; print（u1.id）
     None
     &gt;&gt;&gt; print（a1.user_id）
     None</p>
 <p>在这个阶段，我们可以看到单位操作过程提供的非常大的实用程序; 请回想一下，在   <a class="reference internal" href="data_insert.html#tutorial-core-insert-values-clause"><span class="std std-ref">INSERT 通常会自动生成“值”子句</span></a>  部分中插入“user_account”和“address”表中的行时，使用了一些复杂的语法，以便自动关联 “address.user_id” 列与 “user_account” 行的那些列。此外，需要在“address”行之前插入“user_account”行的 INSERT，因为“address”中的行**依赖于“user_account”中的父行**以获得其“user_id”列中的值。</p>
-<p>使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  时，所有这些繁琐的操作都会为我们处理，即使是最死心眼的 SQL 纯粹主义者也可以从 INSERT、UPDATE 和 DELETE 语句的自动化中受益。当我们  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  事务时，所有步骤都按正确的顺序调用，并且还将新生成的“user_account”行的主键适当地应用于“address.user_id”列：</p>
+<p>使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  时，所有这些繁琐的操作都会为我们处理，即使是最死心眼的 SQL 纯粹主义者也可以从 INSERT、UPDATE 和 DELETE 语句的自动化中受益。当我们  :meth:` _orm.Session.commit`  事务时，所有步骤都按正确的顺序调用，并且还将新生成的“user_account”行的主键适当地应用于“address.user_id”列：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span></pre></div>
 </div>
 <p>  &gt;&gt;&gt; session.commit（）
@@ -307,7 +307,7 @@
 </section>
 <section id="tutorial-loading-relationships">
 <span id="id3"></span><h2>加载关系<a class="headerlink" href="#tutorial-loading-relationships" title="Permalink to this heading">¶</a></h2>
-<p>在最后一步中，我们调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  方法，该方法向事务提交了 COMMIT，然后按  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.commit.expire_on_commit</span></code>  的要求使所有对象过期，以使它们为下一个事务刷新。</p>
+<p>在最后一步中，我们调用了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  方法，该方法向事务提交了 COMMIT，然后按  :paramref:` _orm.Session.commit.expire_on_commit`  的要求使所有对象过期，以使它们为下一个事务刷新。</p>
 <p>当我们下一次访问这些对象的属性时，我们将在其主要属性的 SELECT 中发现 SELECT，例如当我们查看“u1”对象的新生成主键时：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span></pre></div>
 </div>
@@ -318,24 +318,24 @@
   FROM user_account
   WHERE user_account.id = ？使用关系在查询语句中
 ——————————</p>
-<p>前面的章节介绍了当使用**映射类的实例**时，  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> <cite>u1`</cite>，<a href="#id4"><span class="problematic" id="id5">``</span></a>a1``和``a2``实例。在本节中，将介绍  :func:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.relationship`在**映射类的类级别行为**中的行为，其在多个方面上有助于自动化SQL查询的构建。</p>
-<section id="id8">
-<h3>使用关系连接<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
-<p>章节   <a class="reference internal" href="data_select.html#tutorial-select-join"><span class="std std-ref">显式FROM子句和JOIN</span></a>  和   <a class="reference internal" href="data_select.html#tutorial-select-join-onclause"><span class="std std-ref">设置ON子句</span></a>  和  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a>  方法来组合SQL JOIN子句的用法。为了描述如何在表之间建立连接，这些方法通过以下两种方式之一来推断ON子句：基于表元数据结构中存在的单个明确的 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>_schema.ForeignKeyConstraint`对象连接两个表，或者我们可以提供一个明确的SQL表达式构造，指示具有特定ON子句。</p>
-<p>使用ORM实体，一个额外机制可帮助我们设置JOIN的ON子句，即使用在用户映射中设置的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象，如在   <a class="reference internal" href="metadata.html#tutorial-declaring-mapped-classes"><span class="std std-ref">声明映射类</span></a>  对应的类绑定属性可以作为唯一的参数传递给  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  ，它用于同时指示连接的右边以及ON子句：</p>
+<p>前面的章节介绍了当使用**映射类的实例**时，  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ` u1``，<a href="#id4"><span class="problematic" id="id5">``</span></a>a1``和``a2``实例。在本节中，将介绍  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 在**映射类的类级别行为**中的行为，其在多个方面上有助于自动化SQL查询的构建。</p>
+<section id="id6">
+<h3>使用关系连接<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<p>章节   <a class="reference internal" href="data_select.html#tutorial-select-join"><span class="std std-ref">显式FROM子句和JOIN</span></a>  和   :ref:` tutorial_select_join_onclause`  和  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a>  方法来组合SQL JOIN子句的用法。为了描述如何在表之间建立连接，这些方法通过以下两种方式之一来推断ON子句：基于表元数据结构中存在的单个明确的 :class:` _schema.ForeignKeyConstraint`对象连接两个表，或者我们可以提供一个明确的SQL表达式构造，指示具有特定ON子句。</p>
+<p>使用ORM实体，一个额外机制可帮助我们设置JOIN的ON子句，即使用在用户映射中设置的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象，如在   :ref:` tutorial_declaring_mapped_classes`  对应的类绑定属性可以作为唯一的参数传递给  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  ，它用于同时指示连接的右边以及ON子句：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span>
 <span class="go">{printsql}SELECT address.email_address</span>
 <span class="go">FROM user_account JOIN address ON user_account.id = address.user_id</span></pre></div>
 </div>
-<p>如果我们不指定ON子句，   <a href="#id11"><span class="problematic" id="id12">:method:`_sql.Select.join`</span></a>  或   <a href="#id13"><span class="problematic" id="id14">:method:`_sql.Select.join_from`</span></a>  不会使用映射上的ORM   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 。这意味着，如果我们从``User`` <code class="docutils literal notranslate"><span class="pre">Address``进行连接而不使用ON子句，它之所以可以工作，是因为这两个映射的</span>&#160;&#160; <span class="pre">:class:`_schema.Table`</span>&#160; <span class="pre">对象之间的</span>&#160;&#160; <span class="pre">:class:`_schema.ForeignKeyConstraint`</span> <span class="pre">，而不是因为在</span> <span class="pre">``User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类上的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象。</p>
+<p>如果我们不指定ON子句，   <a href="#id7"><span class="problematic" id="id8">:method:`_sql.Select.join`</span></a>  或   :method:` _sql.Select.join_from`  不会使用映射上的ORM   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 。这意味着，如果我们从` <cite>User`</cite> <code class="docutils literal notranslate"><span class="pre">Address``进行连接而不使用ON子句，它之所以可以工作，是因为这两个映射的</span>&#160;&#160; <span class="pre">:class:`_schema.Table`</span>&#160; <span class="pre">对象之间的</span>&#160;&#160; <span class="pre">:class:`</span> <span class="pre">_schema.ForeignKeyConstraint`</span> <span class="pre">，而不是因为在</span> <span class="pre">``User</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 类上的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  对象。</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Address</span><span class="o">.</span><span class="n">email_address</span><span class="p">)</span><span class="o">.</span><span class="n">join_from</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">Address</span><span class="p">))</span>
 <span class="go">{printsql}SELECT address.email_address</span>
 <span class="go">FROM user_account JOIN address ON user_account.id = address.user_id</span></pre></div>
 </div>
-<p>在   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的   <a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-joins"><span class="std std-ref">连接</span></a>  部分，有许多如何使用  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  和  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join_from" title="sqlalchemy.sql.expression.Select.join_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join_from()</span></code></a>  与  :func:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.relationship`构造的示例。</p>
+<p>在   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的   :ref:` orm_queryguide_joins`  部分，有许多如何使用  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  和  :meth:` .Select.join_from`  与  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造的示例。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-joins"><span class="std std-ref">连接</span></a>  在    <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中</p>
+<p><a class="reference internal" href="../orm/queryguide/select.html#orm-queryguide-joins"><span class="std std-ref">连接</span></a>  在    :ref:` queryguide_toplevel`  中</p>
 </div>
 </section>
 <section id="where">
@@ -349,8 +349,8 @@
 <span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;pearl.krabs@gmail.com&#39;</span><span class="p">,)</span>
 </div><span class="go">[&lt;User(name=krusty, address=[Address(id=4, email_address=&#39;pearl.krabs@gmail.com&#39;)])&gt;]</span></pre></div>
 </div>
-<p>在本例中，User.addresses被  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a>  和  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a>  方法使用，用作限制结果集的WHERE条件。</p>
-<p>通过将  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a>  与   <code class="xref py py-class docutils literal notranslate"><span class="pre">_sqlalchemy.orm.contains_eager</span></code>  结合使用，进一步优化连接。这使得查询中早产生的JOIN操作（也称为’早加载’）得以保留，并允许ORM在这些连接之后立即从父对象中读取数据而不必再次发出查询语句。</p>
+<p>在本例中，User.addresses被  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a>  和  :meth:` .Query.filter`  方法使用，用作限制结果集的WHERE条件。</p>
+<p>通过将  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.join" title="sqlalchemy.orm.Query.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.join()</span></code></a>  与   :class:` _sqlalchemy.orm.contains_eager`  结合使用，进一步优化连接。这使得查询中早产生的JOIN操作（也称为’早加载’）得以保留，并允许ORM在这些连接之后立即从父对象中读取数据而不必再次发出查询语句。</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">)</span>\\
 <span class="gp">... </span>       <span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">contains_eager</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 <span class="go">{execsql}SELECT user_account.id AS user_account_id,</span>
@@ -365,15 +365,15 @@
 <span class="go">[&lt;User(name=krusty, addresses=[Address(id=4, email_address=&#39;pearl.krabs@gmail.com&#39;), Address(id=5, email_address=&#39;pearl@aol.com&#39;)])&gt;]WHERE子句</span></pre></div>
 </div>
 <hr class="docutils" />
-<p>参见   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的    <span class="xref std std-ref">orm_queryguide_relationship_operators</span>  章节。</p>
+<p>参见   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的    :ref:` orm_queryguide_relationship_operators`  章节。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的   <span class="xref std std-ref">orm_queryguide_relationship_operators</span>  章节。</p>
+<p><a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中的   :ref:` orm_queryguide_relationship_operators`  章节。</p>
 </div>
 </section>
 </section>
 <section id="tutorial-orm-loader-strategies">
-<span id="id17"></span><h2>加载策略<a class="headerlink" href="#tutorial-orm-loader-strategies" title="Permalink to this heading">¶</a></h2>
+<span id="id9"></span><h2>加载策略<a class="headerlink" href="#tutorial-orm-loader-strategies" title="Permalink to this heading">¶</a></h2>
 <p>在   <a class="reference internal" href="#tutorial-loading-relationships"><span class="std std-ref">加载关系</span></a>  章节中，我们引入了一个
 概念，即当我们使用映射对象的实例时，访问使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>
 映射的属性时，默认情况下，如果未填充集合，则会发出  <span class="xref std std-term">懒加载</span>  命令，
@@ -381,7 +381,7 @@
 <p>懒加载是最著名的ORM模式之一，也是最具争议的模式之一。当内存中有几十个ORM对象均引用一些未加载的属性时，
 对这些对象进行例行操作可能会产生许多额外的查询，并可能导致错误（也称为  <span class="xref std std-term">N+1</span>  问题）。更糟糕的是，
 它们会被隐式调用。这些隐式查询可能不会被注意到，在数据库事务不可用时试图进行操作时可能会导致错误，
-或者在使用替代并发模式（如   :ref:<a href="#id18"><span class="problematic" id="id19">`</span></a>asyncio &lt;asyncio_toplevel&gt; ` ）时，它们实际上无法工作。</p>
+或者在使用替代并发模式（如   :ref:<a href="#id10"><span class="problematic" id="id11">`</span></a>asyncio &lt;asyncio_toplevel&gt; ` ）时，它们实际上无法工作。</p>
 <p>同时，当懒加载与使用的并发方法相兼容且不会引起问题时，懒加载也是一个非常受欢迎并且有用的模式。出于这些原因，
 SQLAlchemy的ORM非常注重能够控制和优化加载行为。</p>
 <p>使用ORM懒加载最有效的方法是首先**测试应用程序，打开SQL跟踪功能，并查看所发出的SQL语句**。如果有大量的冗余SELECT语句，它们看起来非常像
@@ -393,7 +393,7 @@ SQLAlchemy的ORM非常注重能够控制和优化加载行为。</p>
 <span class="p">)</span><span class="o">.</span><span class="n">scalars</span><span class="p">():</span>
     <span class="n">user_obj</span><span class="o">.</span><span class="n">addresses</span>  <span class="c1"># access addresses collection already loaded</span></pre></div>
 </div>
-<p>它们也可以用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  选项作为   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的默认值进行配置，例如：</p>
+<p>它们也可以用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  选项作为   :func:` _orm.relationship`  的默认值进行配置，例如：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
 
@@ -410,7 +410,7 @@ SQLAlchemy的ORM非常注重能够控制和优化加载行为。</p>
 <p>参见：   <span class="xref std std-ref">loading_toplevel</span>  中的两个部分：</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><span class="xref std std-ref">relationship_lazy_option</span>  - 关于在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上配置策略的详细信息</p></li>
+<li><p><span class="xref std std-ref">relationship_lazy_option</span>  - 关于在   :func:` _orm.relationship`  上配置策略的详细信息</p></li>
 <li><p><span class="xref std std-ref">relationship_loader_options</span>  - 关于使用查询时加载程序策略的详细信息</p></li>
 </ul>
 </div></blockquote>
@@ -422,8 +422,8 @@ SQLAlchemy的ORM非常注重能够控制和优化加载行为。</p>
 <div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  将确保使用单个查询提前加载整个对象序列的特定集合。在大多数情况下，</p>
 </div></blockquote>
 <p>它使用一种 SELECT 表单，通常可以只针对相关表发出，而无需引入 JOIN 或子查询，仅查询
-尚未加载集合的那些父对象。下面我们使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  加载所有 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象及其所有相关的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 对象。
-虽然我们只调用了一次  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  给定了一个   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造，
+尚未加载集合的那些父对象。下面我们使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  加载所有 ` <cite>User`</cite> 对象及其所有相关的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 对象。
+虽然我们只调用了一次  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  给定了一个   :func:` _sql.select`  构造，
 但在访问数据库时实际上会发出两个 SELECT 语句，第二个是用于获取相关联的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 对象的：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">selectinload</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">addresses</span><span class="p">))</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
@@ -450,14 +450,14 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/queryguide/relationships.html#selectin-eager-loading"><span class="std std-ref">选择 IN 的加载</span></a>  - in   <span class="xref std std-ref">loading_toplevel</span></p>
+<p><a class="reference internal" href="../orm/queryguide/relationships.html#selectin-eager-loading"><span class="std std-ref">选择 IN 的加载</span></a>  - in   :ref:` loading_toplevel`</p>
 </div>
 </section>
 <section id="joined-load">
 <h3>Joined Load<a class="headerlink" href="#joined-load" title="Permalink to this heading">¶</a></h3>
 <blockquote>
 <div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  是SQLAlchemy中最古老的“急加载器”，它会增强要传递给数据库的SELECT语句，以JOIN的形式排序加载关联对象。</p>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  策略最适合于加载相关的多对一对象，因为这只需要将额外的列添加到主实体行中，而要获取所有这些列需要进行任何操作。为了更高效，它还接受一个  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">joinedload.innerjoin</span></code>  选项，这样就可以在以下情况下使用内部连接而不是外部连接：</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  策略最适合于加载相关的多对一对象，因为这只需要将额外的列添加到主实体行中，而要获取所有这些列需要进行任何操作。为了更高效，它还接受一个  :paramref:` _orm.joinedload.innerjoin`  选项，这样就可以在以下情况下使用内部连接而不是外部连接：</p>
 </div></blockquote>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go">  &gt;&gt;&gt; from sqlalchemy.orm import joinedload</span>
 <span class="go">  &gt;&gt;&gt; stmt = (</span>
@@ -479,22 +479,22 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 <span class="go">  pearl.krabs@gmail.com pkrabs</span>
 <span class="go">  pearl@aol.com pkrabs</span>
 
-<span class="go">:func:`_orm.joinedload`  也适用于集合，即一对多关系，但它会以指数方式递归地乘出每个相关项目的主行，从而增加了通过嵌套集合和/或 较大集合发送的结果集数据量。所以它的使用与其他选项（如   :func:`_orm.selectinload` ）应该在每种情况下进行评估。</span></pre></div>
+<span class="go">:func:`_orm.joinedload`  也适用于集合，即一对多关系，但它会以指数方式递归地乘出每个相关项目的主行，从而增加了通过嵌套集合和/或 较大集合发送的结果集数据量。所以它的使用与其他选项（如   :func:` _orm.selectinload` ）应该在每种情况下进行评估。</span></pre></div>
 </div>
 <p>重要提示：</p>
-<p><strong>WHERE**和**ORDER BY**限制含有   :func:`_orm.joinedload`  的查询语句 **不会针对 joinedload() 渲染的表</strong>。以上面的代码为例，可以看到在SQL中，一个**匿名别名**从应用到“user_account”表上，从而无法直接在查询中定位到它。这个概念在   <span class="xref std std-ref">zen_of_eager_loading</span>  章节中有更详细的讨论。</p>
+<p><strong>WHERE**和**ORDER BY**限制含有   :func:`_orm.joinedload`  的查询语句 **不会针对 joinedload() 渲染的表</strong>。以上面的代码为例，可以看到在SQL中，一个**匿名别名**从应用到“user_account”表上，从而无法直接在查询中定位到它。这个概念在   :ref:` zen_of_eager_loading`  章节中有更详细的讨论。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>重要提示：常常并不需要对多对一进行急加载，因为“N加一”问题在常见情况下更少见；当许多对象都引用相同的相关对象，例如每个都引用相同的“User”对象的许多“Address”对象时，常规惰性加载只会为该“User”对象发出一次SQL。当可能时，懒加载程序将在当前   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中通过主键查找相关对象而不发出任何SQL。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="../orm/queryguide/relationships.html#joined-eager-loading"><span class="std std-ref">连接的及早加载</span></a>  - in   <span class="xref std std-ref">loading_toplevel</span></p>
+<p><a class="reference internal" href="../orm/queryguide/relationships.html#joined-eager-loading"><span class="std std-ref">连接的及早加载</span></a>  - in   :ref:` loading_toplevel`</p>
 </div>
 </section>
 <section id="join">
 <span id="tutorial-orm-loader-strategies-contains-eager"></span><h3>显式Join + 急加载<a class="headerlink" href="#join" title="Permalink to this heading">¶</a></h3>
-<p>如果我们使用  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  这样的方法来渲染JOIN从而加载“Address”表的行时，我们也可以利用该JOIN以急加载返回的每个“Address”对象上的“Address.user”属性的内容。这实际上就是我们正在使用“joined eager loading”，但是我们自己渲染了JOIN。可以使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code>  选项来实现这个常见用例。此选项与   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  非常相似，但它假设我们已经自己设置了JOIN，因此它只表示应该将COLUMNS子句中的其他列加载到返回的每个对象的相关属性中。</p>
+<p>如果我们使用  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>  这样的方法来渲染JOIN从而加载“Address”表的行时，我们也可以利用该JOIN以急加载返回的每个“Address”对象上的“Address.user”属性的内容。这实际上就是我们正在使用“joined eager loading”，但是我们自己渲染了JOIN。可以使用   :func:` _orm.contains_eager`  选项来实现这个常见用例。此选项与   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code>  非常相似，但它假设我们已经自己设置了JOIN，因此它只表示应该将COLUMNS子句中的其他列加载到返回的每个对象的相关属性中。</p>
 <p>例如：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">contains_eager</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -531,11 +531,11 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <blockquote>
-<div><p>:ref:<a href="#id20"><span class="problematic" id="id21">`</span></a>loading_toplevel`中的两个部分：</p>
+<div><p><span class="xref std std-ref">loading_toplevel</span> 中的两个部分：</p>
 </div></blockquote>
 <ul class="simple">
 <li><p><span class="xref std std-ref">zen_of_eager_loading</span>  - 详细描述了上述问题</p></li>
-<li><p><span class="xref std std-ref">contains_eager</span>  - 使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">contains_eager()</span></code></p></li>
+<li><p><span class="xref std std-ref">contains_eager</span>  - 使用   :func:` .contains_eager`</p></li>
 </ul>
 </div>
 </section>
@@ -546,8 +546,8 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 它有两个变体，通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">raiseload.sql_only</span></code>  选项进行控制，
 阻止需要SQL的懒加载，还是所有包括那些只需要查询当前   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>
 的 “load” 操作。</p>
-<p>使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  的一种方法是在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上直接配置，
-通过将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  设置为值 <code class="docutils literal notranslate"><span class="pre">&quot;raise_on_sql&quot;</span></code>，
+<p>使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">raiseload()</span></code>  的一种方法是在   :func:` _orm.relationship`  上直接配置，
+通过将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.lazy</span></code>  设置为值 ` <cite>“raise_on_sql”`</cite>，
 以便对于特定映射，某个关系将永远不会尝试发出SQL：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Mapped</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">relationship</span>
@@ -595,7 +595,7 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 “raiseload” 策略将不会引发错误。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><span class="xref std std-ref">prevent_lazy_with_raiseload</span>  - in   <span class="xref std std-ref">loading_toplevel</span></p>
+<p><span class="xref std std-ref">prevent_lazy_with_raiseload</span>  - in   :ref:` loading_toplevel`</p>
 </div>
 </section>
 </section>
@@ -619,7 +619,7 @@ pkrabs(<a class="reference external" href="mailto:pearl&#46;krabs&#37;&#52;&#48;
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:03
+    Documentation last generated: 2023/8/18 18:59:04
 
     </div>
 </div>

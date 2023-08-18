@@ -129,7 +129,7 @@
 <li><span class="link-container"><a class="reference external" href="metadata.html">使用MetaData描述数据库</a></span></li>
 <li><span class="link-container"><a class="reference external" href="reflection.html">从数据库反射对象</a></span></li>
 <li class="selected"><span class="link-container"><strong>列INSERT/UPDATE默认值</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id5">标量默认值</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id1">标量默认值</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#python-executed-functions">Python-Executed Functions</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#context-default-functions">上下文敏感的默认函数</a></span></li>
 </ul>
@@ -138,9 +138,9 @@
 <li><span class="link-container"><a class="reference external" href="#defaults-sequences">定义序列</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#ddl">基于服务器调用DDL显式默认表达式</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#triggered-columns">标记隐式生成的值、时间戳和触发列</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id45">定义序列</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id53">基于服务器调用DDL显式默认表达式</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id59">标记隐式生成的值、时间戳和触发列</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id23">定义序列</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id29">基于服务器调用DDL显式默认表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id35">标记隐式生成的值、时间戳和触发列</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#generated-always-as">计算列 (GENERATED ALWAYS AS)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#generated-always-by-default-as-identity">标识列 (GENERATED {ALWAYS | BY DEFAULT} AS IDENTITY)</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#api">默认对象API</a></span><ul>
@@ -222,7 +222,7 @@
             <li><b>On this page:</b></li>
             <ul>
 <li><a class="reference internal" href="#insert-update">列INSERT/UPDATE默认值</a><ul>
-<li><a class="reference internal" href="#id5">标量默认值</a></li>
+<li><a class="reference internal" href="#id1">标量默认值</a></li>
 <li><a class="reference internal" href="#python-executed-functions">Python-Executed Functions</a><ul>
 <li><a class="reference internal" href="#context-default-functions">上下文敏感的默认函数</a></li>
 </ul>
@@ -231,9 +231,9 @@
 <li><a class="reference internal" href="#defaults-sequences">定义序列</a></li>
 <li><a class="reference internal" href="#ddl">基于服务器调用DDL显式默认表达式</a></li>
 <li><a class="reference internal" href="#triggered-columns">标记隐式生成的值、时间戳和触发列</a></li>
-<li><a class="reference internal" href="#id45">定义序列</a></li>
-<li><a class="reference internal" href="#id53">基于服务器调用DDL显式默认表达式</a></li>
-<li><a class="reference internal" href="#id59">标记隐式生成的值、时间戳和触发列</a></li>
+<li><a class="reference internal" href="#id23">定义序列</a></li>
+<li><a class="reference internal" href="#id29">基于服务器调用DDL显式默认表达式</a></li>
+<li><a class="reference internal" href="#id35">标记隐式生成的值、时间戳和触发列</a></li>
 <li><a class="reference internal" href="#generated-always-as">计算列 (GENERATED ALWAYS AS)</a></li>
 <li><a class="reference internal" href="#generated-always-by-default-as-identity">标识列 (GENERATED {ALWAYS | BY DEFAULT} AS IDENTITY)</a></li>
 <li><a class="reference internal" href="#api">默认对象API</a><ul>
@@ -288,9 +288,9 @@
 它修改某个列的值，从而在发送到数据库之前通过应用程序以某种方式进行修改。
 SQLAlchemy提供了一些实现此目的的方法，包括使用:ref：自定义数据类型&lt;types_typedecorator&gt;，</p>
 <blockquote>
-<div><p>:ref:<a href="#id1"><span class="problematic" id="id2">`</span></a>SQL执行事件&lt;core_sql_events&gt;`及在ORM中使用的:</p>
+<div><p><a class="reference internal" href="events.html#core-sql-events"><span class="std std-ref">SQL执行事件</span></a> 及在ORM中使用的:</p>
 </div></blockquote>
-<p>ref：定制验证器&lt;simple_validators&gt;以及 :ref:<a href="#id3"><span class="problematic" id="id4">`</span></a>orm_attribute_events &lt;orm_attribute_events&gt;`中的属性事件。
+<p>ref：定制验证器&lt;simple_validators&gt;以及 <a class="reference internal" href="../orm/events.html#orm-attribute-events"><span class="std std-ref">orm_attribute_events</span></a> 中的属性事件。
 仅当在SQL :term: DML语句中不存在**值**时，列默认值才会被调用。</p>
 </div>
 <p>SQLAlchemy提供了一系列有关在INSERT和UPDATE语句中生成缺失值的默认生成功能。
@@ -305,8 +305,8 @@ SQLAlchemy提供了一些实现此目的的方法，包括使用:ref：自定义
 </ul>
 <p>对于所有插入/更新默认值的通用规则是，仅在没有传递特定列的值作为“execute()”参数时才会生效
 否则使用给定的值。</p>
-<section id="id5">
-<h2>标量默认值<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h2>标量默认值<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <p>最简单的默认值是用作列默认值的标量值:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Table</span><span class="p">(</span><span class="s2">&quot;mytable&quot;</span><span class="p">,</span> <span class="n">metadata_obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;somecolumn&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">12</span><span class="p">))</span></pre></div>
 </div>
@@ -319,7 +319,7 @@ SQLAlchemy提供了一些实现此目的的方法，包括使用:ref：自定义
 <section id="python-executed-functions">
 <h2>Python-Executed Functions<a class="headerlink" href="#python-executed-functions" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  和  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  关键字参数也接受Python</p>
+<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  和  :paramref:` _schema.Column.onupdate`  关键字参数也接受Python</p>
 </div></blockquote>
 <p>函数。如果没有为该列提供其他值，则在插入或更新时调用这些函数，然后返回的值用于列的值。下面说明了简单的“序列”
 将递增计数器分配给主键列的方法:</p>
@@ -342,7 +342,7 @@ SQLAlchemy提供了一些实现此目的的方法，包括使用:ref：自定义
 <p>应该注意，对于真正的“递增序列”行为，应正常使用数据库的内置功能
 此包括序列对象或其他自动递增功能。对于主键列，SQLAlchemy在大多数情况下将自动使用这些功能
 参见  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  标志，
-以及本章后面有关 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>~sqlalchemy.schema.Sequence`的部分，用于了解标准主键生成技术的背景信息。</p>
+以及本章后面有关 <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 的部分，用于了解标准主键生成技术的背景信息。</p>
 <p>为说明onupdate，我们将Python的datetime函数“now”分配给  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  属性：：</p>
 <blockquote>
 <div><p>import datetime</p>
@@ -359,7 +359,7 @@ Column(“last_updated”, DateTime, onupdate=datetime.datetime.now),</p>
 <p>更新语句执行并且没有为“last_updated”传递值时，将执行“datetime.datetime.now（）”Python函数，并且其返回值用作“last_updated”的值。
 请注意，我们将“now”作为函数本身提供，而无需调用它（即，没有括号以下）-SQLAlchemy将在语句执行时执行函数。</p>
 <section id="context-default-functions">
-<span id="id8"></span><h3>上下文敏感的默认函数<a class="headerlink" href="#context-default-functions" title="Permalink to this heading">¶</a></h3>
+<span id="id2"></span><h3>上下文敏感的默认函数<a class="headerlink" href="#context-default-functions" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>由于某个语句的上下文会包含所有关于正在执行的语句的信息，因此  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  和</dt><dd><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  中使用的Python函数可以使用当前语句的上下文来确定值。典型的用例与</p>
 </dd>
@@ -379,9 +379,10 @@ Column(“last_updated”, DateTime, onupdate=datetime.datetime.now),</p>
 <p>上面的默认生成功能将应用于所有INSERT和UPDATE语句，其中并没有提供“counter_plus_twelve”的值，
 该值将是执行插入或更新时存在于“counter”列的任何值加上数字12的值。</p>
 <p>对于使用“executemany”样式执行的单个语句（即使用传递给  <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  的多个参数集的语句），
-会为每组参数调用用户定义的函数。对于多值 <code class="xref py py-class docutils literal notranslate"><span class="pre">values</span></code>  方法设置的子句），也会为每个参数集调用用户定义的函数。</p>
+会为每组参数调用用户定义的函数。对于多值 <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造（例如使用多个VALUES
+由  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法设置的子句），也会为每个参数集调用用户定义的函数。</p>
 <p>调用函数时，从上下文对象中可用  <a class="reference internal" href="internals.html#sqlalchemy.engine.default.DefaultExecutionContext.get_current_parameters" title="sqlalchemy.engine.default.DefaultExecutionContext.get_current_parameters"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DefaultExecutionContext.get_current_parameters()</span></code></a>  特殊方法
-(一个 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>.DefaultExecutionContext`子类)。
+(一个 <a class="reference internal" href="internals.html#sqlalchemy.engine.default.DefaultExecutionContext" title="sqlalchemy.engine.default.DefaultExecutionContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">DefaultExecutionContext</span></code></a> 子类)。
 此方法返回一个字典，其中列键对应于值，表示INSERT或UPDATE语句的完整值集。针对
 多值INSERT构造，将仅从完整参数字典中分离与单个VALUES子句对应的子集参数，并将其单独返回。</p>
 <div class="versionadded">
@@ -394,7 +395,7 @@ Column(“last_updated”, DateTime, onupdate=datetime.datetime.now),</p>
 <section id="sql">
 <span id="defaults-client-invoked-sql"></span><h2>由客户端调用的SQL表达式<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  和  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  关键字也可以传递SQL表达式，</p>
+<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  和  :paramref:` _schema.Column.onupdate`  关键字也可以传递SQL表达式，</p>
 </div></blockquote>
 <p>在大多数情况下，这些表达式直接在
 INSERT或UPDATE语句内联呈现：</p>
@@ -430,7 +431,7 @@ Column(“last_modified”, DateTime, onupdate=func.utc_timestamp()),</p>
 手动调用。在使用SQL函数时，调用``func.now（）``会返回这种
 执行“NOW”函数的SQL表达式对象正在发出的SQL。</p>
 </div>
-<p>由  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  引用的默认值和  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  是在INSERT或UPDATE语句发生时显式调用的
+<p>由  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  引用的默认值和  :paramref:` _schema.Column.onupdate`  是在INSERT或UPDATE语句发生时显式调用的
 大多数情况下内联呈现在DML语句中，除非在下面列出的某些情况下。这与无法更改的“服务器端”默认值不同，
 该值作为表的DDL定义的一部分存在，例如作为“CREATE TABLE”语句的一部分，这些DDL定义可能更常见。要
 有关服务器端默认值，请参见下一节：ref：<cite>server_defaults</cite>。</p>
@@ -449,22 +450,22 @@ Column(“def”, String(20), server_onupdate=FetchedValue()),</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>:class:<a href="#id11"><span class="problematic" id="id12">`</span></a>.FetchedValue`指示符不会影响CREATE TABLE的渲染DDL。它标记列，用作将在执行INSERT或UPDATE语句期间为该列填充一个新值的列。</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a> 指示符不会影响CREATE TABLE的渲染DDL。它标记列，用作将在执行INSERT或UPDATE语句期间为该列填充一个新值的列。</p>
 </div></blockquote>
 <p>该值用于支持数据库可能用于此列的RETURNING或输出子句。工具，例如
 ORM然后将使用此标记，以便知道如何访问操作后的列的值。特别是，的</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a></p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  :class:` _expression.Insert`</p>
 </div></blockquote>
-<p>或 :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>_expression.Update`构造指定要返回这些值。</p>
-<p>有关在ORM中使用 <code class="xref py py-class docutils literal notranslate"> <span class="pre">FetchedValue`的详细信息，请参见</span>
-<span class="pre">：ref：`orm_server_defaults</span></code>。</p>
+<p>或 <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 构造指定要返回这些值。</p>
+<p>有关在ORM中使用 <code class="xref py py-class docutils literal notranslate"> <span class="pre">FetchedValue</span></code> 的详细信息，请参见
+：ref：<cite>orm_server_defaults</cite>。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>:paramref:<a href="#id15"><span class="problematic" id="id16">`</span></a>_schema.Column.server_onupdate`指令
-<a href="#id17"><span class="problematic" id="id18">**</span></a>并不**目前会生成MySQL的
+<p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_onupdate</span></code></a> 指令
+<a href="#id3"><span class="problematic" id="id4">**</span></a>并不**目前会生成MySQL的
 “ON UPDATE CURRENT_TIMESTAMP（）”子句。看
-:ref：<a href="#id19"><span class="problematic" id="id20">`</span></a>mysql_timestamp_onupdate`了解如何生成
+:ref：<a href="#id5"><span class="problematic" id="id6">`</span></a>mysql_timestamp_onupdate`了解如何生成
 此子句的背景。</p>
 </div>
 <div class="admonition seealso">
@@ -473,16 +474,18 @@ ORM然后将使用此标记，以便知道如何访问操作后的列的值。�
 </div>
 </section>
 <section id="defaults-sequences">
-<span id="id21"></span><h2>定义序列<a class="headerlink" href="#defaults-sequences" title="Permalink to this heading">¶</a></h2>
-<p>SQLAlchemy使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>
+<span id="id7"></span><h2>定义序列<a class="headerlink" href="#defaults-sequences" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy使用 <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 对象表示数据库序列，它被认为是一种
+特殊情况的“列默认值”。它仅对具有明确支持序列的数据库有效，
+在SQLAlchemy包括的方言之间，包括PostgreSQL、Oracle、MS SQL Server和MariaDB。  <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>
 对象将被忽略。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <blockquote>
 <div><p>在较新的数据库引擎中，  <a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a> .Sequence`
-用于生成整数主键值。请参见该部分：ref:<a href="#id22"><span class="problematic" id="id23">`</span></a>identity_ddl`以获取有关此构造的背景信息。</p>
+用于生成整数主键值。请参见该部分：ref:<a href="#id8"><span class="problematic" id="id9">`</span></a>identity_ddl`以获取有关此构造的背景信息。</p>
 </div></blockquote>
-<p>:class:<a href="#id24"><span class="problematic" id="id25">`</span></a>~sqlalchemy.schema.Sequence`可以作为“默认”生成器放置在任何列上，</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 可以作为“默认”生成器放置在任何列上，</p>
 </div>
 <p>在INSERT操作期间使用，也可以在需要时配置在UPDATE操作期间触发的操作。
 它通常与单个整数主键列结合使用：</p>
@@ -517,26 +520,26 @@ Column(“createdate”, DateTime()),</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>在使用具有显式模式名称的表时（在详细了解中）中，  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .Sequence`分享
+<p>在使用具有显式模式名称的表时（在详细了解中）中，  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .Sequence` 分享
 相反，指定  <a class="reference internal" href="#sqlalchemy.schema.Sequence.params.schema" title="sqlalchemy.schema.Sequence"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Sequence.schema</span></code></a>  ：</p>
 <blockquote>
 <div><p>Sequence(“cart_id_seq”, start=1, schema=”some_schema”)</p>
-<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> <a href="#id26"><span class="problematic" id="id27">``</span></a>.MetaData.schema``设置在使用中的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> ;</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> ` <cite>.MetaData.schema``设置在使用中的   :class:</cite>.MetaData` ;</p>
 </div></blockquote>
 <p>有关背景信息，请参见：ref：<cite>sequence_metadata</cite>。</p>
 </div>
-<p>当使用  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>   DML构造执行针对``cartitems``表时，如果没有为``cart_id``列传递显式值，则将使用``cart_id_seq``序列生成值。
+<p>当使用  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>   DML构造执行针对` <a href="#id10"><span class="problematic" id="id11">`</span></a>cartitems``表时，如果没有为``cart_id``列传递显式值，则将使用``cart_id_seq``序列生成值。
 通常，序列函数将嵌入INSERT语句中，该语句与返回新生成的值的PYTHON过程或函数组合：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">cartitems</span><span class="w"> </span><span class="p">(</span><span class="n">cart_id</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">createdate</span><span class="p">)</span>
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">next_val</span><span class="p">(</span><span class="n">cart_id_seq</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;some description&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2015-10-15 12:00:15&#39;</span><span class="p">)</span>
 <span class="k">RETURNING</span><span class="w"> </span><span class="n">cart_id</span></pre></div>
 </div>
-<p>通过使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Insert`构造传递给执行来调用：</span>
-<span class="pre">在此类操作中生成的新的主键标识符，包括但不限于</span>
-<span class="pre">使用</span>&#160; <span class="pre">:class:</span></code>.Sequence` .CursorResult`构造使用
+<p>通过使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  将 :class:` _dml.Insert`构造传递给执行来调用：
+在此类操作中生成的新的主键标识符，包括但不限于
+使用  <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> .CursorResult` 构造使用
 使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  属性。</p>
-<p>当为  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>  构造调用RETURNING时，这些新生成的主键标识符通常也可用于  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>
-使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_inserted_params" title="sqlalchemy.engine.CursorResult.last_inserted_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_inserted_params()</span></code></a>  或  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_updated_params" title="sqlalchemy.engine.CursorResult.last_updated_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_updated_params()</span></code></a>  中的集合。</p>
+<p>当为  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>  构造调用RETURNING时，这些新生成的主键标识符通常也可用于  :class:` .CursorResult`
+使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_inserted_params" title="sqlalchemy.engine.CursorResult.last_inserted_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_inserted_params()</span></code></a>  或  :meth:` .CursorResult.last_updated_params`  中的集合。</p>
 <blockquote>
 <div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  集合包含插入的行的主键</p>
 </div></blockquote>
@@ -545,7 +548,7 @@ Column(“createdate”, DateTime()),</p>
 <section id="ddl">
 <span id="server-defaults"></span><h2>基于服务器调用DDL显式默认表达式<a class="headerlink" href="#ddl" title="Permalink to this heading">¶</a></h2>
 <p>SQL表达式默认值的变体是  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  ，在CREATE TABLE操作期间将其放置在
-使用 : meth：<a href="#id28"><span class="problematic" id="id29">`</span></a>_schema.Table.create`操作：</p>
+使用 : meth：<a href="#id12"><span class="problematic" id="id13">`</span></a>_schema.Table.create`操作：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;test&quot;</span><span class="p">,</span>
     <span class="n">metadata_obj</span><span class="p">,</span>
@@ -555,19 +558,19 @@ Column(“createdate”, DateTime()),</p>
 <span class="p">)</span></pre></div>
 </div>
 <p>上述示例说明了用于SQL函数（在上述示例中为SYSDATE）以及服务器端常量值（上述示例中的整数“0”）的两种典型用例
-。建议对任何文本SQL值使用:func：<a href="#id30"><span class="problematic" id="id31">`</span></a>_expression.text`构造而不是传递原始值，
+。建议对任何文本SQL值使用:func：<a href="#id14"><span class="problematic" id="id15">`</span></a>_expression.text`构造而不是传递原始值，
 因为SQLAlchemy通常不对这些值执行任何引用或转义。</p>
 <dl class="simple">
-<dt>与使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  或  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  的用户定义Python函数一样，</dt><dd><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  可以容纳SQL表达式，但通常情况下这些将是简单的表达式</p>
+<dt>与使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  或  :paramref:` _schema.Column.onupdate`  的用户定义Python函数一样，</dt><dd><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  可以容纳SQL表达式，但通常情况下这些将是简单的表达式</p>
 </dd>
 </dl>
 <p>函数和表达式，而不是更复杂的情况，如嵌入SELECT。</p>
 </section>
 <section id="triggered-columns">
-<span id="id32"></span><h2>标记隐式生成的值、时间戳和触发列<a class="headerlink" href="#triggered-columns" title="Permalink to this heading">¶</a></h2>
+<span id="id16"></span><h2>标记隐式生成的值、时间戳和触发列<a class="headerlink" href="#triggered-columns" title="Permalink to this heading">¶</a></h2>
 <p>对于在INSERT或UPDATE上生成新值的列，这些值基于其他服务器端数据库机制，
 例如某些平台上的特定于数据库的自动生成行为，例如在某些平台上的TIMESTAMP列，以及
-在INSERT或UPDATE触发器上调用自定义触发器，可以使用:class：<a href="#id33"><span class="problematic" id="id34">`</span></a>.FetchedValue`作为标记：：</p>
+在INSERT或UPDATE触发器上调用自定义触发器，可以使用:class：<a href="#id17"><span class="problematic" id="id18">`</span></a>.FetchedValue`作为标记：：</p>
 <blockquote>
 <div><blockquote>
 <div><p>from sqlalchemy.schema import FetchedValue</p>
@@ -581,21 +584,21 @@ Column(“def”, String(20), server_onupdate=FetchedValue()),</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>:class:<a href="#id35"><span class="problematic" id="id36">`</span></a>.FetchedValue`指示符不会影响 CREATE TABLE 的呈现 DDL。它标记</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a> 指示符不会影响 CREATE TABLE 的呈现 DDL。它标记</p>
 </div></blockquote>
 <p>该列将在进行INSERT或UPDATE语句处理期间填充一个新值，并且对于支持的数据库可能用于返回子句的该列应该包括在其中。
 ORM之类的工具然后使用此标记，以便知道如何访问操作后的列的值。特别是</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a></p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  :class:` _expression.Insert`</p>
 </div></blockquote>
-<p>或 :class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_expression.Update`构造指定要返回这些值。</p>
+<p>或 <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 构造指定要返回这些值。</p>
 <p>有关使用ORM中的  <a class="reference internal" href="#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>:paramref:<a href="#id39"><span class="problematic" id="id40">`</span></a>_schema.Column.server_onupdate`指令
-<a href="#id41"><span class="problematic" id="id42">**</span></a>不会**目前生成MySQL的
+<p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_onupdate</span></code></a> 指令
+<a href="#id19"><span class="problematic" id="id20">**</span></a>不会**目前生成MySQL的
 “ON UPDATE CURRENT_TIMESTAMP（）”子句。看
-:ref：<a href="#id43"><span class="problematic" id="id44">`</span></a>mysql_timestamp_onupdate`了解如何生成
+:ref：<a href="#id21"><span class="problematic" id="id22">`</span></a>mysql_timestamp_onupdate`了解如何生成
 此子句的背景。</p>
 </div>
 <div class="admonition seealso">
@@ -603,17 +606,19 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
 <p><a class="reference internal" href="../orm/persistence_techniques.html#orm-server-defaults"><span class="std std-ref">提取服务器生成的默认值</span></a></p>
 </div>
 </section>
-<section id="id45">
-<span id="id46"></span><h2>定义序列<a class="headerlink" href="#id45" title="Permalink to this heading">¶</a></h2>
-<p>SQLAlchemy使用 <code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code>
+<section id="id23">
+<span id="id24"></span><h2>定义序列<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy使用 <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 对象表示数据库序列，它被认为是一种
+特殊情况的“列默认值”。它仅对具有明确支持序列的数据库有效，
+在SQLAlchemy包括的方言之间，包括PostgreSQL、Oracle、MS SQL Server和MariaDB。  <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>
 对象将被忽略。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <blockquote>
 <div><p>在较新的数据库引擎中，  <a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a> .Sequence`
-用于生成整数主键值。请参见该部分：ref:<a href="#id47"><span class="problematic" id="id48">`</span></a>identity_ddl`以获取有关此构造的背景信息。</p>
+用于生成整数主键值。请参见该部分：ref:<a href="#id25"><span class="problematic" id="id26">`</span></a>identity_ddl`以获取有关此构造的背景信息。</p>
 </div></blockquote>
-<p>:class:<a href="#id49"><span class="problematic" id="id50">`</span></a>~sqlalchemy.schema.Sequence`可以作为“默认”生成器放置在任何列上，</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 可以作为“默认”生成器放置在任何列上，</p>
 </div>
 <p>在INSERT操作期间使用，也可以在需要时配置在UPDATE操作期间触发的操作。
 它通常与单个整数主键列结合使用：</p>
@@ -648,35 +653,35 @@ Column(“createdate”, DateTime()),</p>
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>在使用具有显式模式名称的表时（在详细了解中）中，  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .Sequence`分享
+<p>在使用具有显式模式名称的表时（在详细了解中）中，  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .Sequence` 分享
 相反，指定  <a class="reference internal" href="#sqlalchemy.schema.Sequence.params.schema" title="sqlalchemy.schema.Sequence"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Sequence.schema</span></code></a>  ：</p>
 <blockquote>
 <div><p>Sequence(“cart_id_seq”, start=1, schema=”some_schema”)</p>
-<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> <a href="#id51"><span class="problematic" id="id52">``</span></a>.MetaData.schema``设置在使用中的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> ;</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> ` <cite>.MetaData.schema``设置在使用中的   :class:</cite>.MetaData` ;</p>
 </div></blockquote>
 <p>有关背景信息，请参见：ref：<cite>sequence_metadata</cite>。</p>
 </div>
-<p>当使用  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>   DML构造执行针对``cartitems``表时，如果没有为``cart_id``列传递显式值，则将使用``cart_id_seq``序列生成值。
+<p>当使用  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>   DML构造执行针对` <a href="#id27"><span class="problematic" id="id28">`</span></a>cartitems``表时，如果没有为``cart_id``列传递显式值，则将使用``cart_id_seq``序列生成值。
 通常，序列函数将嵌入INSERT语句中，该语句与返回新生成的值的PYTHON过程或函数组合：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">cartitems</span><span class="w"> </span><span class="p">(</span><span class="n">cart_id</span><span class="p">,</span><span class="w"> </span><span class="n">description</span><span class="p">,</span><span class="w"> </span><span class="n">createdate</span><span class="p">)</span>
 <span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">next_val</span><span class="p">(</span><span class="n">cart_id_seq</span><span class="p">),</span><span class="w"> </span><span class="s1">&#39;some description&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2015-10-15 12:00:15&#39;</span><span class="p">)</span>
 <span class="k">RETURNING</span><span class="w"> </span><span class="n">cart_id</span></pre></div>
 </div>
-<p>通过使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  将 <code class="xref py py-class docutils literal notranslate"><span class="pre">Insert`构造传递给执行来调用：</span>
-<span class="pre">在此类操作中生成的新的主键标识符，包括但不限于</span>
-<span class="pre">使用</span>&#160; <span class="pre">:class:</span></code>.Sequence` .CursorResult`构造使用
+<p>通过使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  将 :class:` _dml.Insert`构造传递给执行来调用：
+在此类操作中生成的新的主键标识符，包括但不限于
+使用  <a class="reference internal" href="#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> .CursorResult` 构造使用
 使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  属性。</p>
-<p>当为  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>  构造调用RETURNING时，这些新生成的主键标识符通常也可用于  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>
-使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_inserted_params" title="sqlalchemy.engine.CursorResult.last_inserted_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_inserted_params()</span></code></a>  或  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_updated_params" title="sqlalchemy.engine.CursorResult.last_updated_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_updated_params()</span></code></a>  中的集合。</p>
+<p>当为  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.Insert()</span></code></a>  构造调用RETURNING时，这些新生成的主键标识符通常也可用于  :class:` .CursorResult`
+使用  <a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.last_inserted_params" title="sqlalchemy.engine.CursorResult.last_inserted_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CursorResult.last_inserted_params()</span></code></a>  或  :meth:` .CursorResult.last_updated_params`  中的集合。</p>
 <blockquote>
 <div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.CursorResult.inserted_primary_key" title="sqlalchemy.engine.CursorResult.inserted_primary_key"><code class="xref py py-attr docutils literal notranslate"><span class="pre">CursorResult.inserted_primary_key</span></code></a>  集合包含插入的行的主键</p>
 </div></blockquote>
 <p>（使用列表，以便单列和复合列主键以相同的格式表示）。</p>
 </section>
-<section id="id53">
-<span id="id54"></span><h2>基于服务器调用DDL显式默认表达式<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h2>
+<section id="id29">
+<span id="id30"></span><h2>基于服务器调用DDL显式默认表达式<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h2>
 <p>SQL表达式默认值的变体是  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  ，在CREATE TABLE操作期间将其放置在
-使用: meth:<a href="#id55"><span class="problematic" id="id56">`</span></a>_schema.Table.create`操作：</p>
+使用: meth:<a href="#id31"><span class="problematic" id="id32">`</span></a>_schema.Table.create`操作：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;test&quot;</span><span class="p">,</span>
     <span class="n">metadata_obj</span><span class="p">,</span>
@@ -686,19 +691,19 @@ Column(“createdate”, DateTime()),</p>
 <span class="p">)</span></pre></div>
 </div>
 <p>上述示例说明了用于SQL函数（在上述示例中为SYSDATE）以及服务器端常量值（上述示例中的整数“0”）的两种典型用例
-。建议对任何文本SQL值使用:func：<a href="#id57"><span class="problematic" id="id58">`</span></a>_expression.text`构造而不是传递原始值，
+。建议对任何文本SQL值使用:func：<a href="#id33"><span class="problematic" id="id34">`</span></a>_expression.text`构造而不是传递原始值，
 因为SQLAlchemy通常不对这些值执行任何引用或转义。</p>
 <dl class="simple">
-<dt>与使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  或  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.onupdate</span></code></a>  的用户定义Python函数一样，</dt><dd><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  可以容纳SQL表达式，但通常情况下这些将是简单的表达式</p>
+<dt>与使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.default</span></code></a>  或  :paramref:` _schema.Column.onupdate`  的用户定义Python函数一样，</dt><dd><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_default" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_default</span></code></a>  可以容纳SQL表达式，但通常情况下这些将是简单的表达式</p>
 </dd>
 </dl>
 <p>函数和表达式，而不是更复杂的情况，如嵌入SELECT。</p>
 </section>
-<section id="id59">
-<span id="id60"></span><h2>标记隐式生成的值、时间戳和触发列<a class="headerlink" href="#id59" title="Permalink to this heading">¶</a></h2>
+<section id="id35">
+<span id="id36"></span><h2>标记隐式生成的值、时间戳和触发列<a class="headerlink" href="#id35" title="Permalink to this heading">¶</a></h2>
 <p>对于在INSERT或UPDATE上生成新值的列，这些值基于其他服务器端数据库机制，
 例如某些平台上的特定于数据库的自动生成行为，例如在某些平台上的TIMESTAMP列，以及
-在INSERT或UPDATE触发器上调用自定义触发器，可以使用:class：<a href="#id61"><span class="problematic" id="id62">`</span></a>.FetchedValue`作为标记：：</p>
+在INSERT或UPDATE触发器上调用自定义触发器，可以使用:class：<a href="#id37"><span class="problematic" id="id38">`</span></a>.FetchedValue`作为标记：：</p>
 <blockquote>
 <div><blockquote>
 <div><p>from sqlalchemy.schema import FetchedValue</p>
@@ -712,26 +717,26 @@ Column(“def”, String(20), server_onupdate=FetchedValue()),</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>:class:<a href="#id63"><span class="problematic" id="id64">`</span></a>.FetchedValue`指示符不会影响 CREATE TABLE 的呈现 DDL。它标记</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a> 指示符不会影响 CREATE TABLE 的呈现 DDL。它标记</p>
 </div></blockquote>
 <p>该列将在进行INSERT或UPDATE语句处理期间填充一个新值，并且对于支持的数据库可能用于返回子句的该列应该包括在其中。
 ORM之类的工具然后使用此标记，以便知道如何访问操作后的列的值。特别是</p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a></p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">ValuesBase.return_defaults()</span></code>  方法可用于  :class:` _expression.Insert`</p>
 </div></blockquote>
-<p>或 :class:<a href="#id65"><span class="problematic" id="id66">`</span></a>_expression.Update`构造指定要返回这些值。</p>
+<p>或 <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> 构造指定要返回这些值。</p>
 <p>有关使用ORM中的  <a class="reference internal" href="#sqlalchemy.schema.FetchedValue" title="sqlalchemy.schema.FetchedValue"><code class="xref py py-class docutils literal notranslate"><span class="pre">FetchedValue</span></code></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>:paramref:<a href="#id67"><span class="problematic" id="id68">`</span></a>_schema.Column.server_onupdate`指令
-<a href="#id69"><span class="problematic" id="id70">**</span></a>不会**目前生成MySQL的
+<p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.server_onupdate" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.server_onupdate</span></code></a> 指令
+<a href="#id39"><span class="problematic" id="id40">**</span></a>不会**目前生成MySQL的
 “ON UPDATE CURRENT_TIMESTAMP（）”子句。看
-:ref：<a href="#id71"><span class="problematic" id="id72">`</span></a>mysql_timestamp_onupdate`了解如何生成
+:ref：<a href="#id41"><span class="problematic" id="id42">`</span></a>mysql_timestamp_onupdate`了解如何生成
 此子句的背景。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>:ref:<a href="#id73"><span class="problematic" id="id74">`</span></a>orm_server_defaults`完全关联于 :class:<a href="#id75"><span class="problematic" id="id76">`</span></a>_schema.MetaData`集合的参数，包括默认架构（如果有）。</p>
+<p><a class="reference internal" href="../orm/persistence_techniques.html#orm-server-defaults"><span class="std std-ref">提取服务器生成的默认值</span></a> 完全关联于 <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 集合的参数，包括默认架构（如果有）。</p>
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -742,7 +747,7 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
 <section id="generated-always-as">
 <span id="computed-ddl"></span><h2>计算列 (GENERATED ALWAYS AS)<a class="headerlink" href="#generated-always-as" title="Permalink to this heading">¶</a></h2>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.3.11: </span><a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  构造函数以文本形式声明，与   <a class="reference internal" href="constraints.html#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类似。然后，数据库服务器将解释SQL表达式，以确定行中列的值。</p>
+<p><span class="versionmodified added">New in version 1.3.11: </span><a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  构造函数以文本形式声明，与   :class:` .CheckConstraint`  类似。然后，数据库服务器将解释SQL表达式，以确定行中列的值。</p>
 </div>
 <p>例如:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">MetaData</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Computed</span>
@@ -758,7 +763,7 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;perimeter&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">Computed</span><span class="p">(</span><span class="s2">&quot;4 * side&quot;</span><span class="p">)),</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>当在PostgreSQL 12后端上运行时，<a href="#id77"><span class="problematic" id="id78">``</span></a>square``表的DDL将如下所示:</p>
+<p>当在PostgreSQL 12后端上运行时，<a href="#id43"><span class="problematic" id="id44">``</span></a>square``表的DDL将如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">square</span> <span class="p">(</span>
     <span class="n">id</span> <span class="n">SERIAL</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
     <span class="n">side</span> <span class="n">INTEGER</span><span class="p">,</span>
@@ -769,11 +774,11 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
 </div>
 <p>值是在插入和更新时是否持久化，还是在获取时计算，这是数据库的一个实现细节；前者称为 “stored”，后者称为 “virtual”。某些数据库实现支持两者，但有些只支持其中一个。可以指定 <strong>computed.persisted</strong> 标志，指定 “STORED” 或 “VIRTUAL” 关键字是否应呈现在DDL中，如果目标后端不支持关键字，则会引发错误；如果不设置，则使用目标后端的默认值。</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a> .FetchedValue`对象的子类，将自己设置为目标   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  的 “server default” 和 “server onupdate” 生成器，这意味着在生成INSERT和UPDATE语句时，它将被视为一个默认生成列，当使用ORM时也将被获取为一个生成列。这包括对于支持RETURNING的数据库：它将成为数据库的RETURNING子句的一部分，并且生成的值将被急切地获取。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a> .FetchedValue` 对象的子类，将自己设置为目标   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  的 “server default” 和 “server onupdate” 生成器，这意味着在生成INSERT和UPDATE语句时，它将被视为一个默认生成列，当使用ORM时也将被获取为一个生成列。这包括对于支持RETURNING的数据库：它将成为数据库的RETURNING子句的一部分，并且生成的值将被急切地获取。</p>
 </div></blockquote>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>用   <a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  定义的   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  可以在服务器应用的值之外不存储任何值；当向这样的列中传递值以应写入INSERT或UPDATE时，SQLAlchemy在当前实现中的行为是将忽略该值。</p>
+<p>用   <a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  定义的   :class:` _schema.Column`  可以在服务器应用的值之外不存储任何值；当向这样的列中传递值以应写入INSERT或UPDATE时，SQLAlchemy在当前实现中的行为是将忽略该值。</p>
 </div>
 <p>现在“GENERATED ALWAYS AS”已知支持以下数据库：</p>
 <ul class="simple">
@@ -784,7 +789,7 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
 <li><p>Microsoft SQL Server</p></li>
 <li><p>SQLite自版本3.31起</p></li>
 </ul>
-<p>当不支持   <a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  的后端使用时，如果目标方言不支持它，则会在尝试渲染构造时引发   <a class="reference internal" href="exceptions.html#sqlalchemy.exc.CompileError" title="sqlalchemy.exc.CompileError"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompileError</span></code></a> 。否则，如果方言支持它，但所使用的特定数据库服务器版本不支持它，则在将DDL发布到数据库时引发   <a class="reference internal" href="exceptions.html#sqlalchemy.exc.DBAPIError" title="sqlalchemy.exc.DBAPIError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBAPIError</span></code></a>  子类，通常是   <a class="reference internal" href="exceptions.html#sqlalchemy.exc.OperationalError" title="sqlalchemy.exc.OperationalError"><code class="xref py py-class docutils literal notranslate"><span class="pre">OperationalError</span></code></a> 。</p>
+<p>当不支持   <a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a>  的后端使用时，如果目标方言不支持它，则会在尝试渲染构造时引发   :class:` .CompileError` 。否则，如果方言支持它，但所使用的特定数据库服务器版本不支持它，则在将DDL发布到数据库时引发   <a class="reference internal" href="exceptions.html#sqlalchemy.exc.DBAPIError" title="sqlalchemy.exc.DBAPIError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DBAPIError</span></code></a>  子类，通常是   :class:` .OperationalError` 。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.schema.Computed" title="sqlalchemy.schema.Computed"><code class="xref py py-class docutils literal notranslate"><span class="pre">Computed</span></code></a></p>
@@ -807,21 +812,21 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">),</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>当在PostgreSQL 12后端上运行时，<a href="#id79"><span class="problematic" id="id80">``</span></a>data``表的DDL将如下所示:</p>
+<p>当在PostgreSQL 12后端上运行时，<a href="#id45"><span class="problematic" id="id46">``</span></a>data``表的DDL将如下所示:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">data</span> <span class="p">(</span>
     <span class="n">id</span> <span class="n">INTEGER</span> <span class="n">GENERATED</span> <span class="n">BY</span> <span class="n">DEFAULT</span> <span class="n">AS</span> <span class="n">IDENTITY</span> <span class="p">(</span><span class="n">START</span> <span class="n">WITH</span> <span class="mi">42</span> <span class="n">CYCLE</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
     <span class="n">data</span> <span class="n">VARCHAR</span><span class="p">,</span>
     <span class="n">PRIMARY</span> <span class="n">KEY</span> <span class="p">(</span><span class="n">id</span><span class="p">)</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>在插入时，数据库将为”<code class="docutils literal notranslate"><span class="pre">id</span></code>”列生成一个值，从”<code class="docutils literal notranslate"><span class="pre">42</span></code>”开始，如果语句中不存在”<code class="docutils literal notranslate"><span class="pre">id</span></code>”列的值。标识列还可以要求数据库生成该列的值，无论传递给语句的值如何，或者引发错误，具体取决于后端。要激活此模式，在  <a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a>  设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> 。将上一个示例更新以包括此参数将生成以下DDL：</p>
+<p>在插入时，数据库将为”<code class="docutils literal notranslate"><span class="pre">id</span></code>”列生成一个值，从”<code class="docutils literal notranslate"><span class="pre">42</span></code>”开始，如果语句中不存在”<code class="docutils literal notranslate"><span class="pre">id</span></code>”列的值。标识列还可以要求数据库生成该列的值，无论传递给语句的值如何，或者引发错误，具体取决于后端。要激活此模式，在  <a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a>  设置为 ` <cite>True`</cite> 。将上一个示例更新以包括此参数将生成以下DDL：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="w">  </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">data</span><span class="w"> </span><span class="p">(</span>
 <span class="w">      </span><span class="n">id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">GENERATED</span><span class="w"> </span><span class="n">ALWAYS</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">IDENTITY</span><span class="w"> </span><span class="p">(</span><span class="k">START</span><span class="w"> </span><span class="k">WITH</span><span class="w"> </span><span class="mi">42</span><span class="w"> </span><span class="k">CYCLE</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
 <span class="w">      </span><span class="k">data</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">,</span>
 <span class="w">      </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span>
 
-<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="k">Identity</span><span class="o">`</span><span class="w">  </span><span class="err">构造是</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">FetchedValue</span><span class="o">`</span><span class="w">  </span><span class="err">对象的子类，并将自身设置为目标</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="n">_schema</span><span class="p">.</span><span class="k">Column</span><span class="o">`</span><span class="w">  </span><span class="err">的</span><span class="w"> </span><span class="ss">&quot;server default&quot;</span><span class="w"> </span><span class="err">生成器，这意味着在生成</span><span class="n">INSERT语句时</span><span class="err">，它将被视为一个默认生成列，当使用</span><span class="n">ORM时也将被获取为一个生成列</span><span class="err">。这包括对于支持</span><span class="n">RETURNING的数据库</span><span class="err">：它将成为数据库的</span><span class="n">RETURNING子句的一部分</span><span class="err">，并且生成的值将被急切地获取。</span></pre></div>
+<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="k">Identity</span><span class="o">`</span><span class="w">  </span><span class="err">构造是</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="w"> </span><span class="p">.</span><span class="n">FetchedValue</span><span class="o">`</span><span class="w">  </span><span class="err">对象的子类，并将自身设置为目标</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="n">_schema</span><span class="p">.</span><span class="k">Column</span><span class="o">`</span><span class="w">  </span><span class="err">的</span><span class="w"> </span><span class="ss">&quot;server default&quot;</span><span class="w"> </span><span class="err">生成器，这意味着在生成</span><span class="n">INSERT语句时</span><span class="err">，它将被视为一个默认生成列，当使用</span><span class="n">ORM时也将被获取为一个生成列</span><span class="err">。这包括对于支持</span><span class="n">RETURNING的数据库</span><span class="err">：它将成为数据库的</span><span class="n">RETURNING子句的一部分</span><span class="err">，并且生成的值将被急切地获取。</span></pre></div>
 </div>
 <p>目前已知支持   <a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a>  构造的有：</p>
 <ul class="simple">
@@ -829,7 +834,7 @@ ORM之类的工具然后使用此标记，以便知道如何访问操作后的�
 <li><p>Oracle自版本12起。它还支持将always=None传递以启用默认生成模式，并支持将参数on_null=True与 “BY DEFAULT” 标识列结合使用来指定 “ON NULL”。</p></li>
 <li><p>Microsoft SQL Server。MSSQL使用自定义语法，仅支持 “start” 和 “increment” 参数，并忽略所有其他参数。</p></li>
 </ul>
-<p>当在  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .Identity`且同时设置  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.autoincrement" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.autoincrement</span></code></a>  为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 时，将引发错误。</p>
+<p>当在  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .Identity` 且同时设置  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column.params.autoincrement" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.autoincrement</span></code></a>  为 ` <cite>False`</cite> 时，将引发错误。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference internal" href="#sqlalchemy.schema.Identity" title="sqlalchemy.schema.Identity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Identity</span></code></a></p>
@@ -1321,7 +1326,7 @@ ORDER keyword.</p></li>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:44
+    Documentation last generated: 2023/8/18 18:58:41
 
     </div>
 </div>

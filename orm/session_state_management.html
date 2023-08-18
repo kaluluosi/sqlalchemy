@@ -132,16 +132,16 @@
 <li><span class="link-container"><a class="reference external" href="session_basics.html">会话基础知识</a></span></li>
 <li class="selected"><span class="link-container"><strong>状态管理</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#session-object-states">对象状态简介</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id5">获取对象的当前状态</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">获取对象的当前状态</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#session-attributes">会话属性</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#session-referencing-behavior">会话引用行为</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#unitofwork-merging">合并</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id27">分离</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">分离</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#session-expire">刷新/到期</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id29">实际加载了什么</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id30">何时过期或刷新</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id17">实际加载了什么</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id18">何时过期或刷新</a></span></li>
 </ul>
 </li>
 </ul>
@@ -210,16 +210,16 @@
             <ul>
 <li><a class="reference internal" href="#id1">状态管理</a><ul>
 <li><a class="reference internal" href="#session-object-states">对象状态简介</a><ul>
-<li><a class="reference internal" href="#id5">获取对象的当前状态</a></li>
+<li><a class="reference internal" href="#id3">获取对象的当前状态</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#session-attributes">会话属性</a></li>
 <li><a class="reference internal" href="#session-referencing-behavior">会话引用行为</a></li>
 <li><a class="reference internal" href="#unitofwork-merging">合并</a></li>
-<li><a class="reference internal" href="#id27">分离</a></li>
+<li><a class="reference internal" href="#id15">分离</a></li>
 <li><a class="reference internal" href="#session-expire">刷新/到期</a><ul>
-<li><a class="reference internal" href="#id29">实际加载了什么</a></li>
-<li><a class="reference internal" href="#id30">何时过期或刷新</a></li>
+<li><a class="reference internal" href="#id17">实际加载了什么</a></li>
+<li><a class="reference internal" href="#id18">何时过期或刷新</a></li>
 </ul>
 </li>
 </ul>
@@ -241,16 +241,16 @@
 <span id="id2"></span><h2>对象状态简介<a class="headerlink" href="#session-object-states" title="Permalink to this heading">¶</a></h2>
 <p>了解一个实例在会话中可以具有的状态是有帮助的：</p>
 <ul class="simple">
-<li><p><strong>瞬态(Transient)</strong> - 不在会话中的实例，也没有保存到数据库中；即它没有数据库身份。这个对象与 ORM 之间唯一的关系是其类上有一个与 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.Mapper`相关联的映射器。</p></li>
+<li><p><strong>瞬态(Transient)</strong> - 不在会话中的实例，也没有保存到数据库中；即它没有数据库身份。这个对象与 ORM 之间唯一的关系是其类上有一个与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> 相关联的映射器。</p></li>
 <li><p><strong>挂起(Pending)</strong> - 当您  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>  一个短暂的实例时，它就变成了挂起状态。虽然它还没有实际刷新到数据库中，但在下一次刷新时将刷新到数据库中。</p></li>
 <li><p><strong>持久(Persistent)</strong> - 在会话中存在一个记录在数据库中的实例。您可以通过刷新，使仍处于挂起状态的实例变成持久实例，或通过查询已存在的实例（或将其他会话中的持久实例移动到您本地会话中）获得持久实例。</p></li>
 <li><p><strong>删除(Deleted)</strong> - 在刷新中被删除的实例，但是事务尚未结束。这种状态的对象实际上与“挂起”状态相反；当会话的事务提交时，对象将移动到分离状态。或者，当会话的事务回滚时，删除的对象会*返回*到持久状态。</p></li>
 <li><p><strong>分离(Detached)</strong> - 与数据库中的记录对应或以前对应的实例，但目前没有任何会话。分离的对象将包含一个数据库标识标记，但是由于它与会话无关，无法确定这个数据库标识是否实际存在于目标数据库中。分离对象可以正常使用，但是它们无法加载未加载的属性或先前标记为“过期”的属性。</p></li>
 </ul>
 <p>有关所有可能的状态转换的更深入的探讨，请参见   <a class="reference internal" href="session_events.html#session-lifecycle-events"><span class="std std-ref">对象生命周期事件</span></a>  节，该节描述了每个转换以及如何以编程方式跟踪每个转换。</p>
-<section id="id5">
-<h3>获取对象的当前状态<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
-<p>任何映射对象的实际状态可以在任何时候使用   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数查看映射实例；此函数将返回相应的   <a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>  对象，该对象管理对象的内部 ORM 状态。   <a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>  提供了许多访问器，其中包括指示对象持久状态的布尔属性，包括：</p>
+<section id="id3">
+<h3>获取对象的当前状态<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>任何映射对象的实际状态可以在任何时候使用   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数查看映射实例；此函数将返回相应的   :class:` .InstanceState`  对象，该对象管理对象的内部 ORM 状态。   <a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>  提供了许多访问器，其中包括指示对象持久状态的布尔属性，包括：</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.transient" title="sqlalchemy.orm.InstanceState.transient"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.transient</span></code></a></p></li>
 <li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.pending" title="sqlalchemy.orm.InstanceState.pending"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.pending</span></code></a></p></li>
@@ -266,12 +266,12 @@
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate"><span class="std std-ref">映射实例的内省</span></a>  - 更多   <a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a>  示例</p>
+<p><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate"><span class="std std-ref">映射实例的内省</span></a>  - 更多   :class:` .InstanceState`  示例</p>
 </div>
 </section>
 </section>
 <section id="session-attributes">
-<span id="id6"></span><h2>会话属性<a class="headerlink" href="#session-attributes" title="Permalink to this heading">¶</a></h2>
+<span id="id4"></span><h2>会话属性<a class="headerlink" href="#session-attributes" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  本身的行为有点像一个集合。可以使用迭代器接口访问所有当前存在的元素：</p>
 <blockquote>
@@ -301,14 +301,14 @@ session.deleted</p>
 session.identity_map</p>
 </div></blockquote>
 <dl class="simple">
-<dt>(Documentation:  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code> ,  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code> ,</dt><dd><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>  ,  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.identity_map</span></code> ).</p>
+<dt>(Documentation:  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code> ,  :attr:` .Session.dirty` ,</dt><dd><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>  ,  :attr:` .Session.identity_map` ).</p>
 </dd>
 </dl>
 </section>
 <section id="session-referencing-behavior">
-<span id="id7"></span><h2>会话引用行为<a class="headerlink" href="#session-referencing-behavior" title="Permalink to this heading">¶</a></h2>
+<span id="id5"></span><h2>会话引用行为<a class="headerlink" href="#session-referencing-behavior" title="Permalink to this heading">¶</a></h2>
 <p>会话中的对象是*弱引用*的。这意味着当它们在外部应用程序中解除引用时，在  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中它们也会失去作用，并且受 Python 解释器的垃圾收集的影响。这其中的例外包括挂起对象、标记为删除的对象或具有挂起更改的持久对象。在完全刷新后，这些集合都为空，并且所有对象再次成为弱引用。</p>
-<p>使  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中的对象保持强引用，通常只需要简单的方法。外部管理强引用行为的示例包括将对象加载到以其主键为键的本地字典中，或将其放入列表或集合中以使其保持引用状态。如果需要，这些集合可以与  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  关联。  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code>   字典。</p>
+<p>使  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中的对象保持强引用，通常只需要简单的方法。外部管理强引用行为的示例包括将对象加载到以其主键为键的本地字典中，或将其放入列表或集合中以使其保持引用状态。如果需要，这些集合可以与  :class:` .Session`  关联。  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code>   字典。</p>
 <p>事件驱动方法也是可行的。一个提供所有对象“强引用”行为的简单方案，当它们保持在  <span class="xref std std-term">persistent</span>  状态内时，如下所示：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
 
@@ -335,18 +335,18 @@ session.identity_map</p>
 <dl class="simple">
 <dt>在上面的代码中，我们拦截  <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.pending_to_persistent" title="sqlalchemy.orm.SessionEvents.pending_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.pending_to_persistent()</span></code></a> ,</dt><dd><p><a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.detached_to_persistent" title="sqlalchemy.orm.SessionEvents.detached_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.detached_to_persistent()</span></code></a>  ,
 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.deleted_to_persistent" title="sqlalchemy.orm.SessionEvents.deleted_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.deleted_to_persistent()</span></code></a>   和
-<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.loaded_as_persistent" title="sqlalchemy.orm.SessionEvents.loaded_as_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.loaded_as_persistent()</span></code></a>   事件挂钩，以拦截对象进入  <span class="xref std std-term">persistent</span>  转换的过程，以及
+<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.loaded_as_persistent" title="sqlalchemy.orm.SessionEvents.loaded_as_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.loaded_as_persistent()</span></code></a>   事件挂钩，以拦截对象进入  :term:` persistent`  转换的过程，以及
 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.persistent_to_detached" title="sqlalchemy.orm.SessionEvents.persistent_to_detached"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.persistent_to_detached()</span></code></a>   和
 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.persistent_to_deleted" title="sqlalchemy.orm.SessionEvents.persistent_to_deleted"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.persistent_to_deleted()</span></code></a>  挂钩截取对象离开持久状态的时刻。</p>
 </dd>
 </dl>
-<p>可以对任何  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session`的强引用行为：</p>
+<p>可以对任何  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 的强引用行为：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
 
 <span class="n">my_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
 <span class="n">strong_reference_session</span><span class="p">(</span><span class="n">my_session</span><span class="p">)</span></pre></div>
 </div>
-<p>也可以对任何 :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>.sessionmaker`进行调用：</p>
+<p>也可以对任何 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 进行调用：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
 
 <span class="n">maker</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
@@ -354,7 +354,7 @@ session.identity_map</p>
 </div>
 </section>
 <section id="unitofwork-merging">
-<span id="id10"></span><h2>合并<a class="headerlink" href="#unitofwork-merging" title="Permalink to this heading">¶</a></h2>
+<span id="id6"></span><h2>合并<a class="headerlink" href="#unitofwork-merging" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>   将状态从外部对象传输到一个新的或已存在的实例中，同时还会将传入数据对比数据库的状态，产生一个历史流，该流将被应用于下一个刷新，或者可以被设置为生成简单的状态“转移”，而不会产生更改历史或访问数据库。使用方法如下：</p>
 </div></blockquote>
@@ -369,17 +369,17 @@ session.identity_map</p>
 <li><p>将该操作级联到相关对象和集合中，如所示``merge``级联 (参见：ref:<cite>unitofwork_cascades</cite>)。</p></li>
 <li><p>返回新实例。</p></li>
 </ul>
-<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code> ，给定的“源”实例不会修改，也不会与目标   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> .Session` 对象中。 :meth:<a href="#id11"><span class="problematic" id="id12">`</span></a>~.Session.merge`用于将任何类型的对象结构的状态复制到新会话，而不考虑其起源或当前会话关联。以下是一些示例：</p>
+<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code> ，给定的“源”实例不会修改，也不会与目标   :class:` .Session` .Session` 对象中。 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code> 用于将任何类型的对象结构的状态复制到新会话，而不考虑其起源或当前会话关联。以下是一些示例：</p>
 <ul class="simple">
-<li><p>一个读取对象结构并希望将其保存到数据库的应用程序可能会解析文件，构建结构，然后使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  将其保存到数据库中，确保文件中的数据用于制定该结构每个元素的主键。稍后，当文件更改时，可以重新运行同一进程，生成略微不同的对象结构，然后再次将其”合并”， :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>~sqlalchemy.orm.session.Session`将自动更新数据库以反映这些更改，通过主键从数据库中加载每个对象，然后使用新状态更新其状态。</p></li>
-<li><p>一个应用程序正在将对象存储在内存中的缓存中，许多  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ~.Session.merge`。将一个已存在的对象转移到其他session或者从缓存中查询对象时， :meth:<a href="#id15"><span class="problematic" id="id16">`</span></a>~.Session.merge`将会更新有相同主键的对象实例的属性。同时它也是一种安全的非插入式方法，能够交换不同会话中的状态对象的属性。 ​</p></li>
+<li><p>一个读取对象结构并希望将其保存到数据库的应用程序可能会解析文件，构建结构，然后使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  将其保存到数据库中，确保文件中的数据用于制定该结构每个元素的主键。稍后，当文件更改时，可以重新运行同一进程，生成略微不同的对象结构，然后再次将其”合并”， :class:` ~sqlalchemy.orm.session.Session`将自动更新数据库以反映这些更改，通过主键从数据库中加载每个对象，然后使用新状态更新其状态。</p></li>
+<li><p>一个应用程序正在将对象存储在内存中的缓存中，许多  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ~.Session.merge` 。将一个已存在的对象转移到其他session或者从缓存中查询对象时， <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code> 将会更新有相同主键的对象实例的属性。同时它也是一种安全的非插入式方法，能够交换不同会话中的状态对象的属性。 ​</p></li>
 </ul>
-<p>关键字参数 load:是否需要映射对象的状态到数据库中,这在缓存查询的情况下很有用。另外，还有一种  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.merge_result" title="sqlalchemy.orm.Query.merge_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.merge_result()</span></code></a>  的“批量”版本，该方法被设计用于缓存扩展的   <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象中——请参阅 :ref:<a href="#id17"><span class="problematic" id="id18">`</span></a>examples_caching`部分。</p>
+<p>关键字参数 load:是否需要映射对象的状态到数据库中,这在缓存查询的情况下很有用。另外，还有一种  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.merge_result" title="sqlalchemy.orm.Query.merge_result"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.merge_result()</span></code></a>  的“批量”版本，该方法被设计用于缓存扩展的   :class:` _query.Query`  对象中——请参阅 <a class="reference internal" href="examples.html#examples-caching"><span class="std std-ref">Dogpile 缓存</span></a> 部分。</p>
 <p>​ <strong>使用技巧</strong> <strong>~~~~~~~~~~</strong></p>
 <blockquote>
-<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>   对于许多情况非常有用。但是，它处理着临时对象和永久对象以及状态自动转移之间复杂的边界。这个过程中有各种各样的情况存在，这些情况通常需要更谨慎的方法去处理对象的状态。 merge的一般问题通常涉及一些关于被传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  方法的对象的意外状态。 我们将使用 User 和 Address 对象来举一个具体的例子：</p>
+<div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>   对于许多情况非常有用。但是，它处理着临时对象和永久对象以及状态自动转移之间复杂的边界。这个过程中有各种各样的情况存在，这些情况通常需要更谨慎的方法去处理对象的状态。 merge的一般问题通常涉及一些关于被传递给  :meth:` ~.Session.merge`  方法的对象的意外状态。 我们将使用 User 和 Address 对象来举一个具体的例子：</p>
 </div></blockquote>
-<p><a href="#id19"><span class="problematic" id="id20">``</span></a><a href="#id21"><span class="problematic" id="id22">`</span></a>python
+<p><a href="#id7"><span class="problematic" id="id8">``</span></a><a href="#id9"><span class="problematic" id="id10">`</span></a>python
 class User(Base):</p>
 <blockquote>
 <div><p>__tablename__ = “user”</p>
@@ -394,7 +394,7 @@ email_address = mapped_column(String(50), nullable=False)
 user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 </dd>
 </dl>
-<p><a href="#id23"><span class="problematic" id="id24">``</span></a><a href="#id25"><span class="problematic" id="id26">`</span></a></p>
+<p><a href="#id11"><span class="problematic" id="id12">``</span></a><a href="#id13"><span class="problematic" id="id14">`</span></a></p>
 <p>首先，我们需要创建 User 对象，有一个已经存在的 Address：</p>
 <p><code class="docutils literal notranslate"><span class="pre">`python</span>
 <span class="pre">u1</span> <span class="pre">=</span> <span class="pre">User(name=&quot;ed&quot;,</span> <span class="pre">addresses=[Address(email_address=&quot;ed&#64;ed.com&quot;)])</span>
@@ -423,9 +423,9 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <span class="pre">a1</span> <span class="pre">is</span> <span class="pre">existing_a1</span>
 <span class="pre">False</span>
 <span class="pre">`</span></code></p>
-<p>以上，我们的 a1 已经在 session 中了。随后的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  操作本质上什么也没有做。Cascade 可以通过在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上设置参数  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code>  来进行配置，虽然在这种情况下，它的行为通常是非常方便的。通常的解决方案是不要将`a1.user`分配给目标会话中已经存在的对象。</p>
+<p>以上，我们的 a1 已经在 session 中了。随后的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  操作本质上什么也没有做。Cascade 可以通过在   :func:` _orm.relationship`  上设置参数  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code>  来进行配置，虽然在这种情况下，它的行为通常是非常方便的。通常的解决方案是不要将` a1.user`分配给目标会话中已经存在的对象。</p>
 <blockquote>
-<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的 cascade_backrefs=False 参数也可以通过防止 Address 通过`a1.user = u1` 添加到会话中。</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的 cascade_backrefs=False 参数也可以通过防止 Address 通过` a1.user = u1` 添加到会话中。</p>
 </div></blockquote>
 <p>对于其他不是预期的 merge 状态:</p>
 <p><code class="docutils literal notranslate"><span class="pre">`python</span>
@@ -435,7 +435,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <span class="pre">session.commit()</span>
 <span class="pre">`</span></code></p>
 <p>上面的代码中，user 的赋值优先于 user_id 的赋值，最后就会导致 user_id 等于 None，因此产生错误。</p>
-<p>大多数  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  问题可以检查对象是否过早地在会话中。（是否出现了两个相同的对象）或者，对象上是否有我们不想要的状态? 通过检查 <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> 可以快速确定:</p>
+<p>大多数  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code>  问题可以检查对象是否过早地在会话中。（是否出现了两个相同的对象）或者，对象上是否有我们不想要的状态? 通过检查 ` <cite>__dict__`</cite> 可以快速确定:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">existing_a1</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="n">user</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span><span class="o">.</span><span class="n">user</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span><span class="o">.</span><span class="vm">__dict__</span>
@@ -450,8 +450,8 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
 </div>
 </section>
-<section id="id27">
-<h2>分离<a class="headerlink" href="#id27" title="Permalink to this heading">¶</a></h2>
+<section id="id15">
+<h2>分离<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
 <p>Expunge从Session中删除对象，将持久实例发送到分离状态，将挂起实例发送到短暂状态:</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">expunge</span><span class="p">(</span><span class="n">obj1</span><span class="p">)</span></pre></div>
 </div>
@@ -459,7 +459,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 (此方法以前称为 <code class="docutils literal notranslate"><span class="pre">clear()</span></code>)。</p>
 </section>
 <section id="session-expire">
-<span id="id28"></span><h2>刷新/到期<a class="headerlink" href="#session-expire" title="Permalink to this heading">¶</a></h2>
+<span id="id16"></span><h2>刷新/到期<a class="headerlink" href="#session-expire" title="Permalink to this heading">¶</a></h2>
 <blockquote>
 <div><p><span class="xref std std-term">到期</span>  是指内部保持的数据库持久化数据被擦除，下次访问这些属性时，</p>
 </div></blockquote>
@@ -510,7 +510,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 如果我们修改了 <code class="docutils literal notranslate"><span class="pre">User</span></code> 的某个属性:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;user2&quot;</span></pre></div>
 </div>
-<p>但然后我们在不首先调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  的情况下调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code> ，
+<p>但然后我们在不首先调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.flush()</span></code>  的情况下调用  :meth:` ~.Session.expire` ，
 我们挂起的值 <code class="docutils literal notranslate"><span class="pre">'user2'</span></code> 就被丢弃了:</p>
 <blockquote>
 <div><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
@@ -526,7 +526,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="c1"># 仅过期 obj1.attr1, obj1.attr2 的属性</span>
   <span class="n">session</span><span class="o">.</span><span class="n">expire</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;attr1&quot;</span><span class="p">,</span> <span class="s2">&quot;attr2&quot;</span><span class="p">])</span>
 
-<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">expire_all</span><span class="err">`</span>   <span class="n">方法允许我们将</span>   <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="err">`</span>  <span class="n">中包含的所有对象</span></pre></div>
+<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">expire_all</span><span class="err">`</span>   <span class="n">方法允许我们将</span>   <span class="p">:</span><span class="n">class</span><span class="p">:</span><span class="err">`</span> <span class="o">.</span><span class="n">Session</span><span class="err">`</span>  <span class="n">中包含的所有对象</span></pre></div>
 </div>
 <p>都标记为“已过期”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">session</span><span class="o">.</span><span class="n">expire_all</span><span class="p">()</span>  <span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">~.</span><span class="n">Session</span><span class="o">.</span><span class="n">refresh</span><span class="err">`</span>  <span class="n">方法具有类似的接口</span><span class="err">，</span><span class="n">但是不是过期</span><span class="err">，</span><span class="n">而是立即发出一个查询以获取对象的行</span><span class="p">::</span>
@@ -534,7 +534,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
   <span class="c1"># 重新加载obj1的所有属性</span>
   <span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">obj1</span><span class="p">)</span>
 
-<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">~.</span><span class="n">Session</span><span class="o">.</span><span class="n">refresh</span><span class="err">`</span>   <span class="n">还接受一个字符串属性名称列表</span><span class="err">，</span><span class="n">但不同于</span>  <span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">~.</span><span class="n">Session</span><span class="o">.</span><span class="n">expire</span><span class="err">`</span> <span class="err">，</span><span class="n">它预期至少有一个名称是列映射属性的名称</span><span class="p">::</span>
+<span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span><span class="o">~.</span><span class="n">Session</span><span class="o">.</span><span class="n">refresh</span><span class="err">`</span>   <span class="n">还接受一个字符串属性名称列表</span><span class="err">，</span><span class="n">但不同于</span>  <span class="p">:</span><span class="n">meth</span><span class="p">:</span><span class="err">`</span> <span class="o">~.</span><span class="n">Session</span><span class="o">.</span><span class="n">expire</span><span class="err">`</span> <span class="err">，</span><span class="n">它预期至少有一个名称是列映射属性的名称</span><span class="p">::</span>
 
   <span class="c1"># 重新加载 obj1.attr1, obj1.attr2</span>
   <span class="n">session</span><span class="o">.</span><span class="n">refresh</span><span class="p">(</span><span class="n">obj1</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;attr1&quot;</span><span class="p">,</span> <span class="s2">&quot;attr2&quot;</span><span class="p">])</span></pre></div>
@@ -542,7 +542,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>另一种常用的刷新方法是使用ORM的   <a class="reference internal" href="queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a>  功能，
-可在  <span class="xref std std-term">2.0 style</span>  查询中使用   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  以及在  <span class="xref std std-term">1.x style</span>  查询中
+可在  <span class="xref std std-term">2.0 style</span>  查询中使用   :func:` _sql.select`  以及在  <span class="xref std std-term">1.x style</span>  查询中
 的  <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query.populate_existing" title="sqlalchemy.orm.Query.populate_existing"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.populate_existing()</span></code></a>  方法中使用。使用这种执行方法，
 语句结果集中返回的所有ORM对象将使用来自数据库的数据进行刷新:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -555,16 +555,16 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 </div>
 <p>有关详细信息，请参见   <a class="reference internal" href="queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">填充现有的实例</span></a> 。</p>
 </div>
-<section id="id29">
-<h3>实际加载了什么<a class="headerlink" href="#id29" title="Permalink to this heading">¶</a></h3>
-<p>当标记为  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  或使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  加载对象时，
+<section id="id17">
+<h3>实际加载了什么<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<p>当标记为  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  或使用  :meth:` ~.Session.refresh`  加载对象时，
 所发出的SELECT语句会根据几个因素而异，包括：</p>
 <ul>
 <li><p>过期属性的加载仅从 <strong>列映射属性</strong> 触发。任何类型的属性都可以标记为过期，包括   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>
 - 映射属性，但访问过期的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  属性仅会为该属性发出加载操作，使用标准的关系导向的
 懒加载。即使是过期的列导向属性，在此操作的一部分中也不会加载，而是在访问任何列导向属性时加载。</p></li>
 <li><p>在访问已过期的基于列的属性时，不会响应   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  - 映射属性的加载。</p></li>
-<li><p>关于关系，与  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  相比，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  在不是列映射属性的属性方面更为严格。
+<li><p>关于关系，与  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  相比，  :meth:` .Session.refresh`  在不是列映射属性的属性方面更为严格。
 调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  并传递仅包括关系映射属性的名称列表将会导致错误。
 在任何情况下，非急加载   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  属性都不会包括在任何刷新操作中。</p></li>
 <li><dl class="simple">
@@ -577,16 +577,16 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 一个未加载的被   <a class="reference internal" href="queryguide/columns.html#sqlalchemy.orm.deferred" title="sqlalchemy.orm.deferred"><code class="xref py py-func docutils literal notranslate"><span class="pre">deferred()</span></code></a>  修饰的属性当直接访问或作为一个未加载属性组的一部分时，才会单独加载。</p></li>
 <li><p>对于加载时按需加载的属性，继承表映射将发出一个SELECT，该SELECT通常仅包括存在未加载属性的表。
 在这里，该操作足够复杂，可以仅加载父表或子表，例如，如果最初过期的列的子集仅涵盖这两个表中的一个。</p></li>
-<li><p>当在继承表映射上使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  时，所发出的SELECT将类似于在目标对象类上使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code>  的情况。
+<li><p>当在继承表映射上使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  时，所发出的SELECT将类似于在目标对象类上使用  :meth:` .Session.query`  的情况。
 这通常是映射的组成部分的所有表。</p></li>
 </ul>
 </section>
-<section id="id30">
-<h3>何时过期或刷新<a class="headerlink" href="#id30" title="Permalink to this heading">¶</a></h3>
+<section id="id18">
+<h3>何时过期或刷新<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  当事务结束时自动使用过期功能。这意味着每当调用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code></p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  当事务结束时自动使用过期功能。这意味着每当调用  :meth:` .Session.commit`</p>
 </div></blockquote>
-<p>或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  时，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中的所有对象都会被过期，使用等效于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code>  方法的功能。
+<p>或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.rollback()</span></code>  时，   :class:` .Session`  中的所有对象都会被过期，使用等效于  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code>  方法的功能。
 其原因是事务结束是一个划分点，在这个点上没有更多的上下文可用以知道数据库的当前状态，
 因为其他任何数量的事务都可能会影响它。只有在开始新事务时，我们才能再次访问数据库的当前状态，
 此时任何数量的更改都可能已经发生。</p>
@@ -595,15 +595,15 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 <blockquote>
 <div><p>当然，大多数数据库都能够处理多个事务，甚至包括涉及相同数据行的事务。当
 关系数据库处理涉及相同表或行的多个事务时，这就是数据库的  <span class="xref std std-term">隔离</span>  属性发挥作用的时候了。
-不同数据库的隔离行为差别很大，即使在单个数据库上也可以配置为以不同的方式进行操作。在一个事务的范围内，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  无法完全预测第二次发出的相同的 SELECT 语句是否会返回我们已经拥有的数据，还是会返回新的数据，这与所谓的  <span class="xref std std-term">隔离级别</span>  设置有关。因此，最好的假设是，在事务的范围内，除非它已知发出了一个修改特定行的 SQL 表达式，否则没有必要重新刷新行，除非明确要求这样做。</p>
+不同数据库的隔离行为差别很大，即使在单个数据库上也可以配置为以不同的方式进行操作。在一个事务的范围内，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  无法完全预测第二次发出的相同的 SELECT 语句是否会返回我们已经拥有的数据，还是会返回新的数据，这与所谓的  :term:` 隔离级别`  设置有关。因此，最好的假设是，在事务的范围内，除非它已知发出了一个修改特定行的 SQL 表达式，否则没有必要重新刷新行，除非明确要求这样做。</p>
 </div></blockquote>
-<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>   和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  方法用于在数据当前状态可能过时的情况下，强制对象从数据库重新加载其数据的情况下。这种情况可能包括：</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>   和  :meth:` .Session.refresh`  方法用于在数据当前状态可能过时的情况下，强制对象从数据库重新加载其数据的情况下。这种情况可能包括：</p>
 </aside>
 <ul class="simple">
-<li><p>一些 SQL 已经在 ORM 的对象处理范围之外在事务中发出，例如，如果使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法发出  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Table.update()</span></code>  构造；</p></li>
+<li><p>一些 SQL 已经在 ORM 的对象处理范围之外在事务中发出，例如，如果使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法发出  :meth:` _schema.Table.update`  构造；</p></li>
 <li><p>如果应用程序试图获取已知在并发事务中被修改的数据，并且也已知生效的隔离规则允许此数据可见。</p></li>
 </ul>
-<p>第二个要点有一个重要的警告：”还知道生效的隔离规则允许此数据可见。”这意味着不能假定外部数据库连接上的更新将在本地透明可见，但在许多情况下不会。这就是为什么，如果想要使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code>  在进行 ongoing 事务之间的数据查看时，必须理解生效的隔离行为的原因。</p>
+<p>第二个要点有一个重要的警告：”还知道生效的隔离规则允许此数据可见。”这意味着不能假定外部数据库连接上的更新将在本地透明可见，但在许多情况下不会。这就是为什么，如果想要使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code>  或  :meth:` .Session.refresh`  在进行 ongoing 事务之间的数据查看时，必须理解生效的隔离行为的原因。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></p>
@@ -639,7 +639,7 @@ user_id = mapped_column(Integer, ForeignKey(“user.id”), nullable=False)</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:02
+    Documentation last generated: 2023/8/18 18:59:03
 
     </div>
 </div>

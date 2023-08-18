@@ -199,7 +199,7 @@ result = connection.execute(mytable.select())</p>
 <p>mytable.drop(engine)</p>
 </div></blockquote>
 <p>上面的连接池连接仍然被检查出;此外，上面的结果对象还保持与此连接的链接。如果使用“隐式执行”，则结果将保持此连接打开状态，直到关闭结果对象或遍历完所有行。</p>
-<p>调用``mytable.drop(engine)``会尝试在从 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>_engine.Engine`获取的第二个连接上发出DROP TABLE命令。</p>
+<p>调用``mytable.drop(engine)``会尝试在从 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 获取的第二个连接上发出DROP TABLE命令。</p>
 <p>解决方法是在发出DROP TABLE之前关闭所有连接：</p>
 <blockquote>
 <div><p>connection = engine.connect()
@@ -213,7 +213,7 @@ mytable.drop(engine)</p>
 </div></blockquote>
 <p>SQLAlchemy是否支持ALTER TABLE、CREATE VIEW、CREATE TRIGGER、模式升级功能？</p>
 <p>SQLAlchemy没有直接支持ALTER支持。可以使用DDL和相关构造的特殊DDL进行特殊DDL。有关此主题的讨论，请参见  <span class="xref std std-ref">metadata_ddl_toplevel</span> 。</p>
-<p>更全面的选项是使用模式迁移工具，例如Alembic或SQLAlchemy-Migrate;请参见 :ref:<a href="#id6"><span class="problematic" id="id7">`</span></a>schema_migrations`以获得有关此功能的讨论。</p>
+<p>更全面的选项是使用模式迁移工具，例如Alembic或SQLAlchemy-Migrate;请参见 <a class="reference internal" href="../core/metadata.html#schema-migrations"><span class="std std-ref">通过Migrations修改数据库对象</span></a> 以获得有关此功能的讨论。</p>
 <p>如何按其依赖关系对表对象进行排序？</p>
 <p>可以通过  <code class="xref py py-attr docutils literal notranslate"><span class="pre">MetaData.sorted_tables</span></code>  函数实现：</p>
 <blockquote>
@@ -235,20 +235,20 @@ for t in ti:</p>
 <blockquote>
 <div><p>print(CreateTable(mytable).compile(engine))</p>
 </div></blockquote>
-<p>还有通过 :func:<a href="#id8"><span class="problematic" id="id9">`</span></a>.create_mock_engine`获得的 :class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_engine.Engine`的特殊形式，允许将整个元数据创建序列转储为字符串，使用以下配方：</p>
+<p>还有通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_mock_engine()</span></code> 获得的 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 的特殊形式，允许将整个元数据创建序列转储为字符串，使用以下配方：</p>
 <blockquote>
 <div><p>from sqlalchemy import create_mock_engine</p>
 <dl class="simple">
-<dt>def dump(sql, <a href="#id12"><span class="problematic" id="id13">*</span></a>multiparams, <a href="#id14"><span class="problematic" id="id15">**</span></a>params):</dt><dd><p>print(sql.compile(dialect=engine.dialect))</p>
+<dt>def dump(sql, <a href="#id4"><span class="problematic" id="id5">*</span></a>multiparams, <a href="#id6"><span class="problematic" id="id7">**</span></a>params):</dt><dd><p>print(sql.compile(dialect=engine.dialect))</p>
 </dd>
 </dl>
 <p>engine = create_mock_engine(“postgresql+psycopg2://”, dump)
 metadata_obj.create_all(engine, checkfirst=False)</p>
 </div></blockquote>
-<p><a href="#id16"><span class="problematic" id="id17">`</span></a>Alembic &lt;<a class="reference external" href="https://alembic.sqlalchemy.org">https://alembic.sqlalchemy.org</a>&gt;`_工具还支持将数据库迁移呈现为SQL脚本的“脱机”SQL生成模式。</p>
+<p><a href="#id8"><span class="problematic" id="id9">`</span></a>Alembic &lt;<a class="reference external" href="https://alembic.sqlalchemy.org">https://alembic.sqlalchemy.org</a>&gt;`_工具还支持将数据库迁移呈现为SQL脚本的“脱机”SQL生成模式。</p>
 <p>如何子类化Table/Column以提供某些行为/配置？</p>
 <blockquote>
-<div><p><a href="#id18"><span class="problematic" id="id19">:class:`_schema.Table`和 :class:`_schema.Column`不适合直接子类化。然而，可以使用创建函数来获取构建期间的行为，使用约束公约或命名公约等架构对象之间的链接相关行为，例如。可以在“命名约定&lt;https://www.sqlalchemy.org/trac/wiki/UsageRecipes/NamingConventions&gt;`_</span></a>”中看到这些技术的示例。</p>
+<div><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 和 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 不适合直接子类化。然而，可以使用创建函数来获取构建期间的行为，使用约束公约或命名公约等架构对象之间的链接相关行为，例如。可以在“命名约定&lt;<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/NamingConventions">https://www.sqlalchemy.org/trac/wiki/UsageRecipes/NamingConventions</a>&gt;`_”中看到这些技术的示例。</p>
 </div></blockquote>
 </section>
 
@@ -270,7 +270,7 @@ metadata_obj.create_all(engine, checkfirst=False)</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:52
+    Documentation last generated: 2023/8/18 18:58:52
 
     </div>
 </div>

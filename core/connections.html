@@ -198,16 +198,16 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#lambda">使用Lambda在语句生成中添加显着的速度增益</a><ul>
-<li><a class="reference internal" href="#id40">简要指南对于Lambda</a></li>
-<li><a class="reference internal" href="#id47">缓存密钥生成</a></li>
+<li><a class="reference internal" href="#id32">简要指南对于Lambda</a></li>
+<li><a class="reference internal" href="#id33">缓存密钥生成</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id54">当前支持</a></li>
-<li><a class="reference internal" href="#id56">禁用功能</a></li>
-<li><a class="reference internal" href="#id59">批操作模式</a></li>
+<li><a class="reference internal" href="#id34">当前支持</a></li>
+<li><a class="reference internal" href="#id36">禁用功能</a></li>
+<li><a class="reference internal" href="#id37">批操作模式</a></li>
 <li><a class="reference internal" href="#returning">将RETURNING行与参数集相关联</a></li>
 <li><a class="reference internal" href="#engine-insertmanyvalues-non-batch">非批次模式操作</a></li>
-<li><a class="reference internal" href="#id68">语句执行模型</a></li>
+<li><a class="reference internal" href="#id40">语句执行模型</a></li>
 <li><a class="reference internal" href="#engine-insertmanyvalues-page-size">控制批量大小</a></li>
 <li><a class="reference internal" href="#engine-insertmanyvalues-events">日志和事件</a></li>
 <li><a class="reference internal" href="#upsert-support">Upsert Support</a></li>
@@ -215,14 +215,14 @@
 </li>
 <li><a class="reference internal" href="#engine-disposal">引擎处理</a></li>
 <li><a class="reference internal" href="#driver-sql-raw-dbapi-connections">使用Driver SQL和 Raw DBAPI Connections 工作</a><ul>
-<li><a class="reference internal" href="#id90">直接向驱动程序调用SQL字符串</a></li>
+<li><a class="reference internal" href="#id46">直接向驱动程序调用SQL字符串</a></li>
 <li><a class="reference internal" href="#dbapi-connections-cursor">直接与DBAPI游标交互</a></li>
 <li><a class="reference internal" href="#stored-procedures">调用存储过程和用户定义函数</a></li>
-<li><a class="reference internal" href="#id103">多个结果集</a></li>
+<li><a class="reference internal" href="#id51">多个结果集</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id104">注册新方言</a><ul>
-<li><a class="reference internal" href="#id109">在进程中注册方言</a></li>
+<li><a class="reference internal" href="#id52">注册新方言</a><ul>
+<li><a class="reference internal" href="#id53">在进程中注册方言</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#api">连接/引擎API</a><ul>
@@ -320,7 +320,7 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id110">结果集API</a><ul>
+<li><a class="reference internal" href="#id54">结果集API</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.engine.ChunkedIteratorResult"><code class="docutils literal notranslate"><span class="pre">ChunkedIteratorResult</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.engine.ChunkedIteratorResult.yield_per"><code class="docutils literal notranslate"><span class="pre">ChunkedIteratorResult.yield_per()</span></code></a></li>
 </ul>
@@ -472,20 +472,20 @@
         
 <section id="module-sqlalchemy.engine">
 <span id="engine-connections"></span><span id="connections-toplevel"></span><h1>使用 Engine 和 Connections<a class="headerlink" href="#module-sqlalchemy.engine" title="Permalink to this heading">¶</a></h1>
-<p>本节详细介绍   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ， <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection`和相关对象的直接使用。需要注意的是，</span>
-<span class="pre">在使用SQLAlchemy</span> <span class="pre">ORM时，通常不会直接访问这些对象；相反，通常使用</span>&#160;&#160; <span class="pre">:class:</span></code>.Session`  对象作为与数据库交互的接口。
+<p>本节详细介绍   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ， :class:` _engine.Connection`和相关对象的直接使用。需要注意的是，
+在使用SQLAlchemy ORM时，通常不会直接访问这些对象；相反，通常使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象作为与数据库交互的接口。
 然而，对于那些围绕着直接使用文本SQL语句和/或SQL表达式构造物而建立的应用程序，在没有ORM的高级管理服务的情况下，</p>
 <blockquote>
 <div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  才是王（和女王？）——继续阅读。</p>
 </div></blockquote>
 <section id="id1">
 <h2>基本用法<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>回想一下 第  <a class="reference internal" href="engines.html"><span class="doc">引擎配置</span></a>  调用创建   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  对象：</p>
+<p>回想一下 第  <a class="reference internal" href="engines.html"><span class="doc">引擎配置</span></a>  调用创建   :class:` _engine.Engine`  对象：</p>
 <blockquote>
 <div><p>engine = create_engine(“mysql+mysqldb://scott:tiger&#64;localhost/test”)</p>
 </div></blockquote>
 <dl class="simple">
-<dt>通常使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  一次创建一个特定的数据库URL，并保存为单个应用程序进程生命周期的全局变量。单个</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  管理代表进程的许多单独的  <span class="xref std std-term">DBAPI</span>  连接，旨在以并发方式调用。   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
+<dt>通常使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  一次创建一个特定的数据库URL，并保存为单个应用程序进程生命周期的全局变量。单个</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  管理代表进程的许多单独的  :term:` DBAPI`  连接，旨在以并发方式调用。   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
 </dd>
 </dl>
 <p><a href="#id2"><span class="problematic" id="id3">**</span></a>不**等同于 DBAPI 的 <code class="docutils literal notranslate"><span class="pre">connect()</span></code> 函数，后者只表示一个连接资源 - 只创建一个   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  对象
@@ -493,10 +493,10 @@
 <aside class="sidebar">
 <p class="sidebar-title">贴士</p>
 <blockquote>
-<div><p>在使用包含内容多个Python进程的   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> （例如使用“os.fork”或Python <code class="docutils literal notranslate"><span class="pre">multiprocessing</span></code>）时，
+<div><p>在使用包含内容多个Python进程的   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> （例如使用“os.fork”或Python ` <cite>multiprocessing`</cite>）时，
 重要的是要为每个进程初始化引擎。有关详情，请参阅   <span class="xref std std-ref">pooling_multiprocessing</span> 。</p>
 </div></blockquote>
-<p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  最基本的功能是提供对   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  的访问，然后可以调用 SQL 语句。如何发出对</p>
+<p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  最基本的功能是提供对   :class:` _engine.Connection`  的访问，然后可以调用 SQL 语句。如何发出对</p>
 </aside>
 <p>数据库的文本语句看起来像这样:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
@@ -506,25 +506,25 @@
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
         <span class="n">print</span><span class="p">(</span><span class="s2">&quot;username:&quot;</span><span class="p">,</span> <span class="n">row</span><span class="o">.</span><span class="n">username</span><span class="p">)</span></pre></div>
 </div>
-<p>上面的  <a class="reference internal" href="#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>  方法返回一个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象，并通过在 Python 上下文管理器中
-（例如 <code class="docutils literal notranslate"><span class="pre">with:</span></code> 语句）使用它，  <a class="reference internal" href="#sqlalchemy.engine.Connection.close" title="sqlalchemy.engine.Connection.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.close()</span></code></a>  方法 在块结束时自动调用。   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+<p>上面的  <a class="reference internal" href="#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>  方法返回一个   :class:` _engine.Connection`  对象，并通过在 Python 上下文管理器中
+（例如 <code class="docutils literal notranslate"><span class="pre">with:</span></code> 语句）使用它，  <a class="reference internal" href="#sqlalchemy.engine.Connection.close" title="sqlalchemy.engine.Connection.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.close()</span></code></a>  方法 在块结束时自动调用。   :class:` _engine.Connection`
 是实际 DBAPI 连接的**代理**对象。 DBAPI 连接从连接池中检索到在创建   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  时。</p>
 <p>返回的对象称为   <a class="reference internal" href="#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a> ，引用了 DBAPI 游标，并提供类似于 DBAPI 游标的方法来检索行。当所有
-结果行（如果有）都用完时，DBAPI 游标将被   <a class="reference internal" href="#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>  关闭。   <a class="reference internal" href="#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>  对象
+结果行（如果有）都用完时，DBAPI 游标将被   <a class="reference internal" href="#sqlalchemy.engine.CursorResult" title="sqlalchemy.engine.CursorResult"><code class="xref py py-class docutils literal notranslate"><span class="pre">CursorResult</span></code></a>  关闭。   :class:` _engine.CursorResult`  对象
 不返回任何行，例如 UPDATE 语句（没有返回任何行），则这些游标资源在构建时立即释放。</p>
-<p>在 <code class="docutils literal notranslate"><span class="pre">with:</span></code> block 结束时，将关闭   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，引用的 DBAPI 连接将 <span class="xref std std-term">释放`到连接池中。从数据库
+<p>在 <code class="docutils literal notranslate"><span class="pre">with:</span></code> block 结束时，将关闭   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> ，引用的 DBAPI 连接将 :term:` 释放`到连接池中。从数据库
 的角度来看，假设池有空间将此连接存储以供下次使用，则连接池实际上不会“关闭”连接。当将连接返回池以供重新使用时，
-连接池机制会在 DBAPI 连接上发出 ``rollback()`</span> 调用，以便删除任何事务状态或锁（这被称为   <a class="reference internal" href="pooling.html#pool-reset-on-return"><span class="std std-ref">返回后重置表单</span></a> )，
+连接池机制会在 DBAPI 连接上发出 <code class="docutils literal notranslate"><span class="pre">rollback()</span></code> 调用，以便删除任何事务状态或锁（这被称为   <a class="reference internal" href="pooling.html#pool-reset-on-return"><span class="std std-ref">返回后重置表单</span></a> )，
 并准备好进行下一次使用。</p>
 <p>我们上面的示例说明了如何执行文本 SQL 字符串，发出此类语句应使用   <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>  构造对象，以表明我们希望
-使用文本 SQL。当然，  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法可以容纳更多内容；有关教程，请参见   <a class="reference internal" href="../tutorial/data.html#tutorial-working-with-data"><span class="std std-ref">使用数据</span></a> 。</p>
+使用文本 SQL。当然，  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法可以容纳更多内容；有关教程，请参见   :ref:` tutorial_working_with_data` 。</p>
 </section>
 <section id="id4">
 <h2>使用事务<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>本节描述了在直接使用   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象时如何使用事务控制的公共 API。在使用
-SQLAlchemy ORM 时，事务控制的公共 API 是通过   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象实现的，该对象在内部使用   <a class="reference internal" href="#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a>  对象。有关
+<p>本节描述了在直接使用   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  和   :class:` _engine.Connection`  对象时如何使用事务控制的公共 API。在使用
+SQLAlchemy ORM 时，事务控制的公共 API 是通过   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  对象实现的，该对象在内部使用   :class:` .Transaction`  对象。有关
 更多信息，请参见   <a class="reference internal" href="../orm/session_transaction.html#unitofwork-transaction"><span class="std std-ref">管理事务</span></a> 。</p>
 </div>
 <section id="id5">
@@ -533,7 +533,7 @@ SQLAlchemy ORM 时，事务控制的公共 API 是通过   <code class="xref py 
 <div><p><a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a></p>
 </div></blockquote>
 <p>方法以执行 SQL 语句时，此事务会自动启动，并使用称为 <strong>autobegin</strong> 的行为。事务在   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象范围内保持不变，直
-到调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  或  <a class="reference internal" href="#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>  方法。在结束事务后，   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象等待
+到调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  或  :meth:` _engine.Connection.rollback`  方法。在结束事务后，   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象等待
 调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法，此时它将再次自动开始。</p>
 <p>此调用样式称为 <strong>按需提交</strong>，下面的示例说明了此样式</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
@@ -553,7 +553,7 @@ CN: DBAPI 的 <code class="docutils literal notranslate"><span class="pre">conne
 当首次发出SQL语句时。 SQLAlchemy的API实际上是用更高级的Python对象重新陈述这种行为。</p>
 </aside>
 <dl>
-<dt>在“按需提交”的样式中，我们可以在  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  的一系列其他语句中自由调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  和</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>   方法；每次事务结束并发出新语句时，都会隐式地开始一个新事务。</p>
+<dt>在“按需提交”的样式中，我们可以在  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  的一系列其他语句中自由调用  :meth:` _engine.Connection.commit`  和</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>   方法；每次事务结束并发出新语句时，都会隐式地开始一个新事务。</p>
 <blockquote>
 <div><dl>
 <dt>with engine.connect() as connection:</dt><dd><p>connection.execute(“&lt;some statement&gt;”)
@@ -581,9 +581,9 @@ connection.commit()  # 提交“a third statement”</p>
 <div><p><a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象提供了更明确的事务管理样式，称为 <strong>一次开始</strong>。与“按需提交”不同，</p>
 </div></blockquote>
 <p>“一次开始”允许显式说明事务的开始点，并且允许将事务本身框架为上下文管理器块，以便事务结束变得隐式。使用“一次开始”时，
-使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  方法，它返回一个代表 DBAPI 事务的   <a class="reference internal" href="#sqlalchemy.engine.Transaction" title="sqlalchemy.engine.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a>  对象。此对象还支持通过</p>
+使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  方法，它返回一个代表 DBAPI 事务的   :class:` .Transaction`  对象。此对象还支持通过</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Transaction.commit" title="sqlalchemy.engine.Transaction.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.commit()</span></code></a>   和  <a class="reference internal" href="#sqlalchemy.engine.Transaction.rollback" title="sqlalchemy.engine.Transaction.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.rollback()</span></code></a>  方法进行显式管理，但作为一种首选的惯例，它还支持上下文管理器接口，</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Transaction.commit" title="sqlalchemy.engine.Transaction.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Transaction.commit()</span></code></a>   和  :meth:` _engine.Transaction.rollback`  方法进行显式管理，但作为一种首选的惯例，它还支持上下文管理器接口，</p>
 </div></blockquote>
 <p>在块结束时，它将正常自动提交并在引发异常时发送回滚以将异常传播出去。以下说明了“一次开始”块的形式：</p>
 <blockquote>
@@ -604,11 +604,11 @@ connection.execute(</p>
 </section>
 <section id="engine">
 <h3>连接和一次开始从 Engine 中开始<a class="headerlink" href="#engine" title="Permalink to this heading">¶</a></h3>
-<p>一个便捷的简写形式是在发起调用时对  <a class="reference internal" href="#sqlalchemy.engine.Engine.begin" title="sqlalchemy.engine.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a>  进行调用，而不是执行两个单独的步骤  <a class="reference internal" href="#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>
-和  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  ；<code class="xref py py-meth docutils literal notranslate"><span class="pre">begin</span>
-<span class="pre">`</span> <span class="pre">方法返回一个特殊上下文管理器，内部维护了</span>&#160;&#160; <span class="pre">:class:`_engine.Connection()</span></code>  的上下文管理器和正常情况下由</p>
+<p>一个便捷的简写形式是在发起调用时对  <a class="reference internal" href="#sqlalchemy.engine.Engine.begin" title="sqlalchemy.engine.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a>  进行调用，而不是执行两个单独的步骤  :meth:` _engine.Engine.connect`
+和  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  ；:meth:` _engine.Engine.begin
+` 方法返回一个特殊上下文管理器，内部维护了   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  的上下文管理器和正常情况下由</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>   方法返回的-context manager class:<cite>_engine.Transaction</cite> 的上下文管理器:</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>   方法返回的-context manager class:` _engine.Transaction` 的上下文管理器:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">connection</span><span class="p">:</span>
     <span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">some_table</span><span class="o">.</span><span class="n">insert</span><span class="p">(),</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="s2">&quot;this is some data&quot;</span><span class="p">})</span>
     <span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
@@ -622,7 +622,7 @@ connection.execute(</p>
 <p class="admonition-title">Tip</p>
 <blockquote>
 <div><dl class="simple">
-<dt>在  <a class="reference internal" href="#sqlalchemy.engine.Engine.begin" title="sqlalchemy.engine.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a>  块内，我们可以调用</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  或  <a class="reference internal" href="#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>  等方法，这将在块之前正常结束事务。</p>
+<dt>在  <a class="reference internal" href="#sqlalchemy.engine.Engine.begin" title="sqlalchemy.engine.Engine.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.begin()</span></code></a>  块内，我们可以调用</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>  或  :meth:` _engine.Connection.rollback`  等方法，这将在块之前正常结束事务。</p>
 </dd>
 </dl>
 </div></blockquote>
@@ -644,10 +644,10 @@ connection.execute(</p>
 </section>
 <section id="id7">
 <h3>样式混合<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
-<p>“按需提交”和“一次开始”样式可以自由混合在单个  <a class="reference internal" href="#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>  块内，只要调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  时不会与
+<p>“按需提交”和“一次开始”样式可以自由混合在单个  <a class="reference internal" href="#sqlalchemy.engine.Engine.connect" title="sqlalchemy.engine.Engine.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code></a>  块内，只要调用  :meth:` _engine.Connection.begin`  时不会与
 “autobegin”行为发生冲突即可。 为了实现这一点，只有在未发出任何 SQL 语句之前或直接在前一个调用</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>   或  <a class="reference internal" href="#sqlalchemy.engine.Connection.rollback" title="sqlalchemy.engine.Connection.rollback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.rollback()</span></code></a>  之后才应调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a> 。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>   或  :meth:` _engine.Connection.rollback`  之后才应调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a> 。</p>
 <blockquote>
 <div><dl>
 <dt>with engine.connect() as connection:</dt><dd><dl class="simple">
@@ -686,14 +686,14 @@ SQLAlchemy 将“自动提交”概念视为另一种事务隔离级别；因为
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>重要的是要注意，在下面的   <a class="reference internal" href="#dbapi-autocommit-understanding"><span class="std std-ref">理解 DBAPI 级别的自动提交隔离级别行为</span></a>  部分中，“autocommit”隔离级别就像另一个事务隔离级别
-一样，对   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象的“事务性”行为没有影响，  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  方法仍会调用
+一样，对   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象的“事务性”行为没有影响，  :meth:` _engine.Connection.begin`  方法仍会调用
 DBAPI <code class="docutils literal notranslate"><span class="pre">.commit()</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.rollback()</span></code> 方法（在自动提交下，它们没有任何作用），对于 <code class="docutils literal notranslate"><span class="pre">.begin()</span></code> 方法，<code class="docutils literal notranslate"><span class="pre">DBAPI</span></code>
 会自动进行事务性开始（这意味着 SQLAlchemy 的“begin”<a href="#id8"><span class="problematic" id="id9">**</span></a>不会更改自动提交模式）。</p>
 </div>
 <p>SQLAlchemy 方言应尽可能支持这些隔离级别以及自动提交。</p>
 <section id="isolation-level-dbapi-autocommit">
 <h3>为一个连接设置 Isolation Level 或 DBAPI Autocommit<a class="headerlink" href="#isolation-level-dbapi-autocommit" title="Permalink to this heading">¶</a></h3>
-<p>可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法为单个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
+<p>可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法为单个   :class:` _engine.Connection`
 对象设置隔离级别的持续时间。该参数称为  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.isolation_level" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.isolation_level</span></code></a>  列表，
 是字符串，通常是以下名称的子集：</p>
 <blockquote>
@@ -720,10 +720,10 @@ DBAPI <code class="docutils literal notranslate"><span class="pre">.commit()</sp
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法的返回值是调用该方法的   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象本身，</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法的返回值是调用该方法的   :class:` _engine.Connection`  对象本身，</p>
 </div></blockquote>
 <dl class="simple">
-<dt>这意味着它会直接修改   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象的状态，这是 SQLAlchemy 2.0 的新行为。该行为不适用于</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>  方法; 该方法仍将返回一个类似副本的   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  对象，就像下面所述，可以使用此方法</p>
+<dt>这意味着它会直接修改   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象的状态，这是 SQLAlchemy 2.0 的新行为。该行为不适用于</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>  方法; 该方法仍将返回一个类似副本的   :class:` .Engine`  对象，就像下面所述，可以使用此方法</p>
 </dd>
 </dl>
 <p>为具有不同执行选项的多个   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  对象构建引擎，但它们共享相同的方言和连接池。</p>
@@ -736,7 +736,7 @@ DBAPI <code class="docutils literal notranslate"><span class="pre">.commit()</sp
 </section>
 <section id="id10">
 <h3>为引擎设置隔离级别或 DBAPI 自动提交<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
-<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_engine.execution_options()</span></code>  参数或 在  <a class="reference internal" href="#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>  方法中
+<p>使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_engine.execution_options()</span></code>  参数或 在  :meth:` _engine.Engine.execution_options`  方法中
 可以对引擎宽度设置隔离级别，这通常是首选的。可以使用参数  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.isolation_level</span></code>  传递给</p>
 <blockquote>
 <div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code>  来实现：</p>
@@ -771,14 +771,14 @@ DBAPI <code class="docutils literal notranslate"><span class="pre">.commit()</sp
 <p>然而，经常选择在不同隔离级别下运行操作的应用程序可能希望创建超级   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  的多个 “子引擎”，每个 “子引擎”
 将配置为不同的隔离级别。一个这样的用例是具有 “事务性” 和 “只读” 操作的操作的应用程序，可以从主引擎中分离出一个额外的</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，它使用 <code class="docutils literal notranslate"><span class="pre">&quot;AUTOCOMMIT&quot;</span></code> 可以单独执行。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，它使用 ` <cite>“AUTOCOMMIT”`</cite> 可以单独执行。</p>
 <blockquote>
 <div><p>from sqlalchemy import create_engine</p>
 <p>eng = create_engine(“postgresql+psycopg2://scott:tiger&#64;localhost/test”)</p>
 <p>autocommit_engine = eng.execution_options(isolation_level=”AUTOCOMMIT”)</p>
 </div></blockquote>
 </div></blockquote>
-<p>上面，  <a class="reference internal" href="#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>   方法创建原始   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  的浅层副本。 <code class="docutils literal notranslate"><span class="pre">eng</span></code> 和
+<p>上面，  <a class="reference internal" href="#sqlalchemy.engine.Engine.execution_options" title="sqlalchemy.engine.Engine.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execution_options()</span></code></a>   方法创建原始   :class:` _engine.Engine`  的浅层副本。 <code class="docutils literal notranslate"><span class="pre">eng</span></code> 和
 <code class="docutils literal notranslate"><span class="pre">autocommit_engine</span></code> 共享相同的方言和连接池。但是，当从 autocommit_engine 获取连接时，将为它们设置“AUTOCOMMIT”模式。</p>
 <p>无论使用哪种方法，不管隔离级别如何，当一个连接返回到连接池时，隔离级别都会被无条件地恢复。</p>
 <div class="admonition seealso">
@@ -807,7 +807,7 @@ connection.execute(“&lt;statement&gt;”)</p>
 </dl>
 </div></blockquote>
 <dl class="simple">
-<dt>上面说明了“DBAPI 自动提交”模式的正常用法。没有必要使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  或</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>   方法，因为所有语句都会立即提交到数据库中。当块结束时，   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a></p>
+<dt>上面说明了“DBAPI 自动提交”模式的正常用法。没有必要使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  或</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Connection.commit" title="sqlalchemy.engine.Connection.commit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.commit()</span></code></a>   方法，因为所有语句都会立即提交到数据库中。当块结束时，   :class:` _engine.Connection`</p>
 </dd>
 </dl>
 <p>对象将恢复“自动提交”隔离级别，并将 DBAPI 连接释放到连接池中，DBAPI 的 <code class="docutils literal notranslate"><span class="pre">connection.rollback()</span></code> 方法通常将被调用，
@@ -830,13 +830,13 @@ with connection.begin() as trans:</p>
 </dl>
 </div></blockquote>
 <p>上面的示例还演示了与前面提到的相同主题，即“自动提交”隔离级别是底层数据库事务的一项配置细节，并且独立于 SQLAlchemy
-的  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  和 <a href="#id13"><span class="problematic" id="id14">|</span></a>meth:<cite>_engine.Connection.commit</cite> 方法的行为。这两种方式对于 SQLAlchemy
+的  <a class="reference internal" href="#sqlalchemy.engine.Connection.begin" title="sqlalchemy.engine.Connection.begin"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.begin()</span></code></a>  和 <a href="#id13"><span class="problematic" id="id14">|</span></a>meth:` _engine.Connection.commit` 方法的行为。这两种方式对于 SQLAlchemy
 的   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  的取用方法来说没有任何影响；该“autocommit”模式可以独立地在其他位置更改，而无需表明其他不同。</p>
 <section id="id15">
 <h4>更改隔离级别<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h4>
 <aside class="topic">
 <p class="topic-title">TL;DR;</p>
-<p>更喜欢使用单个隔离级别的单个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象，而不是在单个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  上切换隔离级别。代码会更易读，更少出现错误。</p>
+<p>更喜欢使用单个隔离级别的单个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象，而不是在单个   :class:` _engine.Connection`  上切换隔离级别。代码会更易读，更少出现错误。</p>
 </aside>
 <p>隔离级别设置，包括自动提交模式，会在将连接释放回到连接池时自动重置。因此，最好不要尝试在单个   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>
 对象上切换隔离级别，因为这会导致过多的冗余 verbosity。</p>
@@ -893,19 +893,19 @@ with engine.begin() as connection:</p>
 <p>从这个基本架构出发，可以得出“服务器端游标”在提取非常大的结果集时更加内存高效，同时可能引入更复杂的客户端/服务器通信过程，并且对小结果集 (通常少于 10000 行) 的效率不高。</p>
 <p>对于那些有条件支持缓冲或未缓冲结果的方言，通常有使用“未缓冲”或服务器端游标模式的警告。例如，使用 psycopg2 方言时，如果使用服务器端游标对任何类型的 DML 或 DDL 语句进行了设置，就会引发错误。使用服务器端游标的 MySQL 驱动程序处于更为脆弱的状态，它不会像缓存式游标那样优雅地从错误条件中恢复，也不允许在游标完全关闭之前执行回滚。</p>
 <p>因此，SQLAlchemy 的方言始终默认使用更少出错的游标，因此对于 PostgreSQL 和 MySQL 方言，它默认使用缓存、“客户端”游标，在从游标调用任何获取方法之前，将完整的结果集拉入内存。这种操作模式适用于 <strong>绝大多数</strong> 情况；未缓冲的游标通常只在应用程序以很大的块获取大量行的不寻常情况下才有用，这些行的处理在获取更多行之前就可以完成。</p>
-<p>对于提供客户端和服务器端游标选项的数据库驱动程序，  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>   和  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  执行选项在基于   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  或语句的基础上提供“服务器端游标”的访问。使用 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  时也存在类似的选项。</p>
+<p>对于提供客户端和服务器端游标选项的数据库驱动程序，  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>   和  :paramref:` _engine.Connection.execution_options.yield_per`  执行选项在基于   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  或语句的基础上提供“服务器端游标”的访问。使用 ORM   :class:` _orm.Session`  时也存在类似的选项。</p>
 </section>
 </section>
 <section id="yield-per">
 <h3>通过 yield_per 使用固定大小的缓冲进行流处理<a class="headerlink" href="#yield-per" title="Permalink to this heading">¶</a></h3>
-<p>由于每个完全未缓存的服务器端游标的单个行提取操作通常比一次提取多行的批处理更昂贵，因此  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  执行选项将为使用服务器端游标的   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  或语句配置一定的以行批为单位的固定大小缓冲，以便在消耗它们时从服务器中检索这些行。可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法在   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  上或在语句上使用  <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Executable.execution_options" title="sqlalchemy.sql.expression.Executable.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Executable.execution_options()</span></code></a>  方法将此参数配置为正整数值。</p>
+<p>由于每个完全未缓存的服务器端游标的单个行提取操作通常比一次提取多行的批处理更昂贵，因此  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  执行选项将为使用服务器端游标的   :class:` _engine.Connection`  或语句配置一定的以行批为单位的固定大小缓冲，以便在消耗它们时从服务器中检索这些行。可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execution_options()</span></code></a>  方法在   :class:` _engine.Connection`  上或在语句上使用  <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Executable.execution_options" title="sqlalchemy.sql.expression.Executable.execution_options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Executable.execution_options()</span></code></a>  方法将此参数配置为正整数值。</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 1.4.40: </span><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  属于 Core 级别的选项，是 SQLAlchemy 1.4.40 新增的；对于之前的 1.4 版本，要结合  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  和   <a class="reference internal" href="#sqlalchemy.engine.Result.yield_per" title="sqlalchemy.engine.Result.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.yield_per()</span></code></a>  使用。</p>
+<p><span class="versionmodified added">New in version 1.4.40: </span><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  属于 Core 级别的选项，是 SQLAlchemy 1.4.40 新增的；对于之前的 1.4 版本，要结合  :paramref:` _engine.Connection.execution_options.stream_results`  和   <a class="reference internal" href="#sqlalchemy.engine.Result.yield_per" title="sqlalchemy.engine.Result.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.yield_per()</span></code></a>  使用。</p>
 </div>
-<p>使用此选项等效于手动设置  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项（下文将描述为“stream”选项），然后调用  <a class="reference internal" href="#sqlalchemy.engine.Result.yield_per" title="sqlalchemy.engine.Result.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.yield_per()</span></code></a>  方法并为给定的整数值。在这两种情况下，此组合的效果包括：</p>
+<p>使用此选项等效于手动设置  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项（下文将描述为“stream”选项），然后调用  :meth:` _engine.Result.yield_per`  方法并为给定的整数值。在这两种情况下，此组合的效果包括：</p>
 <ul class="simple">
 <li><p>选择了给定后端的服务器端游标模式（如果可用且不是该后端的默认行为）</p></li>
-<li><p>由于获取结果行时，它们将被分批缓冲，因此在调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  选项或  <a class="reference internal" href="#sqlalchemy.engine.Result.yield_per" title="sqlalchemy.engine.Result.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.yield_per()</span></code></a>  方法之前，每个批的大小将等于传递给它们的整数参数；然后最后一批与剩下的行的大小相同或更少</p></li>
+<li><p>由于获取结果行时，它们将被分批缓冲，因此在调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  选项或  :meth:` _engine.Result.yield_per`  方法之前，每个批的大小将等于传递给它们的整数参数；然后最后一批与剩下的行的大小相同或更少</p></li>
 <li><p>如果使用那个函数，则  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法使用的默认分区大小，将与该整数大小相同。</p></li>
 </ul>
 <p>下面示例说明这三种行为：</p>
@@ -918,13 +918,13 @@ with engine.begin() as connection:</p>
 <span class="go">            for row in partition:</span>
 <span class="go">                print(f&quot;{row}&quot;)</span></pre></div>
 </div>
-<p>上面的示例演示了组合使用 <code class="docutils literal notranslate"><span class="pre">yield_per=100</span></code> 以及使用  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法在与从服务器检索的大小匹配的批处理中运行处理。使用  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  是可选的，如果直接迭代   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> ，则会为每 100 行获取一批新行。不应使用  <a class="reference internal" href="#sqlalchemy.engine.Result.all" title="sqlalchemy.engine.Result.all"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.all()</span></code></a>  等方法，因为这样会立即获取所有剩余行，从而破坏使用 <code class="docutils literal notranslate"><span class="pre">yield_per</span></code> 的目的。</p>
+<p>上面的示例演示了组合使用 <code class="docutils literal notranslate"><span class="pre">yield_per=100</span></code> 以及使用  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法在与从服务器检索的大小匹配的批处理中运行处理。使用  :meth:` _engine.Result.partitions`  是可选的，如果直接迭代   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a> ，则会为每 100 行获取一批新行。不应使用  :meth:` _engine.Result.all`  等方法，因为这样会立即获取所有剩余行，从而破坏使用 <code class="docutils literal notranslate"><span class="pre">yield_per</span></code> 的目的。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <blockquote>
-<div><p>可以像上面示例中那样使用   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象作为上下文管理器。使用服务器端游标迭代时，这是确保   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象被关闭的最佳方法，即使在迭代过程中引发异常。</p>
+<div><p>可以像上面示例中那样使用   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象作为上下文管理器。使用服务器端游标迭代时，这是确保   :class:` .Result`  对象被关闭的最佳方法，即使在迭代过程中引发异常。</p>
 </div></blockquote>
-<p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>   选项也可移植到 ORM 中，由   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  使用，然后将该引擎传递给   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。在使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  获取 ORM 对象时也会使用此选项，该选项还限制了一次生成的 ORM 对象的数量。有关如何在 ORM 中使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  的背景信息，请参见   <span class="xref std std-ref">orm_queryguide_yield_per</span>  部分，其位于   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中。</p>
+<p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>   选项也可移植到 ORM 中，由   :class:` _engine.Engine`  使用，然后将该引擎传递给   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。在使用   :class:` _orm.Session`  获取 ORM 对象时也会使用此选项，该选项还限制了一次生成的 ORM 对象的数量。有关如何在 ORM 中使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  的背景信息，请参见   :ref:` orm_queryguide_yield_per`  部分，其位于   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中。</p>
 </div>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 1.4.40: </span>新增了  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  作为 Core 级别的执行选项，以方便设置流式结果、缓冲区大小和分区大小，与 ORM 的类似用例相对应。</p>
@@ -932,8 +932,8 @@ with engine.begin() as connection:</p>
 </section>
 <section id="stream-results">
 <span id="engine-stream-results-sr"></span><h3>使用 stream_results 动态增长的缓冲区进行流处理<a class="headerlink" href="#stream-results" title="Permalink to this heading">¶</a></h3>
-<p>要使用 stream_results 选项启用服务器端游标而不指定分区大小，可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项，在   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  对象或语句对象上调用该选项。</p>
-<p>当使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项交付的   <a class="reference internal" href="#sqlalchemy.engine.Result" title="sqlalchemy.engine.Result"><code class="xref py py-class docutils literal notranslate"><span class="pre">Result</span></code></a>  对象直接进行迭代时，将使用一种默认缓冲方案内部获取行，该方案首先缓冲少量行，然后在每次获取时缓冲越来越多的行，直到达到预配置的限制 1000 行。使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.max_row_buffer" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.max_row_buffer</span></code></a>  执行选项可以影响此缓冲区的最大大小:</p>
+<p>要使用 stream_results 选项启用服务器端游标而不指定分区大小，可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项，在   :class:` _engine.Connection`  对象或语句对象上调用该选项。</p>
+<p>当使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项交付的   :class:` _engine.Result`  对象直接进行迭代时，将使用一种默认缓冲方案内部获取行，该方案首先缓冲少量行，然后在每次获取时缓冲越来越多的行，直到达到预配置的限制 1000 行。使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.max_row_buffer" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.max_row_buffer</span></code></a>  执行选项可以影响此缓冲区的最大大小:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
     <span class="k">with</span> <span class="n">conn</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span><span class="n">stream_results</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">max_row_buffer</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
         <span class="n">text</span><span class="p">(</span><span class="s2">&quot;select * from table&quot;</span><span class="p">)</span>
@@ -941,11 +941,11 @@ with engine.begin() as connection:</p>
         <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
             <span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
 </div>
-<p>虽然  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项可以与使用  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法结合使用，但应为  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法提供特定的分区大小，以便不获取整个结果。使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.yield_per" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.yield_per</span></code></a>  选项通常更直接。</p>
+<p>虽然  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.stream_results" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.stream_results</span></code></a>  选项可以与使用  :meth:` _engine.Result.partitions`  方法结合使用，但应为  <a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a>  方法提供特定的分区大小，以便不获取整个结果。使用  :paramref:` _engine.Connection.execution_options.yield_per`  选项通常更直接。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <blockquote>
-<div><p><span class="xref std std-ref">orm_queryguide_yield_per</span>  - 位于   <a class="reference internal" href="../orm/queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a></p>
+<div><p><span class="xref std std-ref">orm_queryguide_yield_per</span>  - 位于   :ref:` queryguide_toplevel`</p>
 </div></blockquote>
 <p><a class="reference internal" href="#sqlalchemy.engine.Result.partitions" title="sqlalchemy.engine.Result.partitions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.partitions()</span></code></a></p>
 <p><a class="reference internal" href="#sqlalchemy.engine.Result.yield_per" title="sqlalchemy.engine.Result.yield_per"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Result.yield_per()</span></code></a></p>
@@ -954,7 +954,7 @@ with engine.begin() as connection:</p>
 </section>
 <section id="schema-translating">
 <span id="id16"></span><h2>翻译模式名称<a class="headerlink" href="#schema-translating" title="Permalink to this heading">¶</a></h2>
-<p>为支持将常见的表分发到多个架构的多租户应用程序，可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>  执行选项，将一组   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象重新用于不同的模式名称，而不需要进行任何更改。</p>
+<p>为支持将常见的表分发到多个架构的多租户应用程序，可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>  执行选项，将一组   :class:` _schema.Table`  对象重新用于不同的模式名称，而不需要进行任何更改。</p>
 <p>给定一个表:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;user&quot;</span><span class="p">,</span>
@@ -963,7 +963,7 @@ with engine.begin() as connection:</p>
     <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">)),</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>“模式”由  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table.params.schema" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.schema</span></code></a>  属性定义，例如   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  这个没有。  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>   可以指定，在未指定模式的情况下，所有   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象都将被呈现为不同于 <code class="docutils literal notranslate"><span class="pre">user_schema_one</span></code> 架构的模式:</p>
+<p>“模式”由  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table.params.schema" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.schema</span></code></a>  属性定义，例如   :class:` _schema.Table`  这个没有。  <a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>   可以指定，在未指定模式的情况下，所有   :class:` _schema.Table`  对象都将被呈现为不同于 <code class="docutils literal notranslate"><span class="pre">user_schema_one</span></code> 架构的模式:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span><span class="o">.</span><span class="n">execution_options</span><span class="p">(</span>
     <span class="n">schema_translate_map</span><span class="o">=</span><span class="p">{</span><span class="kc">None</span><span class="p">:</span> <span class="s2">&quot;user_schema_one&quot;</span><span class="p">}</span>
 <span class="p">)</span>
@@ -989,15 +989,15 @@ with engine.begin() as connection:</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>   参数影响从 SQL 表达式语言生成的所有 DDL 和 SQL constructs，这些 constructs 是从   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  或   <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>  表格派生的。它不会影响通过   <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a>  构造的文字字符串 SQL，也不会影响传递了纯字符串到  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的操作。</p>
+<p><a class="reference internal" href="#sqlalchemy.engine.Connection.execution_options.params.schema_translate_map" title="sqlalchemy.engine.Connection.execution_options"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execution_options.schema_translate_map</span></code></a>   参数影响从 SQL 表达式语言生成的所有 DDL 和 SQL constructs，这些 constructs 是从   :class:` _schema.Table`  或   <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>  表格派生的。它不会影响通过   :func:` _expression.text`  构造的文字字符串 SQL，也不会影响传递了纯字符串到  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的操作。</p>
 </div></blockquote>
-<p>此功能仅在那些直接从   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  或   <a class="reference internal" href="defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>  中派生模式名称的情况下发生作用，并且不会影响   <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code>  对象的操作，因为模式名称是显式传递给这些方法的。</p>
+<p>此功能仅在那些直接从   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  或   :class:` .Sequence`  中派生模式名称的情况下发生作用，并且不会影响   <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code>  对象的操作，因为模式名称是显式传递给这些方法的。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>要在 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  上使用翻译方案特性，请在   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  级别设置该选项，然后将该引擎传递给   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  为每个事务使用一个新   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 。</p>
+<p>要在 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  上使用翻译方案特性，请在   :class:` _engine.Engine`  级别设置该选项，然后将该引擎传递给   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 。  :class:` _orm.Session`  为每个事务使用一个新   <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>默认情况下，使用 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，仅支持 <strong>每个会话的单个模式转换映射</strong>，如果在每个语句的基础上给出了不同的模式转换映射，则它将 <strong>无效</strong>，因为 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  不考虑当前模式转换值。要使用具有多个 <code class="docutils literal notranslate"><span class="pre">schema_translate_map</span></code> 配置的单个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，可以使用   <span class="xref std std-ref">horizontal_sharding_toplevel</span>  扩展。有关示例，请参见   <a class="reference internal" href="../orm/examples.html#examples-sharding"><span class="std std-ref">水平分片</span></a> 。</p>
+<p>默认情况下，使用 ORM   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，仅支持 <strong>每个会话的单个模式转换映射</strong>，如果在每个语句的基础上给出了不同的模式转换映射，则它将 <strong>无效</strong>，因为 ORM   :class:` _orm.Session`  不考虑当前模式转换值。要使用具有多个 <code class="docutils literal notranslate"><span class="pre">schema_translate_map</span></code> 配置的单个   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ，可以使用   :ref:` horizontal_sharding_toplevel`  扩展。有关示例，请参见   <a class="reference internal" href="../orm/examples.html#examples-sharding"><span class="std std-ref">水平分片</span></a> 。</p>
 </div>
 </div>
 </section>
@@ -1019,7 +1019,7 @@ with engine.begin() as connection:</p>
 <p>重要的一点是，SQL 编译缓存仅缓存传递给数据库的**SQL字符串而已**，并且**不缓存**查询返回的数据。它不以任何方式是一个数据缓存，并且不会与获取结果行相关的任何内存使用。</p>
 </div>
 <p>虽然 SQLAlchemy 早期 1.x 系列自带了简单的语句缓存，但另外还提供了“Baked Query”扩展来提高缓存的效率，但是这些系统都需要高度特殊的 API 以使缓存生效。 2020 年 7 月开始，1.4 版本引入了新的缓存系统，这个缓存系统完全自动且不需要任何特殊步骤才能生效。</p>
-<p>这个缓存系统会透明地在   <code class="xref py py-class docutils literal notranslate"><span class="pre">_Engine</span></code>  内部使用类似的机制（由底层编译缓存机制驱动）。那么一个给定的 Core 或 ORM SQL 声明语句的 SQL 编译过程，以及为该语句集装配检索结果机制的相关计算，将仅针对该构造对象的某个具体结构执行一次，并保留在特定结构在引擎的“编译缓存”中的持续时间内。所有 SQLAlchemy 支持的 struct‌　类型都被缓存，including   <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .Insert`构造、  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> .Delete`构造等。</p>
+<p>这个缓存系统会透明地在   <code class="xref py py-class docutils literal notranslate"><span class="pre">_Engine</span></code>  内部使用类似的机制（由底层编译缓存机制驱动）。那么一个给定的 Core 或 ORM SQL 声明语句的 SQL 编译过程，以及为该语句集装配检索结果机制的相关计算，将仅针对该构造对象的某个具体结构执行一次，并保留在特定结构在引擎的“编译缓存”中的持续时间内。所有 SQLAlchemy 支持的 struct‌　类型都被缓存，including   :class:` .Select` .Insert`构造、  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a> .Delete` 构造等。</p>
 <section id="id17">
 <h3>配置<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
 <p>缓存本身是类似字典的对象，称为“LRUCache”。这是一个内部 SQLAlchemy 字典子类，可跟踪特定键的使用情况，并在缓存大小达到一定阈值时执行定期“修剪”步骤，以删除最近未使用的项目。缓存的大小默认为 500 ，可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.query_cache_size</span></code>  参数进行配置：</p>
@@ -1035,7 +1035,7 @@ with engine.begin() as connection:</p>
 </section>
 <section id="sql-caching-logging">
 <span id="id18"></span><h3>使用日志记录估计缓存性能<a class="headerlink" href="#sql-caching-logging" title="Permalink to this heading">¶</a></h3>
-<p>上面的 1200 缓存大小相当大。对于小型应用程序，大小 100 可能已足够。为了估计缓存的最佳大小，假设目标主机上存在足够的内存，则缓存的大小应基于可以为目标引擎呈现的唯一 SQL 字符串的数量。最直接的启用 SQL 回显的方法可能是使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.echo</span></code>  标志，或使用 Python 日志；有关日志配置的背景，请参见   <span class="xref std std-ref">dbengine_logging</span>  部分。</p>
+<p>上面的 1200 缓存大小相当大。对于小型应用程序，大小 100 可能已足够。为了估计缓存的最佳大小，假设目标主机上存在足够的内存，则缓存的大小应基于可以为目标引擎呈现的唯一 SQL 字符串的数量。最直接的启用 SQL 回显的方法可能是使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.echo</span></code>  标志，或使用 Python 日志；有关日志配置的背景，请参见   :ref:` dbengine_logging`  部分。</p>
 <p>例如，我们将检查以下程序生成的日志：</p>
 <div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="go">from sqlalchemy import Column</span>
 <span class="go">from sqlalchemy import create_engine</span>
@@ -1112,7 +1112,7 @@ INFO sqlalchemy.engine.Engine [raw sql] ()</pre></div>
 <span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="k">no</span><span class="w"> </span><span class="k">key</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">00006</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">()</span></pre></div>
 </div>
 <p>对于这两个语句，徽章为“[no key 0.00006s]”。这表示这两个特殊语句均未缓存，原因是 DDL 相关的   <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateTable</span></code>  构造没有生成缓存键。DDL 构造通常不参与缓存，因为它们通常不会被重复使用，而且 DDL 还是数据库配置步骤，性能不是那么重要。</p>
-<p>“[no key]” 徽章也非常重要，因为它可能会为可缓存的 SQL 语句生成，但某些子构造当前不能缓存而产生。此类示例包括没有定义缓存参数的自定义用户定义 SQL 元素，以及生成任意长且不可复制的 SQL 字符串的某些构造形式，主要是   <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Values" title="sqlalchemy.sql.expression.Values"><code class="xref py py-class docutils literal notranslate"><span class="pre">Values</span></code></a>  构造和使用  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>  方法的“多属性插入”。</p>
+<p>“[no key]” 徽章也非常重要，因为它可能会为可缓存的 SQL 语句生成，但某些子构造当前不能缓存而产生。此类示例包括没有定义缓存参数的自定义用户定义 SQL 元素，以及生成任意长且不可复制的 SQL 字符串的某些构造形式，主要是   <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Values" title="sqlalchemy.sql.expression.Values"><code class="xref py py-class docutils literal notranslate"><span class="pre">Values</span></code></a>  构造和使用  :meth:` .Insert.values`  方法的“多属性插入”。</p>
 <p>到目前为止，我们的缓存仍为空。然后缓存的语句将被缓存，一个段落看起来像：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">(</span><span class="k">data</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">)</span>
 <span class="n">INFO</span><span class="w"> </span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="n">Engine</span><span class="w"> </span><span class="p">[</span><span class="k">generated</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">00011</span><span class="n">s</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="k">None</span><span class="p">,)</span>
@@ -1158,13 +1158,13 @@ WHERE ? = b.a_id</p>
 </section>
 <section id="engine-compiled-cache">
 <span id="id20"></span><h3>禁用或使用其他字典缓存一些（或全部）语句<a class="headerlink" href="#engine-compiled-cache" title="Permalink to this heading">¶</a></h3>
-<p>内部使用的缓存称为“LRUCache”，但这主要只是一个字典。任何字典都可以作为任何一系列语句的缓存来使用，方法是使用:paramref: .Connection.execution_options.compiled_cache选项作为执行选项。执行选项可以在语句、  <a href="#id21"><span class="problematic" id="id22">:clas:`_engine.Engine`</span></a>  或  <a href="#id23"><span class="problematic" id="id24">:clas:`_engine.Connection`</span></a>  上设置，以及在使用ORM的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法时进行设置，用于SQLAlchemy-2.0样式的调用。例如，要运行一系列SQL语句并将它们缓存在特定的字典中：</p>
+<p>内部使用的缓存称为“LRUCache”，但这主要只是一个字典。任何字典都可以作为任何一系列语句的缓存来使用，方法是使用:paramref: .Connection.execution_options.compiled_cache选项作为执行选项。执行选项可以在语句、  <a href="#id21"><span class="problematic" id="id22">:clas:`_engine.Engine`</span></a>  或  :clas:` _engine.Connection`  上设置，以及在使用ORM的  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法时进行设置，用于SQLAlchemy-2.0样式的调用。例如，要运行一系列SQL语句并将它们缓存在特定的字典中：</p>
 <p>my_cache = {}
 with engine.connect().execution_options(compiled_cache=my_cache) as conn:</p>
 <blockquote>
 <div><p>conn.execute(table.select())</p>
 </div></blockquote>
-<p>SQLAlchemy ORM使用上述技术来在工作单元“flush”过程中保留独立于 :class: <a href="#id25"><span class="problematic" id="id26">`</span></a>_engine.Engine`上配置的默认缓存的每个映射器缓存，以及某些关系加载器查询。</p>
+<p>SQLAlchemy ORM使用上述技术来在工作单元“flush”过程中保留独立于 <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 上配置的默认缓存的每个映射器缓存，以及某些关系加载器查询。</p>
 <p>也可以使用此参数禁用缓存，方法是发送值为`None`：</p>
 <p># disable caching for this connection
 with engine.connect().execution_options(compiled_cache=None) as conn:</p>
@@ -1173,9 +1173,9 @@ with engine.connect().execution_options(compiled_cache=None) as conn:</p>
 </div></blockquote>
 </section>
 <section id="engine-thirdparty-caching">
-<span id="id27"></span><h3>第三方方言的缓存<a class="headerlink" href="#engine-thirdparty-caching" title="Permalink to this heading">¶</a></h3>
-<p>缓存功能要求方言的编译器生成安全重用的SQL字符串，以给定针对该SQL字符串键入的特定缓存键。这意味着语句中的任何文字值，例如SELECT的LIMIT / OFFSET值，都不能在方言的编译方案中硬编码，因为编译后的字符串将无法重新使用。SQLAlchemy支持使用:meth: <a href="#id28"><span class="problematic" id="id29">`</span></a>_sql.BindParameter.render_literal_execute`方法呈现绑定参数的渲染限制/偏移子句，该方法可以通过自定义编译器应用于现有的`Select._limit_clause`和`Select._offset_clause`属性，如本节稍后的演示。</p>
-<p>由于有许多第三方方言，并且其中许多可能会从SQL语句中生成文字值，而没有使用新的“字面执行”功能的好处，SQLAlchemy从版本1.4.5开始添加了称为  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>   的方言属性。此属性在运行时直接在特定方言类上检查其是否存在，即使在超类上已经存在，因此即使在继承现有可缓存的SQLAlchemy方言（例如`` sqlalchemy.dialects.postgresql.PGDialect``）的第三方方言也必须显式包括此属性才能启用缓存。一旦方言已被修改为需要并经过可重用编译的SQL语句进行测试，就应该启用该属性。对于不支持此属性的所有第三方方言，日志记录将指示“方言不支持缓存”。</p>
+<span id="id23"></span><h3>第三方方言的缓存<a class="headerlink" href="#engine-thirdparty-caching" title="Permalink to this heading">¶</a></h3>
+<p>缓存功能要求方言的编译器生成安全重用的SQL字符串，以给定针对该SQL字符串键入的特定缓存键。这意味着语句中的任何文字值，例如SELECT的LIMIT / OFFSET值，都不能在方言的编译方案中硬编码，因为编译后的字符串将无法重新使用。SQLAlchemy支持使用:meth:<cite>_sql.BindParameter.render_literal_execute</cite> 方法呈现绑定参数的渲染限制/偏移子句，该方法可以通过自定义编译器应用于现有的`Select._limit_clause`和`Select._offset_clause`属性，如本节稍后的演示。</p>
+<p>由于有许多第三方方言，并且其中许多可能会从SQL语句中生成文字值，而没有使用新的“字面执行”功能的好处，SQLAlchemy从版本1.4.5开始添加了称为  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>   的方言属性。此属性在运行时直接在特定方言类上检查其是否存在，即使在超类上已经存在，因此即使在继承现有可缓存的SQLAlchemy方言（例如` ` sqlalchemy.dialects.postgresql.PGDialect``）的第三方方言也必须显式包括此属性才能启用缓存。一旦方言已被修改为需要并经过可重用编译的SQL语句进行测试，就应该启用该属性。对于不支持此属性的所有第三方方言，日志记录将指示“方言不支持缓存”。</p>
 <p>测试完成方言的缓存后，特别是SQL编译器已更新为不直接呈现任何文本LIMIT / OFFSET，编译器作者可以如下应用该属性：</p>
 <p>from sqlalchemy.engine.default import DefaultDialect</p>
 <dl class="simple">
@@ -1195,7 +1195,7 @@ with engine.connect().execution_options(compiled_cache=None) as conn:</p>
 <h4>示例：使用后编译参数呈现LIMIT / OFFSET<a class="headerlink" href="#limit-offset" title="Permalink to this heading">¶</a></h4>
 <p>例如，假设方言重写了  <code class="xref py py-meth docutils literal notranslate"><span class="pre">SQLCompiler.limit_clause()</span></code>  方法，该方法为SQL语句生成“LIMIT / OFFSET”子句，如下所示：</p>
 <p># pre 1.4 style code
-def limit_clause(self, select, <a href="#id30"><span class="problematic" id="id31">**</span></a>kw):</p>
+def limit_clause(self, select, <a href="#id24"><span class="problematic" id="id25">**</span></a>kw):</p>
 <blockquote>
 <div><p>text = “”
 if select._limit is not None:</p>
@@ -1208,17 +1208,17 @@ if select._limit is not None:</p>
 </dl>
 <p>return text</p>
 </div></blockquote>
-<p>上面的例程将：attr:<cite>.Select._limit</cite> 和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Select._offset</span></code>   整数值呈现为嵌入在SQL语句中的文字整数。这是对于不支持SELECT语句的LIMIT / OFFSET子句中使用绑定参数的数据库的常见要求。但是，在初始编译阶段呈现整数值本身直接与缓存不兼容：  <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a> .Select`语句无法正确生成可重复使用的值。</p>
-<p>上述代码的纠正是将文字整数移动到SQLAlchemy的  <a class="reference internal" href="../changelog/migration_14.html#change-4808"><span class="std std-ref">post-compile</span></a>  工具中，该工具将文字整数在初始编译阶段之外呈现，而是在发送到DBAPI的语句执行之前就执行了。在编译阶段中，可以使用  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.BindParameter.render_literal_execute" title="sqlalchemy.sql.expression.BindParameter.render_literal_execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BindParameter.render_literal_execute()</span></code></a>  方法，结合  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Select._limit_clause</span></code>   和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Select._offset_clause</span></code>   属性来表示LIMIT / OFFSET，这些属性表示将LIMIT / OFFSET显示为完整的SQL表达式，如下所示：</p>
+<p>上面的例程将：attr:<cite>.Select._limit</cite> 和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Select._offset</span></code>   整数值呈现为嵌入在SQL语句中的文字整数。这是对于不支持SELECT语句的LIMIT / OFFSET子句中使用绑定参数的数据库的常见要求。但是，在初始编译阶段呈现整数值本身直接与缓存不兼容：  :class:` .Select` .Select`语句无法正确生成可重复使用的值。</p>
+<p>上述代码的纠正是将文字整数移动到SQLAlchemy的  <a class="reference internal" href="../changelog/migration_14.html#change-4808"><span class="std std-ref">post-compile</span></a>  工具中，该工具将文字整数在初始编译阶段之外呈现，而是在发送到DBAPI的语句执行之前就执行了。在编译阶段中，可以使用  :meth:` _sql.BindParameter.render_literal_execute`  方法，结合  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Select._limit_clause</span></code>   和  :attr:` .Select._offset_clause`   属性来表示LIMIT / OFFSET，这些属性表示将LIMIT / OFFSET显示为完整的SQL表达式，如下所示：</p>
 <p># 1.4 cache-compatible code
-def limit_clause(self, select, <a href="#id32"><span class="problematic" id="id33">**</span></a>kw):</p>
+def limit_clause(self, select, <a href="#id26"><span class="problematic" id="id27">**</span></a>kw):</p>
 <blockquote>
 <div><p>text = “”</p>
 <p>limit_clause = select._limit_clause
 offset_clause = select._offset_clause</p>
 <dl>
 <dt>if select._simple_int_clause(limit_clause):</dt><dd><dl class="simple">
-<dt>text += “ n LIMIT %s” % (</dt><dd><p>self.process(limit_clause.render_literal_execute(), <a href="#id34"><span class="problematic" id="id35">**</span></a>kw)</p>
+<dt>text += “ n LIMIT %s” % (</dt><dd><p>self.process(limit_clause.render_literal_execute(), <a href="#id28"><span class="problematic" id="id29">**</span></a>kw)</p>
 </dd>
 </dl>
 <p>)</p>
@@ -1232,7 +1232,7 @@ raise exc.CompileError(</p>
 <p>)</p>
 </dd>
 <dt>if select._simple_int_clause(offset_clause):</dt><dd><dl class="simple">
-<dt>text += “ n OFFSET %s” % (</dt><dd><p>self.process(offset_clause.render_literal_execute(), <a href="#id36"><span class="problematic" id="id37">**</span></a>kw)</p>
+<dt>text += “ n OFFSET %s” % (</dt><dd><p>self.process(offset_clause.render_literal_execute(), <a href="#id30"><span class="problematic" id="id31">**</span></a>kw)</p>
 </dd>
 </dl>
 <p>)</p>
@@ -1254,7 +1254,7 @@ raise exc.CompileError(</p>
 <span class="k">OFFSET</span><span class="w"> </span><span class="n">__</span><span class="p">[</span><span class="n">POSTCOMPILE_param_2</span><span class="p">]</span></pre></div>
 </div>
 <p>上面，“__[POSTCOMPILE_param_1]”和“__[POSTCOMPILE_param_2]”指示符将在语句执行时间之前用其相应的整数值填充从缓存中检索到的SQL字符串。</p>
-<p>完成上述更改后，  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>  标志应设置为“ True” 。强烈建议第三方方言使用  <a href="#id38"><span class="problematic" id="id39">:ref:`examples_performance`中的 `dialect第三方测试套件&lt;https://github.com/sqlalchemy/sqlalchemy/blob/main/README.dialects.rst&gt;`_</span></a>，以确保正确呈现和缓存诸如SELECT with LIMIT / OFFSET之类的操作。</p>
+<p>完成上述更改后，  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect.supports_statement_cache" title="sqlalchemy.engine.Dialect.supports_statement_cache"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dialect.supports_statement_cache</span></code></a>  标志应设置为“ True” 。强烈建议第三方方言使用  :ref:` examples_performance`中的 <a href="#id55"><span class="problematic" id="id56">`dialect第三方测试套件&lt;https://github.com/sqlalchemy/sqlalchemy/blob/main/README.dialects.rst&gt;`_</span></a>，以确保正确呈现和缓存诸如SELECT with LIMIT / OFFSET之类的操作。</p>
 </section>
 </section>
 <section id="lambda">
@@ -1265,16 +1265,16 @@ raise exc.CompileError(</p>
 </div>
 <p>通常，Python函数，通常表示为lambda，可以用于生成基于lambda函数本身以及lambda内的闭包变量的SQL表达式，这可以基于应用程序运行中的Python代码位置和闭包变量来缓存不仅是SQL字符串编译形式，正如SQLAlchemy在不使用lambda系统时的正常行为，还缓存SQL表达式结构本身的维护。</p>
 <p>注：重要的是注意，即使不使用lambda系统，SQLAlchemy中已有SQL缓存。 lambda系统只通过将构建SQL结构本身的缓存和使用更简单的缓存密钥一个附加的操作量来减少每个SQL语句作为缓存渐近性调用的工作量。</p>
-<section id="id40">
-<h4>简要指南对于Lambda<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h4>
-<p>关键是，重点在于lambda SQL系统确保生成lambda的缓存键与它将生成的SQL字符串永远不会不匹配。  :class:<a href="#id41"><span class="problematic" id="id42">`</span></a>_sql.LambdaElement`和相关对象将在每次运行时运行并分析给定的lambda，以计算如何在每次运行时缓存它，试图检测任何潜在问题。基本准则包括：</p>
+<section id="id32">
+<h4>简要指南对于Lambda<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h4>
+<p>关键是，重点在于lambda SQL系统确保生成lambda的缓存键与它将生成的SQL字符串永远不会不匹配。  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.LambdaElement" title="sqlalchemy.sql.expression.LambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaElement</span></code></a> 和相关对象将在每次运行时运行并分析给定的lambda，以计算如何在每次运行时缓存它，试图检测任何潜在问题。基本准则包括：</p>
 <ul>
-<li><p><strong>支持任何类型的声明符</strong> - 虽然有望  <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.select()</span></code></a>  构造函数是  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.lambda_stmt" title="sqlalchemy.sql.expression.lambda_stmt"><code class="xref py py-func docutils literal notranslate"><span class="pre">lambda_stmt()</span></code></a>  和  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.update()</span></code></a>  也可用：：</p>
+<li><p><strong>支持任何类型的声明符</strong> - 虽然有望  <a class="reference internal" href="selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.select()</span></code></a>  构造函数是  :func:` _sql.lambda_stmt`  和  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.sql.expression.update()</span></code></a>  也可用：：</p>
 <blockquote>
 <div><dl class="simple">
-<dt>def upd(<a href="#id111"><span class="problematic" id="id112">id_</span></a>, newname):</dt><dd><p>stmt = lambda_stmt(lambda: users.update())
+<dt>def upd(<a href="#id57"><span class="problematic" id="id58">id_</span></a>, newname):</dt><dd><p>stmt = lambda_stmt(lambda: users.update())
 stmt += lambda s: s.values(name=newname)
-stmt += lambda s: s.where(users.c.id == <a href="#id113"><span class="problematic" id="id114">id_</span></a>)
+stmt += lambda s: s.where(users.c.id == <a href="#id59"><span class="problematic" id="id60">id_</span></a>)
 return stmt</p>
 </dd>
 <dt>with engine.begin() as conn:</dt><dd><p>conn.execute(upd(7, “foo”))</p>
@@ -1314,7 +1314,7 @@ return row</p>
 <span class="go">[generated in 0.00029s] (12, 8){stop}</span>
 <span class="go">12</span></pre></div>
 </div>
-<p>上面的例子表明  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.StatementLambdaElement" title="sqlalchemy.sql.expression.StatementLambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatementLambdaElement</span></code></a> <a href="#id43"><span class="problematic" id="id44">`</span></a>x``和``y``的值，因此它们会在lambda调用之前的缓存构造中替换为相应的值。</p>
+<p>上面的例子表明  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.StatementLambdaElement" title="sqlalchemy.sql.expression.StatementLambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatementLambdaElement</span></code></a> ` x``和``y``的值，因此它们会在lambda调用之前的缓存构造中替换为相应的值。</p>
 </li>
 <li><p><strong>lambda理想上应该在所有情况下生成一致的SQL结构</strong> - 避免在lambda中使用有条件或自定义可调用程序，因为这可能会使其根据输入生成不同的SQL; 如果一个函数可能有条件地使用两个不同的SQL片段，那么使用两个不同的lambda：</p>
 <blockquote>
@@ -1348,7 +1348,7 @@ if thing:</p>
 </div></blockquote>
 <p>如果Lambda不能生成一致的SQL结构，可能会发生各种故障，其中一些可能无法轻松检测。</p>
 </li>
-<li><p><strong>不要在Lambda内部引用Lambda用于生成绑定值的函数</strong> - 绑定值跟踪方法要求在lambda的闭包中存在要在SQL语句中用于绑定的实际值。如果值从其他函数生成，则不可能这样做，而且  :class:<a href="#id45"><span class="problematic" id="id46">`</span></a>_sql.LambdaElement`通常抛出错误如果尝试这样做</p>
+<li><p><strong>不要在Lambda内部引用Lambda用于生成绑定值的函数</strong> - 绑定值跟踪方法要求在lambda的闭包中存在要在SQL语句中用于绑定的实际值。如果值从其他函数生成，则不可能这样做，而且  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.LambdaElement" title="sqlalchemy.sql.expression.LambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaElement</span></code></a> 通常抛出错误如果尝试这样做</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_stmt</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">def</span> <span class="nf">get_x</span><span class="p">():</span>
 <span class="gp">... </span>        <span class="k">return</span> <span class="n">x</span>
@@ -1371,7 +1371,7 @@ if thing:</p>
 <span class="x">to produce literal values since the lambda SQL system normally extracts</span>
 <span class="x">bound values without actually invoking the lambda or any functions within it.</span></pre></div>
 </div>
-<p>上述错误表示  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.LambdaElement" title="sqlalchemy.sql.expression.LambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaElement</span></code></a> <cite>Foo``对象将始终保持相同的行为并且默认情况下不会将其用作缓存键。如果使用``Foo``对象作为缓存键，如果有许多不同的``Foo``对象，则会填充缓存具有重复信息，并且还将为所有这些对象保持长时间参考。解决上述情况的最佳方法是不要在lambda中引用``foo`</cite>，而是在lambda之外引用它：</p>
+<p>上述错误表示  <a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.LambdaElement" title="sqlalchemy.sql.expression.LambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaElement</span></code></a> ` Foo``对象将始终保持相同的行为并且默认情况下不会将其用作缓存键。如果使用``Foo``对象作为缓存键，如果有许多不同的``Foo``对象，则会填充缓存具有重复信息，并且还将为所有这些对象保持长时间参考。解决上述情况的最佳方法是不要在lambda中引用``foo``，而是在lambda之外引用它：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_stmt</span><span class="p">(</span><span class="n">foo</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">x_param</span><span class="p">,</span> <span class="n">y_param</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">foo</span><span class="o">.</span><span class="n">y</span>
 <span class="gp">... </span>    <span class="n">stmt</span> <span class="o">=</span> <span class="n">lambda_stmt</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x_param</span><span class="p">,</span> <span class="n">y_param</span><span class="p">)))</span>
@@ -1396,8 +1396,8 @@ if thing:</p>
 </li>
 </ul>
 </section>
-<section id="id47">
-<h4>缓存密钥生成<a class="headerlink" href="#id47" title="Permalink to this heading">¶</a></h4>
+<section id="id33">
+<h4>缓存密钥生成<a class="headerlink" href="#id33" title="Permalink to this heading">¶</a></h4>
 <p>为了了解有关lambda SQL构造的某些选项和行为，有助于了解缓存系统是如何工作的。SQLAlchemy的缓存系统通常通过从给定SQL表达式构造表示构造缓存密钥来生成缓存密钥，该表示构成为所有可能发生变化的对象表示构成：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">column</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="s2">&quot;q&quot;</span><span class="p">))</span>
@@ -1443,7 +1443,7 @@ if thing:</p>
 <span class="gp">... </span>    <span class="n">stmt</span> <span class="o">+=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">parameter</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">stmt</span></pre></div>
 </div>
-<p>:class:<a href="#id48"><span class="problematic" id="id49">`</span></a>_sql.StatementLambdaElement`具有两个lambda，两个lambda都引用“col”闭包变量，因此缓存密钥将表示这两个段以及“column()”对象：</p>
+<p><a class="reference internal" href="foundation.html#sqlalchemy.sql.expression.StatementLambdaElement" title="sqlalchemy.sql.expression.StatementLambdaElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">StatementLambdaElement</span></code></a> 具有两个lambda，两个lambda都引用“col”闭包变量，因此缓存密钥将表示这两个段以及“column()”对象：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">my_stmt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">key</span> <span class="o">=</span> <span class="n">stmt</span><span class="o">.</span><span class="n">_generate_cache_key</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
@@ -1488,7 +1488,7 @@ if thing:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">key</span><span class="o">.</span><span class="n">bindparams</span>
 <span class="go">[BindParameter(&#39;%(139668884281280 parameter)s&#39;, 5, type_=Integer())]</span></pre></div>
 </div>
-<p>如果想要了解具有性能比较的“lambda”缓存的一系列示例，请参见  :ref: <a href="#id50"><span class="problematic" id="id51">`</span></a>examples_performance`中的“short_selects”测试套件。</p>
+<p>如果想要了解具有性能比较的“lambda”缓存的一系列示例，请参见  <a class="reference internal" href="../orm/examples.html#examples-performance"><span class="std std-ref">性能</span></a> 中的“short_selects”测试套件。</p>
 <p id="engine-insertmanyvalues">INSERT语句的“插入多个值”行为
 ————————————————- ——————</p>
 <div class="versionadded">
@@ -1498,12 +1498,12 @@ if thing:</p>
 <p class="admonition-title">Tip</p>
 <p><span class="xref std std-term">insertmanyvalues</span>  。</p>
 </div>
-<p>随着SQLite和MariaDB增加对RETURNING的支持，SQLAlchemy不再需要依赖于大多数后端提供的仅限单行的`cursor.lastrowid &lt;<a class="reference external" href="https://peps.python.org/pep-0249/#lastrowid">https://peps.python.org/pep-0249/#lastrowid</a>&gt;`_属性； RETURNING现在可以用于除MySQL以外的所有  <a class="reference internal" href="../dialects/index.html#included-dialects"><span class="std std-ref">SQLAlchemy-included</span></a> <a href="#id52"><span class="problematic" id="id53">`</span></a>executemany()``并改为重组单个INSERT语句来解决，每个语句都可容纳大量的行在一次语句中，该语句使用``cursor.execute()``调用。这种方法源自于“psycopg2快速执行帮手”&lt;<a class="reference external" href="https://www.psycopg.org/docs/extras.html#fast-execution-helpers">https://www.psycopg.org/docs/extras.html#fast-execution-helpers</a>&gt;功能，SQLAlchemy在最近的发布系列中逐步增加了对此功能的支持。</p>
+<p>随着SQLite和MariaDB增加对RETURNING的支持，SQLAlchemy不再需要依赖于大多数后端提供的仅限单行的`cursor.lastrowid &lt;<a class="reference external" href="https://peps.python.org/pep-0249/#lastrowid">https://peps.python.org/pep-0249/#lastrowid</a>&gt;`_属性； RETURNING现在可以用于除MySQL以外的所有  <a class="reference internal" href="../dialects/index.html#included-dialects"><span class="std std-ref">SQLAlchemy-included</span></a> ` executemany()``并改为重组单个INSERT语句来解决，每个语句都可容纳大量的行在一次语句中，该语句使用``cursor.execute()``调用。这种方法源自于“psycopg2快速执行帮手”&lt;<a class="reference external" href="https://www.psycopg.org/docs/extras.html#fast-execution-helpers">https://www.psycopg.org/docs/extras.html#fast-execution-helpers</a>&gt;功能，SQLAlchemy在最近的发布系列中逐步增加了对此功能的支持。</p>
 </section>
 </section>
-<section id="id54">
-<h3>当前支持<a class="headerlink" href="#id54" title="Permalink to this heading">¶</a></h3>
-<p>该功能适用于SQLAlchemy中包含支持RETURNING的后端，但Oracle除外，因为cx_Oracle和OracleDB驱动程序都提供自己的等效特性。使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute.params.parameters" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execute.parameters</span></code></a>  参数将字典列表传递给  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法（以及  <a class="reference internal" href="../orm/extensions/asyncio.html"><span class="std std-ref">asyncio</span></a>  ）并使用  <span class="xref std std-term">executemany</span>  执行时，通常会发生特征发生。当使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code>  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>  添加行时，它也将在ORM  <span class="xref std std-term">unit of work</span>  过程中发生。</p>
+<section id="id34">
+<h3>当前支持<a class="headerlink" href="#id34" title="Permalink to this heading">¶</a></h3>
+<p>该功能适用于SQLAlchemy中包含支持RETURNING的后端，但Oracle除外，因为cx_Oracle和OracleDB驱动程序都提供自己的等效特性。使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute.params.parameters" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Connection.execute.parameters</span></code></a>  参数将字典列表传递给  :meth:` _engine.Connection.execute`  或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code>  方法（以及  :ref:` asyncio &lt;asyncio_toplevel&gt;`  ）并使用  <span class="xref std std-term">executemany</span>  执行时，通常会发生特征发生。当使用  :meth:` _orm.Session.add`  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add_all()</span></code>  添加行时，它也将在ORM  :term:` unit of work`  过程中发生。</p>
 <p>对于SQLAlchemy的包含方言，当前支持或等效支持如下：</p>
 <ul class="simple">
 <li><p>SQLite-受SQLite 3.35及以上版本支持</p></li>
@@ -1516,16 +1516,16 @@ if thing:</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2.0.10: </span></p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id55" role="doc-footnote">
+<aside class="footnote brackets" id="id35" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <p>”insertmanyvalues”支持Microsoft SQL Server的临时禁用在版本2.0.9中被恢复。</p>
 </aside>
 </aside>
 </div>
 </section>
-<section id="id56">
-<h3>禁用功能<a class="headerlink" href="#id56" title="Permalink to this heading">¶</a></h3>
-<p>要为某个后端禁用“insertmanyvalues”功能，请在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.create_engine()</span></code>  中将  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.use_insertmanyvalues</span></code>  参数设置为``False``：</p>
+<section id="id36">
+<h3>禁用功能<a class="headerlink" href="#id36" title="Permalink to this heading">¶</a></h3>
+<p>要为某个后端禁用“insertmanyvalues”功能，请在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.create_engine()</span></code>  中将  :paramref:` _sa.create_engine.use_insertmanyvalues`  参数设置为``False``：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>engine = create_engine(</dt><dd><p>“mariadb+mariadbconnector://scott:tiger&#64;host/db”, use_insertmanyvalues=False</p>
@@ -1533,7 +1533,7 @@ if thing:</p>
 </dl>
 <p>)</p>
 </div></blockquote>
-<p>也可以通过传递  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table.params.implicit_returning" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.implicit_returning</span></code></a>  参数为``False``来禁用这一特性，从而不会在一个特定的 :class:<a href="#id57"><span class="problematic" id="id58">`</span></a>._schema.Table`对象中使用隐式的返回特性。：</p>
+<p>也可以通过传递  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table.params.implicit_returning" title="sqlalchemy.schema.Table"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Table.implicit_returning</span></code></a>  参数为` <cite>False``来禁用这一特性，从而不会在一个特定的 :class:</cite>._schema.Table` 对象中使用隐式的返回特性。：</p>
 <blockquote>
 <div><dl class="simple">
 <dt>t = Table(</dt><dd><p>“t”,
@@ -1547,9 +1547,9 @@ implicit_returning=False,</p>
 </div></blockquote>
 <p>禁用返回特性的原因是解决特定于后端的限制。</p>
 </section>
-<section id="id59">
-<h3>批操作模式<a class="headerlink" href="#id59" title="Permalink to this heading">¶</a></h3>
-<p>该功能有两种操作模式，可以在每个方言和 :class:<a href="#id60"><span class="problematic" id="id61">`</span></a>_schema.Table`基础上选中。 一个是“批处理模式”，它通过重新编写INSERT语句的形式来减少数据库往返次数：</p>
+<section id="id37">
+<h3>批操作模式<a class="headerlink" href="#id37" title="Permalink to this heading">¶</a></h3>
+<p>该功能有两种操作模式，可以在每个方言和 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 基础上选中。 一个是“批处理模式”，它通过重新编写INSERT语句的形式来减少数据库往返次数：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="k">data</span><span class="p">)</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="o">%</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span></pre></div>
 </div>
 <p>将其转换为类似于以下形式的“分批”形式：</p>
@@ -1569,7 +1569,7 @@ implicit_returning=False,</p>
 <div class="versionadded">
 <p><span class="versionmodified added">New in version 2.0.10.</span></p>
 </div>
-<p>在前面一节中说明的“分批”模式查询不保证返回的记录的顺序与输入数据的顺序相对应。当被SQLAlchemy ORM  <span class="xref std std-term">unit of work</span>  处理或对于将返回的服务器生成的值与输入数据相关联的应用程序时，  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert.returning" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.returning()</span></code></a>  和  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.UpdateBase.return_defaults" title="sqlalchemy.sql.expression.UpdateBase.return_defaults"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.return_defaults()</span></code></a>  方法包括一个选项:paramref :<cite>_dml.Insert.returning.sort_by_parameter_order</cite>，表示 “insertmanyvalues” 模式应保证此对应关系。这与记录实际被数据库后端插入的顺序无关，其在任何情况下都不被假定；只是应该假定在接收到返回的记录时，应按照传递原始输入数据的顺序组织这些记录。</p>
+<p>在前面一节中说明的“分批”模式查询不保证返回的记录的顺序与输入数据的顺序相对应。当被SQLAlchemy ORM  <span class="xref std std-term">unit of work</span>  处理或对于将返回的服务器生成的值与输入数据相关联的应用程序时，  :meth:` _dml.Insert.returning`  和  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.UpdateBase.return_defaults" title="sqlalchemy.sql.expression.UpdateBase.return_defaults"><code class="xref py py-meth docutils literal notranslate"><span class="pre">UpdateBase.return_defaults()</span></code></a>  方法包括一个选项:paramref :` _dml.Insert.returning.sort_by_parameter_order`，表示 “insertmanyvalues” 模式应保证此对应关系。这与记录实际被数据库后端插入的顺序无关，其在任何情况下都不被假定；只是应该假定在接收到返回的记录时，应按照传递原始输入数据的顺序组织这些记录。</p>
 <p>当出现  <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert.returning.params.sort_by_parameter_order" title="sqlalchemy.sql.expression.Insert.returning"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Insert.returning.sort_by_parameter_order</span></code></a>  参数时，对于使用诸如“IDENTITY”、PostgreSQL“SERIAL”、MariaDB“AUTO_INCREMENT”或SQLite的“ROWID”方案等服务器生成的整数主键值的表，可能会代替“分批”模式，使用更复杂的INSERT..RETURNING形式，结合基于返回值的行的后期排序，如果不存在这样的形式，则“insertmanyvalues”特性可能会以一种优雅的方式降级为“非分批”模式，该方式为每个参数集运行单个INSERT语句。</p>
 <p>例如，在SQL Server上，当自动增加的“IDENTITY”列用作主键时，将使用以下SQL形式：</p>
 <div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="p">(</span><span class="k">data</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
@@ -1583,11 +1583,11 @@ implicit_returning=False,</p>
 <p>当PostgreSQL的主键列使用SERIAL或IDENTITY时，将使用类似的形式。上述形式**不能**保证插入行的顺序。但是，它保证IDENTITY或SERIAL值随每个参数集按顺序创建。然后，“insertmanyvalues”功能根据递增整数标识符对返回的行进行排序。</p>
 <p>对于SQLite数据库，没有适当的INSERT表单可以将新的ROWID值与传递的参数集的顺序相关联。因此，在使用后端生成的主键值时，SQLite后端将降级为“非分批”模式，当请求有序RETURNING时将运行单个INSERT语句。</p>
 <p>对于MariaDB，insertmanyvalues使用的默认INSERT表单是足够的，因为这个数据库后端在使用InnoDB时将自动将：AUTO_INCREMENT的顺序与输入数据的顺序对齐[#]_。</p>
-<p>对于具有其他类型的服务器生成的主键值的 :class:<a href="#id62"><span class="problematic" id="id63">`</span></a>_schema.Table`配置，以及不能提供确定性地对多个参数集对齐的服务器已生成值的后端，当要求保证RETURNING排序时，”insertmanyvalues”模式将使用**非分批**模式。</p>
+<p>对于具有其他类型的服务器生成的主键值的 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 配置，以及不能提供确定性地对多个参数集对齐的服务器已生成值的后端，当要求保证RETURNING排序时，”insertmanyvalues”模式将使用**非分批**模式。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id64" role="doc-footnote">
+<aside class="footnote brackets" id="id38" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
 </aside>
 </aside>
@@ -1604,19 +1604,19 @@ implicit_returning=False,</p>
 </div>
 </section>
 <section id="engine-insertmanyvalues-non-batch">
-<span id="id65"></span><h3>非批次模式操作<a class="headerlink" href="#engine-insertmanyvalues-non-batch" title="Permalink to this heading">¶</a></h3>
-<p>对于不具有客户端主键值的  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  的需求的 :class:<a href="#id66"><span class="problematic" id="id67">`</span></a>_dml.Insert`语句进行有保证的RETURNING排序时，当不支持此类值时，”insertmanyvalues”特征可能会减少分批模式，而使用**非批次**模式。</p>
+<span id="id39"></span><h3>非批次模式操作<a class="headerlink" href="#engine-insertmanyvalues-non-batch" title="Permalink to this heading">¶</a></h3>
+<p>对于不具有客户端主键值的  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  的需求的 :class:` _dml.Insert`语句进行有保证的RETURNING排序时，当不支持此类值时，”insertmanyvalues”特征可能会减少分批模式，而使用**非批次**模式。</p>
 <p>在这种模式下，保留INSERT语句的原始SQL形式，“insertmanyvalues”特性将为每个参数集单独运行该语句，将返回的行组织为完整的结果集。与先前的SQLAlchemy版本不同，它确实以最小化Python开销为基础进行循环。在某些情况下，例如在SQLite上，“非分批”模式的性能与“分批”模式完全相同。</p>
 </section>
-<section id="id68">
-<h3>语句执行模型<a class="headerlink" href="#id68" title="Permalink to this heading">¶</a></h3>
-<p>对于“分批”和“非分批”两种模式，该特征将必然使用DBAPI``cursor.execute（）``方法在Core级别的  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的范围内调用**多个INSERT语句**，每个语句最多包含一定数量的参数集。该限制可以根据下文的  <a class="reference internal" href="#engine-insertmanyvalues-page-size"><span class="std std-ref">控制批量大小</span></a> <cite>cursor.execute()``调用被单独记录并传递给事件侦听器，例如  :meth:</cite>.ConnectionEvents.before_cursor_execute`  （请参见  <a class="reference internal" href="#engine-insertmanyvalues-events"><span class="std std-ref">日志和事件</span></a> ）。</p>
+<section id="id40">
+<h3>语句执行模型<a class="headerlink" href="#id40" title="Permalink to this heading">¶</a></h3>
+<p>对于“分批”和“非分批”两种模式，该特征将必然使用DBAPI``cursor.execute（）``方法在Core级别的  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的范围内调用**多个INSERT语句**，每个语句最多包含一定数量的参数集。该限制可以根据下文的  :ref:` engine_insertmanyvalues_page_size` <cite>cursor.execute()``调用被单独记录并传递给事件侦听器，例如  :meth:</cite>.ConnectionEvents.before_cursor_execute`  （请参见  :ref:` engine_insertmanyvalues_events` ）。</p>
 <p>…</p>
 </section>
 <section id="engine-insertmanyvalues-page-size">
-<span id="id69"></span><h3>控制批量大小<a class="headerlink" href="#engine-insertmanyvalues-page-size" title="Permalink to this heading">¶</a></h3>
+<span id="id41"></span><h3>控制批量大小<a class="headerlink" href="#engine-insertmanyvalues-page-size" title="Permalink to this heading">¶</a></h3>
 <p>“insertmanyvalues”的一个重要特征是，INSERT语句的大小限制为固定的最大“值”子句数，以及每次表示的绑定参数的固定总数，在一次执行中不能表示大于此数量的参数字典。当给定的参数字典的数量超过固定限制，或者当要呈现在单个INSERT语句中的绑定参数总数超过固定限制时（两个固定限制是单独的），将在单个  <a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  调用的范围内调用多个INSERT语句，每个INSERT语句都适用于一个参数字典的一部分，称为“批”。每个“批”的参数字典数然后被称为“批量”。例如，批量大小为500意味着每个INSERT语句最多插入500行。</p>
-<p>重要的是能够调整批量大小，因为较大的批量大小可能对输入本身相对较小的插入效果更高，并且较小的批量大小可能对使用非常大的值集的插入更合适，其中使用最小化后端行为和内存约束的固定大小显然是必要的。因此，批量大小可以在每个 :class:<a href="#id70"><span class="problematic" id="id71">`</span></a>.Engine`以及每个语句的基础上进行配置。限制参数另一方面是基于正在使用的数据库的已知特征的固定参数。</p>
+<p>重要的是能够调整批量大小，因为较大的批量大小可能对输入本身相对较小的插入效果更高，并且较小的批量大小可能对使用非常大的值集的插入更合适，其中使用最小化后端行为和内存约束的固定大小显然是必要的。因此，批量大小可以在每个 <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 以及每个语句的基础上进行配置。限制参数另一方面是基于正在使用的数据库的已知特征的固定参数。</p>
 <p>对于大多数后端，默认情况下，批量大小为1000，具有额外的每方言“最大参数数”限制因素，该限制因素可以根据需要在每个语句的基础上进一步降低。最大参数数因方言和服务器版本而异；最大大小为32700（选择为健康的距离PostgreSQL 32767和SQLite现代限制32766，同时留有余地以便于语句中的附加参数以及DBAPI古怪行），较旧的SQLite版本（3.32.0以前）将此值设置为999。MariaDB没有确定的限制，但32700仍然是SQL消息大小的限制因素。</p>
 <p>批量大小的值可以通过   <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  参数设置在各后端上。例如，要使INSERT语句包含100个参数集：</p>
 <blockquote>
@@ -1641,8 +1641,8 @@ implicit_returning=False,</p>
 </div>
 </section>
 <section id="engine-insertmanyvalues-events">
-<span id="id72"></span><h3>日志和事件<a class="headerlink" href="#engine-insertmanyvalues-events" title="Permalink to this heading">¶</a></h3>
-<p>“insertmanyvalues”功能完全与SQLAlchemy的  <span class="xref std std-ref">statement logging</span> .ConnectionEvents.before_cursor_execute` ）集成。当参数列表被分成单独的批次时，“每个INSERT语句都会单独记录并传递给事件处理程序”<a href="#id73"><span class="problematic" id="id74">**</span></a>。这是与仅限于psycopg2的功能在SQLAlchemy 1.x系列中的工作方式的主要更改，其中多个INSERT语句的生成被隐藏在记录和事件之外。日志显示将截断参数的长列表以便于阅读，并且还将指示每个语句的特定批次。下面的示例说明了这种记录的摘录：</p>
+<span id="id42"></span><h3>日志和事件<a class="headerlink" href="#engine-insertmanyvalues-events" title="Permalink to this heading">¶</a></h3>
+<p>“insertmanyvalues”功能完全与SQLAlchemy的  <span class="xref std std-ref">statement logging</span> .ConnectionEvents.before_cursor_execute` ）集成。当参数列表被分成单独的批次时，“每个INSERT语句都会单独记录并传递给事件处理程序”<a href="#id43"><span class="problematic" id="id44">**</span></a>。这是与仅限于psycopg2的功能在SQLAlchemy 1.x系列中的工作方式的主要更改，其中多个INSERT语句的生成被隐藏在记录和事件之外。日志显示将截断参数的长列表以便于阅读，并且还将指示每个语句的特定批次。下面的示例说明了这种记录的摘录：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>INSERT INTO a (data, x, y) VALUES (?, ?, ?), ... 795 characters truncated ...  (?, ?, ?), (?, ?, ?) RETURNING id
 [generated in 0.00177s (insertmanyvalues) 1/10 (unordered)] (&#39;d0&#39;, 0, 0, &#39;d1&#39;,  ...
 INSERT INTO a (data, x, y) VALUES (?, ?, ?), ... 795 characters truncated ...  (?, ?, ?), (?, ?, ?) RETURNING id
@@ -1653,7 +1653,7 @@ INSERT INTO a (data, x, y) VALUES (?, ?, ?), ... 795 characters truncated ...  (
 INSERT INTO a (data, x, y) VALUES (?, ?, ?), ... 795 characters truncated ...  (?, ?, ?), (?, ?, ?) RETURNING id
 [insertmanyvalues 10/10 (unordered)] (&#39;d900&#39;, 900, 9000, &#39;d901&#39;, ...</pre></div>
 </div>
-<p>当进行 :ref:<a href="#id75"><span class="problematic" id="id76">`</span></a>非批处理模式 &lt;engine_insertmanyvalues_non_batch&gt;`时，日志将指示此操作与insertmanyvalues消息一起发生：</p>
+<p>当进行 <a class="reference internal" href="#engine-insertmanyvalues-non-batch"><span class="std std-ref">非批处理模式</span></a> 时，日志将指示此操作与insertmanyvalues消息一起发生：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>...
 
 INSERT INTO a (data, x, y) VALUES (?, ?, ?) RETURNING id
@@ -1674,32 +1674,32 @@ INSERT INTO a (data, x, y) VALUES (?, ?, ?) RETURNING id
 </section>
 <section id="upsert-support">
 <h3>Upsert Support<a class="headerlink" href="#upsert-support" title="Permalink to this heading">¶</a></h3>
-<p>PostgreSQL、SQLite和MariaDB方言提供了特定于后端的“upsert”构造  <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.insert" title="sqlalchemy.dialects.postgresql.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 、  <a class="reference internal" href="../dialects/sqlite.html#sqlalchemy.dialects.sqlite.insert" title="sqlalchemy.dialects.sqlite.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> ，它们均为 :class:<a href="#id77"><span class="problematic" id="id78">`</span></a>_dml.Insert`构造，具有另外的方法，如“on_conflict_do_update()”或“on_duplicate_key()”。当这些构造函数和RETURNING一起使用时，还支持“insertmanyvalues”行为，从而允许高效的upsert with RETURNING。</p>
+<p>PostgreSQL、SQLite和MariaDB方言提供了特定于后端的“upsert”构造  <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.insert" title="sqlalchemy.dialects.postgresql.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 、  :func:` _sqlite.insert` ，它们均为 <a class="reference internal" href="dml.html#sqlalchemy.sql.expression.Insert" title="sqlalchemy.sql.expression.Insert"><code class="xref py py-class docutils literal notranslate"><span class="pre">Insert</span></code></a> 构造，具有另外的方法，如“on_conflict_do_update()”或“on_duplicate_key()”。当这些构造函数和RETURNING一起使用时，还支持“insertmanyvalues”行为，从而允许高效的upsert with RETURNING。</p>
 </section>
 </section>
 <section id="engine-disposal">
-<span id="id79"></span><h2>引擎处理<a class="headerlink" href="#engine-disposal" title="Permalink to this heading">¶</a></h2>
+<span id="id45"></span><h2>引擎处理<a class="headerlink" href="#engine-disposal" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .QueuePool`的正常默认池实现。</p>
-<p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ._engine.Engine`；相反，它是一个注册表，维护连接池以及关于正在使用的数据库和DBAPI的配置信息，以及一些程度的内部缓存。每个数据库资源的缓存。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .QueuePool` 的正常默认池实现。</p>
+<p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ._engine.Engine` ；相反，它是一个注册表，维护连接池以及关于正在使用的数据库和DBAPI的配置信息，以及一些程度的内部缓存。每个数据库资源的缓存。</p>
 </div></blockquote>
-<p>然而，有很多情况可以在全部关闭由  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  方法显式处理  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 。这会处理引擎的底层连接池，并用空的连接池替换它。只要此时放弃了 :class:<a href="#id80"><span class="problematic" id="id81">`</span></a>_engine.Engine`并且不再使用它，则所有已检入的连接将完全关闭。</p>
+<p>然而，有很多情况可以在全部关闭由  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  方法显式处理  :class:` _engine.Engine` 。这会处理引擎的底层连接池，并用空的连接池替换它。只要此时放弃了 <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 并且不再使用它，则所有已检入的连接将完全关闭。</p>
 <p>调用  <a class="reference internal" href="#sqlalchemy.engine.Engine.dispose" title="sqlalchemy.engine.Engine.dispose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.dispose()</span></code></a>  的有效用例包括：</p>
 <ul class="simple">
 <li><p>当程序想要释放连接池中仍存在的任何剩余检入连接，并且期望将来不再连接到该数据库以进行任何未来操作时。</p></li>
-<li><p>当程序使用 multiprocessing 或“fork()”时，将  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  ，以便引擎创建专门针对该fork的全新数据库连接。通常情况下，数据库连接不会穿越进程边界。在这种情况下，在参数  <a class="reference internal" href="#sqlalchemy.engine.Engine.dispose.params.close" title="sqlalchemy.engine.Engine.dispose"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Engine.dispose.close</span></code></a>  设置为False。请参见 :ref:<a href="#id82"><span class="problematic" id="id83">`</span></a>pooling_multiprocessing`部分以获取有关此用例的更多背景知识。</p></li>
-<li><p>在测试套件或多租户场景中，可能会创建许多临时的、短寿命的 :class:<a href="#id84"><span class="problematic" id="id85">`</span></a>_engine.Engine`对象，并进行处置。</p></li>
+<li><p>当程序使用 multiprocessing 或“fork()”时，将  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  ，以便引擎创建专门针对该fork的全新数据库连接。通常情况下，数据库连接不会穿越进程边界。在这种情况下，在参数  :paramref:` .Engine.dispose.close`  设置为False。请参见 <span class="xref std std-ref">pooling_multiprocessing</span> 部分以获取有关此用例的更多背景知识。</p></li>
+<li><p>在测试套件或多租户场景中，可能会创建许多临时的、短寿命的 <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 对象，并进行处置。</p></li>
 </ul>
-<p>当引用的有  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  或垃圾回收时被丢弃，因为这些连接仍然在应用程序的其他地方被强烈引用。但是，在调用  <a class="reference internal" href="#sqlalchemy.engine.Engine.dispose" title="sqlalchemy.engine.Engine.dispose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.dispose()</span></code></a>  后，这些连接不再与该  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  。</p>
+<p>当引用的有  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  或垃圾回收时被丢弃，因为这些连接仍然在应用程序的其他地方被强烈引用。但是，在调用  :meth:` _engine.Engine.dispose`  后，这些连接不再与该  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  。</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  时不随之被释放，因为这些句柄仍然在应用程序的其他地方存在。如果您还有其他共享同一池的  <a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，请确保我们通过实际调用  <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool.dispose" title="sqlalchemy.pool.QueuePool.dispose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueuePool.dispose()</span></code></a>  或其它方法释放废弃池中的连接。完全兼容DBAPI连接池</p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  时不随之被释放，因为这些句柄仍然在应用程序的其他地方存在。如果您还有其他共享同一池的  :class:` _engine.Engine` ，请确保我们通过实际调用  <a class="reference internal" href="pooling.html#sqlalchemy.pool.QueuePool.dispose" title="sqlalchemy.pool.QueuePool.dispose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">QueuePool.dispose()</span></code></a>  或其它方法释放废弃池中的连接。完全兼容DBAPI连接池</p>
 </div></blockquote>
 <hr class="docutils" />
 <p>SQLAlchemy包含一个内置的连接池实现，它提供了对程序中使用的所有连接的管理。
 这就避免了每次需要连接时都要重新创建连接的开销。默认情况下，连接池在连接
 不再需要时并不会将其释放回DBAPI。相反，它们只是被返回给池中。这通常只会对
 使用新连接产生一些轻微性能影响，并且意味着当连接签入时，它被完全关闭，
-而不会在内存中保留。请参见  :ref:<a href="#id86"><span class="problematic" id="id87">`</span></a>pool_switching`获取有关如何禁用池的指南。</p>
+而不会在内存中保留。请参见  <a class="reference internal" href="pooling.html#pool-switching"><span class="std std-ref">切换连接池实现</span></a> 获取有关如何禁用池的指南。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><span class="xref std std-ref">pooling_toplevel</span></p>
@@ -1709,14 +1709,14 @@ INSERT INTO a (data, x, y) VALUES (?, ?, ?) RETURNING id
 <section id="driver-sql-raw-dbapi-connections">
 <span id="dbapi-connections"></span><h2>使用Driver SQL和 Raw DBAPI Connections 工作<a class="headerlink" href="#driver-sql-raw-dbapi-connections" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的介绍使用了  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a></p>
+<div><p><a class="reference internal" href="#sqlalchemy.engine.Connection.execute" title="sqlalchemy.engine.Connection.execute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.execute()</span></code></a>  方法的介绍使用了  :func:` _expression.text`</p>
 </div></blockquote>
 <p>构造以说明如何调用文本SQL语句。 使用SQLAlchemy时，文本SQL实际上更多的是
 一个例外，而不是规则，因为Core表达式语言和ORM都抽象了SQL的文本表示。
-然而， :func:<a href="#id88"><span class="problematic" id="id89">`</span></a>_expression.text`构造本身也提供了对文本SQL的抽象，因为它规范化了
+然而， <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 构造本身也提供了对文本SQL的抽象，因为它规范化了
 如何传递绑定参数，并支持参数和结果集行的数据类型行为。</p>
-<section id="id90">
-<h3>直接向驱动程序调用SQL字符串<a class="headerlink" href="#id90" title="Permalink to this heading">¶</a></h3>
+<section id="id46">
+<h3>直接向驱动程序调用SQL字符串<a class="headerlink" href="#id46" title="Permalink to this heading">¶</a></h3>
 <p>对于需要直接传递给底层驱动程序（称为  <span class="xref std std-term">DBAPI</span>  ）的文本SQL的用例，
 可以使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.exec_driver_sql" title="sqlalchemy.engine.Connection.exec_driver_sql"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.exec_driver_sql()</span></code></a>  方法:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
@@ -1727,22 +1727,25 @@ INSERT INTO a (data, x, y) VALUES (?, ?, ?) RETURNING id
 </div>
 </section>
 <section id="dbapi-connections-cursor">
-<span id="id91"></span><h3>直接与DBAPI游标交互<a class="headerlink" href="#dbapi-connections-cursor" title="Permalink to this heading">¶</a></h3>
+<span id="id47"></span><h3>直接与DBAPI游标交互<a class="headerlink" href="#dbapi-connections-cursor" title="Permalink to this heading">¶</a></h3>
 <p>在某些情况下，SQLAlchemy无法提供一种通用的方式来访问一些  <span class="xref std std-term">DBAPI</span>  函数，
 比如调用存储过程以及处理多个结果集。在这些情况下，直接使用原始的
 DBAPI连接方法同样方便。</p>
-<p>访问原始DBAPI连接的最常见方式是直接从已经存在的 <code class="xref py py-class docutils literal notranslate"><span class="pre">connection</span></code>  属性进行访问:</p>
+<p>访问原始DBAPI连接的最常见方式是直接从已经存在的 <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 对象
+中获取它。它使用  <a class="reference internal" href="#sqlalchemy.engine.Connection.connection" title="sqlalchemy.engine.Connection.connection"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Connection.connection</span></code></a>  属性进行访问:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
 <span class="n">dbapi_conn</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">connection</span></pre></div>
 </div>
 <p>在这里，DBAPI连接实际上是“代理”的，因为它们起始于连接池，但这是一个能够忽略的
-实现细节。由于该DBAPI连接仍然包含在拥有的 <code class="xref py py-class docutils literal notranslate"><span class="pre">close</span></code>  方法；如果在DBAPI连接上直接执行
-这些操作，则拥有的 :class:<a href="#id92"><span class="problematic" id="id93">`</span></a>_engine.Connection`将不会知道这些状态的更改。</p>
-<p>为了克服由拥有的 :class:<a href="#id94"><span class="problematic" id="id95">`</span></a>_engine.Connection`维护的DBAPI连接所施加的限制，
+实现细节。由于该DBAPI连接仍然包含在拥有的 <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 对象的范围内，
+因此最好使用 <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 对象来进行大多数特性使用，
+如事务控制以及调用  <a class="reference internal" href="#sqlalchemy.engine.Connection.close" title="sqlalchemy.engine.Connection.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Connection.close()</span></code></a>  方法；如果在DBAPI连接上直接执行
+这些操作，则拥有的 <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 将不会知道这些状态的更改。</p>
+<p>为了克服由拥有的 <a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 维护的DBAPI连接所施加的限制，
 还有一种DBAPI连接可用，而不需要获取</p>
 <blockquote>
 <div><dl>
-<dt>:class:<a href="#id96"><span class="problematic" id="id97">`</span></a>_engine.Connection`首先使用 :meth:<a href="#id98"><span class="problematic" id="id99">`</span></a>_engine.Engine.raw_connection`方法</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
+<dt><a class="reference internal" href="#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a> 首先使用 <a class="reference internal" href="#sqlalchemy.engine.Engine.raw_connection" title="sqlalchemy.engine.Engine.raw_connection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.raw_connection()</span></code></a> 方法</dt><dd><p><a class="reference internal" href="#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbapi_conn</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">raw_connection</span><span class="p">()</span></pre></div>
 </div>
 </dd>
@@ -1750,7 +1753,7 @@ DBAPI连接方法同样方便。</p>
 </div></blockquote>
 <p>在这里，DBAPI连接再次是“代理”形式，如之前所述。这种代理的目的现在显而易见，
 当我们调用``close()``这个连接的方法时，DBAPI连接通常并没有真正关闭，而是将其
-：term:<a href="#id100"><span class="problematic" id="id101">`</span></a>released`回引擎的连接池。</p>
+：term:<a href="#id48"><span class="problematic" id="id49">`</span></a>released`回引擎的连接池。</p>
 <blockquote>
 <div><p>dbapi_conn.close()</p>
 </div></blockquote>
@@ -1764,7 +1767,7 @@ DBAPI连接方法同样方便。</p>
 <p>DBAPI连接使用的一些示例见下文。</p>
 </section>
 <section id="stored-procedures">
-<span id="id102"></span><h3>调用存储过程和用户定义函数<a class="headerlink" href="#stored-procedures" title="Permalink to this heading">¶</a></h3>
+<span id="id50"></span><h3>调用存储过程和用户定义函数<a class="headerlink" href="#stored-procedures" title="Permalink to this heading">¶</a></h3>
 <p>SQLAlchemy支持以多种方式调用存储过程和用户定义函数。
 请注意，所有的DBAPI都有不同的做法，因此必须查阅底层DBAPI的文档以获得有关特定用法的详细信息。
 以下示例是假设的，可能无法在您的底层DBAPI中使用。</p>
@@ -1790,8 +1793,8 @@ DBAPI连接方法同样方便。</p>
 </div>
 <p>以上示例是假设性的。底层数据库不保证在这些情况下支持“CALL”或“SELECT”，关键字可能因存储过程或用户定义函数而异。在这些情况下，您应查阅底层DBAPI和数据库文档，以确定要使用的正确语法和模式。</p>
 </section>
-<section id="id103">
-<h3>多个结果集<a class="headerlink" href="#id103" title="Permalink to this heading">¶</a></h3>
+<section id="id51">
+<h3>多个结果集<a class="headerlink" href="#id51" title="Permalink to this heading">¶</a></h3>
 <p>从原始的DBAPI游标可以使用’nextset &lt;<a class="reference external" href="https://legacy.python.org/dev/peps/pep-0249/#nextset">https://legacy.python.org/dev/peps/pep-0249/#nextset</a>&gt;`_方法支持多个结果集:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">raw_connection</span><span class="p">()</span>
 <span class="k">try</span><span class="p">:</span>
@@ -1806,16 +1809,16 @@ DBAPI连接方法同样方便。</p>
 </div>
 </section>
 </section>
-<section id="id104">
-<h2>注册新方言<a class="headerlink" href="#id104" title="Permalink to this heading">¶</a></h2>
+<section id="id52">
+<h2>注册新方言<a class="headerlink" href="#id52" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p>:func:<a href="#id105"><span class="problematic" id="id106">`</span></a>_sa.create_engine`函数调用会使用setuptools entrypoints查找给定方言。</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 函数调用会使用setuptools entrypoints查找给定方言。</p>
 </div></blockquote>
 <p>这些条目可以在setup.py脚本中为第三方方言建立。
 例如，要创建一个新的方言”foodialect：//”，步骤如下：</p>
 <ol class="arabic">
 <li><p>创建一个名为“foodialect”的包。</p></li>
-<li><p>该包应具有包含方言类的模块，通常是 :class:<a href="#id107"><span class="problematic" id="id108">`</span></a>sqlalchemy.engine.default.DefaultDialect`的子类。在这个例子中，我们假设它叫做“FooDialect”，并且它的模块是通过“foodialect.dialect”访问的。</p></li>
+<li><p>该包应具有包含方言类的模块，通常是 <a class="reference internal" href="internals.html#sqlalchemy.engine.default.DefaultDialect" title="sqlalchemy.engine.default.DefaultDialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.engine.default.DefaultDialect</span></code></a> 的子类。在这个例子中，我们假设它叫做“FooDialect”，并且它的模块是通过“foodialect.dialect”访问的。</p></li>
 <li><p>可以在“setup.cfg”中这样建立条目：</p>
 <div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[options.entry_points]</span>
 <span class="na">sqlalchemy.dialects</span><span class="w"> </span><span class="o">=</span>
@@ -1830,8 +1833,8 @@ DBAPI连接方法同样方便。</p>
 <p>上述入口点将在使用 <code class="docutils literal notranslate"><span class="pre">create_engine(&quot;mysql+foodialect://&quot;)</span></code> 时被访问。</p>
 </li>
 </ol>
-<section id="id109">
-<h3>在进程中注册方言<a class="headerlink" href="#id109" title="Permalink to this heading">¶</a></h3>
+<section id="id53">
+<h3>在进程中注册方言<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h3>
 <p>SQLAlchemy还允许在当前进程中注册方言，绕过需要单独安装的要求。使用 <code class="docutils literal notranslate"><span class="pre">register()</span></code> 函数如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">registry</span>
 
@@ -3709,8 +3712,8 @@ phase transactions may be used.</p></li>
 </dd></dl>
 
 </section>
-<section id="id110">
-<h2>结果集API<a class="headerlink" href="#id110" title="Permalink to this heading">¶</a></h2>
+<section id="id54">
+<h2>结果集API<a class="headerlink" href="#id54" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -6113,7 +6116,7 @@ still used at runtime.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:43
+    Documentation last generated: 2023/8/18 18:58:41
 
     </div>
 </div>

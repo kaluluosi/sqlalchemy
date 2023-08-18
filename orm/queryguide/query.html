@@ -378,14 +378,14 @@
 <div class="admonition-legacyapi admonition">
 <p class="admonition-title">关于Legacy查询API</p>
 <p>本页包含Python生成的文档，针对的是 <cite>查询（Query）</cite> 构造函数。该构造函数多年来一直是使用SQLAlchemy ORM时的唯一SQL接口。从版本2.0开始，全新的工作方式成为标准方法，对于ORM来说，与核心库（Core）使用的相同的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  构造函数一样即可，为构建查询提供一致的界面。</p>
-<p>对于任何在2.0 API之前构建在SQLAlchemy ORM上的应用程序而言，  <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  API大多数情况下都是应用程序中的大部分数据库访问代码，因此大部分   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  API**不会被从SQLAlchemy中删除**。当执行   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象时，它在后台将自身转换为2.0样式的   <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  对象，因此它现在只是一个非常薄的适配器API。</p>
+<p>对于任何在2.0 API之前构建在SQLAlchemy ORM上的应用程序而言，  <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  API大多数情况下都是应用程序中的大部分数据库访问代码，因此大部分   :class:` _query.Query`  API**不会被从SQLAlchemy中删除**。当执行   <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象时，它在后台将自身转换为2.0样式的   :func:` _sql.select`  对象，因此它现在只是一个非常薄的适配器API。</p>
 <p>转换基于  <a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a> 。</p>
-<p>关于2.0样式中针对ORM对象编写SQL的介绍，请从   <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  开始。查询2.0样式的附加参考可参阅：  <a class="reference internal" href="index.html"><span class="std std-ref">ORM 查询指南</span></a> 。</p>
+<p>关于2.0样式中针对ORM对象编写SQL的介绍，请从   <a class="reference internal" href="../../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a>  开始。查询2.0样式的附加参考可参阅：  :ref:` queryguide_toplevel` 。</p>
 </div>
 <section id="id1">
 <h2>查询对象<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  是在给定的   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中生成的，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code>  方法即可生成：</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  是在给定的   :class:` ~.Session`  中生成的，使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.query()</span></code>  方法即可生成：</p>
 <blockquote>
 <div><p>q = session.query(SomeMappedClass)</p>
 </div></blockquote>
@@ -2314,7 +2314,7 @@ background on this option.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:01
+    Documentation last generated: 2023/8/18 18:59:03
 
     </div>
 </div>

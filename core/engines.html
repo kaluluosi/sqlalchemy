@@ -169,11 +169,11 @@
 <li><a class="reference internal" href="#engines-toplevel">引擎配置</a><ul>
 <li><a class="reference internal" href="#supported-dbapis">支持的数据库</a></li>
 <li><a class="reference internal" href="#urls">数据库URLs</a><ul>
-<li><a class="reference internal" href="#id17">转义密码中的特殊字符，如&#64;符号</a><ul>
-<li><a class="reference internal" href="#id20">动态生成身份验证令牌</a></li>
+<li><a class="reference internal" href="#id5">转义密码中的特殊字符，如&#64;符号</a><ul>
+<li><a class="reference internal" href="#id6">动态生成身份验证令牌</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id21">屏蔽参数</a></li>
+<li><a class="reference internal" href="#id9">屏蔽参数</a></li>
 </ul>
 </li>
 </ul>
@@ -192,34 +192,34 @@
 <section id="engines-toplevel">
 <span id="id1"></span><h1>引擎配置<a class="headerlink" href="#" title="Permalink to this heading">¶</a></h1>
 <blockquote>
-<div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect`通过连接池和  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> ，用于区分术语和说明文本的方式解释数据库的行为。这些应用程序描述了与特定类型的数据库/DBAPI组合谈话的方法。</p>
+<div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect` 通过连接池和  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> ，用于区分术语和说明文本的方式解释数据库的行为。这些应用程序描述了与特定类型的数据库/DBAPI组合谈话的方法。</p>
 </div></blockquote>
 <p>一般结构如下所示：</p>
 <img alt="../_images/sqla_engine_arch.png" src="../_images/sqla_engine_arch.png" />
-<p>上面，  <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect`和一个  <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> ，它们在一起解释了DBAPI的模​​块函数以及数据库的行为。</p>
+<p>上面，  <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .Dialect` 和一个  <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> ，它们在一起解释了DBAPI的模​​块函数以及数据库的行为。</p>
 <p>创建引擎只涉及发出单个调用，  <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+psycopg2://scott:tiger@localhost:5432/mydatabase&quot;</span><span class="p">)</span></pre></div>
 </div>
-<p>上面的引擎创建了一个专为PostgreSQL量身定制的  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> <cite>localhost：5432``建立一个DBAPI连接。请注意，  :class:`_engine.Engine</cite>  方法或依赖于此方法的操作（例如  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.execute()</span></code>  ）之前建立第一个实际的DBAPI连接。通过这种方式，可以说 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_engine.Engine`和 :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>_pool.Pool`具有*懒初始化*行为。</p>
-<p>一旦创建  <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，可以直接使用它与数据库交互，或者将其传递给  <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> ,将详细介绍 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_engine.Engine`及类似对象的使用API，通常用于非ORM应用程序。</p>
+<p>上面的引擎创建了一个专为PostgreSQL量身定制的  <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> ` localhost：5432``建立一个DBAPI连接。请注意，  <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  方法或依赖于此方法的操作（例如  :meth:` _engine.Engine.execute`  ）之前建立第一个实际的DBAPI连接。通过这种方式，可以说 <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 和 <a class="reference internal" href="pooling.html#sqlalchemy.pool.Pool" title="sqlalchemy.pool.Pool"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pool</span></code></a> 具有*懒初始化*行为。</p>
+<p>一旦创建  <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> ，可以直接使用它与数据库交互，或者将其传递给  :class:` .Session` ,将详细介绍 <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 及类似对象的使用API，通常用于非ORM应用程序。</p>
 <section id="supported-dbapis">
-<span id="id8"></span><h2>支持的数据库<a class="headerlink" href="#supported-dbapis" title="Permalink to this heading">¶</a></h2>
-<p>SQLAlchemy包括许多 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>.Dialect`实现，用于不同的后端。与大多数常见的数据库相关的方言已包含在SQLAlchemy中；另外一些需要额外安装一个单独的方言。</p>
-<p>请参见 :ref:<a href="#id11"><span class="problematic" id="id12">`</span></a>dialect_toplevel`一节，了解各种后端的详细信息。</p>
+<span id="id2"></span><h2>支持的数据库<a class="headerlink" href="#supported-dbapis" title="Permalink to this heading">¶</a></h2>
+<p>SQLAlchemy包括许多 <a class="reference internal" href="internals.html#sqlalchemy.engine.Dialect" title="sqlalchemy.engine.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> 实现，用于不同的后端。与大多数常见的数据库相关的方言已包含在SQLAlchemy中；另外一些需要额外安装一个单独的方言。</p>
+<p>请参见 <a class="reference internal" href="../dialects/index.html"><span class="std std-ref">方言</span></a> 一节，了解各种后端的详细信息。</p>
 </section>
 <section id="urls">
 <span id="database-urls"></span><h2>数据库URLs<a class="headerlink" href="#urls" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a href="#id13"><span class="problematic" id="id14">:func:`_sa.create_engine`函数基于URL生成 :class:`_engine.Engine`对象。URL的格式通常遵循`RFC-1738&lt;https://www.ietf.org/rfc/rfc1738.txt&gt;`_</span></a>，除了在“方案”部分之内接受下划线而不是短横线或句点。URL通常包括用户名、密码、主机名、数据库名称字段，以及可选的关键字参数用于其他配置。在某些情况下，文件路径是可接受的，而在其他情况下，“数据源名称”替换“主机”和“数据库”部分。数据库URL的典型形式为：</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 函数基于URL生成 <a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 对象。URL的格式通常遵循`RFC-1738&lt;<a class="reference external" href="https://www.ietf.org/rfc/rfc1738.txt">https://www.ietf.org/rfc/rfc1738.txt</a>&gt;`_，除了在“方案”部分之内接受下划线而不是短横线或句点。URL通常包括用户名、密码、主机名、数据库名称字段，以及可选的关键字参数用于其他配置。在某些情况下，文件路径是可接受的，而在其他情况下，“数据源名称”替换“主机”和“数据库”部分。数据库URL的典型形式为：</p>
 </div></blockquote>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>dialect+driver://username:password@host:port/database</pre></div>
 </div>
-<p>方言名称包括SQLAlchemy方言的标识名称，例如 <code class="docutils literal notranslate"><span class="pre">sqlite</span></code>，<code class="docutils literal notranslate"><span class="pre">mysql</span></code>，<code class="docutils literal notranslate"><span class="pre">postgresql</span></code>，<a href="#id15"><span class="problematic" id="id16">``</span></a>oracle``或``mssql``的名称。driverName是用于使用所有小写字母连接到数据库的DBAPI的名称。如果未指定，则会导入“默认”DBAPI（如果可用）-这个默认值通常是该后端可用的最通用的驱动程序。</p>
-<section id="id17">
-<h3>转义密码中的特殊字符，如&#64;符号<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
-<p>当构建一个完整的URL字符串传递给 :func:<a href="#id18"><span class="problematic" id="id19">`</span></a>_sa.create_engine`时，<strong>特殊字符，例如在用户和密码中使用的字符需要进行URL编码，以便被正确解析</strong>。<strong>这就包括了“&#64;”符号</strong>。</p>
+<p>方言名称包括SQLAlchemy方言的标识名称，例如 <code class="docutils literal notranslate"><span class="pre">sqlite</span></code>，<code class="docutils literal notranslate"><span class="pre">mysql</span></code>，<code class="docutils literal notranslate"><span class="pre">postgresql</span></code>，<a href="#id3"><span class="problematic" id="id4">``</span></a>oracle``或``mssql``的名称。driverName是用于使用所有小写字母连接到数据库的DBAPI的名称。如果未指定，则会导入“默认”DBAPI（如果可用）-这个默认值通常是该后端可用的最通用的驱动程序。</p>
+<section id="id5">
+<h3>转义密码中的特殊字符，如&#64;符号<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<p>当构建一个完整的URL字符串传递给 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 时，<strong>特殊字符，例如在用户和密码中使用的字符需要进行URL编码，以便被正确解析</strong>。<strong>这就包括了“&#64;”符号</strong>。</p>
 <p>以下是一个URL示例，其中包括密码“<a class="reference external" href="mailto:kx&#37;&#52;&#48;jj5/g">kx<span>&#64;</span>jj5/g</a>”，其中“at”符号和斜杆字符分别表示为“%40”和“%2F”：</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>postgresql+pg8000://dbuser:kx%40jj5%2Fg@pghost10/appdb</pre></div>
 </div>
@@ -233,14 +233,14 @@
 
 <span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span><span class="s2">&quot;postgresql+pg8000://dbuser:kx%40jj5</span><span class="si">%2F</span><span class="s2">g@pghost10/appdb&quot;</span><span class="p">)</span></pre></div>
 </div>
-<p>作为转义特殊字符以创建完整的URL字符串的替代方法，传递给  <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> .URL`类的实例，该实例绕过解析阶段，直接适应未转义的字符串。有关示例，请参见以下部分。</p>
+<p>作为转义特殊字符以创建完整的URL字符串的替代方法，传递给  <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> .URL` 类的实例，该实例绕过解析阶段，直接适应未转义的字符串。有关示例，请参见以下部分。</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 1.4: </span>修复了主机名和数据库名中的``&#64;``符号的支持。作为此修复的副作用，必须转义密码中的``&#64;``符号。</p>
 </div>
-<section id="id20">
-<h4>动态生成身份验证令牌<a class="headerlink" href="#id20" title="Permalink to this heading">¶</a></h4>
+<section id="id6">
+<h4>动态生成身份验证令牌<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h4>
 <blockquote>
-<div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .DialectEvents.do_connect` 事件挂钩来全面接管连接过程，从而为生命周期内可能会更改的令牌提供理想的方法。例如，如果标记通过``get_authentication_token()``生成并在一个``token``参数中传递给DBAPI，那么可以实现如下：</p>
+<div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> .DialectEvents.do_connect` 事件挂钩来全面接管连接过程，从而为生命周期内可能会更改的令牌提供理想的方法。例如，如果标记通过` <a href="#id7"><span class="problematic" id="id8">`</span></a>get_authentication_token()``生成并在一个``token``参数中传递给DBAPI，那么可以实现如下：</p>
 <blockquote>
 <div><p>from sqlalchemy import event</p>
 <p>engine = create_engine(“postgresql+psycopg2://user:pass&#64;hostname/dbname”)</p>
@@ -257,8 +257,8 @@ def provide_token(dialect, conn_rec, cargs, cparams):</p>
 </div>
 </section>
 </section>
-<section id="id21">
-<h3>屏蔽参数<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h3>
+<section id="id9">
+<h3>屏蔽参数<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
 <blockquote>
 <div><p><a class="reference internal" href="connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  标志即可：</p>
 <blockquote>
@@ -288,7 +288,7 @@ def provide_token(dialect, conn_rec, cargs, cparams):</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:46
+    Documentation last generated: 2023/8/18 18:58:42
 
     </div>
 </div>

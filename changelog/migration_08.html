@@ -171,7 +171,7 @@
 <li><span class="link-container"><a class="reference external" href="#postgresql-array">增强的 PostgreSQL ARRAY 类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlite-datetime">适用于 SQLite 的新可配置 DATE、TIME 类型</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#collate-mysqlpostgresql-sqlite">在所有方言上支持“COLLATE”；特别是在 MySQL、PostgreSQL 和 SQLite 中</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#expression-update-expression-delete">为   <code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code> 、  <code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code>  启用“前缀”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#expression-update-func-expression-delete">为   <code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code> 、  :func:` _expression.delete`  启用“前缀”</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#id17">行为变化</a></span><ul>
@@ -285,7 +285,7 @@
 <li><a class="reference internal" href="#postgresql-array">增强的 PostgreSQL ARRAY 类型</a></li>
 <li><a class="reference internal" href="#sqlite-datetime">适用于 SQLite 的新可配置 DATE、TIME 类型</a></li>
 <li><a class="reference internal" href="#collate-mysqlpostgresql-sqlite">在所有方言上支持“COLLATE”；特别是在 MySQL、PostgreSQL 和 SQLite 中</a></li>
-<li><a class="reference internal" href="#expression-update-expression-delete">为   <code class="xref py py-func docutils literal notranslate"><span class="pre">_expression.update()</span></code> 、  <code class="xref py py-func docutils literal notranslate"><span class="pre">_expression.delete()</span></code>  启用“前缀”</a></li>
+<li><a class="reference internal" href="#expression-update-func-expression-delete">为   <code class="xref py py-func docutils literal notranslate"><span class="pre">_expression.update()</span></code> 、  :func:` _expression.delete`  启用“前缀”</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#id17">行为变化</a><ul>
@@ -349,7 +349,7 @@
 <span id="feature-relationship-08"></span><h3>重写的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  机制<a class="headerlink" href="#orm-relationship" title="Permalink to this heading">¶</a></h3>
 <p>0.8版具有更强大和更可行的系统，用于确定   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  在两个实体之间如何连接。新系统包括以下功能：</p>
 <ul>
-<li><p>当使用多个外键路径连接到目标时，在构建   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  时，不再需要 <code class="docutils literal notranslate"><span class="pre">primaryjoin</span></code> 参数。仅需要 <code class="docutils literal notranslate"><span class="pre">foreign_keys</span></code> 参数来指定应包括哪些列：</p>
+<li><p>当使用多个外键路径连接到目标时，在构建   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  时，不再需要 ` <cite>primaryjoin`</cite> 参数。仅需要 <code class="docutils literal notranslate"><span class="pre">foreign_keys</span></code> 参数来指定应包括哪些列：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -419,7 +419,7 @@ remote_side=ip_address,</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>新的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  机制使用 SQLAlchemy 概念称为  <span class="xref std std-term">注释（annotations）</span>  。这些注释也可通过   <code class="xref py py-func docutils literal notranslate"><span class="pre">foreign()</span></code>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">remote()</span></code>  函数明确提供给应用程序代码，作为提高高级配置的可读性或直接注入精确配置的手段，从而绕过通常的连接检查启发式算法：</p>
+<p>新的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  机制使用 SQLAlchemy 概念称为  :term:` 注释（annotations）`  。这些注释也可通过   <code class="xref py py-func docutils literal notranslate"><span class="pre">foreign()</span></code>  和   :func:` .remote`  函数明确提供给应用程序代码，作为提高高级配置的可读性或直接注入精确配置的手段，从而绕过通常的连接检查启发式算法：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import foreign, remote</p>
 <dl>
@@ -444,8 +444,8 @@ primaryjoin=remote(ip_address) == cast(foreign(content), INET),</p>
 <section id="feature-orminspection-08">
 <span id="id3"></span><h3>新的类/对象检查系统<a class="headerlink" href="#feature-orminspection-08" title="Permalink to this heading">¶</a></h3>
 <p>许多SQLAlchemy用户正在编写需要检查映射类的属性的系统，包括能够获取主键列、对象关系、普通属性等等，通常用于构建数据封送系统，如JSON/XML转换方案和当然还有表单库等等。</p>
-<p>最初，   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  和   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  模型是原始检查点，具有良好记录的系统。虽然ORM模型也是完全可检查的，但这从来不是完全稳定和受支持的特性，用户倾向于不知道如何获取此信息。</p>
-<p>0.8现在为此提供了一致，稳定且完全记录的API，包括一组可用于映射类别，实例，属性和其他核心和ORM结构的检查系统。这个系统的入口点是核心级   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数。在大多数情况下，正在检查的对象是SQLAlchemy系统的一部分，例如   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code> ，  <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a> ，  <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code> 。在某些情况下，已添加具有提供检查API的作业的新对象，在特定上下文中，例如   <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.util.AliasedInsp" title="sqlalchemy.orm.util.AliasedInsp"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedInsp</span></code></a>  和   <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.AttributeState" title="sqlalchemy.orm.AttributeState"><code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeState</span></code></a> 。</p>
+<p>最初，   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  和   :class:` _schema.Column`  模型是原始检查点，具有良好记录的系统。虽然ORM模型也是完全可检查的，但这从来不是完全稳定和受支持的特性，用户倾向于不知道如何获取此信息。</p>
+<p>0.8现在为此提供了一致，稳定且完全记录的API，包括一组可用于映射类别，实例，属性和其他核心和ORM结构的检查系统。这个系统的入口点是核心级   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数。在大多数情况下，正在检查的对象是SQLAlchemy系统的一部分，例如   :class:` _orm.Mapper` ，  <a class="reference internal" href="../orm/internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a> ，  :class:` _reflection.Inspector` 。在某些情况下，已添加具有提供检查API的作业的新对象，在特定上下文中，例如   <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.util.AliasedInsp" title="sqlalchemy.orm.util.AliasedInsp"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedInsp</span></code></a>  和   :class:` .AttributeState` 。</p>
 <p>以下是一些关键功能的说明：</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
 <span class="go">...     __tablename__ = &quot;user&quot;</span>
@@ -549,7 +549,7 @@ primaryjoin=remote(ip_address) == cast(foreign(content), INET),</p>
 </section>
 <section id="id4">
 <h3>可以将ORM类别用于核心构造<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
-<p>虽然  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a>  中使用的SQL表达式，如 <code class="docutils literal notranslate"><span class="pre">User.id</span> <span class="pre">==</span> <span class="pre">5</span></code>，对于   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  等核心构造始终是兼容的，但映射的类本身在传递给   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a> ，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.select_from" title="sqlalchemy.sql.expression.Select.select_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.select_from()</span></code></a>   或  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate" title="sqlalchemy.sql.expression.Select.correlate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.correlate()</span></code></a>  时将无法识别。现在，新的SQL注册系统允许将映射类作为CORE中的FROM子句：</p>
+<p>虽然  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a>  中使用的SQL表达式，如 ` <cite>User.id == 5`</cite>，对于   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  等核心构造始终是兼容的，但映射的类本身在传递给   :func:` _expression.select` ，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.select_from" title="sqlalchemy.sql.expression.Select.select_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.select_from()</span></code></a>   或  :meth:` _expression.Select.correlate`  时将无法识别。现在，新的SQL注册系统允许将映射类作为CORE中的FROM子句：</p>
 <blockquote>
 <div><p>from sqlalchemy import select</p>
 <p>stmt = select([User]).where(User.id == 5)</p>
@@ -611,8 +611,8 @@ primaryjoin=remote(ip_address) == cast(foreign(content), INET),</p>
 <h2>新的CORE功能<a class="headerlink" href="#core" title="Permalink to this heading">¶</a></h2>
 <section id="id14">
 <h3>Core中完全可扩展的类型级运算符支持<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
-<p>到目前为止，Core从未具有为Column和其他表达式结构添加支持新SQL运算符的任何系统，除了  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.op" title="sqlalchemy.sql.expression.ColumnOperators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.op()</span></code></a>  方法“只是足够”可以使其正常工作。在Core中还从未有过任何可以允许覆盖现有运算符行为的系统。迄今为止，唯一可以灵活地重新定义运算符的方式是使用ORM层，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  并给定 <code class="docutils literal notranslate"><span class="pre">comparator_factory</span></code> 参数。因此，第三方库如GeoAlchemy被强制为ORM-centric，并依赖于一系列hack来应用新操作，以及使它们正确传播。</p>
-<p>Core中的新运算符系统添加了一直缺失的一个钩子，即将新的和覆盖的运算符与*类型*关联起来。毕竟，实际上*不是*一个列，CAST运算符或SQL函数真正驱动可用的操作类型的种类。实现细节很少-只添加了一些额外的方法到核心   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a>  类型，以便在核心中的   <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine" title="sqlalchemy.types.TypeEngine"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeEngine</span></code></a>  对象中查看可选运算符集。新的或修订的操作可以与任何类型关联，无论是通过现有类型的子类化，使用   <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> ，或通过将新的   <a class="reference internal" href="../core/type_api.html#sqlalchemy.types.TypeEngine.Comparator" title="sqlalchemy.types.TypeEngine.Comparator"><code class="xref py py-class docutils literal notranslate"><span class="pre">Comparator</span></code></a>  对象附加到现有类型类“全局跨越。”</p>
+<p>到目前为止，Core从未具有为Column和其他表达式结构添加支持新SQL运算符的任何系统，除了  <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.op" title="sqlalchemy.sql.expression.ColumnOperators.op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.op()</span></code></a>  方法“只是足够”可以使其正常工作。在Core中还从未有过任何可以允许覆盖现有运算符行为的系统。迄今为止，唯一可以灵活地重新定义运算符的方式是使用ORM层，使用   :func:` .column_property`  并给定 <code class="docutils literal notranslate"><span class="pre">comparator_factory</span></code> 参数。因此，第三方库如GeoAlchemy被强制为ORM-centric，并依赖于一系列hack来应用新操作，以及使它们正确传播。</p>
+<p>Core中的新运算符系统添加了一直缺失的一个钩子，即将新的和覆盖的运算符与*类型*关联起来。毕竟，实际上*不是*一个列，CAST运算符或SQL函数真正驱动可用的操作类型的种类。实现细节很少-只添加了一些额外的方法到核心   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnElement" title="sqlalchemy.sql.expression.ColumnElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColumnElement</span></code></a>  类型，以便在核心中的   :class:` .TypeEngine`  对象中查看可选运算符集。新的或修订的操作可以与任何类型关联，无论是通过现有类型的子类化，使用   <a class="reference internal" href="../core/custom_types.html#sqlalchemy.types.TypeDecorator" title="sqlalchemy.types.TypeDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeDecorator</span></code></a> ，或通过将新的   :class:` .TypeEngine.Comparator`  对象附加到现有类型类“全局跨越。”</p>
 <p>例如，要将logarithm支持添加到   <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Numeric" title="sqlalchemy.types.Numeric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Numeric</span></code></a>  类型：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.types</span> <span class="kn">import</span> <span class="n">Numeric</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">func</span>
@@ -640,7 +640,7 @@ primaryjoin=remote(ip_address) == cast(foreign(content), INET),</p>
 <section id="insertvalues">
 <span id="feature-2623"></span><h3>支持Insert的多重VALUES<a class="headerlink" href="#insertvalues" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>   方法现在支持字典列表，这将呈现出multi-VALUES语句，例如 <code class="docutils literal notranslate"><span class="pre">VALUES</span> <span class="pre">(&lt;row1&gt;),</span> <span class="pre">(&lt;row2&gt;),</span> <span class="pre">...</span></code>。这仅涉及支持这种语法的后端，包括PostgreSQL，SQLite和MySQL。它与通常的 <code class="docutils literal notranslate"><span class="pre">executemany()</span></code> 样式的INSERT不同，它保持不变：</p>
+<div><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Insert.values" title="sqlalchemy.sql.expression.Insert.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Insert.values()</span></code></a>   方法现在支持字典列表，这将呈现出multi-VALUES语句，例如 ` <cite>VALUES (&lt;row1&gt;), (&lt;row2&gt;), …`</cite>。这仅涉及支持这种语法的后端，包括PostgreSQL，SQLite和MySQL。它与通常的 <code class="docutils literal notranslate"><span class="pre">executemany()</span></code> 样式的INSERT不同，它保持不变：</p>
 <blockquote>
 <div><dl>
 <dt>users.insert().values(</dt><dd><dl class="simple">
@@ -685,18 +685,18 @@ test_table = Table(“test_table”, metadata, Column(“data”, LowerString))<
 </section>
 <section id="id16">
 <h3>Core检查系统<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
-<p>在   <a class="reference internal" href="#feature-orminspection-08"><span class="std std-ref">新的类/对象检查系统</span></a>  中引入的   <a class="reference internal" href="../core/inspection.html#sqlalchemy.inspect" title="sqlalchemy.inspect"><code class="xref py py-func docutils literal notranslate"><span class="pre">inspect()</span></code></a>  函数，现在也适用于Core。应用于   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  它会产生   <code class="xref py py-class docutils literal notranslate"><span class="pre">Inspector</span></code>  对象：</p>
+<p>在   <a class="reference internal" href="#feature-orminspection-08"><span class="std std-ref">新的类/对象检查系统</span></a>  中引入的   :func:` _sa.inspect`  函数，现在也适用于Core。应用于   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a>  它会产生   :class:` _reflection.Inspector`  对象：</p>
 <blockquote>
 <div><p>from sqlalchemy import inspect
 from sqlalchemy import create_engine</p>
 <p>engine = create_engine(“postgresql://scott:tiger&#64;localhost/test”)
 insp = inspect(engine)    print(insp.get_table_names())</p>
 </div></blockquote>
-<p>它还可以应用于任何   <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> ，它返回   <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a>  本身，例如   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 、  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 、  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  等。这使得它可以在 Core 和 ORM 结构之间流畅地工作。</p>
+<p>它还可以应用于任何   <a class="reference internal" href="../core/foundation.html#sqlalchemy.sql.expression.ClauseElement" title="sqlalchemy.sql.expression.ClauseElement"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClauseElement</span></code></a> ，它返回   :class:` _expression.ClauseElement`  本身，例如   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 、  :class:` _schema.Column` 、  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select" title="sqlalchemy.sql.expression.Select"><code class="xref py py-class docutils literal notranslate"><span class="pre">Select</span></code></a>  等。这使得它可以在 Core 和 ORM 结构之间流畅地工作。</p>
 </section>
 <section id="expression-select-correlate-except">
 <h3>新的方法  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate_except" title="sqlalchemy.sql.expression.Select.correlate_except"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.correlate_except()</span></code></a><a class="headerlink" href="#expression-select-correlate-except" title="Permalink to this heading">¶</a></h3>
-<p>现在，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  有一个方法  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate_except" title="sqlalchemy.sql.expression.Select.correlate_except"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.correlate_except()</span></code></a> ，它指定“对除特定选择之外的所有 FROM 子句进行关联”。它可用于映射场景，其中一个相关子查询应该正常关联，除了特定的目标可选择的子句：</p>
+<p>现在，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  有一个方法  :meth:` _expression.Select.correlate_except` ，它指定“对除特定选择之外的所有 FROM 子句进行关联”。它可用于映射场景，其中一个相关子查询应该正常关联，除了特定的目标可选择的子句：</p>
 <blockquote>
 <div><dl>
 <dt>class SnortEvent(Base):</dt><dd><p>__tablename__ = “event”</p>
@@ -719,7 +719,7 @@ signature = Column(Integer, ForeignKey(“signature.id”))</p>
 </section>
 <section id="postgresql-hstore">
 <h3>PostgreSQL HSTORE 类型<a class="headerlink" href="#postgresql-hstore" title="Permalink to this heading">¶</a></h3>
-<p>现在可以使用 PostgreSQL 的 <code class="docutils literal notranslate"><span class="pre">HSTORE</span></code> 类型，例如   <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.HSTORE" title="sqlalchemy.dialects.postgresql.HSTORE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSTORE</span></code></a> 。该类型充分利用了新的运算符系统，为 HSTORE 类型提供了全面的运算符范围，包括索引访问、连接和包含方法，例如  <code class="xref py py-meth docutils literal notranslate"><span class="pre">comparator_factory.has_key()</span></code> 、  <code class="xref py py-meth docutils literal notranslate"><span class="pre">comparator_factory.has_any()</span></code>   和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">comparator_factory.matrix()</span></code> ：</p>
+<p>现在可以使用 PostgreSQL 的 <code class="docutils literal notranslate"><span class="pre">HSTORE</span></code> 类型，例如   <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.HSTORE" title="sqlalchemy.dialects.postgresql.HSTORE"><code class="xref py py-class docutils literal notranslate"><span class="pre">HSTORE</span></code></a> 。该类型充分利用了新的运算符系统，为 HSTORE 类型提供了全面的运算符范围，包括索引访问、连接和包含方法，例如  :meth:` ~.HSTORE.comparator_factory.has_key` 、  <code class="xref py py-meth docutils literal notranslate"><span class="pre">comparator_factory.has_any()</span></code>   和  :meth:` ~.HSTORE.comparator_factory.matrix` ：</p>
 <blockquote>
 <div><p>from sqlalchemy.dialects.postgresql import HSTORE</p>
 <dl class="simple">
@@ -802,8 +802,8 @@ Column(“hstore_data”, HSTORE),</p>
 </div></pre></div>
 </div>
 </section>
-<section id="expression-update-expression-delete">
-<h3>为   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> 、  <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.delete" title="sqlalchemy.sql.expression.delete"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete()</span></code></a>  启用“前缀”<a class="headerlink" href="#expression-update-expression-delete" title="Permalink to this heading">¶</a></h3>
+<section id="expression-update-func-expression-delete">
+<h3>为   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.update" title="sqlalchemy.sql.expression.update"><code class="xref py py-func docutils literal notranslate"><span class="pre">update()</span></code></a> 、  :func:` _expression.delete`  启用“前缀”<a class="headerlink" href="#expression-update-func-expression-delete" title="Permalink to this heading">¶</a></h3>
 <p>面向 MySQL，可以在任何这些结构中呈现前缀。“a=1”这样的比较就变成了“a IN (1,)”。
 例如：</p>
 <blockquote>
@@ -811,7 +811,7 @@ Column(“hstore_data”, HSTORE),</p>
 <p>stmt = table.update().prefix_with(“LOW_PRIORITY”, dialect=”mysql”)</p>
 </div></blockquote>
 <p>该方法是新添加的，另外加入了一些已经存在的方法，
-如   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 、  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  和   <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a></p>
+如   <a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.insert" title="sqlalchemy.sql.expression.insert"><code class="xref py py-func docutils literal notranslate"><span class="pre">insert()</span></code></a> 、  :func:` _expression.select`  和   <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a></p>
 </section>
 </section>
 <section id="id17">
@@ -819,7 +819,7 @@ Column(“hstore_data”, HSTORE),</p>
 <p>legacy_is_orphan_addition：</p>
 <section id="id18">
 <h3>将“挂起”对象视为“孤立”对象的考虑更加积极<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h3>
-<p>这是 0.8 系列的一个迟到的添加，但是希望新行为通常在更广泛的情况下更一致和直观。ORM 从至少版本 0.4 开始就包含行为，使得“挂起”的对象（即它与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  关联，但尚未插入到数据库中的对象）在成为“孤儿”时，在断开与引用它的父对象的关系（在配置的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上使用“delete-orphan”级联时）时会自动从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中删除，这种行为旨在大约类似于持久（即已插入）对象的行为，其中 ORM 将拦截分离事件并为基于分离事件的孤儿对象发出 DELETE。</p>
+<p>这是 0.8 系列的一个迟到的添加，但是希望新行为通常在更广泛的情况下更一致和直观。ORM 从至少版本 0.4 开始就包含行为，使得“挂起”的对象（即它与   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  关联，但尚未插入到数据库中的对象）在成为“孤儿”时，在断开与引用它的父对象的关系（在配置的   :func:` _orm.relationship`  上使用“delete-orphan”级联时）时会自动从   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中删除，这种行为旨在大约类似于持久（即已插入）对象的行为，其中 ORM 将拦截分离事件并为基于分离事件的孤儿对象发出 DELETE。</p>
 <p>该行为适用于从属于多个父级都指定“delete-orphan”级联的任何父级都指定“delete-orphan”级联并且规模为一对多或多对多的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ；这是一种尴尬而又无法预知地使用用例（受到一定限制），但尽管如此，该行为仍然希望在对象被部分地关联到要求的父级时能够更一致地操作，而不是需要所有父级都必须置于一个已知的状态。</p>
 <p>发生更改的行为适用于以下对象：</p>
 <blockquote>
@@ -971,15 +971,15 @@ print(s2)</p>
 </section>
 <section id="id25">
 <h3>关联始终是上下文特定的<a class="headerlink" href="#id25" title="Permalink to this heading">¶</a></h3>
-<p>为了允许更广泛的关联方案，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate" title="sqlalchemy.sql.expression.Select.correlate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.correlate()</span></code></a>   和  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.correlate" title="sqlalchemy.orm.Query.correlate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.correlate()</span></code></a>  的行为略有更改，以便仅在语句在该上下文中实际使用时，才从选择语句的 FROM 子句中省略“关联”目标。此外，无法自己指定一个在封闭的 SELECT 中作为一个 FROM 语句被放置的选择语句来“关联”（即，省略）FROM 子句。</p>
-<p>此更改仅使呈现 SQL 更佳，在正确构建的表达式中，关联行为仍完全相同，包括“名字”和“键”方面的所有行为相同，包括呈现 SQL 仍然使用：&lt;tablename&gt;_&lt;colname&gt;该重点在于防止  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  内容呈现为“SELECT”语句，以使  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  中使用的特殊/非 ASCII 字符没有任何问题。</p>
+<p>为了允许更广泛的关联方案，  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.correlate" title="sqlalchemy.sql.expression.Select.correlate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.correlate()</span></code></a>   和  :meth:` _query.Query.correlate`  的行为略有更改，以便仅在语句在该上下文中实际使用时，才从选择语句的 FROM 子句中省略“关联”目标。此外，无法自己指定一个在封闭的 SELECT 中作为一个 FROM 语句被放置的选择语句来“关联”（即，省略）FROM 子句。</p>
+<p>此更改仅使呈现 SQL 更佳，在正确构建的表达式中，关联行为仍完全相同，包括“名字”和“键”方面的所有行为相同，包括呈现 SQL 仍然使用：&lt;tablename&gt;_&lt;colname&gt;该重点在于防止  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  内容呈现为“SELECT”语句，以使  :attr:` _schema.Column.key`  中使用的特殊/非 ASCII 字符没有任何问题。</p>
 <blockquote>
 <div><p><a href="#id26"><span class="problematic" id="id27">:ticket:`2668`</span></a></p>
 </div></blockquote>
 <p>metadata_create_drop_tables:
-.  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code>   和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.drop_all()</span></code>  现在将尊重空列表作为这样的
+.  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code>   和  :meth:` _schema.MetaData.drop_all`  现在将尊重空列表作为这样的
 —————————————————————-</p>
-<p>方法  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code>  和  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.drop_all()</span></code>  现在将接受一个空的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象列表，并且不会发出任何 CREATE 或 DROP 语句。以前，空列表与传递“None”集合相同，并且 CREATE/DROP 将无条件地发出。</p>
+<p>方法  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.create_all()</span></code>  和  :meth:` _schema.MetaData.drop_all`  现在将接受一个空的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象列表，并且不会发出任何 CREATE 或 DROP 语句。以前，空列表与传递“None”集合相同，并且 CREATE/DROP 将无条件地发出。</p>
 <p>这是一个错误修复，但某些应用程序可能已经依赖于以前的行为。</p>
 <blockquote>
 <div><p><a href="#id28"><span class="problematic" id="id29">:ticket:`2664`</span></a></p>
@@ -990,12 +990,12 @@ print(s2)</p>
 <div><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.is_modified()</span></code>   方法接受一个参数“被动”，基本上不应该必要的情况下，所有情况下都应该是 “True” 的值 - 当其保留在其默认值“False”时，它会显示数据库，通常会触发 autoflush，它本身会更改结果。在 0.8 中，“被动”参数将无效，并且未加载的属性将永远不会检查其记录，因为按定义，未加载的属性上不能有待处理的状态更改。</p>
 </div></blockquote>
 <hr class="docutils" />
-<p>表达式系统的用户知道，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.apply_labels()</span></code>   将表名添加到每个列名之前，影响可从  <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.c" title="sqlalchemy.sql.expression.Select.c"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Select.c</span></code></a>  中使用的名称：</p>
+<p>表达式系统的用户知道，  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.apply_labels()</span></code>   将表名添加到每个列名之前，影响可从  :attr:` _expression.Select.c`  中使用的名称：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">([</span><span class="n">table1</span><span class="p">])</span><span class="o">.</span><span class="n">apply_labels</span><span class="p">()</span>
 <span class="n">s</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">table1_col1</span>
 <span class="n">s</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">table1_col2</span></pre></div>
 </div>
-<p>在 0.8 之前，如果   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  具有不同的  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code> ，则此键将被忽略，相对于未使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.apply_labels()</span></code>  时的不一致：</p>
+<p>在 0.8 之前，如果   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  具有不同的  :attr:` _schema.Column.key` ，则此键将被忽略，相对于未使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.apply_labels()</span></code>  时的不一致：</p>
 <blockquote>
 <div><p># 在 0.8 之前
 table1 = Table(“t1”, metadata, Column(“col1”, Integer, key=”column_one”))
@@ -1017,14 +1017,14 @@ s.c.col1  # AttributeError</p>
 s.c.table1_column_one  # 有效
 s.c.table1_col1  # AttributeError</p>
 </div></blockquote>
-<p>所有其他的“name”和“key”行为都是相同的，包括呈现的 SQL 仍然使用形式“&lt; tablename&gt; _ &lt;colname&gt;”–重点是防止  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  内容被呈现为“SELECT”语句，从而避免了使用  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  中的特殊/非 ASCII 字符可能会出现的问题。</p>
+<p>所有其他的“name”和“key”行为都是相同的，包括呈现的 SQL 仍然使用形式“&lt; tablename&gt; _ &lt;colname&gt;”–重点是防止  <code class="xref py py-attr docutils literal notranslate"><span class="pre">Column.key</span></code>  内容被呈现为“SELECT”语句，从而避免了使用  :attr:` _schema.Column.key`  中的特殊/非 ASCII 字符可能会出现的问题。</p>
 <blockquote>
 <div><p><a href="#id30"><span class="problematic" id="id31">:ticket:`2397`</span></a></p>
 </div></blockquote>
 </section>
 <section id="id32">
 <h3>单个父级警告现在为错误<a class="headerlink" href="#id32" title="Permalink to this heading">¶</a></h3>
-<p>由于某种原因，如果   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  是一对多或多对多关系，并且指定了“cascade=’all, delete-orphan’”，这是一种尴尬但仍然支持的用例（具有限制条件），如果关系没有指定 <code class="docutils literal notranslate"><span class="pre">single_parent=True</span></code> 选项，则现在将引发错误而不是警告。
+<p>由于某种原因，如果   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  是一对多或多对多关系，并且指定了“cascade=’all, delete-orphan’”，这是一种尴尬但仍然支持的用例（具有限制条件），如果关系没有指定 ` <cite>single_parent=True`</cite> 选项，则现在将引发错误而不是警告。
 以前只会发出警告，但是几乎立即会在属性系统中因为警告而失败。</p>
 <blockquote>
 <div><p><a href="#id33"><span class="problematic" id="id34">:ticket:`2405`</span></a></p>
@@ -1137,7 +1137,7 @@ def listen_for_col(inspector, table, column_info):</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:40
+    Documentation last generated: 2023/8/18 18:58:38
 
     </div>
 </div>

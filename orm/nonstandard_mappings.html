@@ -216,7 +216,7 @@
 <h1>非传统映射<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <section id="maptojoin">
 <span id="orm-mapping-joins"></span><span id="id2"></span><h2>将类映射到多个表<a class="headerlink" href="#maptojoin" title="Permalink to this heading">¶</a></h2>
-<p>Mapper不仅可以针对纯粹的表进行构造，还可以针对任意关系单元（称为“可选择的”）进行构造。例如，   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.join" title="sqlalchemy.sql.expression.join"><code class="xref py py-func docutils literal notranslate"><span class="pre">join()</span></code></a>  函数创建了一个包含多个表的可选择单元（具有自己的复合主键），这些表可以以与   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  相同的方式进行映射。</p>
+<p>Mapper不仅可以针对纯粹的表进行构造，还可以针对任意关系单元（称为“可选择的”）进行构造。例如，   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.join" title="sqlalchemy.sql.expression.join"><code class="xref py py-func docutils literal notranslate"><span class="pre">join()</span></code></a>  函数创建了一个包含多个表的可选择单元（具有自己的复合主键），这些表可以以与   :class:` _schema.Table`  相同的方式进行映射。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>在下文中，原文有一个术语“mapper”，我未予翻译，因为有上下文即可理解。下同。</p>
@@ -261,7 +261,7 @@ class AddressUser(Base):</p>
 address_id = address_table.c.id</p>
 </div></blockquote>
 </div></blockquote>
-<p>在上面的例子中，连接表达了 <code class="docutils literal notranslate"><span class="pre">user</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表格的列. <code class="docutils literal notranslate"><span class="pre">user.id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address.user_id</span></code> 列是通过外键相等，因此在映射中他们被定义为一个属性， <code class="docutils literal notranslate"><span class="pre">AddressUser.id</span></code>，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  来指示一个专门的列映射。根据配置的这一部分，当刷新发生时，映射将会将新的主键值从 <code class="docutils literal notranslate"><span class="pre">user.id</span></code> 复制到 <code class="docutils literal notranslate"><span class="pre">address.user_id</span></code> 列中。</p>
+<p>在上面的例子中，连接表达了 <code class="docutils literal notranslate"><span class="pre">user</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表格的列. <code class="docutils literal notranslate"><span class="pre">user.id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address.user_id</span></code> 列是通过外键相等，因此在映射中他们被定义为一个属性， <code class="docutils literal notranslate"><span class="pre">AddressUser.id</span></code>，使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">column_property()</span></code>  来指示一个专门的列映射。根据配置的这一部分，当刷新发生时，映射将会将新的主键值从 ` <cite>user.id`</cite> 复制到 <code class="docutils literal notranslate"><span class="pre">address.user_id</span></code> 列中。</p>
 <p>此外，<code class="docutils literal notranslate"><span class="pre">address.id</span></code> 列映射显式地映射到名为 <code class="docutils literal notranslate"><span class="pre">address_id</span></code> 的属性。这是为了**消除歧义**，从 <code class="docutils literal notranslate"><span class="pre">address.id</span></code> 列的映射中区分同名的 <code class="docutils literal notranslate"><span class="pre">AddressUser.id</span></code> 属性，后者被指定为引用与 <code class="docutils literal notranslate"><span class="pre">address.user_id</span></code> 外键结合的 <code class="docutils literal notranslate"><span class="pre">user</span></code> 表格。</p>
 <p>上述映射的自然主键是 <code class="docutils literal notranslate"><span class="pre">(user.id,</span> <span class="pre">address.id)</span></code> 的组合，因为这些是合并为一起的 <code class="docutils literal notranslate"><span class="pre">user</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address</span></code> 表格的主键列。 <code class="docutils literal notranslate"><span class="pre">AddressUser</span></code> 对象的标识将是根据这两个值中的任意值，从 <code class="docutils literal notranslate"><span class="pre">AddressUser</span></code> 对象中表示为 <code class="docutils literal notranslate"><span class="pre">(AddressUser.id，AddressUser.address_id)</span></code>。</p>
 <p>当引用 <code class="docutils literal notranslate"><span class="pre">AddressUser.id</span></code> 列时，大多数 SQL 表达式将只使用映射列列表中的第一列，因为这两列是同义词。然而，对于特殊的用例，例如必须同时引用两个列的 GROUP BY 表达式，同时利用适当的上下文，即适应别名和类似的内容，在访问器  <a class="reference internal" href="internals.html#sqlalchemy.orm.ColumnProperty.Comparator.expressions" title="sqlalchemy.orm.ColumnProperty.Comparator.expressions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Comparator.expressions</span></code></a>  中使用。</p>
@@ -286,12 +286,12 @@ def receive_before_update(mapper, connection, target):</p>
 </dl>
 </div></blockquote>
 </div></blockquote>
-<p>在上述代码中，首先使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Table.insert()</span></code>  创建一个 INSERT 构造，并且使用已经给出的   <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Connection" title="sqlalchemy.engine.Connection"><code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code></a>  执行它，这正是用于发出 SQL 用于刷新过程的那个连接。用户提供的逻辑必须检测到“p”到“q”的 LEFT OUTER JOIN 没有“q”一侧的条目。</p>
+<p>在上述代码中，首先使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Table.insert()</span></code>  创建一个 INSERT 构造，并且使用已经给出的   :class:` _engine.Connection`  执行它，这正是用于发出 SQL 用于刷新过程的那个连接。用户提供的逻辑必须检测到“p”到“q”的 LEFT OUTER JOIN 没有“q”一侧的条目。</p>
 </div>
 </section>
 <section id="orm-mapping-arbitrary-subqueries">
 <span id="id5"></span><h2>将类映射到任意子查询<a class="headerlink" href="#orm-mapping-arbitrary-subqueries" title="Permalink to this heading">¶</a></h2>
-<p>与映射到连接一样，一个普通的   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  对象也可以与 mapper 一起使用。下面的示例片段说明了如何将名为“Customer”的类映射到一个包括对子查询的连接的   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a></p>
+<p>与映射到连接一样，一个普通的   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.select" title="sqlalchemy.sql.expression.select"><code class="xref py py-func docutils literal notranslate"><span class="pre">select()</span></code></a>  对象也可以与 mapper 一起使用。下面的示例片段说明了如何将名为“Customer”的类映射到一个包括对子查询的连接的   :func:` _expression.select`</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span><span class="p">,</span> <span class="n">func</span>
 
 <span class="n">subq</span> <span class="o">=</span> <span class="p">(</span>
@@ -317,13 +317,13 @@ def receive_before_update(mapper, connection, target):</p>
 <p>当 ORM 持久化“Customer”的新实例时，实际上仅会向 <code class="docutils literal notranslate"><span class="pre">customers</span></code> 表格插入数据。这是因为 <code class="docutils literal notranslate"><span class="pre">ordres</span></code> 表格的主键在映射中没有被表示；ORM 仅会向已映射主键的表格插入数据。</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>映射到任意 SELECT 语句的做法，尤其是像上面的那样复杂的 SELECT 语句，是几乎不需要的。这种方法必然导致生成复杂的查询，往往比直接构造查询的查询效率低。这种做法在 SQLalchemy 的早期历史上就存在了，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  构造旨在代表主要的查询界面，但在现代使用中，   <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>  对象可以用来构造几乎任何 SELECT 语句，包括复杂的复合语句，应优先考虑“映射到可选择”的方法。</p>
+<p>映射到任意 SELECT 语句的做法，尤其是像上面的那样复杂的 SELECT 语句，是几乎不需要的。这种方法必然导致生成复杂的查询，往往比直接构造查询的查询效率低。这种做法在 SQLalchemy 的早期历史上就存在了，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  构造旨在代表主要的查询界面，但在现代使用中，   :class:` _query.Query`  对象可以用来构造几乎任何 SELECT 语句，包括复杂的复合语句，应优先考虑“映射到可选择”的方法。</p>
 </div>
 </section>
 <section id="id6">
 <h2>一个类的多个映射器<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h2>
-<p>在现代 SQLalchemy 中，特定类同时只由一个所谓的**主要**映射器进行映射。这个映射器涉及三个主要功能领域：查询、持久化和对映射类的仪表化。主要映射器的理论基础是，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  并非只将其持久地编制到特定的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  上，而是也会 <strong>仪表化</strong> 类上的属性，特定地基于表格元数据进行结构化。由于只有一个映射器实际上可以更改类本身，而不仅仅是将其持久化到特定的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  中，因此没有多个映射器能够与类以相同的度量关联。</p>
-<p>“非主要”映射器的概念在 SQLalchemy 的早期版本中一直存在，但从版本 1.3 开始，该特性已被弃用。当仅构建与可选择项关联的关系时，这种非主要映射器是有用的。现在可以使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">aliased</span></code>  来实现该用例，关于这个：ref:<cite>relationship_aliased_class</cite>.</p>
+<p>在现代 SQLalchemy 中，特定类同时只由一个所谓的**主要**映射器进行映射。这个映射器涉及三个主要功能领域：查询、持久化和对映射类的仪表化。主要映射器的理论基础是，   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  并非只将其持久地编制到特定的   :class:` _schema.Table`  上，而是也会 <strong>仪表化</strong> 类上的属性，特定地基于表格元数据进行结构化。由于只有一个映射器实际上可以更改类本身，而不仅仅是将其持久化到特定的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  中，因此没有多个映射器能够与类以相同的度量关联。</p>
+<p>“非主要”映射器的概念在 SQLalchemy 的早期版本中一直存在，但从版本 1.3 开始，该特性已被弃用。当仅构建与可选择项关联的关系时，这种非主要映射器是有用的。现在可以使用   <code class="xref py py-class docutils literal notranslate"><span class="pre">aliased</span></code>  来实现该用例，关于这个：ref:` relationship_aliased_class`.</p>
 <p>关于将一个类完全持久化到不同的表格中的用例， SQLalchemy 的早期版本提供了一种功能，从 Hibernate 改编而来，称为“实体名称”功能。但是，在 SQLalchemy 将映射类本身成为 SQL 表达式构造的来源后，这个用例变得不可行，即，类的属性直接链接到映射表列。该特性已被删除，并替换为一种无歧义仪表化方法的简单配方，即创建单独映射的新子类。现在，这种模式可以作为配方使用，位于 <a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/使用/配方/EntityName">Entity Name</a> 。</p>
 </section>
 </section>
@@ -346,7 +346,7 @@ def receive_before_update(mapper, connection, target):</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:59:01
 
     </div>
 </div>

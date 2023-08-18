@@ -136,13 +136,13 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#schema-unique-constraint">唯一约束</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id12">检查约束</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id15">主键约束</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id4">检查约束</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id5">主键约束</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#declarative-orm">使用Declarative ORM扩展时设置约束</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#constraint-naming-conventions">配置约束命名约定</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#constraint-default-naming-convention">默认命名约定</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id48">长名称的截断</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id49">为命名约定创建自定义标记</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">长名称的截断</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id17">为命名约定创建自定义标记</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#naming-check-constraints">命名检查约束</a></span></li>
 </ul>
 </li>
@@ -250,8 +250,8 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#schema-indexes">索引</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id57">函数式索引</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id58">索引 API</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id23">函数式索引</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id24">索引 API</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.schema.Index"><code class="docutils literal notranslate"><span class="pre">Index</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.schema.Index.__init__"><code class="docutils literal notranslate"><span class="pre">Index.__init__()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.schema.Index.argument_for"><code class="docutils literal notranslate"><span class="pre">Index.argument_for()</span></code></a></span></li>
@@ -326,13 +326,13 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#schema-unique-constraint">唯一约束</a></li>
-<li><a class="reference internal" href="#id12">检查约束</a></li>
-<li><a class="reference internal" href="#id15">主键约束</a></li>
+<li><a class="reference internal" href="#id4">检查约束</a></li>
+<li><a class="reference internal" href="#id5">主键约束</a></li>
 <li><a class="reference internal" href="#declarative-orm">使用Declarative ORM扩展时设置约束</a></li>
 <li><a class="reference internal" href="#constraint-naming-conventions">配置约束命名约定</a><ul>
 <li><a class="reference internal" href="#constraint-default-naming-convention">默认命名约定</a></li>
-<li><a class="reference internal" href="#id48">长名称的截断</a></li>
-<li><a class="reference internal" href="#id49">为命名约定创建自定义标记</a></li>
+<li><a class="reference internal" href="#id16">长名称的截断</a></li>
+<li><a class="reference internal" href="#id17">为命名约定创建自定义标记</a></li>
 <li><a class="reference internal" href="#naming-check-constraints">命名检查约束</a></li>
 </ul>
 </li>
@@ -440,8 +440,8 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#schema-indexes">索引</a></li>
-<li><a class="reference internal" href="#id57">函数式索引</a></li>
-<li><a class="reference internal" href="#id58">索引 API</a><ul>
+<li><a class="reference internal" href="#id23">函数式索引</a></li>
+<li><a class="reference internal" href="#id24">索引 API</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.schema.Index"><code class="docutils literal notranslate"><span class="pre">Index</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.schema.Index.__init__"><code class="docutils literal notranslate"><span class="pre">Index.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.schema.Index.argument_for"><code class="docutils literal notranslate"><span class="pre">Index.argument_for()</span></code></a></li>
@@ -471,11 +471,11 @@
         
 <section id="metadata-constraints">
 <span id="metadata-constraints-toplevel"></span><span id="id1"></span><h1>定义约束和索引<a class="headerlink" href="#metadata-constraints" title="Permalink to this heading">¶</a></h1>
-<p>本节将介绍SQL  <span class="xref std std-term">constraints</span>  和索引。在SQLAlchemy中，关键类包括  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> .Index`。</p>
+<p>本节将介绍SQL  <span class="xref std std-term">constraints</span>  和索引。在SQLAlchemy中，关键类包括  :class:` _schema.ForeignKeyConstraint` .Index`。</p>
 <section id="metadata-foreignkeys">
 <span id="id2"></span><h2>定义外键<a class="headerlink" href="#metadata-foreignkeys" title="Permalink to this heading">¶</a></h2>
 <p>在SQL中，<em>foreign key</em> 是一个表级构造，它约束该表中的一个或多个列，只允许存在于不同列集中的值（通常但不总是位于不同的表中）。我们称被约束的列为*foreign key*列，被约束至的列称为*referenced*列。被约束列通常定义为其拥有表（但有例外情况）的主键，外键是连接有关联的成对行的“联合”，SQLAlchemy赋予这个概念在其操作的几乎每个领域中非常重要的地位。</p>
-<p>在SQLAlchemy中，以及在DDL中，外键约束可以被定义为表子句中的附加属性，对于单列外键，它们可以在单列的定义中指定。单列外键更常见，在列级别上，是通过构造  <a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.Column`对象的参数来指定的:</p>
+<p>在SQLAlchemy中，以及在DDL中，外键约束可以被定义为表子句中的附加属性，对于单列外键，它们可以在单列的定义中指定。单列外键更常见，在列级别上，是通过构造  <a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.Column` 对象的参数来指定的:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user_preference</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;user_preference&quot;</span><span class="p">,</span>
     <span class="n">metadata_obj</span><span class="p">,</span>
@@ -487,12 +487,12 @@
 </div>
 <p>以上，我们定义了一个名为``user_preference``的新表。该表的每一行都必须包含一个与``user``表的``user_id``的列值相对应的值。</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.Column`对象，我们将在稍后看到，它可以通过其``c``集合从现有的 :class:<a href="#id3"><span class="problematic" id="id4">`</span></a>~sqlalchemy.schema.Table`对象中访问:</p>
+<div><p><a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.Column` 对象，我们将在稍后看到，它可以通过其``c``集合从现有的 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象中访问:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span></pre></div>
 </div>
 </div></blockquote>
 <p>使用字符串的优点是当第一次需要时才会解决``user``和``user_preference``之间在Python中的链接，因此表对象可以轻松地分布在多个模块中，并且可以以任何顺序定义。</p>
-<p>使用  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> <cite>invoice`</cite>:</p>
+<p>使用  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> ` invoice``:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">invoice</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;invoice&quot;</span><span class="p">,</span>
     <span class="n">metadata_obj</span><span class="p">,</span>
@@ -514,7 +514,7 @@
     <span class="p">),</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>需要注意的是  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> <a href="#id5"><span class="problematic" id="id6">`</span></a>invoice_item.invoice_id``和``invoice_item.ref_num``列上存储单独的 :class:<a href="#id7"><span class="problematic" id="id8">`</span></a>~sqlalchemy.schema.ForeignKey`对象，但SQLAlchemy将不知道这两个值应该配对在一起，而不是两个单独的外键，而是一个包含两个列引用的复合外键。</p>
+<p>需要注意的是  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> ` invoice_item.invoice_id``和``invoice_item.ref_num``列上存储单独的 <a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 对象，但SQLAlchemy将不知道这两个值应该配对在一起，而不是两个单独的外键，而是一个包含两个列引用的复合外键。</p>
 <section id="alter">
 <span id="use-alter"></span><h3>通过ALTER创建/删除外键约束<a class="headerlink" href="#alter" title="Permalink to this heading">¶</a></h3>
 <p>在DDL中使用外键的行为通常意味着将约束“内联”在CREATE TABLE语句中，例如：</p>
@@ -526,7 +526,7 @@
 <span class="w">    </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">user_id_fk</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
 <span class="p">)</span></pre></div>
 </div>
-<p>使用“CONSTRAINT..FOREIGN KEY”指令在创建表定义中“内联”创建约束。 :meth：<cite>_schema.MetaData.create_all`和  :meth:`_schema.MetaData.drop_all</cite>  方法默认使用它，使用所有涉及:class :<cite>_schema.Table`对象的拓扑排序，使得表按其外键依赖性的顺序进行创建和删除（此排序也可通过  :attr:`_schema.MetaData.sorted_tables</cite>  访问器获得）。</p>
+<p>使用“CONSTRAINT..FOREIGN KEY”指令在创建表定义中“内联”创建约束。 :meth：<cite>_schema.MetaData.create_all`和  :meth:`_schema.MetaData.drop_all</cite>  方法默认使用它，使用所有涉及:class :` _schema.Table`对象的拓扑排序，使得表按其外键依赖性的顺序进行创建和删除（此排序也可通过  <code class="xref py py-attr docutils literal notranslate"><span class="pre">MetaData.sorted_tables</span></code>  访问器获得）。</p>
 <p>这种方法在两个或多个外键约束涉及“依赖关系周期”的情况下不起作用，其中一组表相互依赖，假设后端强制执行外键（SQLite、MySQL/MyISAM除外）。因此，这两种方法将在所有未支持大部分ALTER的后端上将循环中的约束分离成单独的ALTER语句。给定类似于下面的模式：</p>
 <blockquote>
 <div><blockquote>
@@ -590,7 +590,7 @@ objects involved in the cycle have names so that they can be dropped
 using DROP CONSTRAINT.</pre></div>
 </div>
 <p>这个错误仅适用于DROP案例，因为我们可以在CREATE案例中发出“ADD CONSTRAINT”而不需要名称；数据库通常会自动赋一个名称。</p>
-<p>当使用DROP操作时，  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint.params.use_alter" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">ForeignKeyConstraint.use_alter</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.schema.ForeignKey.params.use_alter" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">ForeignKey.use_alter</span></code></a>  关键字参数可以用于手动解决依赖关系循环。我们可以将此标志仅添加到“element”表中，如下所示：</p>
+<p>当使用DROP操作时，  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint.params.use_alter" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">ForeignKeyConstraint.use_alter</span></code></a>  和  :paramref:` _schema.ForeignKey.use_alter`  关键字参数可以用于手动解决依赖关系循环。我们可以将此标志仅添加到“element”表中，如下所示：</p>
 <blockquote>
 <div><dl>
 <dt>element = Table(</dt><dd><p>“element”,
@@ -629,7 +629,7 @@ name=”fk_element_parent_node_id”,</p>
 <span class="go">  FOREIGN KEY(parent_node_id) REFERENCES node (node_id)</span>
 <span class="go">  {stop}</span>
 
-<span class="go">:paramref:`_schema.ForeignKeyConstraint.use_alter`  和  :paramref:`_schema.ForeignKey.use_alter`  与drop操作一起使用时，将要求约束有一个名称，否则会生成以下错误：</span></pre></div>
+<span class="go">:paramref:`_schema.ForeignKeyConstraint.use_alter`  和  :paramref:` _schema.ForeignKey.use_alter`  与drop操作一起使用时，将要求约束有一个名称，否则会生成以下错误：</span></pre></div>
 </div>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.exc.CompileError: Can&#39;t emit DROP CONSTRAINT for constraint
 ForeignKeyConstraint(...); it has no name</pre></div>
@@ -642,7 +642,7 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 </section>
 <section id="on-updateon-delete">
 <span id="on-update-on-delete"></span><h3>ON UPDATE和ON DELETE<a class="headerlink" href="#on-updateon-delete" title="Permalink to this heading">¶</a></h3>
-<p>大多数数据库支持外键值的*级联*，这意味着当父行被更新时，新值将放置在子行中，或者当父行被删除时，所有对应的子行都将设置为null或删除。在数据定义语言中，可以在外键约束中使用短语，例如“ON UPDATE CASCADE”，“ON DELETE CASCADE”和“ON DELETE SET NULL”，与外键约束相对应。在  <a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.ForeignKeyConstraint`对象中可以通过``onupdate``和``ondelete``关键字参数生成此子句。该值是任何字符串，该字符串将在适当的“ON UPDATE”或“ON DELETE”短语后输出:</p>
+<p>大多数数据库支持外键值的*级联*，这意味着当父行被更新时，新值将放置在子行中，或者当父行被删除时，所有对应的子行都将设置为null或删除。在数据定义语言中，可以在外键约束中使用短语，例如“ON UPDATE CASCADE”，“ON DELETE CASCADE”和“ON DELETE SET NULL”，与外键约束相对应。在  <a class="reference internal" href="#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> ~sqlalchemy.schema.ForeignKeyConstraint` 对象中可以通过``onupdate``和``ondelete``关键字参数生成此子句。该值是任何字符串，该字符串将在适当的“ON UPDATE”或“ON DELETE”短语后输出:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">child</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;child&quot;</span><span class="p">,</span>
     <span class="n">metadata_obj</span><span class="p">,</span>
@@ -671,7 +671,7 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <p>请注意，这些子句需要在使用MySQL时使用``InnoDB``表。它们也可能在其他数据库上不受支持。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p>关于ORM  :func:<a href="#id9"><span class="problematic" id="id10">`</span></a>_orm.relationship`结构与“ON DELETE CASCADE”的集成的背景，请参见以下部分：</p>
+<p>关于ORM  <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 结构与“ON DELETE CASCADE”的集成的背景，请参见以下部分：</p>
 <blockquote>
 <div><p><a class="reference internal" href="../orm/cascades.html#passive-deletes"><span class="std std-ref">在 ORM 关系中使用 FOREIGN KEY ON DELETE 级联</span></a></p>
 <p><a class="reference internal" href="../orm/cascades.html#passive-deletes-many-to-many"><span class="std std-ref">关于基于 foreign key 的 ON DELETE 和多对多关系</span></a></p>
@@ -680,8 +680,8 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 </section>
 </section>
 <section id="schema-unique-constraint">
-<span id="id11"></span><h2>唯一约束<a class="headerlink" href="#schema-unique-constraint" title="Permalink to this heading">¶</a></h2>
-<p>可以使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ~sqlalchemy.schema.UniqueConstraint`表级结构显式命名唯一约束和/或具有多列的约束。</p>
+<span id="id3"></span><h2>唯一约束<a class="headerlink" href="#schema-unique-constraint" title="Permalink to this heading">¶</a></h2>
+<p>可以使用  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ~sqlalchemy.schema.UniqueConstraint` 表级结构显式命名唯一约束和/或具有多列的约束。</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">UniqueConstraint</span>
 
 <span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
@@ -697,9 +697,9 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <span class="p">)</span></pre></div>
 </div>
 </section>
-<section id="id12">
-<h2>检查约束<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h2>
-<p>检查约束可以命名或未命名，并且可以在列或表级别上创建，使用 :class:<a href="#id13"><span class="problematic" id="id14">`</span></a>~sqlalchemy.schema.CheckConstraint`结构。检查约束的文本直接通过到数据库，因此有限制的“数据库无关”行为。列级别的检查约束通常只能引用其所放置的列，而表级别约束可以引用表中的任何列。</p>
+<section id="id4">
+<h2>检查约束<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h2>
+<p>检查约束可以命名或未命名，并且可以在列或表级别上创建，使用 <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a> 结构。检查约束的文本直接通过到数据库，因此有限制的“数据库无关”行为。列级别的检查约束通常只能引用其所放置的列，而表级别约束可以引用表中的任何列。</p>
 <p>请注意，某些数据库不支持主动支持约束，例如旧版的MySQL（8.0.16之前）。</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">CheckConstraint</span>
 
@@ -725,9 +725,9 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 </div></pre></div>
 </div>
 </section>
-<section id="id15">
-<h2>主键约束<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
-<p>任何  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  标志。  :class:<a href="#id16"><span class="problematic" id="id17">`</span></a>.PrimaryKeyConstraint`对象提供了对此约束的显式访问，其中包括直接进行配置的选项:</p>
+<section id="id5">
+<h2>主键约束<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h2>
+<p>任何  <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  标志。  :class:` .PrimaryKeyConstraint`对象提供了对此约束的显式访问，其中包括直接进行配置的选项:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">PrimaryKeyConstraint</span>
 
 <span class="n">my_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
@@ -747,15 +747,15 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <section id="declarative-orm">
 <h2>使用Declarative ORM扩展时设置约束<a class="headerlink" href="#declarative-orm" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p>:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_schema.Table`是SQLAlchemy Core构造，它允许定义表元数据，其中包括可以由SQLAlchemy ORM用作映射类的目标。  :ref:<a href="#id20"><span class="problematic" id="id21">`</span></a>Declarative &lt;declarative_toplevel&gt;`扩展程序允许自动创建 :class:<a href="#id22"><span class="problematic" id="id23">`</span></a>_schema.Table`对象，根据主要是 :class:<a href="#id24"><span class="problematic" id="id25">`</span></a>_schema.Column`对象的映射内容。</p>
+<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 是SQLAlchemy Core构造，它允许定义表元数据，其中包括可以由SQLAlchemy ORM用作映射类的目标。  <a class="reference internal" href="../orm/extensions/declarative/index.html"><span class="std std-ref">Declarative</span></a> 扩展程序允许自动创建 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> 对象，根据主要是 <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象的映射内容。</p>
 </div></blockquote>
-<p>要将表级别约束对象例如  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> <a href="#id26"><span class="problematic" id="id27">`</span></a>__table_args__``属性，如 :ref:<a href="#id28"><span class="problematic" id="id29">`</span></a>declarative_table_args`中所述。</p>
+<p>要将表级别约束对象例如  <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> ` __table_args__``属性，如 <a class="reference internal" href="../orm/extensions/declarative/table_config.html#declarative-table-args"><span class="std std-ref">表格配置</span></a> 中所述。</p>
 </section>
 <section id="constraint-naming-conventions">
-<span id="id30"></span><h2>配置约束命名约定<a class="headerlink" href="#constraint-naming-conventions" title="Permalink to this heading">¶</a></h2>
+<span id="id6"></span><h2>配置约束命名约定<a class="headerlink" href="#constraint-naming-conventions" title="Permalink to this heading">¶</a></h2>
 <p>关系数据库通常对所有约束和索引分配显式名称。在使用``CREATE TABLE``创建表的常见情况下，例如CHECK，UNIQUE和主键约束内联在表定义中生成，如果没有另外指定名称，则数据库通常会有一个系统以自动分配名称的方式。在使用诸如``ALTER TABLE``之类的命令对现有数据库表进行更改时，此命令通常需要为新约束指定显式名称，以及能够指定要删除或修改的现有约束的名称。</p>
-<p>可以使用事件来构建自动命名方案。这种方法的优点是在代码中无需显式名称参数即可收到约束的一致命名方案，而且该约定还适用于使用：paramref：<a href="#id31"><span class="problematic" id="id32">`</span></a>_schema.Column.unique`和：paramref：<a href="#id33"><span class="problematic" id="id34">`</span></a>_schema.Column.index`参数创建的约束和索引。从SQLAlchemy 0.9.2开始，该基于事件的方法已包括在内，可以使用参数：paramref：<a href="#id35"><span class="problematic" id="id36">`</span></a>_schema.MetaData.naming_convention`进行配置。</p>
-<p>配置  <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.params.naming_convention" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.naming_convention</span></code></a> .Index`类或单个约束类作为键，并接受Python字符串模板作为值。它还接受一系列字符串代码作为备用密钥，例如“fk”，“pk”，“ix”，“ck”，“uq”，用于外键，主键，索引，检查和唯一约束，例如。在这个字典中使用的字符串模板，是在该 :class:<a href="#id37"><span class="problematic" id="id38">`</span></a>_schema.MetaData`对象关联到的约束或索引没有现有名称时使用的。</p>
+<p>可以使用事件来构建自动命名方案。这种方法的优点是在代码中无需显式名称参数即可收到约束的一致命名方案，而且该约定还适用于使用：paramref：<a href="#id7"><span class="problematic" id="id8">`</span></a>_schema.Column.unique`和：paramref：<a href="#id9"><span class="problematic" id="id10">`</span></a>_schema.Column.index`参数创建的约束和索引。从SQLAlchemy 0.9.2开始，该基于事件的方法已包括在内，可以使用参数：paramref：<a href="#id11"><span class="problematic" id="id12">`</span></a>_schema.MetaData.naming_convention`进行配置。</p>
+<p>配置  <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.params.naming_convention" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.naming_convention</span></code></a> .Index` 类或单个约束类作为键，并接受Python字符串模板作为值。它还接受一系列字符串代码作为备用密钥，例如“fk”，“pk”，“ix”，“ck”，“uq”，用于外键，主键，索引，检查和唯一约束，例如。在这个字典中使用的字符串模板，是在该 <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> 对象关联到的约束或索引没有现有名称时使用的。</p>
 <p>适用于所有约束的示例命名约定如下：</p>
 <blockquote>
 <div><dl class="simple">
@@ -769,7 +769,7 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <p>}</p>
 <p>metadata_obj = MetaData(naming_convention=convention)</p>
 </div></blockquote>
-<p>上面的约定将为目标  <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> .UniqueConstraint`时产生的名称：</p>
+<p>上面的约定将为目标  <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a> .UniqueConstraint` 时产生的名称：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;user&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">metadata_obj</span><span class="p">,</span>
@@ -780,7 +780,7 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">list</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">constraints</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
 <span class="go">&#39;uq_user_name&#39;</span></pre></div>
 </div>
-<p>即使我们只使用了：paramref:<a href="#id39"><span class="problematic" id="id40">`</span></a>_schema.Column.unique`标志，此功能也会生效：</p>
+<p>即使我们只使用了：paramref:<a href="#id13"><span class="problematic" id="id14">`</span></a>_schema.Column.unique`标志，此功能也会生效：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="s2">&quot;user&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">metadata_obj</span><span class="p">,</span>
@@ -794,20 +794,20 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">upgrade</span><span class="p">():</span>
     <span class="n">op</span><span class="o">.</span><span class="n">create_unique_constraint</span><span class="p">(</span><span class="s2">&quot;uq_user_name&quot;</span><span class="p">,</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">])</span></pre></div>
 </div>
-<p>上面的“uq_user_name”字符串是从“—autogenerate”在我们的元数据中找到的 :class:<a href="#id41"><span class="problematic" id="id42">`</span></a>.UniqueConstraint`对象复制的。</p>
+<p>上面的“uq_user_name”字符串是从“—autogenerate”在我们的元数据中找到的 <a class="reference internal" href="#sqlalchemy.schema.UniqueConstraint" title="sqlalchemy.schema.UniqueConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">UniqueConstraint</span></code></a> 对象复制的。</p>
 <p>可用的标记包括``%(table_name)s``，<code class="docutils literal notranslate"><span class="pre">%(referred_table_name)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(column_0_name)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(column_0_label)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(column_0_key)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(referred_column_0_name)s``和``%(constraint_name)s</span></code>，以及每个标记的多列版本，包括 <code class="docutils literal notranslate"><span class="pre">%(column_0N_name)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(column_0_N_name)s</span></code>，<code class="docutils literal notranslate"><span class="pre">%(referred_column_0_N_name)s</span></code>，它们将所有列名分隔或不分隔线呈现。  <a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.params.naming_convention" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.naming_convention</span></code></a>  文档详细介绍了每个约定的其他细节。</p>
 <section id="constraint-default-naming-convention">
-<span id="id43"></span><h3>默认命名约定<a class="headerlink" href="#constraint-default-naming-convention" title="Permalink to this heading">¶</a></h3>
+<span id="id15"></span><h3>默认命名约定<a class="headerlink" href="#constraint-default-naming-convention" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.params.naming_convention" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.naming_convention</span></code></a>  的默认值处理了长期存在的SQLAlchemy行为，即为使用  <a href="#id44"><span class="problematic" id="id45">:param:`_schema.Column.index`</span></a>  参数创建的 :class:<a href="#id46"><span class="problematic" id="id47">`</span></a>.Index`对象分配名称:</p>
+<div><p><a class="reference internal" href="metadata.html#sqlalchemy.schema.MetaData.params.naming_convention" title="sqlalchemy.schema.MetaData"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">MetaData.naming_convention</span></code></a>  的默认值处理了长期存在的SQLAlchemy行为，即为使用  :param:` _schema.Column.index`  参数创建的 <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> 对象分配名称:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.sql.schema</span> <span class="kn">import</span> <span class="n">DEFAULT_NAMING_CONVENTION</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">DEFAULT_NAMING_CONVENTION</span>
 <span class="go">immutabledict({&#39;ix&#39;: &#39;ix_%(column_0_label)s&#39;})</span></pre></div>
 </div>
 </div></blockquote>
 </section>
-<section id="id48">
-<h3>长名称的截断<a class="headerlink" href="#id48" title="Permalink to this heading">¶</a></h3>
+<section id="id16">
+<h3>长名称的截断<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
 <p>当生成的名称，特别是使用多列标记的那些名称，超出目标数据库的标识符长度限制时（例如，PostgreSQL有一个63个字符的限制），这个名称将根据长名称的md5散列进行确定性截断，该名称的4个字符后缀。例如，下面的命名约定将根据使用的列名称生成非常长的名称:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span>
     <span class="n">naming_convention</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;uq&quot;</span><span class="p">:</span> <span class="s2">&quot;uq_</span><span class="si">%(table_name)s</span><span class="s2">_</span><span class="si">%(column_0_N_name)s</span><span class="s2">&quot;</span><span class="p">}</span>
@@ -833,9 +833,9 @@ ForeignKeyConstraint(...); it has no name</pre></div>
 </div>
 <p>上面的后缀“a79e”是基于长名称的md5哈希而确定的，并且将为给定模式生成相同的值。</p>
 </section>
-<section id="id49">
-<h3>为命名约定创建自定义标记<a class="headerlink" href="#id49" title="Permalink to this heading">¶</a></h3>
-<p>可以通过在:named-param:<a href="#id50"><span class="problematic" id="id51">`</span></a>naming_convention`字典中指定其他令牌和可调用来添加新令牌。例如，如果我们想使用GUID方案命名外键约束，我们可以这样做：</p>
+<section id="id17">
+<h3>为命名约定创建自定义标记<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<p>可以通过在:named-param:<a href="#id18"><span class="problematic" id="id19">`</span></a>naming_convention`字典中指定其他令牌和可调用来添加新令牌。例如，如果我们想使用GUID方案命名外键约束，我们可以这样做：</p>
 <blockquote>
 <div><p>import uuid</p>
 <dl>
@@ -860,7 +860,7 @@ return str(guid)</p>
 </dl>
 <p>}</p>
 </div></blockquote>
-<p>上面的，当我们创建一个新的 :class:<a href="#id52"><span class="problematic" id="id53">`</span></a>_schema.ForeignKeyConstraint`时，我们将获得以下名称：</p>
+<p>上面的，当我们创建一个新的 <a class="reference internal" href="#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> 时，我们将获得以下名称：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span><span class="n">naming_convention</span><span class="o">=</span><span class="n">convention</span><span class="p">)</span></pre></div>
 </div>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
@@ -895,9 +895,9 @@ return str(guid)</p>
 </div>
 </section>
 <section id="naming-check-constraints">
-<span id="id54"></span><h3>命名检查约束<a class="headerlink" href="#naming-check-constraints" title="Permalink to this heading">¶</a></h3>
+<span id="id20"></span><h3>命名检查约束<a class="headerlink" href="#naming-check-constraints" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a> .CheckConstraint`的常见约定是我们期望该对象已经有一个名称，然后我们使用其他约定元素将其增强。典型的约定是“ck_%（table_name）s_%（constraint_name）s”:</p>
+<div><p><a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a> .CheckConstraint` 的常见约定是我们期望该对象已经有一个名称，然后我们使用其他约定元素将其增强。典型的约定是“ck_%（table_name）s_%（constraint_name）s”:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span>
     <span class="n">naming_convention</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ck&quot;</span><span class="p">:</span> <span class="s2">&quot;ck_</span><span class="si">%(table_name)s</span><span class="s2">_</span><span class="si">%(constraint_name)s</span><span class="s2">&quot;</span><span class="p">}</span>
 <span class="p">)</span>
@@ -916,19 +916,19 @@ return str(guid)</p>
 <span class="w">      </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">ck_foo_value_gt_5</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
 <span class="w">  </span><span class="p">)</span>
 
-<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">CheckConstraint</span><span class="o">`</span><span class="w"> </span><span class="o">`</span><span class="err">％（</span><span class="n">columns_0_name</span><span class="err">）</span><span class="n">s</span><span class="o">``</span><span class="err">令牌；我们可以使用这个令牌，通过在约束的表达式中确保我们使用：</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="n">_schema</span><span class="p">.</span><span class="k">Column</span><span class="o">`</span><span class="err">或</span><span class="w"> </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="n">_expression</span><span class="p">.</span><span class="k">column</span><span class="o">`</span><span class="err">元素，对其执行操作，将约束与表分离：</span></pre></div>
+<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">CheckConstraint</span><span class="o">`</span><span class="w"> </span><span class="o">`</span><span class="w"> </span><span class="err">％（</span><span class="n">columns_0_name</span><span class="err">）</span><span class="n">s</span><span class="o">``</span><span class="err">令牌；我们可以使用这个令牌，通过在约束的表达式中确保我们使用：</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="n">_schema</span><span class="p">.</span><span class="k">Column</span><span class="o">`</span><span class="err">或</span><span class="w"> </span><span class="p">:</span><span class="n">func</span><span class="p">:</span><span class="o">`</span><span class="n">_expression</span><span class="p">.</span><span class="k">column</span><span class="o">`</span><span class="w"> </span><span class="err">元素，对其执行操作，将约束与表分离：</span></pre></div>
 </div>
 </section>
 </section>
 <section id="check-naming">
 <h2>配置 Check 约束和 Naming<a class="headerlink" href="#check-naming" title="Permalink to this heading">¶</a></h2>
-<p>在定义表结构时，可以通过   <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类和约束名，来添加 <code class="docutils literal notranslate"><span class="pre">CHECK</span></code> 条件约束。可以用两种方式来指定 CHECK 约束的名字，一种是手动指定，以字符串形式传入。另一种是使用 SQLAlchemy 的命名惯例。</p>
+<p>在定义表结构时，可以通过   <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类和约束名，来添加 ` <cite>CHECK`</cite> 条件约束。可以用两种方式来指定 CHECK 约束的名字，一种是手动指定，以字符串形式传入。另一种是使用 SQLAlchemy 的命名惯例。</p>
 <p>一种方法是使用   <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">metadata_obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>
 <span class="n">CheckConstraint</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;foo_value_check&quot;</span><span class="p">)</span></pre></div>
 </div>
-<p>另一种方法是使用   <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类和 SQLAlchemy 的命名惯例，以下代码将产生名为 <code class="docutils literal notranslate"><span class="pre">ck_foo_value</span></code> 的 CHECK 约束：</p>
+<p>另一种方法是使用   <a class="reference internal" href="#sqlalchemy.schema.CheckConstraint" title="sqlalchemy.schema.CheckConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckConstraint</span></code></a>  类和 SQLAlchemy 的命名惯例，以下代码将产生名为 ` <cite>ck_foo_value`</cite> 的 CHECK 约束：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">(</span><span class="n">naming_convention</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ck&quot;</span><span class="p">:</span> <span class="s2">&quot;ck_</span><span class="si">%(table_name)s</span><span class="s2">_</span><span class="si">%(column_0_name)s</span><span class="s2">&quot;</span><span class="p">})</span>
 <span class="n">foo</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">metadata_obj</span><span class="p">,</span> <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">))</span>
 <span class="n">CheckConstraint</span><span class="p">(</span><span class="n">foo</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">)</span></pre></div>
@@ -951,9 +951,9 @@ return str(guid)</p>
 <p>程序会扫描所给表达式中存在的列对象，来确定“第 0 列”的名称。如果表达式中存在多个列，则使用确定性搜索扫描，但表达式的结构将决定哪个列将被标示为“第 0 列”。</p>
 </section>
 <section id="naming-schematypes">
-<span id="id55"></span><h2>配置布尔值、枚举值和其他模式类型的命名<a class="headerlink" href="#naming-schematypes" title="Permalink to this heading">¶</a></h2>
+<span id="id21"></span><h2>配置布尔值、枚举值和其他模式类型的命名<a class="headerlink" href="#naming-schematypes" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="type_basics.html#sqlalchemy.types.SchemaType" title="sqlalchemy.types.SchemaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaType</span></code></a>  类是指代一些类型信息的类，如  <a class="reference internal" href="type_basics.html#sqlalchemy.types.Boolean" title="sqlalchemy.types.Boolean"><code class="xref py py-class docutils literal notranslate"><span class="pre">Boolean</span></code></a> 。这些类生成了一个与类型相应的 <code class="docutils literal notranslate"><span class="pre">CHECK</span></code> 条件约束。这里约束的名字可以通过直接发送 “name” 参数来设定，例如使用  <a class="reference internal" href="type_basics.html#sqlalchemy.types.Boolean.params.name" title="sqlalchemy.types.Boolean"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Boolean.name</span></code></a>  中的代码：</p>
+<div><p><a class="reference internal" href="type_basics.html#sqlalchemy.types.SchemaType" title="sqlalchemy.types.SchemaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaType</span></code></a>  类是指代一些类型信息的类，如  :class:` .Boolean` 。这些类生成了一个与类型相应的 <code class="docutils literal notranslate"><span class="pre">CHECK</span></code> 条件约束。这里约束的名字可以通过直接发送 “name” 参数来设定，例如使用  <a class="reference internal" href="type_basics.html#sqlalchemy.types.Boolean.params.name" title="sqlalchemy.types.Boolean"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Boolean.name</span></code></a>  中的代码：</p>
 <blockquote>
 <div><p>Table(“foo”, metadata_obj, Column(“flag”, Boolean(name=”ck_foo_flag”)))</p>
 </div></blockquote>
@@ -974,9 +974,9 @@ return str(guid)</p>
 <span class="w">      </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">ck_foo_flag_bool</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">flag</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 <span class="w">  </span><span class="p">)</span>
 
-<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">SchemaType</span><span class="o">`</span><span class="w">  </span><span class="err">类使用特殊的内部符号，以便约定仅在</span><span class="w"> </span><span class="n">DDL</span><span class="w"> </span><span class="err">编译时确定。在</span><span class="w"> </span><span class="n">PostgreSQL</span><span class="w"> </span><span class="err">上，有一个原生的</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="err">类型，因此</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="nb">Boolean</span><span class="o">`</span><span class="w">  </span><span class="err">的</span><span class="w"> </span><span class="o">``</span><span class="k">CHECK</span><span class="o">``</span><span class="w"> </span><span class="err">约束是不必要的；即使在定义检查约束的命名约定的情况下，我们也可以安全地设置一个未命名的</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="nb">Boolean</span><span class="o">`</span><span class="w">  </span><span class="err">类型。只有在运行在诸如</span><span class="w"> </span><span class="n">SQLite</span><span class="w"> </span><span class="err">或</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="err">等没有原生</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="err">类型的数据库中时，才会参考这个约定来确定</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="err">约束。</span></pre></div>
+<span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="n">SchemaType</span><span class="o">`</span><span class="w">  </span><span class="err">类使用特殊的内部符号，以便约定仅在</span><span class="w"> </span><span class="n">DDL</span><span class="w"> </span><span class="err">编译时确定。在</span><span class="w"> </span><span class="n">PostgreSQL</span><span class="w"> </span><span class="err">上，有一个原生的</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="err">类型，因此</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="w"> </span><span class="p">.</span><span class="nb">Boolean</span><span class="o">`</span><span class="w">  </span><span class="err">的</span><span class="w"> </span><span class="o">``</span><span class="k">CHECK</span><span class="o">``</span><span class="w"> </span><span class="err">约束是不必要的；即使在定义检查约束的命名约定的情况下，我们也可以安全地设置一个未命名的</span><span class="w">   </span><span class="p">:</span><span class="k">class</span><span class="p">:</span><span class="o">`</span><span class="p">.</span><span class="nb">Boolean</span><span class="o">`</span><span class="w">  </span><span class="err">类型。只有在运行在诸如</span><span class="w"> </span><span class="n">SQLite</span><span class="w"> </span><span class="err">或</span><span class="w"> </span><span class="n">MySQL</span><span class="w"> </span><span class="err">等没有原生</span><span class="w"> </span><span class="nb">BOOLEAN</span><span class="w"> </span><span class="err">类型的数据库中时，才会参考这个约定来确定</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="err">约束。</span></pre></div>
 </div>
-<p>在调用   <a class="reference internal" href="type_basics.html#sqlalchemy.types.SchemaType" title="sqlalchemy.types.SchemaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaType</span></code></a>  中定义约束时，也可以使用 <code class="docutils literal notranslate"><span class="pre">column_0_name</span></code> 标记:</p>
+<p>在调用   <a class="reference internal" href="type_basics.html#sqlalchemy.types.SchemaType" title="sqlalchemy.types.SchemaType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SchemaType</span></code></a>  中定义约束时，也可以使用 ` <cite>column_0_name`</cite> 标记:</p>
 <blockquote>
 <div><p>metadata_obj = MetaData(naming_convention={“ck”: “ck_%(table_name)s_%(column_0_name)s”})
 foo = Table(“foo”, metadata_obj, Column(“flag”, Boolean()))</p>
@@ -2764,9 +2764,9 @@ name here is final, and the name will render as <code class="docutils literal no
 
 </section>
 <section id="schema-indexes">
-<span id="id56"></span><h2>索引<a class="headerlink" href="#schema-indexes" title="Permalink to this heading">¶</a></h2>
+<span id="id22"></span><h2>索引<a class="headerlink" href="#schema-indexes" title="Permalink to this heading">¶</a></h2>
 <p>可以使用 <code class="docutils literal notranslate"><span class="pre">index</span></code> 关键词来为单个列创建匿名索引（使用自动生成的名称 <code class="docutils literal notranslate"><span class="pre">ix_&lt;column</span> <span class="pre">label&gt;</span></code>）。<code class="docutils literal notranslate"><span class="pre">unique</span></code> 的使用方式则将唯一性应用到该索引本身，而不是添加单独的 <code class="docutils literal notranslate"><span class="pre">UNIQUE</span></code> 约束。对于具有特定名称或涵盖多个列的索引，请使用   <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  结构，该结构需要名称。</p>
-<p>以下是一个   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  示例，包含了多个关联的   <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  对象。”CREATE INDEX” 的 DDL 语句会在表创建语句后立即发出：</p>
+<p>以下是一个   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  示例，包含了多个关联的   :class:` ~sqlalchemy.schema.Index`  对象。”CREATE INDEX” 的 DDL 语句会在表创建语句后立即发出：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">metadata_obj</span> <span class="o">=</span> <span class="n">MetaData</span><span class="p">()</span>
 <span class="n">mytable</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span>
     <span class="s2">&quot;mytable&quot;</span><span class="p">,</span>
@@ -2802,7 +2802,7 @@ name here is final, and the name will render as <code class="docutils literal no
 <span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_col34</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">mytable</span><span class="w"> </span><span class="p">(</span><span class="n">col3</span><span class="p">,</span><span class="w"> </span><span class="n">col4</span><span class="p">)</span>
 </div></pre></div>
 </div>
-<p>请注意，在上面的示例中，使用   <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  结构在与其对应的表之外创建，直接使用   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象。  <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  也支持在   <a class="reference internal" href="metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  中”内联”定义，并使用字符串作为列的标识符：</p>
+<p>请注意，在上面的示例中，使用   <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  结构在与其对应的表之外创建，直接使用   :class:` _schema.Column`  对象。  <a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  也支持在   :class:` _schema.Table`  中”内联”定义，并使用字符串作为列的标识符：</p>
 <blockquote>
 <div><blockquote>
 <div><p>metadata_obj = MetaData()
@@ -2821,7 +2821,7 @@ Index(“idx_col34”, “col3”, “col4”, unique=True),</p>
 </div></blockquote>
 <p>)</p>
 </div></blockquote>
-<p><a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  对象也支持自己的 <code class="docutils literal notranslate"><span class="pre">create()</span></code> 方法：</p>
+<p><a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  对象也支持自己的 ` <cite>create()`</cite> 方法：</p>
 </div></blockquote>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">Index</span><span class="p">(</span><span class="s2">&quot;someindex&quot;</span><span class="p">,</span> <span class="n">mytable</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">col5</span><span class="p">)</span>
 <span class="n">i</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span>
@@ -2829,10 +2829,10 @@ Index(“idx_col34”, “col3”, “col4”, unique=True),</p>
 </div></pre></div>
 </div>
 </section>
-<section id="id57">
-<h2>函数式索引<a class="headerlink" href="#id57" title="Permalink to this heading">¶</a></h2>
+<section id="id23">
+<h2>函数式索引<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h2>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  支持所有 SQL 和函数表达式，具体取决于目标后端。可以使用  <a class="reference internal" href="sqlelement.html#sqlalchemy.sql.expression.ColumnElement.desc" title="sqlalchemy.sql.expression.ColumnElement.desc"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnElement.desc()</span></code></a>  以降序修改所要使用的列，对该列创建索引：</p>
+<div><p><a class="reference internal" href="#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a>  支持所有 SQL 和函数表达式，具体取决于目标后端。可以使用  :meth:` _expression.ColumnElement.desc`  以降序修改所要使用的列，对该列创建索引：</p>
 <blockquote>
 <div><p>from sqlalchemy import Index</p>
 <p>Index(“someindex”, mytable.c.somecol.desc())</p>
@@ -2844,8 +2844,8 @@ Index(“idx_col34”, “col3”, “col4”, unique=True),</p>
 <p>Index(“someindex”, func.lower(mytable.c.somecol))</p>
 </div></blockquote>
 </section>
-<section id="id58">
-<h2>索引 API<a class="headerlink" href="#id58" title="Permalink to this heading">¶</a></h2>
+<section id="id24">
+<h2>索引 API<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -3142,7 +3142,7 @@ such as <a class="reference internal" href="metadata.html#sqlalchemy.schema.Tabl
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:44
+    Documentation last generated: 2023/8/18 18:58:41
 
     </div>
 </div>

@@ -141,10 +141,10 @@
 </li>
 <li><span class="link-container"><a class="reference external" href="#orm-custom-collection">自定义集合实现</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#dictionary-collections">自定义基于字典的集合</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id16">工具化和自定义类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id14">工具化和自定义类型</a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#id17">集合 API</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id15">集合 API</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.attribute_keyed_dict"><code class="docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.column_keyed_dict"><code class="docutils literal notranslate"><span class="pre">column_keyed_dict()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.keyfunc_mapping"><code class="docutils literal notranslate"><span class="pre">keyfunc_mapping()</span></code></a></span></li>
@@ -165,7 +165,7 @@
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.MappedCollection"><code class="docutils literal notranslate"><span class="pre">MappedCollection</span></code></a></span></li>
 </ul>
 </li>
-<li><span class="link-container"><a class="reference external" href="#id18">集合内部</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id16">集合内部</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.collections.bulk_replace"><code class="docutils literal notranslate"><span class="pre">bulk_replace()</span></code></a></span></li>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.collections.collection"><code class="docutils literal notranslate"><span class="pre">collection</span></code></a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#sqlalchemy.orm.collections.collection.adds"><code class="docutils literal notranslate"><span class="pre">collection.adds()</span></code></a></span></li>
@@ -254,10 +254,10 @@
 </li>
 <li><a class="reference internal" href="#orm-custom-collection">自定义集合实现</a><ul>
 <li><a class="reference internal" href="#dictionary-collections">自定义基于字典的集合</a></li>
-<li><a class="reference internal" href="#id16">工具化和自定义类型</a></li>
+<li><a class="reference internal" href="#id14">工具化和自定义类型</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id17">集合 API</a><ul>
+<li><a class="reference internal" href="#id15">集合 API</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict"><code class="docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.column_keyed_dict"><code class="docutils literal notranslate"><span class="pre">column_keyed_dict()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.keyfunc_mapping"><code class="docutils literal notranslate"><span class="pre">keyfunc_mapping()</span></code></a></li>
@@ -278,7 +278,7 @@
 <li><a class="reference internal" href="#sqlalchemy.orm.MappedCollection"><code class="docutils literal notranslate"><span class="pre">MappedCollection</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id18">集合内部</a><ul>
+<li><a class="reference internal" href="#id16">集合内部</a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.collections.bulk_replace"><code class="docutils literal notranslate"><span class="pre">bulk_replace()</span></code></a></li>
 <li><a class="reference internal" href="#sqlalchemy.orm.collections.collection"><code class="docutils literal notranslate"><span class="pre">collection</span></code></a><ul>
 <li><a class="reference internal" href="#sqlalchemy.orm.collections.collection.adds"><code class="docutils literal notranslate"><span class="pre">collection.adds()</span></code></a></li>
@@ -316,11 +316,11 @@
 <section id="api">
 <span id="custom-collections-toplevel"></span><h1>集合自定义和API详细信息<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
 <blockquote>
-<div><p>:func:<a href="#id1"><span class="problematic" id="id2">`</span></a>_orm.relationship`函数定义了两个类之间的链接。当联系定义一个一对多或多对多的关系时，当对象被加载和操作时，它会被表示为Python集合。本节提供关于集合配置和技术的附加信息。</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 函数定义了两个类之间的链接。当联系定义一个一对多或多对多的关系时，当对象被加载和操作时，它会被表示为Python集合。本节提供关于集合配置和技术的附加信息。</p>
 </div></blockquote>
 <section id="custom-collections">
-<span id="id3"></span><h2>定制集合访问<a class="headerlink" href="#custom-collections" title="Permalink to this heading">¶</a></h2>
-<p>将一个一对多或多对多的关系映射到一个父实例的属性上得到一个值的集合，可以通过这个属性进行访问。这两个基本的集合类型是列表和集合，在使用 <code class="docutils literal notranslate"><span class="pre">_orm.Mapped</span></code> 的   <a class="reference internal" href="declarative_styles.html"><span class="std std-ref">Declarative</span></a>  的映射方式中建立，如下面的 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合中将会使用 <code class="docutils literal notranslate"><span class="pre">list</span></code>：</p>
+<span id="id1"></span><h2>定制集合访问<a class="headerlink" href="#custom-collections" title="Permalink to this heading">¶</a></h2>
+<p>将一个一对多或多对多的关系映射到一个父实例的属性上得到一个值的集合，可以通过这个属性进行访问。这两个基本的集合类型是列表和集合，在使用 <code class="docutils literal notranslate"><span class="pre">_orm.Mapped</span></code> 的   <a class="reference internal" href="declarative_styles.html"><span class="std std-ref">Declarative</span></a>  的映射方式中建立，如下面的 ` <cite>Parent.children`</cite> 集合中将会使用 <code class="docutils literal notranslate"><span class="pre">list</span></code>：</p>
 <blockquote>
 <div><p>from sqlalchemy import ForeignKey</p>
 <p>from sqlalchemy.orm import DeclarativeBase
@@ -375,7 +375,7 @@ children: Mapped[List[“Child”]] = relationship()</p>
 </dd>
 </dl>
 </div>
-<p>在使用不带有   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的映射方式时，比如在使用   <a class="reference internal" href="mapping_styles.html#orm-imperative-mapping"><span class="std std-ref">imperative mappings</span></a>  或未定义类型的 Python 代码中以及某些特殊情况下，可以通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数来直接指定   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的集合类，如下例所示：</p>
+<p>在使用不带有   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的映射方式时，比如在使用   :ref:` imperative mappings &lt;orm_imperative_mapping&gt;`  或未定义类型的 Python 代码中以及某些特殊情况下，可以通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数来直接指定   :func:` _orm.relationship`  的集合类，如下例所示：</p>
 <blockquote>
 <div><p># non-annotated mapping</p>
 <dl>
@@ -389,10 +389,10 @@ parent_id = mapped_column(ForeignKey(“parent.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>在缺少  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  或   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的情况下，缺省集合类型为 <code class="docutils literal notranslate"><span class="pre">list</span></code>。除了内建的 <code class="docutils literal notranslate"><span class="pre">list</span></code> 和 <code class="docutils literal notranslate"><span class="pre">set</span></code> 之外，还支持两个字典的变化，在   <a class="reference internal" href="#orm-dictionary-collection"><span class="std std-ref">字典集合</span></a>  以下章节中有详细描述。任何任意可变序列类型都可以设置为目标集合，需要进行一些额外的配置操作，这将在   <a class="reference internal" href="#orm-custom-collection"><span class="std std-ref">自定义集合实现</span></a>  一节中进行描述。</p>
+<p>在缺少  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  或   :class:` _orm.Mapped`  的情况下，缺省集合类型为 <code class="docutils literal notranslate"><span class="pre">list</span></code>。除了内建的 <code class="docutils literal notranslate"><span class="pre">list</span></code> 和 <code class="docutils literal notranslate"><span class="pre">set</span></code> 之外，还支持两个字典的变化，在   <a class="reference internal" href="#orm-dictionary-collection"><span class="std std-ref">字典集合</span></a>  以下章节中有详细描述。任何任意可变序列类型都可以设置为目标集合，需要进行一些额外的配置操作，这将在   :ref:` orm_custom_collection`  一节中进行描述。</p>
 <section id="orm-dictionary-collection">
-<span id="id4"></span><h3>字典集合<a class="headerlink" href="#orm-dictionary-collection" title="Permalink to this heading">¶</a></h3>
-<p>使用字典作为集合需要一些额外的细节处理。这是因为对象总是作为列表从数据库中被加载，并且必须提供一种键生成策略，以便正确地填充字典。   <a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  函数是实现简单字典集合的最常见方法。它会生成一个字典类，该类将某个映射类的特定属性作为键。下面我们映射了包含“Note”条目字典的“Item”类，这个字典键控制在“Note.keyword”属性中。当使用   <a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  时，   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  可以使用   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  或普通的“dict”，如下面的示例所示。不过，在这种情况下，需要在配置时传入  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数，以便正确地指定   <a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a> ：</p>
+<span id="id2"></span><h3>字典集合<a class="headerlink" href="#orm-dictionary-collection" title="Permalink to this heading">¶</a></h3>
+<p>使用字典作为集合需要一些额外的细节处理。这是因为对象总是作为列表从数据库中被加载，并且必须提供一种键生成策略，以便正确地填充字典。   <a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  函数是实现简单字典集合的最常见方法。它会生成一个字典类，该类将某个映射类的特定属性作为键。下面我们映射了包含“Note”条目字典的“Item”类，这个字典键控制在“Note.keyword”属性中。当使用   :func:` .attribute_keyed_dict`  时，   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  可以使用   :class:` _orm.KeyFuncDict`  或普通的“dict”，如下面的示例所示。不过，在这种情况下，需要在配置时传入  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数，以便正确地指定   :func:` .attribute_keyed_dict` ：</p>
 <blockquote>
 <div><p>from typing import Dict
 from typing import Optional</p>
@@ -434,7 +434,7 @@ self.text = text</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">notes</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="go">{&#39;a&#39;: &lt;__main__.Note object at 0x2eaaf0&gt;}</span></pre></div>
 </div>
-<p><a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a> <cite>Note`</cite> 的“keyword”属性都符合字典中的键。例如，当分配给 <code class="docutils literal notranslate"><span class="pre">Item.notes</span></code> 时，我们提供的字典键必须与实际``Note``对象的键匹配：</p>
+<p><a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a> ` Note`` 的“keyword”属性都符合字典中的键。例如，当分配给 <code class="docutils literal notranslate"><span class="pre">Item.notes</span></code> 时，我们提供的字典键必须与实际``Note``对象的键匹配：</p>
 <blockquote>
 <div><p>item = Item()
 item.notes = {</p>
@@ -484,9 +484,9 @@ self.text = text</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="o">.</span><span class="n">notes</span>
 <span class="go">{(&#39;a&#39;, &#39;atext&#39;): &lt;__main__.Note object at 0x2eaaf0&gt;}</span></pre></div>
 </div>
-<p>其它内建的字典类型包括   <a class="reference internal" href="#sqlalchemy.orm.column_keyed_dict" title="sqlalchemy.orm.column_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">column_keyed_dict()</span></code></a>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_collection()</span></code> ，这是一种任意序列类型的扩展，在一些额外的配置步骤中可以设置为目标集合。这个在   <a class="reference internal" href="#orm-custom-collection"><span class="std std-ref">自定义集合实现</span></a>  中进行了说明。</p>
+<p>其它内建的字典类型包括   <a class="reference internal" href="#sqlalchemy.orm.column_keyed_dict" title="sqlalchemy.orm.column_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">column_keyed_dict()</span></code></a>  和   :func:` .mapped_collection` ，这是一种任意序列类型的扩展，在一些额外的配置步骤中可以设置为目标集合。这个在   <a class="reference internal" href="#orm-custom-collection"><span class="std std-ref">自定义集合实现</span></a>  中进行了说明。</p>
 <section id="key-collections-mutations">
-<span id="id5"></span><h4>处理键值变化和记录反向关系字典<a class="headerlink" href="#key-collections-mutations" title="Permalink to this heading">¶</a></h4>
+<span id="id3"></span><h4>处理键值变化和记录反向关系字典<a class="headerlink" href="#key-collections-mutations" title="Permalink to this heading">¶</a></h4>
 <p>在使用   <a class="reference internal" href="#sqlalchemy.orm.attribute_keyed_dict" title="sqlalchemy.orm.attribute_keyed_dict"><code class="xref py py-func docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a>  时，字典的 “key” 是从目标对象的某个属性上提取的。<strong>不会跟踪更改此键的情况</strong>。这意味着，在第一次使用时必须分配键值，如果键值改变，集合将不会发生变化。一个常见的例子是在依赖于反向引用将属性映射集合中的值填充时。给定以下内容：</p>
 <blockquote>
 <div><dl>
@@ -550,16 +550,16 @@ obj.a.bs.pop(previous)</p>
 </section>
 </section>
 <section id="orm-custom-collection">
-<span id="id6"></span><h2>自定义集合实现<a class="headerlink" href="#orm-custom-collection" title="Permalink to this heading">¶</a></h2>
+<span id="id4"></span><h2>自定义集合实现<a class="headerlink" href="#orm-custom-collection" title="Permalink to this heading">¶</a></h2>
 <p>您也可以使用自己的类型来进行集合的实现。对于简单情况来说，继承 <code class="docutils literal notranslate"><span class="pre">list</span></code> 或 <code class="docutils literal notranslate"><span class="pre">set</span></code>，添加定制行为即可。在其他情况下，则需要用特殊的装饰器告诉 SQLAlchemy 更多关于集合的操作方式。</p>
 <aside class="topic">
 <p class="topic-title">是否需要自定义集合实现？</p>
 <p>在大多数情况下，不需要自定义集合实现。自定义集合的最常见用例是验证或转换传入的值，例如将字符串转换为类实例，或者表现出在某些方面内部的数据的不同形式，这些形式对外面呈现出了一个“视图”。</p>
-<p>对于第一个用例，最简单的拦截所有情况的方法是使用   <a class="reference internal" href="mapped_attributes.html#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器进行验证和简单转换。有关此内容的示例，请参阅   <a class="reference internal" href="mapped_attributes.html#simple-validators"><span class="std std-ref">简单的验证器</span></a> 。</p>
-<p>对于第二个用例，   <span class="xref std std-ref">associationproxy_toplevel</span>  扩展是一种经过测试、广泛使用的系统，它提供了一个读/写的对一个集合的“视图”，包含一个目标对象的属性。因为目标对象属性可以是一个返回任何东西的 <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code>，所以使用一些函数就可以构建集合的一系列“替代”视图。</p>
+<p>对于第一个用例，最简单的拦截所有情况的方法是使用   <a class="reference internal" href="mapped_attributes.html#id0" title="sqlalchemy.orm.validates"><code class="xref py py-func docutils literal notranslate"><span class="pre">validates()</span></code></a>  装饰器进行验证和简单转换。有关此内容的示例，请参阅   :ref:` simple_validators` 。</p>
+<p>对于第二个用例，   <span class="xref std std-ref">associationproxy_toplevel</span>  扩展是一种经过测试、广泛使用的系统，它提供了一个读/写的对一个集合的“视图”，包含一个目标对象的属性。因为目标对象属性可以是一个返回任何东西的 ` <cite>&#64;property`</cite>，所以使用一些函数就可以构建集合的一系列“替代”视图。</p>
 <p>这种方法使底层映射的集合不受影响，并避免了在需要逐个修改方法时仔细选择集合行为的需要。这些方法当然可以与以上两种方法相结合使用。</p>
 </aside>
-<p>集合在 SQLAlchemy 中是透明地进行了 <em>instrumentation*（工具化）。工具化意味着将集合的常规操作进行跟踪，操作正常情况下会在执行刷新时写入到数据库。此外，集合操作可能会触发 *事件</em>，这表明需要进行某些次要操作。这样的次要操作包括将子项保存在父   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中（例如，“save-update”级联），以及同步双向关系的状态（如   <code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code> ）。</p>
+<p>集合在 SQLAlchemy 中是透明地进行了 <em>instrumentation*（工具化）。工具化意味着将集合的常规操作进行跟踪，操作正常情况下会在执行刷新时写入到数据库。此外，集合操作可能会触发 *事件</em>，这表明需要进行某些次要操作。这样的次要操作包括将子项保存在父   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  中（例如，“save-update”级联），以及同步双向关系的状态（如   :func:` .backref` ）。</p>
 <p>集合包可以了解列表、集合和字典的基本接口，并自动应用到这些内置类型及其子类中。实现一个基本集合接口的对象派生类型通过 duck-typing 得到检测并进行工具化：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ListLike</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -614,23 +614,23 @@ obj.a.bs.pop(previous)</p>
 </div>
 <p>并不需要完全类似于“列表”或“集合”，只要具有附加器、移除器和迭代器接口标记为 SQLAlchemy 使用即可。追加和移除方法将以映射实体作为唯一参数进行调用，而迭代方法将不带参数调用，并且必须返回一个迭代器。</p>
 <section id="dictionary-collections">
-<span id="id7"></span><h3>自定义基于字典的集合<a class="headerlink" href="#dictionary-collections" title="Permalink to this heading">¶</a></h3>
+<span id="id5"></span><h3>自定义基于字典的集合<a class="headerlink" href="#dictionary-collections" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  类可以用作自定义类型的基类，也可以作为 mix-in，以便将 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 集合支持快速添加到其他类中。它使用键函数来委托到 <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>：</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  类可以用作自定义类型的基类，也可以作为 mix-in，以便将 ` <cite>dict`</cite> 集合支持快速添加到其他类中。它使用键函数来委托到 <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> 和 <code class="docutils literal notranslate"><span class="pre">__delitem__</span></code>：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm.collections import KeyFuncDict</p>
 <dl>
 <dt>class MyNodeMap(KeyFuncDict):</dt><dd><p>“””Holds ‘Node’ objects, keyed by the ‘name’ attribute.”””</p>
 <dl class="simple">
-<dt>def __init__(self, <a href="#id8"><span class="problematic" id="id9">*</span></a>args, <a href="#id10"><span class="problematic" id="id11">**</span></a>kw):</dt><dd><p>super().__init__(keyfunc=lambda node: node.name)
-dict.__init__(self, <a href="#id12"><span class="problematic" id="id13">*</span></a>args, <a href="#id14"><span class="problematic" id="id15">**</span></a>kw)</p>
+<dt>def __init__(self, <a href="#id6"><span class="problematic" id="id7">*</span></a>args, <a href="#id8"><span class="problematic" id="id9">**</span></a>kw):</dt><dd><p>super().__init__(keyfunc=lambda node: node.name)
+dict.__init__(self, <a href="#id10"><span class="problematic" id="id11">*</span></a>args, <a href="#id12"><span class="problematic" id="id13">**</span></a>kw)</p>
 </dd>
 </dl>
 </dd>
 </dl>
 </div></blockquote>
 </div></blockquote>
-<p>当继承   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  时，需要使用装饰器  <a class="reference internal" href="#sqlalchemy.orm.collections.collection.internally_instrumented" title="sqlalchemy.orm.collections.collection.internally_instrumented"><code class="xref py py-meth docutils literal notranslate"><span class="pre">collection.internally_instrumented()</span></code></a>  标记用户定义的版本 of <code class="docutils literal notranslate"><span class="pre">__setitem__()</span></code> 或 <code class="docutils literal notranslate"><span class="pre">__delitem__()</span></code>，<strong>如果</strong> 它们调用了这些已经在   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  上的方法。这是因为   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  上的方法已经被工具化了，如果在已经工具化的调用中再次调用它们可能会导致事件被重复触发或不适当地触发，导致在罕见情况下可能会发生内部状态损坏：</p>
+<p>当继承   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  时，需要使用装饰器  :meth:` .collection.internally_instrumented`  标记用户定义的版本 of <code class="docutils literal notranslate"><span class="pre">__setitem__()</span></code> 或 <code class="docutils literal notranslate"><span class="pre">__delitem__()</span></code>，<strong>如果</strong> 它们调用了这些已经在   <a class="reference internal" href="#sqlalchemy.orm.KeyFuncDict" title="sqlalchemy.orm.KeyFuncDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a>  上的方法。这是因为   :class:` .KeyFuncDict`  上的方法已经被工具化了，如果在已经工具化的调用中再次调用它们可能会导致事件被重复触发或不适当地触发，导致在罕见情况下可能会发生内部状态损坏：</p>
 <blockquote>
 <div><p>from sqlalchemy.orm.collections import KeyFuncDict, collection</p>
 <dl>
@@ -652,8 +652,8 @@ super(MyKeyFuncDict, self).__delitem__(key, _sa_initiator)</p>
 </div></blockquote>
 <p>ORM 理解了 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 接口时就像列表和集合一样，并且如果您选择继承 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 或通过 duck-typed 类提供类似字典的集合行为，则会自动工具化所有”dict-like” 方法。但是必须装饰加入方法和删除方法。基本字典接口中没有兼容的方法供 SQLAlchemy 去使用。迭代将通过 <code class="docutils literal notranslate"><span class="pre">values()</span></code> 进行，除非另有装饰。</p>
 </section>
-<section id="id16">
-<h3>工具化和自定义类型<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
+<section id="id14">
+<h3>工具化和自定义类型<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
 <p>许多自定义类型和现有库类可以用作实体集合类型，因为它们已经有了基本集合接口。但是，重要的是要注意，工具化过程将修改类型，自动添加装饰器。这些装饰器是轻量级的，除了关系之外没有作用，但它们会在其他地方触发时增加不必要的开销。当使用库类作为集合时，使用“微不足道的子类”技巧是一个好习惯，将装饰器限制在关系的使用中。例如：</p>
 <blockquote>
 <div><dl class="simple">
@@ -665,8 +665,8 @@ super(MyKeyFuncDict, self).__delitem__(key, _sa_initiator)</p>
 <p>ORM 使用这种方法来处理内置的集合，当直接使用 <code class="docutils literal notranslate"><span class="pre">list</span></code>、 <code class="docutils literal notranslate"><span class="pre">set</span></code> 或 <code class="docutils literal notranslate"><span class="pre">dict</span></code> 时，会悄替换为一个微不足道的子类。</p>
 </section>
 </section>
-<section id="id17">
-<h2>集合 API<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h2>
+<section id="id15">
+<h2>集合 API<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -1118,8 +1118,8 @@ custom dictionary classes.</p>
 </dd></dl>
 
 </section>
-<section id="id18">
-<h2>集合内部<a class="headerlink" href="#id18" title="Permalink to this heading">¶</a></h2>
+<section id="id16">
+<h2>集合内部<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
 <table class="longtable docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head">Object Name</th>
@@ -1461,7 +1461,7 @@ into the run-time behavior of collection_class=InstrumentedList.</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:55
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

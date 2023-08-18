@@ -225,7 +225,7 @@
 <p>在映射器配置继承关系时，SQLAlchemy可以多态地加载元素，这意味着单个查询可返回多种类型的对象。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="queryguide/inheritance.html#loading-joined-inheritance"><span class="std std-ref">继承映射中编写SELECT语句</span></a> ——在   <a class="reference internal" href="queryguide/index.html"><span class="std std-ref">ORM 查询指南</span></a>  中查看</p>
+<p><a class="reference internal" href="queryguide/inheritance.html#loading-joined-inheritance"><span class="std std-ref">继承映射中编写SELECT语句</span></a> ——在   :ref:` queryguide_toplevel`  中查看</p>
 <p><a class="reference internal" href="examples.html#examples-inheritance"><span class="std std-ref">继承映射示例</span></a> ——完整的联结，单个和具体的继承示例</p>
 </div>
 <section id="joined-inheritance">
@@ -258,7 +258,7 @@ type: Mapped[str]</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>在上面的示例中，鉴别器是 <code class="docutils literal notranslate"><span class="pre">type</span></code> 列，可使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_on</span></code>  参数配置。此参数接受以列为导向的表达式，可以使用映射属性的值作为字符串名称，也可以使用如   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  或   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造的列表达式对象。</p>
+<p>在上面的示例中，鉴别器是 <code class="docutils literal notranslate"><span class="pre">type</span></code> 列，可使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_on</span></code>  参数配置。此参数接受以列为导向的表达式，可以使用映射属性的值作为字符串名称，也可以使用如   :class:` _schema.Column`  或   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造的列表达式对象。</p>
 <p>鉴别器列将存储一个值，该值表示行内表示的对象类型。列可以是任何数据类型，但字符串和整数是最常见的。为特定行应用于此列的实际数据值是使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数指定的，默认值如下。</p>
 <p>虽然多态鉴别器表达式并不是必需的，但如果需要多态加载，则必需。建立基表上的列是实现此功能的最简单方法，但非常复杂的继承映射可能会使用SQL表达式，例如CASE表达式，作为多态鉴别器。</p>
 <div class="admonition note">
@@ -288,8 +288,8 @@ manager_name: Mapped[str]</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>在上面的示例中，每个映射都在其映射器参数中指定  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数。该值填充由  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_on</span></code>  参数建立的列。  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数应在整个层次结构中唯一，并且每个映射类应该只有一个“identity”；如上所述，不支持一些子类引入第二个标识的“级联”身份。</p>
-<p>ORM使用由  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  设置的值，以确定在多态方式下加载行时行所属的类。在上面的示例中，表示 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 的每一行都将在其“type”列中包含值 <code class="docutils literal notranslate"><span class="pre">'employee'</span></code>，同样的，每个 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 将得到值 <code class="docutils literal notranslate"><span class="pre">'engineer'</span></code>，每个 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 将得到值 <code class="docutils literal notranslate"><span class="pre">'manager'</span></code>。不论继承映射是否像联结表继承一样使用不同的单独的表来表示子类，或者所有子类像单表继承一样使用相同的表，都期望将此值保留并在查询时向ORM提供。  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数也适用于具体表继承，但实际上并没有持久化；请参见   <span class="xref std std-ref">concrete_inheritance</span>  部分获取详细信息。</p>
+<p>在上面的示例中，每个映射都在其映射器参数中指定  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数。该值填充由  :paramref:` _orm.Mapper.polymorphic_on`  参数建立的列。  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数应在整个层次结构中唯一，并且每个映射类应该只有一个“identity”；如上所述，不支持一些子类引入第二个标识的“级联”身份。</p>
+<p>ORM使用由  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  设置的值，以确定在多态方式下加载行时行所属的类。在上面的示例中，表示 ` <cite>Employee`</cite> 的每一行都将在其“type”列中包含值 <code class="docutils literal notranslate"><span class="pre">'employee'</span></code>，同样的，每个 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 将得到值 <code class="docutils literal notranslate"><span class="pre">'engineer'</span></code>，每个 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 将得到值 <code class="docutils literal notranslate"><span class="pre">'manager'</span></code>。不论继承映射是否像联结表继承一样使用不同的单独的表来表示子类，或者所有子类像单表继承一样使用相同的表，都期望将此值保留并在查询时向ORM提供。  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_identity</span></code>  参数也适用于具体表继承，但实际上并没有持久化；请参见   :ref:` concrete_inheritance`  部分获取详细信息。</p>
 <p>在多态设置中，最常见的情况是将外键约束建立在与主键本身相同的列或列上，但这不是必需的；也可以使用与主键不同的列来指示父项。从基表到子表构造 JOIN 的方式也是可以直接自定义的，只是这很少使用。</p>
 <aside class="topic">
 <p class="topic-title">联结继承主键</p>
@@ -409,9 +409,9 @@ engineer_info = mapped_column(String(50))</p>
 </section>
 <section id="concrete-polymorphic">
 <span id="id6"></span><h3>具体多态加载配置<a class="headerlink" href="#concrete-polymorphic" title="Permalink to this heading">¶</a></h3>
-<p>使用具体继承进行多态加载需要配置针对每个应该具有多态加载的基类的专用SELECT。该SELECT需要能够单独访问所有映射的表，通常是使用SQLAlchemy助手 :func:<a href="#id7"><span class="problematic" id="id8">`</span></a>.polymorphic_union`构造的UNION语句。</p>
-<p>如在  <a class="reference internal" href="queryguide/inheritance.html"><span class="std std-ref">继承映射中编写SELECT语句</span></a>  参数默认配置为从特殊可选择载入。当前公共API要求必须在首次构建  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">sqlalchemy.orm.Mapper</span></code>  时设置此参数。</p>
-<p>然而，在使用声明性时，映射器和映射到的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .ConcreteBase`和 :class:<a href="#id9"><span class="problematic" id="id10">`</span></a>.AbstractConcreteBase`辅助类，它们在幕后处理此问题。</p>
+<p>使用具体继承进行多态加载需要配置针对每个应该具有多态加载的基类的专用SELECT。该SELECT需要能够单独访问所有映射的表，通常是使用SQLAlchemy助手 <code class="xref py py-func docutils literal notranslate"><span class="pre">polymorphic_union()</span></code> 构造的UNION语句。</p>
+<p>如在  <a class="reference internal" href="queryguide/inheritance.html"><span class="std std-ref">继承映射中编写SELECT语句</span></a>  参数默认配置为从特殊可选择载入。当前公共API要求必须在首次构建  :paramref:` _orm.Mapper`  时设置此参数。</p>
+<p>然而，在使用声明性时，映射器和映射到的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> .ConcreteBase` 和 <a class="reference internal" href="extensions/declarative/index.html#sqlalchemy.ext.declarative.AbstractConcreteBase" title="sqlalchemy.ext.declarative.AbstractConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractConcreteBase</span></code></a> 辅助类，它们在幕后处理此问题。</p>
 <p>使用  <a class="reference internal" href="extensions/declarative/index.html#sqlalchemy.ext.declarative.ConcreteBase" title="sqlalchemy.ext.declarative.ConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteBase</span></code></a> ，我们可以以与其他形式的继承映射几乎相同的方式设置我们的具体映射：</p>
 <blockquote>
 <div><p>from sqlalchemy.ext.declarative import ConcreteBase
@@ -453,7 +453,7 @@ engineer_info = mapped_column(String(40))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>上面，Declarative在“initialization”操作的映射器中设置了“Employee”类的多态可选择载入；此类映射器对于解决其他相关映射器的依赖关系是可执行配置步骤。  <a class="reference internal" href="extensions/declarative/index.html#sqlalchemy.ext.declarative.ConcreteBase" title="sqlalchemy.ext.declarative.ConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteBase</span></code></a> .polymorphic_union`函数为所有具体映射表创建了一个UNION，在创建好所有其他类之后配置该语句并将其应用于已存在的基类映射器。</p>
+<p>上面，Declarative在“initialization”操作的映射器中设置了“Employee”类的多态可选择载入；此类映射器对于解决其他相关映射器的依赖关系是可执行配置步骤。  <a class="reference internal" href="extensions/declarative/index.html#sqlalchemy.ext.declarative.ConcreteBase" title="sqlalchemy.ext.declarative.ConcreteBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConcreteBase</span></code></a> .polymorphic_union` 函数为所有具体映射表创建了一个UNION，在创建好所有其他类之后配置该语句并将其应用于已存在的基类映射器。</p>
 <p>在选择时，多态联合生成如下查询：</p>
 <div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
 <div class='show_sql'><span class="k">SELECT</span>
@@ -516,7 +516,7 @@ engineer_info = mapped_column(String(40))</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:58:59
 
     </div>
 </div>

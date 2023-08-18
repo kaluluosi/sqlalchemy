@@ -134,7 +134,7 @@
 <li><span class="link-container"><a class="reference external" href="#selectin-polymorphic">使用 selectin_polymorphic()</a></span><ul>
 <li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></span></li>
 <li><span class="link-container"><a class="reference external" href="#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></span></li>
-<li><span class="link-container"><a class="reference external" href="#id16">在映射器上配置 selectin_polymorphic()</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">在映射器上配置 selectin_polymorphic()</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#with-polymorphic">使用 with_polymorphic()</a></span><ul>
@@ -148,7 +148,7 @@
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#loading-single-inheritance">单继承映射的 SELECT 语句</a></span><ul>
-<li><span class="link-container"><a class="reference external" href="#id24">提高单继承属性的加载性能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">提高单继承属性的加载性能</a></span></li>
 </ul>
 </li>
 <li><span class="link-container"><a class="reference external" href="#api">继承加载API</a></span><ul>
@@ -219,7 +219,7 @@
 <li><a class="reference internal" href="#selectin-polymorphic">使用 selectin_polymorphic()</a><ul>
 <li><a class="reference internal" href="#polymorphic-selectin-w-loader-options">将其他加载器选项与selectin_polymorphic()子类加载器结合使用</a></li>
 <li><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target">将selectin_polymorphic()应用于现有的急性加载</a></li>
-<li><a class="reference internal" href="#id16">在映射器上配置 selectin_polymorphic()</a></li>
+<li><a class="reference internal" href="#id8">在映射器上配置 selectin_polymorphic()</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#with-polymorphic">使用 with_polymorphic()</a><ul>
@@ -233,7 +233,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#loading-single-inheritance">单继承映射的 SELECT 语句</a><ul>
-<li><a class="reference internal" href="#id24">提高单继承属性的加载性能</a></li>
+<li><a class="reference internal" href="#id16">提高单继承属性的加载性能</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#api">继承加载API</a><ul>
@@ -263,7 +263,7 @@
 <span id="loading-joined-inheritance"></span><span id="inheritance-loading-toplevel"></span><h1>继承映射中编写SELECT语句<a class="headerlink" href="#select" title="Permalink to this heading">¶</a></h1>
 <section id="id1">
 <h2>从基类和特定子类中选择<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
-<p>一个加入继承层次结构的类的 SELECT 语句将会查询它所映射的表，以及查询可能涉及到的表格，使用 JOIN 将这些表连接起来。然后使用每行中的  <span class="xref std std-term">discriminator</span>  来确定正确的类型，该查询将返回请求类型及其所有的子类型。下面的查询建立在 <cite>Manager</cite> 类的子类之上，然后将返回仅包含 <cite>Manager</cite> 类型对象的结果:</p>
+<p>一个加入继承层次结构的类的 SELECT 语句将会查询它所映射的表，以及查询可能涉及到的表格，使用 JOIN 将这些表连接起来。然后使用每行中的  <span class="xref std std-term">discriminator</span>  来确定正确的类型，该查询将返回请求类型及其所有的子类型。下面的查询建立在 ` Manager` 类的子类之上，然后将返回仅包含 <cite>Manager</cite> 类型对象的结果:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">select</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Manager</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Manager</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">managers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -287,18 +287,18 @@
 <span class="go">[Manager(&#39;Mr. Krabs&#39;), Engineer(&#39;SpongeBob&#39;), Engineer(&#39;Squidward&#39;)]</span></pre></div>
 </div>
 <p>上面的查询并未包含 <cite>Manager</cite> 和 <cite>Engineer</cite> 的附加表，这意味着返回的对象将不包含表示这些表的数据，例如 <cite>Manager</cite> 类的 <cite>.manager_name</cite> 属性和 <cite>Engineer</cite> 类的 <cite>.engineer_info</cite> 属性。这些属性以已过期的状态开始，当首次访问时，会自动填充自己，使用  <span class="xref std std-term">lazy loading</span>  功能加载，该功能通过访问时自动加载来实现。</p>
-<p>如果已加载大量对象，则此惰性加载行为是不可行的，在消费应用程序需要访问子类特定属性的情况下，这将是产生额外 SQL 查询的  <span class="xref std std-term">N plus one</span>  问题。这将导致性能下降，并且对诸如使用   <a class="reference internal" href="../extensions/asyncio.html"><span class="std std-ref">asyncio</span></a>  的做法也不兼容。此外，在我们针对 <cite>Employee</cite> 对象的查询中，由于查询只针对基表，我们无法通过子类特定属性添加 SQL 标准，例如 <cite>Manager</cite> 或 <cite>Engineer</cite>。下面的两个部分详细介绍了两种解决这两个问题的实现方法，即   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载器选项和   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体结构。</p>
+<p>如果已加载大量对象，则此惰性加载行为是不可行的，在消费应用程序需要访问子类特定属性的情况下，这将是产生额外 SQL 查询的  <span class="xref std std-term">N plus one</span>  问题。这将导致性能下降，并且对诸如使用   :ref:` asyncio &lt;asyncio_toplevel&gt;`  的做法也不兼容。此外，在我们针对 <cite>Employee</cite> 对象的查询中，由于查询只针对基表，我们无法通过子类特定属性添加 SQL 标准，例如 <cite>Manager</cite> 或 <cite>Engineer</cite>。下面的两个部分详细介绍了两种解决这两个问题的实现方法，即   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载器选项和   :func:` _orm.with_polymorphic`  实体结构。</p>
 </section>
 <section id="selectin-polymorphic">
 <span id="polymorphic-selectin"></span><h2>使用 selectin_polymorphic()<a class="headerlink" href="#selectin-polymorphic" title="Permalink to this heading">¶</a></h2>
-<p>为了解决访问子类特定属性时的性能问题，可以使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载策略来  <span class="xref std std-term">急加载</span>  跨许多对象一起提前加载附加属性。此加载器选项的工作方式与  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> <a href="#id2"><span class="problematic" id="id3">`</span></a>IN``根据主键查询附加行。</p>
+<p>为了解决访问子类特定属性时的性能问题，可以使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  加载策略来  :term:` 急加载`  跨许多对象一起提前加载附加属性。此加载器选项的工作方式与  <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> ` IN``根据主键查询附加行。</p>
 <blockquote>
-<div><p>:func:<a href="#id4"><span class="problematic" id="id5">`</span></a>_orm.selectinload`将其参数作为正在查询的基本实体，然后是该实体的一个子类序列，用于加载其特定属性以供传入行使用：</p>
+<div><p><code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code> 将其参数作为正在查询的基本实体，然后是该实体的一个子类序列，用于加载其特定属性以供传入行使用：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader_opt</span> <span class="o">=</span> <span class="n">selectin_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">,</span> <span class="n">Engineer</span><span class="p">])</span></pre></div>
 </div>
 </div></blockquote>
-<p>然后使用  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> .Select`的  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.options" title="sqlalchemy.sql.expression.Select.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.options()</span></code></a>  方法。该示例说明了如何使用  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <a href="#id6"><span class="problematic" id="id7">`</span></a>Manager``和``Engineer``子类的本地列：</p>
+<p>然后使用  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> .Select` 的  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.options" title="sqlalchemy.sql.expression.Select.options"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.options()</span></code></a>  方法。该示例说明了如何使用  :func:` _orm.selectin_polymorphic` <a href="#id2"><span class="problematic" id="id3">`</span></a>Manager``和``Engineer``子类的本地列：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">loader_opt</span> <span class="o">=</span> <span class="n">selectin_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">,</span> <span class="n">Engineer</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Employee</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Employee</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">loader_opt</span><span class="p">)</span>
@@ -326,11 +326,11 @@
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p><a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <a href="#id8"><span class="problematic" id="id9">`</span></a>employee``表无需包含在后两个“急性加载”查询中的事实。因此，在上面的示例中，尽管已经加载了``employee``的列，但我们看到了从``employee``到``manager``和``engineer``的JOIN。这与：func:<a href="#id10"><span class="problematic" id="id11">`</span></a>_orm.selectinload`关系策略有所不同，后者在这方面更为复杂，并且可以在不需要时将JOIN因素化。</p>
+<p><a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> ` employee``表无需包含在后两个“急性加载”查询中的事实。因此，在上面的示例中，尽管已经加载了``employee``的列，但我们看到了从``employee``到``manager``和``engineer``的JOIN。这与：func:<a href="#id4"><span class="problematic" id="id5">`</span></a>_orm.selectinload`关系策略有所不同，后者在这方面更为复杂，并且可以在不需要时将JOIN因素化。</p>
 </div>
 <section id="polymorphic-selectin-w-loader-options">
-<span id="id12"></span><h3>将其他加载器选项与selectin_polymorphic()子类加载器结合使用<a class="headerlink" href="#polymorphic-selectin-w-loader-options" title="Permalink to this heading">¶</a></h3>
-<p>由  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> <cite>Manager``映射器有到名为``Paperwork``的实体的  :ref:`one to many &lt;relationship_patterns_o2m&gt;</cite> <a href="#id13"><span class="problematic" id="id14">`</span></a>Manager``对象上急性加载此集合，其中``Manager``对象的子属性也本身已经急性加载：</p>
+<span id="id6"></span><h3>将其他加载器选项与selectin_polymorphic()子类加载器结合使用<a class="headerlink" href="#polymorphic-selectin-w-loader-options" title="Permalink to this heading">¶</a></h3>
+<p>由  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> ` Manager``映射器有到名为``Paperwork``的实体的  <a class="reference internal" href="../basic_relationships.html#relationship-patterns-o2m"><span class="std std-ref">one to many</span></a> ` Manager``对象上急性加载此集合，其中``Manager``对象的子属性也本身已经急性加载：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectinload</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">selectin_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -365,7 +365,7 @@
 </div>
 </section>
 <section id="polymorphic-selectin-as-loader-option-target">
-<span id="id15"></span><h3>将selectin_polymorphic()应用于现有的急性加载<a class="headerlink" href="#polymorphic-selectin-as-loader-option-target" title="Permalink to this heading">¶</a></h3>
+<span id="id7"></span><h3>将selectin_polymorphic()应用于现有的急性加载<a class="headerlink" href="#polymorphic-selectin-as-loader-option-target" title="Permalink to this heading">¶</a></h3>
 <p>除了能够在  <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> 。
 由于我们的  <a class="reference internal" href="_inheritance_setup.html"><span class="doc">设置</span></a>  映射包括一个父级
 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体和一个引用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体的 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code>   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ,
@@ -403,13 +403,13 @@
 </div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#eagerloading-polymorphic-subtypes"><span class="std std-ref">多态子类型的急加载</span></a>  - 用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  相当于上面的例子</p>
+<p><a class="reference internal" href="#eagerloading-polymorphic-subtypes"><span class="std std-ref">多态子类型的急加载</span></a>  - 用   :func:` _orm.with_polymorphic`  相当于上面的例子</p>
 </div>
 </section>
-<section id="id16">
-<h3>在映射器上配置 selectin_polymorphic()<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
+<section id="id8">
+<h3>在映射器上配置 selectin_polymorphic()<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
-<dt>可以在特定映射器上配置   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的行为，以便在默认情况下执行，方法是使用</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>   参数，在 per-subclass 的基础上使用值 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code>。下面的示例说明了</p>
+<dt>可以在特定映射器上配置   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的行为，以便在默认情况下执行，方法是使用</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>   参数，在 per-subclass 的基础上使用值 ` <cite>“selectin”`</cite>。下面的示例说明了</p>
 </dd>
 </dl>
 <p>在 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 子类中使用此参数的方法:</p>
@@ -447,19 +447,19 @@
 </section>
 </section>
 <section id="with-polymorphic">
-<span id="id17"></span><h2>使用 with_polymorphic()<a class="headerlink" href="#with-polymorphic" title="Permalink to this heading">¶</a></h2>
-<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  相反，后者仅影响对象的加载方式，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>
+<span id="id9"></span><h2>使用 with_polymorphic()<a class="headerlink" href="#with-polymorphic" title="Permalink to this heading">¶</a></h2>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  相反，后者仅影响对象的加载方式，  :func:` _orm.with_polymorphic`
 构造则影响多态结构的 SQL 查询如何呈现，通常作为到每个包含的子表的 LEFT OUTER JOIN
 系列。这个连接结构被称为**多态可选择项**。通过为多个子表提供视图，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  提供了一种在一个 SELECT 语句中同时
 写入几个继承类的方法，并能基于单个子表添加过滤条件。</p>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实质上是   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  构造的一种特殊形式。它接受一个类似于   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> ` 的参数形式</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实质上是   :func:` _orm.aliased`  构造的一种特殊形式。它接受一个类似于   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a> ` 的参数形式</p>
 </div></blockquote>
 <p>，即进行查询的基础实体，之后是该实体的一系列子类，它们的特定属性应该为传入行加载:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">with_polymorphic</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">,</span> <span class="n">Manager</span><span class="p">])</span></pre></div>
 </div>
-<p>为了表示所有子类都应该成为实体的一部分，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  还将接受字符串 <code class="docutils literal notranslate"><span class="pre">&quot;*&quot;</span></code>，
+<p>为了表示所有子类都应该成为实体的一部分，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  还将接受字符串 ` <cite>“*”`</cite>，
 可以代替类的序列，以表示所有类（请注意，这尚未得到   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  的支持）:</p>
 <div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span><span class="n">下面的示例演示了与上一节中演示的相同操作</span><span class="err">，</span><span class="n">一次加载所有</span><span class="err">“</span><span class="n">Manager</span><span class="err">”</span><span class="n">和</span><span class="err">“</span><span class="n">Engineer</span><span class="err">”</span><span class="n">的列</span><span class="err">：</span>
 
@@ -479,10 +479,10 @@
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span><span class="p">)</span>
 <span class="go">Eugene H. Krabs</span></pre></div>
 </div>
-<p>由于   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  生成的默认可选使用了 LEFT OUTER JOIN，从数据库的角度来看，不像   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  方法那样优化查询，每个表只使用 JOIN 语句。</p>
+<p>由于   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  生成的默认可选使用了 LEFT OUTER JOIN，从数据库的角度来看，不像   :func:` _orm.selectin_polymorphic`  方法那样优化查询，每个表只使用 JOIN 语句。</p>
 <section id="with-polymorphic-subclass-attributes">
-<span id="id18"></span><h3>使用 with_polymorphic() 过滤子类的属性<a class="headerlink" href="#with-polymorphic-subclass-attributes" title="Permalink to this heading">¶</a></h3>
-<p>通过包含允许对子类进行引用的命名空间，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造可用于包含子类映射器上的属性。在上一节中创建的 <code class="docutils literal notranslate"><span class="pre">employee_poly</span></code> 构造包括名为 <code class="docutils literal notranslate"><span class="pre">.Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.Manager</span></code> 的属性，这些属性提供了关于多态 SELECT 中 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的命名空间。在下面的示例中，我们可以使用   <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code class="xref py py-func docutils literal notranslate"><span class="pre">or_()</span></code></a>  构造同时创建两个类的条件：</p>
+<span id="id10"></span><h3>使用 with_polymorphic() 过滤子类的属性<a class="headerlink" href="#with-polymorphic-subclass-attributes" title="Permalink to this heading">¶</a></h3>
+<p>通过包含允许对子类进行引用的命名空间，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造可用于包含子类映射器上的属性。在上一节中创建的 ` <cite>employee_poly`</cite> 构造包括名为 <code class="docutils literal notranslate"><span class="pre">.Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">.Manager</span></code> 的属性，这些属性提供了关于多态 SELECT 中 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的命名空间。在下面的示例中，我们可以使用   <a class="reference internal" href="../../core/sqlelement.html#sqlalchemy.sql.expression.or_" title="sqlalchemy.sql.expression.or_"><code class="xref py py-func docutils literal notranslate"><span class="pre">or_()</span></code></a>  构造同时创建两个类的条件：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">or_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">employee_poly</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">,</span> <span class="n">Manager</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
@@ -510,9 +510,9 @@
 </div>
 </section>
 <section id="with-polymorphic-aliasing">
-<span id="id19"></span><h3>使用 with_polymorphic 进行别名处理<a class="headerlink" href="#with-polymorphic-aliasing" title="Permalink to this heading">¶</a></h3>
+<span id="id11"></span><h3>使用 with_polymorphic 进行别名处理<a class="headerlink" href="#with-polymorphic-aliasing" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造作为   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的特殊情况，也提供了   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的基本功能，即对多态可选进行别名处理。具体来说，这意味着一个语句中可以同时使用两个或多个引用相同类层次结构的   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体。要在具有联接继承映射的情况下使用此功能，通常需要传递两个参数，即  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>  和  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.flat" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.flat</span></code></a> 。  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>   参数表示多态可选应该通过唯一于此构造体的别名名称引用。  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.flat" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.flat</span></code></a>  参数适用于默认的 LEFT OUTER JOIN 多态可选，表示应在语句中使用更优化的别名处理形式。</p>
+<div><p><a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构造作为   :func:` _orm.aliased`  的特殊情况，也提供了   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的基本功能，即对多态可选进行别名处理。具体来说，这意味着一个语句中可以同时使用两个或多个引用相同类层次结构的   :func:` _orm.with_polymorphic`  实体。要在具有联接继承映射的情况下使用此功能，通常需要传递两个参数，即  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>  和  :paramref:` _orm.with_polymorphic.flat` 。  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic.params.aliased" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">with_polymorphic.aliased</span></code></a>   参数表示多态可选应该通过唯一于此构造体的别名名称引用。  :paramref:` _orm.with_polymorphic.flat`  参数适用于默认的 LEFT OUTER JOIN 多态可选，表示应在语句中使用更优化的别名处理形式。</p>
 </div></blockquote>
 <p>为了说明这个特点，下面的示例发出了一个 SELECT 查询，分别使用 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 加入的 polymorphic 实体，以及加入 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的 polymorphic 实体。由于这两个 polymorphic 实体都将基本的「employee」表包含在它们的 polymorphic 可选中，因此必须应用别名来区分该表在其两个不同的上下文中。这两个 polymorphic 实体被视为两个单独的表，因此通常需要以某种方式将这些实体彼此连接，如下面的示例所示，其中按照 <code class="docutils literal notranslate"><span class="pre">company_id</span></code> 列将这两个实体与某些附加限制条件一起进行连接：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">manager_employee</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Manager</span><span class="p">],</span> <span class="n">aliased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -581,13 +581,13 @@
 <p>历史上，以上形式在不一定具有支持右嵌套 JOIN 的后端上更具可移植性，而且当使用   <span class="xref std std-ref">具体的表继承</span>  映射以及一般情况下使用替代多态可选择表格时，也可能是适当的选择。</p>
 </section>
 <section id="with-polymorphic-mapper-config">
-<span id="id20"></span><h3>在映射器上配置 with_polymorphic()<a class="headerlink" href="#with-polymorphic-mapper-config" title="Permalink to this heading">¶</a></h3>
-<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  一样，  <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  还支持在基类上使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数的映射器配置版本，或者以更现代的形式在每个子类上使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  参数，在这里传递值 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>。</p>
+<span id="id12"></span><h3>在映射器上配置 with_polymorphic()<a class="headerlink" href="#with-polymorphic-mapper-config" title="Permalink to this heading">¶</a></h3>
+<p>与   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  一样，  :func:` _orm.with_polymorphic`  还支持在基类上使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数的映射器配置版本，或者以更现代的形式在每个子类上使用  :paramref:` _orm.Mapper.polymorphic_load`  参数，在这里传递值 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>。</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>对于连接的继承映射，建议在查询中显式使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a> ，或者在使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  时使用 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 进行隐式急切子类加载，而不是使用在本节中描述的映射器级  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数。该参数调用复杂的启发式算法，旨在重写 SELECT 语句中的 FROM 子句，可能会干扰构造更复杂的语句，特别是那些引用相同映射实体的嵌套子查询。</p>
+<p>对于连接的继承映射，建议在查询中显式使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a> ，或者在使用  :paramref:` _orm.Mapper.polymorphic_load`  时使用 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code> 进行隐式急切子类加载，而不是使用在本节中描述的映射器级  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.with_polymorphic</span></code>  参数。该参数调用复杂的启发式算法，旨在重写 SELECT 语句中的 FROM 子句，可能会干扰构造更复杂的语句，特别是那些引用相同映射实体的嵌套子查询。</p>
 </div>
-<p>例如，我们可以使用如下所示的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  将 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 映射声明为 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>：</p>
+<p>例如，我们可以使用如下所示的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  将 ` <cite>Employee`</cite> 映射声明为 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -627,8 +627,8 @@
 <span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">manager</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">employee</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">manager</span><span class="p">.</span><span class="n">id</span>
 </div></pre></div>
 </div>
-<p>使用映射器级“with polymorphic”，查询也可以直接引用子类实体，其中它们隐含地表示多态查询中的连接表格。例如，我们可以自由地针对默认的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体直接引用 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code>。如果我们需要在单独的别名上下文中引用``Employee``实体或它的子实体，我们需要再次直接使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  将这些别名实体定义为所示的方式。在   <a class="reference internal" href="#with-polymorphic-aliasing"><span class="std std-ref">使用 with_polymorphic 进行别名处理</span></a>  中。</p>
-<p>如果需要更加集中地控制多态可选择的内容，可以使用更遗留的形式映射器级多态控制，即基类上配置的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.with_polymorphic</span></code>  参数。该参数接受与   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  构建相当的参数，但是使用连接继承映射的常见方法是使用平面的星号，表示所有子表都应左外连接，如下：</p>
+<p>使用映射器级“with polymorphic”，查询也可以直接引用子类实体，其中它们隐含地表示多态查询中的连接表格。例如，我们可以自由地针对默认的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 实体直接引用 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code>。如果我们需要在单独的别名上下文中引用``Employee``实体或它的子实体，我们需要再次直接使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  将这些别名实体定义为所示的方式。在   :ref:` with_polymorphic_aliasing`  中。</p>
+<p>如果需要更加集中地控制多态可选择的内容，可以使用更遗留的形式映射器级多态控制，即基类上配置的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.with_polymorphic</span></code>  参数。该参数接受与   :func:` _orm.with_polymorphic`  构建相当的参数，但是使用连接继承映射的常见方法是使用平面的星号，表示所有子表都应左外连接，如下：</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
     <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;employee&quot;</span>
     <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -661,14 +661,14 @@
         <span class="s2">&quot;polymorphic_identity&quot;</span><span class="p">:</span> <span class="s2">&quot;manager&quot;</span><span class="p">,</span>
     <span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
 </div>
-<p>总的来说，   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  和  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.with_polymorphic</span></code>  使用的 LEFT OUTER JOIN 格式可能在 SQL 和数据库优化器方面非常麻烦；对于连接继承映射中的子类属性的普遍加载，应该首选   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  方法，或者其映射器级别的等效设置  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  为 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code>，仅在需要时按需在每个查询上使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  。</p>
+<p>总的来说，   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  和  :paramref:` _orm.Mapper.with_polymorphic`  使用的 LEFT OUTER JOIN 格式可能在 SQL 和数据库优化器方面非常麻烦；对于连接继承映射中的子类属性的普遍加载，应该首选   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  方法，或者其映射器级别的等效设置  :paramref:` _orm.Mapper.polymorphic_load`  为 <code class="docutils literal notranslate"><span class="pre">&quot;selectin&quot;</span></code>，仅在需要时按需在每个查询上使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  。</p>
 </section>
 </section>
 <section id="inheritance-of-type">
-<span id="id21"></span><h2>连接到特定子类型或 with_polymorphic() 实体<a class="headerlink" href="#inheritance-of-type" title="Permalink to this heading">¶</a></h2>
-<p>作为   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体是   <a class="reference internal" href="api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a>  的一种特殊情况，为了将多态实体作为一个连接的目标，在使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造作为 ON 子句时，
-我们需要使用与详细说明了正常别名的相同技术，详见   <a class="reference internal" href="select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">使用 Relationship 在别名目标之间进行连接</span></a> ，最简单的方法是使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a> 。
-在下面的示例中，我们演示了从父级 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体沿着一对多关系 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> 加入的方式，这在  <a class="reference internal" href="_inheritance_setup.html"><span class="doc">setup</span></a>  中配置，以链接到 <code class="docutils literal notranslate"><span class="pre">Employee</span></code> 对象，使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体作为目标：</p>
+<span id="id13"></span><h2>连接到特定子类型或 with_polymorphic() 实体<a class="headerlink" href="#inheritance-of-type" title="Permalink to this heading">¶</a></h2>
+<p>作为   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体是   :func:` _orm.aliased`  的一种特殊情况，为了将多态实体作为一个连接的目标，在使用   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  构造作为 ON 子句时，
+我们需要使用与详细说明了正常别名的相同技术，详见   <a class="reference internal" href="select.html#orm-queryguide-joining-relationships-aliased"><span class="std std-ref">使用 Relationship 在别名目标之间进行连接</span></a> ，最简单的方法是使用  :meth:` _orm.PropComparator.of_type` 。
+在下面的示例中，我们演示了从父级 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 实体沿着一对多关系 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> 加入的方式，这在  <a class="reference internal" href="_inheritance_setup.html"><span class="doc">setup</span></a>  中配置，以链接到 ` <cite>Employee`</cite> 对象，使用   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  实体作为目标：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employee_plus_engineer</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="p">[</span><span class="n">Engineer</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">employee_plus_engineer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
@@ -690,7 +690,7 @@
 <span class="go">{stop}Krusty Krab SpongeBob</span>
 <span class="go">Krusty Krab Squidward</span></pre></div>
 </div>
-<p>更直接地，  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  也用于任何类型的继承映射，以将连接限定在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的目标的特定子类型上。上面的查询可以按如下方式严格编写为“引擎师”目标：</p>
+<p>更直接地，  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  也用于任何类型的继承映射，以将连接限定在   :func:` _orm.relationship`  的目标的特定子类型上。上面的查询可以按如下方式严格编写为“引擎师”目标：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
 <span class="gp">... </span>    <span class="n">select</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">Engineer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Company</span><span class="o">.</span><span class="n">employees</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">Engineer</span><span class="p">))</span>
@@ -713,10 +713,10 @@
 <p>直接加入到 <code class="docutils literal notranslate"><span class="pre">Engineer</span></code> 目标具有使用内部 JOIN 而不是 LEFT OUTER JOIN 的有用特性，
 从 SQL 优化器的角度来看，通常更有效。</p>
 <section id="eagerloading-polymorphic-subtypes">
-<span id="id22"></span><h3>多态子类型的急加载<a class="headerlink" href="#eagerloading-polymorphic-subtypes" title="Permalink to this heading">¶</a></h3>
-<p>在前一节中，使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  和  <a class="reference internal" href="../../core/selectable.html#sqlalchemy.sql.expression.Select.join" title="sqlalchemy.sql.expression.Select.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code></a>
+<span id="id14"></span><h3>多态子类型的急加载<a class="headerlink" href="#eagerloading-polymorphic-subtypes" title="Permalink to this heading">¶</a></h3>
+<p>在前一节中，使用  <a class="reference internal" href="../internals.html#sqlalchemy.orm.PropComparator.of_type" title="sqlalchemy.orm.PropComparator.of_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PropComparator.of_type()</span></code></a>  和  :meth:` .Select.join`
 方法演示可以等效地应用到   <span class="xref std std-ref">relationship loader options</span>
-中，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  和   <code class="xref py py-func docutils literal notranslate"><span class="pre">joinedload()</span></code> 。</p>
+中，例如   <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>  和   :func:` _orm.joinedload` 。</p>
 <p>例如，如果我们希望加载 <code class="docutils literal notranslate"><span class="pre">Company</span></code> 对象，并且另外希望使用 <code class="docutils literal notranslate"><span class="pre">_orm.with_polymorphic</span></code> 构建充分的层次结构
 来急切地加载 <code class="docutils literal notranslate"><span class="pre">Company.employees</span></code> 的所有元素，则可以编写如下代码：</p>
 <p><code class="docutils literal notranslate"><span class="pre">`</span>
@@ -744,12 +744,12 @@
 演示的   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  版本进行比较。</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target"><span class="std std-ref">将selectin_polymorphic()应用于现有的急性加载</span></a>  - 演示了与上述相同的例子，但使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a></p>
+<p><a class="reference internal" href="#polymorphic-selectin-as-loader-option-target"><span class="std std-ref">将selectin_polymorphic()应用于现有的急性加载</span></a>  - 演示了与上述相同的例子，但使用   :func:` _orm.selectin_polymorphic`</p>
 </div>
 </section>
 </section>
 <section id="loading-single-inheritance">
-<span id="id23"></span><h2>单继承映射的 SELECT 语句<a class="headerlink" href="#loading-single-inheritance" title="Permalink to this heading">¶</a></h2>
+<span id="id15"></span><h2>单继承映射的 SELECT 语句<a class="headerlink" href="#loading-single-inheritance" title="Permalink to this heading">¶</a></h2>
 <p>与联接继承映射不同，对于单继承映射的 SELECT 语句构造通常更简单，因为
 对于全单继承层次结构，只有一个表。</p>
 <p>无论继承层次结构是否都是单继承还是混合使用联接继承和单继承，对于单继承来说，
@@ -782,14 +782,14 @@
 <span class="pre">Engineer('SpongeBob')</span>
 <span class="pre">Engineer('Squidward')</span>
 <span class="pre">`</span></code></p>
-<section id="id24">
-<h3>提高单继承属性的加载性能<a class="headerlink" href="#id24" title="Permalink to this heading">¶</a></h3>
+<section id="id16">
+<h3>提高单继承属性的加载性能<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h3>
 <p>单继承映射对于如何选择子类上的属性的默认行为类似于联接继承，因此在
 默认情况下，特定子类的属性仍然会发出第二个 SELECT。在下面的示例中，
 加载单个类型为 <code class="docutils literal notranslate"><span class="pre">Manager</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Employee</span></code>，但由于请求的类是 <code class="docutils literal notranslate"><span class="pre">Employee</span></code>，
 因此默认情况下不包含属性 <code class="docutils literal notranslate"><span class="pre">Manager.manager_name</span></code>，因此在访问该属性时会发出
 另一个 SELECT：</p>
-<p><a href="#id25"><span class="problematic" id="id26">``</span></a>`
+<p><a href="#id17"><span class="problematic" id="id18">``</span></a>`
 &gt;&gt;&gt; mr_krabs = session.scalars(select(Employee).where(Employee.name == “Mr. Krabs”)).one()
 {execsql}BEGIN (implicit)
 SELECT employee.id, employee.name, employee.type
@@ -799,12 +799,12 @@ WHERE employee.name = ?
 {stop}&gt;&gt;&gt; mr_krabs.manager_name
 {execsql}SELECT employee.manager_name AS employee_manager_name
 FROM employee
-<a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a>WHERE employee.id = ? AND employee.type IN (?)</p>
+<a href="#id19"><span class="problematic" id="id20">``</span></a><a href="#id21"><span class="problematic" id="id22">`</span></a>WHERE employee.id = ? AND employee.type IN (?)</p>
 <blockquote>
 <div><p>[…] (1, ‘manager’)
 {stop}’Eugene H. Krabs’</p>
 </div></blockquote>
-<p>为了更改这种行为，使用在joined inheritance loading中使用的相同的常规概念也可以用于单一继承，包括使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  选项以及   <a class="reference internal" href="#sqlalchemy.orm.with_polymorphic" title="sqlalchemy.orm.with_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">with_polymorphic()</span></code></a>  选项，后者仅包括其他列并从SQL角度而言对于单一继承mapper来说更加高效：</p>
+<p>为了更改这种行为，使用在joined inheritance loading中使用的相同的常规概念也可以用于单一继承，包括使用   <a class="reference internal" href="#sqlalchemy.orm.selectin_polymorphic" title="sqlalchemy.orm.selectin_polymorphic"><code class="xref py py-func docutils literal notranslate"><span class="pre">selectin_polymorphic()</span></code></a>  选项以及   :func:` _orm.with_polymorphic`  选项，后者仅包括其他列并从SQL角度而言对于单一继承mapper来说更加高效：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">employees</span> <span class="o">=</span> <span class="n">with_polymorphic</span><span class="p">(</span><span class="n">Employee</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">employees</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">employees</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
@@ -821,7 +821,7 @@ FROM employee
 <span class="gp">&gt;&gt;&gt; </span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">manager_name</span>
 <span class="go">&#39;Eugene H. Krabs&#39;</span></pre></div>
 </div>
-<p>由于加载单一继承子类映射的开销通常很小，因此建议单一继承映射包括  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  参数，并对那些预计常见加载其特定子类属性的子类设置为 <code class="docutils literal notranslate"><span class="pre">&quot;inline&quot;</span></code>。下面是演示  <a class="reference internal" href="_single_inheritance.html"><span class="doc">设置</span></a>  的示例，其中包含此选项的修改版本：</p>
+<p>由于加载单一继承子类映射的开销通常很小，因此建议单一继承映射包括  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Mapper.polymorphic_load</span></code>  参数，并对那些预计常见加载其特定子类属性的子类设置为 ` <cite>“inline”`</cite>。下面是演示  <a class="reference internal" href="_single_inheritance.html"><span class="doc">设置</span></a>  的示例，其中包含此选项的修改版本：</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Base</span><span class="p">(</span><span class="n">DeclarativeBase</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="k">pass</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Employee</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
@@ -988,7 +988,7 @@ setting on the <code class="xref py py-paramref docutils literal notranslate"><s
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:01
+    Documentation last generated: 2023/8/18 18:59:02
 
     </div>
 </div>

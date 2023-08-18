@@ -226,31 +226,31 @@
 <section id="id1">
 <h1>0.8 更新日志<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
 <ul class="simple">
-<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .foreign`可能会产生问题，因为会进行注释的固有复制操作，这导致父表未在联接中呈现。</p></li>
-<li><p>非工作的 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>_schema.ForeignKey`上的”schema”参数已被废弃;引发了一个警告。在0.9中将被删除。</p></li>
+<li><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .foreign` 可能会产生问题，因为会进行注释的固有复制操作，这导致父表未在联接中呈现。</p></li>
+<li><p>非工作的 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 上的”schema”参数已被废弃;引发了一个警告。在0.9中将被删除。</p></li>
 <li><p>修复了PostgreSQL版本字符串无法解析的错误，该字符串具有在单词”PostgreSQL”或”EnterpriseDB”之前的前缀。感谢Scott Schaefer。</p></li>
-<li><p>现在， :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>.URL`的 :class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_engine.Engine`表述将使用星号隐藏密码。感谢Gunnlaugur Þór Briem。</p></li>
+<li><p>现在， <code class="xref py py-class docutils literal notranslate"><span class="pre">URL</span></code> 的 <a class="reference internal" href="../core/connections.html#sqlalchemy.engine.Engine" title="sqlalchemy.engine.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">Engine</span></code></a> 表述将使用星号隐藏密码。感谢Gunnlaugur Þór Briem。</p></li>
 <li><p>修复  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.exists" title="sqlalchemy.orm.Query.exists"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.exists()</span></code></a>  无WHERE条件时无法正常工作的bug。感谢Vladimir Magamedov。</p></li>
-<li><p>修复了使用`column_reflect`事件更改传入的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .key`时会防止正确反映主键约束，索引和外键约束的bug。</p></li>
-<li><p>增加了一个新标志：<cite>system=True</cite>，用于  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，将列标记为”系统”列，数据库会自动使其存在（例如PostgreSQL <cite>oid`或`xmin</cite>）。列将从`CREATE TABLE`语句中省略，但其他情况下可用于查询。此外， :class:<a href="#id8"><span class="problematic" id="id9">`</span></a>.CreateColumn`结构可以应用于自定义编译规则，该规则允许跳过列，即生成一个返回’’的规则。</p></li>
+<li><p>修复了使用`column_reflect`事件更改传入的  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> .key` 时会防止正确反映主键约束，索引和外键约束的bug。</p></li>
+<li><p>增加了一个新标志：<cite>system=True</cite>，用于  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，将列标记为”系统”列，数据库会自动使其存在（例如PostgreSQL ` oid`或`xmin`）。列将从`CREATE TABLE`语句中省略，但其他情况下可用于查询。此外， <code class="xref py py-class docutils literal notranslate"><span class="pre">CreateColumn</span></code> 结构可以应用于自定义编译规则，该规则允许跳过列，即生成一个返回’’的规则。</p></li>
 <li><p>从0.9中回退了一项更改，此更改也适用于0.8.子级映射器层次结构的迭代现在进行了排序，这有助于具有确定性渲染的多态查询生成的SELECT语句，而这又有助于缓存方案，在SQL字符串本身缓存时缓存该字符串本身。</p></li>
 <li><p>在ORM中使用的有序序列实现中的潜在问题已过去，该问题用于迭代器继承加载器层次结构；在Jython解释器下，此实现未排序，即使cPython和PyPy都保持排序。</p></li>
 <li><p>在版本控制示例中创建历史记录表，添加了“autoincrement=False”，因为在任何情况下，此表都不应具有autoinc，感谢Patrick Schmid。</p></li>
-<li><p>:meth:<a href="#id10"><span class="problematic" id="id11">`</span></a>.ColumnOperators.notin_`运算符现在正确地生成`IN`返回的否定表达式，即使针对空集合使用该运算符时。</p></li>
+<li><p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.notin_" title="sqlalchemy.sql.expression.ColumnOperators.notin_"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.notin_()</span></code></a> 运算符现在正确地生成`IN`返回的否定表达式，即使针对空集合使用该运算符时。</p></li>
 <li><p>改进了``examples/generic_associations``中的一些示例，包括``discriminator_on_association.py``使用单表继承执行”discriminator”的工作。还增加了一个真正的”通用外键”示例，其工作方式类似于其他流行的框架。它使用开放式整数来指向任何其他表，这样就可以省略传统的参照完整性。虽然我们不推荐此模式，但是信息想要变得自由。</p></li>
-<li><p>增加了一个方便的类装饰器：func:<cite>.as_declarative</cite>，它是 :func:<a href="#id12"><span class="problematic" id="id13">`</span></a>.declarative_base`的一个包装器，允许使用嵌套的类进行传递。</p></li>
+<li><p>增加了一个方便的类装饰器：func:<cite>.as_declarative</cite>，它是 <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code> 的一个包装器，允许使用嵌套的类进行传递。</p></li>
 <li><p>修复了ORM中事件注册的bug，其中”原始”或”propagate”标志在某些”未映射的基类”配置中可能会配置错误。</p></li>
-<li><p>改进了  <a class="reference internal" href="../orm/queryguide/columns.html#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a> <a href="#id14"><span class="problematic" id="id15">`</span></a>defer（）``的目的是减少DB/网络开销，而不一定是函数调用计数）；在所有情况下，函数调用开销现在小于从列加载数据的开销。此外，从N（结果中的总延迟值）到1（延迟列的总数）每次加载的“懒惰可调用”对象数量也有所减少。</p></li>
+<li><p>改进了  <a class="reference internal" href="../orm/queryguide/columns.html#sqlalchemy.orm.defer" title="sqlalchemy.orm.defer"><code class="xref py py-func docutils literal notranslate"><span class="pre">defer()</span></code></a> ` defer（）``的目的是减少DB/网络开销，而不一定是函数调用计数）；在所有情况下，函数调用开销现在小于从列加载数据的开销。此外，从N（结果中的总延迟值）到1（延迟列的总数）每次加载的“懒惰可调用”对象数量也有所减少。</p></li>
 <li><p>为PostgreSQL 9.2范围类型添加了支持。目前，不提供类型转换，因此当前可以直接使用字符串或psycopg2 2.5范围扩展类型。修补程序由Chris Withers提供。</p></li>
 <li><p>出现了一个HSTORE类型的错误，其中包含了反斜杠引号的键/值将无法在使用HSTORE数据的“非本机”（即非psycopg2）方法转换时正确转义。感谢Ryan Kelly。</p></li>
-<li><p>修复了多种错误，否则会导致在：meth:<a href="#id16"><span class="problematic" id="id17">`</span></a>_query.Query.order_by`中发送复合属性产生括号表达式，这是某些数据库不接受的。</p></li>
+<li><p>修复了多种错误，否则会导致在：meth:<a href="#id2"><span class="problematic" id="id3">`</span></a>_query.Query.order_by`中发送复合属性产生括号表达式，这是某些数据库不接受的。</p></li>
 <li><p>修复  <code class="xref py py-meth docutils literal notranslate"><span class="pre">MetaData.reflect()</span></code>  在远程模式和本地模式均具有相同名称的表时可能会产生错误结果的bug。</p></li>
-<li><p>修复了  <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.schema.Index()</span></code></a>  中使用的`mysql_length`参数，使其成为列名称/长度的字典，供复合索引使用。感谢Russell Stuart。</p></li>
-<li><p>在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.relationship()</span></code>  中添加了一个新方法  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.select_entity_from()</span></code>  ，该方法将在0.9中替换  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.select_from" title="sqlalchemy.orm.Query.select_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.select_from()</span></code></a>  的部分功能。在0.8中，这两种方法执行相同的功能，因此可以根据需要将代码迁移到使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.select_entity_from()</span></code>  方法。详见0.9迁移指南。</p></li>
-<li><p>修复Bug：多对多关系使用`uselist = False`将无法删除关联行并引发错误，如果将标量属性设置为None。这是由为：ticket:<a href="#id18"><span class="problematic" id="id19">`</span></a>2229`更改引起的回归。</p></li>
+<li><p>修复了  <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.Index" title="sqlalchemy.schema.Index"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.schema.Index()</span></code></a>  中使用的` mysql_length`参数，使其成为列名称/长度的字典，供复合索引使用。感谢Russell Stuart。</p></li>
+<li><p>在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">sqlalchemy.orm.relationship()</span></code>  中添加了一个新方法  :meth:` _query.Query.select_entity_from`  ，该方法将在0.9中替换  <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.select_from" title="sqlalchemy.orm.Query.select_from"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.select_from()</span></code></a>  的部分功能。在0.8中，这两种方法执行相同的功能，因此可以根据需要将代码迁移到使用  :meth:` _query.Query.select_entity_from`  方法。详见0.9迁移指南。</p></li>
+<li><p>修复Bug：多对多关系使用`uselist = False`将无法删除关联行并引发错误，如果将标量属性设置为None。这是由为：ticket:<a href="#id4"><span class="problematic" id="id5">`</span></a>2229`更改引起的回归。</p></li>
 <li><p>ORM映射对象中对于强Session引用的创建已做出改进;当该对象处于瞬态状态或进入分离状态时，将不再创建内部引用循环——只有当对象附加到Session并且在分离时才创建强引用。即使不建议使用这种方法，一个对象仍然可以具有 <cite>¨del（）</cite> 方法，因为关系与backrefs一起产生循环。映射了一个带有 <cite>¨del（）方法的类</cite>，增加了一个警告。</p></li>
 <li><p>SQLAlchemy延迟规则的错误已修复，原先用于防止在自定义运算符上实现`__getitem __（）`方法的对象调用`list（）`时出现无限且扩大内存的循环，但这实际上会使列元素报告它们是可迭代类型，然后尝试循环时抛出错误。这里无法有太多选择，所以我们坚持最佳实践。在自定义运算符上实现`__getitem __（）`方面要特别小心！</p></li>
-<li><p>定义`id`属性的便利方法，该方法将查询转换为一个形如 <a href="#id20"><span class="problematic" id="id21">`</span></a>EXISTS（SELECT 1 FROM … where …)`的子查询。</p></li>
+<li><p>定义`id`属性的便利方法，该方法将查询转换为一个形如 <a href="#id6"><span class="problematic" id="id7">`</span></a>EXISTS（SELECT 1 FROM … where …)`的子查询。</p></li>
 <li><p>修复bug：由于在多表更新时，辅助表是具有其自己的绑定参数的SELECT，因此绑定参数的位置与语句本身相比会颠倒，而使用多表更新时出现`mysql+gaerdbms`方言的一些问题。</p></li>
 <li><p>提供额外的条件用于将”disconnect”与psycopg2/libpq检测到的字符串消息进行检查，以检测已知异常类型层次结构中的所有不同”断开连接”消息。特别是，在至少三种不同的异常类型中，已经发现了“意外关闭连接”的消息。感谢Eli Collins。</p></li>
 <li><p>由于MySQL配置“不锁定外键”，将不再在MySQL方言上渲染“deferrable”关键字，原因是很长一段时间以来，可撤销的外键与不可撤销的外键之间的差异非常大，但是一些环境仅在MySQL上禁用FK，因此我们将在此处不再具有意见。</p></li>
@@ -282,7 +282,7 @@
 <p>各类更新：</p>
 <p>现在，SQL表达式如“select()”和“alias()”将与映射实体如“aliased”构造分开来处理。</p>
 <p>增加了一些关于ORM/扩展的新内部事件函数，用来检索ORM或ORM扩展中关联的所有Python描述符。</p>
-<p>现在“<a href="#id44"><span class="problematic" id="id45">ColumnOperators.in_</span></a>”运算符把“None”值转换为“null”。</p>
+<p>现在“<a href="#id30"><span class="problematic" id="id31">ColumnOperators.in_</span></a>”运算符把“None”值转换为“null”。</p>
 <p>添加了一些新的列修饰符“mssql_include”和“mssql_clustered”，来指定用于呈现“INCLUDE”和“CLUSTERED”关键字的SQL语句。</p>
 <p>现在只有当运算符为“==”或“! =”时，“__nonzero__”方法返回一个值- 其他情况抛出“TypeError”。</p>
 <p>现在表别名和内部路径可以精准地处理子类名称相同的关系。</p>
@@ -306,26 +306,26 @@
 </ul>
 <p>### 增强</p>
 <ul class="simple">
-<li><p><a href="#id22"><span class="problematic" id="id23">`</span></a>GenericFunction`和`func.*`可以允许用户定义的`GenericFunction`子类按照类名自动通过`func.*`命名空间提供，可选择使用包名，以及具有与在`func.* <a href="#id24"><span class="problematic" id="id25">`</span></a>中标识的名称不同的呈现名称的功能。</p></li>
+<li><p><a href="#id8"><span class="problematic" id="id9">`</span></a>GenericFunction`和`func.*`可以允许用户定义的`GenericFunction`子类按照类名自动通过`func.*`命名空间提供，可选择使用包名，以及具有与在`func.* <a href="#id10"><span class="problematic" id="id11">`</span></a>中标识的名称不同的呈现名称的功能。</p></li>
 <li><p><cite>cast（）`和`extract（）`构造现在也将通过`func.*`访问器生成，由于用户通常尝试从`func.*`访问这些名称，因此它们可能会做出预期，即使返回对象不是`FunctionElement</cite>。</p></li>
 <li><p><cite>expression.sql</cite> 中的大多数类现在不再在前面加下划线，即`Label`，<cite>SelectBase</cite>，<cite>Generative</cite>，<cite>CompareMixin</cite>。<cite>_BindParamClause`也重新命名为 `BindParameter</cite>。对于这些类的旧下划线名称将在将来可预见的情况下保留为同义词。</p></li>
 <li><p>Inspector对象现在可以使用新的检查服务`inspect()`获得，作为 …</p></li>
-<li><p><a href="#id26"><span class="problematic" id="id27">`</span></a>column_reflect`事件现在将`Inspector`对象作为第一个参数接受，其前面是“table”。使用0.7版本这种非常新的事件的代码将需要修改以添加“验证者”对象作为第一个参数。</p></li>
+<li><p><a href="#id12"><span class="problematic" id="id13">`</span></a>column_reflect`事件现在将`Inspector`对象作为第一个参数接受，其前面是“table”。使用0.7版本这种非常新的事件的代码将需要修改以添加“验证者”对象作为第一个参数。</p></li>
 <li><p>现在，默认情况下结果集中的列定位行为区分大小写。多年来，SQLAlchemy一般会在这些值上运行不区分大小写的转换，可能是为了缓解Dialect（例如Oracle和Firebird）的早期大小写敏感性问题。这些问题已经在更现代的版本中得到更有效的解决，因此调用标识符上的`lower（）`的性能开销被删除。不区分大小写的比较可以通过在`create_engine()`上设置“<cite>case_insensitive = False</cite>”来重新启用。</p></li>
 <li><p>现在，将应用添加到`select`语句的列表达式，使用具有或不带其他修改构造的标签，不再将其”target”到底层`Column`；这影响依赖于 Column 定位以便检索结果的ORM操作。也就是说，查询`query（User.id，User.id.label（’foo’）`现在将单独跟踪每个`User.id`表达式的值，而不是将它们混合在一起。不希望受到影响任何用户，但是使用`select()`与`query.from_statement()`相结合的用法，并尝试以任意`.label()`名称的select()列对象加载完整组合ORM实体可能不能如预期地运行，因为这些对象不再定位到那个实体映射的`Column`对象。</p></li>
-<li><p><a href="#id28"><span class="problematic" id="id29">`</span></a>insert.values()`或`update.values()`中存在键，但不在目标表中的“未使用的列名”警告现在是异常。</p></li>
-<li><p><a href="#id30"><span class="problematic" id="id31">`</span></a>ForeignKey`和`ForeignKeyConstraint`添加了“MATCH”子句，由Ryan Kelly提供。</p></li>
+<li><p><a href="#id14"><span class="problematic" id="id15">`</span></a>insert.values()`或`update.values()`中存在键，但不在目标表中的“未使用的列名”警告现在是异常。</p></li>
+<li><p><a href="#id16"><span class="problematic" id="id17">`</span></a>ForeignKey`和`ForeignKeyConstraint`添加了“MATCH”子句，由Ryan Kelly提供。</p></li>
 <li><p>添加了从表的别名到DELETE和UPDATE的支持，假定在查询中的其他位置与其相关，由Ryan Kelly提供。</p></li>
 <li><p>现在在`select()`上提供`correlate_except()`方法，自动排除除传递的所有可选择之外的所有可选择。</p></li>
-<li><p><cite>prefix_with()`方法现在在每个`select（）</cite>，<cite>insert（）</cite>，<cite>update（）</cite>，<a href="#id32"><span class="problematic" id="id33">`</span></a>delete（）`上都可用，使用相同的API接受多个前缀调用，以及“方言名称”，以便将前缀限制为一种语言方言。</p></li>
-<li><p>将`reduce_columns（）`方法添加到`select（）`构造中，内联替换列使用`util.reduce_columns`实用程序函数以删除等效列。<a href="#id34"><span class="problematic" id="id35">`</span></a>reduce_columns()`还添加了“with_only_synonyms”以将减少仅限于拥有相同名称的那些列。已删除已弃用的`fold_equivalents()`功能。</p></li>
-<li><p>重新设计了`startswith()`，<a href="#id36"><span class="problematic" id="id37">`</span></a>endswith()`和`contains()`操作符，以更好地支持否定（NOT LIKE）并在编译时装配它们，以便可以更改它们的呈现SQL，例如Firebird的情况下开头叫STARTING WITH。</p></li>
+<li><p><cite>prefix_with()`方法现在在每个`select（）</cite>，<cite>insert（）</cite>，<cite>update（）</cite>，<a href="#id18"><span class="problematic" id="id19">`</span></a>delete（）`上都可用，使用相同的API接受多个前缀调用，以及“方言名称”，以便将前缀限制为一种语言方言。</p></li>
+<li><p>将`reduce_columns（）`方法添加到`select（）`构造中，内联替换列使用`util.reduce_columns`实用程序函数以删除等效列。<a href="#id20"><span class="problematic" id="id21">`</span></a>reduce_columns()`还添加了“with_only_synonyms”以将减少仅限于拥有相同名称的那些列。已删除已弃用的`fold_equivalents()`功能。</p></li>
+<li><p>重新设计了`startswith()`，<a href="#id22"><span class="problematic" id="id23">`</span></a>endswith()`和`contains()`操作符，以更好地支持否定（NOT LIKE）并在编译时装配它们，以便可以更改它们的呈现SQL，例如Firebird的情况下开头叫STARTING WITH。</p></li>
 <li><p>添加了一个系统的渲染CREATE TABLE的钩子，通过针对新的 schema.CreateColumn构造一个&#64;compiles函数，可以为每个列提供单独的渲染。</p></li>
 <li><p>“标量”选择现在具有WHERE方法，以帮助进行创造性的构建。此外，关于如何“关联”列的SS的略微调整;新方法不再适用于正在选择的基础表列。这改善了一些相当偏门的情况，并且似乎存在的逻辑没有任何目的。</p></li>
 <li><p>修复了将列“default”参数解释为可调用参数的问题，以便不要将ExecutionContext传递给关键字参数。</p></li>
 <li><p>当它们直接引用表绑定的列对象（即不仅仅是字符串列名称），并且仅引用一个表时，所有UniqueConstraint、ForeignKeyConstraint、CheckConstraint和PrimaryKeyConstraint将自动附加到它们的父表上。在0.8之前，此行为适用于UniqueConstraint和PrimaryKeyConstraint，但不适用于ForeignKeyConstraint和CheckConstraint。</p></li>
 <li><p>TypeDecorator现在包含by默认在“impl”类型中工作的通用repr()。对于指定自定义`__init__()`方法的TypeDecorator类，这是一种行为上的变化;如果这些类型需要`__repr__()`提供忠实的构造函数表示形式，则这些类型将需要重新定义`__repr__()`</p></li>
-<li><p><a href="#id38"><span class="problematic" id="id39">`</span></a>column.label(None)`现在产生匿名标签，而不是返回列对象本身，与`label(column, None)`的行为一致。</p></li>
+<li><p><a href="#id24"><span class="problematic" id="id25">`</span></a>column.label(None)`现在产生匿名标签，而不是返回列对象本身，与`label(column, None)`的行为一致。</p></li>
 <li><p>显式错误会在第一次使用被构造用于引用多个远程表的`ForeignKeyConstraint()`时引发。</p></li>
 <li><p>MS Access方言已移至Bitbucket上的自己的项目中，利用新的SQLAlchemy方言符合性套件。然而，该方言仍处于非常粗略的状态，可能尚未准备好进行一般使用。 <a class="reference external" href="https://bitbucket.org/zzzeek/sqlalchemy-access">https://bitbucket.org/zzzeek/sqlalchemy-access</a></p></li>
 <li><p>多年未运行的MaxDB方言移至挂起的Bitbucket项目 <a class="reference external" href="https://bitbucket.org/zzzeek/sqlalchemy">https://bitbucket.org/zzzeek/sqlalchemy</a>-maxdb中。</p></li>
@@ -334,7 +334,7 @@
 <li><p>已删除将`==`用于将列比较为标量`SELECT`的旧的不可用行为-of用SQL Server方言。这是隐含的行为，在其他情况下会失败，因此被删除。依赖于此的代码需要修改为明确使用`column.in_（select）`。</p></li>
 <li><p>更新了mxodbc驱动程序的支持; mxodbc 3.2.1建议进行全面兼容性。</p></li>
 <li><p>postgresql.ARRAY带有可选的“尺寸”参数，将代表特定数量的数组，将呈现为DDL中的ARRAY[][]…，还提高了绑定/结果处理的性能。</p></li>
-<li><p><a href="#id40"><span class="problematic" id="id41">`</span></a>postgresql.ARRAY`现在支持索引和切片。所有类型为ARRAY的SQL表达式都可以使用Python []运算符；可以传递整数或简单片段。还可以在UPDATE语句的SET子句中使用这些片段，在Update.values()中将它们传入。请参阅文档以获取示例。</p></li>
+<li><p><a href="#id26"><span class="problematic" id="id27">`</span></a>postgresql.ARRAY`现在支持索引和切片。所有类型为ARRAY的SQL表达式都可以使用Python []运算符；可以传递整数或简单片段。还可以在UPDATE语句的SET子句中使用这些片段，在Update.values()中将它们传入。请参阅文档以获取示例。</p></li>
 <li><p>添加了新的“‘array literal’”构造postgresql.array()。基本上，它是一个将呈现为ARRAY [1,2,3]的“元组”。</p></li>
 <li><p>添加了支持PostgreSQL ONLY关键字的新功能，该关键字可以对应于SELECT，UPDATE或DELETE语句中的表。该短语使用with_hint（）建立。由Ryan Kelly提供</p></li>
 <li><p>PostgreSQL方言的”ischema_names”字典是“非官方”自定义的。也就是说，可以将新类型添加到此字典中，例如PostGIS类型，该PG类型反射代码应开始处理具有可变数目参数的简单类型。这里的功能是“非官方”的，因为：</p></li>
@@ -353,7 +353,7 @@
 <li><p>现在从具有quote = True的Column传递引用信息，当生成一个与绑定参数同名的构建参数时，就像在生成的INSERT和UPDATE语句中一样，这样可以完全支持未知的保留名称。</p></li>
 <li><p>可以通过将字符串DBAPI类型名称的列表发送到`exclude_setinputsizes`方言参数来自定义将排除setinputsizes（）集的类型的列。先前，此列表是固定的。列表现在也默认为STRING，UNICODE，从中删除CLOB，NCLOB。</p></li>
 <li><p>Oracle构造中的CreateIndex将现在使索引的名称模式限定为父表的名称。先前，该名称被省略，这显然会在默认模式中创建索引，而不是表中的模式。</p></li>
-<li><p>将`ColumnOperators.notin_`，<cite>ColumnOperators.notlike</cite>，<a href="#id42"><span class="problematic" id="id43">`</span></a>ColumnOperators.notilike`添加到`ColumnOperators`中。</p></li>
+<li><p>将`ColumnOperators.notin_`，<cite>ColumnOperators.notlike</cite>，<a href="#id28"><span class="problematic" id="id29">`</span></a>ColumnOperators.notilike`添加到`ColumnOperators`中。</p></li>
 </ul>
 </section>
 
@@ -375,7 +375,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:39
+    Documentation last generated: 2023/8/18 18:58:37
 
     </div>
 </div>

@@ -225,7 +225,7 @@
         
 <section id="id1">
 <h1>1.3 更新日志<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
-<p>然而，执行 :class:<a href="#id2"><span class="problematic" id="id3">`</span></a>.Compiled`对象不应该在其状态中引起任何更改，特别是考虑到一旦完全构建就可以重复使用和线程安全性。</p>
+<p>然而，执行 <a class="reference internal" href="../core/internals.html#sqlalchemy.engine.Compiled" title="sqlalchemy.engine.Compiled"><code class="xref py py-class docutils literal notranslate"><span class="pre">Compiled</span></code></a> 对象不应该在其状态中引起任何更改，特别是考虑到一旦完全构建就可以重复使用和线程安全性。</p>
 <ul class="simple">
 <li><p>Fixed a bug where <strong>and_</strong> queries would incorrectly eliminate <strong>True</strong> components of the condition in some cases</p></li>
 <li><p>Fixed a bug when querying with <strong>or_</strong> on a class that’s a join of two entities which could cause an incorrect <strong>DISTINCT</strong> to be rendered</p></li>
@@ -285,7 +285,7 @@
 <li><p>Fix a bug where the xmltodict package receives Unicode data and does not convert to a string, causing compatibility issues with the ORM when using <strong>json.loads</strong></p></li>
 <li><p>Bug fixed where SQLite types (NUMERIC, INTEGER, REAL, and TEXT) do not have a   <code class="xref py py-func docutils literal notranslate"><span class="pre">create()</span></code>  method</p></li>
 <li><p>Fix a bug where the ORM lazy load of related rows would cause the query to go into an infinite loop</p></li>
-<li><p>Fix a bug where the  <code class="xref py py-meth docutils literal notranslate"><span class="pre">default()</span></code>  feature of the   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  object is used, the <strong>server_default</strong> parameter would not be able to access the <strong>metadata</strong> argument due to the <strong>Column</strong> object being at initialization time in <strong>metadata</strong></p></li>
+<li><p>Fix a bug where the  <code class="xref py py-meth docutils literal notranslate"><span class="pre">default()</span></code>  feature of the   :class:` .Column`  object is used, the <strong>server_default</strong> parameter would not be able to access the <strong>metadata</strong> argument due to the <strong>Column</strong> object being at initialization time in <strong>metadata</strong></p></li>
 <li><p>Fix an error in the <strong>sqlalchemy.dialects.mysql.types.JSON</strong> implementation where <strong>BinaryString</strong> keys to JSON were not being interpreted.</p></li>
 <li><p>Starting a transaction on postgresql, for example, could result in a warning if the <strong>XLOG</strong> of the PostgreSQL server was too large</p></li>
 <li><p>The SQLAlchemy ORM will now silently omit any non-primary-items from insert and update when using the bulk operations if they are not defined to be included in the table</p></li>
@@ -344,7 +344,7 @@
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:40
+    Documentation last generated: 2023/8/18 18:58:37
 
     </div>
 </div>

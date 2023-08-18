@@ -253,7 +253,7 @@
         
 <section id="relationship-patterns">
 <span id="id1"></span><h1>基本关系模式<a class="headerlink" href="#relationship-patterns" title="Permalink to this heading">¶</a></h1>
-<p>这里简要介绍了基本的关系模式，并使用基于   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注解类型的   <a class="reference internal" href="declarative_styles.html#orm-explicit-declarative-base"><span class="std std-ref">Declarative</span></a>  样式映射来说明。</p>
+<p>这里简要介绍了基本的关系模式，并使用基于   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注解类型的   :ref:` Declarative &lt;orm_explicit_declarative_base&gt;`  样式映射来说明。</p>
 <p>以下是每个部分的配置：</p>
 <p>    from __future__ import annotations
     from typing import List</p>
@@ -267,7 +267,7 @@
         pass</p>
 <section id="id2">
 <h2>声明式与命令式形式<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>随着 SQLAlchemy 的不断发展，不同的 ORM 配置样式不断涌现。对于本节和其他使用注释的示例，应使用所需的类或字符串类名称作为传递给   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的第一个参数。下面的示例说明了本文档中使用的表格的完全声明性示例，该示例使用了  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  注释，并从   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注释派生目标类和集合类型，这是 SQLAlchemy 声明性映射的最新形式。</p>
+<p>随着 SQLAlchemy 的不断发展，不同的 ORM 配置样式不断涌现。对于本节和其他使用注释的示例，应使用所需的类或字符串类名称作为传递给   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的第一个参数。下面的示例说明了本文档中使用的表格的完全声明性示例，该示例使用了  :pep:` 484`  注释，并从   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注释派生目标类和集合类型，这是 SQLAlchemy 声明性映射的最新形式。</p>
 <p>    class Parent(Base):
         __tablename__ = “parent_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
@@ -303,7 +303,7 @@
         __tablename__ = “parent_table”</p>
 <p>        id = mapped_column(Integer, primary_key=True)
         children = relationship(“Child”, collection_class=set, …)</p>
-<p>有关   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的集合配置的详细信息请参见   <a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a> 。</p>
+<p>有关   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的集合配置的详细信息请参见   :ref:` custom_collections` 。</p>
 <p>在需要时注意注释和未注释/命令式样式之间的其他差异。</p>
 </section>
 <section id="relationship-patterns-o2m">
@@ -317,7 +317,7 @@
         __tablename__ = “child_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
         parent_id: Mapped[int] = mapped_column(ForeignKey(“parent_table.id”))</p>
-<p>为了在一对多中建立双向关系，其中“reverse”侧是多对一，可以指定一个额外的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，并使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  参数将两个联系起来，对于每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，都是使用用于该另一个的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  作为值属性名称。</p>
+<p>为了在一对多中建立双向关系，其中“reverse”侧是多对一，可以指定一个额外的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，并使用  :paramref:` _orm.relationship.back_populates`  参数将两个联系起来，对于每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，都是使用用于该另一个的  :paramref:` _orm.relationship.back_populates`  作为值属性名称。</p>
 <p>    class Parent(Base):
         __tablename__ = “parent_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
@@ -330,13 +330,13 @@
 <p>“Child”将获得一个多对一语义的 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 属性。</p>
 <section id="relationship-patterns-o2m-collection">
 <span id="id4"></span><h3>在一对多中使用集合、列表或其他集合类型<a class="headerlink" href="#relationship-patterns-o2m-collection" title="Permalink to this heading">¶</a></h3>
-<p>对于注释的 Declarative 映射，使用   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  中使用的集合类型派生   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的类型。可以使用``Mapped[Set[“Child”]]`` 来使用 <code class="docutils literal notranslate"><span class="pre">set</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">list</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合的集合类型。</p>
+<p>对于注释的 Declarative 映射，使用   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  中使用的集合类型派生   :func:` _orm.relationship`  的类型。可以使用``Mapped[Set[“Child”]]`` 来使用 <code class="docutils literal notranslate"><span class="pre">set</span></code> 而不是 <code class="docutils literal notranslate"><span class="pre">list</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合的集合类型。</p>
 <p>当使用不包括注释的形式，包括命令式映射时，可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数传递要用作集合的 Python 类。</p>
-<p>      <a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a>  - 包含了关于集合配置的进一步细节，包括一些将   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  映射到字典的技巧。</p>
+<p>      <a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a>  - 包含了关于集合配置的进一步细节，包括一些将   :func:` _orm.relationship`  映射到字典的技巧。</p>
 </section>
 <section id="id5">
 <h3>为一对多配置删除行为<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
-<p>通常情况下，当删除所属的“父项”时，所有 “Child” 对象都应被删除。为了配置此行为，将使用在   <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>  中描述的“删除”级联选项。还有一个额外的选项，即当将“Child”对象与其父对象断开连接时，可以删除“Child”对象本身。此行为在   <a class="reference internal" href="cascades.html#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a>  中描述。</p>
+<p>通常情况下，当删除所属的“父项”时，所有 “Child” 对象都应被删除。为了配置此行为，将使用在   <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a>  中描述的“删除”级联选项。还有一个额外的选项，即当将“Child”对象与其父对象断开连接时，可以删除“Child”对象本身。此行为在   :ref:` cascade_delete_orphan`  中描述。</p>
 <p>      <a class="reference internal" href="cascades.html#cascade-delete"><span class="std std-ref">delete</span></a></p>
 <p>      <a class="reference internal" href="cascades.html#passive-deletes"><span class="std std-ref">在 ORM 关系中使用 FOREIGN KEY ON DELETE 级联</span></a></p>
 <p>      <a class="reference internal" href="cascades.html#cascade-delete-orphan"><span class="std std-ref">delete-orphan</span></a></p>
@@ -354,7 +354,7 @@
         __tablename__ = “child_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)</p>
 <p>上面的示例显示了一个假定非空行为的多对一关系；下一节，  <a class="reference internal" href="#relationship-patterns-nullable-m2o"><span class="std std-ref">可为空的多对一</span></a>  展示了可为空版本。</p>
-<p>通过添加第二个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  并使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  参数在两个方向上连接两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，即可实现双向行为。即对于每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  都使用另一个的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  作为属性名的值。</p>
+<p>通过添加第二个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  并使用  :paramref:` _orm.relationship.back_populates`  参数在两个方向上连接两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，即可实现双向行为。即对于每个   :func:` _orm.relationship`  都使用另一个的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  作为属性名的值。</p>
 <p>    class Parent(Base):
         __tablename__ = “parent_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
@@ -377,8 +377,8 @@
         __tablename__ = “child_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
         parents: Mapped[List[“Parent”]] = relationship(back_populates=”child”)</p>
-<p>在上面的示例中，<code class="docutils literal notranslate"><span class="pre">Parent.child_id</span></code> 的列将被创建为允许 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 值的 DDL。使用显示类型声明的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  时，指定 <code class="docutils literal notranslate"><span class="pre">child_id:</span> <span class="pre">Mapped[Optional[int]]</span></code> 等效于将  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.nullable" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.nullable</span></code></a>  设置为 <code class="docutils literal notranslate"><span class="pre">True</span></code> on the   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，而``child_id: Mapped[int]`` 等效于将其设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。有关此本文的详细信息，请参见   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-nullability"><span class="std std-ref">mapped_column() 从 Mapped 注释中派生类型和可空性</span></a> 。</p>
-<p>  如果使用 Python 3.10 或更高版本，则使用  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0604/"><strong>PEP 604</strong></a>  语法使用``| None`` 指示可选类型更为方便，结合  <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0563/"><strong>PEP 563</strong></a>  延迟注释评估使得不需要使用字符串引用类型，如下所示:</p>
+<p>在上面的示例中，<code class="docutils literal notranslate"><span class="pre">Parent.child_id</span></code> 的列将被创建为允许 <code class="docutils literal notranslate"><span class="pre">NULL</span></code> 值的 DDL。使用显示类型声明的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  时，指定 ` <cite>child_id: Mapped[Optional[int]]`</cite> 等效于将  <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.nullable" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.nullable</span></code></a>  设置为 ` <cite>True`</cite> on the   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ，而` <cite>child_id: Mapped[int]`</cite> 等效于将其设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code>。有关此本文的详细信息，请参见   <a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-nullability"><span class="std std-ref">mapped_column() 从 Mapped 注释中派生类型和可空性</span></a> 。</p>
+<p>  如果使用 Python 3.10 或更高版本，则使用  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0604/"><strong>PEP 604</strong></a>  语法使用` <cite>| None`</cite> 指示可选类型更为方便，结合  <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0563/"><strong>PEP 563</strong></a>  延迟注释评估使得不需要使用字符串引用类型，如下所示:</p>
 <p>     from __future__ import annotations</p>
 <p>     class Parent(Base):
          __tablename__ = “parent_table”</p>
@@ -394,7 +394,7 @@
 <section id="relationships-one-to-one">
 <span id="id8"></span><h2>一对一<a class="headerlink" href="#relationships-one-to-one" title="Permalink to this heading">¶</a></h2>
 <p>一对一本质上是一对多   <a class="reference internal" href="#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a>  关系从外键的角度来看，但表明在任何时候只有一个行引用特定的父行。</p>
-<p>当使用注释映射和  <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注释，这将暗示 ORM 不应在任何一侧上使用集合。下面的示例说明了一种新的类 <code class="docutils literal notranslate"><span class="pre">Association</span></code>，它映射到名为``association`` 的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ；这个表现在现在包括了一个名叫``extra_data`` 的额外的列，它是一个字符串值，存储在每个``Parent`` 和 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 之间的关联中。通过将表映射到显式类，来自 <code class="docutils literal notranslate"><span class="pre">Parent`</span></code> 到 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 的 rudimental 访问将明确地使用 <code class="docutils literal notranslate"><span class="pre">Association</span></code> 方式:</p>
+<p>当使用注释映射和  <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  注释，这将暗示 ORM 不应在任何一侧上使用集合。下面的示例说明了一种新的类 ` <cite>Association`</cite>，它映射到名为``association`` 的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ；这个表现在现在包括了一个名叫` <cite>extra_data`</cite> 的额外的列，它是一个字符串值，存储在每个``Parent`` 和 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 之间的关联中。通过将表映射到显式类，来自 <code class="docutils literal notranslate"><span class="pre">Parent`</span></code> 到 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 的 rudimental 访问将明确地使用 <code class="docutils literal notranslate"><span class="pre">Association</span></code> 方式:</p>
 <p>    from typing import Optional</p>
 <p>    from sqlalchemy import ForeignKey
     from sqlalchemy import Integer
@@ -419,7 +419,7 @@
 <p>    class Child(Base):
         __tablename__ = “right_table”
         id: Mapped[int] = mapped_column(primary_key=True)</p>
-<p>为了示例双向版本，我们本文中添加了两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，并使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  将其与现有定义链接:</p>
+<p>为了示例双向版本，我们本文中添加了两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，并使用  :paramref:` _orm.relationship.back_populates`  将其与现有定义链接:</p>
 <p>    from typing import Optional</p>
 <p>    from sqlalchemy import ForeignKey
     from sqlalchemy import Integer
@@ -459,7 +459,7 @@
 </section>
 <section id="relationships-many-to-many">
 <span id="id9"></span><h2>多对多<a class="headerlink" href="#relationships-many-to-many" title="Permalink to this heading">¶</a></h2>
-<p>多对多在两个类之间添加一个关联表。协会表通常是一个核心   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象或其他的 Core Selectable，例如   <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Join" title="sqlalchemy.sql.expression.Join"><code class="xref py py-class docutils literal notranslate"><span class="pre">Join</span></code></a>  对象，并通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数指示，通常，   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  使用与声明基类关联的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象，以便   <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a>  指令可以定位要链接的远程表：</p>
+<p>多对多在两个类之间添加一个关联表。协会表通常是一个核心   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象或其他的 Core Selectable，例如   :class:` _sql.Join`  对象，并通过  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数指示，通常，   :class:` _schema.Table`  使用与声明基类关联的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  对象，以便   :class:` _schema.ForeignKey`  指令可以定位要链接的远程表：</p>
 <p>    from __future__ import annotations</p>
 <p>    from sqlalchemy import Column
     from sqlalchemy import Table
@@ -486,7 +486,7 @@
 <p>    class Child(Base):
         __tablename__ = “right_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)</p>
-<p>为了建立双向关系，两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  都包含集合。使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code>  ，并为每个微博具体指定一个公共关联表。</p>
+<p>为了建立双向关系，两个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  都包含集合。使用  :paramref:` _orm.relationship.back_populates`  ，并为每个微博具体指定一个公共关联表。</p>
 <p>    from __future__ import annotations</p>
 <p>    from sqlalchemy import Column
     from sqlalchemy import Table
@@ -516,33 +516,33 @@
         parents: Mapped[List[Parent]] = relationship(
             secondary=association_table, back_populates=”children”
         )</p>
-<p>在 Many to Many 关系的配置中，集合的配置与   <a class="reference internal" href="#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a>  完全相同，如在   <a class="reference internal" href="#relationship-patterns-o2m-collection"><span class="std std-ref">在一对多中使用集合、列表或其他集合类型</span></a>  中所述。对于使用   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的注释映射，可以通过在   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  通用类中使用的集合类型指示集合，例如 <code class="docutils literal notranslate"><span class="pre">set</span></code>，来指示集合。:</p>
+<p>在 Many to Many 关系的配置中，集合的配置与   <a class="reference internal" href="#relationship-patterns-o2m"><span class="std std-ref">一对多</span></a>  完全相同，如在   :ref:` relationship_patterns_o2m_collection`  中所述。对于使用   <a class="reference internal" href="internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  的注释映射，可以通过在   :class:` _orm.Mapped`  通用类中使用的集合类型指示集合，例如 <code class="docutils literal notranslate"><span class="pre">set</span></code>，来指示集合。:</p>
 <p>    class Parent(Base):
         __tablename__ = “left_table”</p>
 <p>        id: Mapped[int] = mapped_column(primary_key=True)
         children: Mapped[Set[“Child”]] = relationship(secondary=association_table)</p>
 <p>使用不包括注释的形式，包括命令式映射时，与 one-to-many 相同，可以使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  参数传递用作集合的 Python 类。</p>
-<p>      <a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a>  - 包含了关于集合配置的进一步细节，包括一些将   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  映射到字典的技巧。</p>
+<p>      <a class="reference internal" href="collection_api.html#custom-collections"><span class="std std-ref">定制集合访问</span></a>  - 包含了关于集合配置的进一步细节，包括一些将   :func:` _orm.relationship`  映射到字典的技巧。</p>
 <section id="many-to-many-table">
 <span id="relationships-many-to-many-deletion"></span><h3>从 Many to Many Table 中删除行<a class="headerlink" href="#many-to-many-table" title="Permalink to this heading">¶</a></h3>
-<p>对于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数用于   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  所特有的行为，是   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  自动受到 INSERT 和 DELETE 语句的影响，因为将对象添加或删除到集合中。无需手动从该表中删除。删除集合中的记录将导致在 flush 时删除行：</p>
+<p>对于  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数用于   :func:` _orm.relationship`  所特有的行为，是   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  自动受到 INSERT 和 DELETE 语句的影响，因为将对象添加或删除到集合中。无需手动从该表中删除。删除集合中的记录将导致在 flush 时删除行：</p>
 <p>    # 行将自动从“secondary”表中删除
     myparent.children.remove(somechild)</p>
-<p>一个经常出现的问题是在直接传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  的``Child`` 对象时，如何删除“secondary”表中的行：</p>
+<p>一个经常出现的问题是在直接传递给  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code>  的` <cite>Child`</cite> 对象时，如何删除“secondary”表中的行：</p>
 <p>    session.delete(somechild)</p>
 <p>这里有几种可能性：</p>
 <ul class="simple">
-<li><p>如果从 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 到 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 存在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，但不存在将特定``Child`` 链接到每个 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 的反向关系，则 SQLAlchemy 将不会注意到在删除此特定``Child`` 对象时，它需要维护将其与``Parent <code class="docutils literal notranslate"><span class="pre">相关联的“secondary”表。不会删除“secondary”表。*</span> <span class="pre">如果存在将特定</span> <span class="pre">``Child</span></code> 链接到每个``Parent`` 的关系，假设它称为``Child.parents``，SQLAlchemy 默认情况下会加载 <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code> 集合以定位所有 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象，并从链接此关系的“secondary”表中删除每行。请注意，此关系不需要是双向的；SQLAlchemy 仅在严格查看与要删除的``Child`` 对象相关联的每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上。* 在此处使用更高效的方法是使用 ON DELETE CASCADE 指令与数据库使用的外键。假设数据库支持此功能，则可以让数据库本身在引用“child”被删除时自动删除“secondary”表中的行。使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code>  在这种情况下指示 SQLAlchemy 放弃主动加载``Child.parents`` 集合。有关此功能的详细信息，请参见   <a class="reference internal" href="cascades.html#passive-deletes"><span class="std std-ref">在 ORM 关系中使用 FOREIGN KEY ON DELETE 级联</span></a> 。</p></li>
+<li><p>如果从 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 到 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 存在   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，但不存在将特定` <cite>Child`</cite> 链接到每个 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 的反向关系，则 SQLAlchemy 将不会注意到在删除此特定``Child`` 对象时，它需要维护将其与``Parent <code class="docutils literal notranslate"><span class="pre">相关联的“secondary”表。不会删除“secondary”表。*</span> <span class="pre">如果存在将特定</span> <span class="pre">``Child</span></code> 链接到每个``Parent`` 的关系，假设它称为``Child.parents``，SQLAlchemy 默认情况下会加载 <code class="docutils literal notranslate"><span class="pre">Child.parents</span></code> 集合以定位所有 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象，并从链接此关系的“secondary”表中删除每行。请注意，此关系不需要是双向的；SQLAlchemy 仅在严格查看与要删除的``Child`` 对象相关联的每个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  上。* 在此处使用更高效的方法是使用 ON DELETE CASCADE 指令与数据库使用的外键。假设数据库支持此功能，则可以让数据库本身在引用“child”被删除时自动删除“secondary”表中的行。使用  :paramref:` _orm.relationship.passive_deletes`  在这种情况下指示 SQLAlchemy 放弃主动加载``Child.parents`` 集合。有关此功能的详细信息，请参见   <a class="reference internal" href="cascades.html#passive-deletes"><span class="std std-ref">在 ORM 关系中使用 FOREIGN KEY ON DELETE 级联</span></a> 。</p></li>
 </ul>
-<p>请注意，这些行为仅与   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  选项相关。如果处理显式映射并且不存在于相关   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  选项中的协会表，可以使用级联规则代替以自动删除与相关实体相关的实体 - 请参阅   <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">级联操作</span></a>  了解有关此功能的详细信息。</p>
+<p>请注意，这些行为仅与   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的  :paramref:` _orm.relationship.secondary`  选项相关。如果处理显式映射并且不存在于相关   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  的  :paramref:` _orm.relationship.secondary`  选项中的协会表，可以使用级联规则代替以自动删除与相关实体相关的实体 - 请参阅   <a class="reference internal" href="cascades.html#unitofwork-cascades"><span class="std std-ref">级联操作</span></a>  了解有关此功能的详细信息。</p>
 <p>      <a class="reference internal" href="cascades.html#cascade-delete-many-to-many"><span class="std std-ref">在多对多关系中使用 delete 级联</span></a></p>
 <p>      <a class="reference internal" href="cascades.html#passive-deletes-many-to-many"><span class="std std-ref">关于基于 foreign key 的 ON DELETE 和多对多关系</span></a></p>
 </section>
 </section>
 <section id="association-pattern">
 <span id="id10"></span><h2>关联对象<a class="headerlink" href="#association-pattern" title="Permalink to this heading">¶</a></h2>
-<p>关联对象模式是从多对多变体中提取出来的：当关联表包含除父表和子（或左和右）表之外的其他列时，最理想的情况是将这些列映射到自己的 ORM 映射类。映射的类会映射到在使用多对多模式时通常会指出的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  上。在关联对象模式中，不使用  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数；相反，将一个类直接映射到联合表。然后使用两个单独的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  建立第一个由一个到多个的父项的链接到映射关联类，接着映射关联类到子项的多对一关系，以形成从父项到关联，再到子项的单向关联对象关系。对于双向关系，需要四个   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  将关联映射类与父项和子项在两个方向上链接起来。</p>
-<p>下面的示例说明了一个新类``Association``，它映射到名为 <code class="docutils literal notranslate"><span class="pre">association</span></code> 的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ；现在，这个表包括一个名为``extra_data`` 的附加列，它是一个字符串值，与``Parent`` 和``Child`` 之间的每个关联一起存储。将表映射到显式类，也可以从``Parent`` 到``Child`` 的访问，明确使用``Association``：：</p>
+<p>关联对象模式是从多对多变体中提取出来的：当关联表包含除父表和子（或左和右）表之外的其他列时，最理想的情况是将这些列映射到自己的 ORM 映射类。映射的类会映射到在使用多对多模式时通常会指出的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  上。在关联对象模式中，不使用  :paramref:` _orm.relationship.secondary`  参数；相反，将一个类直接映射到联合表。然后使用两个单独的   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>  建立第一个由一个到多个的父项的链接到映射关联类，接着映射关联类到子项的多对一关系，以形成从父项到关联，再到子项的单向关联对象关系。对于双向关系，需要四个   :func:` _orm.relationship`  将关联映射类与父项和子项在两个方向上链接起来。</p>
+<p>下面的示例说明了一个新类``Association``，它映射到名为 <code class="docutils literal notranslate"><span class="pre">association</span></code> 的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> ；现在，这个表包括一个名为` <cite>extra_data`</cite> 的附加列，它是一个字符串值，与``Parent`` 和``Child`` 之间的每个关联一起存储。将表映射到显式类，也可以从``Parent`` 到``Child`` 的访问，明确使用``Association``：：</p>
 <p>    from typing import Optional</p>
 <p>    from sqlalchemy import ForeignKey
     from sqlalchemy import Integer
@@ -684,7 +684,7 @@ parent_associations: Mapped[List[“Association”]] = relationship(</p>
 <p>在使用此 ORM 模型进行更改操作时，对 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 进行的更改不会与 Python 中对 <code class="docutils literal notranslate"><span class="pre">Parent.child_associations</span></code>
 或 <code class="docutils literal notranslate"><span class="pre">Child.parent_associations</span></code> 进行的更改进行协调；
 虽然所有这些关系将继续正常运行，但是对一个的更改将不会出现在另一个中，
-直到   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  过期，这通常在  <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.commit()</span></code>  后自动发生。</p>
+直到   <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>  过期，这通常在  :meth:` .Session.commit`  后自动发生。</p>
 <p>此外，如果进行冲突的更改，例如同时添加一个新的 <code class="docutils literal notranslate"><span class="pre">Association</span></code> 对象，
 同时将相同的关联 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 添加到 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 中，那么当工作单元的刷新过程进行时，
 例如以下示例，将会导致完整性错误：</p>
@@ -754,7 +754,7 @@ properties={“children”: relationship(“Child”, back_populates=”parent�
 <code class="docutils literal notranslate"><span class="pre">eval()</span></code> 对不受信任的用户输入 <strong>不安全</strong>。</p>
 </div>
 <p>可以在此评估中使用的完整命名空间包括为此声明基本映射的所有类，
-以及 <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> 包的内容，包括表达式函数，例如   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.desc" title="sqlalchemy.sql.expression.desc"><code class="xref py py-func docutils literal notranslate"><span class="pre">desc()</span></code></a>  和  <code class="xref py py-attr docutils literal notranslate"><span class="pre">sqlalchemy.sql.functions.func</span></code> ：</p>
+以及 <code class="docutils literal notranslate"><span class="pre">sqlalchemy</span></code> 包的内容，包括表达式函数，例如   <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.desc" title="sqlalchemy.sql.expression.desc"><code class="xref py py-func docutils literal notranslate"><span class="pre">desc()</span></code></a>  和  :attr:` _functions.func` ：</p>
 <blockquote>
 <div><dl>
 <dt>class Parent(Base):</dt><dd><p># …</p>
@@ -865,7 +865,7 @@ primaryjoin=lambda: Parent.id == _resolve_child_model().parent_id,</p>
 <p class="admonition-title">Note</p>
 <p>与 ORM 映射列一样，如果映射了类且要将映射化的列分配给已映射的类，
 则只有在使用“声明性基础”类时将可以正常工作，
-表示用户定义的   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  子类或由   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>
+表示用户定义的   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeBase</span></code>  子类或由   :func:` _orm.declarative_base`
 或  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.generate_base()</span></code>  返回的动态生成的类。
 此“基础”类包括 Python 元类，该元类实现了一个特殊的 <code class="docutils literal notranslate"><span class="pre">__setattr__()</span></code> 方法，
 该方法截取了这些操作。</p>
@@ -881,9 +881,9 @@ primaryjoin=lambda: Parent.id == _resolve_child_model().parent_id,</p>
 该参数通常指向一个通常非映射的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象或其他 Core 可选择对象。
 支持使用 lambda 可调用或字符串名称进行延迟评估，
 其中字符串解析通过使用 Python 表达式将标识符名称链接到同名   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象来完成，
-这些对象存在于当前经向某个   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  映射的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  集合中。</p>
+这些对象存在于当前经向某个   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  映射的   :class:` _schema.MetaData`  集合中。</p>
 <dl class="simple">
-<dt>例如，在   <a class="reference internal" href="#relationships-many-to-many"><span class="std std-ref">多对多</span></a>  中给出的示例中，如果我们假设 <code class="docutils literal notranslate"><span class="pre">association_table</span></code></dt><dd><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象定义在映射类本身之后的一点处，我们可以使用 lambda 写入   <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> ，</p>
+<dt>例如，在   <a class="reference internal" href="#relationships-many-to-many"><span class="std std-ref">多对多</span></a>  中给出的示例中，如果我们假设 ` <cite>association_table`</cite></dt><dd><p><a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象定义在映射类本身之后的一点处，我们可以使用 lambda 写入   :func:` _orm.relationship` ，</p>
 </dd>
 </dl>
 <p>例如：</p>
@@ -901,7 +901,7 @@ children: Mapped[List[“Child”]] = relationship(</p>
 </div></blockquote>
 <p>或者，以名称定位相同的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a>  对象，然后将名称作为参数使用。
 从 Python 的角度讲，这是一个字符串表达式，在此表达式的 Python 环境中，标识符名称链接到
-当前   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  指向的   <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.MetaData" title="sqlalchemy.schema.MetaData"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetaData</span></code></a>  集合中的表的名称：</p>
+当前   <code class="xref py py-class docutils literal notranslate"><span class="pre">registry</span></code>  指向的   :class:` _schema.MetaData`  集合中的表的名称：</p>
 <blockquote>
 <div><dl>
 <dt>class Parent(Base):</dt><dd><p>__tablename__ = “left_table”</p>
@@ -913,7 +913,7 @@ children: Mapped[List[“Child”]] = relationship(secondary=”association_tabl
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <dl class="simple">
-<dt>当作为字符串传递时，</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数使用 Python 的 <code class="docutils literal notranslate"><span class="pre">eval()</span></code> 函数进行解析，</p>
+<dt>当作为字符串传递时，</dt><dd><p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>  参数使用 Python 的 ` <cite>eval()`</cite> 函数进行解析，</p>
 </dd>
 </dl>
 <p>即使该字符串通常是表的名称。
@@ -940,7 +940,7 @@ children: Mapped[List[“Child”]] = relationship(secondary=”association_tabl
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:43:53
+    Documentation last generated: 2023/8/18 18:58:53
 
     </div>
 </div>

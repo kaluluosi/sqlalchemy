@@ -231,7 +231,7 @@
         
 <section id="mypy-pep-484-orm">
 <span id="mypy-toplevel"></span><h1>Mypy / Pep-484 ORM映射支持<a class="headerlink" href="#mypy-pep-484-orm" title="Permalink to this heading">¶</a></h1>
-<p>使用依赖于 SQLAlchemy 的   <a class="reference internal" href="../declarative_config.html"><span class="std std-ref">declarative</span></a>  映射就能支持  <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0484/"><strong>PEP 484</strong></a>  类型标注以及 <a class="reference external" href="https://mypy.readthedocs.io/">MyPy</a> 类型检查工具, 这种映射直接引用   <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象而非 SQLAlchemy 2.0 引入的   <code class="xref py py-func docutils literal notranslate"><span class="pre">mapped_column()</span></code>  构造。</p>
+<p>使用依赖于 SQLAlchemy 的   <a class="reference internal" href="../declarative_config.html"><span class="std std-ref">declarative</span></a>  映射就能支持  :pep:` 484`  类型标注以及 <a class="reference external" href="https://mypy.readthedocs.io/">MyPy</a> 类型检查工具, 这种映射直接引用   <a class="reference internal" href="../../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a>  对象而非 SQLAlchemy 2.0 引入的   :func:` _orm.mapped_column`  构造。</p>
 <div class="deprecated">
 <p><span class="versionmodified deprecated">Deprecated since version 2.0: </span><strong>SQLAlchemy Mypy 插件已被弃用，可能在 SQLAlchemy 2.1 版本甚至更早的版本中移除。我们强烈建议用户尽快迁移到新的映射语法。</strong></p>
 <p>该插件无法跟随 mypy 不断变化的版本，因此其稳定性未来无法保障。</p>
@@ -261,7 +261,7 @@
 </section>
 <section id="id2">
 <h2>插件所做的事情<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
-<p>Mypy 插件的主要目的是截获并修改 SQLAlchemy 的静态定义   <a class="reference internal" href="../declarative_config.html"><span class="std std-ref">declarative mappings</span></a> ，以便它们与它们   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  对象在进行  <span class="xref std std-term">instrumented</span>  操作后的结构相匹配。这使得类结构和使用该类的代码对 Mypy 工具有意义，否则根据声明式映射当前的功能不会有任何效果。该插件不会与需要为数据类（如 <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">dataclasses</a> ）类动态修改的类似插件类似。</p>
+<p>Mypy 插件的主要目的是截获并修改 SQLAlchemy 的静态定义   <a class="reference internal" href="../declarative_config.html"><span class="std std-ref">declarative mappings</span></a> ，以便它们与它们   :class:` _orm.Mapper`  对象在进行  <span class="xref std std-term">instrumented</span>  操作后的结构相匹配。这使得类结构和使用该类的代码对 Mypy 工具有意义，否则根据声明式映射当前的功能不会有任何效果。该插件不会与需要为数据类（如 ` dataclasses &lt;<a class="reference external" href="https://docs.python.org/3/library/dataclasses.html">https://docs.python.org/3/library/dataclasses.html</a>&gt;`_ ）类动态修改的类似插件类似。</p>
 <p>为了涵盖在此发生的主要区域，请考虑 ORM 映射，使用一个典型的 “User” 类示例:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">String</span><span class="p">,</span> <span class="n">select</span>
 <span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">declarative_base</span>
@@ -285,7 +285,7 @@
 </div>
 <p>在上面的示例中，Mypy 扩展可以采用以下步骤：</p>
 <ul class="simple">
-<li><p>解释由   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>  生成的动态 <code class="docutils literal notranslate"><span class="pre">Base</span></code> 类，使得继承自它的类被认为是已映射的。也可以采用类装饰器的方式，详见   <a class="reference internal" href="../declarative_styles.html#orm-declarative-decorator"><span class="std std-ref">使用装饰器声明式映射（无声明式基类）</span></a> 。</p></li>
+<li><p>解释由   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>  生成的动态 ` <cite>Base`</cite> 类，使得继承自它的类被认为是已映射的。也可以采用类装饰器的方式，详见   <a class="reference internal" href="../declarative_styles.html#orm-declarative-decorator"><span class="std std-ref">使用装饰器声明式映射（无声明式基类）</span></a> 。</p></li>
 <li><p>对 ORM 映射属性进行类型推断，这些属性是以声明式 “内联” 样式定义的，在上面的示例中是 <code class="docutils literal notranslate"><span class="pre">User</span></code> 类的 <code class="docutils literal notranslate"><span class="pre">id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性。这包括：<code class="docutils literal notranslate"><span class="pre">User</span></code> 的实例将使用 <code class="docutils literal notranslate"><span class="pre">int</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">id</span></code> 类型，使用 <code class="docutils literal notranslate"><span class="pre">str</span></code> 作为 <code class="docutils literal notranslate"><span class="pre">name</span></code> 类型。它也包括当访问 <code class="docutils literal notranslate"><span class="pre">User.id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">User.name</span></code> 类级属性时（如在上面的 <code class="docutils literal notranslate"><span class="pre">select()</span></code> 语句中），它们与 SQL 表达式行为兼容，这是从   <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a>  属性描述符类中继承而来的。</p></li>
 <li><p>对于没有显式构造函数的映射类，应用一个 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> 方法，它接受特定类型的关键字参数，这些参数对所有检测到的映射属性进行定义。</p></li>
 </ul>
@@ -293,12 +293,12 @@
 <p>上面采取的关键步骤包括：</p>
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">Base</span></code> 类现在以   <code class="xref py py-class docutils literal notranslate"><span class="pre">DeclarativeMeta</span></code>  类显式定义，而不是动态类。</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性以   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  类为基础定义，该类表示 Python 描述符，具有类级和实例级不同的行为。现在   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  类是   <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a>  类的基类，后者用于所有 ORM 映射属性。</p>
+<li><p><code class="docutils literal notranslate"><span class="pre">id</span></code> 和 <code class="docutils literal notranslate"><span class="pre">name</span></code> 属性以   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  类为基础定义，该类表示 Python 描述符，具有类级和实例级不同的行为。现在   :class:` _orm.Mapped`  类是   <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a>  类的基类，后者用于所有 ORM 映射属性。</p>
 <blockquote>
-<div><p><a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  被针对任意 Python 类型定义为泛型类别，这意味着特定的   <a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  实例与特定的 Python 类型相关联，例如上面的 <code class="docutils literal notranslate"><span class="pre">Mapped[Optional[int]]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Mapped[Optional[str]]</span></code>。</p>
+<div><p><a class="reference internal" href="../internals.html#sqlalchemy.orm.Mapped" title="sqlalchemy.orm.Mapped"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapped</span></code></a>  被针对任意 Python 类型定义为泛型类别，这意味着特定的   :class:` _orm.Mapped`  实例与特定的 Python 类型相关联，例如上面的 <code class="docutils literal notranslate"><span class="pre">Mapped[Optional[int]]</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Mapped[Optional[str]]</span></code>。</p>
 </div></blockquote>
 </li>
-<li><p>声明式映射属性赋值的右侧被 <strong>移除</strong>，因为这类似于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  类通常要执行的操作，即它将这些属性替换为特定的   <a class="reference internal" href="../internals.html#sqlalchemy.orm.InstrumentedAttribute" title="sqlalchemy.orm.InstrumentedAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstrumentedAttribute</span></code></a>  实例。原始表达式被移入一个函数调用中，这将允许它在不与表达式左侧冲突的情况下进行类型检查。对于 Mypy，左侧的类型注释足以让属性的行为被理解。</p></li>
+<li><p>声明式映射属性赋值的右侧被 <strong>移除</strong>，因为这类似于   <code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper</span></code>  类通常要执行的操作，即它将这些属性替换为特定的   :class:` _orm.InstrumentedAttribute`  实例。原始表达式被移入一个函数调用中，这将允许它在不与表达式左侧冲突的情况下进行类型检查。对于 Mypy，左侧的类型注释足以让属性的行为被理解。</p></li>
 <li><p>添加了 <code class="docutils literal notranslate"><span class="pre">User.__init__()</span></code> 方法的类型存根，其中包括正确的关键字和数据类型。</p></li>
 </ul>
 </section>
@@ -345,7 +345,7 @@ user_id: int = Column(ForeignKey(“user.id”))</p>
 </dd>
 </dl>
 </div></blockquote>
-<p>对于集合，类似的模式适用，其中在缺少 <code class="docutils literal notranslate"><span class="pre">uselist=True</span></code> 或  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  的情况下，可以使用集合注释，例如 <code class="docutils literal notranslate"><span class="pre">List</span></code>。在注释中还完全适当地使用类的字符串名称，这是 pep-484 支持的，确保在需要时在 <a href="#id7"><span class="problematic" id="id8">`TYPE_CHECKING 块中导入类`_</span></a>:</p>
+<p>对于集合，类似的模式适用，其中在缺少 <code class="docutils literal notranslate"><span class="pre">uselist=True</span></code> 或  <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.collection_class</span></code>  的情况下，可以使用集合注释，例如 ` <cite>List`</cite>。在注释中还完全适当地使用类的字符串名称，这是 pep-484 支持的，确保在需要时在 <a href="#id7"><span class="problematic" id="id8">`TYPE_CHECKING 块中导入类`_</span></a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">List</span>
 
 <span class="kn">from</span> <span class="nn">.mymodel</span> <span class="kn">import</span> <span class="n">Base</span>
@@ -380,7 +380,7 @@ user_id: int = Column(ForeignKey(“user.id”))</p>
 <section id="declared-attr-declarative-mixins">
 <span id="mypy-declarative-mixins"></span><h3>使用 &#64;declared_attr 和 Declarative Mixins<a class="headerlink" href="#declared-attr-declarative-mixins" title="Permalink to this heading">¶</a></h3>
 <blockquote>
-<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">declared_attr</span></code>  类允许在类级函数中声明声明性映射属性，并且在使用   <span class="xref std std-ref">declarative mixins</span> <cite>Mapped[]``结构进行注释，或者通过指示函数返回的确切对象类型来进行注释。此外，还应该使用   :func:`_orm.declarative_mixin</cite>  装饰未映射的“mixin”类（即不扩展   <code class="xref py py-func docutils literal notranslate"><span class="pre">declarative_base()</span></code>  类，也没有使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code>  等方法映射的类），该装饰符为 Mypy 提供了提示，表明特定类意图作为声明性 mixin:</p>
+<div><p><code class="xref py py-class docutils literal notranslate"><span class="pre">declared_attr</span></code>  类允许在类级函数中声明声明性映射属性，并且在使用   :ref:` declarative mixins &lt;orm_mixins_toplevel&gt;` <cite>Mapped[]``结构进行注释，或者通过指示函数返回的确切对象类型来进行注释。此外，还应该使用   :func:`_orm.declarative_mixin</cite>  装饰未映射的“mixin”类（即不扩展   :func:` _orm.declarative_base`  类，也没有使用  <code class="xref py py-meth docutils literal notranslate"><span class="pre">registry.mapped()</span></code>  等方法映射的类），该装饰符为 Mypy 提供了提示，表明特定类意图作为声明性 mixin:</p>
 <blockquote>
 <div><p>from sqlalchemy.orm import declarative_mixin, declared_attr</p>
 <p>&#64;declarative_mixin
@@ -514,7 +514,7 @@ addresses: List[Address] = field(default_factory=list)</p>
 
         Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
 
-    Documentation last generated: 2023/8/18 18:44:00
+    Documentation last generated: 2023/8/18 18:58:58
 
     </div>
 </div>
