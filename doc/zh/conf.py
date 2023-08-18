@@ -35,9 +35,9 @@ needs_sphinx = "5.0.1"
 
 extensions = [
     "sphinx.ext.autodoc",
-    "zzzeeksphinx",
+    # "zzzeeksphinx",
     # "changelog",
-    "sphinx_paramlinks",
+    # "sphinx_paramlinks",
     "sphinx_copybutton",
 ]
 needs_extensions = {"zzzeeksphinx": "1.2.1"}
