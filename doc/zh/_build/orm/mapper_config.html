@@ -1,0 +1,438 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    ORM映射类配置
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="ORM映射类概述" href="mapping_styles.html" />
+        <link rel="prev" title="ORM快速入门" href="quickstart.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li class="selected"><span class="link-container"><strong>ORM映射类配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="versioning.html">配置版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="quickstart.html" title="previous chapter">ORM快速入门</a></li>
+                <li><b>Next:</b>
+                <a href="mapping_styles.html" title="next chapter">ORM映射类概述</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#orm">ORM映射类配置</a><ul>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-mapper_config" >
+        
+<section id="orm">
+<span id="mapper-config-toplevel"></span><h1>ORM映射类配置<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h1>
+<p>本文档对ORM配置进行详细参考，但不包括关系，关系详见：<span class="xref std std-ref">relationship_config_toplevel</span>。</p>
+<p>若要快速了解典型的ORM配置，请先参考:ref:<cite>orm_quickstart</cite>。</p>
+<p>若要介绍ORM概念，建议先参考:ref:<cite>unified_tutorial`中的:ref:`tutorial_orm_table_metadata</cite>。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="mapping_styles.html">ORM映射类概述</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapping-styles">ORM映射样式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-declarative-mapping">声明式映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-imperative-mapping">命令式映射</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapper-configuration-overview">映射类的必要组件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id11">要映射的类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id14">表或其他从句对象</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#properties">properties字典</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#id15">其他映射器配置参数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html#orm-mapped-class-behavior">映射类的行为</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#mapped-class-default-constructor">默认的构造函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection">映射器对象的运行时自省</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-mapper">映射器对象的自省</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate">映射实例的自省</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="declarative_mapping.html">使用Declarative映射类</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="declarative_styles.html">声明式映射风格</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-generated-base-class">使用声明基类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_styles.html#orm-declarative-decorator">使用装饰器进行声明式映射（无基类）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_tables.html">使用 Declarative 进行表配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#annotated-declarative-table-mapped-column">使用 Annotated Declarative Table（对 “mapped_column()” 进行类型注释的类型注释格式）</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#mapped-column-null-mapped"><code class="docutils literal notranslate"><span class="pre">mapped_column()</span></code> 会将数据类型和可为 Null 的行从 <code class="docutils literal notranslate"><span class="pre">Mapped</span></code> 注释中派生出来</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#orm-declarative-mapped-column-type-map">自定义类型映射</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#id2">动态映射多个类型配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#python-enum-pep-586-literal">在类型映射中使用 Python <code class="docutils literal notranslate"><span class="pre">Enum</span></code> 或 pep-586 <code class="docutils literal notranslate"><span class="pre">Literal</span></code> 类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_tables.html#mapped-column-dataclass">``mapped_column()``中的dataclass功能</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-metadata">访问表和元数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-configuration">声明式表配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#orm-declarative-table-schema-name">在声明性表中明确模式名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#automap">使用 Automap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-automated-reflection-schemes">从反射表自动命名列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#mapper-primary-key">映射到一组明确的主键列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_tables.html#include-exclude-cols">映射表中的一个子集列</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_config.html">使用 Declarative 进行映射器配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#orm-declarative-properties">使用 Declarative 定义映射属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#declarative-mapper">使用 Declarative 进行 Mapper 配置选项</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#id2">动态构造映射器参数</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_config.html#id3">其他 Declarative 映射指令</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#declare-last"><code class="docutils literal notranslate"><span class="pre">__declare_last__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#declare-first"><code class="docutils literal notranslate"><span class="pre">__declare_first__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#metadata"><code class="docutils literal notranslate"><span class="pre">metadata</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#abstract"><code class="docutils literal notranslate"><span class="pre">__abstract__</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="declarative_config.html#table-cls"><code class="docutils literal notranslate"><span class="pre">__table_cls__</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mixins.html">使用 Mixins 构成映射层次</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#id15">在混合和基类中添加映射器属性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#mixintable-mapper">…从多个Mixin组合Table/Mapper参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="declarative_mixins.html#mixin">使用Mixin创建索引</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataclasses.html">与dataclasses和attrs集成</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses">声明性数据类映射</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id20">类级特性配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id31">关键字配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id42">属性配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#id55">列默认值</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dataclasses.html#annotated">与Annotated集成</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#mixin">使用mixin和抽象超类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#id72">关系配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#orm-declarative-native-dataclasses-non-mapped-fields">使用非映射数据类字段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#pydantic">与Pydantic等备用数据类提供者的集成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html#orm">将ORM映射应用于现有的数据类（传统数据类使用）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#declarative-with-imperative-table">使用Declarative With Imperative Table映射预存在的数据类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html#declarative-style">使用Declarative-style字段映射预存在的数据类</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#id1">使用混合类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#column-property">使用 column_property</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="mapped_sql_expr.html#column-property-declarative">将 column_property() 添加到现有的 Declarative 映射类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mapped_sql_expr.html#mapper-column-property-sql-expressions-composed">在映射时间从列属性构成</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#id3">使用列递延与 <code class="docutils literal notranslate"><span class="pre">column_property()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#attribute">使用普通描述符 attribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html#mapper-querytime-expression">映射时间 SQL 表达式加载属性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapped_attributes.html">更改属性行为</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id4">简单验证器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id39">使用自定义数据类型在核心级别</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id40">使用解析器和混合体</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id89">同义词</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html#id112">自定义比较器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="composites.html">组合列类型</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id4">使用已映射的组合列类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#orm-composite-other-forms">其他用于复合的映射形式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#legacy-non-dataclasses">使用Legacy Non-Dataclasses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id32">跟踪复合中的原地突变</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#composite-operations">重新定义复合的比较操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#id36">嵌套复合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html#api">组合API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="composites.html#sqlalchemy.orm.composite"><code class="docutils literal notranslate"><span class="pre">composite()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="inheritance.html">映射类继承层次结构</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#joined-inheritance">联接表继承</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id25">联接继承关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id30">载入联接继承映射</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html#id31">单表继承</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#use-existing-column">使用 use_existing_column 解决列冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id54">单表继承关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#polymorphic-abstract">使用``polymorphic_abstract``建立更深层次的层级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id67">载入单表继承映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#concrete-polymorphic">具体多态加载配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#abstract-concrete-base">具体抽象类</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id90">与具体继承的关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inheritance.html#id93">具体继承的加载</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="nonstandard_mappings.html">非传统映射</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#maptojoin">将一个类映射到多个表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#orm-mapping-arbitrary-subqueries">将类映射到任意子查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html#id10">一个类的多个映射器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html">配置版本计数器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id10">简单版本计数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id15">自定义版本计数器/类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id16">服务器端版本计数器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html#id21">编程或条件版本计数器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapping_api.html">类映射API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping_api.html#sqlalchemy.orm.util.identity_key"><code class="docutils literal notranslate"><span class="pre">identity_key()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="quickstart.html" title="previous chapter">ORM快速入门</a>
+        Next:
+        <a href="mapping_styles.html" title="next chapter">ORM映射类概述</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:02
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

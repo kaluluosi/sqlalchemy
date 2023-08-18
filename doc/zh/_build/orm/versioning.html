@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    配置版本计数器
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="ORM映射类配置" href="mapper_config.html" />
+        <link rel="next" title="类映射API" href="mapping_api.html" />
+        <link rel="prev" title="非传统映射" href="nonstandard_mappings.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="mapping_styles.html">ORM映射类概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="declarative_mapping.html">使用Declarative映射类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dataclasses.html">与dataclasses和attrs集成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapped_attributes.html">更改属性行为</a></span></li>
+<li><span class="link-container"><a class="reference external" href="composites.html">组合列类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="inheritance.html">映射类继承层次结构</a></span></li>
+<li><span class="link-container"><a class="reference external" href="nonstandard_mappings.html">非传统映射</a></span></li>
+<li class="selected"><span class="link-container"><strong>配置版本计数器</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id10">简单版本计数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">自定义版本计数器/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id16">服务器端版本计数器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id21">编程或条件版本计数器</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="mapping_api.html">类映射API</a></span></li>
+<li><span class="link-container"><a class="reference external" href="scalar_mapping.html">SQL表达式映射</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="nonstandard_mappings.html" title="previous chapter">非传统映射</a></li>
+                <li><b>Next:</b>
+                <a href="mapping_api.html" title="next chapter">类映射API</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="mapper_config.html" title="ORM映射类配置">ORM映射类配置</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">配置版本计数器</a><ul>
+<li><a class="reference internal" href="#id10">简单版本计数</a></li>
+<li><a class="reference internal" href="#id15">自定义版本计数器/类型</a></li>
+<li><a class="reference internal" href="#id16">服务器端版本计数器</a></li>
+<li><a class="reference internal" href="#id21">编程或条件版本计数器</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-versioning" >
+        
+<section id="id1">
+<h1>配置版本计数器<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapper`支持管理</span> <span class="pre">:term:`版本ID列</span></code>，它是一个单个表列，每当映射表的“UPDATE”发生时增加或以其他方式更新其值。每次ORM发出“UPDATE”或“DELETE”来对行进行操作时都会检查该值，以确保内存中保存的值与数据库中的值匹配。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>由于版本控制功能依赖于对象的**内存**比较,因此该功能仅适用于:meth:<a href="#id2"><span class="problematic" id="id3">`</span></a>.Session.flush`过程，ORM将每个内存中的行刷新到数据库。在使用:meth:<a href="#id4"><span class="problematic" id="id5">`</span></a>_query.Query.update`或:meth:<a href="#id6"><span class="problematic" id="id7">`</span></a>_query.Query.delete`方法执行多行UPDATE或DELETE时，它不会生效，因为这些方法仅发出UPDATE或DELETE语句，但否则无法直接访问那些受影响的行的内容。</p>
+</div>
+<p>此功能的目的是检测并发事务在大致同时修改同一行的时间，或提供对在再次使用先前事务的数据而没有刷新的情况下使用“陈旧”行的系统的保护。 （例如，如果使用:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>.Session`并设置了“expire_on_commit=False”，则可以从上一次事务重复使用数据）。</p>
+<section id="id10">
+<h2>简单版本计数<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h2>
+<p>最简单的跟踪版本的方法是向映射表添加一个整数列，然后将其作为“version_id_col”建立在映射器选项中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">version_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">__mapper_args__</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;version_id_col&quot;</span><span class="p">:</span> <span class="n">version_id</span><span class="p">}</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>以上，<a href="#id11"><span class="problematic" id="id12">``</span></a>User``映射使用列``version_id``跟踪整数版本。 当首次刷新``User``类型的对象时，<a href="#id13"><span class="problematic" id="id14">``</span></a>version_id``列将被赋予值“1”。然后，以后的表更新将始终以类似于以下方式发出：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">UPDATE</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">version_id</span><span class="o">=</span><span class="p">:</span><span class="n">version_id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="o">=</span><span class="p">:</span><span class="n">name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">version_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">user_version_id</span>
+<span class="c1">-- {&quot;name&quot;: &quot;new name&quot;, &quot;version_id&quot;: 2, &quot;user_id&quot;: 1, &quot;user_version_id&quot;: 1}</span></pre></div>
+</div>
+<p>上述UPDATE语句正在更新与”user.id = 1”匹配且还需要”user.version_id = 1”匹配的行，其中”1”是我们已知用于该对象的最后一个版本标识符。如果在其他地方的事务中独立修改了该行，则该版本ID将不再匹配，UPDATE语句将报告没有匹配的行; SQLAlchemy测试这种情况，即我们的UPDATE（或DELETE）语句只匹配一个行。如果匹配了零行，则表示我们的数据版本已过期，并引发:exc:<cite>.StaleDataError</cite>。</p>
+</section>
+<section id="id15">
+<h2>自定义版本计数器/类型<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h2>
+<p>还可以使用其他类型或计数器方案进行版本控制。常见类型包括日期和GUID。使用备用类型或计数器方案时，SQLAlchemy提供了一个使用“version_id_generator”参数的挂钩函数，该参数接受版本生成可调用项。此可调用项将传递当前已知版本的值，并且预计返回后续版本。</p>
+<p>例如，如果我们想要使用随机生成的GUID跟踪“User”类的版本控制，我们可以这样做（请注意，某些后端支持原生GUID类型，但在这里我们使用简单的字符串来说明）：：</p>
+<blockquote>
+<div><p>import uuid</p>
+<dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+version_uuid = mapped_column(String(32), nullable=False)
+name = mapped_column(String(50), nullable=False)</p>
+<dl class="simple">
+<dt>__mapper_args__ = {</dt><dd><p>“version_id_col”: version_uuid,
+“version_id_generator”: lambda version: uuid.uuid4().hex,</p>
+</dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>持久化引擎将在每次一个“User”对象需要执行INSERT或UPDATE时调用“uuid.uuid4()”。在这种情况下，我们的版本生成功能可以忽略“version”的输入值，因为“uuid4()”函数会生成没有任何先决条件值的标识符。如果我们正在使用数字或特殊字符系统等顺序版本控制方案，则可以利用给定的“version”来帮助确定后续值。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/custom_types.html#custom-guid-type"><span class="std std-ref">后端不受限制的 GUID 类型</span></a></p>
+</div>
+</section>
+<section id="id16">
+<h2>服务器端版本计数器<a class="headerlink" href="#id16" title="Permalink to this heading">¶</a></h2>
+<p>“version_id_generator”也可以配置以依赖于由数据库生成的值。在这种情况下，数据库需要一些生成新标识符的方法，当行受到INSERT和UPDATE的影响时需要这些方法。对于UPDATE情况，通常需要更新触发器，除非问题数据库支持某种本机版本标识符。 PostgreSQL数据库特别支持一个名为`xmin &lt;<a class="reference external" href="https://www.postgresql.org/docs/current/static/ddl-system-columns.html">https://www.postgresql.org/docs/current/static/ddl-system-columns.html</a>&gt;`_的系统列，提供UPDATE版本控制，我们可以使用PostgreSQL中的“xmin”列对“User”类进行版本控制，如下所示：：</p>
+<blockquote>
+<div><p>from sqlalchemy import FetchedValue</p>
+<dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+name = mapped_column(String(50), nullable=False)
+xmin = mapped_column(“xmin”, String, system=True, server_default=FetchedValue())</p>
+<p>__mapper_args__ = {“version_id_col”: xmin, “version_id_generator”: False}</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>通过上述映射，ORM将依赖于“xmin”列来自动提供版本ID计数器的新值。</p>
+<p>当ORM发出INSERT或UPDATE时，通常不会积极提取数据库生成的值，而是将这些列保留为“过期”并在下一次访问时获取，除非设置“eager_defaults”:_orm.Mapper标志。但是，当使用服务器端版本列时，ORM需要积极提取新生成的值。这样，版本计数器将在任何并发事务更新它之前设置。最好使用:term:<a href="#id17"><span class="problematic" id="id18">`</span></a>RETURNING`同时在INSERT或UPDATE语句中进行获取，否则如果之后发出SELECT语句，则仍存在潜在的竞争关系，其中版本计数器可能会在获取之前发生更改。</p>
+<p>当目标数据库支持RETURNING时，我们的User类的INSERT语句如下：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">RETURNING</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">xmin</span>
+<span class="c1">-- {&#39;name&#39;: &#39;ed&#39;}</span></pre></div>
+</div>
+<p>在上述示例中，ORM可以在一条语句中获取任何新生成的主键值和服务器生成的版本标识符。当后端不支持RETURNING时，必须为**每个**INSERT和UPDATE发出额外的SELECT语句，这效率要低得多，并且还会引入可能的错误版本计数器:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">%</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="n">s</span><span class="p">)</span>
+<span class="c1">-- {&#39;name&#39;: &#39;ed&#39;}</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">version_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_version_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="w"> </span><span class="k">where</span>
+<span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">param_1</span>
+<span class="c1">-- {&quot;param_1&quot;: 1}</span></pre></div>
+</div>
+<p>强烈建议仅在绝对必要的情况下以及仅在支持:term:<a href="#id19"><span class="problematic" id="id20">`</span></a>RETURNING`的后端上使用服务器端版本计数器，当前为PostgreSQL、Oracle、MariaDB 10.5、SQLite 3.35和SQL Server。</p>
+</section>
+<section id="id21">
+<h2>编程或条件版本计数器<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h2>
+<p>当“version_id_generator”设置为False时，我们还可以以与分配任何其他映射属性相同的方式编程（并有条件地）设置我们对象上的版本标识符。例如，如果我们使用示例UUID，但将“version_id_generator”设置为“False”，我们可以按照我们的选择设置版本标识符：：</p>
+<blockquote>
+<div><p>import uuid</p>
+<dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+version_uuid = mapped_column(String(32), nullable=False)
+name = mapped_column(String(50), nullable=False)</p>
+<p>__mapper_args__ = {“version_id_col”: version_uuid, “version_id_generator”: False}</p>
+</dd>
+</dl>
+<p>u1 = User(name=”u1”, version_uuid=uuid.uuid4())</p>
+<p>session.add(u1)</p>
+<p>session.commit()</p>
+<p>u1.name = “u2”
+u1.version_uuid = uuid.uuid4()</p>
+<p>session.commit()</p>
+</div></blockquote>
+<p>我们还可以更新我们的“User”对象而不增加版本计数器。计数器的值将保持不变，UPDATE语句仍将检查以前的值。对于仅对并发问题敏感的UPDATE类别，这可能很有用：：</p>
+<blockquote>
+<div><p># will leave version_uuid unchanged
+u1.name = “u3”
+session.commit()</p>
+</div></blockquote>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="nonstandard_mappings.html" title="previous chapter">非传统映射</a>
+        Next:
+        <a href="mapping_api.html" title="next chapter">类映射API</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:05
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

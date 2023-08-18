@@ -1,0 +1,6 @@
+.. change::
+    :tags: bug，mysql，mariadb
+    :tickets: 7115，7136
+    :versions: 1.4.26
+
+    修正以适应MariaDB 10.6系列，包括在mariadb-connector Python驱动程序（仅支持SQLAlchemy 1.4）和默认情况下被mysqlclient DBAPI自动使用的本地10.6客户端库中的不兼容变更（适用于1.3和1.4）。当编码为“utf8”时，这些客户端库现在报告“utf8mb3”编码符号，从而导致MySQL dialect在没有预期该符号时出现查找和编码错误。更新MySQL基库以适应报告此utf8mb3符号以及测试套件。感谢Georg Richter的支持。

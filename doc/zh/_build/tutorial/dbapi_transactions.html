@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    处理事务和DBAPI
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy统一教程" href="index.html" />
+        <link rel="next" title="使用数据库元数据" href="metadata.html" />
+        <link rel="prev" title="建立连接 - 引擎" href="engine.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
+<li class="selected"><span class="link-container"><strong>处理事务和DBAPI</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-getting-connection">获取连接</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-committing-data">提交更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-statement-execution">语句执行的基础</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-fetching-rows">获取行</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-sending-parameters">发送参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-multiple-parameters">发送多个参数</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#orm">使用ORM会话执行</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">使用数据库元数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">处理数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="engine.html" title="previous chapter">建立连接 - 引擎</a></li>
+                <li><b>Next:</b>
+                <a href="metadata.html" title="next chapter">使用数据库元数据</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#dbapi">处理事务和DBAPI</a><ul>
+<li><a class="reference internal" href="#tutorial-getting-connection">获取连接</a></li>
+<li><a class="reference internal" href="#tutorial-committing-data">提交更改</a></li>
+<li><a class="reference internal" href="#tutorial-statement-execution">语句执行的基础</a><ul>
+<li><a class="reference internal" href="#tutorial-fetching-rows">获取行</a></li>
+<li><a class="reference internal" href="#tutorial-sending-parameters">发送参数</a></li>
+<li><a class="reference internal" href="#tutorial-multiple-parameters">发送多个参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#orm">使用ORM会话执行</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar tutorial-dbapi_transactions" >
+        
+<section id="dbapi">
+<span id="tutorial-working-with-transactions"></span><h1>处理事务和DBAPI<a class="headerlink" href="#dbapi" title="Permalink to this heading">¶</a></h1>
+<p>有了:class:<cite>_engine.Engine`对象，我们现在可以深入研究:class:`_engine.Engine`的基本操作以及其主要交互端点，:class:`_engine.Connection`和:class:`_engine.Result</cite>。此外，我们还介绍了ORM的这些对象的外观，即:class:<cite>_orm.Session</cite>。</p>
+<div class="orm-header docutils container">
+<p><strong>ORM读者注意</strong></p>
+<p>在使用ORM时，:class:<a href="#id1"><span class="problematic" id="id2">`</span></a>_engine.Engine`由另一个名为:class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_orm.Session`的对象管理。现代SQLAlchemy中的:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.Session`强调事务和SQL执行模式，这与本文中讨论的:class:<a href="#id7"><span class="problematic" id="id8">`</span></a>_engine.Connection`基本相同，因此，尽管本小节主要关注Core，但所有这里的概念对ORM使用都基本相关，建议所有ORM学习者都要学习此部分。:class:<a href="#id9"><span class="problematic" id="id10">`</span></a>_engine.Connection`使用的执行模式将在本节末尾与:class:<a href="#id11"><span class="problematic" id="id12">`</span></a>_orm.Session`进行对比。</p>
+</div>
+<p>既然我们还没有介绍SQLAlchemy表达语言（Expression Language），我们将在本软件包中使用一个名为:func:<a href="#id13"><span class="problematic" id="id14">`</span></a>_sql.text`的简单构造，它允许我们编写**文本SQL**语句。请放心，在日常SQLAlchemy使用中，文本SQL通常是例外而不是规则，尽管它始终完全可用。</p>
+<section class="core-header" id="tutorial-getting-connection">
+<span id="id15"></span><h2>获取连接<a class="headerlink" href="#tutorial-getting-connection" title="Permalink to this heading">¶</a></h2>
+<p>从用户角度来看，:class:<a href="#id16"><span class="problematic" id="id17">`</span></a>_engine.Engine`对象的唯一目的是提供名为:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>_engine.Connection`的数据库连接单位。当直接使用Core时，:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>_engine.Connection`对象是所有与数据库交互的交互方式。由于:class:<a href="#id22"><span class="problematic" id="id23">`</span></a>_engine.Connection`表示数据库上的打开资源，我们始终希望将此对象的使用范围限制在特定上下文中，并且最好的方法是使用Python上下文管理器形式，也称为“with语句”。下面我们用一个文本SQL语句说明“Hello World”，这里的文本SQL是使用一种称为:func:<a href="#id24"><span class="problematic" id="id25">`</span></a>_sql.text`的构造发出的，稍后将对其进行详细讨论：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">text</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(text(&quot;select &#39;hello world&#39;&quot;))</span>
+<span class="go">...     print(result.all())</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">select</span><span class="w"> </span><span class="s1">&#39;hello world&#39;</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">[(&#39;hello world&#39;,)]</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>在上面的示例中，上下文管理器提供了一个数据库连接，并将操作框架置于事务内部。 Python DBAPI的默认行为包括始终处于进程中的事务。当连接的范围被释放时，将发出回滚以终止事务。事务不会**自动提交**；当我们要提交数据时，通常需要调用:meth:<cite>_engine.Connection.commit</cite>，我们将在下一节中看到。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>特殊情况下可用“autocommit”模式。:ref:<a href="#id26"><span class="problematic" id="id27">`</span></a>dbapi_autocommit`讨论了这一点。</p>
+</div>
+<p>SELECT的结果也是返回一个名为:class:<a href="#id28"><span class="problematic" id="id29">`</span></a>_engine.Result`的对象，稍后将对其进行讨论，但是，暂时我们将其添加为最好确保在“connect”块内消耗此对象，并且不要将它传递到连接范围之外的作用域。</p>
+</section>
+<section class="core-header" id="tutorial-committing-data">
+<span id="id30"></span><h2>提交更改<a class="headerlink" href="#tutorial-committing-data" title="Permalink to this heading">¶</a></h2>
+<p>我们刚刚知道DBAPI连接不会自动提交。如果我们想提交一些数据怎么办呢？我们可以将上面的示例更改为创建表并插入一些数据，然后通过:meth:<a href="#id31"><span class="problematic" id="id32">`</span></a>_engine.Connection.commit`方法在获得:class:<a href="#id33"><span class="problematic" id="id34">`</span></a>_engine.Connection`对象的块**内**提交事务：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go"># &quot;在操作过程中进行提交&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     conn.execute(text(&quot;CREATE TABLE some_table (x int, y int)&quot;))</span>
+<span class="go">...     conn.execute(</span>
+<span class="go">...         text(&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;),</span>
+<span class="go">...         [{&quot;x&quot;: 1, &quot;y&quot;: 1}, {&quot;x&quot;: 2, &quot;y&quot;: 4}],</span>
+<span class="go">...     )</span>
+<span class="go">...     conn.commit()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="nb">int</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="nb">int</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)]</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>以上，我们发出了两个SQL语句，它们通常是事务的，”CREATE TABLE”语句[1]和参数化的“INSERT”语句（上面的参数化语法将在稍后的几节中讨论）。由于我们希望我们所做的工作在块内被提交，我们调用了:meth:<a href="#id35"><span class="problematic" id="id36">`</span></a>_engine.Connection.commit`方法，该方法提交了事务。在块内调用此方法后，我们可以继续运行更多的SQL语句，并且如果我们想，可以继续调用:meth:<a href="#id37"><span class="problematic" id="id38">`</span></a>_engine.Connection.commit`以进行后续语句的提交。 SQLAlchemy将这种样式称为**随时提交**。</p>
+<p>还有一种提交数据的样式，即我们可以事先声明我们的“connect”块是一个事务块。这种操作模式下，我们使用:meth:<a href="#id39"><span class="problematic" id="id40">`</span></a>_engine.Engine.begin`方法获取连接，而不是:meth:<a href="#id41"><span class="problematic" id="id42">`</span></a>_engine.Engine.connect`方法。此方法既管理:class:<a href="#id43"><span class="problematic" id="id44">`</span></a>_engine.Connection`的范围，还将包含内部事务中的所有内容，在成功的块中以COMMIT结尾，或在异常引发时以ROLLBACK结尾。这种样式可以称为**始终开始**：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="go"># &quot;始终开始&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     conn.execute(</span>
+<span class="go">...         text(&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;),</span>
+<span class="go">...         [{&quot;x&quot;: 6, &quot;y&quot;: 8}, {&quot;x&quot;: 9, &quot;y&quot;: 10}],</span>
+<span class="go">...     )</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)]</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>“始终开始”样式经常被认为更为简洁，并且在一开始就指示了整个块的意图。然而，在本教程中，我们通常使用“随时提交”的样式，因为它更灵活，适用于演示目的。</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id45" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>:term:<a href="#id46"><span class="problematic" id="id47">`</span></a>DDL`是指SQL的子集，此SQL指示数据库创建、修改或删除架构级别的结构，例如表。DDL，例如”CREATE TABLE”，应该在以COMMIT结束的事务块内，因为许多数据库使用事务DDL，以使架构更改在提交事务之前不会生效。但是，就像我们后面要看到的那样，我们通常让SQLAlchemy在高级别操作中运行DDL序列，其中我们通常不需要担心提交。</p>
+</aside>
+</aside>
+</section>
+<section class="core-header" id="tutorial-statement-execution">
+<span id="id48"></span><h2>语句执行的基础<a class="headerlink" href="#tutorial-statement-execution" title="Permalink to this heading">¶</a></h2>
+<p>我们已经看到了一些在数据库上运行SQL语句的示例，使用:meth:<a href="#id49"><span class="problematic" id="id50">`</span></a>_engine.Connection.execute`方法，结合称为:func:<a href="#id51"><span class="problematic" id="id52">`</span></a>_sql.text`的对象，并返回名为:class:<a href="#id53"><span class="problematic" id="id54">`</span></a>_engine.Result`的对象。在本节中，我们将更密切地说明这些组件的机制和交互。</p>
+<div class="orm-header docutils container">
+<p>本节的大多数内容同样适用于现代ORM的使用，当使用:meth:<cite>_orm.Session.execute`方法时，工作方式非常类似于:meth:`_engine.Connection.execute</cite>，包括ORM结果行使用与Core使用时相同的:class:<a href="#id55"><span class="problematic" id="id56">`</span></a>_engine.Result`接口。</p>
+</div>
+<section class="orm-addin" id="tutorial-fetching-rows">
+<span id="id57"></span><h3>获取行<a class="headerlink" href="#tutorial-fetching-rows" title="Permalink to this heading">¶</a></h3>
+<p>我们首先通过使用我们先前插入的行并在我们创建的表上运行文本SELECT语句，更详细地说明了:class:<a href="#id58"><span class="problematic" id="id59">`</span></a>_engine.Result`对象：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(text(&quot;SELECT x, y FROM some_table&quot;))</span>
+<span class="go">...     for row in result:</span>
+<span class="go">...         print(f&quot;x: {row.x}  y: {row.y}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">()</span>
+</div><span class="go">x: 1  y: 1</span>
+<span class="go">x: 2  y: 4</span>
+<span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>在上面的示例中，我们发出了一个选择语句，以选择我们表中的所有行。返回的对象称为:class:<cite>_engine.Result</cite>，表示结果行的可迭代对象。</p>
+<p>:class:<a href="#id60"><span class="problematic" id="id61">`</span></a>_engine.Result`有许多用于获取和转换行的方法，例如之前演示过的:meth:<a href="#id62"><span class="problematic" id="id63">`</span></a>_engine.Result.all`方法，它返回所有:class:<a href="#id64"><span class="problematic" id="id65">`</span></a>_engine.Row`对象的列表。它还实现了Python迭代器接口，以便我们可以直接迭代:class:<a href="#id66"><span class="problematic" id="id67">`</span></a>_engine.Row`对象的集合。</p>
+<p><a href="#id68"><span class="problematic" id="id69">:class:`_engine.Row`对象本身旨在像Python &quot;命名元组&quot;&lt;https://docs.python.org/3/library/collections.html#collections.namedtuple&gt;`_</span></a>。下面我们通过多种方式访问行。</p>
+<ul>
+<li><p><strong>元组分配运算符</strong>—-这是最符合Python风格的样式，即按位置将变量分配到每一行：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="o">...</span></pre></div>
+</div>
+</li>
+<li><p><strong>整数索引</strong>—-元组是Python序列，因此也可以正常使用整数访问：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+</li>
+<li><p><strong>属性名称</strong>—-由于这些是Python命名元组，因此元组具有与每个列中的列名匹配的动态属性名称。这些名称通常是SQL语句分配给每行列的名称。虽然它们通常是相当可预测的，并且还可以通过标签进行控制，但在定义不太明确的情况下，它们可能受到数据库特定的行为影响:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;select x, y from some_table&quot;</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">y</span>
+
+    <span class="c1">#采用Python格式化字符串使用</span>
+    <span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Row: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></pre></div>
+</div>
+</li>
+<li><p><strong>映射访问</strong>—-为了将行作为Python的**映射**对象接收，这本质上是Python与常见``dict``对象接口的只读版本，可以使用:meth:<a href="#id70"><span class="problematic" id="id71">`</span></a>_engine.Result.mappings`修改器将:class:<a href="#id72"><span class="problematic" id="id73">`</span></a>_engine.Result`**转换**为:class:<a href="#id74"><span class="problematic" id="id75">`</span></a>_engine.MappingResult`对象。对象返回类似于字典的:class:<a href="#id76"><span class="problematic" id="id77">`</span></a>_engine.RowMapping`对象而不是:class:<a href="#id78"><span class="problematic" id="id79">`</span></a>_engine.Row`对象:</p>
+<blockquote>
+<div><p>result = conn.execute(text(“select x, y from some_table”))</p>
+<dl class="simple">
+<dt>for dict_row in result.mappings():</dt><dd><p>x = dict_row[“x”]
+y = dict_row[“y”]</p>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+</ul>
+</section>
+<section class="orm-addin" id="tutorial-sending-parameters">
+<span id="id80"></span><h3>发送参数<a class="headerlink" href="#tutorial-sending-parameters" title="Permalink to this heading">¶</a></h3>
+<p>SQL语句通常伴随着要用SQL语句传递的数据，就像我们上面在INSERT示例中看到的那样。因此:meth:<cite>_engine.Connection.execute`方法也接受参数，称为:term:`bound parameters</cite>。一个简单的例子可能是，如果我们想限制SELECT语句仅选择特定条件下的行，比如y值大于某个传递到函数中的值。</p>
+<p>为了实现这一点，使SQL语句保持固定，并且驱动程序可以正确地对该值进行消毒，我们在语句中添加了一个名为”y”的WHERE条件，该条件命名了一个名为”:y”的新参数; :func:<a href="#id81"><span class="problematic" id="id82">`</span></a>_sql.text`构造使用冒号格式”:y”接受这些参数。实际的”：y”值以一个字典的形式传递给:meth:<a href="#id83"><span class="problematic" id="id84">`</span></a>_engine.Connection.execute`的第二个参数：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(text(&quot;SELECT x, y FROM some_table WHERE y &gt; :y&quot;), {&quot;y&quot;: 2})</span>
+<span class="go">...     for row in result:</span>
+<span class="go">...         print(f&quot;x: {row.x}  y: {row.y}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,)</span>
+</div><span class="go">x: 2  y: 4</span>
+<span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>在日志记录的SQL输出中，我们可以看到绑定参数“：y”在发送到SQLite数据库时已被转换为问号。这是因为SQLite数据库驱动程序使用名为“qmark parameter style”的格式，这是DBAPI规范允许的六种不同格式之一。SQLAlchemy将这些格式抽象为使用冒号的“named”格式。</p>
+</section>
+<section id="tutorial-multiple-parameters">
+<span id="id85"></span><h3>发送多个参数<a class="headerlink" href="#tutorial-multiple-parameters" title="Permalink to this heading">¶</a></h3>
+<p>在:ref:<cite>tutorial_committing_data`中的示例中，我们执行了一个INSERT语句，似乎能够一次将多个行插入到数据库中。对于“DML”语句，例如“INSERT”，“ UPDATE”和“ DELETE”，我们可以通过传递字典的列表而不是单个字典来向:meth:`_engine.Connection.execute`方法发送**多个参数集**，这表明单个SQL语句应该针对每个参数集执行一次。这种执行方式称为:term:`executemany</cite>：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     conn.execute(</span>
+<span class="go">...         text(&quot;INSERT INTO some_table (x, y) VALUES (:x, :y)&quot;),</span>
+<span class="go">...         [{&quot;x&quot;: 11, &quot;y&quot;: 12}, {&quot;x&quot;: 13, &quot;y&quot;: 14}],</span>
+<span class="go">...     )</span>
+<span class="go">...     conn.commit()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">)]</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>上面的操作等效于为每个参数集运行给定的一次INSERT语句，除了该操作将针对许多行进行优化以获得更好的性能。</p>
+<p>“执行”和“executemany”之间的关键行为差异在于后者不支持返回结果行，即使语句包括RETURNING子句也不支持。这个例外情况是当使用Core :func:<a href="#id86"><span class="problematic" id="id87">`</span></a>_sql.insert`构造时引入的，稍后在:ref:<a href="#id88"><span class="problematic" id="id89">`</span></a>tutorial_core_insert`中介绍，其中还使用:meth:<a href="#id90"><span class="problematic" id="id91">`</span></a>_sql.Insert.returning`方法指示RETURNING。在这种情况下，SQLAlchemy利用特殊逻辑重组INSERT语句，使其能够在支持RETURNING的情况下为多行调用。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../glossary.html#term-executemany"><span class="xref std std-term">executemany</span></a>—-在:doc:<a href="#id92"><span class="problematic" id="id93">`</span></a>&lt;Glossary&gt;中描述了，它描述的是大部分“executemany”执行所使用的DBAPI级别的`cursor.executemany() &lt;<a class="reference external" href="https://peps.python.org/pep-0249/#executemany">https://peps.python.org/pep-0249/#executemany</a>&gt;`_方法。</p>
+<p><span class="xref std std-ref">engine_insertmanyvalues</span>—-在:ref:<a href="#id94"><span class="problematic" id="id95">`</span></a>connections_toplevel`中，描述了用于使用:meth:<a href="#id96"><span class="problematic" id="id97">`</span></a>_sql.Insert.returning`提供结果集的“executemany”执行的专门逻辑。</p>
+</div>
+</section>
+</section>
+<section class="orm-header" id="orm">
+<span id="tutorial-executing-orm-session"></span><h2>使用ORM会话执行<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
+<p>如前所述，大多数模式和示例适用于与ORM一起使用，因此在此处介绍此使用，以便在随后的示例中可以用Core和ORM使用每个模式进行说明。</p>
+<p>使用ORM时的基本事务性/数据库交互对象是称为:class:<cite>_orm.Session`的对象。在现代SQLAlchemy中，此对象的使用方式非常类似于:class:`_engine.Connection</cite>，实际上，在使用:class:<cite>_orm.Session`时，它在内部引用:class:`_engine.Connection</cite>，用于发出SQL。</p>
+<p>当对非ORM构造使用:class:<a href="#id98"><span class="problematic" id="id99">`</span></a>_orm.Session`时，它通过我们给它传递的SQL语句并不会实际做什么，因此返回结果与使用:class:<a href="#id100"><span class="problematic" id="id101">`</span></a>_engine.Connection`直接 执行的结果基本相同，因此在这里我们将它们用简单的文本SQL操作演示。</p>
+<p>:class:<a href="#id102"><span class="problematic" id="id103">`</span></a>_orm.Session`具有几种不同的创建模式，但是在此处我们将说明与使用:class:<a href="#id104"><span class="problematic" id="id105">`</span></a>_engine.Connection`的方式完全相同的最基本模式，即将其构建在上下文管理器内：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span><span class="s2">&quot;SELECT x, y FROM some_table WHERE y &gt; :y ORDER BY x, y&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     result = session.execute(stmt, {&quot;y&quot;: 6})</span>
+<span class="go">...     for row in result:</span>
+<span class="go">...         print(f&quot;x: {row.x}  y: {row.y}&quot;)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="mi">6</span><span class="p">,)</span>
+</div><span class="go">x: 6  y: 8</span>
+<span class="go">x: 9  y: 10</span>
+<span class="go">x: 11  y: 12</span>
+<span class="go">x: 13  y: 14</span>
+<div class='show_sql'><span class="k">ROLLBACK</span>
+</div></pre></div>
+</div>
+<p>上面的示例可以与在:ref:<cite>tutorial_sending_parameters`中的示例进行比较——我们直接将调用``with engine.connect() as conn``替换为``with Session(engine) as session`</cite>，然后使用:meth:<a href="#id106"><span class="problematic" id="id107">`</span></a>_orm.Session.execute`方法，就像使用:meth:<a href="#id108"><span class="problematic" id="id109">`</span></a>_engine.Connection.execute`方法一样。</p>
+<p>另外，与:class:<a href="#id110"><span class="problematic" id="id111">`</span></a>_engine.Connection`一样，:class:<a href="#id112"><span class="problematic" id="id113">`</span></a>_orm.Session`还使用:meth:<a href="#id114"><span class="problematic" id="id115">`</span></a>_orm.Session.commit`方法实现了“随时提交”行为，下面我们使用一个文本UPDATE语句更改了一些数据：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Session</span><span class="p">(</span><span class="n">engine</span><span class="p">)</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+<span class="go">...     result = session.execute(</span>
+<span class="go">...         text(&quot;UPDATE some_table SET y=:y WHERE x=:x&quot;),</span>
+<span class="go">...         [{&quot;x&quot;: 9, &quot;y&quot;: 11}, {&quot;x&quot;: 13, &quot;y&quot;: 15}],</span>
+<span class="go">...     )</span>
+<span class="go">...     session.commit()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">y</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">x</span><span class="o">=?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="w"> </span><span class="mi">13</span><span class="p">)]</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>上面，我们使用:ref:<a href="#id116"><span class="problematic" id="id117">`</span></a>tutorial_multiple_parameters`方式执行了一个UPDATE语句，并以“随时提交”提交了块。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>:class:<a href="#id118"><span class="problematic" id="id119">`</span></a>_orm.Session`实际上并未在结束事务后保留:class:<a href="#id120"><span class="problematic" id="id121">`</span></a>_engine.Connection`对象。在下一次需要执行SQL语句时，它将从:class:<a href="#id122"><span class="problematic" id="id123">`</span></a>_engine.Engine`中获得新的:class:<a href="#id124"><span class="problematic" id="id125">`</span></a>_engine.Connection`对象。</p>
+</div>
+<p>显然，:class:<a href="#id126"><span class="problematic" id="id127">`</span></a>_orm.Session`有很多技巧，但是了解它具有一个:meth:<a href="#id128"><span class="problematic" id="id129">`</span></a>_orm.Session.execute`方法，该方法的使用方式与:meth:<a href="#id130"><span class="problematic" id="id131">`</span></a>_engine.Connection.execute`方法相同，将为我们使用后面的示例获取良好的启动。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/session_basics.html#session-basics"><span class="std std-ref">使用会话的基础知识</span></a>—-呈现了与:class:<a href="#id132"><span class="problematic" id="id133">`</span></a>_orm.Session`对象的基本创建和用法方式。</p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="engine.html" title="previous chapter">建立连接 - 引擎</a>
+        Next:
+        <a href="metadata.html" title="next chapter">使用数据库元数据</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:06
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

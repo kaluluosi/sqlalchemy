@@ -1,0 +1,5 @@
+.. change::
+    :tags: bug, engine
+    :tickets: 10147
+
+    修复了关键问题，当将 :paramref:`_sa.create_engine.isolation_level` 设置为 ``AUTOCOMMIT``（与 :meth:`_engine.Engine.execution_options` 方法不同）时，如果使用 :paramref:`_engine.Connection.execution_options.isolation_level` 选择了临时的不同隔离级别，则无法将 "autocommit" 恢复到连接池的连接。

@@ -1,0 +1,1 @@
+该文档已移动到:doc:`queryguide/columns`。

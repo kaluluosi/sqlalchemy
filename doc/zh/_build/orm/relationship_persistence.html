@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    特殊关系持久化模式
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="关系配置" href="relationships.html" />
+        <link rel="next" title="使用传统的“backref”关系参数" href="backref.html" />
+        <link rel="prev" title="集合订制和API详细信息" href="collection_api.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="self_referential.html">邻接列表关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
+<li class="selected"><span class="link-container"><strong>特殊关系持久化模式</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#post-update">自身引用的行/互相依赖的行</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#passive-updates">可变主键/更新级联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#on-update-cascade">在没有外键支持的情况下模拟受限的 ON UPDATE CASCADE</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="collection_api.html" title="previous chapter">集合订制和API详细信息</a></li>
+                <li><b>Next:</b>
+                <a href="backref.html" title="next chapter">使用传统的“backref”关系参数</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="relationships.html" title="关系配置">关系配置</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">特殊关系持久化模式</a><ul>
+<li><a class="reference internal" href="#post-update">自身引用的行/互相依赖的行</a></li>
+<li><a class="reference internal" href="#passive-updates">可变主键/更新级联</a></li>
+<li><a class="reference internal" href="#on-update-cascade">在没有外键支持的情况下模拟受限的 ON UPDATE CASCADE</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-relationship_persistence" >
+        
+<section id="id1">
+<h1>特殊关系持久化模式<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<section id="post-update">
+<span id="id2"></span><h2>自身引用的行/互相依赖的行<a class="headerlink" href="#post-update" title="Permalink to this heading">¶</a></h2>
+<p>这是一种非常特殊的情况，需要 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 执行一个 INSERT 和一个UPDATE 以正确地填充一行（反之，需要一个 UPDATE 和一个 DELETE，以便在不违反外键约束的情况下进行删除）。这两种用例是：</p>
+<ul class="simple">
+<li><p>表格包含外键指向自身，并且单个行将有一个外键值指向其自己的主键。</p></li>
+<li><p>两个表格各包含一个外键，引用另一个表格，在每个表格中都有引用另一个表格的行。</p></li>
+</ul>
+<p>例如：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>          user
+---------------------------------
+user_id    name   related_user_id
+   1       &#39;ed&#39;          1</pre></div>
+</div>
+<p>或：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>             widget                                                  entry
+-------------------------------------------             ---------------------------------
+widget_id     name        favorite_entry_id             entry_id      name      widget_id
+   1       &#39;somewidget&#39;          5                         5       &#39;someentry&#39;     1</pre></div>
+</div>
+<p>在第一种情况下，一行指向自身。从技术上讲，使用序列的数据库（如 PostgreSQL 或 Oracle）可以一次 INSERT 行使用先前生成的值，但是依赖 Autoincrement-style 主键标识符的数据库则不行。<code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 总是假定“父/子”模型的行填充过程在 flush 期间进行，因此，除非直接填充主键/外键列，否则 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 需要使用两个语句。</p>
+<p>在第二种情况下，“widget”行必须在任何引用“entry”行之前插入，但是然后不能设置该“widget”行的“favorite_entry_id”列，直到生成了“entry”行。在这种情况下，通常不可能只使用两个 INSERT 语句插入“widget”和“entry”行；必须执行 UPDATE 以保持外键约束满足条件。除非将外键配置为“延迟到提交”（某些数据库支持的功能），并且如果标识符是手动填充的（再次基本上绕过了 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>）。</p>
+<p>为了使用补充 UPDATE 语句，我们使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.post_update</span></code> 选项，这个选项是 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 中的。这指定两个行之间的关系应在两个行插入后使用 UPDATE 语句创建；它还导致两个行在 DELETE 发出之前通过 UPDATE 取消关联。标记应放在关系中的 <em>一个</em>，最好是多对一侧。下面我们说明一个完整的示例，包括两个 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 结构：</p>
+<blockquote>
+<div><p>from sqlalchemy import Integer, ForeignKey
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import relationship</p>
+<dl>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class Entry(Base):</dt><dd><p>__tablename__ = “entry”
+entry_id = mapped_column(Integer, primary_key=True)
+widget_id = mapped_column(Integer, ForeignKey(“widget.widget_id”))
+name = mapped_column(String(50))</p>
+</dd>
+<dt>class Widget(Base):</dt><dd><p>__tablename__ = “widget”</p>
+<p>widget_id = mapped_column(Integer, primary_key=True)
+favorite_entry_id = mapped_column(</p>
+<blockquote>
+<div><p>Integer, ForeignKey(“entry.entry_id”, name=”fk_favorite_entry”)</p>
+</div></blockquote>
+<p>)
+name = mapped_column(String(50))</p>
+<p>entries = relationship(Entry, primaryjoin=widget_id == Entry.widget_id)
+favorite_entry = relationship(</p>
+<blockquote>
+<div><p>Entry, primaryjoin=favorite_entry_id == Entry.entry_id, post_update=True</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>当使用上面的配置让在被刷新时，”widget” 行将被 INSERT，但是 “favorite_entry_id” 值除外，然后所有 “entry” 行都将参照父 “widget” 行插入，然后将使用 UPDATE 语句填充 “widget” 表的 “favorite_entry_id” 列（这是目前的一行一行）：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">w1</span> <span class="o">=</span> <span class="n">Widget</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;somewidget&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">e1</span> <span class="o">=</span> <span class="n">Entry</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;someentry&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w1</span><span class="o">.</span><span class="n">favorite_entry</span> <span class="o">=</span> <span class="n">e1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">w1</span><span class="o">.</span><span class="n">entries</span> <span class="o">=</span> <span class="p">[</span><span class="n">e1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add_all</span><span class="p">([</span><span class="n">w1</span><span class="p">,</span> <span class="n">e1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">widget</span><span class="w"> </span><span class="p">(</span><span class="n">favorite_entry_id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;somewidget&#39;</span><span class="p">)</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="p">(</span><span class="n">widget_id</span><span class="p">,</span><span class="w"> </span><span class="n">name</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;someentry&#39;</span><span class="p">)</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">widget</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">favorite_entry_id</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">widget</span><span class="p">.</span><span class="n">widget_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>我们可以指定一个更细致的外键约束在“Widget”上，这样就可以保证“favorite_entry_id”指的是一个也引用了这个“Widget”的“Entry”。我们可以使用一个复合的外键，如下所示：</p>
+<blockquote>
+<div><p>from sqlalchemy import Integer, ForeignKey
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import mapped_column
+from sqlalchemy.orm import relationship
+from sqlalchemy import String, UniqueConstraint, ForeignKeyConstraint</p>
+<dl>
+<dt>class Base(DeclarativeBase):</dt><dd><p>pass</p>
+</dd>
+<dt>class Entry(Base):</dt><dd><p>__tablename__ = “entry”
+entry_id = mapped_column(Integer, primary_key=True)
+widget_id = mapped_column(Integer, ForeignKey(“widget.widget_id”))
+name = mapped_column(String(50))
+__table_args__ = (UniqueConstraint(“entry_id”, “widget_id”),)</p>
+</dd>
+<dt>class Widget(Base):</dt><dd><p>__tablename__ = “widget”</p>
+<p>widget_id = mapped_column(Integer, autoincrement=”ignore_fk”, primary_key=True)
+favorite_entry_id = mapped_column(Integer)</p>
+<p>name = mapped_column(String(50))</p>
+<dl>
+<dt>__table_args__ = (</dt><dd><dl class="simple">
+<dt>ForeignKeyConstraint(</dt><dd><p>[“widget_id”, “favorite_entry_id”],
+[“entry.widget_id”, “entry.entry_id”],
+name=”fk_favorite_entry”,</p>
+</dd>
+</dl>
+<p>),</p>
+</dd>
+</dl>
+<p>)</p>
+<dl class="simple">
+<dt>entries = relationship(</dt><dd><p>Entry, primaryjoin=widget_id == Entry.widget_id, foreign_keys=Entry.widget_id</p>
+</dd>
+</dl>
+<p>)
+favorite_entry = relationship(</p>
+<blockquote>
+<div><p>Entry,
+primaryjoin=favorite_entry_id == Entry.entry_id,
+foreign_keys=favorite_entry_id,
+post_update=True,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述映射具有跨 “widget_id” 和 “favorite_entry_id” 列拼合的复合 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a>。为了确保 “Widget.widget_id” 仍是一个“自增”列，我们在 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 上指定了 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.autoincrement" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.autoincrement</span></code></a> 的值为“ignore_fk”，并且还必须在每个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上限制那些作为连接和交叉填充中的外键的列。</p>
+</section>
+<section id="passive-updates">
+<span id="id3"></span><h2>可变主键/更新级联<a class="headerlink" href="#passive-updates" title="Permalink to this heading">¶</a></h2>
+<p>当实体的主键更改时，引用主键的相关项也必须进行更新。对于强制引用完整性的数据库，最佳策略是使用数据库的 ON UPDATE CASCADE 功能，以便将主键更改传播到引用的外键 - 除非将约束标记为“可延迟”，否则值不能短暂地不同步。</p>
+<p>如果一个应用程序使用可变值的自然主键，则强烈建议使用数据库的 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">UPDATE</span> <span class="pre">CASCADE</span></code> 功能。下面示例演示：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”
+__table_args__ = {“mysql_engine”: “InnoDB”}</p>
+<p>username = mapped_column(String(50), primary_key=True)
+fullname = mapped_column(String(100))</p>
+<p>addresses = relationship(“Address”)</p>
+</dd>
+<dt>class Address(Base):</dt><dd><p>__tablename__ = “address”
+__table_args__ = {“mysql_engine”: “InnoDB”}</p>
+<p>email = mapped_column(String(50), primary_key=True)
+username = mapped_column(</p>
+<blockquote>
+<div><p>String(50), ForeignKey(“user.username”, onupdate=”cascade”)</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上面，我们在 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 上说明了 <code class="docutils literal notranslate"><span class="pre">onupdate=&quot;cascade&quot;</span></code>，并且还说明了 <code class="docutils literal notranslate"><span class="pre">mysql_engine='InnoDB'</span></code> 设置，在 MySQL 后端上，这确保了支持执行引用完整性的引擎“ InnoDB”。在使用 SQLite 时，应启用引用完整性，使用 <a class="reference internal" href="../dialects/sqlite.html#sqlite-foreign-keys"><span class="std std-ref">Foreign Key Support</span></a> 描述的配置。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a href="#id4"><span class="problematic" id="id5">:see:`passive_deletes`</span></a> - 支持关系中的 ON DELETE CASCADE</p>
+<p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">mapper.passive_updates</span></code> - <code class="xref py py-class docutils literal notranslate"><span class="pre">sqlalchemy.orm.Mapper</span></code> 中的类似特性</p>
+</div>
+</section>
+<section id="on-update-cascade">
+<h2>在没有外键支持的情况下模拟受限的 ON UPDATE CASCADE<a class="headerlink" href="#on-update-cascade" title="Permalink to this heading">¶</a></h2>
+<p>在使用不支持引用完整性的数据库，并且使用可变值的自然主键时，SQLAlchemy 提供一种特性，以允许将主键值传播到已引用的外键，但是只有在某种程度上。限制，通过针对外键列发出 UPDATE 语句，立即引用已更改主键列的主键列，仅在无法使用 PRAGMA foreign_keys=ON 的情况下才启用该功能，这些主要平台是使用 MyISAM 存储引擎时的 MySQL，以及没有使用该引用完整性的 SQLite。Oracle 数据库也不支持 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">UPDATE</span> <span class="pre">CASCADE</span></code>，但因为它仍然执行引用完整性，需要将约束标记为可延迟，以便 SQLAlchemy 可以发出 UPDATE 语句。</p>
+<p>通过将 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_updates</span></code> 标志设置为 <code class="docutils literal notranslate"><span class="pre">False</span></code> 以启用该功能，最好是在一对多或多对多的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上。当“更新”不再是“被动的”时，这表示 SQLAlchemy 将针对具有变异性主键值的更改的主父对象所引用的集合中的对象单独发出 UPDATE 语句。这也意味着，如果尚未本地存在，集合将完全加载到内存中。</p>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">passive_updates=False</span></code> 的先前映射如下所示：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p>username = mapped_column(String(50), primary_key=True)
+fullname = mapped_column(String(100))</p>
+<p>addresses = relationship(“Address”, passive_updates=False)</p>
+</dd>
+<dt>class Address(Base):</dt><dd><p>__tablename__ = “address”</p>
+<p>email = mapped_column(String(50), primary_key=True)
+username = mapped_column(String(50), ForeignKey(“user.username”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">passive_updates=False</span></code> 的主要限制包括：</p>
+<ul class="simple">
+<li><p>它的性能比直接数据库 ON UPDATE CASCADE 差得多，因为它需要使用 SELECT 完全预加载受影响的集合，并且还必须对这些值发出 UPDATE 语句，它将尝试以“批处理”的方式运行，但仍然在 DBAPI 级别上以逐行方式运行。</p></li>
+<li><p>该功能不能“级联”超过一级。也就是说，如果映射 X 有一个外键引用了映射 Y 的主键，但然后映射 Y 的主键本身是指向映射 Z 的外键，那么 <code class="docutils literal notranslate"><span class="pre">passive_updates=False</span></code> 无法将主键值的更改从 <code class="docutils literal notranslate"><span class="pre">Z</span></code> 传播到 <code class="docutils literal notranslate"><span class="pre">X</span></code>。</p></li>
+<li><p>在关系中仅在多对一侧上配置“passive_updates=False”将无法产生全面的效果，因为单元操作仅在当前身份映射中搜索可能引用具有可变主键的对象，而不是在整个数据库中搜索。</p></li>
+</ul>
+<p>因为几乎所有数据库现在都支持 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">UPDATE</span> <span class="pre">CASCADE</span></code>，因此强烈建议在使用自然和可变主键值时使用传统的 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">UPDATE</span> <span class="pre">CASCADE</span></code> 支持。</p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="collection_api.html" title="previous chapter">集合订制和API详细信息</a>
+        Next:
+        <a href="backref.html" title="next chapter">使用传统的“backref”关系参数</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:05
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

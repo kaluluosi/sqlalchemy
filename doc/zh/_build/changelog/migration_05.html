@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQLAlchemy 0.5有哪些新特性？
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="变更和迁移" href="index.html" />
+        <link rel="next" title="SQLAlchemy 0.4有什么新功能？" href="migration_04.html" />
+        <link rel="prev" title="SQLAlchemy 0.6 有哪些新变化?" href="migration_06.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="变更和迁移">变更和迁移</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="migration_20.html">SQLAlchemy 2.0 - 主要迁移指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="whatsnew_20.html">SQLAlchemy 2.0 有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_20.html">2.0 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_14.html">1.4 版本更新历史</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_13.html">1.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_12.html">1.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_11.html">1.1 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_10.html">1.0 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_09.html">0.9版本更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_08.html">0.8 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_06.html">0.6 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_05.html">0.5 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_04.html">0.4 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_03.html">0.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_02.html">0.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_01.html">版本记录</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_14.html">SQLAlchemy 1.4有哪些新内容？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_13.html">SQLAlchemy 1.3有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_12.html">SQLAlchemy 1.2有哪些新特性?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_11.html">SQLAlchemy 1.1新功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_10.html">SQLAlchemy 1.0有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_09.html">SQLAlchemy 0.9 的新特性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_08.html">SQLAlchemy 0.8有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_07.html">SQLAlchemy 0.7有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_06.html">SQLAlchemy 0.6 有哪些新变化?</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy 0.5有哪些新特性？</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id1">主要文档更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id6">退化源</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id7">需求更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id8">ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id21">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id22">模式/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id23">连接池不再默认为线程本地</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#args-args">*args已接受，不再接受*args</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id44">删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id77">已重命名或已移动</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id86">已弃用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html">SQLAlchemy 0.4有什么新功能？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id1">首先要做什么</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id2">模块导入</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id3">对象关系映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id22">SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id26">架构和反射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id28">SQL执行</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="migration_06.html" title="previous chapter">SQLAlchemy 0.6 有哪些新变化?</a></li>
+                <li><b>Next:</b>
+                <a href="migration_04.html" title="next chapter">SQLAlchemy 0.4有什么新功能？</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="变更和迁移">变更和迁移</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sqlalchemy-0-5">SQLAlchemy 0.5有哪些新特性？</a></li>
+<li><a class="reference internal" href="#id1">主要文档更改</a></li>
+<li><a class="reference internal" href="#id6">退化源</a></li>
+<li><a class="reference internal" href="#id7">需求更改</a></li>
+<li><a class="reference internal" href="#id8">ORM</a></li>
+<li><a class="reference internal" href="#id21">ORM扩展</a></li>
+<li><a class="reference internal" href="#id22">模式/类型</a></li>
+<li><a class="reference internal" href="#id23">连接池不再默认为线程本地</a></li>
+<li><a class="reference internal" href="#args-args">*args已接受，不再接受*args</a></li>
+<li><a class="reference internal" href="#id44">删除</a></li>
+<li><a class="reference internal" href="#id77">已重命名或已移动</a></li>
+<li><a class="reference internal" href="#id86">已弃用</a></li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar changelog-migration_05" >
+        
+<section id="sqlalchemy-0-5">
+<h1>SQLAlchemy 0.5有哪些新特性？<a class="headerlink" href="#sqlalchemy-0-5" title="Permalink to this heading">¶</a></h1>
+<p>此指南记录了影响用户从0.4系列迁移应用程序到0.5的API更改。对于那些使用“Essential SQLAlchemy”的人也建议看一下，因为它只包括了0.4并且似乎甚至有一些旧的0.3模式。请注意，SQLAlchemy 0.5删除了许多在0.4系列的时间段内已弃用的行为，并且还弃用了特定于0.4的更多行为。</p>
+</section>
+<section id="id1">
+<h1>主要文档更改<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>文档的某些部分已经重新编写，并且可以用作新ORM功能的介绍。<a href="#id2"><span class="problematic" id="id3">``</span></a>Query``和``Session``对象特别具有某些API和行为上的不同点，从根本上改变了许多基本的操作方式，特别是关于构造高度自定义的ORM查询以及处理过时的会话状态，提交和回滚。</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.sqlalchemy.org/docs/05/ormtutorial.html">ORM教程</a></p></li>
+<li><p><a href="#id4"><span class="problematic" id="id5">`</span></a>会话文件</p></li>
+</ul>
+<p>  &lt;<a class="reference external" href="https://www.sqlalchemy.org/docs/05/session.html">https://www.sqlalchemy.org/docs/05/session.html</a>&gt;`_</p>
+</section>
+<section id="id6">
+<h1>退化源<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h1>
+<p>另一个信息来源记录在一系列单元测试中，这些单元测试说明了一些常见“查询”模式的最新用法; 可以在
+[source:sqlalchemy/trunk/test/orm/test_deprecations.py]
+查看此文件。</p>
+</section>
+<section id="id7">
+<h1>需求更改<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>需要Python 2.4或更高版本。SQLAlchemy 0.4语句是具有Python 2.3支持的最后一个版本。</p></li>
+</ul>
+</section>
+<section id="id8">
+<h1>ORM<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><strong>查询中的列级表达式。</strong> - 如细节</p></li>
+</ul>
+<p>  在ORM说明中所示，“Query”具有创建特定SELECT的能力
+  语句，而不仅仅是针对完整行的语句：</p>
+<p>  :</p>
+<p>      session.query(User.name, func.count(Address.id).label(“numaddresses”)).join(
+          地址
+      ).group_by(User.name)</p>
+<p>  任何多列/实体查询返回的元组均为*命名’元组：</p>
+<p>  :</p>
+<p>      for row in (
+          session.query(User.name, func.count(Address.id).label(“numaddresses”))
+          .join(Address)
+          .group_by(User.name)
+      ):
+          print(“name”, row.name, “number”, row.numaddresses)</p>
+<blockquote>
+<div><p>“查询”有一个“声明”访问器，以及</p>
+</div></blockquote>
+<p>  一个“subquery()”方法允许使用“Query”来
+  创建更复杂的组合：</p>
+<p>  :</p>
+<p>      subq = (
+          session.query(Keyword.id.label(“keyword_id”))
+          .filter(Keyword.name.in_([“beans”, “carrots”]))
+          .subquery()
+      )
+      recipes = session.query(Recipe).filter(
+          exists()
+          .where(Recipe.id == recipe_keywords.c.recipe_id)
+          .where(recipe_keywords.c.keyword_id == subq.c.keyword_id)
+      )</p>
+<ul class="simple">
+<li><p><strong>建议使用显式的ORM别名进行别名加入</strong></p></li>
+</ul>
+<p>  - “aliased()”函数生成一个“alias”of a
+  类，它允许使用ORM查询中的别名进行细粒度的控制。虽然
+  仍可使用表级别别名（即table.join（someothertable）），但ORM级别的
+  别名保留了ORM映射对象的语义，这对于继承映射，选项和
+  其他场景非常重要。例如：</p>
+<p>  :</p>
+<p>      Friend = aliased(Person)
+      session.query(Person, Friend).join((Friend, Person.friends)).all()</p>
+<ul class="simple">
+<li><p><strong>查询。大大增强。</strong>-您现在可以指定</p></li>
+</ul>
+<p>  为多种方式中的目标和ON子句之一。
+  单个类可以在提供相关外键的情况下提供，方法是
+  使用与“table.join（someothertable）”相同的方式来形成join。一个目标和一个明确的
+  ON条件也可以提供，其中ON条件可以是“relation ()”名称，
+  实际类描述符或SQL表达式。或旧方式的“relation ()”
+  名称或类描述符也可以正常工作。请参阅ORM教程
+  其中有几个例子。</p>
+<ul class="simple">
+<li><p><strong>推荐Declarative用于不需要（也不喜欢）表和的应用程序</strong></p></li>
+</ul>
+<p>  映射器之间的抽象“ - [/ docs / 05 / reference / ext / declarative.html
+  Declarative]模块，用于将``Table’’，’’mapper()`’和用户定义的table类对象结合在一起，由于
+  简化了应用程序配置，确保“每个类一个映射器”模式，并允许整个范围的配置
+  可用于不同的“mapper()`”呼叫。分开“映射器()”和“表”的使用现在已被称为“古典
+  SQLAlchemy用法”，当然可以自由混合使用声明式。</p>
+<ul class="simple">
+<li><p><a href="#id9"><span class="problematic" id="id10">**</span></a>已删除类中的“.c。”属性**（即</p></li>
+</ul>
+<p>  <a href="#id11"><span class="problematic" id="id12">``</span></a>MyClass.c.somecolumn’’）。与0.4一样，类级别的属性可用作查询元素，即
+  <a href="#id13"><span class="problematic" id="id14">``</span></a>Class.c.propname’’现已被``Class.propname’’取代，并且``c’’属性继续保留在``Table’’
+  对象上，其中它们指示``Table’’对象上存在的``Column’’对象的命名空间。</p>
+<p>  要获取映射类的表（如果您没有保存它）：</p>
+<p>  :</p>
+<p>      table = class_mapper(someclass).mapped_table</p>
+<p>  迭代某个表中的列：</p>
+<p>  :</p>
+<p>      for col in table.c:
+          print(col)</p>
+<p>  使用特定列的工作方式：</p>
+<p>  :</p>
+<p>      table.c.somecolumn</p>
+<p>  类绑定的描述符支持完整的列
+  运算符以及文档记录的关系导向
+  操作符，例如“has（）”，“any（）”，“contains（）”等。</p>
+<p>  删除“一词。”的原因是在0.5中
+  类绑定的描述符传递可能不同
+  意思，以及有关类映射的信息，
+  相比简单的“Column”对象 - 这里有使用案例
+  您可能想专门使用其中之一。一般而言，使用类绑定-描述符会调用一组映射/多态感知翻译，使用table-绑定列则不会。在0.4中，这些翻译
+  适用于所有表达式，但是在0.5中，它们不再完全区分列和映射描述符，而仅将翻译应用于后者。因此，在许多情况下，特别是在处理加入表时
+  遗传配置以及使用“query（&lt;columns&gt;）”时，“Class.propname”和“table.c.colname”不能互换使用。</p>
+<p>  例如，“session.query（users.c.id，users.c.name）”与“session.query（User.id, User.name）”是不同的;在后一种情况下，“Query”知道使用的映射器，并且还可以使用进一步的映射器特定操作，例如“query.join（&lt;propname&gt;）”、“query.with_parent（）”等， 但是在前一种情况下不可以。另外，在多态继承方案中，“Class”绑定的描述符是指在用于多态选择的表多态查询中存在的列，而不一定是直接对应于描述符的表列。例如，通过对所有由加入表继承到与每个表的’person_id’列相关联的类集进行关联来创建一组类将使它们的“Class.person_id”属性映射到“person_id”列，而不是子类表。在0.4年，这种行为会自动将此类行为映射到table-附加“Column”对象。在0.5中，已删除了此自动转换，以使您实际上*可以*使用table-绑定列作为重写多态查询时发生的翻译;这使得“Query”能够在联接表或具体表继承设置中创建优化的选择，以及可移植的子查询等。</p>
+<ul class="simple">
+<li><p><strong>会话现在会自动与事务同步。</strong> 默认情况下，会话</p></li>
+</ul>
+<p>  现在自动与事务同步，包括自动刷新和自动到期。一个交易一直存在，除非使用“autocommit”选项禁用。当所有三个标志设置为默认值时，会话在回滚后会恢复得很好，很难在会话中提取过时的数据，详情请参见新的Session
+  文档。</p>
+<ul class="simple">
+<li><p><strong>隐式排序已删除</strong>，这将影响基于ORM</p></li>
+</ul>
+<p>  用户依赖于SA的“隐式排序”行为，该行为指的是所有没有
+  “order_by（）”的查询对象将ORDER BY“id”或“oid”列
+  主映射表，并且所有惰性/饱和集合应用类似的排序。在0.5中，必须明确地在“mapper()”和“relation()”对象上配置自动排序，或在使用“Query”时否则添加自动排序。</p>
+<p>  将0.4映射转换为0.5，使其排序行为与0.4或以前的版本极为相似，请使用mapper（…，server_default =’val’），弃用Column（…，PassiveDefault（’val’））。
+  现在使用“server_default = FetchedValue（）”替换了“PassiveDefault（’’）”形式标记作为受外部触发器影响的列的一种方法，并且没有DDL副作用。</p>
+<ul class="simple">
+<li><p><a href="#id15"><span class="problematic" id="id16">**</span></a>Session现在是</p></li>
+</ul>
+<p>  autoflush = True / autoexpire = True / autocommit = False。** -为了
+  配置它，只需不带参数调用“sessionmaker（）”。名称“transactional = True”现在
+  “autocommit = False”。在发出每个查询时进行flush（使用“autoflush = False”禁用），在每个“commit（）”中（如旧方式）和在每个“begin_nested（）”之前进行flush（因此将回滚到SAVEPOINT很有意义）。所有对象均在每个commit（后以及每个rollback（后过期。在回滚后，待定对象会被清除，删除的对象会移回persistent状态。这些默认值可以很好地协同工作，在很难将过时数据带入会话的情况下，容易导致old技术，例如“clear（）”（也重命名为“expunge_all（）”）</p>
+<blockquote>
+<div><p>P.S .:会话现在可以在“rollback（）”后重新使用。标量和集合属性更改，添加和删除均被回滚。</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><a href="#id17"><span class="problematic" id="id18">**</span></a>session.add（）替换session.save（），session.update（），</p></li>
+</ul>
+<p>  session.save_or_update（）。 <a href="#id19"><span class="problematic" id="id20">**</span></a>- the
+  “session.add（someitem）”和“session.add_all（[list of
+  items]）”方法替换了保存（），“update（）”和
+  <cite>save_or_update（）</cite>。这三种方法将在整个0.5中保持不兼容。</p>
+<ul class="simple">
+<li><p><strong>backref配置简化。</strong> - “backref（）”功能现在</p></li>
+</ul>
+<p>  使用前向“relation（）”的“primaryjoin”和
+  “secondaryjoin”参数，当不明确声明时使用。现在是
+  不需要在两个方向上分别指定“primaryjoin” /“secondaryjoin”。</p>
+<ul class="simple">
+<li><p><strong>简化多态选项。</strong> - ORM的</p></li>
+</ul>
+<p>  “多态加载”行为已经简化了。在0.4中，
+  Mapper（）具有名为“polymorphic_fetch”的参数
+  可配置为“select”或“deferred”。删除了此选项；
+  现在，映射器仅推迟没有出现在SELECT语句中的任何列。
+  使用的实际SELECT语句由
+  “with_polymorphic”mapper参数控制（在0.4中也是这样
+  并替换了“select_table”），以及“with_polymorphic（）”方法
+  在“查询”中（在0.4中也是如此）。</p>
+<p>  继承类的延迟加载的改进是映射现在生成所有情况下的“优化”SELECT语句。即，如果类B从A继承，并且仅供B类拥有的多个属性已过期，则刷新操作将仅包括B的表在SELECT语句中，并且不会连接到A。</p>
+<ul class="simple">
+<li><p>“Session.execute（）”方法将纯字符串转换为“text（）”构造，以便可以指定所有绑定参数为“：bindname”，而无需显式调用“text（）”。如果需要“原始”SQL，请使用“session.connection（）.execute（’raw</p></li>
+</ul>
+<p>  text’）”。</p>
+<ul class="simple">
+<li><p>“session.Query（）.iterate_instances（）”现已更名为仅使用“instances（）”。“旧式”方法返回列表而不是迭代器不再存在。如果你依赖于这种行为，则应使用“list（your_query.instances（））”。</p></li>
+</ul>
+</section>
+<section id="id21">
+<h1>ORM扩展<a class="headerlink" href="#id21" title="Permalink to this heading">¶</a></h1>
+<p>在0.5中，我们正在推进更多修改和扩展ORM的方法。这里是一个摘要：</p>
+<ul class="simple">
+<li><p><strong>MapperExtension。</strong> - 这是经典的扩展</p></li>
+</ul>
+<p>  类，仍然存在。很少需要“create_instance（）”方法，而需要
+  “populate_instance（）”。要对初始化进行控制
+  从数据库加载对象时，请使用“reconstruct_instance（）”方法，或者更容易地使用
+  文件中描述的“&#64;reconstructor”装饰符。</p>
+<ul class="simple">
+<li><p><strong>SessionExtension。</strong> - 这是用于会话事件的易于使用的扩展</p></li>
+</ul>
+<p>  类。特别是，它提供了“before_flush（）”，“after_flush（）”和
+  “after_flush_postexec（）”方法。在许多情况下，使用这种用法
+  建议使用而不是在“MapperExtension”内部使用，因为在
+  在“before_flush（）”中，您可以自由地修改会话的刷新计划，这是不能
+  从“MapperExtension”中进行的。</p>
+<ul class="simple">
+<li><p><strong>AttributeExtension。</strong> - 这个类现在是公共API的一部分，</p></li>
+</ul>
+<p>  允许拦截属性上的用户事件，包括属性集和删除
+  操作，以及集合附加和移除。它也允许修改要设置或附加的值。
+  文档中描述的“&#64;validates”装饰符提供了一种将任何映射
+  属性标记为由特定类方法“验证”的快速方式。</p>
+<ul class="simple">
+<li><p><strong>属性仪表盘定制。</strong> - 提供了一个API以完全替换SQLAlchemy的属性仪表盘，或者仅在某些情况下增强它。此API是为Trellis工具包而生产的，但可以作为公共API使用。分发中提供了一些示例，在``/examples/custom_attributes``目录中。</p></li>
+</ul>
+</section>
+<section id="id22">
+<h1>模式/类型<a class="headerlink" href="#id22" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><strong>String没有长度不再生成TEXT，它是VARCHAR</strong> - “String”类型不再神奇地转换为“Text”类型，当没有长度时指定它。这仅在发出CREATE TABLE时有影响，因为它将没有长度参数的“VARCHAR”发出DDL，这在许多（但不是全部）数据库上无效。要创建TEXT（或CLOB，即无限制的字符串）列，请使用“Text”类型。</p></li>
+<li><p><strong>具有mutable = True的PickleType（）需要__eq __（）方法</strong> - 当mutable = True时，“PickleType”类型需要比较值。比较“pickle.dumps（）”的方法效率低而不可靠。如果传入的对象没有实现“__eq __（）”并且也不是“None”，则使用“dumps（）”比较，但会发出警告。对于“__eq __（）”中包含所有字典，列表等的类型来说，比较将使用“==”，现在默认情况下是可靠的。</p></li>
+<li><p><strong>TypeEngine / TypeDecorator的convert_bind_param（）和convert_result_value（）方法已删除。</strong>-O’Reilly博客不幸地记录了这些方法，尽管它们在0.3之后被弃用。对于子类化“TypeEngine”的用户定义类型，应使用“bind_processor（）”和“result_processor（）”方法进行绑定/处理。在扩展“TypeEngine”或“TypeDecorator”的用户定义类型中使用旧0.3样式的用户定义类型可以通过使用以下适配器轻松适应新样式：</p></li>
+</ul>
+<p>  :</p>
+<p>      class AdaptOldConvertMethods（object）：
+          “”“一个混入，用于调整0.3样式的convert_bind_param和
+          convert_result_value方法</p>
+<p>          ”“”</p>
+<p>          def bind_processor（self，dialect）：
+              def convert（value）：
+                  return self.convert_bind_param（value，dialect）</p>
+<p>              返回转换</p>
+<p>          def result_processor（self，dialect）：
+              def convert（value）：
+                  return self.convert_result_value（value，dialect）</p>
+<p>              返回转换</p>
+<p>          def convert_result_value（self，value，dialect）：
+              返回值</p>
+<p>          def convert_bind_param（self，value，dialect）：
+              返回值</p>
+<p>  要使用上述mixin：</p>
+<p>  :</p>
+<p>      class MyType（AdaptOldConvertMethods，TypeEngine）：
+          …</p>
+<ul class="simple">
+<li><p>Column和Table的“quote”标志以及“quote_schema”标志现在控制引用</p></li>
+</ul>
+<p>  正面和反面。默认值为“空白’，意味着让常规引用规则生效。在
+  “True”时，引用被强制打开。在``False``时，强制引用被关闭。</p>
+<ul class="simple">
+<li><p>ColumnDEFAULT值DDL现在可以更方便地使用Column（…，server_default =’val’）指定，弃用了``Column(…, PassiveDefault(‘val’))``。只有Python启动的默认值可以与“default =”一起使用，可以与server_default共存。新的“server_default = FetchedValue（）”替换了“PassiveDefault（’’）”成语来标记列是否受到外部触发器的影响，并且没有DDL副作用。</p></li>
+<li><p>SQLite的“DateTime”，“Time”和“Date”类型现在仅接受datetime对象，而不是字符串作为绑定参数输入。如果您想创建自己的“混合”类型，该类型接受字符串并将结果作为日期对象返回（从您想要的任何格式），请创建一个基于“String”的“TypeDecorator”。如果您只想使用基于字符串的日期，请使用“String”。</p></li>
+<li><p>此外，SQLite的“DateTime”和“Time”类型，当使用SQLite时，现在表示Python“datetime.datetime”对象的“microseconds”字段的方式与“str（datetime）”相同 - 作为小数秒，而不是毫秒的计数。也就是说：</p></li>
+</ul>
+<p>       dt = datetime.datetime（2008,6,27,12,0,0,125）＃125 usec</p>
+<p>       #老方法
+       “2008-06-27 12:00:00.125”</p>
+<p>       #现在的方法
+       “2008-06-27 12:00:00.000125”</p>
+<p>  因此，如果现有的SQLite基于文件的数据库打算在0.4和0.5之间使用，则必须将datetime列升级为存储新格式（注意：请测试此功能，我相当确定其是正确的）：</p>
+<p>  .. sourcecode :: sql</p>
+<p>       UPDATE mytable SET somedatecol =
+          substr（somedatecol，0,19）||’.’||substr（（substr（somedatecol，21，-1）/ 1000000），3，-1）;</p>
+<p>  或者，在这里启用“传统”模式：</p>
+<p>  :</p>
+<p>       from sqlalchemy.databases.sqlite import DateTimeMixin</p>
+<p>       DateTimeMixin.__传统的微秒__ = True</p>
+</section>
+<section id="id23">
+<h1>连接池不再默认为线程本地<a class="headerlink" href="#id23" title="Permalink to this heading">¶</a></h1>
+<p>0.4有一个令人遗憾的默认设置“pool_threadlocal = True”，因此在单个线程中使用多个会话时会出现意外的行为。在0.5中，此标志已关闭。要重新启用0.4的行为，请将“pool_threadlocal = True”指定为“create_engine（）”，或者通过“strategy =” threadlocal“”使用“threadlocal”策略。</p>
+</section>
+<section id="args-args">
+<h1><a href="#id24"><span class="problematic" id="id25">*</span></a>args已接受，不再接受<a href="#id26"><span class="problematic" id="id27">*</span></a>args<a class="headerlink" href="#args-args" title="Permalink to this heading">¶</a></h1>
+<p>使用“方法（<a href="#id28"><span class="problematic" id="id29">*</span></a>args）”与“方法（[args]）”之间的策略是，如果方法接受表示固定结构的变长项目集，则采用“<a href="#id30"><span class="problematic" id="id31">*</span></a>args”。如果方法接受变长项集的数据驱动，则采用“[args]”。</p>
+<p><a href="#id32"><span class="problematic" id="id33">*</span></a>各种查询选项函数“eagerload（）”，
+   “eagerload_all（）”，“lazyload（）”，“contains_eager（）”，
+   “defer（）”，“undefer（）”现在都接受包含可变长度的“<a href="#id34"><span class="problematic" id="id35">*</span></a>keys”参数
+   作为其参数，这允许使用描述符制定路径，即：</p>
+<p>  :</p>
+<p>          query.options(eagerload_all(User.orders, Order.items, Item.keywords))</p>
+<p>  一个单独的数组参数仍会被接受用于向后兼容。</p>
+<p><a href="#id36"><span class="problematic" id="id37">*</span></a>类似地，“Query.join（）”和“Query.outerjoin（）”
+  方法现在接受可变长度的<a href="#id38"><span class="problematic" id="id39">*</span></a>args，其中单个
+  数组用于向后兼容：</p>
+<p>  :</p>
+<p>          query.join（“orders”，“items”）
+          query.join(User.orders，Order.items)</p>
+<p><a href="#id40"><span class="problematic" id="id41">*</span></a>列等的“in_（）”方法现在仅接受列表参数。它不再接受“<a href="#id42"><span class="problematic" id="id43">*</span></a>args”。</p>
+</section>
+<section id="id44">
+<h1>删除<a class="headerlink" href="#id44" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><strong>entity_name</strong> - 此功能一直存在困难，并且很少使用。 0.5更深入地阐述了“entity_name”的用例，展示了进一步的问题，导致其被删除。如果需要针对单个类请求不同的映射，请将类拆分为单独的子类并单独进行映射。一个这样的例子位于[wiki：UsageRecipes / EntityName]。有关原理的更多信息描述在https://groups.google.c中。</p></li>
+<li><p><strong>get（）/load（）清理</strong></p></li>
+</ul>
+<p>  已移除“load（）”方法。它的
+  功能有些随意，基本上复制了
+  来自Hibernate，其也并不是特别
+  有意义的方法。</p>
+<p>  要获得等效功能：</p>
+<p>  :</p>
+<p>       x = session.query(SomeClass).populate_existing().get(7)</p>
+<p>  “Session.get（cls，id）”和“Session.load（cls，id）”已删除。“Session.get（）”与“Session.query（cls）.get（id）”重复。</p>
+<p>  “MapperExtension.get（）”也已删除（同样是“MapperExtension.load（）”）。要覆盖“Query.get（）”的功能，请使用子类：</p>
+<p>  :</p>
+<p>       class MyQuery（Query）：
+           def get（self，ident）：
+               …</p>
+<p>       session = sessionmaker（query_cls = MyQuery）（）</p>
+<p>       ad1 = session.query(Address).get(1)</p>
+<p><a href="#id45"><span class="problematic" id="id46">*</span></a>“sqlalchemy.orm.relation（）”</p>
+<p>  已删除以下弃用的关键字参数：</p>
+<p>  foreignkey，association，private，attributeext，is_backref</p>
+<p>  特别是，“attributeext”替换为“extension”  - “AttributeExtension”类现在在公共API中。</p>
+<p><a href="#id47"><span class="problematic" id="id48">*</span></a>“session.Query（）”</p>
+<p>  已删除以下弃用功能：</p>
+<p>  list，scalar，count_by，select_whereclause，get_by，
+  select_by，join_by，selectfirst，selectone，select，
+  执行，select_statement，select_text，join_to，join_via，
+  selectfirst_by，selectone_by，apply_max，apply_min，
+  apply_avg，apply_sum</p>
+<p>  此外对“join（）”，“outerjoin（）”，“add_entity（）”和“add_column（）”使用“id”关键字参数已删除。使用“aliased”构造向“Query”中的别名目标，以将结果列定向到目标。</p>
+<p>  :</p>
+<p>          from sqlalchemy.orm import aliased</p>
+<p>          address_alias = aliased(Address)
+          print(session.query(User, address_alias).join((address_alias, User.addresses)).all())</p>
+<p><a href="#id49"><span class="problematic" id="id50">*</span></a>“sqlalchemy.orm.Mapper”</p>
+<p>  * instances（）</p>
+<p>  * get_session（）-此方法并不引人注目，但
+    如果使用扩展名，例如“scoped_session（）”或旧的“SessionContextExt”
+    使用时，即使父对象完全分离，它的效果是将懒加载与特定会话相关联。应用程序将不能按预期工作。</p>
+<p><a href="#id51"><span class="problematic" id="id52">*</span></a>“mapper（MyClass，mytable）”</p>
+<p>  现在不再使用“c”类属性进行映射，即“MyClass.c”</p>
+<p><a href="#id53"><span class="problematic" id="id54">*</span></a>“sqlalchemy.orm.collections”</p>
+<p>  _prepare_instrumentation别名为空
+  调用已删除。</p>
+<p><a href="#id55"><span class="problematic" id="id56">*</span></a>“sqlalchemy.orm”</p>
+<p>  已删除“EXT_PASS”别名“EXT_CONTINUE”。</p>
+<p><a href="#id57"><span class="problematic" id="id58">*</span></a>“sqlalchemy.engine”</p>
+<p>  从“DefaultDialect.preexecute_sequences”到的别名已删除
+  <code class="docutils literal notranslate"><span class="pre">.preexecute_pk_sequences</span></code>。</p>
+<p>  已删除已弃用的engine_descriptors（）函数。</p>
+<p><a href="#id59"><span class="problematic" id="id60">*</span></a>“sqlalchemy.ext.activemapper”</p>
+<p>  模块已删除。</p>
+<p><a href="#id61"><span class="problematic" id="id62">*</span></a>“sqlalchemy.ext.assignmapper”</p>
+<p>  模块已删除。</p>
+<p><a href="#id63"><span class="problematic" id="id64">*</span></a>“sqlalchemy.ext.associationproxy”</p>
+<p>  代理的下传关键字参数“.append（item，** kw）”已被删除，现在是``.append（item）``</p>
+<p><a href="#id65"><span class="problematic" id="id66">*</span></a>“sqlalchemy.ext.selectresults”，
+  “sqlalchemy.mods.selectresults”</p>
+<p>  已删除模块。</p>
+<p><a href="#id67"><span class="problematic" id="id68">*</span></a>“sqlalchemy.ext.declarative”</p>
+<p>  已删除“declared_synonym（）”。</p>
+<p><a href="#id69"><span class="problematic" id="id70">*</span></a>“sqlalchemy.ext.sessioncontext”</p>
+<p>  模块已删除。</p>
+<p><a href="#id71"><span class="problematic" id="id72">*</span></a>“sqlalchemy.log”</p>
+<p>  别名“SADeprecationWarning”已删除
+  “sqlalchemy.exc.SADeprecationWarning”。</p>
+<p><a href="#id73"><span class="problematic" id="id74">*</span></a>“sqlalchemy.exc”</p>
+<p>  “exc.AssertionError”已删除，并使用相同名称的内置代替。</p>
+<p><a href="#id75"><span class="problematic" id="id76">*</span></a>“sqlalchemy.databases.mysql”</p>
+<p>  已删除弃用的“get_version_info”dialect方法。</p>
+</section>
+<section id="id77">
+<h1>已重命名或已移动<a class="headerlink" href="#id77" title="Permalink to this heading">¶</a></h1>
+<p><a href="#id78"><span class="problematic" id="id79">*</span></a>“sqlalchemy.exceptions”现在是“sqlalchemy.exc ”</p>
+<p>  该模块可以在0.6之前仍然以旧名称导入。</p>
+<p><a href="#id80"><span class="problematic" id="id81">*</span></a>“FlushError”，“ConcurrentModificationError”，
+  <code class="docutils literal notranslate"><span class="pre">UnmappedColumnError</span></code> - &gt; sqlalchemy.orm.exc</p>
+<p>  这些异常移动到orm包中。导入’
+  ‘sqlalchemy.orm’会在sqlalchemy.exc中安装别名，以便向后兼容直到0.6。</p>
+<p><a href="#id82"><span class="problematic" id="id83">*</span></a>“sqlalchemy.logging”-&gt;“sqlalchemy.log”</p>
+<p>  此内部模块已被重命名。不再需要进行特殊处理
+  当使用py2app和类似的扫描导入的工具打包SA时。</p>
+<p><a href="#id84"><span class="problematic" id="id85">*</span></a>“session.Query（）.iterate_instances（）”-&gt;
+  “session.Query（）.instances（）”。</p>
+</section>
+<section id="id86">
+<h1>已弃用<a class="headerlink" href="#id86" title="Permalink to this heading">¶</a></h1>
+<p><a href="#id87"><span class="problematic" id="id88">*</span></a>“Session.save（）”，“Session.update（）”，
+  “Session.save_or_update（）”</p>
+<p>  所有三个替换为“Session.add（）”</p>
+<p><a href="#id89"><span class="problematic" id="id90">*</span></a>“sqlalchemy.PassiveDefault”</p>
+<p>  使用“Column（server_default = …）”进行翻译到sqlalchemy.DefaultClause()。
+  在幕后。</p>
+<p><a href="#id91"><span class="problematic" id="id92">*</span></a>“session.Query（）.iterate_instances（）”。已更名为“instances（）”。</p>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="migration_06.html" title="previous chapter">SQLAlchemy 0.6 有哪些新变化?</a>
+        Next:
+        <a href="migration_04.html" title="next chapter">SQLAlchemy 0.4有什么新功能？</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:19:41
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

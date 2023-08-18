@@ -1,0 +1,862 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQLAlchemy 0.7有什么新特性？
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="变更和迁移" href="index.html" />
+        <link rel="next" title="SQLAlchemy 0.6 有哪些新变化?" href="migration_06.html" />
+        <link rel="prev" title="SQLAlchemy 0.8有哪些新特性？" href="migration_08.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="变更和迁移">变更和迁移</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="migration_20.html">SQLAlchemy 2.0 - 主要迁移指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="whatsnew_20.html">SQLAlchemy 2.0 有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_20.html">2.0 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_14.html">1.4 版本更新历史</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_13.html">1.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_12.html">1.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_11.html">1.1 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_10.html">1.0 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_09.html">0.9版本更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_08.html">0.8 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_06.html">0.6 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_05.html">0.5 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_04.html">0.4 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_03.html">0.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_02.html">0.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_01.html">版本记录</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_14.html">SQLAlchemy 1.4有哪些新内容？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_13.html">SQLAlchemy 1.3有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_12.html">SQLAlchemy 1.2有哪些新特性?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_11.html">SQLAlchemy 1.1新功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_10.html">SQLAlchemy 1.0有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_09.html">SQLAlchemy 0.9 的新特性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_08.html">SQLAlchemy 0.8有哪些新特性？</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy 0.7有什么新特性？</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">介绍</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">新特性</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id3">新事件系统</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#comparable-property">混合属性，实现/替换同义词(), comparable_property()</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id14">速度增强</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id15">组合重写</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#join-target-onclause">更简洁的查询.join(target，onclause)格式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mutable-true">突变事件扩展，取代“mutable = True”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#nulls-first-nulls-last">NULLS FIRST / NULLS LAST操作符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#select-distinct-query-distinct-postgresql-distinct-on-args">select.distinct()，query.distinct()对于PostgreSQL DISTINCT ON现在支持*args</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#index-table-table-args"><code class="docutils literal notranslate"><span class="pre">Index()``可以内联放置在``Table</span></code>，``__table_args__``内</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql">窗口函数SQL构造</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#typedecorator">``TypeDecorator``可与整数主键列一起使用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#typedecorator-sqlalchemy">``TypeDecorator``在“sqlalchemy”导入空间中存在</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id51">新方言</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id52">行为变化（向后兼容）</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#c">默认情况下，构建C扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id53">查询计数（）简化，应该几乎总是起作用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#flush">查询中含有集合成员，标量引用不属于flush</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#nose">不再装置安装Nose插件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#table">非由“Table”派生的构造适用映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#aliased-fromclause">aliased()接受“FromClause”元素</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-connection-session-execute-bind">Session.connection(), Session.execute()接受’bind’</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id66">在列子句中使用独立的绑定参数会被自动标记。</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlite-os-path-abspath">SQLite - 相对文件路径通过 os.path.abspath() 进行规范化</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#ms-sql-string-unicode-varchar-nvarchar-varbinarymax">在 MS-SQL 上，“String” /“Unicode” /“VARCHAR”/“NVARCHAR” /“VARBINARY”在不指定长度的情况下发出“max”</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id67">行为更改（向后不兼容）</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#pickletypearray">PickleType和ARRAY可变性默认关闭</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#composite-mutation-tracking-extension">“Composite（）”的可变性检测需要Mutation Tracking Extension</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sqlite-sqlitenullpool">SQLite - 现在对于基于文件的数据库，SQLite方言使用“NullPool”</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-merge-id">“Session.merge()”检查具有版本控制的映射器的版本id</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#query">Query改进中的元组标签名称</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id68">映射列属性首先引用最具体的列</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#ddl">DDL()构造现在转义百分号</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#types-type-map-types-type-map">列出类型名称的types.type_map现在已不公开，types._type_map</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#mappers-configure-mappers">编译器的mappers()重命名为configure_mappers（），简化配置内部</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#core">Core侦听器/代理被事件侦听器取代</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm">ORM扩展被事件侦听器取代</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#select-mysql-distinct">在select()中向MySQL发送字符串到’distinct’应该通过前缀完成</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id69">映射到具有两个或多个同名列的联接需要显式声明</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#polymorphic-on">映射器要求polymorphic_on列存在于预定选择中</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#compile-mappers-configure-mappers">compile_mappers()改名为configure_mappers()，简化配置内部</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#callablesbindparam-beaker">callables传递给bindparam()不会被求值-影响了 Beaker 示例</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#type-map-types-type-map">类型.type_map现在是私有的，types._type_map</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#alias-name">独立的alias（）函数的别名关键字参数改为name</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#pool-get-pool-get-api-pool-connect">‘Pool.get（）’-&gt; ‘Pool._get（）’，公共API是’Pool.connect（）’以前被弃用，现在被移除</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#query-join-query-outerjoin-eagerload-eagerload-all">Query.join（），Query.outerjoin（），eagerload（），eagerload_all（）和其他方法不再允许将属性列表作为参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#scopedsession-mapper">``ScopedSession.mapper``被移除</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="migration_06.html">SQLAlchemy 0.6 有哪些新变化?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html">SQLAlchemy 0.5有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id1">主要文档更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id6">退化源</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id7">需求更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id8">ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id21">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id22">模式/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id23">连接池不再默认为线程本地</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#args-args">*args已接受，不再接受*args</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id44">删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id77">已重命名或已移动</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id86">已弃用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html">SQLAlchemy 0.4有什么新功能？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id1">首先要做什么</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id2">模块导入</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id3">对象关系映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id22">SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id26">架构和反射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id28">SQL执行</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="migration_08.html" title="previous chapter">SQLAlchemy 0.8有哪些新特性？</a></li>
+                <li><b>Next:</b>
+                <a href="migration_06.html" title="next chapter">SQLAlchemy 0.6 有哪些新变化?</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="变更和迁移">变更和迁移</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sqlalchemy-0-7">SQLAlchemy 0.7有什么新特性？</a><ul>
+<li><a class="reference internal" href="#id1">介绍</a></li>
+<li><a class="reference internal" href="#id2">新特性</a><ul>
+<li><a class="reference internal" href="#id3">新事件系统</a></li>
+<li><a class="reference internal" href="#comparable-property">混合属性，实现/替换同义词(), comparable_property()</a></li>
+<li><a class="reference internal" href="#id14">速度增强</a></li>
+<li><a class="reference internal" href="#id15">组合重写</a></li>
+<li><a class="reference internal" href="#join-target-onclause">更简洁的查询.join(target，onclause)格式</a></li>
+<li><a class="reference internal" href="#mutable-true">突变事件扩展，取代“mutable = True”</a></li>
+<li><a class="reference internal" href="#nulls-first-nulls-last">NULLS FIRST / NULLS LAST操作符</a></li>
+<li><a class="reference internal" href="#select-distinct-query-distinct-postgresql-distinct-on-args">select.distinct()，query.distinct()对于PostgreSQL DISTINCT ON现在支持*args</a></li>
+<li><a class="reference internal" href="#index-table-table-args"><code class="docutils literal notranslate"><span class="pre">Index()``可以内联放置在``Table</span></code>，``__table_args__``内</a></li>
+<li><a class="reference internal" href="#sql">窗口函数SQL构造</a></li>
+<li><a class="reference internal" href="#typedecorator">``TypeDecorator``可与整数主键列一起使用</a></li>
+<li><a class="reference internal" href="#typedecorator-sqlalchemy">``TypeDecorator``在“sqlalchemy”导入空间中存在</a></li>
+<li><a class="reference internal" href="#id51">新方言</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id52">行为变化（向后兼容）</a><ul>
+<li><a class="reference internal" href="#c">默认情况下，构建C扩展</a></li>
+<li><a class="reference internal" href="#id53">查询计数（）简化，应该几乎总是起作用</a></li>
+<li><a class="reference internal" href="#flush">查询中含有集合成员，标量引用不属于flush</a></li>
+<li><a class="reference internal" href="#nose">不再装置安装Nose插件</a></li>
+<li><a class="reference internal" href="#table">非由“Table”派生的构造适用映射</a></li>
+<li><a class="reference internal" href="#aliased-fromclause">aliased()接受“FromClause”元素</a></li>
+<li><a class="reference internal" href="#session-connection-session-execute-bind">Session.connection(), Session.execute()接受’bind’</a></li>
+<li><a class="reference internal" href="#id66">在列子句中使用独立的绑定参数会被自动标记。</a></li>
+<li><a class="reference internal" href="#sqlite-os-path-abspath">SQLite - 相对文件路径通过 os.path.abspath() 进行规范化</a></li>
+<li><a class="reference internal" href="#ms-sql-string-unicode-varchar-nvarchar-varbinarymax">在 MS-SQL 上，“String” /“Unicode” /“VARCHAR”/“NVARCHAR” /“VARBINARY”在不指定长度的情况下发出“max”</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id67">行为更改（向后不兼容）</a><ul>
+<li><a class="reference internal" href="#pickletypearray">PickleType和ARRAY可变性默认关闭</a></li>
+<li><a class="reference internal" href="#composite-mutation-tracking-extension">“Composite（）”的可变性检测需要Mutation Tracking Extension</a></li>
+<li><a class="reference internal" href="#sqlite-sqlitenullpool">SQLite - 现在对于基于文件的数据库，SQLite方言使用“NullPool”</a></li>
+<li><a class="reference internal" href="#session-merge-id">“Session.merge()”检查具有版本控制的映射器的版本id</a></li>
+<li><a class="reference internal" href="#query">Query改进中的元组标签名称</a></li>
+<li><a class="reference internal" href="#id68">映射列属性首先引用最具体的列</a></li>
+<li><a class="reference internal" href="#ddl">DDL()构造现在转义百分号</a></li>
+<li><a class="reference internal" href="#types-type-map-types-type-map">列出类型名称的types.type_map现在已不公开，types._type_map</a></li>
+<li><a class="reference internal" href="#mappers-configure-mappers">编译器的mappers()重命名为configure_mappers（），简化配置内部</a></li>
+<li><a class="reference internal" href="#core">Core侦听器/代理被事件侦听器取代</a></li>
+<li><a class="reference internal" href="#orm">ORM扩展被事件侦听器取代</a></li>
+<li><a class="reference internal" href="#select-mysql-distinct">在select()中向MySQL发送字符串到’distinct’应该通过前缀完成</a></li>
+<li><a class="reference internal" href="#id69">映射到具有两个或多个同名列的联接需要显式声明</a></li>
+<li><a class="reference internal" href="#polymorphic-on">映射器要求polymorphic_on列存在于预定选择中</a></li>
+<li><a class="reference internal" href="#compile-mappers-configure-mappers">compile_mappers()改名为configure_mappers()，简化配置内部</a></li>
+<li><a class="reference internal" href="#callablesbindparam-beaker">callables传递给bindparam()不会被求值-影响了 Beaker 示例</a></li>
+<li><a class="reference internal" href="#type-map-types-type-map">类型.type_map现在是私有的，types._type_map</a></li>
+<li><a class="reference internal" href="#alias-name">独立的alias（）函数的别名关键字参数改为name</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pool-get-pool-get-api-pool-connect">‘Pool.get（）’-&gt; ‘Pool._get（）’，公共API是’Pool.connect（）’以前被弃用，现在被移除</a><ul>
+<li><a class="reference internal" href="#query-join-query-outerjoin-eagerload-eagerload-all">Query.join（），Query.outerjoin（），eagerload（），eagerload_all（）和其他方法不再允许将属性列表作为参数</a></li>
+<li><a class="reference internal" href="#scopedsession-mapper">``ScopedSession.mapper``被移除</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar changelog-migration_07" >
+        
+<section id="sqlalchemy-0-7">
+<h1>SQLAlchemy 0.7有什么新特性？<a class="headerlink" href="#sqlalchemy-0-7" title="Permalink to this heading">¶</a></h1>
+<div class="admonition- admonition">
+<p class="admonition-title">关于本文档</p>
+<p>本文档描述了SQLAlchemy版本0.6和0.7之间的变化，0.7最近一次维护发布是在2012年10月。</p>
+<p>文档日期：2011年7月27日</p>
+</div>
+<section id="id1">
+<h2>介绍<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>本指南介绍SQLAlchemy 0.7的新特性，并记录影响用户从0.6转移到0.7系列的应用程序的更改。</p>
+<p>尽可能地使更改按照不破坏兼容性的方式进行。必须不兼容的更改非常少，除了一种，即可变属性默认值的更改，应该会影响极少部分应用程序-许多更改涉及非公共API和一些用户可能一直尝试使用的未记录的黑客。</p>
+<p>第二个，更小的非向后兼容性变化类别也有所记录。这个类别的更改涉及自0.5版本起就已被弃用并且已经发出警告的功能和行为。这些更改只会影响仍在使用0.4或早期0.5样式API的应用程序。随着项目的成熟，我们的API具有越来越少的这些类型的功能，这是我们API具有的少数不太理想的功能，而这些功能并不适用于它们旨在解决的用例。</p>
+<p>SQLAlchemy 0.7中有一系列现有功能被替换。“supereded”和“deprecated”的术语没有太大的区别，只是前者更弱地表明旧特性将会被删除。在0.7中，例如“同义词”和“comparable_property”，以及所有“Extension”和其他事件类，都已被取代。但是，这些“不再建议使用”的功能已经被重新实现，使其实现大部分在ORM核心代码之外，因此它们的持续“挂起”不会影响SQLAlchemy进一步简化和完善其内部的能力，并且我们预计它们将在可预见的未来的API中保持不变。</p>
+</section>
+<section id="id2">
+<h2>新特性<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<section id="id3">
+<h3>新事件系统<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy从``MapperExtension``类开始，为映射器的持久化周期提供了钩子。随着SQLAlchemy的不断组件化，越来越多的“扩展”，“监听器”和“代理”类出现，以以各种ad-hoc方式解决各种活动拦截用例。其中的一部分是由活动的分歧带来的； <a href="#id4"><span class="problematic" id="id5">``</span></a>ConnectionProxy``对象希望提供一个重写语句和参数的系统； <a href="#id6"><span class="problematic" id="id7">``</span></a>AttributeExtension``提供了一种替换传入值的系统，并且``DDL``对象具有可以关闭特定方言调用的事件。</p>
+<p>0.7现在使用新的，统一的方法来实现几乎所有的插件点，该方法保留不同系统的所有功能，提供了更多的灵活性和更少的样板文件，执行效果更好，并且消除了为每个事件子系统学习根本不同的API的需要。预先存在的类``MapperExtension``，<code class="docutils literal notranslate"><span class="pre">SessionExtension</span></code>，<code class="docutils literal notranslate"><span class="pre">AttributeExtension</span></code>，<code class="docutils literal notranslate"><span class="pre">ConnectionProxy</span></code>，<a href="#id8"><span class="problematic" id="id9">``</span></a>PoolListener``以及``DDLElement.execute_at``方法已被弃用并且现在是基于新系统的实现-这些API仍然功能齐全，并且预计会保留在该位置可预见的未来。</p>
+<p>新方法使用具名事件和用户定义的可调用项将活动与事件关联起来。 API的外观和感觉由多种来源驱动，例如JQuery，Blinker和Hibernate，并且在多次与Twitter上的许多用户进行会议期间进行了进一步修改，该应用程序似乎具有更高的响应率，更高于问题的邮件列表。</p>
+<p>它还具有一种开放式的目标规范系统，该系统允许将事件与API类（例如所有“Session”或“Engine”对象）相关联，以特定API类的特定实例（例如某个“Pool”或“Mapper”），以及与之相关的对象，例如一个用户定义类，它被映射，或者像特定映射父类的特定子类的实例上的某个属性一样特定。单个侦听器子系统可以应用包装器到传入的用户定义侦听器函数，这些包装器修改它们如何被调用-映射器事件可以接收要操作的对象的实例或其底层``InstanceState``对象。属性事件可以选择是否有返回新值的责任。</p>
+<p>现在有多个系统基于新事件API构建，包括新的“可变属性”API和组合属性。更大的事件重视还导致引入了一些新事件，包括属性过期和刷新操作，pickle 加载/卸载操作，完成的映射器构造操作。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">event_toplevel</span></p>
+</div>
+<p><a href="#id10"><span class="problematic" id="id11">:ticket:`1902`</span></a></p>
+</section>
+<section id="comparable-property">
+<h3>混合属性，实现/替换同义词(), comparable_property()<a class="headerlink" href="#comparable-property" title="Permalink to this heading">¶</a></h3>
+<p>“派生属性”示例现在已成为官方扩展程序。 `` synonym（）``的典型用例是提供对映射列的描述符访问； `` comparable_property（）``的用例是能够从任何描述符返回``PropComparator`` 。实践中，“衍生”方法更容易使用，更易于扩展，使用几十行纯Python几乎没有导入，而且不需要ORM核心甚至意识到它。该功能现在被称为“混合属性”扩展程序。</p>
+<p>`` synonym（）``和`` comparable_property（）``仍然是ORM的一部分，尽管它们的实现已经移出，并建立在类似于混合扩展的方法上，因此除此之外，<a href="#id74"><span class="problematic" id="id75">核心ORM_</span></a>
+mapper/query/property模块并不真正知道它们。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">hybrids_toplevel</span></p>
+</div>
+<p><a href="#id12"><span class="problematic" id="id13">:ticket:`1903`</span></a></p>
+</section>
+<section id="id14">
+<h3>速度增强<a class="headerlink" href="#id14" title="Permalink to this heading">¶</a></h3>
+<p>按照所有主要的SQLA版本，对内部进行了广泛的遍历，以减少常见情况下的开销和调用次数。此版本的亮点包括：</p>
+<ul class="simple">
+<li><p>现在，刷新进程将INSERT语句捆绑到批量中，用于主键已经存在的行，而无需调用``cursor.execute（）``。特别是这通常适用于连接表继承配置的“child”表，这意味着用于加入表对象的大量批量插入的``cursor.execute``调用数量可以减半，允许本地DBAPI优化针对那些传递给``cursor.executemany（）``的语句运作（例如重用预准备语句）。</p></li>
+<li><p>以前已加载的``relationship()``引用的许多对一引用的访问者执行路径现在已经大大简化。直接检查身份映射而不需要先生成新的``Query``对象，这在许多内存中访问许多对一数据时是代价高昂的。此外，也不再使用每次调用构造的“loader”对象大多数的懒惰属性加载。混合体重新编写使在刷新期间mapper内部访问映射属性的代码路径更短。旧的内联属性访问函数替换了以前在“save-update”和其他级联操作需要在全部数据成员中级联的情况下使用的“history”。这减少了为此速度关键操作生成新的``History``对象的开销。</p></li>
+<li><p>ExecutionContext的内部，即对应于语句执行的对象，已被内联化和简化。</p></li>
+<li><p>每次语句执行时由类型生成的``bind_processor（）``和``result_processor（）``可调用项现在已经被缓存（小心使用，以避免临时类型和方言的内存泄漏），对于该类型的寿命进一步减少每个语句的调用开销。</p></li>
+<li><p>特定Compiled实例的“bind processor”的传递的收藏也缓存到了“Compiled”对象上，利用刷新过程使用的“编译缓存”，以重新使用相同的编译INSERT，UPDATE，DELETE语句。</p></li>
+</ul>
+<p>呼吁减少调用次数的演示，包括示例基准脚本在
+<a class="reference external" href="https://techspot.zzzeek.org/2010/12/12/a-tale-of-three-profiles/">https://techspot.zzzeek.org/2010/12/12/a-tale-of-three-profiles/</a></p>
+</section>
+<section id="id15">
+<h3>组合重写<a class="headerlink" href="#id15" title="Permalink to this heading">¶</a></h3>
+<p>“composite”特性已被重新编写，就像“synonym（）”和“comparable_property()”一样，使用基于描述符和事件的轻量级实现，而不是构建到ORM内部中。这允许从mapper/unit of work内部删除一些延迟并简化组合的工作方式。复合属性现在不再隐藏它们构建属性上的基础列，而现在将其作为常规属性保留。复合材料还可以充当“relationship()”以及“Column()”属性的代理。</p>
+<p>组合体的主要不向后兼容的更改是它们不再使用“mutable = True”系统来检测原地突变。请使用“变异跟踪&lt;<a class="reference external" href="https://www.sqlalchemy.org/docs/07/orm/extensions/mutable.html">https://www.sqlalchemy.org/docs/07/orm/extensions/mutable.html</a>&gt;`_”扩展来为现有复合材料使用建立就地变更事件。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/composites.html#mapper-composite"><span class="std std-ref">组合列类型</span></a></p>
+<p><a class="reference internal" href="../orm/extensions/mutable.html"><span class="std std-ref">变异跟踪</span></a></p>
+</div>
+<p><a href="#id16"><span class="problematic" id="id17">:ticket:`2008`</span></a> ：ticket:<cite>2024</cite></p>
+</section>
+<section id="join-target-onclause">
+<h3>更简洁的查询.join(target，onclause)格式<a class="headerlink" href="#join-target-onclause" title="Permalink to this heading">¶</a></h3>
+<p>现在，将带有显式onclause的目标作为``query.join（）``的默认方法是：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="n">SomeClass</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">ParentClass</span><span class="o">.</span><span class="n">some_id</span><span class="p">)</span></pre></div>
+</div>
+<p>在0.6中，这种用法被认为是错误的，因为``join()``接受与多个JOIN子句相对应的多个参数-两个参数的形式需要以元组的形式出现，以消除单个参数和二元参数之间的歧义目标加入。在0.6中间，由于这种用法非常普遍，所以添加了检测和针对此特定调用风格的错误消息。在0.7中，由于我们正在检测确切的模式，而需要出于没有理由的目的键入元组则非常麻烦，并且现在非元组方法现在成为执行此操作的“正常”方式。复杂的连接次数比单个连接案例要少得多，而且多个连接现在更能明确地表示为多个``join()``调用。</p>
+<p>元组形式将保持向后兼容性。</p>
+<p>请注意，所有其他形式的“query.join（）”仍然保持不变：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MyClass</span><span class="o">.</span><span class="n">somerelation</span><span class="p">)</span>
+<span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;somerelation&quot;</span><span class="p">)</span>
+<span class="n">query</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MyTarget</span><span class="p">)</span>
+<span class="c1"># ... etc</span></pre></div>
+</div>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/orm/tutorial.html#querying-with-joins">使用连接进行查询</a></p>
+<p><a href="#id19"><span class="problematic" id="id20">:ticket:`1923`</span></a></p>
+</section>
+<section id="mutable-true">
+<span id="migration-mutation-extension"></span><h3>突变事件扩展，取代“mutable = True”<a class="headerlink" href="#mutable-true" title="Permalink to this heading">¶</a></h3>
+<p>新扩展程序：ref:<cite>mutable_toplevel</cite>，提供了一种机制，通过该机制，用户定义的数据类型可以将更改事件提供给其所拥有的一个或多个父级。扩展包括标量数据库值的方法，例如由:class:<a href="#id21"><span class="problematic" id="id22">`</span></a>.PickleType`管理的值，<a href="#id23"><span class="problematic" id="id24">`</span></a>postgresql.ARRAY`或其他自定义``MutableType``类，以及ORM“组合体”，使用:func:<a href="#id25"><span class="problematic" id="id26">`</span></a>~.sqlalchemy.orm.composite`进行配置。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../orm/extensions/mutable.html"><span class="std std-ref">变异跟踪</span></a></p>
+</div>
+</section>
+<section id="nulls-first-nulls-last">
+<h3>NULLS FIRST / NULLS LAST操作符<a class="headerlink" href="#nulls-first-nulls-last" title="Permalink to this heading">¶</a></h3>
+<p>这是``asc（）``和``desc（）``操作符的扩展，称为``nullsfirst（）``和``nullslast（）``。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.nullsfirst" title="sqlalchemy.sql.expression.nullsfirst"><code class="xref py py-func docutils literal notranslate"><span class="pre">nullsfirst()</span></code></a></p>
+<p><a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.nullslast" title="sqlalchemy.sql.expression.nullslast"><code class="xref py py-func docutils literal notranslate"><span class="pre">nullslast()</span></code></a></p>
+</div>
+<p><a href="#id27"><span class="problematic" id="id28">:ticket:`723`</span></a></p>
+</section>
+<section id="select-distinct-query-distinct-postgresql-distinct-on-args">
+<h3>select.distinct()，query.distinct()对于PostgreSQL DISTINCT ON现在支持*args<a class="headerlink" href="#select-distinct-query-distinct-postgresql-distinct-on-args" title="Permalink to this heading">¶</a></h3>
+<p>现在，通过传递表达式的列表到``select（）` <a href="#id29"><span class="problematic" id="id30">`</span></a>， <a href="#id31"><span class="problematic" id="id32">``</span></a>select()``的``distinct()``方法以及``Query``的位置参数现在将呈现为PostgreSQL后端使用DISTINCT ON时呈现的DISTINCT ON。</p>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/core/expression_api.html#sqlalchemy.sql.expression.Select.distinct">distinct()</a></p>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/orm/query.html#sqlalchemy.orm.query.Query.distinct">Query.distinct()</a></p>
+<p><a href="#id33"><span class="problematic" id="id34">:ticket:`1069`</span></a></p>
+</section>
+<section id="index-table-table-args">
+<h3><code class="docutils literal notranslate"><span class="pre">Index()``可以内联放置在``Table</span></code>，<a href="#id35"><span class="problematic" id="id36">``</span></a>__table_args__``内<a class="headerlink" href="#index-table-table-args" title="Permalink to this heading">¶</a></h3>
+<p>可以使用字符串作为列名称，将Index（）构造内联到表定义中，作为在表之外创建索引的替代方法。也就是说：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Table</span><span class="p">(</span>
+    <span class="s2">&quot;mytable&quot;</span><span class="p">,</span>
+    <span class="n">metadata</span><span class="p">,</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+    <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="n">Index</span><span class="p">(</span><span class="s2">&quot;idx_name&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">),</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>这里的主要原因是为了声明性``__table_args__``的好处，尤其是与mixin一起使用时：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">HasNameMixin</span><span class="p">(</span><span class="n">object</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@declared_attr</span>
+    <span class="k">def</span> <span class="nf">__table_args__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">Index</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">),</span> <span class="p">{})</span>
+
+
+<span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">HasNameMixin</span><span class="p">,</span> <span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/core/schema.html#indexes">Indexes</a></p>
+</section>
+<section id="sql">
+<h3>窗口函数SQL构造<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h3>
+<p>“窗口函数”为语句提供了关于生成的结果集的信息。这允许针对诸如“行号”，“秩”等各种条件进行标准化。它们已知至少由PostgreSQL，SQL Server和Oracle支持。</p>
+<p>最好的窗口函数介绍在PostgreSQL的网站上，自从8.4版本开始，窗口函数就受到了支持：</p>
+<p><a class="reference external" href="https://www.postgresql.org/docs/current/static/tutorial-window.html">https://www.postgresql.org/docs/current/static/tutorial-window.html</a></p>
+<p>SQLAlchemy提供了一个简单的构造，通常通过现有的函数子句调用，使用``over（）``方法，它接受``order_by``和``partition_by``关键字参数。下面我们复制PG教程中的第一个示例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">table</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">func</span>
+
+<span class="n">empsalary</span> <span class="o">=</span> <span class="n">table</span><span class="p">(</span><span class="s2">&quot;empsalary&quot;</span><span class="p">,</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;depname&quot;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;empno&quot;</span><span class="p">),</span> <span class="n">column</span><span class="p">(</span><span class="s2">&quot;salary&quot;</span><span class="p">))</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="n">empsalary</span><span class="p">,</span>
+        <span class="n">func</span><span class="o">.</span><span class="n">avg</span><span class="p">(</span><span class="n">empsalary</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">salary</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">over</span><span class="p">(</span><span class="n">partition_by</span><span class="o">=</span><span class="n">empsalary</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">depname</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;avg&quot;</span><span class="p">),</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></pre></div>
+</div>
+<p>SQL:</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">empsalary</span><span class="p">.</span><span class="n">depname</span><span class="p">,</span><span class="w"> </span><span class="n">empsalary</span><span class="p">.</span><span class="n">empno</span><span class="p">,</span><span class="w"> </span><span class="n">empsalary</span><span class="p">.</span><span class="n">salary</span><span class="p">,</span>
+<span class="k">avg</span><span class="p">(</span><span class="n">empsalary</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">empsalary</span><span class="p">.</span><span class="n">depname</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">avg</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">empsalary</span></pre></div>
+</div>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/core/expression_api.html#sqlalchemy.sql.expression.over">sqlalchemy.sql.expression.over</a></p>
+<p><a href="#id37"><span class="problematic" id="id38">:ticket:`1844`</span></a></p>
+<p>Connection中的execution_options（）接受“isolation_level”参数
+————————————————– ——-</p>
+<p>这将为单个“Connection”设置事务隔离级别，直到该“Connection”关闭并其底层DBAPI资源返回到连接池，此后隔离级别将被重置为默认值。使用``isolation_level``参数设置默认隔离级别``create_engine()``。</p>
+<p>目前，事务隔离支持仅由PostgreSQL和SQLite后端支持。</p>
+<p><a class="reference external" href="https://www.sqlalchemy.org/docs/07/core/connections.html#sqlalchemy.engine.base.Connection.execution_options">execution_options()</a></p>
+<p><a href="#id39"><span class="problematic" id="id40">:ticket:`2001`</span></a></p>
+</section>
+<section id="typedecorator">
+<h3><a href="#id41"><span class="problematic" id="id42">``</span></a>TypeDecorator``可与整数主键列一起使用<a class="headerlink" href="#typedecorator" title="Permalink to this heading">¶</a></h3>
+<p>扩展了``Integer``行为的``TypeDecorator``可以与主键列一起使用。 <a href="#id43"><span class="problematic" id="id44">``</span></a>Column``的“自动递增”功能现在将识别底层数据库列仍然是整数，使得lastrowid机制继续正常工作。自动生成的主键也将应用其结果值处理器，包括DBAPI <a href="#id45"><span class="problematic" id="id46">``</span></a>cursor.lastrowid``访问器所接收的值。</p>
+<p><a href="#id47"><span class="problematic" id="id48">:ticket:`2005`</span></a> ：ticket:<cite>2006</cite></p>
+</section>
+<section id="typedecorator-sqlalchemy">
+<h3><a href="#id49"><span class="problematic" id="id50">``</span></a>TypeDecorator``在“sqlalchemy”导入空间中存在<a class="headerlink" href="#typedecorator-sqlalchemy" title="Permalink to this heading">¶</a></h3>
+<p>不再需要从“sqlalchemy.types”导入此功能，它现在在“sqlalchemy”中进行镜像。</p>
+</section>
+<section id="id51">
+<h3>新方言<a class="headerlink" href="#id51" title="Permalink to this heading">¶</a></h3>
+<p>方言已添加：</p>
+<ul class="simple">
+<li><p>用于Drizzle数据库的MySQLdb驱动程序：</p></li>
+</ul>
+<p>   <a class="reference external" href="https://www.sqlalchemy.org/docs/07/dialects/drizzle.html">Drizzle</a></p>
+<ul class="simple">
+<li><p>支持pymysql DBAPI：</p></li>
+</ul>
+<p>   <a href="#id76"><span class="problematic" id="id77">`pymsql Notes
+  &lt;https://www.sqlalchemy.org/docs/07/dialects/mysql.html
+  #module-sqlalchemy.dialects.mysql.pymysql&gt;`_</span></a></p>
+<ul class="simple">
+<li><p>psycopg2现在可以与Python 3一起使用</p></li>
+</ul>
+</section>
+</section>
+<section id="id52">
+<h2>行为变化（向后兼容）<a class="headerlink" href="#id52" title="Permalink to this heading">¶</a></h2>
+<section id="c">
+<h3>默认情况下，构建C扩展<a class="headerlink" href="#c" title="Permalink to this heading">¶</a></h3>
+<p>这是在0.7b4中。如果检测到cPython 2.xx，则会构建exts。如果构建失败，例如在Windows安装中，则会捕获该条件并继续执行非-C安装。如果使用Python 3或PyPy，则不会构建C exts。</p>
+</section>
+<section id="id53">
+<h3>查询计数（）简化，应该几乎总是起作用<a class="headerlink" href="#id53" title="Permalink to this heading">¶</a></h3>
+<p>非常老的猜测在``Query.count()``中已经现代化，使用``.from_self（）```。也就是说，<a href="#id54"><span class="problematic" id="id55">``</span></a>query.count()``现在等同于：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">query</span><span class="o">.</span><span class="n">from_self</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">literal_column</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)))</span><span class="o">.</span><span class="n">scalar</span><span class="p">()</span></pre></div>
+</div>
+<p>以前，内部逻辑试图重写查询本身的列子句，在检测到“子查询”条件时（例如，列的查询可能具有聚合，或具有DISTINCT），会经过一个错综复杂的过程通过重写列子句。</p>
+<p>这种逻辑在复杂情况，特别是涉及联接表继承时失败，因此在更全面的``.from_self（）` <a href="#id56"><span class="problematic" id="id57">`</span></a>调用之前已经过时。 通过这种方式的“孤儿”行为发生在将具有“delete-orphan”级联的``relationship()``关联对象新添加到INSERT中，而没有建立父关系。多年前，此检查是为了适应一些测试案例，这些测试案例测试孤儿的行为的一致性。在现代SQLA中，不再需要这种检查。该对象的父外键引用与数据库列的数据一致性相同，而SQLA则允许大多数其他操作完成工作。如果对象的父外键是可空的，那么可以插入行。当对象以特定父级持久化，然后与该父级解除联系时，将运行“孤儿”行为，导致删除语句发出。</p>
+<p><a href="#id58"><span class="problematic" id="id59">:ticket:`1912`</span></a></p>
+</section>
+<section id="flush">
+<h3>查询中含有集合成员，标量引用不属于flush<a class="headerlink" href="#flush" title="Permalink to this heading">¶</a></h3>
+<p>在父对象标记为“脏”时通过加装的``relationship()``引用加载的相关对象没有出现在当前``Session``中时，现在会发出警告。</p>
+<p><a href="#id60"><span class="problematic" id="id61">``</span></a>save-update``级联在将对象添加到``Session``或首次将对象与父级相关联时生效，因此对象及其相关对象通常都存在同一个``Session``中。但是，如果禁用了特定``relationship()``的“save-update”级联，则不会发生此行为，并且刷新过程不会尝试纠正它，而是保持一致与配置的级联行为一致。以前，在刷新过程中检测到这些对象时，它们会被默默地跳过。新行为是发出警告，目的是警示导致意外行为的情况。</p>
+<p><a href="#id62"><span class="problematic" id="id63">:ticket:`1973`</span></a></p>
+</section>
+<section id="nose">
+<h3>不再装置安装Nose插件<a class="headerlink" href="#nose" title="Permalink to this heading">¶</a></h3>
+<p>自从我们使用鼻子以来，我们就使用了一个插件，通过setuptools安装该插件，以便``nosetests``脚本会自动运行SQLA的插件代码，从而使我们的测试具有完整的环境。在0.6中途，我们意识到这种导入模式意味着“coverage”将损坏，“coverage”要求在导入要覆盖的任何模块之前启动;因此，在0.6中间期间，我们为此特定情况添加了检测和错误消息，因为这是如此普遍。在0.7中，由于该模式确实检测到了准确的模式，并且由于为无缘无故地为整个引擎创建多个Nose配置选项会产生额外的标识字符串，因此不再尝试使“nosetests”自动工作。 SQLAlchemy模块将在所有``nosetests``的使用中产生大量nose配置选项，而不仅仅是SQLAlchemy单元测试本身，并且额外的``sqlalchemy-nose``安装是更糟的想法，因为Python环境中会产生额外的软件包。0.7中的``sqla_nose.py``脚本现在是使用nose进行测试的唯一方法。</p>
+<p><a href="#id64"><span class="problematic" id="id65">:ticket:`1949`</span></a></p>
+</section>
+<section id="table">
+<h3>非由“Table”派生的构造适用映射<a class="headerlink" href="#table" title="Permalink to this heading">¶</a></h3>
+<p>可以映射不针对任何“Table”的构造，例如函数。</p>
+<p>::from sqlalchemy import select, func
+from sqlalchemy.orm import mapper</p>
+<dl class="simple">
+<dt>class Subset(object):</dt><dd><p>pass</p>
+</dd>
+</dl>
+<p>selectable = select([“x”, “y”, “z”]).select_from(func.some_db_function()).alias()
+mapper(Subset, selectable, primary_key=[selectable.c.x])</p>
+<p>#ticket: 1876#</p>
+</section>
+<section id="aliased-fromclause">
+<h3>aliased()接受“FromClause”元素<a class="headerlink" href="#aliased-fromclause" title="Permalink to this heading">¶</a></h3>
+<p>如果向orm.aliased()构造中传递了一个普通的FromClause，例如select、Table或join，则实用程序将通过那个from构造的.继而让该from构造的.alias()方法而不是构造一个ORM级别的AliasedClass。</p>
+<p>#ticket: 2018#</p>
+</section>
+<section id="session-connection-session-execute-bind">
+<h3>Session.connection(), Session.execute()接受’bind’<a class="headerlink" href="#session-connection-session-execute-bind" title="Permalink to this heading">¶</a></h3>
+<p>这是为了使execute/connection操作明确参与引擎的打开事务。它还允许自定义Session子类实现它们自己的get_bind()方法和参数，以同时使用这些自定义参数和execute()和connection()方法。</p>
+<p>Session.connection
+Session.execute</p>
+<p>#ticket: 1996#</p>
+</section>
+<section id="id66">
+<h3>在列子句中使用独立的绑定参数会被自动标记。<a class="headerlink" href="#id66" title="Permalink to this heading">¶</a></h3>
+<p>如果在select的“columns clause”中存在绑定参数，则如其他“匿名”clause一样，现在会自动标记它们，这使得它们的“类型”在提取行时是有意义的，例如在结果行处理器中。</p>
+<p>#ticket: 2036#</p>
+</section>
+<section id="sqlite-os-path-abspath">
+<h3>SQLite - 相对文件路径通过 os.path.abspath() 进行规范化<a class="headerlink" href="#sqlite-os-path-abspath" title="Permalink to this heading">¶</a></h3>
+<p>这样，更改当前目录的脚本将继续针对后续建立的SQLite连接的相同位置。</p>
+<p>#ticket: 1833#</p>
+</section>
+<section id="ms-sql-string-unicode-varchar-nvarchar-varbinarymax">
+<h3>在 MS-SQL 上，“String” /“Unicode” /“VARCHAR”/“NVARCHAR” /“VARBINARY”在不指定长度的情况下发出“max”<a class="headerlink" href="#ms-sql-string-unicode-varchar-nvarchar-varbinarymax" title="Permalink to this heading">¶</a></h3>
+<p>在MS-SQL后端上，字符串/unicode类型及其对应的VARCHAR / NVARCHAR，以及VARBINARY(:ticket:1833)在未指定长度时发出“max”。这使其与未指定长度时同样无限制的PostgreSQL的VARCHAR类型相比更加兼容。SQL Server在未指定长度时将这些类型的默认长度设置为“1”。</p>
+</section>
+</section>
+<section id="id67">
+<h2>行为更改（向后不兼容）<a class="headerlink" href="#id67" title="Permalink to this heading">¶</a></h2>
+<p>注意，除了默认的可变性更改之外，大多数更改都是*非常小*的，不会影响大多数用户。</p>
+<section id="pickletypearray">
+<h3>PickleType和ARRAY可变性默认关闭<a class="headerlink" href="#pickletypearray" title="Permalink to this heading">¶</a></h3>
+<p>ORM将映射具有PickleType或postgresql.ARRAY数据类型的列时，将默认情况下将mutable标志设置为False。如果现有应用程序使用这些类型并依赖于就地更改的检测，则必须使用mutable=True构造类型对象以恢复0.6行为。</p>
+<p>较早的使用“mutable=True”方法不提供更改事件，相反，ORM必须扫描会话中存在的所有可变值，并在每次调用“flush()”时将它们与其原始值进行比较，这是一个非常耗时的事件。这是SQLAlchemy早期版本的遗留问题，当时“flush()”不是自动的，并且历史记录跟踪系统还不像现在这样复杂。</p>
+<p>使用PickleType，postgresql.ARRAY或其他MutableType子类的现有应用程序，并且需要就地更改的检测，应该迁移到新的变异跟踪系统，因为很可能在将来废弃“mutable=True”。</p>
+<p>#ticket:1980#</p>
+</section>
+<section id="composite-mutation-tracking-extension">
+<h3>“Composite（）”的可变性检测需要Mutation Tracking Extension<a class="headerlink" href="#composite-mutation-tracking-extension" title="Permalink to this heading">¶</a></h3>
+<p>被称为“composite”映射属性的属性，这些属性使用在“Composite Column Types”中描述的技术进行配置，已重新实现，以使ORM内部不再知道它们（从而在关键节省和更有效的代码路径）。尽管复合型通常被视为不可变的值对象，但从未实施过这一点。对于使用可变性的应用程序使用复合型，Mutation Tracking扩展为用户定义的复合类型提供了一种机制，以向每个对象的所有者或父级发送更改事件消息。</p>
+<p>使用组合类型并依赖于这些对象的就地突变检测的应用程序应迁移到“变异跟踪”扩展，或更改组合类型的使用方式，以使就地更改不再需要（即将它们视为不可变的值对象）。</p>
+</section>
+<section id="sqlite-sqlitenullpool">
+<h3>SQLite - 现在对于基于文件的数据库，SQLite方言使用“NullPool”<a class="headerlink" href="#sqlite-sqlitenullpool" title="Permalink to this heading">¶</a></h3>
+<p>此更改**在99.999％的情况下向后兼容**，除非您在连接池连接跨连接池连接使用临时表。</p>
+<p>基于文件的SQLite连接速度非常快，使用“NullPool”意味着每次调用“Engine.connect”都会创建一个新的pysqlite连接。</p>
+<p>以前使用的是“SingletonThreadPool”，这意味着在一个线程中对某个引擎的所有连接都将是相同的连接。新方法更直观，尤其是使用了多个连接时。</p>
+<p>使用内存数据库时，默认引擎仍为“SingletonThreadPool”。</p>
+<p>请注意，<strong>这种更改会破坏Session提交之间使用临时表的情况</strong>，因为SQLite处理临时表的方式。如果需要临时表超出一个池连接的范围，则请参阅https://www.sqlalchemy.org/docs/dialects/sqlite.html#using-temporary-tables-with-sqlite上的注释。</p>
+<p>#ticket: 1921#</p>
+</section>
+<section id="session-merge-id">
+<h3>“Session.merge()”检查具有版本控制的映射器的版本id<a class="headerlink" href="#session-merge-id" title="Permalink to this heading">¶</a></h3>
+<p>如果传入状态的版本ID与数据库的版本ID不匹配，则Session.merge()将检查入站状态的版本ID，并引发StaleDataError。这是正确的行为，因为如果传入状态包含陈旧的版本ID，则应该假定该状态已过期。</p>
+<p>如果将数据合并到具有版本控制的状态中，则版本ID属性可以保留未定义，将不会进行版本检查。</p>
+<p>Hibernate做的事情被证实了这个检查 - “merge（）”和版本化功能最初都是从Hibernate中适应的。</p>
+<p>#ticket:2027#</p>
+</section>
+<section id="query">
+<h3>Query改进中的元组标签名称<a class="headerlink" href="#query" title="Permalink to this heading">¶</a></h3>
+<p>这种改进对于依赖旧行为的应用程序可能有些向后不兼容。</p>
+<p>给出两个映射类“Foo”和“Bar”，每个类都有一个列“spam”：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qa</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Foo</span><span class="o">.</span><span class="n">spam</span><span class="p">)</span>
+<span class="n">qb</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Bar</span><span class="o">.</span><span class="n">spam</span><span class="p">)</span>
+
+<span class="n">qu</span> <span class="o">=</span> <span class="n">qa</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">qb</span><span class="p">)</span></pre></div>
+</div>
+<p>对于由“qu”产生的单个列命名为“spam”。以前，由于“union”的方式结合了这些内容，这个名称将是“foo_spam”之类的内容，它与非union查询中的名称“spam”不一致。</p>
+<p>#ticket: 1942#</p>
+</section>
+<section id="id68">
+<h3>映射列属性首先引用最具体的列<a class="headerlink" href="#id68" title="Permalink to this heading">¶</a></h3>
+<p>这是行为的变化，涉及映射列属性引用多个列的情况，特别是在一个属性的情况下，该属性位于具有与超类相同的名称的属性上。</p>
+<p>使用声明式，情况如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Parent</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;parent&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>上面，属性“Child.id”同时指代“child.id”列和“parent.id”列–这是由于属性的名称，在这种情况下是如此。如果在类上命名为不同的属性，例如“Child.child_id”，则它将明确地映射到“child.id”，其中“Child.id”与“Parent.id”相同。</p>
+<p>当”id”属性用于引用“parent.id”和“child.id”时，它们将被存储在有序列表中。然后，如“Child.id”这样的表达式在呈现时仅引用这些列中的*一列*。在0.6以前，此列将是“parent.id”。在0.7中，它是更少令人惊讶的“child.id”。</p>
+<p>这种行为的遗留问题与ORM的行为和限制有关，这些限制现在不再适用；所需的是翻转顺序。</p>
+<p>这种方法的主要优点是现在更容易构造”primaryjoin”表达式，这些表达式引用本地列：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Parent</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;child&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;parent.id&quot;</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">some_related</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;SomeRelated&quot;</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="s2">&quot;Child.id==SomeRelated.child_id&quot;</span>
+    <span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SomeRelated</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;some_related&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">child_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;child.id&quot;</span><span class="p">))</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在0.7之前，”Child.id”表达式将引用”Parent.id”，并且很可能需要将child.id映射到一个不同的属性中。</p>
+<p>这也意味着查询像这样的查询将更改其行为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Child</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">)</span></pre></div>
+</div>
+<p>在0.6中，这将会呈现：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">parent_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">parent</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">:</span><span class="n">id_1</span></pre></div>
+</div>
+<p>在0.7中，您会得到：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">parent_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">parent</span><span class="p">,</span><span class="w"> </span><span class="n">child</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">child</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">:</span><span class="n">id_1</span></pre></div>
+</div>
+<p>您会注意到这是一个笛卡尔积–这种行为现在等效于用于“Child”的任何其他本地属性。with_polymorphic()函数或类似的策略通过显式连接基础“Table”对象来渲染针对“Child”的所有“Parent”对象的查询，以与0.5和0.6的情况相同：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Parent</span><span class="p">)</span><span class="o">.</span><span class="n">with_polymorphic</span><span class="p">([</span><span class="n">Child</span><span class="p">])</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">Child</span><span class="o">.</span><span class="n">id</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">))</span></pre></div>
+</div>
+<p>它们在0.6和0.7上呈现：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">parent_id</span><span class="p">,</span><span class="w"> </span><span class="n">child</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">child_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">parent</span><span class="w"> </span><span class="k">LEFT</span><span class="w"> </span><span class="k">OUTER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">child</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">parent</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">child</span><span class="p">.</span><span class="n">id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">child</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="p">:</span><span class="n">id_1</span></pre></div>
+</div>
+<p>这种更改的另一个影响是跨两个以上同名列的连接绑定需要明确声明。</p>
+<p>#ticket: 1875#</p>
+</section>
+<section id="ddl">
+<h3>DDL()构造现在转义百分号<a class="headerlink" href="#ddl" title="Permalink to this heading">¶</a></h3>
+<p>以前，DDL()字符串中的百分号必须被转义，即视DBAPI而定，对于那些接受“pyformat”或“format”绑定的DBAPI（即psycopg2，mysql-python等），这是不一致的，与text()构造不同，后者会自动执行此操作。</p>
+<p>现在，DDL()和text()相同，例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">DDL</span>
+<span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">DDL</span><span class="p">(</span><span class="s2">&quot;CREATE TRIGGER foo_ins ...&quot;</span><span class="p">))</span></pre></div>
+</div>
+<p>#ticket: 1870#</p>
+</section>
+<section id="types-type-map-types-type-map">
+<h3>列出类型名称的types.type_map现在已不公开，types._type_map<a class="headerlink" href="#types-type-map-types-type-map" title="Permalink to this heading">¶</a></h3>
+<p>我们注意到，一些用户在“sqlalchemy.types”中的字典中拦截，作为将Python类型与SQL类型关联的捷径。我们无法保证该字典的内容或格式，并且另外，将Python类型一对一地关联具有些许灰色地带，应由单个应用程序决定，因此我们对此属性进行了下划线。</p>
+<p>#ticket: 1892#:ticket: 1917#</p>
+</section>
+<section id="mappers-configure-mappers">
+<h3>编译器的mappers()重命名为configure_mappers（），简化配置内部<a class="headerlink" href="#mappers-configure-mappers" title="Permalink to this heading">¶</a></h3>
+<p>这个系统从最初是一些小型，实现本地到单个映射器的某些应用程序并且出于历史原因被命名不佳，演变成一个全球“注册表”-级别函数并且命名不佳。因此，我们将其实现从“Mapper”移出并将其命名为“configure_mappers()”来重新命名。正常情况下，应用程序无需调用“configure_mappers()”，因为此过程会基于属性或查询访问需要的情况在需要的情况下立即发生。</p>
+<p>#ticket:1966#</p>
+</section>
+<section id="core">
+<h3>Core侦听器/代理被事件侦听器取代<a class="headerlink" href="#core" title="Permalink to this heading">¶</a></h3>
+<p>PoolListener，ConnectionProxy，DDLElement.execute_at被PoolEvents，EngineEvents，DDLEvents分发对象使用的“event.listen()”取代。</p>
+</section>
+<section id="orm">
+<h3>ORM扩展被事件侦听器取代<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h3>
+<p>MapperExtension，AttributeExtension，SessionExtension被Event监听器替代，使用MapperEvents/InstanceEvents，AttributeEvents，SessionEvents分发对象。</p>
+</section>
+<section id="select-mysql-distinct">
+<h3>在select()中向MySQL发送字符串到’distinct’应该通过前缀完成<a class="headerlink" href="#select-mysql-distinct" title="Permalink to this heading">¶</a></h3>
+<p>这种隐晦的特性允许MySQL后端使用这样的模式：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="p">([</span><span class="n">mytable</span><span class="p">],</span> <span class="n">distinct</span><span class="o">=</span><span class="s2">&quot;ALL&quot;</span><span class="p">,</span> <span class="n">prefixes</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HIGH_PRIORITY&quot;</span><span class="p">])</span></pre></div>
+</div>
+<p>应该在需要使用非标准或不寻常前缀的情况下使用关键字参数“prefixes”或“prefix_with（）”方法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span><span class="p">([</span><span class="n">mytable</span><span class="p">])</span><span class="o">.</span><span class="n">prefix_with</span><span class="p">(</span><span class="s2">&quot;HIGH_PRIORITY&quot;</span><span class="p">,</span> <span class="s2">&quot;ALL&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>#ticket: 1896#</p>
+</section>
+<section id="id69">
+<h3>映射到具有两个或多个同名列的联接需要显式声明<a class="headerlink" href="#id69" title="Permalink to this heading">¶</a></h3>
+<p>这与1792号（#ticket: 1792）的先前变更有关。在映射到联接时，必须显式链接具有相同名称的列到映射的属性中，即如`Mapping a Class Against Multiple Tables&lt;<a class="reference external" href="http://www.sqlalchemy.org/docs/07/orm/mapper_config.html#mapping-a-class-against-multiple-tables">http://www.sqlalchemy.org/docs/07/orm/mapper_config.html#mapping-a-class-against-multiple-tables</a>&gt;`_所述。</p>
+<p>现有的代码应修改使使用元素名称明确返回，如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">foobar</span> <span class="o">=</span> <span class="n">foo</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">foo</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">bar</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">foo_id</span><span class="p">)</span>
+<span class="n">mapper</span><span class="p">(</span><span class="n">FooBar</span><span class="p">,</span> <span class="n">foobar</span><span class="p">,</span> <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">foo</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">]})</span></pre></div>
+</div>
+<p>应在“left join”，“outer join”等情况下运行，以将“properties”参数相应更改为所需的列列表。</p>
+<p>#ticket: 1893#</p>
+</section>
+<section id="polymorphic-on">
+<h3>映射器要求polymorphic_on列存在于预定选择中<a class="headerlink" href="#polymorphic-on" title="Permalink to this heading">¶</a></h3>
+<p>这是在0.6中的警告，现在在0.7中是一个错误了。给定为polymorphic_on的列必须存在于映射的可选择内容中。防止偶尔存在一些用户错误，例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">,</span> <span class="n">sometable</span><span class="p">,</span> <span class="n">polymorphic_on</span><span class="o">=</span><span class="n">some_lookup_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></pre></div>
+</div>
+<p>上面的polymorphic_on需要在“sometable”列上，例如也许是“sometable.c.some_lookup_id”（在这种情况下）。还有一些“多态联合”的情况，类似的错误有时会发生。</p>
+<p>这种配置错误一直是“错的”，上面的映射不按照指定的那样工作-列将被忽略。然而，直到此更改，仍然可能会出现潜在的向后不兼容的情况。</p>
+<p>#ticket: 1875#</p>
+<p>现-func()构造不支持额外的参数
+———————————————— ————-</p>
+<p>核心types模块中的简单类型如Integer、Date等不接受参数。默认构造函数接受/忽略一个万能参数’args，** kwargs’<a href="#id70"><span class="problematic" id="id71">`</span></a>的默认构造函数被恢复到`0.7b4/0.7.0，但发出了一个“过时”的警告。</p>
+<p>如果在核心类型如“Integer”中使用参数，则可能是您打算使用特定于方言的类型，例如“sqlalchemy.dialects.mysql.INTEGER”，该类型接受“display_width”参数。</p>
+</section>
+<section id="compile-mappers-configure-mappers">
+<h3>compile_mappers()改名为configure_mappers()，简化配置内部<a class="headerlink" href="#compile-mappers-configure-mappers" title="Permalink to this heading">¶</a></h3>
+<p>该系统从最初的实施在一个单独的映射器本地，名称不佳，并发展成一个全球“注册表”级别函数，名称不佳，因此我们通过将实现从“Mapper”移到“configure_mappers()”来修复这两个问题。使用属性或查询访问时，这在需要时立即发生，通常情况下无需应用程序调用“configure_mappers()”。</p>
+<p>#ticket: 1966#</p>
+</section>
+<section id="callablesbindparam-beaker">
+<h3>callables传递给bindparam()不会被求值-影响了 Beaker 示例<a class="headerlink" href="#callablesbindparam-beaker" title="Permalink to this heading">¶</a></h3>
+<p>#ticket:1950#</p>
+<p>请注意，这影响了Beaker缓存示例，其中“_params_from_query()”函数的工作需要进行轻微调整。如果您使用Beaker示例中的代码，则应应用此更改。</p>
+</section>
+<section id="type-map-types-type-map">
+<h3>类型.type_map现在是私有的，types._type_map<a class="headerlink" href="#type-map-types-type-map" title="Permalink to this heading">¶</a></h3>
+<p>我们注意到，一些用户正在利用types内部的诸如“sqlalchemy.types”中的字典，以将Python类型与SQL类型关联。我们不能保证该字典的内容或格式，另外，将Python类型一对一地关联具有一些灰色地带，最好由各个应用程序决定，因此我们已经标记了下划线。</p>
+<p>#ticket: 1870#</p>
+</section>
+<section id="alias-name">
+<h3>独立的alias（）函数的别名关键字参数改为name<a class="headerlink" href="#alias-name" title="Permalink to this heading">¶</a></h3>
+<p>因此，显式关键字名称“alias”名称现在与所有“FromClause”对象上的alias()方法以及Query.subquery()上的“name”参数匹配。</p>
+<p>应该只修改在传递alias名称时使用显式关键字名称“alias”（而不是位置）且没有使用方法绑定函数的代码。非公共的Pool方法现在有下划线。这样的方法有：</p>
+<p>‘Pool.create_connection（）’-&gt;’Pool._create_connection（）’</p>
+<p>‘Pool.do_get（）’-&gt;’Pool._do_get（）’</p>
+<p>‘Pool.do_return_conn（）’-&gt;’Pool._do_return_conn（）’</p>
+<p>‘Pool.do_return_invalid（）’-&gt;删除，未使用</p>
+<p>“Pool.return_conn（）” -&gt;“Pool._return_conn（）”</p>
+</section>
+</section>
+<section id="pool-get-pool-get-api-pool-connect">
+<h2>‘Pool.get（）’-&gt; ‘Pool._get（）’，公共API是’Pool.connect（）’以前被弃用，现在被移除<a class="headerlink" href="#pool-get-pool-get-api-pool-connect" title="Permalink to this heading">¶</a></h2>
+<section id="query-join-query-outerjoin-eagerload-eagerload-all">
+<h3>Query.join（），Query.outerjoin（），eagerload（），eagerload_all（）和其他方法不再允许将属性列表作为参数<a class="headerlink" href="#query-join-query-outerjoin-eagerload-eagerload-all" title="Permalink to this heading">¶</a></h3>
+<p>自从0.5版本以来，将属性列表或属性名称列表传递给“Query.join（）”，“eagerload（）”等方法已被弃用：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 自从0.5以来弃用</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Houses</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">Houses</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">Room</span><span class="o">.</span><span class="n">closets</span><span class="p">])</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Houses</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">eagerload_all</span><span class="p">([</span><span class="n">Houses</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">Room</span><span class="o">.</span><span class="n">closets</span><span class="p">]))</span></pre></div>
+</div>
+<p>从0.5版本以后，这些方法都接受* args：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 当前的方式，自0.5以来已经使用</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Houses</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Houses</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">Room</span><span class="o">.</span><span class="n">closets</span><span class="p">)</span>
+<span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Houses</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">eagerload_all</span><span class="p">(</span><span class="n">Houses</span><span class="o">.</span><span class="n">rooms</span><span class="p">,</span> <span class="n">Room</span><span class="o">.</span><span class="n">closets</span><span class="p">))</span></pre></div>
+</div>
+</section>
+<section id="scopedsession-mapper">
+<h3><a href="#id72"><span class="problematic" id="id73">``</span></a>ScopedSession.mapper``被移除<a class="headerlink" href="#scopedsession-mapper" title="Permalink to this heading">¶</a></h3>
+<p>这个功能提供了一种映射器扩展，将基于类的功能与特定的“ScopedSession”关联起来，特别是提供了这样的行为，使得新的对象实例自动与该会话关联。这个功能被教程和框架过度使用，导致用户由于其隐式行为而产生了极大的困惑，并在0.5.5版中被弃用。可以在[wiki:UsageRecipes/SessionAwareMapper]上找到复制其功能的技术。</p>
+</section>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="migration_08.html" title="previous chapter">SQLAlchemy 0.8有哪些新特性？</a>
+        Next:
+        <a href="migration_06.html" title="next chapter">SQLAlchemy 0.6 有哪些新变化?</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:19:41
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

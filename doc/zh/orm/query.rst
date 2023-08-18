@@ -1,0 +1,1 @@
+本文档已经移动到 :doc:`queryguide/query`。

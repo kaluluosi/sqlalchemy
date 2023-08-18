@@ -1,0 +1,8 @@
+.. change::
+    :tags: bug, postgresql, regression
+    :tickets: 6182
+    :versions: 1.4.5
+
+    修复了由 :ticket:`6023` 导致的问题，当使用 psycopg2 时，对于 :class:`_types.ARRAY` 中的元素应用 PostgreSQL 转换操作符时，如果数据类型也嵌入到 :class:`_types.Variant` 适配器的实例中，则会失败并未使用正确的类型。
+
+    另外，修复支持在使用 ``Variant(ARRAY(some_schema_type))`` 时发出正确的 CREATE TYPE。

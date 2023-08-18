@@ -1,0 +1,1150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQLAlchemy 1.3有什么新特性？
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="变更和迁移" href="index.html" />
+        <link rel="next" title="SQLAlchemy 1.2有哪些新特性?" href="migration_12.html" />
+        <link rel="prev" title="SQLAlchemy 1.4有哪些新内容？" href="migration_14.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="变更和迁移">变更和迁移</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="migration_20.html">SQLAlchemy 2.0 - 主要迁移指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="whatsnew_20.html">SQLAlchemy 2.0 有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_20.html">2.0 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_14.html">1.4 版本更新历史</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_13.html">1.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_12.html">1.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_11.html">1.1 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_10.html">1.0 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_09.html">0.9版本更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_08.html">0.8 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_06.html">0.6 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_05.html">0.5 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_04.html">0.4 变更日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_03.html">0.3 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_02.html">0.2 更新日志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="changelog_01.html">版本记录</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_14.html">SQLAlchemy 1.4有哪些新内容？</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy 1.3有什么新特性？</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">介绍</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">常规</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#change-4393-general">所有已弃用的元素都会生成弃用警告；添加了新的弃用</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#orm">新功能和改进 - ORM</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#aliasedclass">关系到AliasedClass可以替换非主要映射器</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#change-4340">选择加载不再使用简单一对多的连接</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#change-4359">许多对一查询表达式的行为改进</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#old-raiseload-detached">许多对一替换不会为“old”对象的”raiseload”或”detached”引发错误</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#ormdel">为ORM属性执行del操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#instancestateinfo">在InstanceState对象上添加了info字段</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#change-4196">基于水平分片的查询扩展支持批量更新和删除方法</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id41">协会代理改进</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#associationcascade-scalar-deletes">Association代理具有新的cascade_scalar_deletes标志</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#association">Association代理在每个类上按类存储类特定状态</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#change-4351">面向列的比较运算符现在提供了用于面向列的目标的标准列运算符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#associationproxy-noneempty">当列型AssociationProxy目标时，== None协议跟empty匹配</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#manytoone-onetooneduplicates">在ManyToOne / OneToOne加载时可以授予“duplicates”警告</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#apply-updates">在更新时，不需要apply_updates参数</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id65">代理现在强引用父对象</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#change-2642">多列代理和字典的替换实现</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#change-1103">一对多反向引用在删除操作期间检查集合重复项</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id80">核心要点变化</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sql-text">强制转换字符串 SQL 片段为 text() 完全移除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#threadlocal">不推荐使用“threadlocal”引擎策略</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#convert-unicode">已弃用 “convert_unicode” 参数</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy-postgresql">SQLAlchemy - PostgreSQL 改进和更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#postgresql">为 PostgreSQL 分区表添加基本反射支持</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy-mysql">SQLAlchemy - MySQL 改进和更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#ping-ping">启用协议级 ping 进行预 ping</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#on-duplicate-key-update">在 ON DUPLICATE KEY UPDATE 中控制参数订购</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy-sqlite">SQLAlchemy - SQLite 改进和更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#sqlite-json">添加对 SQLite JSON 的支持</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#id91">SQLAlchemy - SQLite 改进和更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#change-4360">增加了新参数来影响 IDENTITY 起始和增量，同时弃用 Sequence</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#cx-oracle">cx_Oracle 连接参数现代化，弃用已过时的参数</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#sqlalchemy-sql-server">SQLAlchemy - SQL Server 改进和更改</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#pyodbc-fast-executemany">支持 pyodbc fast_executemany</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#oracle-unicode-generic-unicode">对于 Oracle，弃用了国家字符数据类型，重新启用了通用 Unicode（Generic Unicode）</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#statementerror-s">更改了 StatementError 的格式（换行符和 %s）</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="migration_12.html">SQLAlchemy 1.2有哪些新特性?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_11.html">SQLAlchemy 1.1新功能</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_10.html">SQLAlchemy 1.0有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_09.html">SQLAlchemy 0.9 的新特性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_08.html">SQLAlchemy 0.8有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_07.html">SQLAlchemy 0.7有什么新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_06.html">SQLAlchemy 0.6 有哪些新变化?</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html">SQLAlchemy 0.5有哪些新特性？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id1">主要文档更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id6">退化源</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id7">需求更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id8">ORM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id21">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id22">模式/类型</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id23">连接池不再默认为线程本地</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#args-args">*args已接受，不再接受*args</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id44">删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id77">已重命名或已移动</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_05.html#id86">已弃用</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html">SQLAlchemy 0.4有什么新功能？</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id1">首先要做什么</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id2">模块导入</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id3">对象关系映射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id22">SQL表达式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id26">架构和反射</a></span></li>
+<li><span class="link-container"><a class="reference external" href="migration_04.html#id28">SQL执行</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="migration_14.html" title="previous chapter">SQLAlchemy 1.4有哪些新内容？</a></li>
+                <li><b>Next:</b>
+                <a href="migration_12.html" title="next chapter">SQLAlchemy 1.2有哪些新特性?</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="变更和迁移">变更和迁移</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sqlalchemy-1-3">SQLAlchemy 1.3有什么新特性？</a><ul>
+<li><a class="reference internal" href="#id1">介绍</a></li>
+<li><a class="reference internal" href="#id2">常规</a><ul>
+<li><a class="reference internal" href="#change-4393-general">所有已弃用的元素都会生成弃用警告；添加了新的弃用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#orm">新功能和改进 - ORM</a><ul>
+<li><a class="reference internal" href="#aliasedclass">关系到AliasedClass可以替换非主要映射器</a></li>
+<li><a class="reference internal" href="#change-4340">选择加载不再使用简单一对多的连接</a></li>
+<li><a class="reference internal" href="#change-4359">许多对一查询表达式的行为改进</a></li>
+<li><a class="reference internal" href="#old-raiseload-detached">许多对一替换不会为“old”对象的”raiseload”或”detached”引发错误</a></li>
+<li><a class="reference internal" href="#ormdel">为ORM属性执行del操作</a></li>
+<li><a class="reference internal" href="#instancestateinfo">在InstanceState对象上添加了info字段</a></li>
+<li><a class="reference internal" href="#change-4196">基于水平分片的查询扩展支持批量更新和删除方法</a></li>
+<li><a class="reference internal" href="#id41">协会代理改进</a></li>
+<li><a class="reference internal" href="#associationcascade-scalar-deletes">Association代理具有新的cascade_scalar_deletes标志</a></li>
+<li><a class="reference internal" href="#association">Association代理在每个类上按类存储类特定状态</a><ul>
+<li><a class="reference internal" href="#change-4351">面向列的比较运算符现在提供了用于面向列的目标的标准列运算符</a></li>
+<li><a class="reference internal" href="#associationproxy-noneempty">当列型AssociationProxy目标时，== None协议跟empty匹配</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#manytoone-onetooneduplicates">在ManyToOne / OneToOne加载时可以授予“duplicates”警告</a></li>
+<li><a class="reference internal" href="#apply-updates">在更新时，不需要apply_updates参数</a><ul>
+<li><a class="reference internal" href="#id65">代理现在强引用父对象</a></li>
+<li><a class="reference internal" href="#change-2642">多列代理和字典的替换实现</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#change-1103">一对多反向引用在删除操作期间检查集合重复项</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id80">核心要点变化</a><ul>
+<li><a class="reference internal" href="#sql-text">强制转换字符串 SQL 片段为 text() 完全移除</a></li>
+<li><a class="reference internal" href="#threadlocal">不推荐使用“threadlocal”引擎策略</a></li>
+<li><a class="reference internal" href="#convert-unicode">已弃用 “convert_unicode” 参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlalchemy-postgresql">SQLAlchemy - PostgreSQL 改进和更改</a><ul>
+<li><a class="reference internal" href="#postgresql">为 PostgreSQL 分区表添加基本反射支持</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlalchemy-mysql">SQLAlchemy - MySQL 改进和更改</a><ul>
+<li><a class="reference internal" href="#ping-ping">启用协议级 ping 进行预 ping</a></li>
+<li><a class="reference internal" href="#on-duplicate-key-update">在 ON DUPLICATE KEY UPDATE 中控制参数订购</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlalchemy-sqlite">SQLAlchemy - SQLite 改进和更改</a><ul>
+<li><a class="reference internal" href="#sqlite-json">添加对 SQLite JSON 的支持</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id91">SQLAlchemy - SQLite 改进和更改</a><ul>
+<li><a class="reference internal" href="#change-4360">增加了新参数来影响 IDENTITY 起始和增量，同时弃用 Sequence</a></li>
+<li><a class="reference internal" href="#cx-oracle">cx_Oracle 连接参数现代化，弃用已过时的参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sqlalchemy-sql-server">SQLAlchemy - SQL Server 改进和更改</a><ul>
+<li><a class="reference internal" href="#pyodbc-fast-executemany">支持 pyodbc fast_executemany</a></li>
+<li><a class="reference internal" href="#oracle-unicode-generic-unicode">对于 Oracle，弃用了国家字符数据类型，重新启用了通用 Unicode（Generic Unicode）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#statementerror-s">更改了 StatementError 的格式（换行符和 %s）</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar changelog-migration_13" >
+        
+<section id="sqlalchemy-1-3">
+<h1>SQLAlchemy 1.3有什么新特性？<a class="headerlink" href="#sqlalchemy-1-3" title="Permalink to this heading">¶</a></h1>
+<div class="admonition- admonition">
+<p class="admonition-title">关于本文档</p>
+<p>本文档描述了SQLAlchemy版本1.2和1.3之间的变化。</p>
+</div>
+<section id="id1">
+<h2>介绍<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>本指南介绍了SQLAlchemy版本1.3中的新特性，并记录了影响从1.2系列迁移应用程序的用户的更改。</p>
+<p>请仔细查看行为变更部分，因为其中可能存在不兼容的行为更改。</p>
+</section>
+<section id="id2">
+<h2>常规<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<section id="change-4393-general">
+<span id="id3"></span><h3>所有已弃用的元素都会生成弃用警告；添加了新的弃用<a class="headerlink" href="#change-4393-general" title="Permalink to this heading">¶</a></h3>
+<p>1.3版本确保所有已弃用的行为和API（包括所有长期列为“遗留”状态多年的元素）都会生成``DeprecationWarning``警告。这包括使用参数（例如 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">Session.weak_identity_map</span></code>）和类（例如 <code class="xref py py-class docutils literal notranslate"><span class="pre">MapperExtension</span></code>）时。虽然所有弃用项都已记录在文档中，但通常它们没有使用适当的重构文本指令或翻译成版本号。无论某个API功能是否实际上会生成弃用警告都是不一致的。通常的态度是，这些已弃用功能都被视为长期遗留功能，没有计划删除它们。</p>
+<p>该更改包括：所有已记录的弃用现在使用文档中的适当重构文本指令和版本号进行记录，表达了特性或用例将在未来版本中删除的措辞被明确地表示（例如，不再使用永久遗留用例），并且使用任何这样的特性或用例肯定会生成``DeprecationWarning``，这在Python 3中以及使用Pytest等现代测试工具时现在在标准错误流中更明确。目标是将这些长期弃用的功能（追溯到版本0.7或0.6）全部开始完全删除，而不是将它们保留为“遗留”功能。此外，从版本1.3开始添加了一些主要的新弃用。由于SQLAlchemy有数千个开发人员在14年的现实世界中使用，因此可以指向一种流畅混合使用实例的方式，以消除广泛使用的特性和模式。</p>
+<p>更大的背景是SQLAlchemy试图调整面向Python 3-only的世界，以及类型注释的世界，为此，SQLAlchemy有一些**暂定的**计划，即进行大规模的重新构建 SQLAlchemy，希望大大减少API的认知负荷，以及对核心和ORM之间的许多实现和使用差异进行重大修补。由于这两个系统在SQLAlchemy的首次发布后剧烈演变，特别是ORM仍然保留了许多“附加”行为，这些行为使得Core和ORM之间的隔离墙过高。通过提前将API聚焦于每个受支持的用例的单一模式，将来迁移到显著更改的API的工作变得更加简单。</p>
+<p>有关1.3中添加的大部分主要弃用，请参见下面链接的部分。</p>
+<p><a href="#id4"><span class="problematic" id="id5">:ticket:`4393`</span></a></p>
+</section>
+</section>
+<section id="orm">
+<h2>新功能和改进 - ORM<a class="headerlink" href="#orm" title="Permalink to this heading">¶</a></h2>
+<section id="aliasedclass">
+<span id="change-4423"></span><h3>关系到AliasedClass可以替换非主要映射器<a class="headerlink" href="#aliasedclass" title="Permalink to this heading">¶</a></h3>
+<p>“非主要映射器”是在:ref:<cite>orm_imperative_mapping`风格中创建的:class:`_orm.Mapper</cite>，它充当已经映射到与不同类型的可选择关联的类的附加映射器。非主要映射器的根源在0.1、0.2系列的SQLAlchemy版本中，当时预计:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>_orm.Mapper`对象将是主要的查询构造界面，而:class:<a href="#id8"><span class="problematic" id="id9">`</span></a>_query.Query`对象尚不存在。</p>
+<p>随着:class:<cite>_query.Query`和以后的:class:</cite>.AliasedClass`构造的出现，大多数非主要映射器的用途都消失了。这是一个好事，因为SQLAlchemy从0.5系列开始完全停用了“经典”映射，转而采用声明性系统。</p>
+<p>当一个非主要映射器与选择性可选择的不同选择集合上的对象存在困难定义的:func:<cite>_orm.relationship`配置实现时，仍然存在一个用例，这反映了一个用于非主要映射器的需求。在这种情况下，将非主要映射器与可选的选择集合作为映射目标，而不是尝试构建涵盖特定对象之间关系所有复杂性的:paramref:`_orm.relationship.primaryjoin</cite>，可以使过程变得更加容易。</p>
+<p>随着这种用例的普及，它的局限性变得明显，其中包括：非主要映射器难以针对添加新列的可选择执行配置，映射器不继承原始映射器的关系，在非主要映射器上显式配置的关系在使用程序装载器选项时无法正常工作，非主要映射器还没有提供可用于查询的完全功能的以列为基础的属性的全功能命名空间（再次提醒，在旧的0.1-0.4天中，人们会直接使用:class:<a href="#id10"><span class="problematic" id="id11">`</span></a>_schema.Table`对象来与ORM配合使用）。</p>
+<p>缺失的一部分是允许 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 直接引用 <a class="reference internal" href="../orm/queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a>。<code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass`已经做了我们希望非主要映射器执行的所有操作。它允许从可选的可选择执行加载现有映射的类，它继承已存在映射器的所有属性和关系，它非常适合执行装载程序选项，它提供了可以像类一样混合到查询中的类似于类的对象。通过这个变化，前非主要映射器的配方在</span> <span class="pre">:ref:`relationship_aliased_class</span></code> 中更改为预支类。</p>
+<p>在新方法中，所有这些冗verbose都消失了，并且在创建关系时直接引用了附加列:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">j</span> <span class="o">=</span> <span class="n">join</span> <span class="p">(</span><span class="n">B</span><span class="err">，</span><span class="n">D</span><span class="err">，</span><span class="n">D</span><span class="o">.</span><span class="n">b_id</span> <span class="o">==</span> <span class="n">B</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">join</span> <span class="p">(</span><span class="n">C</span><span class="err">，</span><span class="n">C</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">D</span><span class="o">.</span><span class="n">c_id</span><span class="p">)</span>
+
+<span class="n">B_viacd</span> <span class="o">=</span> <span class="n">aliased</span><span class="err">（</span><span class="n">B</span><span class="err">，</span><span class="n">j</span><span class="err">，</span><span class="n">flat</span> <span class="o">=</span> <span class="kc">True</span><span class="err">）</span>
+
+<span class="n">A</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">B_viacd</span><span class="p">,</span> <span class="n">primaryjoin</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">b_id</span> <span class="o">==</span> <span class="n">j</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">b_id</span><span class="p">)</span></pre></div>
+</div>
+<p>非主要映射器现在已经被弃用，最终的目标是将传统的映射全部取消。declarative API将成为映射的单一手段，这有望允许内部改进和简化，以及更清晰的文档故事。</p>
+<p><a href="#id12"><span class="problematic" id="id13">:ticket:`4423`</span></a></p>
+</section>
+<section id="change-4340">
+<span id="id14"></span><h3>选择加载不再使用简单一对多的连接<a class="headerlink" href="#change-4340" title="Permalink to this heading">¶</a></h3>
+<p>1.2中引入的“selectin”加载特性引入了一种极其高效的新方法来急切地加载集合，在许多情况下比“子查询”急切加载的效率要高得多，因为它不依赖于重新说明原始SELECT查询，并且使用一个简单的IN子句。但是，“selectin”加载仍然依赖于渲染父代和相关表之间的连接，因为它需要该行中的父主键值以匹配行。在1.3中，添加了一种新的优化，将省略大多数简单一对多加载的最常见情况，其中相关行已包含表达式的父主键行的主键值。这可以使ORM在不使用JOIN或子查询的情况下一次加载大量集合，从而提供了巨大的性能提升。</p>
+<p>给定一个映射:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">lazy</span><span class="o">=</span><span class="s2">&quot;selectin&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="err">“</span><span class="n">a</span><span class="o">.</span><span class="n">id</span><span class="err">”</span><span class="p">))</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在1.2 “selectin”加载的版本中，加载 A 到 B 的方式看起来像是：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">a_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_1_id</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b_id</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">a_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b_a_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_1</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">a_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">a_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">a_1</span><span class="p">.</span><span class="n">id</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span></pre></div>
+</div>
+<p>使用新行为时，加载看起来是这样的：</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">a</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">a_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b_a_id</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">b</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">a_id</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">,</span><span class="w"> </span><span class="o">?</span><span class="p">)</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">a_id</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">)</span></pre></div>
+</div>
+<p>该行为正在自动发布，使用类似于懒加载的启发式方法来确定相关实体是否可以直接从标识映射中获取。但是，与大多数查询功能一样，由于多态加载方案的高级方案，该功能的实现变得更加复杂。如果遇到问题，用户应报告错误，但是更改还包括一个标志：：paramref:<cite>_orm.relationship.omit_join</cite>，在:func:<a href="#id15"><span class="problematic" id="id16">`</span></a>_orm.relationship`上可以设置为``False``以禁用此优化。</p>
+<p><a href="#id17"><span class="problematic" id="id18">:ticket:`4340`</span></a></p>
+</section>
+<section id="change-4359">
+<span id="id19"></span><h3>许多对一查询表达式的行为改进<a class="headerlink" href="#change-4359" title="Permalink to this heading">¶</a></h3>
+<p>在构建查询时，将相对于对象值（例如：param：<cite>User.id</cite> = <code class="docutils literal notranslate"><span class="pre">5</span></code>）将许多对一关系与对象值进行比较的查询表达式比较，例如：</p>
+<blockquote>
+<div><p>u1 = session.query(User).get(5)</p>
+<p>query = session.query(Address).filter(Address.user == u1)</p>
+</div></blockquote>
+<p>上面的表达式``Address.user == u1``，它最终编译成基于``User``对象的主键列的SQL表达式，例如``”address.user_id = 5”<code class="docutils literal notranslate"><span class="pre">，使用延迟可调用包装器来在绑定表达式的时候尽可能晚地检索值``5</span></code>。这既适用于``Address.user == u1``表达式可能针对尚未刷新的具有服务器生成主键值的``User``对象的用例，也适用于表达式始终在属性创建之后检索正确结果的用例，即使此时属性的值已更改。</p>
+<p>但是，这种行为的副作用是，如果在表达式评估时``u1``过期，它将会生成额外的SELECT语句，并且如果``u1``也从 :class:<a href="#id20"><span class="problematic" id="id21">`</span></a>.Session`中分离，则会引发错误：：</p>
+<blockquote>
+<div><p>u1 = session.query(User).get(5)</p>
+<p>query = session.query(Address).filter(Address.user == u1)</p>
+<p>session.expire(u1)
+session.expunge(u1)</p>
+<p>query.all()  # &lt;– would raise DetachedInstanceError</p>
+</div></blockquote>
+<p>当对象的过期/清除时可能隐式发生此情况:class:<cite>.Session</cite>，因为``Address.user == u1``表达式仅引用其:class:<cite>.InstanceState</cite>，而不是对象本身。现在的修复方法是，允许``Address.user == u1``表达式在尝试通常在表达式编译时检索或加载值时执行该值，但如果对象已分离并且已过期，则在:class:<cite>.DetachedInstanceError`中检索它，因为该属性试图在 :class:</cite>.InstanceState` 上将先前值检索回来时，检索该属性。</p>
+<p>但是，这种行为的副作用是，如果在表达式评估时``u1``过期，它将会生成额外的SELECT语句，并且如果``u1``也从:class:<a href="#id22"><span class="problematic" id="id23">`</span></a>.Session`中分离，则会引发错误：</p>
+<blockquote>
+<div><p>u1 = session.query(User).get(5)</p>
+<p>query = session.query(Address).filter(Address.user == u1)</p>
+<p>session.expire(u1)
+session.expunge(u1)</p>
+<p>query.all()  # &lt;– would raise DetachedInstanceError</p>
+</div></blockquote>
+<p>该修复方案是，允许``Address.user == u1``表达式在尝试检索或加载该值时检索该值，但如果该对象被分离，并且已过期，则在从:class:<cite>.InstanceState`检索该值时从一个新的机制中检索它，在该机制下，每当属性被过期时，都会为该状态记录此属性的上一个已知值。该机制仅在需要属性/: class:</cite>.InstanceState`的表达式功能时才启用，以节省性能/内存开销。</p>
+<p>渐进属性API特性用于指示无法计算该值时的特定错误消息，这两种情况是当列属性从未设置时以及在第一次评估时已过期和现在分离时。在所有情况下，不再引发:class:<cite>.DetachedInstanceError</cite>。</p>
+<p><a href="#id24"><span class="problematic" id="id25">:ticket:`4359`</span></a></p>
+</section>
+<section id="old-raiseload-detached">
+<span id="change-4353"></span><h3>许多对一替换不会为“old”对象的”raiseload”或”detached”引发错误<a class="headerlink" href="#old-raiseload-detached" title="Permalink to this heading">¶</a></h3>
+<p>考虑在一个集合上进行延迟加载，以便加载“old”值的情况，如果关系未指定 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.active_history</span></code> 标志，将不会为已分离的对象引发``AssertionError``:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">one</span><span class="p">()</span>
+
+<span class="n">session</span><span class="o">.</span><span class="n">expunge</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+
+<span class="n">a1</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">some_user</span></pre></div>
+</div>
+<p>上面，当在未附加的``a1``对象上替换``.user``属性时，<code class="docutils literal notranslate"><span class="pre">.user``属性将从标识映射中尝试检索</span></code>.user``属性的以前值，会引发:class:<cite>.DetachedInstanceError</cite>，因为属性试图从已分离的``some_user``对象中检索值。当``u1``对象已过期并且已分离时，通常会隐式发生对象的过期/清除，因为``Address.user == u1``表达式仅引用其:class:<cite>.InstanceState</cite>，而不是该对象本身。解决办法是，这个操作现在可以在不加载旧值的情况下继续。</p>
+<p>对于“引发加载”策略（<code class="docutils literal notranslate"><span class="pre">lazy=&quot;raise&quot;</span></code>），同样的更改也发生了：</p>
+<blockquote>
+<div><dl>
+<dt>class Address(Base):</dt><dd><p># …</p>
+<p>user = relationship(“User”, …, lazy=”raise”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>以前，将``a1.user``关联对象调用“引发加载”会由于属性试图检索以前的值而引发“raiseload”异常。即使在加载“old”值时也不会引发这个断言了。</p>
+<p><a href="#id26"><span class="problematic" id="id27">:ticket:`4353`</span></a></p>
+</section>
+<section id="ormdel">
+<span id="change-4354"></span><h3>为ORM属性执行del操作<a class="headerlink" href="#ormdel" title="Permalink to this heading">¶</a></h3>
+<p>Python的“del”操作对映射属性（标量列或对象引用）实际上没有用处。现在已经添加了修复程序，其中“del”操作正确工作，其中“del”操作大致等同于将属性设置为“None”值：：</p>
+<blockquote>
+<div><p>some_object = session.query(SomeObject).get(5)</p>
+<p>del some_object.some_attribute  #从SQL的角度来看，像是”= None”</p>
+</div></blockquote>
+<p><a href="#id28"><span class="problematic" id="id29">:ticket:`4354`</span></a></p>
+</section>
+<section id="instancestateinfo">
+<span id="change-4257"></span><h3>在InstanceState对象上添加了info字段<a class="headerlink" href="#instancestateinfo" title="Permalink to this heading">¶</a></h3>
+<p>向:class:<cite>.InstanceState`类添加了`</cite>.info``字典，它来自于对映射对象调用:func:<cite>_sa.inspect</cite>。这使得用户可以为对象添加其他信息，这些信息将随着对象在内存中的完整生命周期一起传递：</p>
+<blockquote>
+<div><p>from sqlalchemy import inspect</p>
+<p>u1 = User(id=7, name=”ed”)</p>
+<p>inspect(u1).info[“user_info”] = “7|ed”</p>
+</div></blockquote>
+<p><a href="#id30"><span class="problematic" id="id31">:ticket:`4257`</span></a></p>
+</section>
+<section id="change-4196">
+<span id="id32"></span><h3>基于水平分片的查询扩展支持批量更新和删除方法<a class="headerlink" href="#change-4196" title="Permalink to this heading">¶</a></h3>
+<p>:class:<a href="#id33"><span class="problematic" id="id34">`</span></a>.ShardedQuery`扩展对象支持:meth:<a href="#id35"><span class="problematic" id="id36">`</span></a>_query.Query.update`和:meth:<a href="#id37"><span class="problematic" id="id38">`</span></a>_query.Query.delete`批量更新/删除方法。当调用它们时，将查询选择器调用，以根据给定的标准在多个分片上运行更新/删除。</p>
+<p><a href="#id39"><span class="problematic" id="id40">:ticket:`4196`</span></a></p>
+</section>
+<section id="id41">
+<h3>协会代理改进<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h3>
+<p>虽然没有任何特定的原因，但是在本周期中，Association代理扩展经历了许多改进。</p>
+</section>
+<section id="associationcascade-scalar-deletes">
+<span id="change-4308"></span><h3>Association代理具有新的cascade_scalar_deletes标志<a class="headerlink" href="#associationcascade-scalar-deletes" title="Permalink to this heading">¶</a></h3>
+<p>给定以下映射:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;test_a&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;AB&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">uselist</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">association_proxy</span><span class="p">(</span>
+        <span class="s2">&quot;ab&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="n">AB</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="n">b</span><span class="p">),</span> <span class="n">cascade_scalar_deletes</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;test_b&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;AB&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">AB</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;test_ab&quot;</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">b_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">B</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p>将``A.b``赋值将生成一个``AB``对象:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">B</span><span class="p">()</span></pre></div>
+</div>
+<p>如果设置 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">b``设置为``None``将同时删除``A.ab`</span></code>。默认行为仍然是使``a.ab``保持原样:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">ab</span> <span class="ow">is</span> <span class="kc">None</span></pre></div>
+</div>
+<p>虽然看起来直观，这个逻辑应该只查看现有关系的“级联”属性，但是，从这单独的属性本身并不明确该属性是否应该被删除，因此该行为作为一个显式选项可用。</p>
+<p>此外，现在``del``针对标量运作方式与将属性设置为``None``大致相同:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">a</span><span class="o">.</span><span class="n">b</span>
+<span class="k">assert</span> <span class="n">a</span><span class="o">.</span><span class="n">ab</span> <span class="ow">is</span> <span class="kc">None</span></pre></div>
+</div>
+<p><a href="#id42"><span class="problematic" id="id43">:ticket:`4308`</span></a></p>
+</section>
+<section id="association">
+<span id="change-3423"></span><h3>Association代理在每个类上按类存储类特定状态<a class="headerlink" href="#association" title="Permalink to this heading">¶</a></h3>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy`对象根据父映射类做出许多决策。虽然:class:</span></code>.AssociationProxy`最初只是一个相对简单的“getter”，但很快就显而易见，它还需要对其关联的属性进行决策，例如它所参考的是什么类型的属性，即标量还是集合，映射对象还是简单值等等。为了实现这一点，它需要检查它引用的映射属性或其他描述符或属性，这些映射属性或其他描述符或属性是从其父类引用的。但是，在Python描述符机制中，描述符仅在它在该类的上下文中被访问时（例如将``MyClass.some_descriptor``调用``__get __（）``方法，它将传递类）。因此，<code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy`对象会存储仅特定于该类的内部状态，但仅在将:class:</span></code>.AssociationProxy`作为描述符调用``__get __（）``的基础上才会修改其内部状态，尝试在不先访问:class:<a href="#id44"><span class="problematic" id="id45">`</span></a>.AssociationProxy`作为描述符的情况下预先检查该状态将引发错误。此外，它假设``__get __（）``首次看到的第一个类是它需要知道的唯一父类。尽管在1.1中已经改进了此缺陷，但是它仍然留下了一些缺陷以及确定最佳“所有者”类的复杂问题。</p>
+<p>这些问题现已得到解决，因为 <code class="xref py py-class docutils literal notranslate"><span class="pre">AssociationProxy`在``__get__（）``被调用时不再修改其自己的内部状态；相反，生成了一种新对象</span> <span class="pre">:class:</span></code>.AssociationProxyInstance`用于每个特定于映射的父类处理所有与该映射父类相关的特定状态（当父类没有映射时，不会生成：class：<cite>。AssociationProxyInstance</cite>）。“拥有”类的概念在本质上改进了1.1，现在已经被更换为一种方法，其中AP现在可以同等地处理任意数量的“拥有”类。</p>
+<p>为了适应希望检查不一定直接调用``__get __（）``的:class:<cite>.AssociationProxy`的应用程序的状态，而不一定调用``__get __（）`</cite>，添加了一个新方法:meth:<cite>.AssociationProxy.for_class</cite>，它提供了直接访问特定于类的:class:<cite>.AssociationProxyInstance</cite>，如下所示：：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p># …</p>
+<p>keywords = association_proxy(“kws”, “keyword”)</p>
+</dd>
+</dl>
+<p>proxy_state = inspect(User).all_orm_descriptors[“keywords”].for_class(User)</p>
+</div></blockquote>
+<p>一旦我们有了 <code class="xref py py-class docutils literal notranslate"><span class="pre">keywords``代理特定的属性，例如``target_class`</span></code>：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">proxy_state</span><span class="o">.</span><span class="n">target_class</span>
+<span class="go">Keyword</span></pre></div>
+</div>
+<p><a href="#id46"><span class="problematic" id="id47">:ticket:`3423`</span></a></p>
+<section id="change-4351">
+<span id="id48"></span><h4>面向列的比较运算符现在提供了用于面向列的目标的标准列运算符<a class="headerlink" href="#change-4351" title="Permalink to this heading">¶</a></h4>
+<p>给定了一个:class:<cite>.AssociationProxy</cite>，其中目标是一个数据库列，并且不是一个对象引用或另一个关联代理:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Element&quot;</span><span class="p">)</span>
+
+    <span class="c1"># column-based association proxy</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">association_proxy</span><span class="p">(</span><span class="s2">&quot;elements&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Element</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>那么现在可以使用标准列运算符，例如``like``：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span> <span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">like</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%f</span><span class="s2">oo%&quot;</span><span class="p">))</span><span class="err">）</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">element</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="p">:</span><span class="n">value_1</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">equals</span></code>：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="s2">&quot;foo&quot;</span><span class="p">))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">element</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">value_1</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p>当将其与``None``进行比较时，IS NULL表达式将与相关行不再存在的测试一起增强；这与以前相同：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span> <span class="p">(</span><span class="n">s</span><span class="o">.</span> <span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="kc">None</span><span class="p">)</span><span class="err">）</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">element</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="p">))</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="p">(</span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">element</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">user_id</span><span class="p">))</span>
+</div></pre></div>
+</div>
+<p>请注意， <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.ColumnOperators.contains" title="sqlalchemy.sql.expression.ColumnOperators.contains"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ColumnOperators.contains()</span></code></a> 操作符实际上是一个字符串比较操作符； <strong>这是一种行为更改</strong>，因为先前，关联代理仅使用``.contains``作为列表存在运算符。对于基于列的比较，现在的行为类似于“like”：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span><span class="p">)))</span>
+<div class='show_sql_print'><span class="k">SELECT</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="ss">&quot;user&quot;</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">element</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">&quot;user&quot;</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="n">element</span><span class="p">.</span><span class="n">value</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="p">:</span><span class="n">value_1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="p">))</span>
+</div></pre></div>
+</div>
+<p>为了测试值``”foo”<code class="docutils literal notranslate"><span class="pre">是否是``User.values``集合的简单成员资格，应使用相等运算符（例如``User.values</span> <span class="pre">==</span> <span class="pre">'foo'</span></code>）；在之前的版本中，这也可以工作。</p>
+<p>当使用基于对象的协会代理与集合时，行为与以前相同，测试集合成员资格，例如，给定一个映射:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user_elements</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;UserElement&quot;</span><span class="p">)</span>
+
+    <span class="c1"># object-based association proxy</span>
+    <span class="n">elements</span> <span class="o">=</span> <span class="n">association_proxy</span><span class="p">(</span><span class="s2">&quot;user_elements&quot;</span><span class="p">,</span> <span class="s2">&quot;element&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">UserElement</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user_element&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">))</span>
+    <span class="n">element_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;element.id&quot;</span><span class="p">))</span>
+    <span class="n">element</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Element&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Element</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;element&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p><a href="#id49"><span class="problematic" id="id50">``</span></a>。contains()``方法仍然产生与以前相同的表达式，测试``User.elements``的列表中是否存在``Element``对象：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">User</span><span class="o">.</span><span class="n">elements</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">Element</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))))</span>
+<span class="go">SELECT &quot;user&quot;.id AS user_id</span>
+<span class="go">FROM &quot;user&quot;</span>
+<span class="go">WHERE EXISTS (SELECT 1</span>
+<span class="go">FROM user_element</span></pre></div>
+</div>
+<p><a href="#id51"><span class="problematic" id="id52">:ticket:`4351`</span></a></p>
+</section>
+<section id="associationproxy-noneempty">
+<span id="change-4356"></span><h4>当列型AssociationProxy目标时，== None协议跟empty匹配<a class="headerlink" href="#associationproxy-noneempty" title="Permalink to this heading">¶</a></h4>
+<p>给定具有非空默认值的SQLAlchemy列的映射，例如：</p>
+<blockquote>
+<div><p>sa.Column(sa.String, default=”value”)</p>
+</div></blockquote>
+<p>如果对应于“value”的属性被映射到具有默认值的这样的列，则``.xxx == None``协议现在实际上匹配空字符串。例如，如果考虑使用内置调查机制检查一个代理对象是否为空:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查询所有长度为0的元素</span>
+<span class="n">query</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>那么这个查询同时还将查找那些被映射到某个具有默认值为“value”的列上的其他映射，这个值既不是数量级也不是NULL，例如：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>class SomeMappedObject(Base):</dt><dd><p>__tablename__ = “somemappedthing”
+id = Column(Integer, primary_key=True)
+name = Column(String, default=”value”)</p>
+</dd>
+</dl>
+<p>proxy = association_proxy(“columns”, “name”)</p>
+<p>mapped = SomeMappedObject()
+mapped.columns = [SomeMappedThingColumn(name=”foo”), SomeMappedThingColumn(name=””)]</p>
+<p>assert proxy == [“foo”, “”]</p>
+</div></blockquote>
+<p>现在，当代理也适用于代理列时，<a href="#id53"><span class="problematic" id="id54">``</span></a>== None``协议也会匹配空字符串，因为在SQLAlchemy中，这通常意味着相应的列具有无值的情况，如果该列是非空的，则具有默认值。如果不需要此行为，则可以使用“== None”代替以前的比较，或者显式添加``is``运算符。</p>
+<p><a href="#id55"><span class="problematic" id="id56">:ticket:`4356`</span></a></p>
+</section>
+</section>
+<section id="manytoone-onetooneduplicates">
+<span id="change-4365"></span><h3>在ManyToOne / OneToOne加载时可以授予“duplicates”警告<a class="headerlink" href="#manytoone-onetooneduplicates" title="Permalink to this heading">¶</a></h3>
+<p>在尝试加载ManyToOne/OneToOne关联时，如果关联键不是唯一的，将为警告提供一个复制当前行的信息。</p>
+<p><a href="#id57"><span class="problematic" id="id58">:ticket:`4365`</span></a></p>
+</section>
+<section id="apply-updates">
+<span id="change-4093"></span><h3>在更新时，不需要apply_updates参数<a class="headerlink" href="#apply-updates" title="Permalink to this heading">¶</a></h3>
+<p>bind对象的:meth:<a href="#id59"><span class="problematic" id="id60">`</span></a>_engine.Cursor.execute`方法现在将不接受``apply_updates``参数，这是一个无用的参数：:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+    <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">update</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="p">),</span>
+        <span class="p">{</span><span class="n">table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">a</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+        <span class="n">apply_updates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># not used</span>
+    <span class="p">)</span></pre></div>
+</div>
+<p>现应该忽略这个参数：：</p>
+<blockquote>
+<div><dl>
+<dt>with engine.connect() as conn:</dt><dd><dl class="simple">
+<dt>conn.execute(</dt><dd><p>table.update().values(a=b),
+{table.c.a: 1},</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>:ticket:<a href="#id61"><span class="problematic" id="id62">`</span></a>4093`WHERE “user”.id = user_element.user_id AND :param_1 = user_element.element_id)</p>
+<p>总体而言，这项更改是基于:ref:<cite>change_3423`的架构更改启用的；由于代理现在在生成表达式时会产生额外的状态，因此有一个对象目标和一个列目标版本的:class:</cite>.AssociationProxyInstance`类。</p>
+<p><a href="#id63"><span class="problematic" id="id64">:ticket:`4351`</span></a></p>
+<section id="id65">
+<h4>代理现在强引用父对象<a class="headerlink" href="#id65" title="Permalink to this heading">¶</a></h4>
+<p>协会代理集合维护只有父对象的弱引用的长期行为被撤销；现在代理将维护父对象的强引用，只要代理集合本身仍然存在于内存中，也将消除“陈旧的关联代理”错误。这个改变正在实验性的基础上进行，看看是否会引起任何副作用。</p>
+<p>例如，给定一个具有协会代理映射的情况:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+    <span class="n">b_data</span> <span class="o">=</span> <span class="n">association_proxy</span><span class="p">(</span><span class="s2">&quot;bs&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="p">[</span><span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;b1&quot;</span><span class="p">),</span> <span class="n">B</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="s2">&quot;b2&quot;</span><span class="p">)])</span>
+
+<span class="n">b_data</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">b_data</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>之前，如果``a1``被删除了:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">del</span> <span class="n">a1</span></pre></div>
+</div>
+<p><a href="#id66"><span class="problematic" id="id67">``</span></a>a1``被删除后，尝试迭代``b_data``集合会导致“stale association proxy，parent object has gone out of scope”的错误。这是因为协会代理需要访问实际的``a1.bs``集合以产生视图，在此改变之前它只维护了对``a1``的弱引用。特别是，当执行内联操作时，用户通常会遇到此错误，例如:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">collection</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">b_data</span></pre></div>
+</div>
+<p>上面的查询由于``A``对象将在实际使用``b_data``集合之前被垃圾收集器收集而引起错误。</p>
+<p>现在的改变是，<a href="#id68"><span class="problematic" id="id69">``</span></a>b_data``集合现在维护一个对``a1``对象的强引用，这样它就会留在那儿:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">b_data</span> <span class="o">==</span> <span class="p">[</span><span class="s2">&quot;b1&quot;</span><span class="p">,</span> <span class="s2">&quot;b2&quot;</span><span class="p">]</span></pre></div>
+</div>
+<p>这个改变引入了一个副作用，即当应用程序像上面那样传递集合时，“<strong>只有在集合也被丢弃时，父对象才会被垃圾回收</strong>”。与始终如一，如果``a1``在特定的:class:<a href="#id70"><span class="problematic" id="id71">`</span></a>.Session`内是持久的，它将保持为该会话的状态，直到被垃圾收集。</p>
+<p>请注意，如果此更改导致问题，可能会对其进行修改。</p>
+<p><a href="#id72"><span class="problematic" id="id73">:ticket:`4268`</span></a></p>
+</section>
+<section id="change-2642">
+<span id="id74"></span><h4>多列代理和字典的替换实现<a class="headerlink" href="#change-2642" title="Permalink to this heading">¶</a></h4>
+<p>将集合或字典分配给协会代理集合现在应该正常工作，而不是重新创建现有键/值对协会代理成员，从而导致由于删除+插入相同对象而潜在刷新失败，它现在应该只在适当的情况下创建新的协会对象:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;test_a&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">b_rel</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;B&quot;</span><span class="p">,</span>
+        <span class="n">collection_class</span><span class="o">=</span><span class="n">set</span><span class="p">,</span>
+        <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">association_proxy</span><span class="p">(</span><span class="s2">&quot;b_rel&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">creator</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">B</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">x</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;test_b&quot;</span>
+    <span class="n">__table_args__</span> <span class="o">=</span> <span class="p">(</span><span class="n">UniqueConstraint</span><span class="p">(</span><span class="s2">&quot;a_id&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">),)</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;test_a.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+
+
+<span class="c1"># ...</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">Session</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">b</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">})</span>
+<span class="n">s</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<span class="c1"># re-assign where one B should be deleted, one B added, two</span>
+<span class="c1"># B&#39;s maintained</span>
+<span class="n">a</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="s2">&quot;q&quot;</span><span class="p">}</span>
+
+<span class="c1"># only &#39;q&#39; was added, so only one new B object.  previously</span>
+<span class="c1"># all three would have been re-created leading to flush conflicts</span>
+<span class="c1"># against the deleted ones.</span>
+<span class="k">assert</span> <span class="n">len</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">new</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></pre><div class="code-annotations-key"></div></div>
+</div>
+<p><a href="#id75"><span class="problematic" id="id76">:ticket:`2642`</span></a></p>
+</section>
+</section>
+<section id="change-1103">
+<span id="id77"></span><h3>一对多反向引用在删除操作期间检查集合重复项<a class="headerlink" href="#change-1103" title="Permalink to this heading">¶</a></h3>
+<p>ORM映射的集合，典型的Python序列，通常为Python“列表”，包含重复的情况下，如果对象从一个位置删除而没有从其他位置删除，那么多对一的反向引用会将其属性设置为``None``，即使仍然表示一个对多的集合事实上仍存在。 尽管一对多集合在关系模型中不能有重复项，但使用ORM映射的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，可以在内存中具有有重复项的限制。 在特定的Python“交换”操作中，将一个副本暂时存在于列表中是固有的。给定标准的一对多/多对一设置。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">A</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">B</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;b&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">a_id</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;a.id&quot;</span><span class="p">))</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>如果我们有一个带有两个``B``成员的``A``对象，并执行一个交换：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="p">[</span><span class="n">B</span><span class="p">(),</span> <span class="n">B</span><span class="p">()])</span>
+
+<span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+<p>在上述操作期间，中继Python <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> <code class="docutils literal notranslate"><span class="pre">__delitem__``方法释放中间状态，在集合中第二个``B（）``对像存在两次。当``B（）``对象被从一个位置删除时，``B.a``反向引用将设置引用为``None</span></code>，导致在刷新期间从``A``和``B``对象之间移除链接。即使在关系模型中不能在一个对多的一侧存在重复项，但是在内存中具有重复值的ORM映射的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，该活动也是固有的，重复状态的限制不能持久化或从数据库中检索。特别地，当列表中暂时存在一个副本时，具有重复项的情况是Python“交换”操作的固有属性。是一个标准的一对多/多对一设置。</p>
+<blockquote>
+<div><dl>
+<dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
+<p>id = Column(Integer, primary_key=True)
+bs = relationship(“B”, backref=”a”)</p>
+</dd>
+<dt>class B(Base):</dt><dd><p>__tablename__ = “b”
+id = Column(Integer, primary_key=True)
+a_id = Column(ForeignKey(“a.id”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>如果我们有一个带有两个``B``成员的``A``对象，并执行一个交换：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="p">[</span><span class="n">B</span><span class="p">(),</span> <span class="n">B</span><span class="p">()])</span>
+
+<span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+<p>在上述操作期间，中继Python <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> <code class="docutils literal notranslate"><span class="pre">__delitem__``方法释放中间状态，在集合中第二个``B（）``对像存在两次。当``B（）``对象被从一个位置删除时，``B.a``反向引用将设置引用为``None</span></code>，导致在刷新期间从``A``和``B``对象之间移除链接。即使在关系模型中不能在一个对多的一侧存在重复项，但是在内存中具有重复值的ORM映射的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，该活动也是固有的，重复状态的限制不能持久化或从数据库中检索。特别地，当列表中暂时存在一个副本时，具有重复项的情况是Python“交换”操作的固有属性。</p>
+<blockquote>
+<div><dl>
+<dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
+<p>id = Column(Integer, primary_key=True)
+bs = relationship(“B”, backref=”a”)</p>
+</dd>
+<dt>class B(Base):</dt><dd><p>__tablename__ = “b”
+id = Column(Integer, primary_key=True)
+a_id = Column(ForeignKey(“a.id”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>如果我们有一个带有两个``B``成员的``A``对象，并执行一个交换：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="p">[</span><span class="n">B</span><span class="p">(),</span> <span class="n">B</span><span class="p">()])</span>
+
+<span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+<p>在上述操作期间，中继Python <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> <code class="docutils literal notranslate"><span class="pre">__delitem__``方法释放中间状态，在集合中第二个``B（）``对像存在两次。当``B（）``对象被从一个位置删除时，``B.a``反向引用将设置引用为``None</span></code>，导致在刷新期间从``A``和``B``对象之间移除链接。即使在关系模型中不能在一个对多的一侧存在重复项，但是在内存中具有重复值的ORM映射的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，该活动也是固有的，重复状态的限制不能持久化或从数据库中检索。特别地，当列表中暂时存在一个副本时，具有重复项的情况是Python“交换”操作的固有属性。</p>
+<blockquote>
+<div><dl>
+<dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
+<p>id = Column(Integer, primary_key=True)
+bs = relationship(“B”, backref=”a”)</p>
+</dd>
+<dt>class B(Base):</dt><dd><p>__tablename__ = “b”
+id = Column(Integer, primary_key=True)
+a_id = Column(ForeignKey(“a.id”))</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>如果我们有一个带有两个``B``成员的``A``对象，并执行一个交换：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">A</span><span class="p">(</span><span class="n">bs</span><span class="o">=</span><span class="p">[</span><span class="n">B</span><span class="p">(),</span> <span class="n">B</span><span class="p">()])</span>
+
+<span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a1</span><span class="o">.</span><span class="n">bs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></pre></div>
+</div>
+<p>在上述操作期间，中继Python <code class="docutils literal notranslate"><span class="pre">__setitem__</span></code> <code class="docutils literal notranslate"><span class="pre">__delitem__``方法释放中间状态，在集合中第二个``B（）``对像存在两次。当``B（）``对象被从一个位置删除时，``B.a``反向引用将设置引用为``None</span></code>，导致在刷新期间从``A``和``B``对象之间移除链接。即使在关系模型中不能在一个对多的一侧存在重复项，但是在内存中具有重复值的ORM映射的 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>，该活动也是固有的，重复状态的限制不能持久化或从数据库中检索。特别地，当列表中暂时存在一个副本时，具有重复项的情况是Python“交换”操作的固有属性。</p>
+<p>当ORM映射的集合以Python序列的形式存在并具有重复性时，发现多对一的反向引用将其属性设置为``None``的问题，即使一对多/多对一集合在关系模型中不允许具有重复值，在ORM映射中具有重复值的情况下可以出现限制（即Python“交换”操作固有的可能性）。改变确保在类似的情况下不会清除多对一关系上的属性，从而维护了集合的完整性。</p>
+<p><a href="#id78"><span class="problematic" id="id79">:ticket:`1103`</span></a>
+连接池通常由 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 使用，称为 <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.QueuePool" title="sqlalchemy.pool.QueuePool"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueuePool</span></code></a>。该池使用 Python 内置的 <code class="docutils literal notranslate"><span class="pre">Queue</span></code> 类型的对象来存储等待使用的数据库连接。<code class="docutils literal notranslate"><span class="pre">Queue</span></code> 具有先进先出的行为，旨在提供对持久池中的数据库连接的轮询使用。但是，这可能会带来潜在的缺点：当池的利用率较低时，一系列重用连接导致防止服务器端超时策略关闭这些连接。为适应此用例，增加了一个新标志：<code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.pool_use_lifo</span></code>，它将 <code class="docutils literal notranslate"><span class="pre">.get()</span></code> 方法的顺序与正常相反，从队列的开头而不是结尾获取连接，从本质上将“队列”变为“堆栈”（考虑到这会太冗长，因此没有添加一个名为 <code class="docutils literal notranslate"><span class="pre">StackPool</span></code> 的全新池）。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../core/pooling.html#pool-use-lifo"><span class="std std-ref">使用先进后出和先进先出</span></a></p>
+</div>
+</section>
+</section>
+<section id="id80">
+<h2>核心要点变化<a class="headerlink" href="#id80" title="Permalink to this heading">¶</a></h2>
+<section id="sql-text">
+<span id="change-4481"></span><h3>强制转换字符串 SQL 片段为 text() 完全移除<a class="headerlink" href="#sql-text" title="Permalink to this heading">¶</a></h3>
+<p>首次在 1.0 版本中添加的警告，在 <span class="xref std std-ref">migration_2992</span> 中描述。现在已将其转换为异常。持续关注使用像 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.filter" title="sqlalchemy.orm.Query.filter"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.filter()</span></code></a> 和 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a> 这样的方法传递的字符串片段强制转换为 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.text" title="sqlalchemy.sql.expression.text"><code class="xref py py-func docutils literal notranslate"><span class="pre">text()</span></code></a> 组成的内容，即使这发出了警告。对于 <a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.order_by" title="sqlalchemy.sql.expression.Select.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.order_by()</span></code></a>、<a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.order_by" title="sqlalchemy.orm.Query.order_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.order_by()</span></code></a>、<a class="reference internal" href="../core/selectable.html#sqlalchemy.sql.expression.Select.group_by" title="sqlalchemy.sql.expression.Select.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.group_by()</span></code></a> 和 <a class="reference internal" href="../orm/queryguide/query.html#sqlalchemy.orm.Query.group_by" title="sqlalchemy.orm.Query.group_by"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Query.group_by()</span></code></a> 来说，仍然会将字符串标签或列名解析为相应的表达式结构，但是如果解析失败，则会引发 <a class="reference internal" href="../core/exceptions.html#sqlalchemy.exc.CompileError" title="sqlalchemy.exc.CompileError"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompileError</span></code></a>，从而防止直接呈现原始 SQL 文本。</p>
+<p><a href="#id81"><span class="problematic" id="id82">:ticket:`4481`</span></a></p>
+</section>
+<section id="threadlocal">
+<span id="change-4393-threadlocal"></span><h3>不推荐使用“threadlocal”引擎策略<a class="headerlink" href="#threadlocal" title="Permalink to this heading">¶</a></h3>
+<p>“threadlocal 引擎策略”是在 SQLAlchemy 0.2 左右添加的，作为解决 SQLAlchemy 0.1 中的标准操作方式总结出的问题的一种解决方案。回顾过去，可以说 SQLAlchemy 第一个发布版本在每个方面都是“alpha”，人们担心已经有太多用户已经使用现有 API，无法更改它显得相当荒谬。</p>
+<p>SQLAlchemy 的最初使用模型如下所示：</p>
+<blockquote>
+<div><p>engine.begin()</p>
+<p>table.insert().execute(parameters)
+result = table.select().execute()</p>
+<p>table.update().execute(parameters)</p>
+</div></blockquote>
+<p>几个月的现实世界使用后，很明显，假装“连接”或“事务”是隐藏的实现细节是一个坏主意，特别是当某个人需要一次处理多个数据库连接时。因此，我们今天看到的使用范例被引入了，由于当时 Python 中还不存在上下文管理器，因此省略了上下文管理器：</p>
+<blockquote>
+<div><p>conn = engine.connect()
+try:</p>
+<blockquote>
+<div><p>trans = conn.begin()</p>
+<p>conn.execute(table.insert(), parameters)
+result = conn.execute(table.select())</p>
+<p>conn.execute(table.update(), parameters)</p>
+<p>trans.commit()</p>
+</div></blockquote>
+<dl class="simple">
+<dt>except:</dt><dd><p>trans.rollback()
+raise</p>
+</dd>
+<dt>finally:</dt><dd><p>conn.close()</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述模式是人们所需的，但由于它仍然有点冗长（因为没有上下文管理器），因此仍然保留了旧的工作方式，成为“threadlocal 引擎策略”。</p>
+<p>今天，在 Core 的工作更加简洁，甚至比原始模式更加简洁，得益于上下文管理器：</p>
+<blockquote>
+<div><dl>
+<dt>with engine.begin() as conn:</dt><dd><p>conn.execute(table.insert(), parameters)
+result = conn.execute(table.select())</p>
+<p>conn.execute(table.update(), parameters)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>在此时，任何仍然依赖“threadlocal”方式的剩余代码都将通过此停用来更新为更现代的方式。该功能应在下一个主要系列（如 1.4）的 SQLAlchemy 中完全删除。连接池参数 <a class="reference internal" href="../core/pooling.html#sqlalchemy.pool.Pool.params.use_threadlocal" title="sqlalchemy.pool.Pool"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Pool.use_threadlocal</span></code></a> 也已被弃用，因为它在大多数情况下实际上没有任何影响，还有 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.contextual_connect()</span></code> 方法，它通常与 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Engine.connect()</span></code> 方法同义，除非使用 threadlocal 引擎。</p>
+<p><a href="#id83"><span class="problematic" id="id84">:ticket:`4393`</span></a></p>
+</section>
+<section id="convert-unicode">
+<span id="change-4393-convertunicode"></span><h3>已弃用 “convert_unicode” 参数<a class="headerlink" href="#convert-unicode" title="Permalink to this heading">¶</a></h3>
+<p>已弃用 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.String.params.convert_unicode" title="sqlalchemy.types.String"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">String.convert_unicode</span></code></a> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.convert_unicode</span></code> 参数。这些参数的目的是告知 SQLAlchemy 在 Python 2.x 中确保传入的 Python Unicode 对象在传递到数据库之前进行了编码，并期望从数据库接收的是 bytestring。在 Python 3 开始使用后，DBAPIs 开始开始更充分地支持 Unicode，更重要的是默认情况下支持 Unicode。但是，特定 DBAPI 在哪些条件下返回结果中的 Unicode 数据的特定情况，以及是否接受 Python Unicode 值作为参数，仍然非常复杂。这是“convert_unicode”标志过时的开始，因为它们不再足以确保仅在需要时执行编码/解码。取而代之的是，dialects 开始自动检测“convert_unicode”。其中一部分可以在引擎第一次连接时发出的 “SELECT ‘test plain returns’” 和 “SELECT ‘test_unicode_returns’” 的 SQL 中看到；方言正在测试当前的 DBAPI 是否以默认方式返回 Unicode 数据。</p>
+<p>最终结果是，在任何情况下，无需使用“convert_unicode”标志，如果确实需要，则 SQLAlchemy 项目需要知道这些情况以及原因。目前，在所有主要数据库中都通过了数百个 Unicode 回路测试，而没有使用该标志，因此可以相当有把握地认为，除了争议性的非使用情况（例如从遗留数据库中访问错误编码的数据）之外，它们不再需要使用自定义类型更合适。</p>
+<p><a href="#id85"><span class="problematic" id="id86">:ticket:`4393`</span></a></p>
+</section>
+</section>
+<section id="sqlalchemy-postgresql">
+<h2>SQLAlchemy - PostgreSQL 改进和更改<a class="headerlink" href="#sqlalchemy-postgresql" title="Permalink to this heading">¶</a></h2>
+<section id="postgresql">
+<span id="change-4237"></span><h3>为 PostgreSQL 分区表添加基本反射支持<a class="headerlink" href="#postgresql" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy 可以使用在版本 1.2.6 中添加的 <strong>postgresql_partition_by</strong> 标志在 PostgreSQL 的 CREATE TABLE 语句中呈现“PARTITION BY”序列。但是，<code class="docutils literal notranslate"><span class="pre">'p'</span></code> 类型不是直到现在使用的反射查询的一部分。</p>
+<p>给定类似于以下架构：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>dv = Table(</dt><dd><p>“data_values”,
+metadata_obj,
+Column(“modulus”, Integer, nullable=False),
+Column(“data”, String(30)),
+postgresql_partition_by=”range(modulus)”,</p>
+</dd>
+</dl>
+<p>)</p>
+<dl>
+<dt>sa.event.listen(</dt><dd><p>dv,
+“after_create”,
+sa.DDL(</p>
+<blockquote>
+<div><p>“CREATE TABLE data_values_4_10 PARTITION OF data_values ”
+“FOR VALUES FROM (4) TO (10)”</p>
+</div></blockquote>
+<p>),</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>两个表名称 <code class="docutils literal notranslate"><span class="pre">'data_values'</span></code> 和 <code class="docutils literal notranslate"><span class="pre">'data_values_4_10'</span></code> 将从 <a class="reference internal" href="../core/reflection.html#sqlalchemy.engine.reflection.Inspector.get_table_names" title="sqlalchemy.engine.reflection.Inspector.get_table_names"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Inspector.get_table_names()</span></code></a> 返回，此外列也将从 <code class="docutils literal notranslate"><span class="pre">Inspector.get_columns('data_values')</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Inspector.get_columns('data_values_4_10')</span></code> 返回。这也适用于使用这些表的 <code class="docutils literal notranslate"><span class="pre">Table(...,</span> <span class="pre">autoload=True)</span></code> 形式。</p>
+<p><a href="#id87"><span class="problematic" id="id88">:ticket:`4237`</span></a></p>
+</section>
+</section>
+<section id="sqlalchemy-mysql">
+<h2>SQLAlchemy - MySQL 改进和更改<a class="headerlink" href="#sqlalchemy-mysql" title="Permalink to this heading">¶</a></h2>
+<section id="ping-ping">
+<span id="change-mysql-ping"></span><h3>启用协议级 ping 进行预 ping<a class="headerlink" href="#ping-ping" title="Permalink to this heading">¶</a></h3>
+<p>PyMySQL 和 mysql-connector-python 等 MySQL 方言现在使用 <code class="docutils literal notranslate"><span class="pre">connection.ping()</span></code> 方法进行预 ping 功能，该功能在连接上使用 Microsoft ODBC 驱动程序时可用。这比以前在连接上发出 “SELECT 1” 的方法要轻量得多。</p>
+</section>
+<section id="on-duplicate-key-update">
+<span id="change-mysql-ondupordering"></span><h3>在 ON DUPLICATE KEY UPDATE 中控制参数订购<a class="headerlink" href="#on-duplicate-key-update" title="Permalink to this heading">¶</a></h3>
+<p>在“ON DUPLICATE KEY UPDATE”子句中可显式地排序 UPDATE 参数。方法是通过传递 2 元组的列表来实现：</p>
+<blockquote>
+<div><p>from sqlalchemy.dialects.mysql import insert</p>
+<p>insert_stmt = insert(my_table).values(id=”some_existing_id”, data=”inserted value”)</p>
+<dl>
+<dt>on_duplicate_key_stmt = insert_stmt.on_duplicate_key_update(</dt><dd><dl class="simple">
+<dt>[</dt><dd><p>(“data”, “some data”),
+(“updated_at”, func.current_timestamp()),</p>
+</dd>
+</dl>
+<p>],</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/mysql.html#mysql-insert-on-duplicate-key-update"><span class="std std-ref">INSERT…ON DUPLICATE KEY UPDATE (Upsert)</span></a></p>
+</div>
+</section>
+</section>
+<section id="sqlalchemy-sqlite">
+<h2>SQLAlchemy - SQLite 改进和更改<a class="headerlink" href="#sqlalchemy-sqlite" title="Permalink to this heading">¶</a></h2>
+<section id="sqlite-json">
+<span id="change-3850"></span><h3>添加对 SQLite JSON 的支持<a class="headerlink" href="#sqlite-json" title="Permalink to this heading">¶</a></h3>
+<p>添加了一个新的数据类型 <a class="reference internal" href="../dialects/sqlite.html#sqlalchemy.dialects.sqlite.JSON" title="sqlalchemy.dialects.sqlite.JSON"><code class="xref py py-class docutils literal notranslate"><span class="pre">JSON</span></code></a>，它代表 SQLite 上中的 JSON 成员访问函数。该实现使用 SQLite 的 <code class="docutils literal notranslate"><span class="pre">JSON_EXTRACT</span></code> 和 <code class="docutils literal notranslate"><span class="pre">JSON_QUOTE</span></code> 函数提供基本的 JSON 支持。</p>
+<p>请注意，存储在数据库中的数据类型名称本身是名称“JSON”。这将创建一个带有“numeric”亲和力的 SQLite 数据类型，这通常应该不是问题，除了在 JSON 值仅由单个整数值组成的情况下。尽管如此，在 SQLite 的文档上下文中，采用“JSON”用于其熟悉度。</p>
+<p><a href="#id89"><span class="problematic" id="id90">:ticket:`3850`</span></a></p>
+</section>
+</section>
+<section id="id91">
+<h2>SQLAlchemy - SQLite 改进和更改<a class="headerlink" href="#id91" title="Permalink to this heading">¶</a></h2>
+<section id="change-4360">
+<span id="identity-sequence"></span><h3>增加了新参数来影响 IDENTITY 起始和增量，同时弃用 Sequence<a class="headerlink" href="#change-4360" title="Permalink to this heading">¶</a></h3>
+<p>从 SQL Server 2012 开始，SQL Server 现在支持序列，其具有真实的“CREATE SEQUENCE”语法。在 <a href="#id92"><span class="problematic" id="id93">:ticket:`4235`</span></a> 中，SQLAlchemy 将以与任何其他方言一样的方式使用 <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 支持这些功能。但是，当前的情况是，在 SQL Server 上 <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 已被重新用途，从而影响主键列上的 “start” 和 “increment” 参数。为了过渡到正常序列也可用的情况，使用 <a class="reference internal" href="../core/defaults.html#sqlalchemy.schema.Sequence" title="sqlalchemy.schema.Sequence"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a> 将在整个 1.3 系列中发出弃用警告。为了影响“起始”和“增量”，请在 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 上使用新的 <code class="docutils literal notranslate"><span class="pre">mssql_identity_start</span></code> 和 <code class="docutils literal notranslate"><span class="pre">mssql_identity_increment</span></code> 参数：</p>
+<blockquote>
+<div><dl>
+<dt>test = Table(</dt><dd><p>“test”,
+metadata_obj,
+Column(</p>
+<blockquote>
+<div><p>“id”,
+Integer,
+primary_key=True,
+mssql_identity_start=100,
+mssql_identity_increment=10,</p>
+</div></blockquote>
+<p>),
+Column(“name”, String(20)),</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>为了在非主键列上发出 “IDENTITY”（这是极少使用但有效的 SQL Server 用例），使用 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column.params.autoincrement" title="sqlalchemy.schema.Column"><code class="xref py py-paramref docutils literal notranslate"><span class="pre">Column.autoincrement</span></code></a> 标志，在目标列上将其设置为 True，在任何整数主键列上设置为 False：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>test = Table(</dt><dd><p>“test”,
+metadata_obj,
+Column(“id”, Integer, primary_key=True, autoincrement=False),
+Column(“number”, Integer, autoincrement=True),</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/mssql.html#mssql-identity"><span class="std std-ref">Auto Increment Behavior / IDENTITY Columns</span></a></p>
+</div>
+<p><a href="#id94"><span class="problematic" id="id95">:ticket:`4362`</span></a></p>
+<p><a href="#id96"><span class="problematic" id="id97">:ticket:`4235`</span></a></p>
+</section>
+<section id="cx-oracle">
+<span id="change-4369"></span><h3>cx_Oracle 连接参数现代化，弃用已过时的参数<a class="headerlink" href="#cx-oracle" title="Permalink to this heading">¶</a></h3>
+<p>一系列参数现代化的步骤被添加到了 cx_oracle 方言中，以及 URL 字符串：</p>
+<ul class="simple">
+<li><p>已弃用的参数“auto_setinputsizes”、“allow_twophase”、“exclude_setinputsizes”已被删除。</p></li>
+<li><p>参数“threaded”的值一直为 SQLAlchemy 方言的默认值 True，现在不再默认生成。SQLAlchemy <code class="xref py py-class docutils literal notranslate"><span class="pre">Connection</span></code> 对象本身不被认为是线程安全的，因此不需要传递此标志。</p></li>
+<li><p>已弃用在 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 中发出“线程化”本身的参数。要将“线程化”的值设置为 “True”，请将其传递到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.connect_args</span></code> 字典或使用查询字符串，例如 “?”threaded=true”。</p></li>
+<li><p>URL 查询字符串中未被特别使用的所有参数现已传递给 cx_Oracle.connect() 函数。其中的选择已被强制指定为 cx_Oracle 常量或布尔值，包括“mode”、“purity”、“events”和“threaded”。</p></li>
+<li><p>与以前一样，所有 cx_Oracle“.connect()”参数都通过 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">create_engine.connect_args</span></code> 字典接受，该文档的准确性是不准确的。</p></li>
+</ul>
+<p><a href="#id98"><span class="problematic" id="id99">:ticket:`4369`</span></a></p>
+</section>
+</section>
+<section id="sqlalchemy-sql-server">
+<h2>SQLAlchemy - SQL Server 改进和更改<a class="headerlink" href="#sqlalchemy-sql-server" title="Permalink to this heading">¶</a></h2>
+<section id="pyodbc-fast-executemany">
+<span id="change-4158"></span><h3>支持 pyodbc fast_executemany<a class="headerlink" href="#pyodbc-fast-executemany" title="Permalink to this heading">¶</a></h3>
+<p>现在，当使用 Microsoft ODBC 驱动程序时，Pyodbc 的最新添加的“fast_executemany”模式可用于 pyodbc / mssql 方言。通过 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 传递：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>engine = create_engine(</dt><dd><p>“mssql+pyodbc://scott:tiger&#64;mssql2017:1433/test?driver=ODBC+Driver+13+for+SQL+Server”,
+fast_executemany=True,</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../dialects/mssql.html#mssql-pyodbc-fastexecutemany"><span class="std std-ref">Fast Executemany Mode</span></a></p>
+</div>
+<p><a href="#id100"><span class="problematic" id="id101">:ticket:`4158`</span></a></p>
+</section>
+<section id="oracle-unicode-generic-unicode">
+<span id="change-4362"></span><h3>对于 Oracle，弃用了国家字符数据类型，重新启用了通用 Unicode（Generic Unicode）<a class="headerlink" href="#oracle-unicode-generic-unicode" title="Permalink to this heading">¶</a></h3>
+<p>现在，除非更改具有 Unicode 兼容字符集的数据库在 SQL Server 中，否则 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> 和 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.UnicodeText" title="sqlalchemy.types.UnicodeText"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnicodeText</span></code></a> 数据类型默认对应于 Oracle 上的 <code class="docutils literal notranslate"><span class="pre">VARCHAR2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">CLOB</span></code> 数据类型，而不是 <code class="docutils literal notranslate"><span class="pre">NVARCHAR2</span></code> 和 <code class="docutils literal notranslate"><span class="pre">NCLOB``（也称为“国家字符集”类型）。这将在例如在其如何呈现在“CREATE</span> <span class="pre">TABLE”语句中这样的行为中看到，在使用</span> <span class="pre">:class:`.Unicode`</span> <span class="pre">或</span> <span class="pre">:class:`.UnicodeText`</span> <span class="pre">处理绑定参数时，不会传递类型对象到</span> <span class="pre">``setinputsizes()</span></code>；cx_Oracle 本身进行字符串值处理。这个变化基于 cx_Oracle 的维护者的建议，即 Oracle 中的“国家”数据类型在很大程度上已过时且不具备性能。它们还会在某些情况下干扰，例如应用于像 “trunc()” 等函数的格式说明符时。</p>
+<p>当不使用 Unicode 兼容字符集的数据库时，<code class="docutils literal notranslate"><span class="pre">NVARCHAR2</span></code> 及相关类型可能需要。在这种情况下，可以通过传递 <code class="docutils literal notranslate"><span class="pre">use_nchar_for_unicode</span></code> 标志到 <code class="xref py py-func docutils literal notranslate"><span class="pre">create_engine()</span></code> 来重新启用旧行为。</p>
+<p>与此同时，在 Python 2 下添加了用于实现 CHAR/VARCHAR/CLOB 结果行的自动 Unicode 转换，以匹配 Python 3 下 cx_Oracle 的行为。为了缓解在 Python 2 下 cx_Oracle 方言此前具有的此行为的性能问题，现在在 Python 2 下使用性能非常好（当构建了 C 扩展名时）的本地 Unicode 处理程序。自动 Unicode 强制执行可以通过将 <code class="docutils literal notranslate"><span class="pre">coerce_to_unicode</span></code> 标志设置为 False 来禁用。该标志现在默认为 True，并适用于未显式为 <a class="reference internal" href="../core/type_basics.html#sqlalchemy.types.Unicode" title="sqlalchemy.types.Unicode"><code class="xref py py-class docutils literal notranslate"><span class="pre">Unicode</span></code></a> 或 Oracle 的 NVARCHAR2/NCHAR/NCLOB 数据类型之一的结果集中返回的所有字符串数据。</p>
+<p><a href="#id102"><span class="problematic" id="id103">:ticket:`4242`</span></a></p>
+</section>
+</section>
+<section id="statementerror-s">
+<span id="change-4500"></span><h2>更改了 StatementError 的格式（换行符和 %s）<a class="headerlink" href="#statementerror-s" title="Permalink to this heading">¶</a></h2>
+<p>字符串表示形式的 “StatementError” 引入了两个更改。现在，“细节”和“SQL”部分的字符串表示形式在换行符之间分隔，并保留在原始 SQL 语句中存在的换行符。目标是提高可读性，同时仍然使原始错误消息在一行上以供记录目的。</p>
+<p>这意味着以前看起来像这样的错误消息：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is
+required for bind parameter &#39;id&#39; [SQL: &#39;select * from reviews\nwhere id = ?&#39;]
+(Background on this error at: https://sqlalche.me/e/cd3x)</pre></div>
+</div>
+<p>现在会看起来像这样：</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>sqlalchemy.exc.StatementError: (sqlalchemy.exc.InvalidRequestError) A value is required for bind parameter &#39;id&#39;
+[SQL: select * from reviews
+where id = ?]
+(Background on this error at: https://sqlalche.me/e/cd3x)</pre></div>
+</div>
+<p>该更改的主要影响是消费者不能再假设完整的异常消息都在单行上，但原始“错误”部分，由 DBAPI 驱动程序或 SQLAlchemy 内部生成，仍将在第一行中。</p>
+<p><a href="#id104"><span class="problematic" id="id105">:ticket:`4500`</span></a></p>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="migration_14.html" title="previous chapter">SQLAlchemy 1.4有哪些新内容？</a>
+        Next:
+        <a href="migration_12.html" title="next chapter">SQLAlchemy 1.2有哪些新特性?</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:19:41
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

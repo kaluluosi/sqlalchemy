@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    状态管理
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="使用Session" href="session.html" />
+        <link rel="next" title="级联" href="cascades.html" />
+        <link rel="prev" title="会话基础知识" href="session_basics.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="session_basics.html">会话基础知识</a></span></li>
+<li class="selected"><span class="link-container"><strong>状态管理</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#session-object-states">对象状态简介</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id17">获得对象的当前状态</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#session">Session 属性</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-referencing-behavior">会话引用行为</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#unitofwork-merging">合并</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="cascades.html">级联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_transaction.html">事务和连接管理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">附加的持久化技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="session_basics.html" title="previous chapter">会话基础知识</a></li>
+                <li><b>Next:</b>
+                <a href="cascades.html" title="next chapter">级联</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="session.html" title="使用Session">使用Session</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">状态管理</a><ul>
+<li><a class="reference internal" href="#session-object-states">对象状态简介</a><ul>
+<li><a class="reference internal" href="#id17">获得对象的当前状态</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#session">Session 属性</a></li>
+<li><a class="reference internal" href="#session-referencing-behavior">会话引用行为</a></li>
+<li><a class="reference internal" href="#unitofwork-merging">合并</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-session_state_management" >
+        
+<section id="id1">
+<h1>状态管理<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<section id="session-object-states">
+<span id="id2"></span><h2>对象状态简介<a class="headerlink" href="#session-object-states" title="Permalink to this heading">¶</a></h2>
+<p>了解实例在会话/session中的可能状态将有所帮助：</p>
+<ul class="simple">
+<li><p><a href="#id3"><span class="problematic" id="id4">**</span></a>临时**（Transient）- 不在会话/session中，未保存到数据库中；即没有数据库标识符。一个对象与ORM的唯一相关关系是其类与:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_orm.Mapper`关联。</p></li>
+<li><p><a href="#id7"><span class="problematic" id="id8">**</span></a>挂起**（Pending）- 当你使用:meth:<a href="#id9"><span class="problematic" id="id10">`</span></a>~.Session.add`将临时实例添加到会话/session中时，它变成挂起状态。它还未被持久化到数据库中，但在下一个 flush 发生时会被刷新到数据库中。</p></li>
+<li><p><a href="#id11"><span class="problematic" id="id12">**</span></a>持久**（Persistent）- 一个已经存在于会话/session中，且在数据库中拥有记录的实例。使一个实例持久的方法可以是一个 flush 操作以使所有的挂起实例变成持久实例，或者查询数据库以找到现有实例（或从其他会话中添加持久实例到本地会话中）。</p></li>
+<li><p><a href="#id13"><span class="problematic" id="id14">**</span></a>删除**（Deleted）- 在 flush 期间被删除的实例，但事务还未完成。对象处于这一状态相当于位于”挂起”状态的反面；当会话/session的事务提交时，对象将转移到分离状态。或者当会话的事务回滚时，删除的对象将“回归”到持久状态。</p></li>
+<li><p><a href="#id15"><span class="problematic" id="id16">**</span></a>分离**（Detached）- 对应于一个在之前与数据库中的记录对应（或者现在还是对应），但当前不位于任何会话/session中的实例。分离的对象实例会包含数据库标识符，但由于不与会话/session关联，所以不知道这个标识符在目标数据库中是否存在。分离的对象实例可以正常使用，但是它们无法加载未加载的属性或以前标记为“过期”的属性。</p></li>
+</ul>
+<p>关于所有可能状态转换更深入的探讨，详见 <a class="reference internal" href="session_events.html#session-lifecycle-events"><span class="std std-ref">对象生命周期事件</span></a> 这部分，它描述了每个转换以及如何在程序中跟踪每个转换。</p>
+<section id="id17">
+<h3>获得对象的当前状态<a class="headerlink" href="#id17" title="Permalink to this heading">¶</a></h3>
+<p>可以使用:meth:<cite>~sqlalchemy.inspect`方法在任何时候查看任何映射对象的状态；这个方法将返回相应的 :class:</cite>.InstanceState` 对象，管理对象的内部ORM状态。除其他访问器之外， <a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState" title="sqlalchemy.orm.InstanceState"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceState</span></code></a> 还提供布尔属性，指示对象的持久性状态，包括：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.transient" title="sqlalchemy.orm.InstanceState.transient"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.transient</span></code></a></p></li>
+<li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.pending" title="sqlalchemy.orm.InstanceState.pending"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.pending</span></code></a></p></li>
+<li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.persistent" title="sqlalchemy.orm.InstanceState.persistent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.persistent</span></code></a></p></li>
+<li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.deleted" title="sqlalchemy.orm.InstanceState.deleted"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.deleted</span></code></a></p></li>
+<li><p><a class="reference internal" href="internals.html#sqlalchemy.orm.InstanceState.detached" title="sqlalchemy.orm.InstanceState.detached"><code class="xref py py-attr docutils literal notranslate"><span class="pre">InstanceState.detached</span></code></a></p></li>
+</ul>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">inspect</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="n">my_object</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">insp</span><span class="o">.</span><span class="n">persistent</span>
+<span class="go">True</span></pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="mapping_styles.html#orm-mapper-inspection-instancestate"><span class="std std-ref">映射实例的自省</span></a> - 进一步关于:class:<a href="#id18"><span class="problematic" id="id19">`</span></a>.InstanceState`的例子。</p>
+</div>
+</section>
+</section>
+<section id="session">
+<span id="session-attributes"></span><h2>Session 属性<a class="headerlink" href="#session" title="Permalink to this heading">¶</a></h2>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 本身可以看作一组类似于“集合”的对象。可以使用迭代器接口访问所有项目：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></pre></div>
+</div>
+<p>可以使用常规”包含”语义测试存在性：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">session</span><span class="p">:</span>
+    <span class="n">print</span><span class="p">(</span><span class="s2">&quot;Object is present&quot;</span><span class="p">)</span></pre></div>
+</div>
+<p>会话/session还跟踪所有新创建（即挂起）的对象，所有自上次加载或保存后发生更改的对象（即“脏”的对象）
+以及所有已标记为已删除的对象：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 会话/session中最近添加的挂起对象</span>
+<span class="n">session</span><span class="o">.</span><span class="n">new</span>
+
+<span class="c1"># 当前检测到有更改的持久对象（该集合现在是在每次调用属性时动态创建的）</span>
+<span class="n">session</span><span class="o">.</span><span class="n">dirty</span>
+
+<span class="c1"># 标记为删除的持久对象，例如通过session.delete(obj)标记的。</span>
+<span class="n">session</span><span class="o">.</span><span class="n">deleted</span>
+
+<span class="c1"># 包含所有持久对象的字典，以它们的标识键来索引</span>
+<span class="n">session</span><span class="o">.</span><span class="n">identity_map</span></pre></div>
+</div>
+<p>（文档： <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.new</span></code>，<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.dirty</span></code>，
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.deleted</span></code>，<code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.identity_map</span></code>）。</p>
+</section>
+<section id="session-referencing-behavior">
+<span id="id20"></span><h2>会话引用行为<a class="headerlink" href="#session-referencing-behavior" title="Permalink to this heading">¶</a></h2>
+<p>会话/session中的对象是 <em>弱引用</em> 的。这意味着当它们在外部应用程序中反引用时，它们也会从:class:<a href="#id21"><span class="problematic" id="id22">`</span></a>~sqlalchemy.orm.session.Session`中移出范围，并受Python解释器的垃圾回收。这其中的例外情况包括标记为已删除的对象、标记为挂起的对象、以及有挂起更改的持久化对象。在 flush 后，这些集合都会被清空，所有对象再次成为弱引用。</p>
+<p>使会话/<code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中的对象保持强引用的通常简单方法可能会很有用。外部管理强引用行为的示例包括将对象加载到一个本地词典中，以其主键为键，或者在它们需要保持引用的时间段内将它们加载到列表或集合中。如果需要，这些集合可以与一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 关联，将它们放入 <code class="xref py py-attr docutils literal notranslate"><span class="pre">Session.info</span></code> 字典中。</p>
+<p>也可以选择采用事件驱动的方式。为了使所有对象在一直处于 <span class="xref std std-term">persistent</span> 状态时都保持强引用行为，实现其中一种简单做法是：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">event</span>
+
+
+<span class="k">def</span> <span class="nf">strong_reference_session</span><span class="p">(</span><span class="n">session</span><span class="p">):</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;pending_to_persistent&quot;</span><span class="p">)</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;deleted_to_persistent&quot;</span><span class="p">)</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;detached_to_persistent&quot;</span><span class="p">)</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;loaded_as_persistent&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">strong_ref_object</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;refs&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sess</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+            <span class="n">sess</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;refs&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">refs</span> <span class="o">=</span> <span class="n">set</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">refs</span> <span class="o">=</span> <span class="n">sess</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;refs&quot;</span><span class="p">]</span>
+
+        <span class="n">refs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;persistent_to_detached&quot;</span><span class="p">)</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;persistent_to_deleted&quot;</span><span class="p">)</span>
+    <span class="nd">@event</span><span class="o">.</span><span class="n">listens_for</span><span class="p">(</span><span class="n">session</span><span class="p">,</span> <span class="s2">&quot;persistent_to_transient&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">deref_object</span><span class="p">(</span><span class="n">sess</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="n">sess</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">&quot;refs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span></pre></div>
+</div>
+<p>上述的方法中，我们捕获了 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.pending_to_persistent" title="sqlalchemy.orm.SessionEvents.pending_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.pending_to_persistent()</span></code></a>、<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.detached_to_persistent" title="sqlalchemy.orm.SessionEvents.detached_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.detached_to_persistent()</span></code></a>、
+<a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.deleted_to_persistent" title="sqlalchemy.orm.SessionEvents.deleted_to_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.deleted_to_persistent()</span></code></a> 和 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.loaded_as_persistent" title="sqlalchemy.orm.SessionEvents.loaded_as_persistent"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.loaded_as_persistent()</span></code></a>
+等事件钩子，以拦截对象进入 <span class="xref std std-term">persistent</span> 过渡的情况，以及 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.persistent_to_detached" title="sqlalchemy.orm.SessionEvents.persistent_to_detached"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.persistent_to_detached()</span></code></a> 和 <a class="reference internal" href="events.html#sqlalchemy.orm.SessionEvents.persistent_to_deleted" title="sqlalchemy.orm.SessionEvents.persistent_to_deleted"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SessionEvents.persistent_to_deleted()</span></code></a> 钩子，拦截对象离开持久状态的情况。</p>
+<p>我们可以在任何 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中调用上述函数来提供基于每个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的强引用行为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">Session</span>
+
+<span class="n">my_session</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="n">strong_reference_session</span><span class="p">(</span><span class="n">my_session</span><span class="p">)</span></pre></div>
+</div>
+<p>也可以在任何 <code class="xref py py-class docutils literal notranslate"><span class="pre">sessionmaker</span></code> 中调用该函数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">sessionmaker</span>
+
+<span class="n">maker</span> <span class="o">=</span> <span class="n">sessionmaker</span><span class="p">()</span>
+<span class="n">strong_reference_session</span><span class="p">(</span><span class="n">maker</span><span class="p">)</span></pre></div>
+</div>
+</section>
+<section id="unitofwork-merging">
+<span id="id23"></span><h2>合并<a class="headerlink" href="#unitofwork-merging" title="Permalink to this heading">¶</a></h2>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge`将状态从外部对象传输到会话/:class:()</span></code>.Session`中的新实例或已存在实例中。它还会根据数据库的状态来对入站数据进行调解，并产生一个历史记录流，该流将被应用到下一个 flush 中，或者可以要求产生一个简单的状态“传输”，而不会产生变更记录或访问数据库。使用方式如下：</p>
+<blockquote>
+<div><p>merged_object = session.merge(existing_object)</p>
+</div></blockquote>
+<p>当给出一个实例，其遵循以下步骤：</p>
+<ul>
+<li><p>它检查实例的主键。如果存在，则尝试在本地标识映射中找到该实例。如果将 <code class="docutils literal notranslate"><span class="pre">load=True</span></code> 标志保留为其默认值，则在本地未找到主键时还会检查数据库。</p></li>
+<li><p>如果给定的实例没有主键，或者未找到具有给定主键的实例，则创建一个新实例。</p></li>
+<li><p>然后，将给定实例的状态复制到已定位/新已创建的实例上。对于存在于来源实例上的属性值，该值将传输到目标实例。对于不在源实例上存在的属性值，从目标实例删除对应属性的当前值（即，该属性会被标记为过期，将目标对象中相关的本地值丢弃，但不会改变该属性在数据库中已持久化的值）。</p>
+<p>如果将 <code class="docutils literal notranslate"><span class="pre">load=True</span></code> 标志保留为其默认值，则此复制过程会生成事件并为来源对象的每个属性加载目标对象未加载的收集，以便数据库中的现有状态可被纳入已到达/incoming 状态中。如果传递了 <code class="docutils literal notranslate"><span class="pre">load=False</span></code>，则生成的数据将直接打标签，而不生成任何更改记录（即使不存在任何目标对象上的历史记录）。</p>
+</li>
+<li><p>这个操作被级联到相关对象和收集上，就像所指示的那样，通过:paramref:<cite>_orm.relationship</cite></p>
+<p>merge 级联（参见 <span class="xref std std-ref">unitofwork_cascades</span>）。</p>
+</li>
+<li><p>返回新的实例。</p></li>
+</ul>
+<p>用于 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.merge()</span></code> 的“来源”实例未被修改，且未与目标:class:<cite>.Session`相关联，仍可用于与任意数量的其他:class:</cite>.Session`对象合并。
+:meth:<a href="#id24"><span class="problematic" id="id25">`</span></a>~.Session.merge`对于许多目的来说是非常有用的方法。然而，它处理的是瞬时/分离对象和那些持久对象复杂边界，以及自动传输状态所涉及的场景多种多样，通常需要更仔细的方法来处理对象的状态。:meth:<a href="#id26"><span class="problematic" id="id27">`</span></a>~.Session.merge`通常涉及一些不可预期的状态以及传递给它的对象的问题。</p>
+<p>让我们使用经典的用户和地址对象示例。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="s2">&quot;user&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Address</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">email_address</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">String</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">user_id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="s2">&quot;user.id&quot;</span><span class="p">),</span> <span class="n">nullable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>假设已经有一个拥有一个“Address”对象的“User”对象，而这个对象已经持久化:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1</span> <span class="o">=</span> <span class="n">User</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;ed&quot;</span><span class="p">,</span> <span class="n">addresses</span><span class="o">=</span><span class="p">[</span><span class="n">Address</span><span class="p">(</span><span class="n">email_address</span><span class="o">=</span><span class="s2">&quot;ed@ed.com&quot;</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">u1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></pre></div>
+</div>
+<dl>
+<dt>我们现在创建了一个在会话之外的“a1”对象，并希望将其合并到现有的“Address”上:：</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">existing_a1</span> <span class="o">=</span> <span class="n">u1</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="n">existing_a1</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></pre></div>
+</div>
+</dd>
+</dl>
+<p>如果我们进行了这些操作，将会出现一个惊喜:：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">u1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a1</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="go">sqlalchemy.orm.exc.FlushError: New instance &lt;Address at 0x1298f50&gt;</span>
+<span class="go">with identity key (&lt;class &#39;__main__.Address&#39;&gt;, (1,)) conflicts with</span>
+<span class="go">persistent instance &lt;Address at 0x12a25d0&gt;</span></pre></div>
+</div>
+<p>为什么会这样呢？我们在级联中不太小心，将``a1.user``分配给了已存在的对象，因为它是一个持久化对象，级联将返回到了 users.addresses，使``a1``对象以为自己已经添加进了地址列表中。然而这样它还会再次进行添加的操作，这会导致一个错误。上述问题通常解决方法是像上文中描述的一样，在所需的情况下选择不将持久化对象分配给“a1.user”。
+使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expunge_all()</span></code> 方法可以移除 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中的所有项目。因此，最佳猜测是，在事务的范围内，除非已知发出一个SQL表达式以修改特定行，否则没有必要刷新行，除非明确告知这样做。在那些已知当前数据状态可能过期的情况下，可以使用:meth:<cite>. Session.expire`和:meth:</cite>. Session.refresh`方法，强制对象重新从数据库加载数据。这些情况可能包括：</p>
+<p><a href="#id28"><span class="problematic" id="id29">*</span></a>在ORM对象处理范围之外的事务中发出了一些SQL，例如使用:meth:<a href="#id30"><span class="problematic" id="id31">`</span></a>. Session.execute`方法发出:meth:<a href="#id32"><span class="problematic" id="id33">`</span></a>_schema.Table.update`构造;</p>
+<p><a href="#id34"><span class="problematic" id="id35">*</span></a>如果应用程序试图获取已知在并发事务中已修改的数据，并且还知道生效的隔离规则允许查看此数据。</p>
+<p>第二个要点有一个重要的警告，即“也知道在生效的隔离规则允许查看此数据。”这意味着不能假设在另一个数据库连接上发生的UPDATE在本地这里仍然可见；在许多情况下，它是不可见的。这就是为什么如果希望使用:meth:<cite>. Session.expire`或:meth:</cite>. Session.refresh`来在进行中的事务之间查看数据，则必须理解有效的隔离行为。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire()</span></code></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.expire_all()</span></code></p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.refresh()</span></code></p>
+<p><a class="reference internal" href="queryguide/api.html#orm-queryguide-populate-existing"><span class="std std-ref">现有数据充填</span></a>-使任何ORM查询都可以刷新对象，就像正常加载对象一样，在身份映射中刷新所有匹配对象以匹配SELECT语句的结果。</p>
+<p><span class="xref std std-term">isolation</span>-带有指向Wikipedia的链接的隔离词表解释。</p>
+<p>The SQLAlchemy Session In-Depth-有关对象生命周期的深入讨论，包括数据过期的作用的视频+幻灯片。</p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="session_basics.html" title="previous chapter">会话基础知识</a>
+        Next:
+        <a href="cascades.html" title="next chapter">级联</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:05
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

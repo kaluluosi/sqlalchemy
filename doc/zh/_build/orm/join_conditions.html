@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    配置 Relationship Joins
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="关系配置" href="relationships.html" />
+        <link rel="next" title="处理大集合" href="large_collections.html" />
+        <link rel="prev" title="邻接列表关系" href="self_referential.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="self_referential.html">邻接列表关系</a></span></li>
+<li class="selected"><span class="link-container"><strong>配置 Relationship Joins</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#id1">处理多个连接路径</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id2">指定替代联接条件</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#sql">基于 SQL 函数的自定义操作符</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id3">自我引用的多对多关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#relationship-aliased-class">关于关系的别名类</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#relationship-to-window-function">使用窗口函数的行限制关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#query-enabled-properties">构建具有查询功能的属性</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="self_referential.html" title="previous chapter">邻接列表关系</a></li>
+                <li><b>Next:</b>
+                <a href="large_collections.html" title="next chapter">处理大集合</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="relationships.html" title="关系配置">关系配置</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#relationship-joins">配置 Relationship Joins</a><ul>
+<li><a class="reference internal" href="#id1">处理多个连接路径</a></li>
+<li><a class="reference internal" href="#id2">指定替代联接条件</a></li>
+<li><a class="reference internal" href="#sql">基于 SQL 函数的自定义操作符</a></li>
+<li><a class="reference internal" href="#id3">自我引用的多对多关系</a></li>
+<li><a class="reference internal" href="#relationship-aliased-class">关于关系的别名类</a></li>
+<li><a class="reference internal" href="#relationship-to-window-function">使用窗口函数的行限制关系</a></li>
+<li><a class="reference internal" href="#query-enabled-properties">构建具有查询功能的属性</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-join_conditions" >
+        
+<section id="relationship-joins">
+<h1>配置 Relationship Joins<a class="headerlink" href="#relationship-joins" title="Permalink to this heading">¶</a></h1>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 通常会通过检查两个表之间的外键关系来创建连接，从而确定应比较哪些列。 有多种情况需要自定义此行为。</p>
+<section id="id1">
+<h2>处理多个连接路径<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h2>
+<p>我们需要处理的最常见情况之一是在两个表之间存在多个外键路径。</p>
+<p>考虑“客户”类，其中包含两个对“地址”类的外键：</p>
+<p>以上映射，当我们尝试使用它时，会产生以下错误：</p>
+<p>上述消息非常长。 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 可以返回许多潜在消息，这些消息经过精心设计，可检测到各种常见的配置问题；大多数建议提供所需的附加配置来解决比模糊或其他缺失的信息。</p>
+<p>在这种情况下，消息需要我们对每个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 进行限定，指示每个外键列应如何处理，适当的格式如下：</p>
+<p>上面我们指定了“foreign_keys”参数，它是一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 或 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> 对象列表，指示应将哪些列视为“foreign”，换句话说，包含指向父表的值的列。 从 “Customer” 对象中加载 “Customer.billing_address” 关系将使用“billing_address_id” 中存在的值，以便标识要加载的 “Address” 中的行；类似地，“shipping_address_id” 用于“shipping_address”关系。 两列的联接在持久性期间也会发挥作用；刚刚插入的“Address”对象的新生成的主键将被复制到关联的“Customer”对象的相应外键列中，在刷新其间处理。</p>
+<p>在使用 Declarative 指定“foreign_keys”时，我们还可以使用字符串名称进行指定，但重要的是，如果使用列表，则 <strong>列表应包含在字符串中</strong>：</p>
+<p>在这个特定的例子中，无论如何，都不需要使用列表，因为我们只需要一个 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Column" title="sqlalchemy.schema.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> ：</p>
+<p>警告： 当作为 Python-evaluable 字符串传递时，<code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.foreign_keys</span></code> 参数使用 Python 的“eval()”函数进行解释。 <strong>不要将不受信任的输入传递给此字符串</strong>。请参阅 <a class="reference internal" href="extensions/declarative/relationships.html#declarative-relationship-eval"><span class="std std-ref">关系参数的评估</span></a> ，了解关于声明性 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 参数的详细信息。</p>
+</section>
+<section id="id2">
+<h2>指定替代联接条件<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h2>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 的默认行为在构造联接时是比较一个表上的主键列与另一个表上的外键引用列的值。 我们可以使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 参数更改此条件，以及 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondaryjoin</span></code> 参数（在使用“secondary”表的情况下）。</p>
+<p>在以下示例中，使用“User”类以及一个存储街道地址的“Address”类，创建了一个仅加载指定“Boston”城市的 “Address” 对象的关系“boston_addresses” ：</p>
+<p>在上面的字符串 SQL 表达式中，我们使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a> 连接构造来为联接条件建立两个不同的谓词 - 同时连接“User.id”和“Address.user_id”列，以及将“Address” 行限制为仅显示 “city =‘Boston’”。 使用 Declarative 时，基本 SQL 函数（例如 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.and_" title="sqlalchemy.sql.expression.and_"><code class="xref py py-func docutils literal notranslate"><span class="pre">and_()</span></code></a>）会自动在字符串 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 参数的评估命名空间中提供。</p>
+<p>警告： 当作为 Python-evaluable 字符串传递时， <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 参数使用 Python 的“eval()”函数进行解释。 <strong>不要将不受信任的输入传递给此字符串</strong>。请参阅 <a class="reference internal" href="extensions/declarative/relationships.html#declarative-relationship-eval"><span class="std std-ref">关系参数的评估</span></a> ，了解关于声明性 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 参数的详细信息。</p>
+<p>我们在 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 中使用的自定义条件通常只在 SQLAlchemy 为了加载或表示此关系而渲染 SQL 时有效。也就是说，当在发出每种属性惰性加载的 SQL 语句时使用，或在查询时构造连接（例如通过 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Select.join()</span></code> 或通过急切的“连接”或“子查询”样式加载），它将用于生成 SQL 语句。 在操作内存中的对象时，我们可以将任何“Address”对象放入“boston_addresses”集合，而不管“.city”属性的值是什么。这些对象将保留在集合中，直到属性过期并从应用程序重新加载为止，其中将应用标准选择条件。在刷新时，键入“boston_addresses”中的对象将无条件刷新，将新插入的“Address”对象的新生成的主键值分配给关联的每个“Customer”对象的相应外键列。在此情况下， “city”条件不起作用，因为刷新过程只关心将主键值与引用外键值进行同步。</p>
+</section>
+<section id="sql">
+<h2>基于 SQL 函数的自定义操作符<a class="headerlink" href="#sql" title="Permalink to this heading">¶</a></h2>
+<p>另一个使用关系的用例是使用自定义操作符，例如 PostgreSQL 的“is contained within”“&lt;&lt;”运算符，与 <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.INET" title="sqlalchemy.dialects.postgresql.INET"><code class="xref py py-class docutils literal notranslate"><span class="pre">INET</span></code></a> 和 <a class="reference internal" href="../dialects/postgresql.html#sqlalchemy.dialects.postgresql.CIDR" title="sqlalchemy.dialects.postgresql.CIDR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CIDR</span></code></a> 类型配合使用。对于自定义布尔运算符，我们使用 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.Operators.bool_op" title="sqlalchemy.sql.expression.Operators.bool_op"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Operators.bool_op()</span></code></a> 函数:</p>
+<p>例如上面的比较可以在构建 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 时直接使用:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IPA</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;ip_address&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">v4address</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">INET</span><span class="p">)</span>
+
+    <span class="n">network</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Network&quot;</span><span class="p">,</span>
+        <span class="n">primaryjoin</span><span class="o">=</span><span class="s2">&quot;IPA.v4address.bool_op(&#39;&lt;&lt;&#39;)&quot;</span> <span class="s2">&quot;(foreign(Network.v4representation))&quot;</span><span class="p">,</span>
+        <span class="n">viewonly</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Network</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;network&quot;</span>
+
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">v4representation</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">CIDR</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>该查询被渲染为：</p>
+<p>表达式 <code class="xref py py-meth docutils literal notranslate"><span class="pre">op.is_comparison()</span></code> 的另一个使用情况是当我们不使用操作符，而是使用 SQL 函数时。此用例的典型示例是 PostgreSQL PostGIS 函数，但任何数据库上的任何解析为二进制条件的 SQL 函数都可以适用。为了适应此用例， <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.as_comparison" title="sqlalchemy.sql.functions.FunctionElement.as_comparison"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.as_comparison()</span></code></a> 方法可以修改任何 SQL 函数（例如那些从 <a class="reference internal" href="../core/sqlelement.html#sqlalchemy.sql.expression.func" title="sqlalchemy.sql.expression.func"><code class="xref py py-data docutils literal notranslate"><span class="pre">func</span></code></a> 命名空间调用的函数），以表明 ORM 函数生成两个表达式的比较。下面的示例使用 <a class="reference internal" href="../core/functions.html#sqlalchemy.sql.functions.FunctionElement.as_comparison" title="sqlalchemy.sql.functions.FunctionElement.as_comparison"><code class="xref py py-meth docutils literal notranslate"><span class="pre">FunctionElement.as_comparison()</span></code></a> 演示了此方法：</p>
+<p>例如，我们采取具有代币的重叠路径格式，其中我们比较字符串以便产生一种树状结构。</p>
+<p>通过仔细使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">foreign()</span></code> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">remote()</span></code>，我们可以构建一个关系，它实际上产生了一个粗糙的 materialized path 系统。 基本上，当 <code class="xref py py-func docutils literal notranslate"><span class="pre">foreign()</span></code> 和 <code class="xref py py-func docutils literal notranslate"><span class="pre">remote()</span></code> 在比较表达式的 <em>同一侧</em> 时，认为关系是“一对多”，当它们在不同的方向上时，关系被视为“多对一”。 对于我们将要在这里使用的比较，我们将处理集合，因此保持配置为“一对多”：</p>
+</section>
+<section id="id3">
+<h2>自我引用的多对多关系<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h2>
+<p>多对多关系可以通过一个或两个参数进行自定义 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondaryjoin</span></code> - 对于指定使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 参数的多对多引用，后者很重要。</p>
+<p>一种常见情况是需要将一个类与自己建立多对多关系，如下所示：</p>
+<p>在上述示例中，我们提供了所有三个 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code>， <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 和 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondaryjoin</span></code>，关于命名表”a”,”b”,”c”,”d”的声明式风格。从”A”到”D”的查询如下所示：</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">d</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_b_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="n">b</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">b_1</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">b_1</span><span class="p">.</span><span class="n">d_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d_1</span><span class="p">.</span><span class="n">id</span>
+<span class="w">        </span><span class="k">JOIN</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">c_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">c_1</span><span class="p">.</span><span class="n">d_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d_1</span><span class="p">.</span><span class="n">id</span><span class="p">)</span>
+<span class="w">    </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b_1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c_1</span><span class="p">.</span><span class="n">a_id</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b_1</span><span class="p">.</span><span class="n">d_id</span>
+</div></pre></div>
+</div>
+<p>在上述示例中，我们利用了将多个表放置在“次要”容器中的能力，以便我们在跨多个表连接时仍然保持“简单性” <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code>。在左边和右边都只有“一个”表的情况下，复杂性保持在中间。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>上面的关系通常被标记为“viewonly=True”，应该被视为只读毫无疑问。虽然有时可以使上述关系可写，但这通常是非常复杂和错综复杂的。</p>
+</div>
+</section>
+<section id="relationship-aliased-class">
+<span id="relationship-non-primary-mapper"></span><span id="id4"></span><h2>关于关系的别名类<a class="headerlink" href="#relationship-aliased-class" title="Permalink to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 1.3: </span><code class="xref py py-class docutils literal notranslate"><span class="pre">relationship</span></code> 的目标，以取代使用非主要映射器的先前方法，它具有诸如不能继承映射实体的子关系的限制，以及它们要求针对替代可选择的进行复杂的配置。 本节中的示例现已更新，使用了 <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a>。</p>
+</div>
+<p>在前面的一节中，我们演示了一种将 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 放入连接条件中的技术。在即使使用“C”、“D”等中间表进行连接时，只要“A”和“B”之间也有直接的连接条件，这里还有一个复杂的连接情况即此时不足够using一个复杂的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.primaryjoin</span></code> 条件来表达连接从“A”到“B”，因为中介表可能需要特殊处理，并且使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 对象无法表达“A-&gt;secondary-&gt;B”模式之间的引用“A”和“B”之间的直接引用。当出现这种**极其高级**的情况时，我们可以借助创建第二个映射作为关系的目标。这是使用 <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.util.AliasedClass" title="sqlalchemy.orm.util.AliasedClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">AliasedClass</span></code></a> 的方式，以便为此连接中需要的所有其他表创建到类的映射。为了将此映射作为我们类的“替代”映射生成，我们使用 <a class="reference internal" href="queryguide/api.html#sqlalchemy.orm.aliased" title="sqlalchemy.orm.aliased"><code class="xref py py-func docutils literal notranslate"><span class="pre">aliased()</span></code></a> 函数生成新的构造，然后使用 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 来针对该对象进行操作，就像它是一个普通的映射类一样。</p>
+<p>下面说明了 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 与从“A”到“B”的简单连接的使用，但是主连接条件增加了两个附加实体“C”和“D”，这些实体必须同时与“A”和“B”的行相对应：</p>
+<blockquote>
+<div><dl>
+<dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+b_id = mapped_column(ForeignKey(“b.id”))</p>
+</dd>
+<dt>class B(Base):</dt><dd><p>__tablename__ = “b”</p>
+<p>id = mapped_column(Integer, primary_key=True)</p>
+</dd>
+<dt>class C(Base):</dt><dd><p>__tablename__ = “c”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+a_id = mapped_column(ForeignKey(“a.id”))</p>
+<p>some_c_value = mapped_column(String)</p>
+</dd>
+<dt>class D(Base):</dt><dd><p>__tablename__ = “d”</p>
+<p>id = mapped_column(Integer, primary_key=True)
+c_id = mapped_column(ForeignKey(“c.id”))
+b_id = mapped_column(ForeignKey(“b.id”))</p>
+<p>some_d_value = mapped_column(String)</p>
+</dd>
+</dl>
+<p># 1. 将 join() 设置为变量，这样我们可以在映射中多次引用它。
+j = join(B, D, D.b_id == B.id).join(C, C.id == D.c_id)</p>
+<p># 2. 创建一个到 B 的别名类
+B_viacd = aliased(B, j, flat=True)</p>
+<p>A.b = relationship(B_viacd, primaryjoin=A.b_id == j.c.b_id)</p>
+</div></blockquote>
+<p>在上述映射中，简单连接如下所示：</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_b_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">c_id</span><span class="p">)</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span>
+</div></pre></div>
+</div>
+<p>在关于“A.b”的上述关系中，其引用的是“B_viacd”实体，而不是直接的“B”类。要基于“a.b”关系添加其他标准，通常需要直接引用“B_viacd”而不是使用“B”，特别是在目标实体将被转换为别名或子查询的情况下。下面说明了相同的关系，使用子查询而不是连接:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subq</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">B</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">D</span><span class="p">,</span> <span class="n">D</span><span class="o">.</span><span class="n">b_id</span> <span class="o">==</span> <span class="n">B</span><span class="o">.</span><span class="n">id</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">C</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">D</span><span class="o">.</span><span class="n">c_id</span><span class="p">)</span><span class="o">.</span><span class="n">subquery</span><span class="p">()</span>
+
+<span class="n">B_viacd_subquery</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">subq</span><span class="p">)</span>
+
+<span class="n">A</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="n">B_viacd_subquery</span><span class="p">,</span> <span class="n">primaryjoin</span><span class="o">=</span><span class="n">A</span><span class="o">.</span><span class="n">b_id</span> <span class="o">==</span> <span class="n">subq</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></pre></div>
+</div>
+<p>使用上面的“a.b”关系查询将呈现子查询：</p>
+<div class="highlight-python+sql notranslate"><div class="highlight"><pre><span></span><span class="n">sess</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">b</span><span class="p">))</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+<div class='show_sql'><span class="k">SELECT</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_id</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">a_b_id</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">some_b_column</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">some_b_column</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">c_id</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">anon_1</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">b_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">anon_1</span><span class="p">.</span><span class="n">id</span>
+</div></pre></div>
+</div>
+<p>如果我们想要基于“A.b”联接添加其他标准，我们必须使用“B_viacd_subquery”而不是直接使用“B”。</p>
+</section>
+<section id="relationship-to-window-function">
+<span id="id5"></span><h2>使用窗口函数的行限制关系<a class="headerlink" href="#relationship-to-window-function" title="Permalink to this heading">¶</a></h2>
+<p>关系到:class:<a href="#id6"><span class="problematic" id="id7">`</span></a>.AliasedClass`对象的另一个有趣用途是在需要关系加入到任何形式的专门SELECT时。当期望使用窗口函数时，例如限制每个集合返回的行数时。下面的示例说明了为每个集合加载前十个项的非主映射关系：</p>
+<blockquote>
+<div><dl>
+<dt>class A(Base):</dt><dd><p>__tablename__ = “a”</p>
+<p>id = mapped_column(Integer, primary_key=True)</p>
+</dd>
+<dt>class B(Base):</dt><dd><p>__tablename__ = “b”
+id = mapped_column(Integer, primary_key=True)
+a_id = mapped_column(ForeignKey(“a.id”))</p>
+</dd>
+<dt>partition = select(</dt><dd><p>B, func.row_number().over(order_by=B.id, partition_by=B.a_id).label(“index”)</p>
+</dd>
+</dl>
+<p>).alias()</p>
+<p>partitioned_b = aliased(B, partition)</p>
+<dl class="simple">
+<dt>A.partitioned_bs = relationship(</dt><dd><p>partitioned_b, primaryjoin=and_(partitioned_b.a_id == A.id, partition.c.index &lt; 10)</p>
+</dd>
+</dl>
+<p>)</p>
+</div></blockquote>
+<p>我们可以将上述“partitioned_bs”关系与大多数加载器策略一起使用，例如 <code class="xref py py-func docutils literal notranslate"><span class="pre">selectinload()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">a1</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">A</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">selectinload</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">partitioned_bs</span><span class="p">))):</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">a1</span><span class="o">.</span><span class="n">partitioned_bs</span><span class="p">)</span>  <span class="c1"># &lt;-- 最多有十个对象</span></pre></div>
+</div>
+<p>以上，在匹配的主键中，我们将按“b.id”排序的前十个“bs”合并在一起。通过分区“a_id”，我们确保每个“row number”对应于父“a_id”。</p>
+<p>这样的映射通常还包括从“A”到“B”的“普通”关系，用于持久操作以及当需要“A”下的全部“B”对象时。</p>
+</section>
+<section id="query-enabled-properties">
+<span id="id8"></span><h2>构建具有查询功能的属性<a class="headerlink" href="#query-enabled-properties" title="Permalink to this heading">¶</a></h2>
+<p>非常雄心勃勃的自定义连接条件可能无法直接进行持久化，在某些情况下可能无法正确加载。要从方程中删除持久性部分，请在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上使用标志 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.viewonly</span></code>，以将其建立为只读属性（在 flush() 上忽略添加到集合的数据）。但是，在极端情况下，考虑使用常规的 Python 属性以及 <a class="reference internal" href="queryguide/query.html#sqlalchemy.orm.Query" title="sqlalchemy.orm.Query"><code class="xref py py-class docutils literal notranslate"><span class="pre">Query</span></code></a>，如下所示：</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;user&quot;</span>
+    <span class="n">id</span> <span class="o">=</span> <span class="n">mapped_column</span><span class="p">(</span><span class="n">Integer</span><span class="p">,</span> <span class="n">primary_key</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">addresses</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">object_session</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">Address</span><span class="p">)</span><span class="o">.</span><span class="n">with_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="o">...</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在其他情况下，描述符可以被构建为利用现有的 Python 数据。有关特殊 Python 属性的更一般讨论，请参见 <span class="xref std std-ref">mapper_hybrids</span> 部分。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">mapper_hybrids</span></p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="self_referential.html" title="previous chapter">邻接列表关系</a>
+        Next:
+        <a href="large_collections.html" title="next chapter">处理大集合</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:02
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

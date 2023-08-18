@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    关系配置
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="SQLAlchemy ORM" href="index.html" />
+        <link rel="next" title="关系模式基础知识" href="basic_relationships.html" />
+        <link rel="prev" title="映射表列" href="mapping_columns.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li class="selected"><span class="link-container"><strong>关系配置</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="basic_relationships.html">关系模式基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="self_referential.html">邻接列表关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="join_conditions.html">配置 Relationship Joins</a></span></li>
+<li><span class="link-container"><a class="reference external" href="large_collections.html">处理大集合</a></span></li>
+<li><span class="link-container"><a class="reference external" href="collection_api.html">集合订制和API详细信息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_persistence.html">特殊关系持久化模式</a></span></li>
+<li><span class="link-container"><a class="reference external" href="backref.html">使用传统的“backref”关系参数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationship_api.html">关系 API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="mapping_columns.html" title="previous chapter">映射表列</a></li>
+                <li><b>Next:</b>
+                <a href="basic_relationships.html" title="next chapter">关系模式基础知识</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">关系配置</a></li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-relationships" >
+        
+<section id="id1">
+<h1>关系配置<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>本节介绍 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 函数及其使用的详细讨论。如果想了解关系的概念，可以先阅读 <a class="reference internal" href="../tutorial/index.html#unified-tutorial"><span class="std std-ref">SQLAlchemy统一教程</span></a> 中的 <a class="reference internal" href="../tutorial/orm_related_objects.html#tutorial-orm-related-objects"><span class="std std-ref">处理 ORM 相关对象（Related Objects）</span></a>。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic_relationships.html">关系模式基础知识</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#vs">声明式 vs. 命令式形式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#relationship-patterns-o2m">一对多</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#relationship-patterns-o2m-collection">对一使用集合、列表或其他集合类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#id4">为一对多配置删除行为</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#relationship-patterns-m2o">多对一</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#relationship-patterns-nullable-m2o">可空的多对一</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#relationships-one-to-one">一对一</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#setting-uselist-false-for-non-annotated-configurations">Setting uselist=False for non-annotated configurations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#relationships-many-to-many">多对多</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#id9">设置双向多对多关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#relationships-many-to-many-deletion">从多对多表中删除行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#association-pattern">关联对象</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#association-pattern-w-m2m">将关联对象与多对多访问模式结合使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html#orm-declarative-relationship-eval">关系参数的延迟评估</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#id14">在声明完成后向映射类添加关系</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_relationships.html#secondary">在多对多中使用延迟评估的 “secondary” 参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="self_referential.html">邻接列表关系</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="self_referential.html#id2">复合邻接列表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="self_referential.html#self-referential-query">自引用查询策略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="self_referential.html#self-referential-eager-loading">配置自引用关系的预加载</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="join_conditions.html">配置 Relationship Joins</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#id1">处理多个连接路径</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#id2">指定替代联接条件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#sql">基于 SQL 函数的自定义操作符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#id3">自我引用的多对多关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#relationship-aliased-class">关于关系的别名类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#relationship-to-window-function">使用窗口函数的行限制关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html#query-enabled-properties">构建具有查询功能的属性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="large_collections.html">处理大集合</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html#write-only-relationship">只写关系</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#write-only">创建和持久化新的write_only集合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#id31">把新项目添加到现有集合中</a></li>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#id34">删除记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#querying-items">Querying Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#bulk-insert-of-new-items">Bulk INSERT of New Items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#write-only-collections-api-documentation">Write Only Collections - API Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html#dynamic-relationship">动态关系加载器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="large_collections.html#dynamic-relationship-loaders-api">Dynamic Relationship Loaders - API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html#raiseload">设置RaiseLoad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html#children-raise">在上述代码中，如果之前没有填充children，则访问属性将引发异常。这包括读取访问，但对于集合来说也影响了写访问，因为集合不能在不加载它们的情况下进行变更。这样做的原因是确保应用程序在某个上下文中不会发出任何意外的懒惰加载。使用raise策略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html#id40">使用被动删除</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collection_api.html">集合订制和API详细信息</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="collection_api.html#custom-collections">定制集合访问</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#orm-dictionary-collection">字典集合订制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="collection_api.html#orm-custom-collection">定制集合实现</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#dictionary-collections">自定义字典型集合</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="collection_api.html#id25">集合API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.attribute_keyed_dict"><code class="docutils literal notranslate"><span class="pre">attribute_keyed_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.column_keyed_dict"><code class="docutils literal notranslate"><span class="pre">column_keyed_dict()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.keyfunc_mapping"><code class="docutils literal notranslate"><span class="pre">keyfunc_mapping()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.attribute_mapped_collection"><code class="docutils literal notranslate"><span class="pre">attribute_mapped_collection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.column_mapped_collection"><code class="docutils literal notranslate"><span class="pre">column_mapped_collection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.mapped_collection"><code class="docutils literal notranslate"><span class="pre">mapped_collection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.KeyFuncDict"><code class="docutils literal notranslate"><span class="pre">KeyFuncDict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.MappedCollection"><code class="docutils literal notranslate"><span class="pre">MappedCollection</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="collection_api.html#id26">集合内部</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.bulk_replace"><code class="docutils literal notranslate"><span class="pre">bulk_replace()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.collection"><code class="docutils literal notranslate"><span class="pre">collection</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.collection_adapter"><code class="docutils literal notranslate"><span class="pre">collection_adapter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.CollectionAdapter"><code class="docutils literal notranslate"><span class="pre">CollectionAdapter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.InstrumentedDict"><code class="docutils literal notranslate"><span class="pre">InstrumentedDict</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.InstrumentedList"><code class="docutils literal notranslate"><span class="pre">InstrumentedList</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.InstrumentedSet"><code class="docutils literal notranslate"><span class="pre">InstrumentedSet</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="collection_api.html#sqlalchemy.orm.collections.prepare_instrumentation"><code class="docutils literal notranslate"><span class="pre">prepare_instrumentation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relationship_persistence.html">特殊关系持久化模式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="relationship_persistence.html#post-update">自身引用的行/互相依赖的行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_persistence.html#passive-updates">可变主键/更新级联</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_persistence.html#on-update-cascade">在没有外键支持的情况下模拟受限的 ON UPDATE CASCADE</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="backref.html">使用传统的“backref”关系参数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="backref.html#id1">Backref 默认参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backref.html#id2">指定 Backref 参数</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relationship_api.html">关系 API</a></li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="mapping_columns.html" title="previous chapter">映射表列</a>
+        Next:
+        <a href="basic_relationships.html" title="next chapter">关系模式基础知识</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:05
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

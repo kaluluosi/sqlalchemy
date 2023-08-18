@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    使用UPDATE和DELETE语句
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="处理数据" href="data.html" />
+        <link rel="next" title="使用ORM进行数据操作" href="orm_data_manipulation.html" />
+        <link rel="prev" title="使用 SELECT 语句" href="data_select.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="engine.html">建立连接 - 引擎</a></span></li>
+<li><span class="link-container"><a class="reference external" href="dbapi_transactions.html">处理事务和DBAPI</a></span></li>
+<li><span class="link-container"><a class="reference external" href="metadata.html">使用数据库元数据</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data.html">处理数据</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="data_insert.html">使用 INSERT 语句</a></span></li>
+<li><span class="link-container"><a class="reference external" href="data_select.html">使用 SELECT 语句</a></span></li>
+<li class="selected"><span class="link-container"><strong>使用UPDATE和DELETE语句</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#update-sql">update() SQL表达式构造函数</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-correlated-updates">相关更新</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#update-from">UPDATE..FROM</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#tutorial-parameter-ordered-updates">参数有序的更新</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#delete-sql">delete() SQL表达式构造函数</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#tutorial-multi-table-deletes">多表删除</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#update-delete">从UPDATE，DELETE获取影响行数</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#returning">使用RETURNING更新，删除</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#id41">进一步阅读UPDATE，DELETE</a></span></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="orm_data_manipulation.html">使用ORM进行数据操作</a></span></li>
+<li><span class="link-container"><a class="reference external" href="orm_related_objects.html">处理 ORM 相关对象（Related Objects）</a></span></li>
+<li><span class="link-container"><a class="reference external" href="further_reading.html">进一步阅读</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="data_select.html" title="previous chapter">使用 SELECT 语句</a></li>
+                <li><b>Next:</b>
+                <a href="orm_data_manipulation.html" title="next chapter">使用ORM进行数据操作</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy统一教程">SQLAlchemy统一教程</a></li>
+                    <ul><li><a href="data.html" title="处理数据">处理数据</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#updatedelete">使用UPDATE和DELETE语句</a><ul>
+<li><a class="reference internal" href="#update-sql">update() SQL表达式构造函数</a><ul>
+<li><a class="reference internal" href="#tutorial-correlated-updates">相关更新</a></li>
+<li><a class="reference internal" href="#update-from">UPDATE..FROM</a></li>
+<li><a class="reference internal" href="#tutorial-parameter-ordered-updates">参数有序的更新</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#delete-sql">delete() SQL表达式构造函数</a><ul>
+<li><a class="reference internal" href="#tutorial-multi-table-deletes">多表删除</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#update-delete">从UPDATE，DELETE获取影响行数</a></li>
+<li><a class="reference internal" href="#returning">使用RETURNING更新，删除</a></li>
+<li><a class="reference internal" href="#id41">进一步阅读UPDATE，DELETE</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar tutorial-data_update" >
+        
+<section class="core-header orm-addin" id="updatedelete">
+<span id="tutorial-core-update-delete"></span><h1>使用UPDATE和DELETE语句<a class="headerlink" href="#updatedelete" title="Permalink to this heading">¶</a></h1>
+<p>到目前为止，我们已经介绍了:class:<cite>_sql.Insert</cite>，可以将一些数据添加到我们的数据库中，然后在:class:<cite>_sql.Select</cite>
+中花费大量时间处理用于从数据库检索数据的各种用法。 在这一节中，我们将介绍:class:<a href="#id1"><span class="problematic" id="id2">`</span></a>_sql.Update`和
+:class:<a href="#id3"><span class="problematic" id="id4">`</span></a>_sql.Delete`构造函数，它们用于修改现有行以及删除现有行。 本节将从Core-centric的角度介绍这些构造函数。</p>
+<div class="orm-header docutils container">
+<p><strong>ORM读者</strong> - 如在：ref:<cite>tutorial_core_insert`中所述的情况一样，
+当与ORM一起使用时，:class:</cite> _sql.Update`和:class:` _sql.Delete`操作通常是作为
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Session`的一部分在</span> <span class="pre">:term:`unit</span> <span class="pre">of</span> <span class="pre">work</span></code> 过程中内部调用的。</p>
+<p>但是，不像:class:<cite>_sql.Insert</cite>，当ORM使用”ORM-enabled update and delete”模式时，
+:class:<a href="#id5"><span class="problematic" id="id6">`</span></a>_sql.Update`和:class:<a href="#id7"><span class="problematic" id="id8">`</span></a>_sql.Delete`构造函数也可以直接使用；因此，熟悉这些构造函数对于ORM的使用非常有用。
+两种用法在:ref:<a href="#id9"><span class="problematic" id="id10">`</span></a>tutorial_orm_updating`和:ref:<a href="#id11"><span class="problematic" id="id12">`</span></a>tutorial_orm_deleting`中讨论。</p>
+</div>
+<section id="update-sql">
+<span id="tutorial-core-update"></span><h2>update() SQL表达式构造函数<a class="headerlink" href="#update-sql" title="Permalink to this heading">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">func<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a href="#id13"><span class="problematic" id="id14">`</span></a>_sql.update`函数生成一个 :</p>
+</dd>
+</dl>
+<p>class:<cite>_sql.Update</cite> 的新实例，该实例表示SQL中的
+UPDATE语句，将更新表中的现有数据。</p>
+<p>与:func:<a href="#id15"><span class="problematic" id="id16">`</span></a>_sql.insert`构造函数一样，有一种“传统”的:func:<a href="#id17"><span class="problematic" id="id18">`</span></a>_sql.update`形式，
+它一次只发出对单个表的UPDATE并且不返回任何行。
+但是，某些后端支持可以同时修改多个表的UPDATE语句，UPDATE语句还支持RETURNING，
+以便可以在结果集中返回匹配行中包含的列。</p>
+<p>基本的UPDATE看起来像:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">update</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(user_table)</span>
+<span class="go">...     .where(user_table.c.name == &quot;patrick&quot;)</span>
+<span class="go">...     .values(fullname=&quot;Patrick the Star&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=</span><span class="p">:</span><span class="n">fullname</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">name_1</span>
+</div></pre></div>
+</div>
+<p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.values" title="sqlalchemy.sql.expression.Update.values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.values()</span></code></a> 方法控制UPDATE语句的SET元素的内容。这是与:class:<cite>_sql.Insert</cite>
+构造函数共享的同一方法。通常可以使用列名称作为关键字参数传递参数。</p>
+<p>UPDATE支持所有常见的UPDATE形式，包括针对表达式的更新，
+在这些更新中，我们可以使用:class:<a href="#id19"><span class="problematic" id="id20">`</span></a>_schema.Column`表达式:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Username: &quot;</span> <span class="o">+</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=</span><span class="p">(:</span><span class="n">name_1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<p>为了支持”executemany”上下文中的UPDATE，其中将对同一语句调用多个参数集，
+可以使用:func:<a href="#id21"><span class="problematic" id="id22">`</span></a>_sql.bindparam`构造函数设置绑定参数；这些替换了通常选择文本
+值的位置：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">bindparam</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(user_table)</span>
+<span class="go">...     .where(user_table.c.name == bindparam(&quot;oldname&quot;))</span>
+<span class="go">...     .values(name=bindparam(&quot;newname&quot;))</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     conn.execute(</span>
+<span class="go">...         stmt,</span>
+<span class="go">...         [</span>
+<span class="go">...             {&quot;oldname&quot;: &quot;jack&quot;, &quot;newname&quot;: &quot;ed&quot;},</span>
+<span class="go">...             {&quot;oldname&quot;: &quot;wendy&quot;, &quot;newname&quot;: &quot;mary&quot;},</span>
+<span class="go">...             {&quot;oldname&quot;: &quot;jim&quot;, &quot;newname&quot;: &quot;jake&quot;},</span>
+<span class="go">...         ],</span>
+<span class="go">...     )</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">name</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">[(</span><span class="s1">&#39;ed&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;jack&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;mary&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;wendy&#39;</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;jake&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;jim&#39;</span><span class="p">)]</span>
+<span class="o">&lt;</span><span class="n">sqlalchemy</span><span class="p">.</span><span class="n">engine</span><span class="p">.</span><span class="k">cursor</span><span class="p">.</span><span class="n">CursorResult</span><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="k">at</span><span class="w"> </span><span class="mi">0</span><span class="n">x</span><span class="p">...</span><span class="o">&gt;</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>可以应用于UPDATE的其他技术，包括：</p>
+<section id="tutorial-correlated-updates">
+<span id="id23"></span><h3>相关更新<a class="headerlink" href="#tutorial-correlated-updates" title="Permalink to this heading">¶</a></h3>
+<p>使用相关的子查询，UPDATE语句可以使用其他表中的行。子查询可以用作
+可以放置列表达式的任何位置:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scalar_subq</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     select(address_table.c.email_address)</span>
+<span class="go">...     .where(address_table.c.user_id == user_table.c.id)</span>
+<span class="go">...     .order_by(address_table.c.id)</span>
+<span class="go">...     .limit(1)</span>
+<span class="go">...     .scalar_subquery()</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="n">scalar_subq</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">update_stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=</span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="p">:</span><span class="n">param_1</span><span class="p">)</span>
+</div></pre></div>
+</div>
+</section>
+<section id="update-from">
+<span id="tutorial-update-from"></span><h3>UPDATE..FROM<a class="headerlink" href="#update-from" title="Permalink to this heading">¶</a></h3>
+<p>某些数据库（如PostgreSQL和MySQL）支持“UPDATE FROM”语法，
+其中其他表可以在特殊FROM子句中直接指定。 当使用WHERE子句中存在其他表时，
+此语法将自动隐式生成变量:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(user_table)</span>
+<span class="go">...     .where(user_table.c.id == address_table.c.user_id)</span>
+<span class="go">...     .where(address_table.c.email_address == &quot;patrick@aol.com&quot;)</span>
+<span class="go">...     .values(fullname=&quot;Pat&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">update_stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=</span><span class="p">:</span><span class="n">fullname</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">email_address_1</span>
+</div></pre></div>
+</div>
+<p>MySQL还有一种特殊语法，可以更新多个表。这要求在VALUES子句中引用:class:<a href="#id24"><span class="problematic" id="id25">`</span></a>_schema.Table`对象，
+以引用其他表:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     update(user_table)</span>
+<span class="go">...     .where(user_table.c.id == address_table.c.user_id)</span>
+<span class="go">...     .where(address_table.c.email_address == &quot;patrick@aol.com&quot;)</span>
+<span class="go">...     .values(</span>
+<span class="go">...         {</span>
+<span class="go">...             user_table.c.fullname: &quot;Pat&quot;,</span>
+<span class="go">...             address_table.c.email_address: &quot;pat@aol.com&quot;,</span>
+<span class="go">...         }</span>
+<span class="go">...     )</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">mysql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">update_stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="p">,</span><span class="w"> </span><span class="n">address</span>
+<span class="k">SET</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="o">=%</span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">fullname</span><span class="o">=%</span><span class="n">s</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span>
+</div></pre></div>
+</div>
+</section>
+<section id="tutorial-parameter-ordered-updates">
+<span id="id26"></span><h3>参数有序的更新<a class="headerlink" href="#tutorial-parameter-ordered-updates" title="Permalink to this heading">¶</a></h3>
+<p>另一个仅适用于MySQL的行为是，在UPDATE的SET子句中参数的顺序实际上会影响
+每个表达式的评估结果。。对于此用例，<a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update.ordered_values" title="sqlalchemy.sql.expression.Update.ordered_values"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Update.ordered_values()</span></code></a> 方法接受元组序列，
+因此可以控制这种顺序[2] _</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="n">update</span><span class="p">(</span><span class="n">some_table</span><span class="p">)</span><span class="o">.</span><span class="n">ordered_values</span><span class="p">(</span>
+<span class="go">...     (some_table.c.y, 20), (some_table.c.x, some_table.c.y + 10)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">update_stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">UPDATE</span><span class="w"> </span><span class="n">some_table</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">y</span><span class="o">=</span><span class="p">:</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="p">(</span><span class="n">some_table</span><span class="p">.</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">:</span><span class="n">y_1</span><span class="p">)</span>
+</div></pre></div>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id27" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>虽然从Python 3.7开始，Python字典被保证是插入有序的，
+但是：meth:<cite>_sql.Update.ordered_values</cite> 方法仍然在必须特定情况下提供额外的意图清晰度，
+即MySQL UPDATE语句的SET子句必须按特定方式进行处理。</p>
+</aside>
+</aside>
+</section>
+</section>
+<section id="delete-sql">
+<span id="tutorial-deletes"></span><h2>delete() SQL表达式构造函数<a class="headerlink" href="#delete-sql" title="Permalink to this heading">¶</a></h2>
+<p>:func:` _sql.delete`函数生成一个:class:` _sql.Delete`的新实例，
+表示SQL中的一个DELETE语句，该语句将从表中删除行。</p>
+<p>从API的角度来看，<code class="xref py py-func docutils literal notranslate"><span class="pre">delete`语句类似于</span> <span class="pre">:func:()</span></code> _sql.update`. 函数，
+传统上不返回任何行，但允许一些数据库后端的RETURNING变体。</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">delete</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stmt</span> <span class="o">=</span> <span class="n">delete</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+<div class='show_sql_print'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">:</span><span class="n">name_1</span>
+</div></pre></div>
+</div>
+<section id="tutorial-multi-table-deletes">
+<span id="id28"></span><h3>多表删除<a class="headerlink" href="#tutorial-multi-table-deletes" title="Permalink to this heading">¶</a></h3>
+<p>像:class:` _sql.Update`一样，:class:<a href="#id29"><span class="problematic" id="id30">`</span></a>_sql.Delete`支持在WHERE子句中使用相关子查询，以及后端特定的多个表语法，例如在MySQL上的“DELETE FROM … USING”语法:</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="go">...     delete(user_table)</span>
+<span class="go">...     .where(user_table.c.id == address_table.c.user_id)</span>
+<span class="go">...     .where(address_table.c.email_address == &quot;patrick@aol.com&quot;)</span>
+<span class="go">... )</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sqlalchemy.dialects</span> <span class="kn">import</span> <span class="n">mysql</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">delete_stmt</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">dialect</span><span class="o">=</span><span class="n">mysql</span><span class="o">.</span><span class="n">dialect</span><span class="p">()))</span>
+<div class='show_sql_print'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">USING</span><span class="w"> </span><span class="n">user_account</span><span class="p">,</span><span class="w"> </span><span class="n">address</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">user_id</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">email_address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span>
+</div></pre></div>
+</div>
+</section>
+</section>
+<section id="update-delete">
+<span id="tutorial-update-delete-rowcount"></span><h2>从UPDATE，DELETE获取影响行数<a class="headerlink" href="#update-delete" title="Permalink to this heading">¶</a></h2>
+<p>:class:` _sql.Update`和:class:` _sql.Delete`都支持能够返回语句执行后匹配到的行数，
+这些语句是使用Core <code class="xref py py-class docutils literal notranslate"><span class="pre">execute</span></code>.
+如下所述的注意事项，可以从 :attr:<a href="#id31"><span class="problematic" id="id32">`</span></a>_engine.CursorResult.rowcount`获取此值属性：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">engine</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+<span class="go">...     result = conn.execute(</span>
+<span class="go">...         update(user_table)</span>
+<span class="go">...         .values(fullname=&quot;Patrick McStar&quot;)</span>
+<span class="go">...         .where(user_table.c.name == &quot;patrick&quot;)</span>
+<span class="go">...     )</span>
+<span class="go">...     print(result.rowcount)</span>
+<div class='show_sql'><span class="k">BEGIN</span><span class="w"> </span><span class="p">(</span><span class="k">implicit</span><span class="p">)</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">user_account</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">fullname</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">user_account</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">[...]</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;Patrick McStar&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;patrick&#39;</span><span class="p">)</span>
+</div><span class="go">1</span>
+<div class='show_sql'><span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>:class:` _engine.CursorResult`类是:class:` _engine.Result`的子类，
+包含特定于DBAPI“一游标”对象的其他属性。
+当通过:meth:<cite>_engine.Connection.execute</cite> 方法触发语句时，将返回此子类的对象。
+在使用ORM时，<code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.execute()</span></code> 方法为所有INSERT，UPDATE和DELETE语句返回此类型的对象。</p>
+</div>
+<p>关于 :attr:<a href="#id33"><span class="problematic" id="id34">`</span></a>_engine.CursorResult.rowcount`的事实：</p>
+<ul class="simple">
+<li><p>返回的值是WHERE子句所匹配的行数。无论行实际上是否被修改都无所谓。</p></li>
+<li><p>:attr:<a href="#id35"><span class="problematic" id="id36">`</span></a>_engine.CursorResult.rowcount`不一定适用于使用RETURNING的UPDATE或DELETE语句。</p></li>
+<li><dl class="simple">
+<dt>对于:ref:<cite>executemany &lt;tutorial_multiple_parameters&gt;`执行，:attr:`_engine.CursorResult.rowcount</cite></dt><dd><p>可能也无法使用，这高度依赖于使用的DBAPI模块以及配置的选项。 属性:
+:attr:<a href="#id37"><span class="problematic" id="id38">`</span></a>_engine.CursorResult.supports_sane_multi_rowcount`指示当前所使用的后端是否将为此值提供可用性。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>一些驱动程序，特别是非关系性数据库的第三方方言，可能根本不支持:attr:` _engine.CursorResult.rowcount`。</dt><dd><p>属性:attr:<cite>_engine.CursorResult.supports_sane_rowcount</cite> 指示了这一点。</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>“rowcount”在ORM :term: <a href="#id39"><span class="problematic" id="id40">`</span></a>unit of work`过程中用于验证UPDATE或DELETE语句匹配的预期行数，</dt><dd><p>对于文档中的ORM版本化功能至关重要，详见 <span class="xref std std-ref">mapper_version_counter</span>。</p>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="returning">
+<h2>使用RETURNING更新，删除<a class="headerlink" href="#returning" title="Permalink to this heading">¶</a></h2>
+<p>与:class:` _sql.Insert`构造函数一样，:class:` _sql.Update`和:class:` _sql.Delete`也支持RETURNING子句，
+可以通过使用:meth:` _sql.Update.returning`和:meth:` _sql.Delete.returning`方法添加该子句。
+在可支持RETURNING的后端上，所选择行的某些列将返回:meth:` _engine.Result`对象作为可以迭代的行：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">update_stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">update</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">fullname</span><span class="o">=</span><span class="s2">&quot;Patrick the Star&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">update_stmt</span><span class="p">)</span>
+<span class="go">{printsql}UPDATE user_account SET fullname=:fullname</span>
+<span class="go">WHERE user_account.name = :name_1</span>
+<span class="go">RETURNING user_account.id, user_account.name{stop}</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_stmt</span> <span class="o">=</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">delete</span><span class="p">(</span><span class="n">user_table</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;patrick&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">.</span><span class="n">returning</span><span class="p">(</span><span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">user_table</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">print</span><span class="p">(</span><span class="n">delete_stmt</span><span class="p">)</span>
+<span class="go">{printsql}DELETE FROM user_account</span>
+<span class="go">WHERE user_account.name = :name_1</span>
+<span class="go">RETURNING user_account.id, user_account.name{stop}</span></pre></div>
+</div>
+</section>
+<section id="id41">
+<h2>进一步阅读UPDATE，DELETE<a class="headerlink" href="#id41" title="Permalink to this heading">¶</a></h2>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>UPDATE / DELETE的API文档：</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Update" title="sqlalchemy.sql.expression.Update"><code class="xref py py-class docutils literal notranslate"><span class="pre">Update</span></code></a></p></li>
+<li><p><a class="reference internal" href="../core/dml.html#sqlalchemy.sql.expression.Delete" title="sqlalchemy.sql.expression.Delete"><code class="xref py py-class docutils literal notranslate"><span class="pre">Delete</span></code></a></p></li>
+</ul>
+<p>ORM-enabled UPDATE and DELETE:</p>
+<p><a class="reference internal" href="../orm/queryguide/dml.html#orm-expression-update-delete"><span class="std std-ref">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</span></a> -请参见：ref:<cite>queryguide_toplevel</cite></p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="data_select.html" title="previous chapter">使用 SELECT 语句</a>
+        Next:
+        <a href="orm_data_manipulation.html" title="next chapter">使用ORM进行数据操作</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:06
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

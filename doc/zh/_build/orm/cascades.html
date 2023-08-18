@@ -1,0 +1,669 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    级联
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="up" title="使用Session" href="session.html" />
+        <link rel="next" title="事务和连接管理" href="session_transaction.html" />
+        <link rel="prev" title="状态管理" href="session_state_management.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="session_basics.html">会话基础知识</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_state_management.html">状态管理</a></span></li>
+<li class="selected"><span class="link-container"><strong>级联</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#save-update">save-update</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#backref-cascade">双向关系下的 save-update 级联行为</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#delete">delete</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="#cascade-delete-many-to-many">使用 delete 级联与多对多关系</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#orm-on-delete">使用 ORM 关系的外键 ON DELETE 级联</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#on-delete">使用外键 ON DELETE 与多对多关系</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="#cascade-merge">合并</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#cascade-refresh-expire">刷新-过期</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#cascade-expunge">删减</a></span></li>
+<li><span class="link-container"><a class="reference external" href="#session-deleting-from-collections">删除-删除从集合和标量关系引用的对象</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="session_transaction.html">事务和连接管理</a></span></li>
+<li><span class="link-container"><a class="reference external" href="persistence_techniques.html">附加的持久化技术</a></span></li>
+<li><span class="link-container"><a class="reference external" href="contextual.html">上下文/线程本地会话</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session_api.html">会话API</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="session_state_management.html" title="previous chapter">状态管理</a></li>
+                <li><b>Next:</b>
+                <a href="session_transaction.html" title="next chapter">事务和连接管理</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+                    <ul><li><a href="index.html" title="SQLAlchemy ORM">SQLAlchemy ORM</a></li>
+                    <ul><li><a href="session.html" title="使用Session">使用Session</a></li>
+                </ul>
+                </ul>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#id1">级联</a><ul>
+<li><a class="reference internal" href="#save-update">save-update</a><ul>
+<li><a class="reference internal" href="#backref-cascade">双向关系下的 save-update 级联行为</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#delete">delete</a><ul>
+<li><a class="reference internal" href="#cascade-delete-many-to-many">使用 delete 级联与多对多关系</a></li>
+<li><a class="reference internal" href="#orm-on-delete">使用 ORM 关系的外键 ON DELETE 级联</a></li>
+<li><a class="reference internal" href="#on-delete">使用外键 ON DELETE 与多对多关系</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cascade-merge">合并</a></li>
+<li><a class="reference internal" href="#cascade-refresh-expire">刷新-过期</a></li>
+<li><a class="reference internal" href="#cascade-expunge">删减</a></li>
+<li><a class="reference internal" href="#session-deleting-from-collections">删除-删除从集合和标量关系引用的对象</a></li>
+</ul>
+</li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-cascades" >
+        
+<section id="id1">
+<h1>级联<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h1>
+<p>映射器支持在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 构造中可配置 <span class="xref std std-term">级联</span> 行为的概念。这涉及到对相对于关于特定 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的 “父” 对象执行操作应如何传播到由该关系引用的项目（例如 “子” 对象），并受到 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 选项的影响。</p>
+<p>级联的默认行为仅限于所谓的 <a class="reference internal" href="#cascade-save-update"><span class="std std-ref">Cascade Save-Update</span></a> 和 <a class="reference internal" href="#cascade-merge"><span class="std std-ref">Cascade Merge</span></a> 设置的级联。级联的典型 “替代” 设置是添加 <a class="reference internal" href="#cascade-delete"><span class="std std-ref">Cascade Delete</span></a> 和 <span class="xref std std-ref">Cascade Delete-Orphan</span> 选项；这些设置适用于只存在于它们附加到其父对象的情况下，并且否则会被删除的相关对象。</p>
+<p>使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 选项配置级联行为的示例在下面的代码中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;order&quot;</span>
+
+    <span class="n">items</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Item&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+    <span class="n">customer</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;User&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;save-update&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在回推（backref）上设置级联，可以使用相同的标志与 <code class="xref py py-func docutils literal notranslate"><span class="pre">backref()</span></code> 函数，它最终将其参数反馈到 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="n">__tablename__</span> <span class="o">=</span> <span class="s2">&quot;item&quot;</span>
+
+    <span class="n">order</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span>
+        <span class="s2">&quot;Order&quot;</span><span class="p">,</span> <span class="n">backref</span><span class="o">=</span><span class="n">backref</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">,</span> <span class="n">cascade</span><span class="o">=</span><span class="s2">&quot;all, delete-orphan&quot;</span><span class="p">)</span>
+    <span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p><code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 的默认值为 <code class="docutils literal notranslate"><span class="pre">save-update,</span> <span class="pre">merge</span></code>。对于此参数的典型替代设置为 <code class="docutils literal notranslate"><span class="pre">all</span></code> 或更常见的 <code class="docutils literal notranslate"><span class="pre">all,</span> <span class="pre">delete-orphan</span></code>。<code class="docutils literal notranslate"><span class="pre">all</span></code> 符号是 <code class="docutils literal notranslate"><span class="pre">save-update,</span> <span class="pre">merge,</span> <span class="pre">refresh-expire,</span> <span class="pre">expunge,</span> <span class="pre">delete</span></code> 的同义词，并且在与 <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> 结合使用时表示，子对象应在所有情况下跟随其父对象，并且一旦与该父对象不再关联，就应将其删除。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><code class="docutils literal notranslate"><span class="pre">all</span></code> 级联选项意味着 <a class="reference internal" href="#cascade-refresh-expire"><span class="std std-ref">Cascade Refresh-Expire</span></a>  级联设置，使用 <a class="reference internal" href="extensions/asyncio.html"><span class="std std-ref">异步 I/O (asyncio)</span></a> 扩展时可能不是理想的，因为它会比在显式 IO 上下文中通常适当的方式更积极地到期相关对象。有关详细背景，请参见 <a class="reference internal" href="extensions/asyncio.html#asyncio-orm-avoid-lazyloads"><span class="std std-ref">在使用 AsyncSession 时避免隐式 I/O</span></a> 中的备注。</p>
+</div>
+<p>可以指定的 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 参数的可用值在以下各小节中描述。</p>
+<section id="save-update">
+<span id="cascade-save-update"></span><h2>save-update<a class="headerlink" href="#save-update" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联指示当使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code> 将对象放置到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中时，
+所有通过此 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 关系关联的对象也应添加到相同的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中。使用 <code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联将为你自动将对象和它的关系添加到会话中。例如，我们有一个带有两个相关对象，<code class="docutils literal notranslate"><span class="pre">address1</span></code>，<code class="docutils literal notranslate"><span class="pre">address2</span></code> 的对象 <code class="docutils literal notranslate"><span class="pre">user1</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">User</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(),</span> <span class="n">Address</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span> <span class="o">=</span> <span class="p">[</span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span><span class="p">]</span></pre></div>
+</div>
+<p>如果我们将 <code class="docutils literal notranslate"><span class="pre">user1</span></code> 添加到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中，它也会隐式地添加 <code class="docutils literal notranslate"><span class="pre">address1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address2</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="ow">in</span> <span class="n">sess</span>
+<span class="go">True</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联也影响已经存在于 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中的对象的属性操作。如果我们将第三个对象``address3`` 添加到 <code class="docutils literal notranslate"><span class="pre">user1.addresses</span></code> 集合中，它将成为该 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 的状态的一部分:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="o">=</span> <span class="n">Address</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">address3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address3</span> <span class="ow">in</span> <span class="n">sess</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>使用 <code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联可能会出现令人惊讶的行为，当从集合中删除项或将对象从标量属性中取消关联时。在某些情况下，孤立的对象仍可能被拉入前父级的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code>；
+原因是刷新过程需要正确处理相关对象。通常只有在将对象从一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中删除并添加到另一个 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中时才会出现这种情况:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">sess1</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="o">=</span> <span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess1</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># user1，address1不再与sess1关联</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span><span class="o">.</span><span class="n">addresses</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">address1</span><span class="p">)</span>  <span class="c1"># address1不再与user1相关联</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess2</span> <span class="o">=</span> <span class="n">Session</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>  <span class="c1"># ...但它仍然会被添加到新会话中</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span> <span class="ow">in</span> <span class="n">sess2</span>  <span class="c1"># 因为它仍处于“挂起”状态等待刷新</span>
+<span class="go">True</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联默认开启，通常为方便起见。它通过允许单个调用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.add()</span></code> 一次为该 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 注册整个对象结构来简化代码。
+虽然可以禁用它，但通常不需要这样做。</p>
+<section id="backref-cascade">
+<span id="back-populates-cascade"></span><span id="id2"></span><h3>双向关系下的 save-update 级联行为<a class="headerlink" href="#backref-cascade" title="Permalink to this heading">¶</a></h3>
+<p>双向关系上的 <code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联行为在单向情况下进行，即使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.back_populates</span></code> 或 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.backref</span></code> 参数创建互相引用的两个 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 对象时。</p>
+<p>当将与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 关联的“父”对象上的属性或集合分配给未与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 关联的子对象时，将自动将对象添加到该同一 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中。但是，反向操作不会产生此效果；将与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 关联的子对象分配给与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 不关联的对象时，将不会自动将该父对象添加到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中。这种行为的整体主题为“级联回推（cascade backrefs）”，它表示自 SQLAlchemy 2.0 以来标准化的行为更改。</p>
+<p>举例来说，给定一个 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 对象的映射，该对象通过关系 <code class="docutils literal notranslate"><span class="pre">Order.items</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Item.order</span></code> 与一系列 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象相关双向关系:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Order</span><span class="p">,</span>
+    <span class="n">order_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Item</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;order&quot;</span><span class="p">)},</span>
+<span class="p">)</span>
+
+<span class="n">mapper_registry</span><span class="o">.</span><span class="n">map_imperatively</span><span class="p">(</span>
+    <span class="n">Item</span><span class="p">,</span>
+    <span class="n">item_table</span><span class="p">,</span>
+    <span class="n">properties</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="n">relationship</span><span class="p">(</span><span class="n">Order</span><span class="p">,</span> <span class="n">back_populates</span><span class="o">=</span><span class="s2">&quot;items&quot;</span><span class="p">)},</span>
+<span class="p">)</span></pre></div>
+</div>
+<p>如果在与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 关联的 <code class="docutils literal notranslate"><span class="pre">Order</span></code> 上添加一个 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象并将其添加到该 <code class="docutils literal notranslate"><span class="pre">Order.items</span></code> 集合中，则此 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 将自动级联到该 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="o">=</span> <span class="n">Order</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">o1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="o">=</span> <span class="n">Item</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="ow">is</span> <span class="n">i1</span><span class="o">.</span><span class="n">order</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>上面，<code class="docutils literal notranslate"><span class="pre">Order.items</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Item.order</span></code> 的双向特性意味着将 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 添加到 <code class="docutils literal notranslate"><span class="pre">Order.items</span></code> 中还分配给了``Item.order``。同时，<code class="docutils literal notranslate"><span class="pre">save-update</span></code> 级联允许为对象添加到与父对象相同的 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中已经相关的内容。</p>
+<p>但是，如果在相反的方向上执行上述操作，即将 <code class="docutils literal notranslate"><span class="pre">Item.order</span></code> 分配给该子对象而不是直接附加到 <code class="docutils literal notranslate"><span class="pre">Order.item</span></code> 上，则不会自动执行级联操作，即便在建立的对象分配上``Order.items`` 和 <code class="docutils literal notranslate"><span class="pre">Item.order</span></code> 的状态也是相同的：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="o">=</span> <span class="n">Order</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">o1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">o1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">True</span></pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="o">=</span> <span class="n">Item</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="n">o1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="ow">in</span> <span class="n">order</span><span class="o">.</span><span class="n">items</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i1</span> <span class="ow">in</span> <span class="n">session</span>
+<span class="go">False</span></pre></div>
+</div>
+<p>在上面的情况下，创建 <code class="docutils literal notranslate"><span class="pre">Item</span></code> 对象并进行所需的所有状态设置后，它应显式添加到 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 中:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span></pre></div>
+</div>
+<p>在旧版本的 SQLAlchemy 中，级联的 save-update 行为在所有情况下双向执行。然后通过称为 <code class="docutils literal notranslate"><span class="pre">cascade_backrefs</span></code> 的选项可切换到它的可选设置，针对 SQLAlchemy 2.0 移除了旧行为，不再提供选择在 ORM 中间切换不同的工作方式，这包括了在 ORM 中的学习曲线以及文档和用户支持的负担。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../changelog/migration_14.html#change-5150"><span class="std std-ref">级联反向引用在2.0中被弃用以移除</span></a> - 有关“级联回推”行为变更的背景信息</p>
+</div>
+</section>
+</section>
+<section id="delete">
+<span id="cascade-delete"></span><h2>delete<a class="headerlink" href="#delete" title="Permalink to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">delete</span></code> 级联指示将标记为删除的“父”对象的相关的“子”对象也应标记为删除。例如，如果我们的关系为 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 并配置了 <code class="docutils literal notranslate"><span class="pre">delete</span></code> 级联，则：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p># …</p>
+<p>addresses = relationship(“Address”, cascade=”all, delete”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>如果使用上面的映射，则有一个 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象和两个相关的 <code class="docutils literal notranslate"><span class="pre">Address</span></code> 对象：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">user1</span> <span class="o">=</span> <span class="n">sess1</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">User</span><span class="p">)</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">first</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address1</span><span class="p">,</span> <span class="n">address2</span> <span class="o">=</span> <span class="n">user1</span><span class="o">.</span><span class="n">addresses</span></pre></div>
+</div>
+<p>如果将 <code class="docutils literal notranslate"><span class="pre">user1</span></code>  标记为删除，则在进行刷新操作后，<code class="docutils literal notranslate"><span class="pre">address1</span></code> 和 <code class="docutils literal notranslate"><span class="pre">address2</span></code> 也将被删除：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">((</span><span class="mi">1</span><span class="p">,),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,))</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p>或者，如果我们的 <code class="docutils literal notranslate"><span class="pre">User.addresses</span></code> 关系没有 <code class="docutils literal notranslate"><span class="pre">delete</span></code> 级联，则 SQLAlchemy 的默认行为是将其与 <code class="docutils literal notranslate"><span class="pre">user1</span></code> 解除关联，使其外键引用设置为 <code class="docutils literal notranslate"><span class="pre">NULL</span></code>。使用下面的映射:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+
+    <span class="n">addresses</span> <span class="o">=</span> <span class="n">relationship</span><span class="p">(</span><span class="s2">&quot;Address&quot;</span><span class="p">)</span></pre><div class="code-non-annotations-key"></div></div>
+</div>
+<p>在删除父 <code class="docutils literal notranslate"><span class="pre">User</span></code> 对象时，不会删除 <code class="docutils literal notranslate"><span class="pre">address</span></code> 中的行，但会将其解除关联：</p>
+<div class="highlight-pycon+sql notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">user1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sess</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<div class='show_sql'><span class="k">UPDATE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">user_id</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="k">UPDATE</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">user_id</span><span class="o">=?</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="k">None</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">user</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">?</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="k">COMMIT</span>
+</div></pre></div>
+</div>
+<p><a class="reference internal" href="#cascade-delete"><span class="std std-ref">delete</span></a> 级联在一对多关系上通常与 <span class="xref std std-ref">cascade_delete_orphan</span> 级联结合使用，如果“子”对象与父对象分离，则会发出有关相关行的 DELETE。将 <code class="docutils literal notranslate"><span class="pre">delete</span></code> 和 <code class="docutils literal notranslate"><span class="pre">delete-orphan</span></code> 级联组合起来涵盖了 SQLAlchemy 不得不在设置外键列为 NULL 与完全删除行之间进行决策的两种情况。</p>
+<p>该功能默认与数据库配置的 <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> 约束完全独立，后者本身会配置 <code class="docutils literal notranslate"><span class="pre">CASCADE</span></code> 行为。为了更有效地与此配置集成，需要使用 <a class="reference internal" href="#passive-deletes"><span class="std std-ref">使用 ORM 关系的外键 ON DELETE 级联</span></a> 中描述的附加指令。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#passive-deletes"><span class="std std-ref">使用 ORM 关系的外键 ON DELETE 级联</span></a></p>
+<p><a class="reference internal" href="#cascade-delete-many-to-many"><span class="std std-ref">使用 delete 级联与多对多关系</span></a></p>
+<p><span class="xref std std-ref">cascade_delete_orphan</span></p>
+</div>
+<section id="cascade-delete-many-to-many">
+<span id="id3"></span><h3>使用 delete 级联与多对多关系<a class="headerlink" href="#cascade-delete-many-to-many" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> 选项同样适用于使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.secondary</span></code> 表示关联的关系；表示联结表。当父对象被删除，且因此从其相关对象中解除关联时，单元操作流程通常会从联接表中删除行，但保留相关对象。当与 <code class="docutils literal notranslate"><span class="pre">&quot;all,</span> <span class="pre">delete&quot;</span></code> 组合使用时，还将为子行本身执行额外的 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。</p>
+<p>以下示例调整了 <a class="reference internal" href="basic_relationships.html#relationships-many-to-many"><span class="std std-ref">多对多</span></a> 的例子以说明在关系的 <strong>一个</strong> 方向上设置了 <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> ：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>association_table = Table(</dt><dd><p>“association”,
+Base.metadata,
+Column(“left_id”, Integer, ForeignKey(“left.id”)),
+Column(“right_id”, Integer, ForeignKey(“right.id”)),</p>
+</dd>
+</dl>
+<p>)</p>
+<dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left”
+id = mapped_column(Integer, primary_key=True)
+children = relationship(</p>
+<blockquote>
+<div><p>“Child”,
+secondary=association_table,
+back_populates=”parents”,
+cascade=”all, delete”,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right”
+id = mapped_column(Integer, primary_key=True)
+parents = relationship(</p>
+<blockquote>
+<div><p>“Parent”,
+secondary=association_table,
+back_populates=”children”,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述示例中，当使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 标记父行时，删除流程将按照惯例从 <code class="docutils literal notranslate"><span class="pre">association</span></code> 表中删除行，但根据级联规则，还将删除所有相关的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 行。</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>如果在两个关系上同时设置了 <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code> 设置，则级联操作将继续级联所有 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 和 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象，加载遇到的每个 <code class="docutils literal notranslate"><span class="pre">children</span></code> 和 <code class="docutils literal notranslate"><span class="pre">parents</span></code> 集合，然后删除连接的然后删除连缀；这通常不适用于 “delete” 级联在双向设置上。</p>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="basic_relationships.html#relationships-many-to-many-deletion"><span class="std std-ref">从多对多表中删除行</span></a></p>
+<p><a class="reference internal" href="#passive-deletes-many-to-many"><span class="std std-ref">使用外键 ON DELETE 与多对多关系</span></a></p>
+</div>
+</section>
+<section id="orm-on-delete">
+<span id="passive-deletes"></span><h3>使用 ORM 关系的外键 ON DELETE 级联<a class="headerlink" href="#orm-on-delete" title="Permalink to this heading">¶</a></h3>
+<p>SQLAlchemy 的级联行为与关系数据库的 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> 功能重叠。
+SQLAlchemy 使用 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKey" title="sqlalchemy.schema.ForeignKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKey</span></code></a> 和 <a class="reference internal" href="../core/constraints.html#sqlalchemy.schema.ForeignKeyConstraint" title="sqlalchemy.schema.ForeignKeyConstraint"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForeignKeyConstraint</span></code></a> 构造对象允许配置这些架构级别的 DDL 行为。使用这些对象与 <a class="reference internal" href="../core/metadata.html#sqlalchemy.schema.Table" title="sqlalchemy.schema.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> metadata 在 <span class="xref std std-ref">on_update_on_delete</span> 中进行描述；</p>
+<p>为了使用 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span></code> 外键级联与 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 结合使用，首先需要注意的是 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.cascade</span></code> 设置必须匹配所需的 “delete” 的或 “set null” 行为（使用 <code class="docutils literal notranslate"><span class="pre">delete</span></code> 级联或不使用它），以便无论 ORM 还是数据库级别的约束将处理实际修改数据库中的数据时，ORM 都能够适当地跟踪在本地存在的对象的状态。</p>
+<p>然后，在 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上还有一个附加选项，指示 ORM 应在多大程度上尝试自行运行相关行的 DELETE/UPDATE 操作，而非依赖于期望数据库 SIDE FOREIGN KEY 约束级联来处理任务；这是 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 参数，它接受选项 <code class="docutils literal notranslate"><span class="pre">False``（默认值）、``True</span></code> 和 <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>。</p>
+<p>最典型的示例是将孩子行与父行分离时删除子行，并且在相关的 <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> 约束上配置了 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code>：</p>
+<blockquote>
+<div><dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “parent”
+id = mapped_column(Integer, primary_key=True)
+children = relationship(</p>
+<blockquote>
+<div><p>“Child”,
+back_populates=”parent”,
+cascade=”all, delete”,
+passive_deletes=True,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “child”
+id = mapped_column(Integer, primary_key=True)
+parent_id = mapped_column(Integer, ForeignKey(“parent.id”, ondelete=”CASCADE”))
+parent = relationship(“Parent”, back_populates=”children”)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上述配置中，当父行被删除时，删除行为将遵循以下步骤：</p>
+<ol class="arabic simple">
+<li><p>应用使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 标记删除的父行。</p></li>
+<li><p>在下次 flush 更改到数据库时，所有 <strong>当前加载的</strong> <code class="docutils literal notranslate"><span class="pre">my_parent.children</span></code> 集合中的项都将被 ORM 删除，这意味着每个记录都将发出一个 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。</p></li>
+<li><p>如果 <code class="docutils literal notranslate"><span class="pre">my_parent.children</span></code> 集合 <strong>未加载</strong>，则不会发出 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。如果在此 <code class="xref py py-func docutils literal notranslate"><span class="pre">relationship()</span></code> 上未设置 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 标志，则会发出查询未加载的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象的 SELECT 语句。</p></li>
+<li><p>然后，为 <code class="docutils literal notranslate"><span class="pre">my_parent.row</span></code> 中对应的行发出 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。</p></li>
+<li><p>数据库级别的 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code> 使得与受影响的行在 <code class="docutils literal notranslate"><span class="pre">parent</span></code> 中有引用的所有行都会被删除。</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">my_parent</span></code> 对象，以及与其相关的所有 <code class="docutils literal notranslate"><span class="pre">Child</span></code>，在操作完成后均与 <code class="xref py py-class docutils literal notranslate"><span class="pre">Session</span></code> 分离。</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>要使用 “ON DELETE CASCADE”，底层数据库引擎必须支持 <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> 约束，并且它们必须被实施：</p>
+<ul class="simple">
+<li><p>在使用 MySQL 时，必须选择适当的存储引擎。有关详细信息，请参见 <a class="reference internal" href="../dialects/mysql.html#mysql-storage-engines"><span class="std std-ref">CREATE TABLE arguments including Storage Engines</span></a>。</p></li>
+<li><p>使用 SQLite 时，必须显式启用外键支持。有关详细信息，请参见 <a class="reference internal" href="../dialects/sqlite.html#sqlite-foreign-keys"><span class="std std-ref">Foreign Key Support</span></a>。</p></li>
+</ul>
+</div>
+</section>
+<section id="on-delete">
+<span id="passive-deletes-many-to-many"></span><h3>使用外键 ON DELETE 与多对多关系<a class="headerlink" href="#on-delete" title="Permalink to this heading">¶</a></h3>
+<p>如 <a class="reference internal" href="#cascade-delete-many-to-many"><span class="std std-ref">Cascade Delete Many-to-Many</span></a> 中所述，“delete” 级联在多对多关系上同样适用。要使使用 <code class="docutils literal notranslate"><span class="pre">foreign</span> <span class="pre">key</span></code> 来配置联接表上的 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code> 与多对多关系结合使用，必须在联接表上配置 <code class="docutils literal notranslate"><span class="pre">FOREIGN</span> <span class="pre">KEY</span></code> 指令。这些指令可以处理自动从联接表上删除，但不能自动删除相关对象本身。</p>
+<p>在这种情况下，可以使用 <code class="xref py py-paramref docutils literal notranslate"><span class="pre">relationship.passive_deletes</span></code> 指令在删除操作期间在执行某些额外的 <code class="docutils literal notranslate"><span class="pre">SELECT</span></code> 语句时节省一些时间，但仍有一些集合需要 ORM 继续加载以查找受影响的子对象并正确处理它们。</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这种情况的假设优化是以单个 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句一次删除联接表的所有父相关行，然后使用 <code class="docutils literal notranslate"><span class="pre">RETURNING</span></code> 查找受影响的相关子行，但这目前不是 ORM 工作单元实现的一部分。</p>
+</div>
+<p>在此配置中，必须在联接表的两个外键约束上配置 <code class="docutils literal notranslate"><span class="pre">ON</span> <span class="pre">DELETE</span> <span class="pre">CASCADE</span></code>。在父（parent）-&gt;子（child）关系的一侧上配置了 <code class="docutils literal notranslate"><span class="pre">cascade=&quot;all,</span> <span class="pre">delete&quot;</span></code>，可以在双向关系的 <strong>其他</strong> 一侧上配置 <code class="docutils literal notranslate"><span class="pre">passive_deletes=True</span></code>，如下所示：</p>
+<blockquote>
+<div><dl class="simple">
+<dt>association_table = Table(</dt><dd><p>“association”,
+Base.metadata,
+Column(“left_id”, Integer, ForeignKey(“left.id”, ondelete=”CASCADE”)),
+Column(“right_id”, Integer, ForeignKey(“right.id”, ondelete=”CASCADE”)),</p>
+</dd>
+</dl>
+<p>)</p>
+<dl>
+<dt>class Parent(Base):</dt><dd><p>__tablename__ = “left”
+id = mapped_column(Integer, primary_key=True)
+children = relationship(</p>
+<blockquote>
+<div><p>“Child”,
+secondary=association_table,
+back_populates=”parents”,
+cascade=”all, delete”,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+<dt>class Child(Base):</dt><dd><p>__tablename__ = “right”
+id = mapped_column(Integer, primary_key=True)
+parents = relationship(</p>
+<blockquote>
+<div><p>“Parent”,
+secondary=association_table,
+back_populates=”children”,
+passive_deletes=True,</p>
+</div></blockquote>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>使用上述配置，删除 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象的过程如下:</p>
+<ol class="arabic simple">
+<li><p>使用 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Session.delete()</span></code> 标记删除 <code class="docutils literal notranslate"><span class="pre">Parent</span></code> 对象。</p></li>
+<li><p>在刷新时，如果没有加载 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 集合，则 ORM 将首先发出 SELECT 语句以加载与 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 相应的 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象。</p></li>
+<li><p>然后，对于与该父行对应的行，将为 <code class="docutils literal notranslate"><span class="pre">association</span></code> 中的行发出 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。</p></li>
+<li><p>对于受此直接删除影响的每个 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象。因为配置了 <code class="docutils literal notranslate"><span class="pre">passive_deletes=True</span></code>，因此在“Child.parents”集合上的每个“Child”对象不需要在单独的查询中检索，因为假定与“association”中相应的行将被删除。</p></li>
+<li><p>然后，对于从 <code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> 中加载的每个 <code class="docutils literal notranslate"><span class="pre">Child</span></code> 对象发出 <code class="docutils literal notranslate"><span class="pre">DELETE</span></code> 语句。与父对象解绑定的子对象在父对象标记为删除时，而不是在其父对象删除时，被自动删除。这在处理“由其父对象拥有”的相关对象时是一项常见功能，其外键为NOT NULL，以便从父则删除集合中的项目会导致其删除。</p></li>
+</ol>
+<p><a href="#id4"><span class="problematic" id="id5">``</span></a>delete-orphan``级联意味着每个子对象一次只能有一个父对象，并且在**绝大多数情况下，只配置在一对多关系上。<a href="#id6"><span class="problematic" id="id7">**</span></a>对于在多对一或多对多关系上设置这种级联的少见情况，“多”端可以通过配置:paramref:<a href="#id8"><span class="problematic" id="id9">`</span></a>_orm.relationship.single_parent`参数来强制一次只允许一个对象，这会建立验证-python端的Python验证，以确保该对象一次只与一个父对象相关联，但这严重限制了“多”关系的功能，而且通常不是所需的。</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><span class="xref std std-ref">error_bbf0</span> - 关于涉及delete-orphan级联的常见错误情况的背景。</p>
+</div>
+</section>
+</section>
+<section id="cascade-merge">
+<span id="id10"></span><h2>合并<a class="headerlink" href="#cascade-merge" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id11"><span class="problematic" id="id12">``</span></a>merge``级联表示应从作为:meth:<cite>.Session.merge`调用的主体的父对象向下传播:meth:</cite>.Session.merge`操作。默认情况下，此级联也开启。</p>
+</section>
+<section id="cascade-refresh-expire">
+<span id="id13"></span><h2>刷新-过期<a class="headerlink" href="#cascade-refresh-expire" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id14"><span class="problematic" id="id15">``</span></a>refresh-expire``是不常见的选项，表示从父对象向下传播:meth:<cite>.Session.expire`操作。使用:meth:</cite>.Session.refresh`时，只有被引用的对象被过期，但实际上并没有刷新。</p>
+</section>
+<section id="cascade-expunge">
+<span id="id16"></span><h2>删减<a class="headerlink" href="#cascade-expunge" title="Permalink to this heading">¶</a></h2>
+<p><a href="#id17"><span class="problematic" id="id18">``</span></a>expunge``级联表示当从:class:<cite>.Session`使用:meth:</cite>.Session.expunge`删除父对象时，应向下传播操作以删除所引用的对象。</p>
+</section>
+<section id="session-deleting-from-collections">
+<span id="id19"></span><h2>删除-删除从集合和标量关系引用的对象<a class="headerlink" href="#session-deleting-from-collections" title="Permalink to this heading">¶</a></h2>
+<p>ORM通常在刷新过程中不会修改集合或标量关系的内容。这意味着，如果你的类具有一个引用了对象集的:func:<cite>_orm.relationship</cite>，或者引用了单个对象的引用，例如多对一，则此属性的内容将在刷新过程发生时不被修改。相反，预计:class:<cite>.Session`最终将过期，通过:meth:</cite>.Session.commit`的commit-expire行为或通过:meth:<cite>.Session.expire`的显式使用进行。此时，与该:class:</cite>.Session`相关联的任何引用对象或集合都将被清除，并在下一次访问时重新加载。</p>
+<p>关于这种行为经常引起困惑的一个常见问题涉及使用:meth:<cite>~.Session.delete`方法。当:meth:</cite>.Session.delete`在对象上调用并且:class:<a href="#id20"><span class="problematic" id="id21">`</span></a>.Session`被刷新时，从数据库中删除该行。引用到目标行的行，假设它们使用:func:<a href="#id22"><span class="problematic" id="id23">`</span></a>_orm.relationship`之间的跟踪，这两个映射对象类型之间的，将还会发现它们的外键属性被更新为null，或者如果设置了级联删除，则相关行也将被删除。但是，即使与删除的对象相关联的行本身可能也会发生修改，代表该行的集合或对象引用也在刷新本身范围内未被修改。这意味着，如果对象是相关集合的成员，则在该集合过期之前，它仍将存在于python端。同样，如果通过另一个对象通过多对一或一对一引用，则该引用也将保留在该对象上，直到该对象过期为止。</p>
+<p>下面，我们演示了在标记了要删除的“地址”对象后，它仍存在与“用户”的父级关联集合中，在刷新之后仍然存在的情况：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span>
+<span class="go">True</span></pre></div>
+</div>
+<p>上述会话提交后，所有属性都过期。再次访问“user.addresses”将重新加载集合，显示所需状态：</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">address</span> <span class="ow">in</span> <span class="n">user</span><span class="o">.</span><span class="n">addresses</span>
+<span class="go">False</span></pre></div>
+</div>
+<p>有一个配方可以拦截:meth:<a class="reference external" href="https://www.sqlalchemy.org/trac/wiki/UsageRecipes/ExpireRelationshipOnFKChange">.Session.delete`并自动调用过期；请参见`ExpireRelationshipOnFKChange</a>。但是，删除集合内的项目的常见做法是放弃直接使用:meth:<a href="#id24"><span class="problematic" id="id25">`</span></a>~.Session.delete`的用法，而是使用级联行为，以便自动调用删除作为将对象从父集合中删除的结果。<a href="#id26"><span class="problematic" id="id27">``</span></a>delete-orphan``级联可以实现这一点，如下例所示：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p>__tablename__ = “user”</p>
+<p># …</p>
+<p>addresses = relationship(“Address”, cascade=”all, delete-orphan”)</p>
+</dd>
+</dl>
+<p># …</p>
+<p>del user.addresses[1]
+session.flush()</p>
+</div></blockquote>
+<p>在上述示例中，从“User.addresses”集合中删除“Address”对象后，“delete-orphan”级联的效果相当于将其传递给:meth:<cite>~.Session.delete</cite>。</p>
+<p><a href="#id28"><span class="problematic" id="id29">``</span></a>delete-orphan``级联也可以应用于多对一或一对一关系，以便在解除与其父对象的关联时自动标记为删除。在多对一或一对一上使用“delete-orphan”级联需要额外的标志:paramref:<cite>_orm.relationship.single_parent</cite>，它会调用断言，表明此相关对象不应与任何其他父对象同时共享：</p>
+<blockquote>
+<div><dl>
+<dt>class User(Base):</dt><dd><p># …</p>
+<dl class="simple">
+<dt>preference = relationship(</dt><dd><p>“Preference”, cascade=”all, delete-orphan”, single_parent=True</p>
+</dd>
+</dl>
+<p>)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>上面的代码，如果从“User”中删除一个假设的“Preference”对象，则将在刷新时将其删除:</p>
+<blockquote>
+<div><p>some_user.preference = None
+session.flush()  # will delete the Preference object</p>
+</div></blockquote>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>:ref:<a href="#id30"><span class="problematic" id="id31">`</span></a>unitofwork_cascades`有关级联详细信息。</p>
+</div>
+</section>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="session_state_management.html" title="previous chapter">状态管理</a>
+        Next:
+        <a href="session_transaction.html" title="next chapter">事务和连接管理</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:19:56
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+

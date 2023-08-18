@@ -1,0 +1,1 @@
+本文档已移动至:doc:`queryguide/index`。

@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <title>
+            
+    
+    SQLAlchemy ORM
+ &mdash;
+    SQLAlchemy 2.0 Documentation
+
+        </title>
+
+        
+            <!-- begin iterate through site-imported + sphinx environment css_files -->
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/docs.css" type="text/css" />
+                <link rel="stylesheet" href="../_static/sphinx_paramlinks.css" type="text/css" />
+            <!-- end iterate through site-imported + sphinx environment css_files -->
+        
+
+        
+
+    
+
+    <!-- begin layout.mako headers -->
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+        <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="top" title="SQLAlchemy 2.0 Documentation" href="../index.html" />
+        <link rel="next" title="ORM快速入门" href="quickstart.html" />
+        <link rel="prev" title="进一步阅读" href="../tutorial/further_reading.html" />
+    <!-- end layout.mako headers -->
+
+
+    </head>
+    <body>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="docs-container">
+
+
+
+
+
+<div id="docs-top-navigation-container" class="body-background">
+<div id="docs-header">
+    <div id="docs-version-header">
+        Release: <span class="version-num">2.0.19</span>
+
+
+        | Release Date: July 15, 2023
+
+    </div>
+
+    <h1><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h1>
+
+</div>
+</div>
+
+<div id="docs-body-container">
+
+    <div id="fixed-sidebar" class="withsidebar">
+
+
+
+        <div id="docs-sidebar-popout">
+            <h3><a href="../index.html">SQLAlchemy 2.0 Documentation</a></h3>
+            <p id="sidebar-topnav">
+                <a href="../index.html">Home</a>
+            </p>
+
+            <div id="sidebar-search">
+                <form class="search" action="../search.html" method="get">
+                  <label>
+                  Search terms:
+                  <input type="text" placeholder="search..." name="q" size="12" />
+                  </label>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </div>
+
+        </div>
+
+        <div id="docs-sidebar">
+
+        <div id="sidebar-banner">
+            
+        </div>
+
+        <div id="docs-sidebar-inner">
+
+        
+        <h3>
+            <a href="../index.html" title="SQLAlchemy 2.0 Documentation">SQLAlchemy 2.0 Documentation</a>
+        </h3>
+
+        <ul>
+<li><span class="link-container"><a class="reference external" href="../intro.html">概述</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../tutorial/index.html">SQLAlchemy统一教程</a></span></li>
+<li class="selected"><span class="link-container"><strong>SQLAlchemy ORM</strong><a class="paramlink headerlink reference internal" href="#">¶</a></span><ul>
+<li><span class="link-container"><a class="reference external" href="quickstart.html">ORM快速入门</a></span></li>
+<li><span class="link-container"><a class="reference external" href="mapper_config.html">ORM映射类配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="relationships.html">关系配置</a></span></li>
+<li><span class="link-container"><a class="reference external" href="queryguide/index.html">ORM查询指南</a></span></li>
+<li><span class="link-container"><a class="reference external" href="session.html">使用Session</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extending.html">事件和内部实现</a></span></li>
+<li><span class="link-container"><a class="reference external" href="extensions/index.html">ORM扩展</a></span></li>
+<li><span class="link-container"><a class="reference external" href="examples.html">ORM Examples</a></span></li>
+</ul>
+</li>
+<li><span class="link-container"><a class="reference external" href="../core/index.html">SQLAlchemy核心模块</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../dialects/index.html">方言</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../faq/index.html">常见问题解答</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../errors.html">错误消息</a></span></li>
+<li><span class="link-container"><a class="reference external" href="../changelog/index.html">变更和迁移</a></span></li>
+</ul>
+
+
+
+        </div>
+
+        </div>
+
+    </div>
+
+    <div id="narrow-index-nav">
+        <form class="search" action="../search.html" method="get">
+            <label>
+                Search terms:
+            <input type="text" placeholder="search..." name="q" size="12" />
+            </label>
+            <input type="submit" value="Search" />
+            <input type="hidden" name="check_keywords" value="yes" />
+            <input type="hidden" name="area" value="default" />
+        </form>
+
+        <p>
+        <a href="../index.html">Home</a>
+        </p>
+
+    </div>
+
+
+        <div id="docs-narrow-top-navigation">
+            <ul>
+                <li><b>Previous:</b>
+                <a href="../tutorial/further_reading.html" title="previous chapter">进一步阅读</a></li>
+                <li><b>Next:</b>
+                <a href="quickstart.html" title="next chapter">ORM快速入门</a></li>
+
+            <li><b>Up:</b> <a href="../index.html">Home</a></li>
+
+
+
+            <li><b>On this page:</b></li>
+            <ul>
+<li><a class="reference internal" href="#sqlalchemy-orm">SQLAlchemy ORM</a></li>
+</ul>
+
+
+            </ul>
+
+        </div>
+
+
+
+    <div id="docs-body" role="main" class="withsidebar orm-index" >
+        
+<section id="sqlalchemy-orm">
+<span id="orm-toplevel"></span><h1>SQLAlchemy ORM<a class="headerlink" href="#sqlalchemy-orm" title="Permalink to this heading">¶</a></h1>
+<p>SQLAlchemy ORM是一种对象关系映射工具，本文档将全面介绍它的使用。如果你希望使用自动生成的高级SQL和自动化的Python对象持久化，首先请查看教程。</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">ORM快速入门</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id11">声明模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id30">创建引擎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#create-table-ddl">发出CREATE TABLE DDL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id45">创建对象并进行持久化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id62">简单选择</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#joinselect">带有JOIN的SELECT</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id83">进行更改</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id88">一些删除</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id109">深入了解上述概念</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mapper_config.html">ORM映射类配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mapping_styles.html">ORM映射类概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="declarative_mapping.html">使用Declarative映射类</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataclasses.html">与dataclasses和attrs集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_sql_expr.html">将 SQL 表达式作为映射属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapped_attributes.html">更改属性行为</a></li>
+<li class="toctree-l2"><a class="reference internal" href="composites.html">组合列类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="inheritance.html">映射类继承层次结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nonstandard_mappings.html">非传统映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="versioning.html">配置版本计数器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mapping_api.html">类映射API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="relationships.html">关系配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_relationships.html">关系模式基础知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="self_referential.html">邻接列表关系</a></li>
+<li class="toctree-l2"><a class="reference internal" href="join_conditions.html">配置 Relationship Joins</a></li>
+<li class="toctree-l2"><a class="reference internal" href="large_collections.html">处理大集合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collection_api.html">集合订制和API详细信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_persistence.html">特殊关系持久化模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="backref.html">使用传统的“backref”关系参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="relationship_api.html">关系 API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="queryguide/index.html">ORM查询指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/select.html">用ORM Mapper类编写SELECT语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/inheritance.html">编写继承映射的SELECT语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/dml.html">支持 ORM 的 INSERT、UPDATE 和 DELETE 语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/columns.html">列载入选项</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/relationships.html">关系属性加载技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/api.html">用于查询的ORM API特性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queryguide/query.html">旧版查询API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="session.html">使用Session</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="session_basics.html">会话基础知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_state_management.html">状态管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cascades.html">级联</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_transaction.html">事务和连接管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistence_techniques.html">附加的持久化技术</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contextual.html">上下文/线程本地会话</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_events.html">使用事件跟踪查询、对象和会话更改</a></li>
+<li class="toctree-l2"><a class="reference internal" href="session_api.html">会话API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extending.html">事件和内部实现</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="events.html">ORM 事件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="internals.html">ORM内部结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">ORM 异常</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extensions/index.html">ORM扩展</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extensions/asyncio.html">异步 I/O (asyncio)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/associationproxy.html">关联代理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/automap.html">自动映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/baked.html">摘要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/declarative/index.html">声明式扩展</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/mypy.html">Mypy / Pep-484的ORM映射支持</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/mutable.html">变异跟踪</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/orderinglist.html">排序列表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/horizontal_shard.html">水平分片</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/hybrid.html">混合属性</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/indexable.html">可索引对象</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions/instrumentation.html">备选类仪器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">ORM Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#id1">映射示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#examples-inheritance">继承映射示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#api">特殊API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples.html#orm">扩展ORM</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+    </div>
+
+</div>
+
+<div id="docs-bottom-navigation" class="docs-navigation-links, withsidebar">
+        Previous:
+        <a href="../tutorial/further_reading.html" title="previous chapter">进一步阅读</a>
+        Next:
+        <a href="quickstart.html" title="next chapter">ORM快速入门</a>
+
+    <div id="docs-copyright">
+        &copy; <a href="../copyright.html">Copyright</a> 2007-2023, the SQLAlchemy authors and contributors.
+
+
+    <p><b>flambé!</b> the dragon and <b><i>The Alchemist</i></b> image designs created and generously donated by <a href="https://github.com/vmalloc">Rotem Yaari</a>.</p>
+
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 7.0.1.
+
+    Documentation last generated: 2023/8/18 9:20:01
+
+    </div>
+</div>
+
+</div>
+
+
+
+        
+        
+
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../',
+          VERSION:     '2.0.19',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: '.html'
+      };
+    </script>
+
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+
+    <!-- begin iterate through sphinx environment script_files -->
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script type="text/javascript" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/sphinx_highlight.js"></script>
+        <script type="text/javascript" src="../_static/clipboard.min.js"></script>
+        <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <!-- end iterate through sphinx environment script_files -->
+
+    <script type="text/javascript" src="../_static/init.js"></script>
+
+
+    </body>
+</html>
+
+
